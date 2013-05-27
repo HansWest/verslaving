@@ -1,0 +1,227 @@
+<html>
+<!--
+sova-mixed-signals.htm
+
+deze code is van controleerjeverslavingszorg.nl 
+wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
+HansRJWest@Gmail.com
+U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
+Voor de context zie:
+http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
+-->
+
+<head>
+<title>reageren op mixed signals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../css/lajout.css" type="text/css" />
+<link rel="stylesheet" href="../css/screen.css" type="text/css" media="Screen" />
+<link rel="stylesheet" href="../css/mobile.css" type="text/css" media="handheld" />
+<link rel="stylesheet" href="../css/pageprint.css" type="text/css" media="print" />
+<!--Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
+<script type="text/javascript" src="../skripts/praatmethans.js"></script>
+<script language="javascript">
+<!--
+
+function effevullen()
+{
+document.mixedsignals.lastgevoel.value = "lastgevoel";
+document.mixedsignals.lastgedrag.value = "lastgedrag";
+document.mixedsignals.gedrag01.value = "gedrag01";
+document.mixedsignals.gedrag02.value = "gedrag02";
+document.mixedsignals.lastgedrag.value ="lastgedrag";
+document.mixedsignals.gevoel01.value = "gevoel01";
+document.mixedsignals.gevoel02.value = "gevoel02";
+document.mixedsignals.wensgedrag.value = "wensgedrag";
+document.mixedsignals.wensgedrag02.value = "wensgedrag02";
+document.mixedsignals.wensgevoel.value = "wensgevoel";
+document.mixedsignals.jouwwensgedrag.value = "jouwwensgedrag";
+document.mixedsignals.waarderingpunt.value ="waarderingpunt";
+document.mixedsignals.antwoordveld.value="antwoordveld";
+}
+
+function langautoantwoord()
+{
+effevullen();
+msg = "Mag ik je even feedback geven op iets? *alleen verder als het antwoord een JA was (anders een andere afspraak maken)* ... Waar ik last van heb is het gevoel "+ document.mixedsignals.lastgevoel.value + " waardoor ik makkelijk " + document.mixedsignals.lastgedrag.value +" ga doen. En dat wil ik eigenlijk helemaal niet. .Dat gevoel ontstaat bij mij omdat jij aan de ene kant " + document.mixedsignals.gedrag01.value + " doet -wat mij het gevoel van " + document.mixedsignals.gevoel01.value + " geeft, terwijl je aan de andere kant " + document.mixedsignals.gedrag02.value + " doet -wat mij het gevoel van " + document.mixedsignals.gevoel02.value + " geeft, Het zou voor mij prettig zijn als jij meer " + document.mixedsignals.wensgedrag.value + " zou laten zien (en misschien op een ander moment meer " + document.mixedsignals.wensgedrag02.value + ") waardoor ik mij waarschijnlijk meer "+ document.mixedsignals.wensgevoel.value + " zou voelen, waardoor ik hopelijk ook meer " + document.mixedsignals.jouwwensgedrag.value + " zou doen.. Ik denk dat dit mij ook zou helpen om meer waardering te voelen voor "+ document.mixedsignals.waarderingpunt.value +".";
+alert ( msg);
+document.mixedsignals.antwoordveld.value=msg;
+hulp_scherm(425,'mixed signals feedback',msg);
+}
+
+function middelautoantwoord()
+{
+effevullen();
+msg = "Ik zou graag even feedback geven op iets... Waar ik last van heb is het gevoel "+ document.mixedsignals.lastgevoel.value + ". Dat krijg ik doordat jij aan de ene kant " + document.mixedsignals.gedrag01.value + " doet (wat mij het gevoel van " + document.mixedsignals.gevoel01.value + " geeft), terwijl je aan de andere kant " + document.mixedsignals.gedrag02.value + " doet (wat mij het gevoel van " + document.mixedsignals.gevoel02.value + " geeft). Het zou voor mij prettig zijn als jij meer " + document.mixedsignals.wensgedrag.value + " zou laten zien (en misschien op een ander moment meer " + document.mixedsignals.wensgedrag02.value + "). Dat zou me waarschijnlijk meer "+ document.mixedsignals.wensgevoel.value + " laten voelen. Trouwens, ik wou ook nog even zeggen dat ik erg blij ben met "+ document.mixedsignals.waarderingpunt.value +".";
+document.mixedsignals.antwoordveld.value=msg;
+hulp_scherm(350,'mixed signals feedback',msg);
+}
+
+function kortautoantwoord()
+{
+effevullen();
+msg = "Even wat feedback over iets dat voor mij als dubbele boodschappen voelt. Aan de ene kant zie ik: " + document.mixedsignals.gedrag01.value + " en ik zie ook: " + document.mixedsignals.gedrag02.value + ". Dat geeft me het gevoel: "+ document.mixedsignals.lastgevoel.value + ". Wat vind jij daarvan?";
+document.mixedsignals.antwoordveld.value=msg;
+hulp_scherm(225,'mixed signals feedback',msg);
+}
+
+function hulppagina()
+{
+window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
+}
+
+function hulpscherm()
+{
+hulp_scherm(300,'mixed signals','Regelmatig zie je dat er trek kan ontstaan door lastige sociale situaties. Aan de ene kant doordat het en vervelend gevoel geeft, aan de andere kant omdat het lastig is om te reageren en, juist er niet gereageerd wordt, wordt de wilskracht opgebruikt zodat er onvoldoende over blijft voor de avond.<br> Dit formuliertje help met het geven van reactie.')
+}
+//-->
+</script>
+</head>
+<body>
+
+<div class="shadow"><div class="content">
+<div class="praatmethansheader">
+<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+
+<!--OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
+<h1 class="praatmethansheader">reageren op mixed signals </h1>
+</div>
+<div class="rechtsitalic">11 vragen: 15 - 40 minuten</div>
+
+<H1>Een  antwoord in lastige situaties </H1>
+
+
+<div class="printhide">
+  <p>Mensen geven nou eenmaal regelmatig dubbele signalen en als je daarop wilt reageren dan is het soms handig om even extra na te denken.<br />
+  eventjes: in het begin lijkt dit een erg overdreven uitgebreid formulier,
+    en in de praktijk zal je inderdaad heel vaak genoeg hebben aan het korte
+    antwoord. Maar als je dit als oefening een aantal keer hebt uitgewerkt, dan
+    wordt het makkelijker om ook lastige dingen te bespreken. </p>
+  <div class="praatmethansheader2">Dit formuliertje dus als oefening of als hulp om een gesprek(je) voor te
+    bereiden.</div><p></p>
+  <p></p>
+  <div class="rechtsitalic">sociale intelligentie.</div>
+  <p style="text-align:right">
+<a href="index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp; &nbsp;
+<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
+<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+
+
+</div>
+<form name="mixedsignals">
+<h1>REACTIE OP MIXED SIGNALS </h1>
+
+<p>Wat wordt er  aan de <b>ene kant gezegd/gedaan</b> door degene die dubbele signalen
+  geeft (beschrijf gedrag dat je kan observeren met een videocamera, ga niet
+  uit van jouw eigen interpretaties van dat gedrag, dat komt later)<br />
+  <textarea name="gedrag01" class="praatmethansformtextarea" cols="55" rows="2" title="wat zie je dat iemand doet, wat hoor je dat iemand zegt?"></textarea>
+</p>
+<div class="praatmethansheader2">&quot;aan de ene kant zegt iemand/ doet iemand...&quot;</div><p></p>
+<p>Wat is het <b>gevoel</b> dat in jou aan de <b>ene kant</b> ontstaat?<br />
+  <textarea name="gevoel01" class="praatmethansformtextarea" cols="55" rows="2" title="Daardoor voel jij aan de ene kant?"></textarea><br />
+</p><div class="praatmethansheader2">&quot;aan de ene kant geeft dat het gevoel...&quot;</div><p></p>
+
+<p>Wat wordt er <b>gezegd./gedaan aan de andere kant</b> (beschrijf weer gedrag dat
+  je kan observeren met een videocamera, ga niet uit van jouw eigen interpretaties
+  van dat gedrag, dat komt later)<br />
+  <textarea name="gedrag02" class="praatmethansformtextarea" cols="55" rows="2" title="wat zie jecdat iemand ook doet, wat hoor je dat iemand ook zegt?"></textarea><br />
+</p><div class="praatmethansheader2">&quot;aan de andere kant zegt iemand/ doet iemand...&quot;</div><p></p>
+
+<p>Wat is het <b>gevoel</b> dat in jou aan de <b>andere kant</b> ontstaat?<br />
+  <textarea name="gevoel02" class="praatmethansformtextarea" cols="55" rows="2" title="Daardoor voel jij aan de andere kant?"></textarea><br />
+</p><div class="praatmethansheader2">&quot;aan de andere kant geeft dat het gevoel...&quot;</div><p></p>
+
+<p>Wat is het <b>gevoel dat bij jou ontstaat</b> door het verschil tussen deze twee
+  gevoelens? (de last die jij hebt van de dubbel heid) <br />
+  <textarea name="lastgevoel" class="praatmethansformtextarea" cols="55" rows="2" title="Wat is het (dubbele) gevoel  dat jij voelt?"></textarea><br />
+</p><div class="praatmethansheader2">&quot;dat geeft jou het (dubbele) gevoel...&quot;</div>
+<p></p>
+
+<p>Het <b>gedrag dat uitgelokt wordt</b> door  dat gevoel, dat is?<br />
+  <textarea name="lastgedrag" class="praatmethansformtextarea" cols="55" rows="2" title="Wat is het gedrag dat jij gaat doen door dit (dubbele) gevoel?"></textarea><br />
+</p><div class="praatmethansheader2">&quot;dat werkt bij jou het gedrag in de hand...&quot;</div>
+<p>Wat is <b>jouw wens</b> voor het gedrag van die ander? (wederom: beschrijf gedrag
+  dat je kan observeren met een videocamera, ga niet uit van jouw eigen gevoel
+  bij dat gewenste gedrag, dat komt later)<br />
+  <textarea name="wensgedrag" class="praatmethansformtextarea" cols="55" rows="2" title="wat zou bje het liefste zien dat iemand WEL doet (met zijn/haar gevoel)?"></textarea><br/>
+</p>
+<div class="praatmethansheader2">&quot;ik zou graag willen dat  iemand/ wel gaat
+  doen...&quot;</div>
+<div class="rechtsitalic">val niet in de valkuil dat je dingen gaat zeggen als:
+  &quot;je moet <b>niet</b> zo dubbel doen&quot; .<br />
+  Beschrijf dingen die mensen WEL kunnen
+  doen.. </div>
+<p>Eventueel (want het is niet de bedoeling dat je de ander dwingt om gevoelens in te slikken (die komen er namelijk toch wel uit op een ander moment) kan je jezefl afvragen:<br />
+Wat zou je willen dat iemand daarnaast &oacute;&oacute;k, op een <i>ander</i> moment,
+doet met zijn/haar gevoel? (wederom:
+beschrijf videocameragedrag)<br />
+  <textarea name="wensgedrag02" class="praatmethansformtextarea" cols="55" rows="2" title="wat zou bje het liefste zien dat iemand WEL doet (met zijn/haar gevoel)?"></textarea><br/>
+</p>
+<div class="praatmethansheader2">&quot;aan de andere kant zou  iemand/
+  kunnen doen met z'n gevoel...&quot;</div>
+<div class="rechtsitalic">val niet in de valkuil dat je iemand &eacute;&eacute;n helft van
+  het gevoel weg laat poetsen<br />
+  Beschrijf dingen die mensen er WEL mee kunnen
+  doen.. </div>
+
+<p>Wat voor <b>gevoel verwacht</b> jij (meer) te gaan krijgen als iemand dit gedrag
+  (deze gedragingen) meer zou laten zien? <br />
+  <textarea name="wensgevoel" class="praatmethansformtextarea" cols="55" rows="2" title="wat verwacht jij vaker te gaan voelen als iemand vaker zou doen wat jij VRAAGT?"></textarea><br />
+</p><div class="praatmethansheader2">&quot;wat zou voor jou de winst zijn ...&quot;</div>
+<p>Wat voor <b>gedrag verwacht</b> jij zelf (meer) te laten zien als de ander
+  vaker zou doen wat jij hiervoor beschreef? <br />
+  <textarea name="jouwwensgedrag" class="praatmethansformtextarea" cols="55" rows="2" title="wat verwacht jij vaker te gaan doen als iemand vaker zou doen wat jij VRAAGT?"></textarea><br />
+</p><div class="praatmethansheader2">&quot;wat zou  de winst zijn voor de ander ...&quot;</div>
+<p>Wat is een eigenschap of een gedrag van deze persoon waar jij <b>w&egrave;l
+    waardering</b>  voor hebt?<br />
+  <textarea name="waarderingpunt" class="praatmethansformtextarea" cols="55" rows="2" title="vind jij een mooie/prettige/goede eigenschap van iemand?"></textarea><br />
+</p>
+<div class="praatmethansheader2">&quot;je waardeert iemand/ omdat...&quot;</div>
+<p></p>&nbsp;<p></p>
+<p align="center">*klik voor het* &nbsp; &nbsp; <a href="javascript:void(0)" onClick="langautoantwoord();" class="praatmethansbutton" title="ik wil de automatische antwoorden even zien">&nbsp;&nbsp;lange
+    auto-antwoord&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp; &nbsp; <a href="javascript:void(0)" onClick="middelautoantwoord();" class="praatmethansbutton" title="ik wil de automatische antwoorden even zien">&nbsp;&nbsp;middel
+    auto-antwoord&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="javascript:void(0)" onClick="kortautoantwoord();" class="praatmethansbutton" title="ik wil de automatische antwoorden even zien">&nbsp;&nbsp;korte
+    auto-antwoord&nbsp;&nbsp;</a>&nbsp;&nbsp;</p>
+  <textarea name="antwoordveld" class="praatmethansformtextarea" cols="55" rows="5" title="antwoord veld, EVENTUEEL bruikbaar voor emails of brieven"></textarea><br />
+<div class="praatmethansheader2">&quot;feedback geef je liever face-to-face, eerder dan middels een emailtje...&quot;</div>
+<p></p>
+<div class="stickit">
+  <p>OK disclaimer... voor alle duidelijkheid: programmeurs weten: &quot;garbage
+  in: garbage out&quot;.
+  Dit is een computer en een dergelijk formulier geeft maximaal een automatisch
+  antwoord. <br />
+  Bij alle automatische reacties geld altijdt: Je krijgt maximaal
+  terug wat je er in stopt. Als jij er onzin in stopt dan krijg je onzin terug.
+  En ook als jij er jouw meest eerlijke antwoorden in hebt gestopt,
+  dan kan een script nog steeds maximaal een algemene (goeie) tip geven. Het
+  blijft aan jou om er over na te denken wat jij daarmee wilt doen. Het blijft
+  jouw verantwoordleijkheid om de antwoorden van deze formulieren zo naar <i>jouw
+  eigen</i> situatie te vertalen zodat jij er tevreden over gaat zijn. </p>
+</div>
+<p align="right"><a href="javascript:void(0)" onClick="effevullen();" title="antwoorden even snel vullen">&pi;</a></p>
+</FORM>
+<SCRIPT language=JavaScript type="">loadSelections(document.forms[0]);</SCRIPT>
+<hr class="formhr" />
+<p><i>nee, communicatie is <b>niet</b> simpel.., gevoelens zijn niet simpel...
+    en zeker wanneer je (zonder veroordeling!) een langere tijd sommige gevoelens
+    niet nuchter hebt hoeven verwoorden omdat je er middels regelmatig gebruik
+    een 'oplossing' voor had... dat maakt het niet per se makkelijker.<br />
+    Maar ik denk dat het 't waard is om te oefenen.
+</i></p>
+<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
+Copyright 2012 Hans RJ West</i></p><script language="javascript">
+<!--
+document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
+--></script>
+<!-- /inhoud -->
+</div></div>
+</body>
+</html>
