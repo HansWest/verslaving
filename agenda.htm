@@ -1,0 +1,458 @@
+<html>
+<!--
+deze code is van controleerjeverslavingszorg.nl 
+wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
+HansRJWest@Gmail.com
+U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
+Voor de context zie:
+http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
+-->
+<head>
+<title>Dagelijkse agenda</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../css/lajout.css" type="text/css" />
+<link rel="stylesheet" href="../css/screen.css" type="text/css" media="Screen" />
+<link rel="stylesheet" href="../css/mobile.css" type="text/css" media="handheld" />
+<link rel="stylesheet" href="../css/pageprint.css" type="text/css" media="print" />
+<!--Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
+<!--
+<style type="text/css">
+@import "../css/jquery.icalendar.css";
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="../skripts/jquery-1.4.2.js"></script>
+<script type="text/javascript" src="../skripts/jquery.icalendar.js"></script>
+-->
+<script type="text/javascript">
+<!--
+// de uitgebreidere versie die weg kan maar die ik nog EVEN laat staan
+/*
+AustDayLunch = {start: new Date(2008, 1-1, 26, 11, 30, 00), 
+    end: new Date(2008, 1-1, 26, 12, 45, 00), 
+    title: 'Australia Day lunch', 
+    description: 'A traditional barbeque for our big day', 
+    location: 'On your local beach'}; 
+$('#defaultICal').icalendar(AustDayLunch); 
+ 
+$('#removeICal').toggle(function() { 
+        $(this).text('Re-attach'); 
+        $('#defaultICal').icalendar('destroy'); 
+    }, 
+    function() { 
+        $(this).text('Remove'); 
+        $('#defaultICal').icalendar(AustDayLunch); 
+    } 
+);
+
+$(function () {
+  $('#basicICal').icalendar({start: new Date(2013, 1-1, 27, 11, 30, 00),
+		end: new Date(2013, 1-1, 27, 12, 45, 00),
+		title: 'Australia Day lunch',
+		description: 'A traditional barbeque for our big day',
+		location: 'thuis'});
+}
+
+);
+*/
+-->
+</script>
+<script type="text/javascript" src="../skripts/praatmethans.js"></script>
+
+<script language="javascript">
+<!--
+
+function willen()
+{
+var detekst,dedatum,delokatie,deopmerking,desprop;
+var variab1 = document.agenda.willen01.value.trim();
+var variab2 = document.agenda.willen02.value.trim();
+if (variab1==""){alert("Het is wel heel Zen van mij om NIETS te willen en dat dan WEL in mijn agenda willen zetten... ;-)"); return;}
+
+detekst = "Ik wil vandaag: ["+ variab1 + "]";
+if (!variab2==""){detekst = detekst + " & [" +  variab2 + "]";}
+detekst = encodeURIComponent(detekst);
+//alert(detekst);
+dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T090000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T094500Z";
+//alert(dedatum+"//20130526T103000Z/20130526T114500Z");
+delokatie = "Waar ga ik dit doen?";
+delokatie = encodeURIComponent(delokatie);
+//alert(delokatie);
+deopmerking="willen vandaag...";
+deopmerking = encodeURIComponent(deopmerking);
+//alert(deopmerking);
+desprop="n.a.v.website:PraatmetHans.nl";
+desprop = encodeURIComponent(desprop);
+//alert(desprop);
+googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
+}
+
+function moeten()
+{
+var detekst,dedatum,delokatie,deopmerking,desprop;
+var variab1 = document.agenda.moeten01.value.trim();
+var variab2 = document.agenda.moeten02.value.trim();
+if (variab1==""){alert("Als ik NIKS moet dan wordt het lastig om iets in mijn agenda zetten dat ik iets moet vandaag... ;-)"); return;}
+if (!document.agenda.gunnen01.value){alert("ik hoop niet dat je alleen maar de dingen in je agenda zet die MOETEN, toch? :-S (vergeet niet jezelf ook wat te gunnen) :-)");}
+detekst = "Ik moet vandaag toch echt: ["+ variab1 + "]";
+if (!variab2==""){detekst = detekst + " & [" +  variab2 + "]";}
+detekst = encodeURIComponent(detekst);
+//alert(detekst);
+dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T090000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T094500Z";
+//alert(dedatum+"//20130526T103000Z/20130526T114500Z");
+delokatie = "Waar moet ik dit doen?";
+delokatie = encodeURIComponent(delokatie);
+//alert(delokatie);
+deopmerking="moeten vandaag...";
+deopmerking = encodeURIComponent(deopmerking);
+//alert(deopmerking);
+desprop="n.a.v.website:PraatmetHans.nl";
+desprop = encodeURIComponent(desprop);
+//alert(desprop);
+googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
+}
+
+function gunnen()
+{
+var detekst,dedatum,delokatie,deopmerking,desprop;
+var variab1 = document.agenda.gunnen01.value.trim();
+var variab2 = document.agenda.gunnen02.value.trim();
+if (variab1==""){alert("Als ik mijzelf NIKS gun, hoe moet mijn agenda mij dan iets gunnen... ;-)"); return;}
+alert("controleerjeverslaving / PraatmetHans hoopt dat dit gunnen(!) niett iets met het gebruik van middelen te maken heeft? :-)");
+detekst = "Ik gun mijzelf vandaag: ["+ variab1 + "]";
+if (!variab2==""){detekst = detekst + " & [" +  variab2 + "]";}
+detekst = encodeURIComponent(detekst);
+// alert(detekst);
+dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T190000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T194500Z";
+// alert(dedatum+"//20130526T103000Z/20130526T114500Z");
+delokatie = "Waar ga ik mijzelf dit gunnen?";
+delokatie = encodeURIComponent(delokatie);
+// alert(delokatie);
+deopmerking="gunnen vandaag (importasnt stuff)...";
+deopmerking = encodeURIComponent(deopmerking);
+// alert(deopmerking);
+desprop="n.a.v.website:PraatmetHans.nl";
+desprop = encodeURIComponent(desprop);
+// alert(desprop);
+googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
+}
+
+
+function belonen()
+{
+//if (window.confirm("Ik kan er op vertrouwen dat deze beloning niets met middelengebruik te maken heeft, toch? ;-)"){
+//	return;
+//else
+//alert("verders";);
+//}
+if (!document.agenda.beloning.value)
+{
+window.alert("Als ik niet weet hoe ik mij kan belonen dan wordt het lastig om iets in mijn agenda zetten war ik naar uit kan kijken... :-)");
+return;
+}
+var detekst,dedatum,delokatie,deopmerking,desprop;
+detekst = "Beloningsmoment van vandaag...";
+detekst = encodeURIComponent(detekst);
+alert(detekst);
+dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T210000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T214500Z";
+delokatie = "Waar ga ik mijzelf dit gunnen?";
+delokatie = encodeURIComponent(delokatie);
+deopmerking= "voor: ";
+if (document.agenda.reden.value)
+{
+deopmerking = deopmerking + document.agenda.reden.value.trim();
+}
+if (document.agenda.trekverwacht.value > 5 || document.agenda.trekgehad.value > 5)
+{
+deopmerking = deopmerking + " en uithouden van de trek-intensiteit: [verwacht:"+document.agenda.trekverwacht.value.trim() + " gehad:"+document.agenda.trekgehad.value.trim() + "]";
+}
+if (document.agenda.willen01.value)
+{
+deopmerking = deopmerking + " & willen [" +  document.agenda.willen01.value.trim()+ "] & ["+ document.agenda.willen02.value.trim()+"]";
+}
+if (document.agenda.moeten01.value)
+{
+deopmerking = deopmerking + " & moeten [" +  document.agenda.moeten01.value.trim()+ "] - ["+ document.agenda.moeten02.value.trim()+ "]";
+}
+if(deopmerking == "voor: ")
+{
+alert("Als er niks is waarvoor ik mij mag belonen dan gaat zo'n beloning in mijn agenda ook wat goedkoop voelen toch? :-)");
+return;
+}
+deopmerking = encodeURIComponent(deopmerking);
+desprop="n.a.v.website:PraatmetHans.nl";
+desprop = encodeURIComponent(desprop);
+//alert(dedatum+"//20130526T103000Z/20130526T114500Z");
+//alert(delokatie);
+//alert(deopmerking);
+//alert(desprop);
+googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
+}
+
+
+function schatten()
+{
+var detekst,dedatum,delokatie,deopmerking,desprop;
+detekst = "schatting vandaag";
+detekst = encodeURIComponent(detekst);
+dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T050000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T051500Z";
+delokatie = "n.v.t.";
+delokatie = encodeURIComponent(delokatie);
+deopmerking = "De verwachte intensiteit van vandaag: ["+document.agenda.trekverwacht.value.trim()+"]";
+if (document.agenda.trekgehad.value)
+{
+deopmerking = deopmerking + " .. en het bleek te zijn: ["+document.agenda.trekgehad.value.trim() + "]";
+}
+desprop="n.a.v.website:PraatmetHans.nl";
+desprop = encodeURIComponent(desprop);
+//alert(desprop);
+//alert(deopmerking);
+googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
+}
+
+function googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
+{
+var hetwindow = "http://www.google.com/calendar/event?action=TEMPLATE&text="+detekst+"&dates="+dedatum+"&details="+deopmerking+"&location="+delokatie+"&sprop="+desprop;
+//
+// alert(hetwindow);
+//http://www.google.com/calendar/event?action=TEMPLATE&text=Test%20Day%20lunch&dates=20130526T103000Z/20130526T114500Z&details=A%20test%20barbeque%20for%20jop%20big%20day&location=On%20your%20local%20beach&sprop=website:");
+window.open(hetwindow,"Google");
+//window.open("http://www.google.com/calendar/event?action=TEMPLATE&text=Test%20Day%20lunch&dates=20130526T103000Z/20130526T114500Z&details=A%20test%20barbeque%20for%20jop%20big%20day&location=On%20your%20local%20beach&sprop=website:","Google");
+}
+
+function hulppagina()
+{
+window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
+}
+
+function hulpscherm()
+{
+hulp_scherm(300,'Dagelijkse agenda', 'Het is soms lastig om de dagen op een goede manier te gebruiken. Zeker in een periode dat er veel is waardoor je kop omloopt, dan helpt het om te dingen zo te doen dat je voorwaarden, wat moet, wat je jezelf moet gunnen om het te kunnen <i>blijven</i> doen en de dingen die je (even) maar beter kunt laten uit elkaar te houden. En als je die dingen gedaan hebt zoals verstandig was: dan heb je een beloning verdiend... Voor de google intergratie is het wel handig ;-) als je een google account hebt (gratis en eventueel anonmiem)')
+}
+//-->
+</script>
+
+</head><body>
+<div id="calendarTitle"></div><div id="events"></div>
+<div class="shadow"><div class="content">
+<div class="praatmethansheader">
+<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+
+<!--OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
+<h1 class="praatmethansheader">dagelijkse agenda tips </h1>
+</div>
+<div class="rechtsitalic">dagelijks: 5-10 minuten</div>
+<div class="printhide">
+	<!--
+  <p>Deze pagina exporteert de velden naar jouw google-agenda, om te gebruiken
+    om jezelf aan de gang te krijgen als je er bijvoorbeeld een periode even
+    doorheen zit.</p>
+	-->
+	 <p>Deze pagina is bedoeld om jezelf aan de gang te krijgen als je er bijvoorbeeld een periode even doorheen zit.</p>
+
+	
+<p style="text-align:right">
+<a href="index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp; &nbsp;
+<a href="javascript:void(0)" onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
+<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+
+<form name="agenda" >
+
+<table><!-- border=1 cellspacing=0 cellpadding=0 align=left style='border-collapse:
+ collapse;border:none;'-->
+ <tr>
+  <th width="100%" colspan="3" valign="top">
+  <p align=center style='text-align:center;'><b>Agenda</b></p>
+  </th>
+ </tr>
+<tr>
+  <td width=100% colspan=3 valign=top>
+  <p align=center style='text-align:center;'><b>de DATUM:</b>  
+  <script language="javascript">
+  <!-- 
+		document.write("<select name='dd'>");
+	
+	//dd
+	var vandaag = new Date();
+	var slctd = 1+vandaag.getDate();
+	var dag = 1;
+	for(var teller=1;teller<32;teller++)
+	{
+	dag = teller;
+	if(dag<10){dag="0"+dag;}
+	document.write("<option value='"+(dag)+"'");
+	if (slctd==teller){document.write(" selected='selected'");}
+	document.write(">"+(dag)+"</option>");
+	}
+	
+	// mm
+	document.write("</select>/<select name='mm'>");
+
+	var vandaag = new Date();
+	var slctd = 1+vandaag.getMonth();
+	var mnd = 1;
+	for(var teller=1;teller<13;teller++)
+	{
+	//maand = teller;
+	mnd=teller;
+	if(mnd<10){mnd="0"+mnd;}
+	document.write("<option value='"+(mnd)+"'");
+	if (slctd==teller){document.write(" selected='selected'");}
+	document.write(">"+(mnd)+"</option>");
+	}
+	
+	// yyyy
+	document.write("</select>/<select name='yyyy'>");
+	
+	var jaar = 1900+vandaag.getYear();
+	for(var teller=0;teller<5;teller++)
+	{
+	document.write("<option value='"+(jaar+teller)+"'>"+(jaar+teller)+"</option>");
+	}
+	
+	document.write("</select> <b>(dd/mm/yyyy)</b>");
+-->
+</script>
+	</p>
+  </td>
+ </tr>
+<tr>
+  <td width=50% colspan=2 valign=top >
+  <p align="center"><b>WEL WILLEN</b></p>
+  </td>
+  <td width=50% valign=top>
+  <p class=MsoNormal align=center style='text-align:center;'><b>WEL MOETEN</b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=50% colspan=2>
+<p>1 &aacute;  2 dingen die ik w&egrave;l <b>wil</b> doen op deze dag<br />
+<textarea name="willen01" cols="40" rows="2" class="praatmethansformtextarea" title="Wat wil je voor deze dag -01-"></textarea><br />
+<textarea name="willen02" cols="40" rows="2" class="praatmethansformtextarea" title="Wat wil je voor deze dag -02-"></textarea> &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="willen();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a>
+</p>
+</td>
+  <td width=50% valign=top>
+  <p>1 &aacute;  2 dingen die ik echt <b>moet</b> doen op deze dag<br />
+      <textarea name="moeten01" cols="40" rows="2" class="praatmethansformtextarea" title="Wat moet je voor deze dag -01-"></textarea>
+      <br />
+      <textarea name="moeten02" cols="40" rows="2" class="praatmethansformtextarea" title="Wat moet je voor deze dag -02-"></textarea>
+&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="moeten();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=50% colspan=2 valign=top>
+  <p align="center"><b>WEL GUNNEN</b></p>
+  </td>
+  <td width=50% valign=top><p align="center"><b>NIET DOEN (risico's)</b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=50% colspan=2 valign=top>
+<p>1 &aacute;  2 dingen die ik mijzelf <b>gun</b> op deze dag<br />
+<textarea name="gunnen01" cols="40" rows="2" class="praatmethansformtextarea" title="Wat gun jij jezelf deze dag -01-"></textarea><br />
+<textarea name="gunnen02" cols="40" rows="2" class="praatmethansformtextarea" title="Wat gun jij jezelf deze dag -02-"></textarea>
+ &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="gunnen();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p>
+<p><i>NB aandacht voor voeding &amp; conditie</i></p>  </td>
+  <td width=50% valign=top>
+wat ik beter <b>niet</b> kan doen op deze dag<br />
+<textarea name="nietdoen01" cols="40" rows="2" class="praatmethansformtextarea" title="Wat doe je maar beter niet op deze dag -01-"></textarea>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><i>NB welk noodplan? (zie evt. <a href="noodplan-forse-trek.htm" target="formulieren">trek</a>, <a href="plan-bij-uitglijden.htm" target="formulieren">uitglijder</a>,
+      <a href="noodplan-wegglijden.htm" target="formulieren">wegglijder</a></i></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=100% colspan=3 style='border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;background:#888888;
+  padding:0in 5.4pt 0in 5.4pt;height:13.45pt'>
+  <p><b>beloningsmoment van de dag</b> </p>
+  </td>
+ </tr>
+   <tr><td width=50% colspan=2 valign=top><p>Hoe beloon ik mij vandaag:<br />
+  <textarea name="beloning" cols="40" rows="2" class="praatmethansformtextarea" title="hoe beloon ik mij op deze dag?"></textarea> &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="belonen();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p></td>
+  <td width=50% valign=top> <p>Waarvoor:<br />
+<textarea name="reden" cols="40" rows="2" class="praatmethansformtextarea" title="Waar heb je deze beloning mee verdiend?"></textarea></p>
+  </td>
+  </tr>
+ <tr style='height:8.7pt'>
+  <td width=374 colspan=3 valign=top style='width:374.35pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;background:#888888;
+  padding:0in 5.4pt 0in 5.4pt;height:8.7pt'>
+  <p><b>TREK/CRAVING</b></p>  </td>
+ </tr>
+ <tr>
+  <td width=20% valign=top style='border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
+  <p>vooraf bedacht </p>
+  </td>
+  <td colspan=2 style='border-top:none;
+  border-left:none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:15.35pt'>
+  <p>
+   <!-- <input type="text" class="praatmethansformtexfield" name="trekverwacht" size="3" maxlength="2" title="hoeveel trek verwacht je te gaan krijgen op deze dag?" /> -->
+    <select name="trekverwacht" title="hoeveel trek verwacht je te gaan krijgen op deze dag?">
+	<option value="0">00</option>
+	<option value="1">01</option>
+	<option value="2">02</option>
+	<option value="3">03</option>
+	<option value="4">04</option>
+	<option value="5" selected="selected">05</option>
+	<option value="6">06</option>
+	<option value="7">07</option>
+	<option value="8">08</option>
+	<option value="9">09</option>
+	<option value="10">10</option>
+	</select>&nbsp;&nbsp;&nbsp;&nbsp; hoeveel trek verwacht ik?
+    <i>(zie: <a href="craving-1-10.htm" target="formulieren">craving 1-10</a>) </i></p>
+  </td>
+ </tr>
+ <tr style='height:13.0pt'>
+  <td width=70 valign=top style='width:70.1pt;border:solid windowtext .5pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
+  height:13.0pt'>
+  <p>achteraf bleek </p>
+  </td>
+  <td colspan=2 valign=top style='width:304.25pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
+  mso-border-top-alt:solid windowtext .5pt;
+  padding:0in 5.4pt 0in 5.4pt;height:13.0pt'>
+  <p> <!--input type="text" class="praatmethansformtexfield" name="trekgehad" size="3" maxlength="2" title="hoeveel trek verwacht je te gaan krijgen op deze dag?" /--> 
+  <select name="trekgehad" title="hoeveel trek verwacht je te gaan krijgen op deze dag?" >
+	<option value="0">00</option>
+	<option value="1">01</option>
+	<option value="2">02</option>
+	<option value="3">03</option>
+	<option value="4">04</option>
+	<option value="5" selected="selected">05</option>
+	<option value="6">06</option>
+	<option value="7">07</option>
+	<option value="8">08</option>
+	<option value="9">09</option>
+	<option value="10">10</option>
+	</select>&nbsp;&nbsp;&nbsp;&nbsp; hoeveel trek had ik werkelijk?  &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="schatten();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p>
+  </td>
+ </tr>
+</table>
+
+
+ </form>
+<p>&nbsp;</p>
+<hr class="formhr" />
+<p><i>Wanneer je dit dagelijks invult en mogelijk ook de gegevens naar jouw agenda
+    verhuist om de gegevens vast te houden helpt dit vaak om dagen productiever
+    en leuker in te vullen. </i></p>
+<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
+Copyright 2012 Hans RJ West</i></p><!-- /inhoud --><a href="aaaaaa.htm">i</a>
+</div></div>
+</div></body>
+</html>
