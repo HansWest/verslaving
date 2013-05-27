@@ -1,0 +1,255 @@
+<html>
+<!--
+analyseachteraf.htm
+
+deze code is van controleerjeverslavingszorg.nl 
+wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
+HansRJWest@Gmail.com
+U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
+Voor de context zie:
+http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
+-->
+
+<head>
+<title>Analyse achteraf</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../css/lajout.css" type="text/css" />
+<link rel="stylesheet" href="../css/screen.css" type="text/css" media="Screen" />
+<link rel="stylesheet" href="../css/mobile.css" type="text/css" media="handheld" />
+<link rel="stylesheet" href="../css/pageprint.css" type="text/css" media="print" />
+<!--Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
+<script type="text/javascript" src="../skripts/praatmethans.js"></script>
+<script language="javascript">
+<!--
+
+function achteraf()
+{
+var detekst,dedatum,delokatie,deopmerking,desprop;
+if (!document.analyseachteraf.plan.value)
+{
+window.alert("Als ik niets wil leren van een uitglijder dan zit het er niet in dat ik een volgende keer iets geleerd heb... :-)");
+return;
+}
+detekst = "les geleerd?";
+detekst = encodeURIComponent(detekst);
+dedatum=document.analyseachteraf.yyyy.value+document.analyseachteraf.mm.value+document.analyseachteraf.dd.value+"T220000Z/"+document.analyseachteraf.yyyy.value+document.analyseachteraf.mm.value+document.analyseachteraf.dd.value+"T222000Z";
+delokatie = document.analyseachteraf.waar.value;
+delokatie = encodeURIComponent(delokatie);
+deopmerking = "Op controleerjeverslaving.nl zei ik dat ik wilde leren: ["+document.analyseachteraf.plan.value.trim()+"]";
+desprop="n.a.v.website:PraatmetHans.nl";
+desprop = encodeURIComponent(desprop);
+googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
+}
+
+function googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
+{
+var hetwindow = "http://www.google.com/calendar/event?action=TEMPLATE&text="+detekst+"&dates="+dedatum+"&details="+deopmerking+"&location="+delokatie+"&sprop="+desprop;
+//
+// alert(hetwindow);
+//http://www.google.com/calendar/event?action=TEMPLATE&text=Test%20Day%20lunch&dates=20130526T103000Z/20130526T114500Z&details=A%20test%20barbeque%20for%20jop%20big%20day&location=On%20your%20local%20beach&sprop=website:");
+window.open(hetwindow,"Google");
+//window.open("http://www.google.com/calendar/event?action=TEMPLATE&text=Test%20Day%20lunch&dates=20130526T103000Z/20130526T114500Z&details=A%20test%20barbeque%20for%20jop%20big%20day&location=On%20your%20local%20beach&sprop=website:","Google");
+}
+
+function hulppagina()
+{
+window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
+}
+
+function hulpscherm()
+{
+hulp_scherm(290,'analyse achteraf', 'Noem het uitglijer, noem het terugval... dat zijn maar woorden.<br/>Waar het om gaat is dat je op een gegeven moment blijkbaar gedacht hebt dat het een goed/lekker/leuk idee was om te gebruiken... en dat je daar dus achteraf weer echt <i>anders</i> over denkt. Waarschijnlijk is dat al vaker gebeurd -bij verslaving gebeurt dat namelijk vaker-<BR>Maar als je van <i>iedere</i> terugval iets leert voor de toekomst, dan is dat een belangrijke bron voor controle.')
+}
+//-->
+</script>
+</head>
+<body>
+
+<div class="shadow"><div class="content">
+<div class="praatmethansheader">
+<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+
+<!--OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
+<h1 class="praatmethansheader"> analyse achteraf </h1>
+</div><div class="rechtsitalic">18 vragen: 25 - 50 minuten</div>
+<h1>Achteraf analyse van gebruik </h1>
+<div class="printhide">
+  <p>Dit is een vrij uitgebreide lijst met vragen waar je bij stil kunt staan.
+  Niet om jezelf te gaan lopen straffen voor gebruik maar om jezelf te helpen
+    in te zien wat er waarom gebeurt. Want wanneer je wilt voorkomen dat je voortdurend
+    op dezelfde manier uitglijdt/terugvalt dan doe je er verstandig aan om iets
+    te leren van <i>elke</i> terugval en uitglijder. <br />
+    Natuurlijk is het nooit
+    prettig om terug te denken aan iets dat niet goed is gegaan. Maar als je
+    ervan leert dan is de kans beter dat je het niet zo vaak hoeft te herhalen.
+    EN dan heeft het in ieder geval een nut gehad. <br />
+  In de verslavingszorg wordt dit ook wel een "terugvalanalyse" genoemd</p>
+  
+
+<p style="text-align:right">
+<a href="index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp; &nbsp;
+<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
+<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+</div>
+<form name="analyseachteraf">
+
+<p>&nbsp;</p>
+<h1>De aanloop naar de uitglijer/terugval</h1>
+
+<b>Wanneer</b> is het gebeurd?<br/>
+<span style="text-align:center;">
+<script language="javascript">
+  <!-- 
+  	document.write("<select name='dd'>");
+	
+	//dd
+	var vandaag = new Date();
+	var slctd = 1+vandaag.getDate();
+	var dag = 1;
+	for(var teller=1;teller<32;teller++)
+	{
+	dag = teller;
+	if(dag<10){dag="0"+dag;}
+	document.write("<option value='"+(dag)+"'");
+	if (slctd==teller){document.write(" selected='selected'");}
+	document.write(">"+(dag)+"</option>");
+	}
+	
+	// mm
+	document.write("</select>/<select name='mm'>");
+
+	var vandaag = new Date();
+	var slctd = 1+vandaag.getMonth();
+	var mnd = 1;
+	for(var teller=1;teller<13;teller++)
+	{
+	//maand = teller;
+	mnd=teller;
+	if(mnd<10){mnd="0"+mnd;}
+	document.write("<option value='"+(mnd)+"'");
+	if (slctd==teller){document.write(" selected='selected'");}
+	document.write(">"+(mnd)+"</option>");
+	}
+	
+	// yyyy
+	document.write("</select>/<select name='yyyy'>");
+	
+	var jaar = 1900+vandaag.getYear();
+	for(var teller=0;teller<5;teller++)
+	{
+	document.write("<option value='"+(jaar+teller)+"'>"+(jaar+teller)+"</option>");
+	}
+	
+	document.write("</select> <b>(dd/mm/yyyy)</b>");
+-->
+</script>
+</span> <br />
+en hoe lang heeft het geduurd? <br /> 
+<textarea name="wanneer" cols="35" rows="2" class="praatmethansformtextarea" title="Wanneer is de terugval gebeurd? ( datum, tijdstip van-tot)"></textarea><br />
+<div class="praatmethansheader2">&quot;wanneer ?&quot;</div>
+<p>Met <b>wie</b> was je?<br/>
+<textarea name="wie" cols="55" rows="3" class="praatmethansformtextarea" title="Met wie was je (of wie was er juist niet)?"></textarea></p><div class="praatmethansheader2">&quot;Wie?&quot;</div>
+<p><b>Waar</b> was je?<br/>
+<textarea name="waar" cols="55" rows="3" class="praatmethansformtextarea" title="Welke omgeving heeft mogelijk aanleiding gegeven tot zin in"></textarea></p><div class="praatmethansheader2">&quot;Waar?&quot;</div>
+<p>Op <b>welk moment</b> merkte je dat je trek gekregen had?<br/>
+<textarea name="trekbemerkt" cols="55" rows="2" class="praatmethansformtextarea" title="Zelfs als je dat helemaal niet gemerkt hebt: als je gebruikt hebt terwijl je gedacht had dat je dat niet zou gaan doen dan moet er topch trek geweest zijn"></textarea></p><div class="praatmethansheader2">&quot;wanneer merkte je de trek?&quot;</div>
+<p>Welke <b>gevoelens en/of gedachten</b> had je <b>voordat</b> de trek zo sterk was dat je ging gebruiken?<br/>
+<textarea name="gevoelgedachtevoor" cols="55" rows="4" class="praatmethansformtextarea" title="het is handig om er bij stil te staan wat de gedachten en de gevoelens zijn geweest die mogelijk mede de oorzaak zijn geweest"></textarea></p><div class="praatmethansheader2">&quot;gevoelens en gedachten voordien&quot;</div>
+<p>Wat <b>deed je</b> of wat <b>gebeurde</b> er voordat je zoveel trek kreeg (of wat deed je niet)?<br/>
+<textarea name="doengebeurenvoor@" cols="55" rows="3" class="praatmethansformtextarea" title="de dingen buiten jou die hebben meegewerkt aan het ontstaan van de uitglijer."></textarea></p><div class="praatmethansheader2">&quot;gebeurtenissen of gedrag voordien?&quot;</div>
+<p><b>Wat verwachtte je</b> van het gebruik op het <b>moment</b> dat je ging gebruiken?<br/>
+<textarea name="verwachtingenvoor" cols="55" rows="4" class="praatmethansformtextarea" title="het hoeft niet realistisch te zijn, achteraf, maar wat was je verwachting op dat(!) moment? -de verwachte voordelen-"></textarea></p><div class="praatmethansheader2">&quot;de verwachte voordelen?&quot;</div>
+<p>&nbsp;</p>
+
+<hr class="formhr" />
+
+<h1>Het gebruik  zelf</h1>
+<p>Welke <b>gevoelens of gedachten</b> had je <b>tijdens</b> het gebruik?<br/>
+<textarea name="gevoelgedachtetijdens" cols="55" rows="4" class="praatmethansformtextarea" title="was dat zoiets als -schijt aan- of juist -lekker puh-?"></textarea></p><div class="praatmethansheader2">&quot;gedachten/gevoel tijdens?&quot;</div>
+<p>Wat ben je gaan <b>doen door/tijdens</b> het gebruik? (mogelijk -wat-
+ onder invloed na het gebruik? -en misschien had je dat ergens ook wel verwacht?-)<br/>
+ <textarea name="doendoorgebruik" cols="55" rows="4" class="praatmethansformtextarea" title="was het reustig of kon er juist gevoel uit, was je alleen of juist onder de mensen"></textarea>
+ <br />
+</p>
+  
+  
+ <div class="praatmethansheader2">&quot;gedrag door gebruik?&quot;</div><p></p>
+<p>&nbsp;</p>
+<hr class="formhr" />
+<h1>Na het gebruik</h1>
+<p>Welke <b>gevoelens en/of gedachten</b> had je <b>direct na</b> het
+  gebruik?<br/>
+<textarea name="gevoelnadien" cols="55" rows="4" class="praatmethansformtextarea" title="wat gebeurde er psychologisch, wat waren gevoelens en gedachten? rust of schaamte, opluchting of ..."></textarea></p><div class="praatmethansheader2">&quot;gevoel en gedachten na gebruik...&quot;</div>
+<p>Wat ben je <b>gaan doen na</b> je gebruik?<br/>
+  <textarea name="doennadien" cols="55" rows="4" class="praatmethansformtextarea" title="wat ben je gaan DOEN? slapen, dansen, praten ...?"></textarea>
+</p>
+<p></p><div class="praatmethansheader2">&quot;gaan doen na gebruik...&quot;</div>
+<p>&nbsp;</p>
+<hr class="formhr" />
+<h1>Evaluatie achteraf</h1>
+<p>Vindt je dat dit gebruik<br/><input name="uitwegglijer" type="radio" value="uitglijder" /> een enkele uitglijder was of<br />
+<input name="uitwegglijer" type="radio" value="uitglijder" checked /> dat dit gebruik (het begin van een) wegglijder was?</p>
+  <p>&nbsp;</p>
+  <p>Welke <b>gevolgen</b> (de <b>nadelen</b> maar &oacute;&oacute;k
+    de -tijdelijke- <b>voordelen</b>) had jouw  gebruik voor jou en eventueel
+    voor anderen?</p>
+	<table>
+<tr><td class="praatmethanstd" colspan="2">Welke <b>gevolgen</b> (<b>voor-</b> en <b>nadelen</b>) had jouw gebruik <b>voor
+      jouzelf</b>?</td>
+</tr>
+<tr><td class="praatmethanstd"><b>Voordelen</b> voor jou</td>
+<td class="praatmethanstd"><b>Nadelen</b> voor jou</td>
+</tr>
+<tr><td class="praatmethanstd"><textarea name="voordelenjou" cols="22" rows="3"></textarea></td><td class="praatmethanstd"><textarea name="nadelenjou" cols="22" rows="3"></textarea></td></tr>
+</table>
+<table>
+<tr>
+  <td class="praatmethanstd" colspan="2">Welke <b>gevolgen</b> (<b>voor-</b> en <b>nadelen</b>) had
+    jouw gebruik <b>voor
+      andere mensen</b>?</td>
+</tr>
+<tr><td class="praatmethanstd"><b>Voordelen</b> voor anderen</td>
+<td class="praatmethanstd"><b>Nadelen</b> voor anderen</td>
+</tr>
+<tr><td class="praatmethanstd"><textarea name="voordelenanderen" cols="22" rows="3"></textarea></td><td class="praatmethanstd"><textarea name="nadelenanderen" cols="22" rows="3"></textarea></td></tr>
+</table>
+  <p>Achteraf gezien: had je eerder kunnen merken dat je trek aan het krijgen was? (en waar aan dan)    </p>
+  <p>Wat heb je (achteraf gezien) <b>niet of onvoldoende gedaan</b> in de paar
+    dagen voor de terugval?<br/><textarea name="onvoldoendevooraf" cols="55" rows="4" class="praatmethansformtextarea" title="te weinig mensen gezien waardoor de eenzaamheid te groot was, onvoldoende over gevoel gesproken waardoor het te hoog was opgelopen -ik noem maar voorbeelden-"></textarea></p><div class="praatmethansheader2">&quot;onvoldoende gedaan vooraf?&quot;</div>
+<p>&nbsp;</p>
+  <p>Wanneer je alles nogmaals overleest: Waarin zou het gebruik op dat
+    moment aantrekkelijk kunnen zijn geweest? <br />
+    Of was het gewoon zo dat het voldoende
+    was dat je de mogelijkheid leek te zien?</p>
+  <div class="praatmethansheader2">vraagje tussendoor</div>
+    <p>Wanneer je opnieuw in zo'n situatie komt, hoe zou je er dan anders mee
+    om willen en kunnen gaan?<br/>
+    <textarea name="plan" cols="55" rows="4" class="praatmethansformtextarea" title="als je van dit gebruik wilt leren dan is het handig om je te bedenken wat de les is voor de toekomst zodat je ongewenste situaties niet hoeft te herhalen"></textarea> &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="achteraf();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p><div class="praatmethansheader2">&quot;de les ervan?&quot;</div>
+</FORM>
+<hr class="formhr" />
+<p>&nbsp;</p>
+<p></p><i>mogelijk wil je naar aanleiding van deze analyse ook nog even kijken naar de plannen rond gebruik:
+<ul>
+	<li><a href="noodplan-forse-trek.htm" target="formulieren">noodplan bij forse trek</a></li>
+	<li><a href="plan-bij-uitglijden.htm" target="formulieren">plan bij uitglijden</a></li>
+	<li><a href="noodplan-wegglijden.htm" target="formulieren">noodplan bij wegglijden</a></li>
+	</ul></i>
+<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
+Copyright 2012 Hans RJ West</i></p><script language="javascript">
+<!--
+document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
+--></script>
+<!-- /inhoud -->
+</div>
+</div>
+</body>
+</html>
