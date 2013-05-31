@@ -72,18 +72,14 @@ if (variab1==""){alert("Het is wel heel Zen van mij om NIETS te willen en dat da
 
 detekst = "Ik wil vandaag: ["+ variab1 + "]";
 if (!variab2==""){detekst = detekst + " & [" +  variab2 + "]";}
-detekst = encodeURIComponent(detekst);
 //alert(detekst);
 dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T090000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T094500Z";
 //alert(dedatum+"//20130526T103000Z/20130526T114500Z");
 delokatie = "Waar ga ik dit doen?";
-delokatie = encodeURIComponent(delokatie);
 //alert(delokatie);
 deopmerking="willen vandaag...";
-deopmerking = encodeURIComponent(deopmerking);
 //alert(deopmerking);
 desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
 //alert(desprop);
 googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
 }
@@ -97,18 +93,14 @@ if (variab1==""){alert("Als ik NIKS moet dan wordt het lastig om iets in mijn ag
 if (!document.agenda.gunnen01.value){alert("ik hoop niet dat je alleen maar de dingen in je agenda zet die MOETEN, toch? :-S (vergeet niet jezelf ook wat te gunnen) :-)");}
 detekst = "Ik moet vandaag toch echt: ["+ variab1 + "]";
 if (!variab2==""){detekst = detekst + " & [" +  variab2 + "]";}
-detekst = encodeURIComponent(detekst);
 //alert(detekst);
 dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T090000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T094500Z";
 //alert(dedatum+"//20130526T103000Z/20130526T114500Z");
 delokatie = "Waar moet ik dit doen?";
-delokatie = encodeURIComponent(delokatie);
 //alert(delokatie);
 deopmerking="moeten vandaag...";
-deopmerking = encodeURIComponent(deopmerking);
 //alert(deopmerking);
 desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
 //alert(desprop);
 googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
 }
@@ -122,18 +114,14 @@ if (variab1==""){alert("Als ik mijzelf NIKS gun, hoe moet mijn agenda mij dan ie
 alert("controleerjeverslaving / PraatmetHans hoopt dat dit gunnen(!) niett iets met het gebruik van middelen te maken heeft? :-)");
 detekst = "Ik gun mijzelf vandaag: ["+ variab1 + "]";
 if (!variab2==""){detekst = detekst + " & [" +  variab2 + "]";}
-detekst = encodeURIComponent(detekst);
 // alert(detekst);
 dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T190000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T194500Z";
 // alert(dedatum+"//20130526T103000Z/20130526T114500Z");
 delokatie = "Waar ga ik mijzelf dit gunnen?";
-delokatie = encodeURIComponent(delokatie);
 // alert(delokatie);
 deopmerking="gunnen vandaag (importasnt stuff)...";
-deopmerking = encodeURIComponent(deopmerking);
 // alert(deopmerking);
 desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
 // alert(desprop);
 googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
 }
@@ -153,11 +141,9 @@ return;
 }
 var detekst,dedatum,delokatie,deopmerking,desprop;
 detekst = "Beloningsmoment van vandaag...";
-detekst = encodeURIComponent(detekst);
 alert(detekst);
 dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T210000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T214500Z";
 delokatie = "Waar ga ik mijzelf dit gunnen?";
-delokatie = encodeURIComponent(delokatie);
 deopmerking= "voor: ";
 if (document.agenda.reden.value)
 {
@@ -180,9 +166,7 @@ if(deopmerking == "voor: ")
 alert("Als er niks is waarvoor ik mij mag belonen dan gaat zo'n beloning in mijn agenda ook wat goedkoop voelen toch? :-)");
 return;
 }
-deopmerking = encodeURIComponent(deopmerking);
 desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
 //alert(dedatum+"//20130526T103000Z/20130526T114500Z");
 //alert(delokatie);
 //alert(deopmerking);
@@ -195,30 +179,17 @@ function schatten()
 {
 var detekst,dedatum,delokatie,deopmerking,desprop;
 detekst = "schatting vandaag";
-detekst = encodeURIComponent(detekst);
 dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T050000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T051500Z";
 delokatie = "n.v.t.";
-delokatie = encodeURIComponent(delokatie);
 deopmerking = "De verwachte intensiteit van vandaag: ["+document.agenda.trekverwacht.value.trim()+"]";
 if (document.agenda.trekgehad.value)
 {
 deopmerking = deopmerking + " .. en het bleek te zijn: ["+document.agenda.trekgehad.value.trim() + "]";
 }
 desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
 //alert(desprop);
 //alert(deopmerking);
 googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
-}
-
-function googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
-{
-var hetwindow = "http://www.google.com/calendar/event?action=TEMPLATE&text="+detekst+"&dates="+dedatum+"&details="+deopmerking+"&location="+delokatie+"&sprop="+desprop;
-//
-// alert(hetwindow);
-//http://www.google.com/calendar/event?action=TEMPLATE&text=Test%20Day%20lunch&dates=20130526T103000Z/20130526T114500Z&details=A%20test%20barbeque%20for%20jop%20big%20day&location=On%20your%20local%20beach&sprop=website:");
-window.open(hetwindow,"Google");
-//window.open("http://www.google.com/calendar/event?action=TEMPLATE&text=Test%20Day%20lunch&dates=20130526T103000Z/20130526T114500Z&details=A%20test%20barbeque%20for%20jop%20big%20day&location=On%20your%20local%20beach&sprop=website:","Google");
 }
 
 function hulppagina()
@@ -278,49 +249,9 @@ hulp_scherm(300,'Dagelijkse agenda', 'Het is soms lastig om de dagen op een goed
 <tr>
   <td width=100% colspan=3 valign=top>
   <p align=center style='text-align:center;'><b>de DATUM:</b>  
-  <script language="javascript">
-  <!-- 
-		document.write("<select name='dd'>");
-	
-	//dd
-	var vandaag = new Date();
-	var slctd = 1+vandaag.getDate();
-	var dag = 1;
-	for(var teller=1;teller<32;teller++)
-	{
-	dag = teller;
-	if(dag<10){dag="0"+dag;}
-	document.write("<option value='"+(dag)+"'");
-	if (slctd==teller){document.write(" selected='selected'");}
-	document.write(">"+(dag)+"</option>");
-	}
-	
-	// mm
-	document.write("</select>/<select name='mm'>");
-
-	var vandaag = new Date();
-	var slctd = 1+vandaag.getMonth();
-	var mnd = 1;
-	for(var teller=1;teller<13;teller++)
-	{
-	//maand = teller;
-	mnd=teller;
-	if(mnd<10){mnd="0"+mnd;}
-	document.write("<option value='"+(mnd)+"'");
-	if (slctd==teller){document.write(" selected='selected'");}
-	document.write(">"+(mnd)+"</option>");
-	}
-	
-	// yyyy
-	document.write("</select>/<select name='yyyy'>");
-	
-	var jaar = 1900+vandaag.getYear();
-	for(var teller=0;teller<5;teller++)
-	{
-	document.write("<option value='"+(jaar+teller)+"'>"+(jaar+teller)+"</option>");
-	}
-	
-	document.write("</select> <b>(dd/mm/yyyy)</b>");
+<script language="javascript">
+<!-- 
+selectdatum("");
 -->
 </script>
 	</p>
