@@ -2,7 +2,7 @@
 <!--
 analyseachteraf.htm
 
-deze code is van controleerjeverslavingszorg.nl 
+deze code is van controleerjeverslaving.nl 
 wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
 HansRJWest@Gmail.com
 U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
@@ -31,25 +31,13 @@ window.alert("Als ik niets wil leren van een uitglijder dan zit het er niet in d
 return;
 }
 detekst = "les geleerd?";
-detekst = encodeURIComponent(detekst);
 dedatum=document.analyseachteraf.yyyy.value+document.analyseachteraf.mm.value+document.analyseachteraf.dd.value+"T220000Z/"+document.analyseachteraf.yyyy.value+document.analyseachteraf.mm.value+document.analyseachteraf.dd.value+"T222000Z";
 delokatie = document.analyseachteraf.waar.value;
-delokatie = encodeURIComponent(delokatie);
 deopmerking = "Op controleerjeverslaving.nl zei ik dat ik wilde leren: ["+document.analyseachteraf.plan.value.trim()+"]";
 desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
 googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
 }
 
-function googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
-{
-var hetwindow = "http://www.google.com/calendar/event?action=TEMPLATE&text="+detekst+"&dates="+dedatum+"&details="+deopmerking+"&location="+delokatie+"&sprop="+desprop;
-//
-// alert(hetwindow);
-//http://www.google.com/calendar/event?action=TEMPLATE&text=Test%20Day%20lunch&dates=20130526T103000Z/20130526T114500Z&details=A%20test%20barbeque%20for%20jop%20big%20day&location=On%20your%20local%20beach&sprop=website:");
-window.open(hetwindow,"Google");
-//window.open("http://www.google.com/calendar/event?action=TEMPLATE&text=Test%20Day%20lunch&dates=20130526T103000Z/20130526T114500Z&details=A%20test%20barbeque%20for%20jop%20big%20day&location=On%20your%20local%20beach&sprop=website:","Google");
-}
 
 function hulppagina()
 {
@@ -108,48 +96,8 @@ hulp_scherm(290,'analyse achteraf', 'Noem het uitglijer, noem het terugval... da
 <b>Wanneer</b> is het gebeurd?<br/>
 <span style="text-align:center;">
 <script language="javascript">
-  <!-- 
-  	document.write("<select name='dd'>");
-	
-	//dd
-	var vandaag = new Date();
-	var slctd = 1+vandaag.getDate();
-	var dag = 1;
-	for(var teller=1;teller<32;teller++)
-	{
-	dag = teller;
-	if(dag<10){dag="0"+dag;}
-	document.write("<option value='"+(dag)+"'");
-	if (slctd==teller){document.write(" selected='selected'");}
-	document.write(">"+(dag)+"</option>");
-	}
-	
-	// mm
-	document.write("</select>/<select name='mm'>");
-
-	var vandaag = new Date();
-	var slctd = 1+vandaag.getMonth();
-	var mnd = 1;
-	for(var teller=1;teller<13;teller++)
-	{
-	//maand = teller;
-	mnd=teller;
-	if(mnd<10){mnd="0"+mnd;}
-	document.write("<option value='"+(mnd)+"'");
-	if (slctd==teller){document.write(" selected='selected'");}
-	document.write(">"+(mnd)+"</option>");
-	}
-	
-	// yyyy
-	document.write("</select>/<select name='yyyy'>");
-	
-	var jaar = 1900+vandaag.getYear();
-	for(var teller=0;teller<5;teller++)
-	{
-	document.write("<option value='"+(jaar+teller)+"'>"+(jaar+teller)+"</option>");
-	}
-	
-	document.write("</select> <b>(dd/mm/yyyy)</b>");
+<!-- 
+selectdatum("");
 -->
 </script>
 </span> <br />
