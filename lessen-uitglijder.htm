@@ -1,0 +1,218 @@
+<html>
+<!--
+lessen-uitglijder.htm
+
+deze code is van controleerjeverslaving.nl 
+wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
+HansRJWest@Gmail.com
+U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
+Voor de context zie:
+http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
+-->
+
+<head>
+<title>lessen van uitglijden of terugval</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../css/lajout.css" type="text/css" />
+<link rel="stylesheet" href="../css/screen.css" type="text/css" media="Screen" />
+<link rel="stylesheet" href="../css/mobile.css" type="text/css" media="handheld" />
+<link rel="stylesheet" href="../css/pageprint.css" type="text/css" media="print" />
+<!--Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
+<script type="text/javascript" src="../skripts/praatmethans.js"></script>
+<script language="javascript">
+<!--
+
+
+function willen()
+{
+var detekst,dedatum,delokatie,deopmerking,desprop;
+detekst = "Ik had me voorgenomen...";
+dedatum=document.uitglijles.yyyy.value+document.uitglijles.mm.value+document.uitglijles.dd.value+"T050000Z/"+document.uitglijles.yyyy.value+document.uitglijles.mm.value+document.uitglijles.dd.value+"T051500Z";
+delokatie = document.uitglijles.situatie.value;
+deopmerking = "om vandaag geleerd te hebben: ["+document.uitglijles.uitwegglij_achteraf.value.trim()+"]";
+desprop="n.a.v.website:PraatmetHans.nl";
+//alert(desprop);
+//alert(deopmerking);
+googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
+}
+
+function hulppagina()
+{
+window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
+}
+
+function opmerking()
+{
+var TipVanMij = new Array();
+TipVanMij[4]="4 Zeker bij uitglijders of terugvallen na een tegenvaller of een verdrietig moment... zou het kunnen zijn dat de terugval het prijskaartje is van niet-geuitte emoties?";
+TipVanMij[1]="1 Als je nou een uitglijder had tijdens het uitgaan ... zou het zo kunnen zijn dat jij niet meer zo goed geoefend ben in het nuchter uitgaan? (dat vereist oefening en is niet gelijk leuk)";
+TipVanMij[2]="2 Als je jouw uitglijder laat in de avond of nacht heb gehad is dat dan mogelijk een seintje dat je eigenlijk onvoldoende wilskracht meer over had aan het einde van de dag?";
+TipVanMij[3]="3 Als jij dingen hebt gedaan of gezegd waar je achteraf spijt van zegt te hebben .... zou het kunnen zijn dat er toch iets uit wil in jouw leven dat de ruimte krijgt als de rem weg valt?";
+TipVanMij[0]="0";
+TipVanMij[5]="5?";
+//alert(Math.floor((Math.random()*5)+1));
+hulp_scherm(200,'de les van de uitglijer',TipVanMij[Math.floor((Math.random()*4)+1)]);
+}
+
+function autosamenvatting()
+{
+alert ("De sammenvatting wordt achter de huidige gezet");
+document.uitglijles.samenvattend.value=document.uitglijles.samenvattend.value+"}}}Ik heb de week voor de uitglijder te veel/te weinig ["+ document.uitglijles.ikvoordien.value +"] zodat ook andere mensen te veel/te weinig ["+ document.uitglijles.anderenvoordien.value +"]. Zodat ik al met gedachten en gevoelens zoals ["+ document.uitglijles.internecontext.value +"] in de situatie terecht kwam van ["+ document.uitglijles.situatie.value +"]. En toen dan ook nog ["+ document.uitglijles.cue.value +"] toen ben ik uitgegleden. Als aanvulling daarop geldt: ["+document.uitglijles.aanvulling.value+"].{{{";
+}
+function hulpscherm()
+{
+hulp_scherm(300,'lessen van uitglijen','Zonder enig schuldgevoel of veroordeling, daar heb je niet zo veel aan, is het handig om even stil te staan bij uitglijers. Niets gebeurt zonder reden en dat geldt ook voor uitglijers. Het is handig om stil te staan bij de reden ervan, &quot;het verhaal er <i>voor</i> dat uitmondde in...&quot;. Vaak zie je dat mensen achteraf niet meer zo weten waardoor het is gebeurd en dan kan je alleen maar hopen dat het niet opnieuw gebeurt. Maar als er nou redenen voor zijn, signalen zijn die je eerder zou kunnen oppikken, dan kan je iets <B>anders</B> doen op dergelijke  momenten. Zodat dezelfde situatie een volgende keer niet hoeft te leiden tot hetzelfde resultaat.')
+}
+//-->
+</script>
+</head>
+<body>
+
+<div class="shadow"><div class="content">
+<div class="praatmethansheader">
+<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+
+<!--OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
+<h1 class="praatmethansheader">lessen van uitglijers</h1>
+</div>
+<div class="rechtsitalic">8 vragen: 20 - 40 minuten</div>
+
+<H1>lessen van  uitglijden of terugvallen</H1>
+
+
+<div class="printhide">
+  <p>Ik hoop dat je al een beetje hebt nagedacht over uitglijden - terugvallen
+    - wegglijden? (zie oa: <a href="uitglijder-wegglijder.htm">verschil tussen
+    een uitglijden en wegglijden (en wat is dan terugval)</a></p>
+
+  <p>Als we dus uitglijden serieus nemen, zoaiets als &quot;als gebruik dat ik niet
+    gepland had&quot; dan zeg ik niet dat je hele leven altijd volgens plan moet lopen
+    maar dat het herwinnen van controle hier natuurlijk wel een beetje mee te
+    maken heeft. Zeker de uitglijders waar we niet bij stil staan, die we geen
+    betekenis geven., die hebben de nneiging om zich te herhalen. En ook bij
+    een terugval zeggen mensen vaak: &quot;het overkwam me en ik kon er niks aan doen&quot;...
+    Als dat werklijk zo is dan kunnen we je alleen maar opsluiten, natuurlijk
+    als we terugval willen voorkomen in de toekomst.</p>
+  <p>Daarom is mijn stelling:</p>
+  <div class="rechtsitalic">van iedere (iedere!) terugval is iets te leren
+    zodat we het niet hoeven te herhalen in de toekomst.</div>
+  <p style="text-align:right">
+<a href="index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp; &nbsp;
+<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
+&nbsp;&nbsp;&nbsp;
+<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
+<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+
+
+</div>
+<form name="uitglijles">
+<h1>CUE</h1>
+<p>Zoals een acteur een 'cue' krijgt als teken dat hij z'n ding moet gaan doen zo is er ook vaak een druppel die de emmer doet overlopen in de richting van een uitglijder.<br />
+Voor mij was de 
+&quot;<b>cue</b>&quot; waardoor ik blijkbaar zo veel trek kreeg/ zin kreeg in gebruik
+dat: <br />
+  <textarea name="cue" class="praatmethansformtextarea" cols="55" rows="3" title="wat zag je, wat hoorde je, wat gebeurde er?"></textarea>
+</p>
+<div class="praatmethansheader2">&quot;de cue voor de uitglijder was...&quot;</div>
+<br />
+<div class="rechtsitalic">wat was de driuppel die de emmer deed overlopen, die
+  de trek deed ontstaan, die maakte dat je zin kreeg in het gebruik dat je niet
+  van te voren had bedacht. </div>
+
+<h1>CONTEXT</h1>
+<p>Niet alleen de cue is belangrijk maar ook de context is vaak bepalend. Wat
+  is de situatie geweest waarin je de uitglijder had? Waar was je? en met wie
+  was je daar? Hoe laat was het?<br />
+Wat was de <b>situatie</b> waarin ik mij bevond toen mijn uitglijder <i>begon</i>: <br />
+<textarea name="situatie" class="praatmethansformtextarea" cols="55" rows="3" title="Was je alleen? was je onder de mensen? was het laat op de dag? of op een bepaalde tijd?"></textarea>
+</p>
+<div class="praatmethansheader2">&quot;wat was de situatie waarinjij je bevond&quot;</div>
+<p>Niet alleen de externe context is belangrijk maar ook de interne context is
+  vaak richting gevend.<br />
+  Wat was het gevoel dat je had? Wat waren de gedachten
+  die je had? Of dacht je niet maar was je aan het piekeren? Was er een moeilijk
+  gevoel of juist een lekker gevoel? Was er de verwachting van plezier of juist
+  de verwachting van ellende?<br />
+Mijn <b>gevoel, gedachtes</b> en emoties toen  mijn uitglijder
+begon, die waren: <br />
+<textarea name="internecontext" class="praatmethansformtextarea" cols="55" rows="3" title="Was je alleen? was je onder de mensen? was het laat op de dag? of op een bepaalde tijd?"></textarea>
+</p>
+<div class="praatmethansheader2">&quot;wat was de  <a  href="javascript:void(0)" onClick="opmerking();">interne context</a> waarin jij je bevond&quot;</div>
+<p></p>
+<h1>OPBOUW</h1>
+<p>Niet alleen de context van de situatie op dat moment maar ook de context
+  in tijd speelt een rol. Wat is er v&oacute;&oacute;r dat moment van uitgelijden gebeurd? <br />
+  Wat is er de dagen voor de uitglijder
+  gebeurt... of juist: wat is er <i>niet </i>gebeurd? Dingen kunnen op een bepaald
+  moment heel belangrijk voelen maar als er nog maar &eacute;&eacute;n druppel nodig is om
+  is die emmer over te laten lopen, dan is dan is er vaak al wel het &eacute;&eacute;n-en-ander
+  gebeurd (of juist niet gebeurd) waardoor die emmer zo vol zit.</p>
+<p>Wat is er in de dagen voor de uitglijder  gebeurd dat bijdroeg aan de kans
+  op een uitglijder?<br />
+  In vijf dagen voor de uitglijder heb <b>ik zelf</b> te veel... (of te weinig)...: <br />
+  <textarea name="ikvoordien" class="praatmethansformtextarea" cols="55" rows="3" title="Wat heb jij iets te veel of te weinig gedaan of iets laten gebeuren?" onBlur="opmerking();"></textarea>
+</p>
+  In vijf dagen voor de uitglijder hebben <b>andere mensen</b> te veel... (of te weinig)...: <br />
+  <textarea name="anderenvoordien" class="praatmethansformtextarea" cols="55" rows="3" title="Was je alleen? was je onder de mensen? was het laat op de dag? of op een bepaalde tijd?"></textarea>
+<p></p>
+<div class="praatmethansheader2">&quot;wat was de opbouw naar dat moment?&quot;</div>
+<br />
+<div class="rechtsitalic">en ik heb het over uitglijden!.. dus per ongeluk<br />
+  niet over &quot;Kijk eens: een bananenschil op 15 meter... Dat wordt vallen!&quot;</div>
+<p></p>
+<p>Zijn er nog aanvullingen? (bijvoorbeeld reden die te maken hebben met het
+  verlden, of met miscommunicatie of geheimen o.i.d.) <br />
+Als <b>aanvulling</b> hoort voor mij nog bij deze situatie dat: <br />
+<textarea name="aanvulling" class="praatmethansformtextarea" cols="55" rows="3" title="Zijn er nog andere complicerende factoren- -uit het verleden, uit misverstanden, uit lastige issues-?"></textarea>
+</p>
+<div class="praatmethansheader2">&quot;wat is een aanvulling op deze context
+  en cues&quot;</div>
+<p><b>Samenvattend</b> kun je zeggen dat: <br />
+Ik wil dat samen vatten door:<br /> 
+  <textarea name="samenvattend" class="praatmethansformtextarea" cols="55" rows="3" title="maak hier eens een samenvatting van? (eventueel met de auto-samenvatting knop)"></textarea> &nbsp; &nbsp; <a href="javascript:void(0)" onClick="autosamenvatting();" class="praatmethansbutton" title="ik wil een automatische, grove samenvatting maken">&nbsp;&nbsp;auto-samenvatting&nbsp;&nbsp;</a></p>
+<div class="praatmethansheader2">&quot;wegglijden  in gebruik is voor jou ...&quot;</div>
+<p> Wat is hiervan de les die  <i><b>ik voor mijzelf</b></i> wil trekken<br />
+  En wat ga ik <i><b>doen</b></i> om die les te
+  leren?<br />
+  <textarea name="uitwegglij_achteraf" class="praatmethansformtextarea" cols="55" rows="3" title="wat zal er, achteraf gezien, gebeurd zijn waaraan je kan herkennen dat jij (even) bent weggegleden?"></textarea></p>
+<p>En wanneer verwacht ik dit voldoende geoefend te hebben?<br>
+  <span style="text-align:center;">
+<script language="javascript">
+<!-- 
+selectdatum("");
+-->
+</script>
+ 
+ </span>  &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="willen();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p>
+<div class="praatmethansheader2">&quot;wat is hiervan de les voor mij? &quot;</div>
+<p>...en mogelijk betekent dit nog iets voor jouw (nood)plannen?</p>
+<ul>
+<li><a href="noodplan-forse-trek.htm" title="het noodplan als je last hebt van forse trek">noodplan bij forse trek</a></li>
+<li><a href="plan-bij-uitglijden.htm" title="het plan bij een uitglijder">plan
+    bij uitglijden</a></li>
+<li><a href="noodplan-wegglijden.htm">noodplan bij wegglijden</a></li>
+</ul>
+</FORM>
+<SCRIPT language=JavaScript type="">loadSelections(document.forms[0]);</SCRIPT>
+<hr class="formhr" />
+<p><i>nee, niet iedere uitglijder hoeft uiteindelijk tot wegglijden te leiden.
+    Als er maar genoeg tegenover staat dan is dat gewoon niet altijd zo! Maar
+    omgekeerd start iedere periode van wegglijden (met alle schade die daarbij
+    hoort) wel met een uitglijder... daarom is het verschil nogal belangrijk
+    om het over te hebben met de mensen die jou bij staan  </i></p>
+<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
+Copyright 2012 Hans RJ West</i></p><script language="javascript">
+<!--
+document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
+--></script>
+<!-- /inhoud -->
+</div></div>
+</body>
+</html>
