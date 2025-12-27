@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Self Manage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #111827;
+            --card-dark: #1f2937;
+            --teal: #2DD4BF;
+            --neutral-border: #4B5563;
+            --neutral-bg: #374151;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 1rem;
+        }
+
+        #mobile-frame {
+            border-radius: 2rem;
+            overflow: hidden;
+            border: 8px solid #000;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 40px rgba(45, 212, 191, 0.2);
+            background-color: #1F2937;
+            height: calc(100dvh - 2rem);
+            display: flex;
+            flex-direction: column;
+        }
+
+        #app-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #app-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 1rem;
+        }
+
+        .card {
+            background-color: var(--card-dark);
+        }
+
+        .swipe-area {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60vh;
+            min-height: 350px;
+            margin-top: 1rem;
+            perspective: 1000px;
+            /* Enable 3D space */
+            overflow: hidden;
+            /* Clip the grid */
+            border-radius: 1rem;
+            background: linear-gradient(to bottom, #111827 0%, #111827 40%, #1f2937 100%);
+            /* Sky to ground fade */
+        }
+
+        /* Retro 3D Grid */
+        .grid-plane {
+            position: absolute;
+            top: 25%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(rgba(45, 212, 191, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(45, 212, 191, 0.3) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: rotateX(60deg);
+            /* Tilt the plane */
+            transform-origin: 50% 0%;
+            animation: grid-move 20s linear infinite;
+            pointer-events: none;
+            /* Let clicks pass through */
+            z-index: 0;
+        }
+
+        @keyframes grid-move {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 0 40px;
+            }
+        }
+
+        .game-card {
+            position: relative;
+            width: auto;
+            max-width: 85%;
+            height: auto;
+            min-height: 100px;
+            min-width: 150px;
+            background-color: var(--card-dark);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+            touch-action: none;
+            cursor: grab;
+            transition: transform 0.1s ease-out, box-shadow 0.2s;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .hotlist-indicator {
+            border-color: #FBBF24 !important;
+        }
+
+        .feedback-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .feedback-correct {
+            background-color: rgba(16, 185, 129, 0.9);
+        }
+
+        .feedback-incorrect {
+            background-color: rgba(239, 68, 68, 0.9);
+        }
+
+        .feedback-show {
+            opacity: 1;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #2DD4BF;
+            cursor: pointer;
+            box-shadow: 0 0 2px #000;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #2DD4BF;
+            cursor: pointer;
+            box-shadow: 0 0 2px #000;
+        }
+
+        #cravingLevel::-webkit-slider-thumb,
+        #cravingLevel::-moz-range-thumb {
+            background: #F87171;
+        }
+
+        #moodLevel::-webkit-slider-thumb,
+        #moodLevel::-moz-range-thumb {
+            background: #4ADE80;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900">
+
+    <div id="status-log" class="p-2 bg-yellow-900 text-yellow-100 text-xs text-center font-mono sticky top-0 z-50">
+        Status: Initializing...
+    </div>
+
+    <!-- START Mobile Frame Wrapper -->
+    <div id="mobile-frame" class="max-w-sm mx-auto w-full flex flex-col mt-8 mb-8 relative">
+        <div id="app-content-wrapper" class="flex flex-col flex-grow bg-gray-900 rounded-2xl overflow-hidden">
+
+            <header class="sticky top-0 z-40 bg-gray-800 shadow-xl border-b border-gray-700 w-full">
+                <div class="flex justify-between items-center px-4 py-3">
+                    <h1 class="flex flex-col font-black tracking-wider text-teal-400 text-xs leading-tight">
+                        <span>TO</span>
+                        <span>SELF</span>
+                        <span>MANAGE</span>
+                    </h1>
+                    <div class="flex space-x-2">
+                        <button id="nav-manager"
+                            class="py-1 px-2.5 text-xs rounded-full font-semibold bg-teal-600 text-gray-100 shadow-lg">Manage</button>
+                        <button id="nav-game"
+                            class="py-1 px-2.5 text-xs rounded-full font-semibold bg-gray-700 text-gray-300 hover:bg-gray-600">Play
+                            (0 Pts)</button>
+                        <button id="nav-progress"
+                            class="py-1 px-2.5 text-xs rounded-full font-semibold bg-gray-700 text-gray-300 hover:bg-gray-600">Progress</button>
+                    </div>
+                </div>
+            </header>
+
+            <main id="app-content" class="flex-grow w-full p-4 pt-8 bg-gray-900">
+                <div id="loading-message" class="text-center mt-20">
+                    <div class="animate-spin rounded-full h-10 w-10 border-b-4 border-teal-500 mx-auto mb-3"></div>
+                    <p class="text-base text-gray-400">Loading local data...</p>
+                </div>
+            </main>
+        </div>
+
+        <div id="modal-container" class="absolute inset-0 z-50 pointer-events-none"></div>
+
+
+    </div>
+
+    <script type="module">
+        // --- 1. GLOBAL APP VARIABLES ---
+        let appItems = [];
+        let dailyScores = {};
+        let todayScore = 0;
+        let hasCheckedIn = false;
+        let currentView = 'manager';
+
+        const ROUND_SIZE = 24;
+        const HOTLIST_PROPORTION = 2 / 3;
+        const MIN_SWIPE_DISTANCE = 80;
+        const MAX_SCORE = 500;
+        const PENALTY_SCORE = 100;
+        const MAX_REACTION_TIME = 2000;
+        const SWIPE_ANIMATION_DURATION = 400;
+
+        const DEFAULT_RECOVERY_ITEMS = [
+            { type: 'positive', content: 'Energy', motto: 'Less alcohol, more dopamine and motivation.', isHotlist: false },
+            { type: 'positive', content: 'Friends', motto: 'I am there for them, and they are there for me.', isHotlist: false },
+            { type: 'positive', content: 'Health & Fitness', motto: 'Drinking less means getting fitter every day.', isHotlist: true },
+            { type: 'negative', content: 'Shame', motto: 'Less drinking: less shame and regret.', isHotlist: true },
+            { type: 'negative', content: 'Erection Dysfunction', motto: 'More alcohol: less bloodflow and less sensitivity', isHotlist: true },
+            { type: 'negative', content: 'Hangovers', motto: 'costs more energy than you\'d think.', isHotlist: false },
+            { type: 'negative', content: 'Financial Worries', motto: 'More drinks: less invoices and less tax admin, .', isHotlist: false },
+        ];
+
+        // --- 2. DIAGNOSTICS / STATUS LOGGING ---
+        const logStatus = (message) => {
+            const statusLog = document.getElementById('status-log');
+            if (statusLog) {
+                statusLog.textContent = `Status: ${message}`;
+                console.log(message);
+            }
+        };
+
+        const getTodayDateKey = (date = new Date()) => date.toISOString().split('T')[0];
+
+        // --- 3. INITIALIZATION LOGIC (LOCAL STORAGE) ---
+        function initApp() {
+            logStatus('1. Initializing Local Storage App...');
+            loadAllData();
+            renderApp();
+        }
+
+        // --- 4. DATA LOADING ---
+        function loadAllData() {
+            logStatus('2. Loading items and scores from Local Storage...');
+
+            // Load Items
+            const storedItems = localStorage.getItem('verity_items');
+            if (storedItems) {
+                appItems = JSON.parse(storedItems);
+            } else {
+                logStatus('2a. No local items found, initializing defaults...');
+                appItems = DEFAULT_RECOVERY_ITEMS.map(item => ({
+                    ...item,
+                    id: 'init_' + Math.random().toString(36).substr(2, 9),
+                    createdAt: new Date().toISOString()
+                }));
+                saveItems();
+            }
+
+            // Load Scores
+            const storedScores = localStorage.getItem('verity_scores');
+            if (storedScores) {
+                dailyScores = JSON.parse(storedScores);
+            } else {
+                dailyScores = {};
+            }
+
+            // Check Today's Status
+            const todayKey = getTodayDateKey();
+            if (dailyScores[todayKey]) {
+                todayScore = dailyScores[todayKey].score || 0;
+                hasCheckedIn = !!dailyScores[todayKey].checkedInAt;
+            } else {
+                todayScore = 0;
+                hasCheckedIn = false;
+            }
+
+            document.getElementById('nav-game').textContent = `Play (${todayScore} Pts)`;
+            updateHotlistStatus();
+        }
+
+        function saveItems() {
+            localStorage.setItem('verity_items', JSON.stringify(appItems));
+            updateHotlistStatus();
+        }
+
+        function saveScores() {
+            localStorage.setItem('verity_scores', JSON.stringify(dailyScores));
+            document.getElementById('nav-game').textContent = `Play (${todayScore} Pts)`;
+        }
+
+        function updateHotlistStatus() {
+            if (currentView === 'manager') {
+                const hotlistCount = appItems.filter(item => item.isHotlist).length;
+                const hotlistSpan = document.getElementById('manager-hotlist-count');
+                if (hotlistSpan) {
+                    hotlistSpan.textContent = hotlistCount;
+                }
+            }
+        }
+
+        // --- 5. CRUD FUNCTIONS ---
+        function addItem(newItem) {
+            newItem.id = 'local_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+            newItem.createdAt = new Date().toISOString();
+            appItems.push(newItem);
+            saveItems();
+            renderApp();
+        }
+
+        function deleteItem(id) {
+            appItems = appItems.filter(item => item.id !== id);
+            saveItems();
+            renderApp();
+        }
+
+        function updateItem(id, updates) {
+            const index = appItems.findIndex(item => item.id === id);
+            if (index !== -1) {
+                appItems[index] = { ...appItems[index], ...updates };
+                saveItems();
+                renderApp();
+            }
+        }
+
+        function saveDailyGameScore(newScore) {
+            todayScore += newScore;
+            const todayKey = getTodayDateKey();
+
+            if (!dailyScores[todayKey]) {
+                dailyScores[todayKey] = { score: 0, createdAt: new Date().toISOString() };
+            }
+
+            dailyScores[todayKey].score = todayScore;
+            dailyScores[todayKey].updatedAt = new Date().toISOString();
+
+            saveScores();
+        }
+
+        function saveCheckIn(data) {
+            const todayKey = getTodayDateKey();
+            if (!dailyScores[todayKey]) {
+                dailyScores[todayKey] = { score: todayScore };
+            }
+
+            dailyScores[todayKey] = {
+                ...dailyScores[todayKey],
+                ...data,
+                checkedInAt: new Date().toISOString()
+            };
+
+            hasCheckedIn = true;
+            saveScores();
+            closeModal();
+
+            // Start the game immediately after check-in
+            if (currentView === 'game') {
+                startGame();
+            } else {
+                renderApp();
+            }
+        }
+
+        // --- 6. UI/RENDER FUNCTIONS ---
+        function alertModal(message, title = "Notification") {
+            const modalContainer = document.getElementById('modal-container');
+            modalContainer.classList.remove('pointer-events-none');
+            modalContainer.innerHTML = `
+                <div class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-3xl max-w-sm w-full border-t-4 border-teal-500">
+                        <h3 class="text-xl font-bold text-teal-400 mb-4">${title}</h3>
+                        <p class="text-gray-300 text-sm mb-6">${message}</p>
+                        <button onclick="window.closeModal()" 
+                                class="w-full py-2 rounded-lg font-bold bg-teal-600 hover:bg-teal-700 text-gray-100">
+                            OK
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderEditModal(item) {
+            const modalContainer = document.getElementById('modal-container');
+            modalContainer.classList.remove('pointer-events-none');
+            const isPositive = item.type === 'positive';
+            const typeColor = isPositive ? 'text-green-400' : 'text-red-400';
+            const ringColor = isPositive ? 'focus:ring-green-500' : 'focus:ring-red-500';
+
+            modalContainer.innerHTML = `
+                <div class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+                    <div class="bg-gray-800 p-6 rounded-xl shadow-3xl max-w-sm w-full border-t-4 ${isPositive ? 'border-green-500' : 'border-red-500'}">
+                        <h3 class="text-xl font-bold ${typeColor} mb-4">Edit Item: ${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</h3>
+                        <form id="form-edit" data-id="${item.id}" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1">Content</label>
+                                <input type="text" name="content" value="${item.content || ''}" required
+                                    class="w-full p-2.5 bg-gray-700 border border-gray-500 rounded-lg text-sm text-gray-100 ${ringColor}"
+                                />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1">Motto</label>
+                                <textarea name="motto" 
+                                    class="w-full p-2.5 bg-gray-700 border border-gray-500 rounded-lg text-sm text-gray-100 ${ringColor} h-16 resize-none"
+                                >${item.motto || ''}</textarea>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="edit-isHotlist" name="isHotlist" type="checkbox" ${item.isHotlist ? 'checked' : ''}
+                                    class="h-4 w-4 text-yellow-500 bg-gray-700 border-gray-500 rounded focus:ring-yellow-500"
+                                />
+                                <label for="edit-isHotlist" class="ml-2 text-sm text-yellow-400 font-semibold">Hotlist Item (More practice)</label>
+                            </div>
+                            <div class="flex space-x-4 pt-4">
+                                <button type="submit"
+                                        class="flex-1 py-2 rounded-lg font-bold transition duration-200 shadow-lg text-sm text-gray-100 
+                                        ${isPositive ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}">
+                                    Save Changes
+                                </button>
+                                <button type="button" onclick="window.closeModal()"
+                                        class="flex-1 py-2 rounded-lg font-bold bg-gray-600 hover:bg-gray-700 text-sm text-gray-100">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.getElementById('form-edit').onsubmit = handleEditSubmit;
+        }
+
+        function renderCheckInModal() {
+            const modalContainer = document.getElementById('modal-container');
+            modalContainer.classList.remove('pointer-events-none');
+            modalContainer.innerHTML = `
+                <div class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+                    <div class="bg-gray-900 p-6 rounded-2xl shadow-3xl max-w-sm w-full border-t-8 border-teal-500">
+                        <h3 class="text-2xl font-black text-teal-400 mb-4 text-center">Daily Check-In</h3>
+                        <p class="text-sm text-gray-300 mb-6 text-center">How are you doing today? This helps track your baseline.</p>
+                        
+                        <form id="form-check-in" class="space-y-6">
+                            
+                            <div>
+                                <label for="cravingLevel" class="block text-sm font-bold text-red-300 mb-2">Current Craving Level (1-10)</label>
+                                <input type="range" id="cravingLevel" name="cravingLevel" min="1" max="10" value="5" step="1" required
+                                    class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                                />
+                                <div class="flex justify-between text-xs text-red-400 mt-1"><span>Low (1)</span><span>High (10)</span></div>
+                            </div>
+
+                            <div>
+                                <label for="moodLevel" class="block text-sm font-bold text-green-300 mb-2">Current Mood (1-10)</label>
+                                <input type="range" id="moodLevel" name="moodLevel" min="1" max="10" value="5" step="1" required
+                                    class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer range-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                />
+                                <div class="flex justify-between text-xs text-green-400 mt-1"><span>Low (1)</span><span>High (10)</span></div>
+                            </div>
+
+                            <div>
+                                <label for="note" class="block text-sm font-medium text-gray-300 mb-2">Quick Note (Optional)</label>
+                                <textarea id="note" name="note" placeholder="Any key thoughts or events?"
+                                    class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-sm text-gray-100 resize-none h-16 focus:ring-teal-500 focus:border-teal-500"
+                                ></textarea>
+                            </div>
+                            
+                            <button type="submit"
+                                    class="w-full py-3 rounded-lg font-bold bg-teal-600 hover:bg-teal-700 text-gray-100 text-lg transition duration-200 shadow-xl">
+                                Check In & Start Practice
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.getElementById('form-check-in').onsubmit = handleCheckInSubmit;
+        }
+
+        function closeModal() {
+            const modalContainer = document.getElementById('modal-container');
+            modalContainer.innerHTML = '';
+            modalContainer.classList.add('pointer-events-none');
+        }
+
+        // --- VIEWS ---
+        function renderStatusFooterContent() {
+            const hotlistCount = appItems.filter(item => item.isHotlist).length;
+            return `
+                <div class="mt-8 pt-3 border-t border-gray-700 text-center">
+                    <p class="text-xs text-yellow-400 font-medium mt-0.5 text-center mb-1.5">
+                        HOTLIST: Currently <span id="manager-hotlist-count" class="font-extrabold">${hotlistCount}</span> items selected
+                    </p>
+                    <div class="text-xs text-gray-500 truncate text-center mb-3">
+                        <span class="font-bold">Storage:</span> Local Browser Storage
+                    </div>
+                    <button id="btn-reset-defaults" 
+                            class="px-4 py-1.5 text-xs font-semibold bg-red-600 hover:bg-red-700 text-gray-100 rounded-lg transition duration-200 shadow-lg">
+                        Reset to Defaults
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderManagerView() {
+            const positiveItems = appItems.filter(item => item.type === 'positive');
+            const negativeItems = appItems.filter(item => item.type === 'negative');
+
+            return `
+                <div class="p-4 md:p-6 max-w-7xl mx-auto">
+                    <h2 class="text-lg font-bold text-gray-100 mb-5 text-center">
+                        Self-Management Items
+                    </h2>
+
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="bg-gray-800 p-4 rounded-xl shadow-xl border-t-4 border-green-500">
+                            <h3 class="text-base font-bold text-green-400 mb-3">Long-Term Positive (Approach)</h3>
+                            <p class="text-xs text-gray-400 mb-3">
+                                Items you want to **approach** (swipe towards you/down in the game). This is your motivation.
+                            </p>
+                            ${renderItemInput('positive', "E.g. 'Healthy Relationship'", "Motto: E.g. 'This is my future!'")}
+                            <div class="mt-6 space-y-3 max-h-96 overflow-y-auto">
+                                ${positiveItems.length === 0 ? '<p class="text-center text-gray-400 italic text-sm">Add your first positive item.</p>' : positiveItems.map(renderItemCard).join('')}
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-800 p-4 rounded-xl shadow-xl border-t-4 border-red-500">
+                            <h3 class="text-base font-bold text-red-400 mb-3">Long-Term Negative (Avoidance)</h3>
+                            <p class="text-xs text-gray-400 mb-3">
+                                Items you want to **avoid** (swipe away from you/up in the game). This builds aversion.
+                            </p>
+                            ${renderItemInput('negative', "E.g. 'Monday Hangover'", "Motto: E.g. 'I never want this again.'")}
+                            <div class="mt-6 space-y-3 max-h-96 overflow-y-auto">
+                                ${negativeItems.length === 0 ? '<p class="text-center text-gray-400 italic text-sm">Add your first negative item.</p>' : negativeItems.map(renderItemCard).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${renderStatusFooterContent()}
+                </div>
+            `;
+        }
+
+        function renderItemInput(type, placeholderText, mottoPlaceholder) {
+            const isPositive = type === 'positive';
+            const colorClass = isPositive ? 'text-green-300' : 'text-red-300';
+            const ringColor = isPositive ? 'focus:ring-green-500' : 'focus:ring-red-500';
+
+            return `
+                <form id="form-${type}" class="p-3 bg-gray-700/50 rounded-lg shadow-inner mb-3 space-y-2.5">
+                    <h3 class="font-semibold text-sm ${colorClass}">
+                        New Item (${isPositive ? 'Positive' : 'Negative'})
+                    </h3>
+                    <input type="text" name="content" placeholder="${placeholderText}" required
+                        class="w-full p-2 bg-gray-600 border border-gray-500 rounded-lg text-sm text-gray-100 placeholder-gray-300 focus:ring-2 focus:ring-opacity-50 ${ringColor}"
+                    />
+                    <textarea name="motto" placeholder="${mottoPlaceholder}"
+                        class="w-full p-2 bg-gray-600 border border-gray-500 rounded-lg text-sm text-gray-100 placeholder-gray-300 focus:ring-2 focus:ring-opacity-50 ${ringColor} h-14 resize-none"
+                    ></textarea>
+                    <button type="submit" data-type="${type}"
+                        class="w-full py-1.5 rounded-lg font-semibold transition duration-200 shadow-lg text-sm text-gray-100 
+                        ${isPositive ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}">
+                        Add Item
+                    </button>
+                </form>
+            `;
+        }
+
+        function renderItemCard(item) {
+            const isPositive = item.type === 'positive';
+            const neutralClass = 'bg-gray-700/50 border-gray-600';
+            const isHotlist = item.isHotlist;
+
+            return `
+                <div id="item-${item.id}" class="item-card p-2.5 border rounded-lg mb-2 shadow-md ${neutralClass} transition duration-150 transform hover:scale-[1.01]">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-grow">
+                            <p class="font-semibold text-sm text-gray-100 break-words flex items-center">
+                                ${item.content || 'Error: Content Missing'}
+                                ${isHotlist ? '<span class="ml-2 px-2 py-0.5 text-xs bg-yellow-600 text-gray-100 rounded-full font-medium" title="High Priority Hotlist Item">HOT</span>' : ''}
+                            </p>
+                            <p class="text-xs italic text-gray-400 mt-0.5 break-words">"${item.motto || 'No motto provided'}"</p>
+                            <p class="text-xs font-medium mt-0.5 text-gray-500">
+                                Category: ${isPositive ? 'Approach (Positive)' : 'Avoid (Negative)'}
+                            </p>
+                        </div>
+                        <div class="flex space-x-2 ml-4">
+                            <button data-action="edit" data-id="${item.id}"
+                                class="text-blue-400 hover:text-blue-300 transition"
+                                title="Edit Item">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg>
+                            </button>
+                            <button data-action="toggle-hotlist" data-id="${item.id}"
+                                class="transition ${isHotlist ? 'text-yellow-400 hover:text-yellow-300' : 'text-gray-500 hover:text-gray-300'}"
+                                title="${isHotlist ? "Remove from Hotlist" : "Add to Hotlist"}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.635-.921 1.935 0l3.086 9.539c.094.288.35.485.65.485h1.968c.84 0 1.18.995.54 1.5l-2.49 1.808a.75.75 0 00-.28.847l.95 2.936c.3.921-.75.673-1.52-.317l-3.086-9.539a.75.75 0 00-.67-.485H6.968c-.84 0-1.18-.995-.54-1.5l2.49-1.808a.75.75 0 00.28-.847l-.95-2.936z" /></svg>
+                            </button>
+                            <button data-action="delete" data-id="${item.id}"
+                                class="text-red-400 hover:text-red-200 transition"
+                                title="Delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- GAME LOGIC ---
+        function createShuffledGameItems() {
+            const items = appItems;
+            const positiveItems = items.filter(i => i.type === 'positive');
+            const negativeItems = items.filter(i => i.type === 'negative');
+
+            if (positiveItems.length === 0 || negativeItems.length === 0) {
+                return [];
+            }
+
+            const hotlistItems = items.filter(i => i.isHotlist);
+            const nonHotlistItems = items.filter(i => !i.isHotlist);
+            let gameList = [];
+
+            const hotlistSize = Math.min(hotlistItems.length, Math.round(ROUND_SIZE * HOTLIST_PROPORTION));
+            const remainingSize = ROUND_SIZE - hotlistSize;
+
+            for (let i = 0; i < hotlistSize; i++) {
+                gameList.push(hotlistItems[Math.floor(Math.random() * hotlistItems.length)]);
+            }
+
+            if (nonHotlistItems.length > 0) {
+                for (let i = 0; i < remainingSize; i++) {
+                    gameList.push(nonHotlistItems[Math.floor(Math.random() * nonHotlistItems.length)]);
+                }
+            } else {
+                for (let i = 0; i < remainingSize; i++) {
+                    gameList.push(items[Math.floor(Math.random() * items.length)]);
+                }
+            }
+
+            for (let i = gameList.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [gameList[i], gameList[j]] = [gameList[j], gameList[i]];
+            }
+
+            return gameList;
+        }
+
+        let gameItems = [];
+        let currentCardIndex = 0;
+        let roundScore = 0;
+        let gameActive = false;
+        let lastSwipeTime = 0;
+
+        function startGame() {
+            if (gameActive) return;
+
+            gameItems = createShuffledGameItems();
+            currentCardIndex = 0;
+            roundScore = 0;
+
+            if (gameItems.length === 0) {
+                gameActive = false;
+                renderApp();
+                return;
+            }
+
+            gameActive = true;
+            renderGameView();
+        }
+
+        function renderGameView() {
+            const hasEnoughItems = appItems.filter(i => i.type === 'positive').length > 0 && appItems.filter(i => i.type === 'negative').length > 0;
+            const isRoundOver = currentCardIndex >= gameItems.length && gameItems.length > 0;
+            const currentItem = gameItems[currentCardIndex];
+
+            let contentHTML;
+
+            if (!hasEnoughItems) {
+                contentHTML = `
+                    <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl text-center mt-10 w-full max-w-sm mx-auto">
+                        <h3 class="text-xl font-bold text-red-400">GAME INCOMPLETE</h3>
+                        <p class="text-sm text-gray-100 mt-4">You need at least one Positive item and one Negative item in the 'Manage' tab to play.</p>
+                        <button onclick="handleNavigation('manager')" class="mt-6 py-2 px-6 bg-teal-600 hover:bg-teal-700 rounded-full font-bold text-gray-100 text-sm transition duration-200">
+                             Go to Manage
+                        </button>
+                    </div>
+                `;
+                gameActive = false;
+            } else if (isRoundOver) {
+                contentHTML = `
+                    <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl text-center mt-10 w-full max-w-sm mx-auto">
+                        <h3 class="text-xl font-bold text-green-400">ROUND COMPLETE!</h3>
+                        <p class="text-sm text-gray-100 mt-4">Your score for this round: <span class="text-yellow-400 font-bold text-3xl">${roundScore}</span> Pts.</p>
+                        <p class="text-xs text-gray-400 mt-2">The total daily score has been updated.</p>
+                        <button id="btn-new-round" class="mt-6 py-2 px-6 bg-teal-600 hover:bg-teal-700 rounded-full font-bold text-gray-100 text-sm transition duration-200">
+                            Start New Round
+                        </button>
+                    </div>
+                `;
+                gameActive = false;
+            } else if (currentItem) {
+                const isHotlistCard = currentItem.isHotlist;
+                const itemContent = currentItem.content || 'Error: Content Missing';
+
+                contentHTML = `
+                    <div class="text-center text-gray-300 mb-4">
+                        <p class="text-xs font-medium text-green-400">Swipe DOWN to Approach (Positive)</p>
+                        <p class="text-xs font-medium text-red-400">Swipe UP to Avoid (Negative)</p>
+                        <p class="text-xl font-bold text-yellow-400 mt-3">${currentCardIndex + 1} / ${gameItems.length}</p>
+                    </div>
+                    <div class="swipe-area" id="swipe-area">
+                        <div class="grid-plane"></div>
+                        <div id="game-card" 
+                             data-item-id="${currentItem.id || ''}"
+                             data-item-type="${currentItem.type || ''}"
+                             class="game-card ${isHotlistCard ? 'hotlist-indicator' : ''}">
+                            <div class="feedback-overlay" id="feedback-overlay">
+                                <span class="text-5xl font-extrabold text-white" id="feedback-text"></span>
+                                <span class="text-lg text-white mt-2" id="score-text"></span>
+                            </div>
+
+                            <p class="text-xl font-bold text-white text-center">${itemContent}</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-6">
+                        <p class="text-xs text-gray-400">Round Score: <span class="text-teal-400 font-semibold">${roundScore}</span></p>
+                    </div>
+                `;
+            } else {
+                contentHTML = `
+                    <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl text-center mt-10 w-full max-w-sm mx-auto">
+                        <h3 class="text-xl font-bold text-red-400">GAME SETUP ERROR</h3>
+                        <p class="text-sm text-gray-100 mt-4">The game failed to load the next item.</p>
+                        <button onclick="handleNavigation('manager')" class="mt-6 py-2 px-6 bg-teal-600 hover:bg-teal-700 rounded-full font-bold text-gray-100 text-sm transition duration-200">
+                             Return to Manage
+                        </button>
+                    </div>
+                `;
+                gameActive = false;
+            }
+
+            document.getElementById('app-content').innerHTML = contentHTML;
+
+            if (currentItem && gameActive) {
+                setupGameCardListeners();
+            } else if (isRoundOver) {
+                document.getElementById('btn-new-round').addEventListener('click', startGame);
+            }
+        }
+
+        function setupGameCardListeners() {
+            const card = document.getElementById('game-card');
+            if (!card) return;
+
+            if (card.cleanup) card.cleanup();
+
+            let startY = 0;
+            let currentY = 0;
+            let isDragging = false;
+            let startTime = 0;
+
+            const updatePosition = (y) => {
+                const diff = y - startY;
+                currentY = diff;
+
+                // Dynamic Scaling Logic
+                // Up (Negative Y) -> Smaller (Away)
+                // Down (Positive Y) -> Bigger (Towards)
+                const scaleBase = 1;
+                const scaleFactor = 0.0015; // Adjust sensitivity
+                let scale = scaleBase + (diff * scaleFactor);
+
+                // Clamp scale to reasonable limits
+                scale = Math.max(0.5, Math.min(scale, 1.5));
+
+                card.style.transform = `translateY(${diff}px) scale(${scale})`;
+            };
+
+            const resetCard = () => {
+                card.style.transition = 'transform 0.2s ease-out';
+                card.style.transform = '';
+                setTimeout(() => {
+                    card.style.transition = 'transform 0.1s ease-out, box-shadow 0.2s';
+                }, 200);
+            };
+
+            const handleStart = (event) => {
+                if (gameActive && (Date.now() - lastSwipeTime > SWIPE_ANIMATION_DURATION)) {
+                    isDragging = true;
+                    startTime = Date.now();
+                    card.style.transition = 'none';
+                    startY = event.touches ? event.touches[0].clientY : event.clientY;
+                }
+            };
+
+            const handleMove = (event) => {
+                if (!isDragging || !gameActive) return;
+                const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+                updatePosition(clientY);
+                event.preventDefault();
+            };
+
+            const handleEnd = () => {
+                if (!isDragging || !gameActive) return;
+                isDragging = false;
+                lastSwipeTime = Date.now();
+
+                const timeTaken = Date.now() - startTime;
+                const swipeDistance = Math.abs(currentY);
+                const direction = currentY > 0 ? 'down' : 'up';
+
+                if (swipeDistance > MIN_SWIPE_DISTANCE) {
+                    processSwipe(direction, timeTaken);
+                } else {
+                    resetCard();
+                }
+                currentY = 0;
+            };
+
+            card.addEventListener('mousedown', handleStart);
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('mouseup', handleEnd);
+
+            card.addEventListener('touchstart', handleStart);
+            card.addEventListener('touchmove', handleMove);
+            card.addEventListener('touchend', handleEnd);
+
+            card.cleanup = () => {
+                card.removeEventListener('mousedown', handleStart);
+                document.removeEventListener('mousemove', handleMove);
+                document.removeEventListener('mouseup', handleEnd);
+                card.removeEventListener('touchstart', handleStart);
+                card.removeEventListener('touchmove', handleMove);
+                card.removeEventListener('touchend', handleEnd);
+            };
+        }
+
+        function processSwipe(direction, timeTaken) {
+            const card = document.getElementById('game-card');
+            if (!card || !gameActive) return;
+
+            const itemType = gameItems[currentCardIndex].type;
+            let scoreChange = 0;
+            let isCorrect = false;
+
+            if (itemType === 'positive' && direction === 'down') {
+                isCorrect = true;
+            } else if (itemType === 'negative' && direction === 'up') {
+                isCorrect = true;
+            }
+
+            const item = gameItems[currentCardIndex];
+            const feedbackText = document.getElementById('feedback-text');
+            const scoreText = document.getElementById('score-text');
+            const overlay = document.getElementById('feedback-overlay');
+
+            overlay.classList.add(isCorrect ? 'feedback-correct' : 'feedback-incorrect');
+            feedbackText.textContent = isCorrect ? 'CORRECT' : 'INCORRECT';
+
+            if (isCorrect) {
+                const timeFactor = Math.min(timeTaken, MAX_REACTION_TIME) / MAX_REACTION_TIME;
+                scoreChange = Math.round(MAX_SCORE * (1 - timeFactor));
+            } else {
+                scoreChange = -PENALTY_SCORE;
+            }
+
+            roundScore += scoreChange;
+            scoreText.textContent = `${scoreChange > 0 ? '+' : ''}${scoreChange} Pts`;
+            overlay.classList.add('feedback-show');
+
+            card.style.transition = `transform ${SWIPE_ANIMATION_DURATION}ms ease-out`;
+            const swipeOffset = direction === 'down' ? '1000px' : '-1000px';
+            card.style.transform = `translateY(${swipeOffset}) rotate(${Math.random() > 0.5 ? 15 : -15}deg)`;
+
+            setTimeout(() => {
+                if (card.cleanup) card.cleanup();
+                saveDailyGameScore(scoreChange);
+                currentCardIndex++;
+
+                overlay.classList.remove('feedback-show', 'feedback-correct', 'feedback-incorrect');
+
+                renderGameView();
+            }, SWIPE_ANIMATION_DURATION);
+        }
+
+        const getPastDates = (days) => {
+            const dates = [];
+            for (let i = days - 1; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                dates.push(getTodayDateKey(d));
+            }
+            return dates;
+        };
+
+        function renderProgressView() {
+            const dateKeys = Object.keys(dailyScores).sort((a, b) => new Date(b) - new Date(a));
+
+            let totalScore = 0;
+            dateKeys.forEach(key => totalScore += (dailyScores[key].score || 0));
+
+            const last7Days = getPastDates(7);
+            const scores7Days = last7Days.map(dateKey => dailyScores[dateKey]?.score || 0);
+
+            const maxAbsoluteScore = Math.max(
+                ...scores7Days.map(score => Math.abs(score)),
+                100
+            );
+
+            const chartHTML = `
+                <div class="bg-gray-800 p-5 rounded-2xl shadow-2xl mb-8 border border-gray-700">
+                    <h3 class="text-lg font-bold text-gray-100 mb-4 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-teal-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 8v8m-4-5v5m-4-2v2m-2-12h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" />
+                        </svg>
+                        Last 7 Days Game Score Trend
+                    </h3>
+                    <div class="flex items-end h-40 space-x-2 border-b border-gray-600 pb-1">
+                        ${last7Days.map((dateKey, index) => {
+                const score = scores7Days[index];
+                const absoluteHeight = Math.abs(score) / maxAbsoluteScore * 100;
+                const isPositive = score >= 0;
+                const color = isPositive ? 'bg-teal-500' : 'bg-red-500';
+                const dateLabel = dateKey.substring(5).replace('-', '/');
+
+                const barHeight = Math.max(absoluteHeight, score === 0 ? 2 : 0);
+
+                return `
+                                <div class="flex flex-col flex-1 items-center justify-end h-full relative group" 
+                                    style="min-width: 0;">
+                                    <div class="absolute -top-6 text-xs font-semibold ${isPositive ? 'text-teal-300' : 'text-red-400'} opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">${score}</div>
+                                    <div class="w-2/3 ${color} rounded-lg shadow-lg transition-all duration-500 ease-out" 
+                                        style="height: ${barHeight}%; align-self: flex-end;" 
+                                        title="${dateKey}: ${score} Pts">
+                                    </div>
+                                    <div class="text-xs text-gray-400 mt-1 whitespace-nowrap">${dateLabel}</div>
+                                </div>
+                            `;
+            }).join('')}
+                    </div>
+                </div>
+            `;
+
+            return `
+                <div class="p-4 md:p-8 max-w-7xl mx-auto">
+                    <h2 class="text-xl font-extrabold text-gray-100 mb-6 text-center">Your Progress & Summary</h2>
+                    
+                    <div class="bg-gray-800 p-4 rounded-xl mb-6 shadow-2xl text-center">
+                        <p class="text-sm text-gray-400">Total All-Time Score:</p>
+                        <p class="text-5xl font-extrabold text-teal-400 mt-2">${totalScore}</p>
+                    </div>
+                    
+                    ${chartHTML}
+
+                    <h3 class="text-lg font-bold text-gray-100 mt-8 mb-4 border-b border-gray-700 pb-2">Daily Check-ins & Scores</h3>
+                    
+                    <div class="space-y-3 max-h-96 overflow-y-auto">
+                        ${dateKeys.length === 0 ? '<p class="text-center text-gray-400 italic">No daily records found yet.</p>' : ''}
+                        ${dateKeys.map(dateKey => {
+                const data = dailyScores[dateKey];
+                const checkIn = data.checkedInAt ? '✅' : '❌';
+                const checkInTime = data.checkedInAt ? new Date(data.checkedInAt).toLocaleTimeString() : 'N/A';
+
+                return `
+                                <div class="bg-gray-700 p-4 rounded-lg shadow-lg border-l-4 ${data.score >= 0 ? 'border-teal-500' : 'border-red-500'}">
+                                    <p class="text-sm font-bold text-gray-100">${dateKey} <span class="text-xs text-gray-400">(${checkInTime})</span></p>
+                                    <div class="flex justify-between items-center mt-2 text-sm">
+                                        <p class="text-gray-300">Game Score:</p>
+                                        <p class="font-extrabold text-lg ${data.score >= 0 ? 'text-teal-300' : 'text-red-400'}">${data.score || 0} Pts</p>
+                                    </div>
+                                    <div class="flex justify-between items-center mt-1 text-xs">
+                                        <p class="text-gray-400">Check-in Status:</p>
+                                        <p class="font-bold text-gray-200">${checkIn} ${data.cravingLevel ? `(Crave: ${data.cravingLevel}, Mood: ${data.moodLevel})` : ''}</p>
+                                    </div>
+                                    ${data.note ? `<p class="mt-2 text-xs italic text-gray-500 border-t border-gray-600 pt-1">Note: ${data.note}</p>` : ''}
+                                </div>
+                            `;
+            }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- 7. EVENT HANDLERS ---
+        function handleNavigation(newView) {
+            currentView = newView;
+            ['nav-manager', 'nav-game', 'nav-progress'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    if (id.includes(newView)) {
+                        btn.classList.replace('bg-gray-700', 'bg-teal-600');
+                        btn.classList.replace('text-gray-300', 'text-gray-100');
+                        btn.classList.add('shadow-lg');
+                    } else {
+                        btn.classList.replace('bg-teal-600', 'bg-gray-700');
+                        btn.classList.replace('text-gray-100', 'text-gray-300');
+                        btn.classList.remove('shadow-lg');
+                    }
+                }
+            });
+
+            if (newView === 'game' && !hasCheckedIn) {
+                renderCheckInModal();
+                return; // Don't call renderApp yet
+            }
+
+            if (newView === 'game' && hasCheckedIn && !gameActive) {
+                startGame();
+                return; // startGame calls renderGameView
+            }
+
+            renderApp();
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const type = form.querySelector('button[type="submit"]').dataset.type;
+
+            const newItem = {
+                type: type,
+                content: form.elements.content.value.trim(),
+                motto: form.elements.motto.value.trim() || `Remember to focus on your ${type} goals.`,
+                isHotlist: false,
+            };
+
+            if (newItem.content) {
+                addItem(newItem);
+                form.reset();
+            } else {
+                alertModal("Please enter content for the item.");
+            }
+        }
+
+        function handleEditSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const id = form.dataset.id;
+
+            const updates = {
+                content: form.elements.content.value.trim(),
+                motto: form.elements.motto.value.trim(),
+                isHotlist: form.elements.isHotlist.checked,
+            };
+
+            if (updates.content) {
+                updateItem(id, updates);
+                closeModal();
+            } else {
+                alertModal("Item description cannot be empty.");
+            }
+        }
+
+        function handleCheckInSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+
+            const data = {
+                cravingLevel: parseInt(form.elements.cravingLevel.value, 10),
+                moodLevel: parseInt(form.elements.moodLevel.value, 10),
+                note: form.elements.note.value.trim(),
+            };
+
+            saveCheckIn(data);
+        }
+
+        function handleItemCardClick(event) {
+            const button = event.target.closest('button[data-action]');
+            if (!button) return;
+
+            const action = button.dataset.action;
+            const id = button.dataset.id;
+            const item = appItems.find(i => i.id === id);
+
+            if (!item) return;
+
+            switch (action) {
+                case 'delete':
+                    const customConfirmationHTML = `
+                         <div class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+                            <div class="bg-gray-800 p-6 rounded-xl shadow-3xl max-w-sm w-full border-t-4 border-red-500">
+                                <h3 class="text-xl font-bold text-red-400 mb-4">Confirm Deletion</h3>
+                                <p class="text-gray-300 text-sm mb-6">Are you sure you want to delete "${item.content}"?</p>
+                                <div class="flex space-x-4">
+                                    <button onclick="window.deleteItem('${id}'); window.closeModal();" 
+                                            class="flex-1 py-2 rounded-lg font-bold bg-red-600 hover:bg-red-700 text-gray-100">
+                                        Yes, Delete
+                                    </button>
+                                    <button onclick="window.closeModal()" 
+                                            class="flex-1 py-2 rounded-lg font-bold bg-gray-600 hover:bg-gray-700 text-gray-100">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('modal-container').classList.remove('pointer-events-none');
+                    document.getElementById('modal-container').innerHTML = customConfirmationHTML;
+                    break;
+                case 'toggle-hotlist':
+                    updateItem(id, { isHotlist: !item.isHotlist });
+                    break;
+                case 'edit':
+                    renderEditModal(item);
+                    break;
+            }
+        }
+
+        // --- 8. MAIN RENDER FUNCTION ---
+        function renderApp() {
+            const contentElement = document.getElementById('app-content');
+
+            switch (currentView) {
+                case 'manager':
+                    contentElement.innerHTML = renderManagerView();
+                    break;
+                case 'game':
+                    if (gameActive || hasCheckedIn) {
+                        renderGameView();
+                    } else {
+                        contentElement.innerHTML = `
+                             <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl text-center mt-10 w-full max-w-sm mx-auto">
+                                <h3 class="text-xl font-bold text-teal-400">DAILY CHECK-IN REQUIRED</h3>
+                                <p class="text-sm text-gray-100 mt-4">Please perform your daily check-in to begin the practice round.</p>
+                                <button id="btn-show-checkin" class="mt-6 py-2 px-6 bg-teal-600 hover:bg-teal-700 rounded-full font-bold text-gray-100 text-sm transition duration-200">
+                                    Start Check-in
+                                </button>
+                             </div>
+                         `;
+                        document.getElementById('btn-show-checkin')?.addEventListener('click', renderCheckInModal);
+                    }
+                    break;
+                case 'progress':
+                    contentElement.innerHTML = renderProgressView();
+                    break;
+                default:
+                    currentView = 'manager';
+                    contentElement.innerHTML = renderManagerView();
+                    break;
+            }
+
+            setupEventListeners();
+        }
+
+        function setupEventListeners() {
+            document.getElementById('nav-manager').onclick = () => handleNavigation('manager');
+            document.getElementById('nav-game').onclick = () => handleNavigation('game');
+            document.getElementById('nav-progress').onclick = () => handleNavigation('progress');
+
+            const contentArea = document.getElementById('app-content');
+
+            if (currentView === 'manager') {
+                const formPositive = document.getElementById('form-positive');
+                const formNegative = document.getElementById('form-negative');
+
+                if (formPositive) formPositive.onsubmit = handleFormSubmit;
+                if (formNegative) formNegative.onsubmit = handleFormSubmit;
+
+                contentArea.onclick = handleItemCardClick;
+
+                // Reset button handler
+                const resetBtn = document.getElementById('btn-reset-defaults');
+                if (resetBtn) {
+                    resetBtn.onclick = () => {
+                        if (confirm('Are you sure you want to reset all items to defaults? This will delete all your custom items and scores.')) {
+                            localStorage.clear();
+                            location.reload();
+                        }
+                    };
+                }
+            }
+
+            if (currentView === 'game') {
+                const newRoundBtn = document.getElementById('btn-new-round');
+                if (newRoundBtn) newRoundBtn.onclick = startGame;
+            }
+        }
+
+        window.closeModal = closeModal;
+        window.deleteItem = deleteItem;
+        window.handleNavigation = handleNavigation;
+
+        // --- 9. START THE APP ---
+        initApp();
+
+    </script>
+</body>
+
+</html>
