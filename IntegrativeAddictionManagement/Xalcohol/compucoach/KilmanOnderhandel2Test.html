@@ -1,0 +1,331 @@
+<html>
+
+<head>
+<title>Thomas - Kilmann Test</title>
+
+<script language="javascript" style="text/javascript">
+var rArray = new Array(16);
+function printZW(){			//functie die de applet geschikt maakt om in zwart-wit af te drukken
+	myWin.document.applets['applet1'].veranderKleur();
+	myWin.document.forms['afdrukform'].Button3.value="Afdrukken in zwart/wit";
+	}
+function checkForm()
+{
+var ok = 0;
+	for (i=1; i < 17; i++)
+	{
+		for (j=0;j<7;j++)
+		{
+		result = false;
+		if (eval('document.forms[0].vraag'+i+'['+j+'].checked'))
+			{
+			rArray[i]=j+1;
+			ok++;
+			}
+		}
+	}
+	if(ok<16)
+	{alert('Alle vragen moeten beantwoord worden!');}
+	else
+	{bereken();}
+}
+
+function bereken()
+{
+	VT=0;
+	VN=0;
+	CO=0;
+	EX=0;
+	
+	VT=rArray[1]+rArray[6]+rArray[14]+rArray[16];
+	VN=rArray[3]+rArray[10]+rArray[11]+rArray[15];
+	CO=rArray[7]+rArray[4]+rArray[8]+rArray[13];
+	EX=rArray[2]+rArray[5]+rArray[9]+rArray[12];
+
+
+		myWin = open('', '', 'width=620,height=600,toolbar=no,scrollbars=yes,menubar=no');
+
+		if (!myWin.opener){
+		    myWin.opener = self;}
+
+		myWin.document.open();
+		myWin.document.write('<html><head><title>Resultaten Onderhandelingsstijl test</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">');
+		myWin.document.write('<style type="text/css"><!-- h2 {  font-family: Arial, Helvetica, sans-serif; font-size: 14pt}p {  font-family: Arial, Helvetica, sans-serif; font-size: 10pt; color:#000099;}--></style>');
+		myWin.document.write('</head><body bgcolor="#FFFFFF">');
+		myWin.document.write('<div align="center"><h2>Resultaten <br>Vragenlijst onderhandelingsstijl test</h2></div>');
+		myWin.document.write('<p align="center"><applet name="applet1" code="OHgrafiek.class" width="400" height="450">');
+		myWin.document.write('<param name="pVT" value="' +VT+'">');
+		myWin.document.write('<param name="pVN" value="' +VN+'">');
+		myWin.document.write('<param name="pCO" value="' +CO+'">');
+		myWin.document.write('<param name="pEX" value="' +EX+'">');
+		myWin.document.write('</applet></p>');
+		myWin.document.write('<p align="center"><font face="Arial, Helvetica, sans-serif">Je scoreprofiel is slechts een indicatie.</p>');
+		myWin.document.write('<p align="center">Deze resultaten geven niet aan hoe je bent. Het is de bedoeling dat je iets herkent of iets ontdekt waarover je kan nadenken.</p>');
+		myWin.document.write('<p align="center">In theorie scoort iemand met een maximale flexibiliteit op alle stijlen 28 punten.');
+		myWin.document.write('Zo&acute;n persoon is uiteraard een zeldzaamheid. De meeste mensen scoren op één of twee stijlen beduidend hoger dan de overige stijlen.</font></p>');
+		myWin.document.write('<p><p><p><p><p align="center"><form name="afdrukform"><input type="button" name="Button2" value="Venster sluiten" onClick="self.close();">');
+	  	myWin.document.write('<p><p align="center"><input type="button" name="Button3" value="  Afdrukken in kleur "onClick="self.print();">');
+	  	myWin.document.write('<font size="2"><p><p align="center">Als je gebruik maakt van een zwart/wit (laser)printer kan het zijn dat de ');
+		myWin.document.write('kleuren in de grafieken niet goed worden weergegeven. In dat geval kun je op ');
+		myWin.document.write('onderstaande knop klikken. De kleuren in de grafieken worden dan geconverteerd ');
+		myWin.document.write('naar zwart/wit-waarden. Controleer of de grafiek is omgezet naar ');
+		myWin.document.write('zwart/wit en klik daarna op de knop "Afdrukken in zwart/wit" om het document uit te printen in zwart/wit.</p></font>');
+		myWin.document.write('<p align="center">');
+		myWin.document.write('<input type="button" name="Button4" value="Converteren naar zwart/wit" onClick="opener.printZW();">');
+		myWin.document.write('</table></form>');
+	  	myWin.document.write('<p></body></html>');
+		myWin.document.close();
+
+}
+</script>
+
+<link rel="stylesheet" href="../master.css" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset="><style type="text/css">
+<!--
+body {
+	background-color: #FFFFFF;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+-->
+</style></head>
+
+<body>
+<div id="div1" style="position:absolute; width:100%; height:300px; z-index:1; left: 0; top: 31; visibility: inherit;"></div>
+  <table width="100%" height="30" cellpadding="0" cellspacing="0" class="kop2">
+<tr><td class="kop"><div align="right"><img src="../pic/gedragstesten.gif"></div></td>
+</tr></table>
+<div id="div2" style="position:absolute; width:100%;z-index:2;">
+<table width="100%" border="0" cellspacing="1" cellpadding="3" align="center">
+  <tr> 
+    <th> 
+      <div align="left">
+        <p><em><font face="Arial, Helvetica, sans-serif" size="6">Onderhandelingstest</font></em></p>
+        <p><em><font size="3" face="Arial, Helvetica, sans-serif">Mastenbroek</font></em></p>
+      </div>
+    </th>
+  </tr>
+  <tr> 
+    <td> 
+      <div align="left">
+        <p><b><font face="Arial, Helvetica, sans-serif" color="#CC0000">&quot;Jouw stijl van onderhandelen.&quot;</font></b></p>
+        <p><font face="Arial, Helvetica, sans-serif">Bij de onderstaande vragen 
+          moet je telkens een waardeoordeel geven over je gedrag.<br>
+          </font></p>
+        <p><font face="Arial, Helvetica, sans-serif">Elke vraag <b>moet</b> beantwoord 
+            worden! </font></p>
+        <p><font face="Arial, Helvetica, sans-serif">De waarden lopen van 1 tot 7 waarbij 1 staat voor &quot;beslist niet&quot; en 7 voor &quot;beslist wel&quot;.</font></p>
+        </div>
+    </td>
+  </tr>
+</table>
+<form name="form1">
+  <table border="0" width="600" cellspacing="1" cellpadding="3" align="center" class="vraag">
+    <tr>
+      <th class="vraag"><div align="left">nr</div></th>
+      <th class="vraag"><div align="left">Vraag</div></th>
+      <th class="vraag">1</th>
+      <th class="vraag">2</th>
+      <th class="vraag">3</th>
+      <th class="vraag">4</th>
+      <th class="vraag">5</th>
+      <th class="vraag">6</th>
+      <th class="vraag">7</th>
+    </tr>
+	    <tr>
+	      <td class="vraag">1.</td>
+      <td class="vraag">Ik doe mijn best om spanningen te vermijden. </td>
+      <td align="center" class="vraag"><input name="vraag1" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag1" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag1" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag1" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag1" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag1" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag1" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">2.</td>
+      <td class="vraag">Ik neem het geschil met de ander grondig door. </td>
+      <td align="center" class="vraag"><input name="vraag2" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag2" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag2" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag2" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag2" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag2" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag2" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">3.</td>
+      <td class="vraag">Ik probeer tegenstellingen te vermijden. </td>
+      <td align="center" class="vraag"><input name="vraag3" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag3" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag3" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag3" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag3" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag3" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag3" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">4.</td>
+      <td class="vraag">Ik stel me meegaand op. </td>
+      <td align="center" class="vraag"><input name="vraag4" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag4" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag4" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag4" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag4" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag4" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag4" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">5.</td>
+      <td class="vraag">Ik zoek naar een uitweg waarmee iedereen tevreden is. </td>
+      <td align="center" class="vraag"><input name="vraag5" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag5" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag5" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag5" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag5" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag5" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag5" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">6.</td>
+      <td class="vraag">Ik probeer hoe dan ook mijn idee&euml;n erdoor te krijgen. </td>
+      <td align="center" class="vraag"><input name="vraag6" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag6" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag6" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag6" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag6" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag6" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag6" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">7.</td>
+      <td class="vraag">Ik erken mijn verlies.</td>
+      <td align="center" class="vraag"><input name="vraag7" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag7" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag7" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag7" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag7" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag7" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag7" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">8.</td>
+      <td class="vraag">Vriendelijkheid kan een positief effect hebben. </td>
+      <td align="center" class="vraag"><input name="vraag8" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag8" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag8" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag8" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag8" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag8" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag8" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">9.</td>
+      <td class="vraag">Ik praat het uit totdat we het samen eens zijn. </td>
+      <td align="center" class="vraag"><input name="vraag9" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag9" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag9" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag9" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag9" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag9" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag9" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">10.</td>
+      <td class="vraag">Ik ga de zaak naar mijn hand zetten. </td>
+      <td align="center" class="vraag"><input name="vraag10" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag10" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag10" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag10" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag10" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag10" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag10" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">11.</td>
+      <td class="vraag">Ik ga geschilpunten zoveel mogelijk uit de weg. </td>
+      <td align="center" class="vraag"><input name="vraag11" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag11" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag11" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag11" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag11" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag11" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag11" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">12.</td>
+      <td class="vraag">Ik verken elkaars idee&euml;n tot we volledig uit de problemen zijn. </td>
+      <td align="center" class="vraag"><input name="vraag12" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag12" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag12" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag12" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag12" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag12" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag12" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">13.</td>
+      <td class="vraag">Voor vervelende voorvallen heb ik altijd wel een verzachtende omstandigheid aan te voeren.</td>
+      <td align="center" class="vraag"><input name="vraag13" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag13" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag13" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag13" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag13" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag13" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag13" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">14.</td>
+      <td class="vraag">Ik blijf net zo lang doorgaan totdat ik mijn zin krijg. </td>
+      <td align="center" class="vraag"><input name="vraag14" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag14" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag14" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag14" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag14" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag14" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag14" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">15.</td>
+      <td class="vraag">Ik probeer problemen af te zwakken. </td>
+      <td align="center" class="vraag"><input name="vraag15" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag15" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag15" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag15" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag15" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag15" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag15" type="radio" value="7"></td>
+      </tr>
+	    <tr>
+	      <td class="vraag">16.</td>
+      <td class="vraag">Ik probeer mijn gelijk op allerlei manieren te bewijzen. </td>
+      <td align="center" class="vraag"><input name="vraag16" type="radio" value="1"></td>
+      <td align="center" class="vraag"><input name="vraag16" type="radio" value="2"></td>
+      <td align="center" class="vraag"><input name="vraag16" type="radio" value="3"></td>
+      <td align="center" class="vraag"><input name="vraag16" type="radio" value="4"></td>
+      <td align="center" class="vraag"><input name="vraag16" type="radio" value="5"></td>
+      <td align="center" class="vraag"><input name="vraag16" type="radio" value="6"></td>
+      <td align="center" class="vraag"><input name="vraag16" type="radio" value="7"></td>
+      </tr>
+	<tr>
+      <td  colspan="9" class="vraag"> <div align="right">
+        <input type="reset" name="Reset" value="Wissen">
+        <input type="button" name="Submit" value="Berekenen" onClick="checkForm()"> 
+        </div>
+      
+    </tr>
+  </table>
+</form>
+
+<p align="right">Bron: Mastenbroek, 1998 
+<p align="right">Gemaakt door: <a href="mailto:testjezelf@xs4all.nl">Gert van
+  Oel</a></p>
+
+<p>
+</p></div>
+</body>
+
+</html>

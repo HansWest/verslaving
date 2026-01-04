@@ -1,0 +1,1 @@
+<?require("Cart.php");DBinfo();Root();mysql_connect("$DBHost","$DBUser","$DBPass");mysql("$DBName","DELETE FROM ACartItems WHERE CartItemsID='$CartItemsID'");Header("Location: $Relative/viewCart.php?UID=$UID");?>

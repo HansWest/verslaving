@@ -1,0 +1,1 @@
+<?php//#!/home/httpd/vhosts/helpdisk.nl/httpdocs/alcohol/assets/cronjob24.php -q	mail("info@helpdisk.nl", $_SERVER['PHP_SELF'], "/home/httpd/vhosts/helpdisk.nl/httpdocs/alcohol/assets/test00.php","FROM: design@helpdisk.nl");?>

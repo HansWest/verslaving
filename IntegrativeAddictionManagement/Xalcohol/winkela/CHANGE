@@ -1,0 +1,82 @@
+This file documents significant changes made to the MyCart distribution
+since the original.
+
+For installation, setup, legal and support information, please refer to
+the README file.
+
+CHANGES FOR VERSION 1999.10.27
+This is the firest major revision of the MyCart scripts.  As a result, the
+changes are many.  I may have forgotten a few, but most of them are as
+follows:
+
+- Removed the dependance on cookies.  90% of the problems people reported
+with the original distribution were with cookies, so I removed them.  The
+resulting URLs aren't as pretty, but the alternative was to lose
+functionality.  After examining popular sites that make use of shopping
+carts (i.e. amazon.com), I figured that people probably don't make a big
+fuss over good looking URLs.
+- Order numbers are not generated until after the shopper has checked out
+and provided payment information.  This should eliminate gaps in order
+numbers.
+- The items in the CartItems and Users tables now expire
+automatically after they become more than a day old.  This will eliminate
+the resulting huge tables when people fail to use the "Flush Data"
+functions from the previous version.  These tables should only contain
+current "shopping" users and items that people have in their carts.  If
+they still exist on the site after 24 hours, then it's pretty safe to
+assume that they have abandoned their cart.
+- The items in the Buyers, Receipts and Orders tables expire automatically
+after one year.  One year seemed sufficient for keeping electronic copies
+of user information and receipts. If you want to increase the number of
+years, you can do so by modifying the index.php file in the admin
+directory.  View the README file for more information.
+- Added support to supply database names dynamically.  This should ease
+the stress of needed modifications when more than one shopping cart is
+needed on one database server.
+- Auto forward customers after they have placed their order so that
+multiple orders are not created when a customer refreshes the receipt
+screen.
+- Create and show a URL on the receipt that customers can visit if they
+wish to review their receipt at a later date.
+- Support for easily changing the defualt root directory for the shopping
+cart scripts.
+- Categories are stored and accessed as ID numbers instead of names.  This
+eliminates the strange behaviors associated with URLs that are made of
+special characters - especially quotation marks.
+- The ability to specify a text string (such as "Shipping Extra") to show
+when the shipping amount has not been specified.
+- The ability to change pictures shown for an item without running the
+modifyItem script.
+- Warning screen before deleting categories or items.
+- All pages the customers see check for the existence of a valid, current
+UserID, and assigns one of they do not have one.  This should eliminate
+people bookmarking pages and coming in with previous user's shopping cart
+items.  This will also assign a UserID to people that come directly to
+your site starting somewhere other than the home page.
+- The viewCart script checks for an empty cart and reports "Your Cart
+Contains No Items" when true instead of stating "You Shopping Cart
+Contains the Following Items" and displaying an empty table.
+- Once an order is complete, that customer's information is immediately
+and automatically removed from the CartItems and Users tables to help 
+avoid table congestion.
+- When a category is deleted, all of the items in that category and any
+pictures related to those items are automatically removed.
+- Whenever an item is deleted, it's picture is removed also.
+- The Year drop-down list on the searchReceipts box is generated
+dynamically, starting from the current year and working five years 
+backward, rather than being hard coded in standard HTML.  This will
+help avoid modification of this script in coming years.
+- If there is no description provided for a particular item, customers
+will not see "Description:" near the bottom of the description view of the
+item.
+- Fixed a typo on the description script.
+- Added the item description to the page that lists all items in the
+selected category.
+- Strip all non-numeric values (like dollar signs and commas) out of item
+addition and change response forms to eliminate user error as a cause of
+database data flaws.
+- Changed all file names to end in .php for future compatibility with
+"standard" PHP4 naming conventions.
+
+This file, these scripts and "MyCart" are
+Copyright 1998-1999, Rosenet Internet Services

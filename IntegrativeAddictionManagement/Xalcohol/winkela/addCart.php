@@ -1,0 +1,1 @@
+<?require("Cart.php");DBinfo();Root();mysql_connect("$DBHost","$DBUser","$DBPass");mysql("$DBName","INSERT INTO ACartItems VALUES('$UID','$ItemID','$ItemQuantity','$Date','$CartItemsID')");Header("Location: $Relative/viewCart.php?UID=$UID");?>

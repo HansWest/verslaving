@@ -1,0 +1,59 @@
+
+<html>
+ <head>
+ </head>
+<body onLoad="changeIt();" onClick="moveIt();">
+ <span id="button1" style="position:relative;z-index:10"></span>
+
+<script>
+
+/*
+Uncatchable button script by Craig Casey (craig_c_11@hotmail.com)
+Featured on JavaScript Kit (http://javascriptkit.com)
+For this and over 400+ free scripts, visit http://javascriptkit.com
+*/
+
+var btnbgcol="lightgreen"
+var fntcol="black"
+var ok=(document.getElementById||document.all)?1:0
+if (ok)
+var cross_el=document.getElementById? document.getElementById("button1"):button1
+
+/* Type your TEXT message below but DO NOT use double quotation marks, use 
+SINGLE quotation marks instead */
+message = "Click Here for Yahoo!"
+
+// No need to edit below this line
+
+function changeIt(){
+if (!ok)
+return
+cross_el.innerHTML='<button style="background-color:'+btnbgcol+'" onmouseDown="moveIt();" onmouseOver="moveIt()"><font color="'+fntcol+'">'+message+'</font></button>'
+}
+
+function setRandom(){
+random1=Math.floor(Math.random()*301)
+random2=Math.floor(Math.random()*401)
+
+}
+
+function moveIt(){
+if (!ok)
+return
+setRandom()
+cross_el.style.top=random1
+cross_el.style.left=random2
+
+if (document.all){
+if (cross_el.offsetTop-document.body.scrollTop>document.body.clientHeight)
+cross_el.style.top=random1*(-2/3)
+}
+else{
+if (cross_el.offsetTop-window.pageYOffset>window.innerHeight)
+cross_el.style.top=random1*(-2/3)
+}
+
+}
+</script>
+ </body>
+</html>

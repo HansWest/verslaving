@@ -1,0 +1,1 @@
+@@@@moet ik de database niet vaker disconnecten????NB ///$alcohool=mysql_pconnect($db_host, $db_user, $db_password) or die('Could not connect ' .mysql_error());

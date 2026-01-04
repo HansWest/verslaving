@@ -1,0 +1,365 @@
+<HTML>
+ <HEAD>
+  <TITLE>Discover The Word 2.0</TITLE>
+
+<STYLE TYPE="text/css"><!--
+
+BODY
+{
+	font-family: Verdana, Arial, sans-serif, Helvetica;
+	font-size: 11px;
+}
+
+TD
+{
+	font-family: Verdana, Arial, sans-serif, Helvetica;
+	font-size: 11px;
+}
+
+A
+{
+	font-family: Verdana, Arial, sans-serif, Helvetica;
+	font-size: 11px;
+	font-weight: bold;
+	color: #AA6677;
+	text-decoration: none;
+}
+
+A:hover
+{
+	font-family: Verdana, Arial, sans-serif, Helvetica;
+	font-size: 11px;
+	font-weight: bold;
+	color: #AA8899;
+	text-decoration: underline;
+}
+
+.txt
+{
+	font-family: Verdana, Arial, sans-serif, Helvetica;
+	font-size: 12px;
+	font-weight: bold;
+	border: solid 1 #000000;
+	color: #000000;
+	background-color: #FFFFFF;
+}
+
+--></STYLE>
+
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/JavaScript" SRC="source/words.js"><!--
+
+/*
+ * Program - Discover The Word
+ * File Name - Discover The Word.html
+ * Author - ShuvoRim
+ * Web site - http://www.shuvorim.tk
+ * Email - shuvorim@hotmail.com
+ * (c)ShuvoRim Pvt. Ltd. 2002 - 03
+ * All rights reserved.
+ * ------------------------------
+ * Visit our web site for free open
+ * source Applications, Applets,
+ * Scripts and Games. Please tell
+ * us whether you liked it or not!
+ * Thank you for using our program.
+ */
+
+--></SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/JavaScript"><!--
+
+	holdWords = randomWords(); //variable to hold the word
+	wordsLength = holdWords.length; //the words length
+	correct = 0; //correct words
+	tries = 0; //count tries
+	prevent = new Array
+	(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0); //an array that prevents
+	//the user/player sending a letter twice
+
+if(document.images) //pre-load the images
+{
+	a = new Image();	a.src = "image/a.gif";
+	b = new Image();	b.src = "image/b.gif";
+	c = new Image();	c.src = "image/c.gif";
+	d = new Image();	d.src = "image/d.gif";
+	e = new Image();	e.src = "image/e.gif";
+	f = new Image();	f.src = "image/f.gif";
+	g = new Image();	g.src = "image/g.gif";
+	h = new Image();	h.src = "image/h.gif";
+	i = new Image();	i.src = "image/i.gif";
+	j = new Image();	j.src = "image/j.gif";
+	k = new Image();	k.src = "image/k.gif";
+	l = new Image();	l.src = "image/l.gif";
+	m = new Image();	m.src = "image/m.gif";
+	n = new Image();	n.src = "image/n.gif";
+	o = new Image();	o.src = "image/o.gif";
+	p = new Image();	p.src = "image/p.gif";
+	q = new Image();	q.src = "image/q.gif";
+	r = new Image();	r.src = "image/r.gif";
+	s = new Image();	s.src = "image/s.gif";
+	t = new Image();	t.src = "image/t.gif";
+	u = new Image();	u.src = "image/u.gif";
+	v = new Image();	v.src = "image/v.gif";
+	w = new Image();	w.src = "image/w.gif";
+	x = new Image();	x.src = "image/x.gif";
+	y = new Image();	y.src = "image/y.gif";
+	z = new Image();	z.src = "image/z.gif";
+}
+
+//the main function of the game
+function callMe(letter, prev)
+{
+	if(prev > 1)
+	{
+		//do nothing!
+		//the user/player clicked
+		//a letter more than once
+	}
+
+	else
+	{
+
+	tries++; //update tries
+	document.form1.trd.value = tries; //set values to the tries textbox
+
+	//a for loop to check the letter
+	for(counter = 0; counter < wordsLength; counter++)
+	{
+
+	if(holdWords.charAt(counter) == letter) //if the letter matches
+	{
+		//then show the right letter's image
+		document.images[counter+1].src = eval(letter + ".src");
+		correct++; //update correct
+		--tries; //update tries
+		document.form1.trd.value = tries; //set values to the tries textbox
+
+		if(correct == wordsLength) //if the whole word discovered
+		{
+		if(window.confirm("Congratulations! You have successfully"
+		+ " discovered the word " + holdWords.toUpperCase()
+		+ ". Do you want to play again?"))
+		{
+		tries = 0; //set tries to 0
+		document.form1.trd.value = tries; //set values to the tries textbox
+		location.reload(); //reload the current page for a new game
+		}
+		}
+	}
+	}
+
+	}
+
+	if(tries == 5) //losing condition
+	{
+		if(window.confirm("Sorry, your chances over. The word was "
+		+ holdWords.toUpperCase() + ". Do you want to play again?"))
+		{
+		tries = 0; //set tries to 0
+		document.form1.trd.value = tries; //set values to the tries textbox
+		location.reload(); //reload the current page for a new game
+		}
+	}
+}
+
+/*
+**function that enebles the user
+**to play from the keyboard only
+**in MSIE.
+*/
+function catchKeyStrokes()
+{
+	//pressing the RETURN key
+	//will start a new game
+	if(event.keyCode == 13)
+	{
+		if(window.confirm("Are you sure you want to start a new game?"))
+		{
+		tries = 0; //set tries to 0
+		document.form1.trd.value = tries; //set values to the tries textbox
+		location.reload();
+		}
+	}
+
+	//catch key strokes no matter the
+	//CAPS LOCK is ON or OFF
+	if((event.keyCode == 97) || (event.keyCode == 65)) callMe('a',++prevent[0]);
+	if((event.keyCode == 98) || (event.keyCode == 66)) callMe('b',++prevent[1]);
+	if((event.keyCode == 99) || (event.keyCode == 67)) callMe('c',++prevent[2]);
+	if((event.keyCode == 100) || (event.keyCode == 68)) callMe('d',++prevent[3]);
+	if((event.keyCode == 101) || (event.keyCode == 69)) callMe('e',++prevent[4]);
+	if((event.keyCode == 102) || (event.keyCode == 70)) callMe('f',++prevent[5]);
+	if((event.keyCode == 103) || (event.keyCode == 71)) callMe('g',++prevent[6]);
+	if((event.keyCode == 104) || (event.keyCode == 72)) callMe('h',++prevent[7]);
+	if((event.keyCode == 105) || (event.keyCode == 73)) callMe('i',++prevent[8]);
+	if((event.keyCode == 106) || (event.keyCode == 74)) callMe('j',++prevent[9]);
+	if((event.keyCode == 107) || (event.keyCode == 75)) callMe('k',++prevent[10]);
+	if((event.keyCode == 108) || (event.keyCode == 76)) callMe('l',++prevent[11]);
+	if((event.keyCode == 109) || (event.keyCode == 77)) callMe('m',++prevent[12]);
+	if((event.keyCode == 110) || (event.keyCode == 78)) callMe('n',++prevent[13]);
+	if((event.keyCode == 111) || (event.keyCode == 79)) callMe('o',++prevent[14]);
+	if((event.keyCode == 112) || (event.keyCode == 80)) callMe('p',++prevent[15]);
+	if((event.keyCode == 113) || (event.keyCode == 81)) callMe('q',++prevent[16]);
+	if((event.keyCode == 114) || (event.keyCode == 82)) callMe('r',++prevent[17]);
+	if((event.keyCode == 115) || (event.keyCode == 83)) callMe('s',++prevent[18]);
+	if((event.keyCode == 116) || (event.keyCode == 84)) callMe('t',++prevent[19]);
+	if((event.keyCode == 117) || (event.keyCode == 85)) callMe('u',++prevent[20]);
+	if((event.keyCode == 118) || (event.keyCode == 86)) callMe('v',++prevent[21]);
+	if((event.keyCode == 119) || (event.keyCode == 87)) callMe('w',++prevent[22]);
+	if((event.keyCode == 120) || (event.keyCode == 88)) callMe('x',++prevent[23]);
+	if((event.keyCode == 121) || (event.keyCode == 89)) callMe('y',++prevent[24]);
+	if((event.keyCode == 122) || (event.keyCode == 90)) callMe('z',++prevent[25]);
+
+	if(event.keyCode == 63) helpUser('source/minihelp.html'); //open a mini window for help
+}
+
+//function to help the user/player
+function helpUser(getURL)
+{
+	hlp = window.open(getURL,"Help","toolbal=0,menubar=0,status=0,scrollbars=1,width=500, height=400,resizable=0");
+}
+
+//function for playing a new game
+function newGame()
+{
+	if(window.confirm("Are you sure you want to start a new game?"))
+	{
+		tries = 0; //set tries to 0
+		document.form1.trd.value = tries; //set values to the tries textbox
+		location.reload();
+	}
+}
+
+--></SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#0000AA onKeyPress="catchKeyStrokes();" onLoad="tries;">
+
+<TABLE BORDER=0 ALIGN=center><TR><TD ALIGN=center VALIGN=top><P>
+<IMG SRC="image/discover_word.gif" BORDER=0 WIDTH=353 HEIGHT=36 ALT="Discover The Word#v1.0">
+</P>
+
+<SCRIPT LANGUAGE="JavaScript" TYPE="text/JavaScript"><!--
+
+for(counter = 0; counter < wordsLength; counter++)
+document.write("<IMG SRC='image/back.gif' BORDER=0 WIDTH=18 HEIGHT=18> ");
+
+--></SCRIPT><BR><BR>
+
+<TABLE BORDER=0 BGCOLOR=#AA8899 CELLPADDING=2 CELLSPACING=2>
+<TR><TD>
+
+<A HREF="JavaScript:callMe('a',++prevent[0]);">
+<IMG SRC="image/a.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('b',++prevent[1]);">
+<IMG SRC="image/b.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('c',++prevent[2]);">
+<IMG SRC="image/c.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('d',++prevent[3]);">
+<IMG SRC="image/d.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('e',++prevent[4]);">
+<IMG SRC="image/e.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('f',++prevent[5]);">
+<IMG SRC="image/f.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('g',++prevent[6]);">
+<IMG SRC="image/g.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('h',++prevent[7]);">
+<IMG SRC="image/h.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('i',++prevent[8]);">
+<IMG SRC="image/i.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('j',++prevent[9]);">
+<IMG SRC="image/j.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('k',++prevent[10]);">
+<IMG SRC="image/k.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('l',++prevent[11]);">
+<IMG SRC="image/l.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('m',++prevent[12]);">
+<IMG SRC="image/m.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+</TD></TR>
+
+<TR><TD>
+<A HREF="JavaScript:callMe('n',++prevent[13]);">
+<IMG SRC="image/n.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('o',++prevent[14]);">
+<IMG SRC="image/o.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('p',++prevent[15]);">
+<IMG SRC="image/p.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('q',++prevent[16]);">
+<IMG SRC="image/q.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('r',++prevent[17]);">
+<IMG SRC="image/r.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('s',++prevent[18]);">
+<IMG SRC="image/s.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('t',++prevent[19]);">
+<IMG SRC="image/t.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('u',++prevent[20]);">
+<IMG SRC="image/u.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('v',++prevent[21]);">
+<IMG SRC="image/v.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('w',++prevent[22]);">
+<IMG SRC="image/w.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('x',++prevent[23]);">
+<IMG SRC="image/x.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('y',++prevent[24]);">
+<IMG SRC="image/y.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+
+<A HREF="JavaScript:callMe('z',++prevent[25]);">
+<IMG SRC="image/z.gif" BORDER=0 WIDTH=18 HEIGHT=18></A>
+</TD></TR>
+
+<TR>
+ <TD>
+  <FORM NAME="form1">
+   <B><FONT COLOR=#FFFFFF>Tries:</FONT></B>
+    <INPUT TYPE=text NAME="trd" SIZE=2 VALUE="0" READONLY CLASS=txt>
+  </FORM>
+ </TD>
+</TR>
+
+</TABLE>
+
+Press <B>Shift+?</B> for help or click here for
+<A HREF="JavaScript:helpUser('source/minihelp.html');" CLASS=sr TITLE="Getting help">Help</A>
+
+<BR>
+
+Press <B>Enter</B> key to play a<BR>new game or click here for a
+<A HREF="JavaScript:newGame();" CLASS=sr TITLE="Start a new game">New Game</A>
+
+<BR>
+
+<!-- You are not authorized to remove the code below -->
+<A HREF="http://www.shuvorim.tk" TARGET="_new" TITLE="Click here to visit us">&copy;ShuvoRim Pvt. Ltd. 2003</A>
+<!-- You are not authorized to remove the code above -->
+
+ </TD>
+</TR>
+
+</TABLE>
+
+ </BODY>
+</HTML>

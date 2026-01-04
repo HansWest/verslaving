@@ -1,0 +1,725 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Zelftest &quot;Roos van Leary&quot;</title>
+
+<script language="javascript" style="text/javascript">
+<!--
+
+//Script gemaakt door: Gert van Oel 21-04-2001
+
+function printZW(){			//functie die de applets geschikt maakt om in zwart-wit af te drukken
+	myWin.document.applets['applet1'].veranderKleur();
+	myWin.document.applets['applet2'].veranderKleur();
+	myWin.document.applets['applet3'].veranderKleur();
+	myWin.document.applets['applet4'].veranderKleur();
+	myWin.document.forms['afdrukform'].Button3.value="Afdrukken in zwart/wit";
+	}
+
+function afronden(getal){		//functie om een getal af te ronden op twee decimalen
+	return (Math.round(getal * 100)/100);
+	}
+
+
+
+function ControLeer(){
+var waarde = 0;
+var BT = 0;
+var BS = 0;
+var TB = 0;
+var TO = 0;
+var OT = 0;
+var OS = 0;
+var SO = 0;
+var SB = 0;
+var SOM = 0;
+var GIN = 0;
+var AAK = 0;
+
+var TBtekst02 = "kan streng zijn wanneer dat nodig is;";
+var TBtekst24 = "kritisch op anderen, vastberaden, open en direct;";
+var TBtekst46 = "kan fouten van anderen niet verdragen, vaak onvriendelijk, sarcastisch;";
+var TBtekst68 = "wreed en onhartelijk;";
+var BTtekst02 = "kan voor zichzelf zorgen;";
+var BTtekst24 = "assertief en vertrouwend op zichzelf, onafhankelijk, zakelijk;";
+var BTtekst46 = "denkt slechts aan zichzelf, egoïstisch, opschepperig;";
+var BTtekst68 = "koud en zonder gevoel;";
+var BStekst02 = "kan opdrachten geven;";
+var BStekst24 = "door anderen gerespecteerd, houdt van verantwoordelijkheid, goede leider;";
+var BStekst46 = "baast over anderen, dominerend, geeft altijd advies;";
+var BStekst68 = "dictatoriaal;";
+var SBtekst02 = "behulpzaam;";
+var SBtekst24 = "met een ruim hart en onbaatzuchtig, moedigt aan, heeft er plezier in om voor anderen te zorgen;";
+var SBtekst46 = "mild ten aanzien van een fout, overbeschermend, te toegeeflijk aan anderen;";
+var SBtekst68 = "probeert iedere te troosten en te bemoedigen;";
+var SOtekst02 = "samenwerkingsgezind;";
+var SOtekst24 = "hartelijk en met begrip, er sterk op uit met anderen goed overweg te kunnen, wil ieders sympathie;";
+var SOtekst46 = "aan één stuk door vriendelijk, vindt iedereen aardig, te gemakkelijk te beïnvloeden door anderen;";
+var SOtekst68 = "is het met iedereen eens;";
+var OStekst02 = "dankbaar;";
+var OStekst24 = "bewondert en imiteert anderen, erg bezorgd om bevestiging te krijgen, vol respect voor gezag;";
+var OStekst46 = "afhankelijk, laat anderen de besluiten nemen, houdt er van om verzorgd te worden;";
+var OStekst68 = "zal ieder geloven;";
+var OTtekst02 = "kan gehoorzamen;";
+var OTtekst24 = "heeft gebrek aan zelfvertrouwen, bescheiden, geeft gewoonlijk toe;";
+var OTtekst46 = "zachtmoedig, gehoorzaamt te bereidwillig, verlegen;";
+var OTtekst68 = "schaamt zich voor zichzelf;";
+var TOtekst02 = "kan klagen wanneer dat nodig is.";
+var TOtekst24 = "gepikeerd wanneer een ander de baas over hem/haar speelt, sceptisch (twijfelzuchtig), licht geraakt.";
+var TOtekst46 = "verbittert, klagerig, koppig.";
+var TOtekst68 = "rebelleert tegen van alles.";
+
+//bepalen browser naam i.v.m. afwijkingen NN en IE bij printen van het document
+if(navigator.appName.indexOf("Netscape") != -1){
+	var AppNm = 1;}
+	else{
+	var AppNm = 0;}
+
+
+for (i=1; i<=64; i++)
+	{
+		if (eval('document.F1.C'+i+'.checked'))		//Loopt alle checkboxen af en controleert af ze afgevinkt zijn
+		{
+		AAK++;		//var AAK wordt opgehoogd met één
+		SOM += parseInt(eval('document.F1.C'+i+'.value'));		//var waarde wordt opgehoogd met de afgevinkte checkbox
+		if (i==1 || i==30 || i==35 || i==46 || i==8 || i==23 || i==40 || i==22) BS++;
+		if (i==2 || i==12 || i==34 || i==49 || i==11 || i==52 || i==57 || i==14) BT++;
+		if (i==13 || i==18 || i==27 || i==54 || i==33 || i==45 || i==50 || i==20) TB++;
+		if (i==15 || i==48 || i==53 || i==59 || i==9 || i==17 || i==55 || i==47) TO++;
+		if (i==19 || i==36 || i==42 || i==61 || i==41 || i==43 || i==51 || i==6) OT++;
+		if (i==31 || i==4 || i==7 || i==62 || i==21 || i==37 || i==39 || i==64) OS++;
+		if (i==16 || i==3 || i==24 || i==63 || i==28 || i==38 || i==56 || i==5) SO++;
+		if (i==32 || i==10 || i==25 || i==26 || i==29 || i==44 || i==58 || i==60) SB++;
+
+		}
+	}
+
+
+GIN = afronden(SOM / AAK);
+GIN2 = GIN*100;
+
+DOM = BT + BS - OT - OS;
+AFF = SB + SO - TB - TO;
+
+
+//Interpretatie DOM en AFF scores
+
+	myWin = open('', '', 'width=620,height=600,toolbar=no,scrollbars=yes,menubar=no');
+
+	if (!myWin.opener)
+	    myWin.opener = self;
+
+	myWin.document.open();
+	myWin.document.write('<html><head><title>Resultaten Roos van Leary</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">');
+	myWin.document.write('<style type="text/css"><!-- h2 {  font-family: Arial, Helvetica, sans-serif; font-size: 14pt}table {  font-family: Arial, Helvetica, sans-serif; font-size: 10pt; color:#000099;}--></style>');
+	myWin.document.write('</head><body bgcolor="#FFFFFF">');
+	myWin.document.write('<div align="center"><h2>Resultaten <br>Vragenlijst interpersoonlijk gedrag (VIG)</h2></div>');
+	myWin.document.write('<table width="475" border="1" cellspacing="2" cellpadding="4" align="center">');
+	myWin.document.write('<tr><td colspan="4" height="21"><div align="left">Interpretatie dominantie (DOM) en affiliatie (AFF) scores.<br>De twee scores vatten de belangrijkste informatie samen van hoejij jezelf op de vragenlijst beschreven hebt.');
+	myWin.document.write('Ze vormen twee wezenlijke aspecten van jouw interpersoonlijke gedrag:<br>');
+	myWin.document.write('- de mate waarinjij jezelf als dominant, dan wel als submissief omschrijft,<br>');
+	myWin.document.write('- de mate waarinjij jezelf als affiliatief, dan wel als vijandig omschrijft.<br>');
+	myWin.document.write('Anders gezegd: jouw basishoudingen tegenover macht en tegenover intimiteit.</div></td></tr>');
+    myWin.document.write('<tr bgcolor="#CCCCCC"><td width="38"><div align="center">schaal</div>');
+    myWin.document.write('</td><td width="32"><div align="center">score</div></td><td colspan="2">');
+    myWin.document.write('<div align="center">zelf omschrijving </div><div align="center"></div></td></tr><tr>');
+    myWin.document.write('<td rowspan="2" valign="middle" width="38"><div align="center">DOM</div><div align="center"></div>');
+    myWin.document.write('</td><td rowspan="2" width="32" valign="middle"><div align="center">'+DOM+'</div></td><td width="57"><div align="center">hoog +</div>');
+    myWin.document.write('</td><td width="301">Ik neem het initiatief, geef leiding, overtuig, beheers en domineer anderen voor mijn eigen doeleinden.');
+    myWin.document.write('</td></tr><tr><td width="57"><div align="center">hoog -</div></td>');
+    myWin.document.write('<td width="301">Ik volg, geef toe, maak mezelf klein, pas me aan, gehoorzaam en onderwerp me aan anderen op een afhankelijke manier.');
+    myWin.document.write('</td></tr><tr><td rowspan="2" valign="middle" width="38"><div align="center">AFF</div><div align="center"></div></td>');
+    myWin.document.write('<td rowspan="2" width="32" valign="middle"><div align="center">'+AFF+'</div></td>');
+    myWin.document.write('<td width="57"><div align="center">hoog +</div></td><td width="301">');
+    myWin.document.write('Ik sympathiseer, vergeef, ben het met anderen eens, wil graag hun affectie winnen.</td>');
+  	myWin.document.write('</tr><tr><td width="57"><div align="center">hoog -</div></td><td width="301">');
+    myWin.document.write('Ik wantrouw, rebelleer, klaag, verwijt, voel me kwaad tegenover anderen op een zelfgerichte manier.</td>');
+  	myWin.document.write('</tr></table><p>');
+	myWin.document.write('<p align="center"><applet name="applet1" code="Testapplet.class" width="400" height="400" MAYSCRIPT>');
+	myWin.document.write('<param name="P_DOM" value="' + DOM + '">');
+	myWin.document.write('<param name="P_AFF" value="'+AFF+'">');
+	myWin.document.write('</applet></p>');
+	myWin.document.write('<table width="475" border="1" cellspacing="2" cellpadding="4" align="center" STYLE="page-break-before:always">');
+  	myWin.document.write('<tr><td width="177">Aantal aangegeven kenmerken<br>(AAK-score) </td><td width="270">AAK-score = '+AAK+' </td>');
+  	myWin.document.write('</tr><tr><td width="177">');
+  	myWin.document.write('<p align="center"><applet name="applet2" code="Aakmeter.class" width="150" height="250">');
+	myWin.document.write('<param name="P_AAK" value="' +AAK+'">');
+	myWin.document.write('</applet></p>');
+  	myWin.document.write('</td><td width="270"><p>Interpretatie.<br>');
+  	myWin.document.write('Omdat het invullen van de vragenlijst beschouwd kan worden als een vorm ');
+    myWin.document.write('van communicatie, zou het aantal kenmerken dat je aangegeven hebt een index ');
+    myWin.document.write('kunnen zijn van van jouw communicatiebereidheid: jouw bereidheid om uzelf');
+    myWin.document.write('&quot;bloot te geven&quot; en te onthullen aan anderen, die jouw scores ');
+    myWin.document.write('kunnen zien.<br>');
+    myWin.document.write('Op deze manier geredeneerd kan een lage score wijzen op een aarzeling ');
+    myWin.document.write('om zichzelf aan anderen te laten kennen, terwijl een hoge score wijst ');
+    myWin.document.write('op een bereidheid tot openheid.</p>');
+    myWin.document.write('<p>NB1: De aanduiding &quot;hoog&quot;, &quot;gemiddeld&quot; en &quot;laag&quot;');
+    myWin.document.write(' zijn gebaseerd op scores uit een onderzoek bij psychologiestudenten.<br>');
+    myWin.document.write('NB2: Het aangegeven hebben van m&eacute;&eacute;r kenmerken betekent over');
+    myWin.document.write('het algemeen ook het aangevinkt hebben van meer zelfkritische kenmerken');
+    myWin.document.write('(zie ook bij GIN-score).</p></td></tr></table>');
+	myWin.document.write('<p><p><table width="475" border="1" cellspacing="2" cellpadding="4" align="center">');
+	myWin.document.write('<tr><td width="225">Gemiddelde intensiteit<br>(GIN-score) </td>');
+	myWin.document.write('<td width="222">GIN-score = '+GIN+' </td></tr><tr><td width="225">');
+	myWin.document.write('<p>Interpretatie.<br>Omdat de kenmerken op elk van de acht vragenlijstschalen gerangschikt ');
+	myWin.document.write('zijn naar hun intensiteit, geeft deze score een gemiddelde intensiteitsniveau ');
+	myWin.document.write('van de aangegeven kenmerken. </p>');
+	myWin.document.write('<p>Zo is bijvoorbeeld kenmerk 1 (&quot;kan opdracht geven&quot;) minder ');
+	myWin.document.write('intens dan kenmerk 22 (&quot;dictatoriaal&quot;).</p>');
+	myWin.document.write('<p>Een hoge score wijst op een sterke mate van zelfkritiek, omdat deze het ');
+	myWin.document.write('resultaat is van negatievere zelfomschrijving.</p></td><td width="222"> ');
+	myWin.document.write('<p align="center"><applet name="applet3" code="Ginmeter.class" width="150" height="251">');
+	myWin.document.write('<param name="P_GIN" value="'+GIN2+'">');
+	myWin.document.write('</applet></p></td></tr></table>');
+
+	myWin.document.write('<p align="center"><applet name="applet4" code="Roos.class"');
+	if(navigator.appName.indexOf("Netscape") != -1){		//applet grootte aanpassen aan type browser
+	 myWin.document.write('width="400" height="400">');}
+	else{
+	myWin.document.write(' width="600" height="600">');}
+	myWin.document.write('<param name="P_TB" value="'+TB+'">');
+	myWin.document.write('<param name="P_BT" value="'+BT+'">');
+	myWin.document.write('<param name="P_BS" value="'+BS+'">');
+	myWin.document.write('<param name="P_SB" value="'+SB+'">');
+	myWin.document.write('<param name="P_SO" value="'+SO+'">');
+	myWin.document.write('<param name="P_OS" value="'+OS+'">');
+	myWin.document.write('<param name="P_OT" value="'+OT+'">');
+	myWin.document.write('<param name="P_TO" value="'+TO+'">');
+	myWin.document.write('<param name="P_AppNm" value="'+AppNm+'">');
+	myWin.document.write('</applet></p>');
+
+	myWin.document.write('<p><table width="475" border="1" cellspacing="2" cellpadding="4" align="center" STYLE="page-break-before:always"><tr><td>');
+	myWin.document.write('<p>Interpretatie &quot;Roos van Leary&quot;.</p>');
+	myWin.document.write('<p> De segmenten in de rechterhelft van de cirkel geven aan in hoeverre ');
+	myWin.document.write('u jezelf beschreven hebt als <i>affiliatief</i> (de &quot;Samen&quot;-pool ');
+	myWin.document.write('van Leary); de segmenten in de linkerhelft als<i> vijandig</i> (de &quot;Tegen&quot;-pool ');
+	myWin.document.write('van Leary).</p><p>De segmenten in de bovenste helft van de cirkel geven aan in hoeverre ');
+	myWin.document.write('u jezelf omschreven hebt als <i>dominant</i> (de &quot;Boven&quot;-pool ');
+	myWin.document.write('van Leary); de segmenten in de onderste helft als <i>submissief</i> (de ');
+	myWin.document.write('&quot;Onder&quot;-pool van Leary).</p>');
+	myWin.document.write('<p>Hogere scores (meer naar de buitenkant) wijzen op negatievere zelfomschrijvingen ');
+	myWin.document.write('dan lage scores.</p></td></tr><tr><td><p>De typering van jouw zelfbeeld is als volgt:</p>');
+	myWin.document.write('<p>');
+
+	if (TB >0 && TB <= 2){myWin.document.write(TBtekst02+'<br>')};
+	if (TB >2 && TB <=4){myWin.document.write(TBtekst24+'<br>')};
+	if (TB >4 && TB <=6)myWin.document.write(TBtekst46+'<br>');
+	if (TB >6)myWin.document.write(TBtekst68+'<br>');
+
+	if (BT > 0 && BT <= 2)myWin.document.write(BTtekst02+'<br>');
+	if (BT >2 && BT <=4)myWin.document.write(BTtekst24+'<br>');
+	if (BT >4 && BT <=6)myWin.document.write(BTtekst46+'<br>');
+	if (BT >6)myWin.document.write(BTtekst68+'<br>');
+
+	if (BS > 0 && BS <= 2)myWin.document.write(BStekst02+'<br>');
+	if (BS >2 && BS <=4)myWin.document.write(BStekst24+'<br>');
+	if (BS >4 && BS <=6)myWin.document.write(BStekst46+'<br>');
+	if (BS >6)myWin.document.write(BStekst68+'<br>');
+
+	if (SB > 0 && SB <= 2)myWin.document.write(SBtekst02+'<br>');
+	if (SB >2 && SB <=4)myWin.document.write(SBtekst24+'<br>');
+	if (SB >4 && SB <=6)myWin.document.write(SBtekst46+'<br>');
+	if (SB >6)myWin.document.write(SBtekst68+'<br>');
+
+	if (SO > 0 && SO <= 2)myWin.document.write(SOtekst02+'<br>');
+	if (SO >2 && SO <=4)myWin.document.write(SOtekst24+'<br>');
+	if (SO >4 && SO <=6)myWin.document.write(SOtekst46+'<br>');
+	if (SO >6)myWin.document.write(SOtekst68+'<br>');
+
+	if (OS > 0 && OS <= 2)myWin.document.write(OStekst02+'<br>');
+	if (OS >2 && SO <=4)myWin.document.write(OStekst24+'<br>');
+	if (OS >4 && SO <=6)myWin.document.write(OStekst46+'<br>');
+	if (OS >6)myWin.document.write(OStekst68+'<br>');
+
+	if (OT > 0 && OT <= 2)myWin.document.write(OTtekst02+'<br>');
+	if (OT >2 && SO <=4)myWin.document.write(OTtekst24+'<br>');
+	if (OT >4 && SO <=6)myWin.document.write(OTtekst46+'<br>');
+	if (OT >6)myWin.document.write(OTtekst68+'<br>');
+
+	if (TO >0 && TO <= 2)myWin.document.write(TOtekst02+'<br>');
+	if (TO >2 && SO <=4)myWin.document.write(TOtekst24+'<br>');
+	if (TO >4 && SO <=6)myWin.document.write(TOtekst46+'<br>');
+	if (TO >6)myWin.document.write(TOtekst68+'<br>');
+	myWin.document.write('&nbsp;</p></td></tr></table>');
+	myWin.document.write('&nbsp;</p></td></tr></table>');
+	myWin.document.write('<p><table width="400" border="0" cellspacing="2" cellpadding="4" align="center">');
+	myWin.document.write('<tr><td><form name="afdrukform">');
+	myWin.document.write('<input type="button" name="Button3" value="  Afdrukken in kleur  " onClick="self.focus();self.print();"></td> ');
+	myWin.document.write('<td><input type="button" name="Button2" value="Venster sluiten" onClick="self.close();"></td>');
+	myWin.document.write('</tr></table><p><table width="400" border="0" cellspacing="2" cellpadding="4" align="center">');
+	myWin.document.write('<font size="2"><p><p align="center">Als je gebruik maakt van een zwart/wit (laser)printer kan het zijn dat de ');
+	myWin.document.write('kleuren in de grafieken niet goed worden weergegeven. In dat geval kun je op ');
+	myWin.document.write('onderstaande knop klikken. De kleuren in de grafieken worden dan geconverteerd ');
+	myWin.document.write('naar zwart/wit-waarden. Controleer of alle grafieken zijn omgezet naar ');
+	myWin.document.write('zwart/wit en klik daarna op de knop "Afdrukken in zwart/wit" om het document uit te printen in zwart/wit.</p></font>');
+	myWin.document.write('<p align="center"><input type="button" name="Button4" value="Converteren naar zwart/wit" onClick="opener.printZW();">');
+	myWin.document.write('</table></form>');
+	myWin.document.write('<p><p><p></body></html>');
+	myWin.document.close();
+
+}
+//-->
+</script>
+
+
+<link rel="stylesheet" href="../master.css" type="text/css">
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color:white;
+}
+-->
+</style></head>
+
+<body bgcolor="#FFFFcc">
+<div id="div1" style="position:absolute; width:100%; height:300px; z-index:1; left: 0; top: 31; visibility: inherit;"></div>
+  <table width="100%" height="30" cellpadding="0" cellspacing="0" class="kop2">
+<tr><td class="kop"><div align="right"><img src="../pic/gedragstesten.gif"></div></td>
+</tr></table>
+<div id="div2" style="position:absolute; width:100%;z-index:2;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th> 
+      <div align="left"><em><font face="Arial, Helvetica, sans-serif" size="6">Vragenlijst interpersoonlijk gedrag</font></em></div>
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <p><font face="Arial, Helvetica, sans-serif" color="#CC0000"><b>&quot;De 
+        roos van Leary&quot;</b></font></p>
+      <p>In deze vragenlijst beschrijf je hoe jij jezelf  opstelt in sociale relaties. 
+        Het invullen gaat het helderst wanneer je &eacute;&eacute;n bepaalde relatie 
+        van jezelf voor ogen hebt, bijvoorbeeld een bepaalde relatie op jouw werk. 
+        Maak dus vooral een keuze hierin.</p>
+      <p>Lees de hierna volgende lijst van interpersoonlijke gedragsvormen door
+        en vink het vakje aan dat voor het woord of zinnetje staat dat een goede
+        typering geeft van jouw opstelling in de gekozen relatie.</p>
+      <p>De zinnetjes staan in de derde persoon geformuleerd, want je kunt deze
+        vragenlijst ook gebruiken om het persoonlijke gedrag van iemand anders
+        te typeren.</p>
+      <p>Als je klaar bent met aanvinken van de woorden of zinnen die jou goed typeren
+        dan kun je de resultaten opvragen door op de knop &quot;Toon resultaat&quot;
+        te klikken onder aan de pagina. De getoonde resultaten kunnen desgewenst
+        worden afgedrukt.</p>
+    </td>
+  </tr>
+</table>
+<form method="POST" name="F1">
+  <table border="0" width="500" align="center" cellpadding="3" cellspacing="1" class="vraag">
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C1" value="1">
+      </td>
+      <td width="93%" valign="top" class="vraag">&nbsp;1. kan opdrachten geven</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C2" value="1">
+      </td>
+      <td width="93%" valign="top" class="vraag">&nbsp;2. kan voor zichzelf zorgen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C3" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">&nbsp;3. hartelijk en met begrip</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C4" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">&nbsp;4.&nbsp;bewondert en immiteert anderen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C5" value="4">
+      </td>
+      <td width="93%" valign="top" class="vraag">&nbsp;5. is het met iedereen eens</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C6" value="4">
+      </td>
+      <td width="93%" valign="top" class="vraag">&nbsp;6. schaamt zich voor zichzelf</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C7" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">&nbsp;7. erg bezorgd om bevestiging te krijgen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C8" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">&nbsp;8. geeft altijd advies</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C9" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">&nbsp;9. verbitterd</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C10" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">10. met een ruim hart en onbaatzuchtig</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C11" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">11. opschepperig</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C12" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">12. zakelijk</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C13" value="1">
+      </td>
+      <td width="93%" valign="top" class="vraag">13. kan streng zijn wanneer dat nodig is</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C14" value="4">
+      </td>
+      <td width="93%" valign="top" class="vraag">14. koud en zonder gevoel</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C15" value="1">
+      </td>
+      <td width="93%" valign="top" class="vraag">15. kan klagen wanneer dat nodig is</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C16" value="1">
+      </td>
+      <td width="93%" valign="top" class="vraag">16. samenwerkingsgezind</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C17" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">17. klagerig</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C18" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">18. kritisch op anderen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C19" value="1">
+      </td>
+      <td width="93%" valign="top" class="vraag">19. kan gehoorzamen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C20" value="4">
+      </td>
+      <td width="93%" valign="top" class="vraag">20. wreed en onhartelijk</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C21" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">21. afhankelijk</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C22" value="4">
+      </td>
+      <td width="93%" valign="top" class="vraag">22. dictatoriaal</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C23" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">23. dominerend</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C24" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">24. er sterk op uit om met anderen goed overweg 
+        te kunnen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C25" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">25. moedigt anderen aan</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C26" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">26. heeft er plezier in voor anderen te zorgen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C27" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">27. vastberaden maar rechtvaardig</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C28" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">28. aan één stuk door vriendelijk</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C29" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">29. mild ten aanzien van een fout</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C30" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">30. goede leider</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C31" value="1">
+      </td>
+      <td width="93%" valign="top" class="vraag">31. dankbaar</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C32" value="1">
+      </td>
+      <td width="93%" valign="top" class="vraag">32. behulpzaam</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C33" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">33. kan fouten van anderen niet verdragen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C34" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">34. onafhankelijk</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C35" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">35. houdt van verantwoordelijkheid</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C36" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">36. heeft gebrek aan zelfvertrouwen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C37" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">37. laat anderen besluiten nemen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C38" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">38. vindt iedereen aardig</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C39" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">39. houdt ervan om verzorgd te worden</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C40" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">40. baast over anderen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C41" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">41. zachtmoedig</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C42" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">42. bescheiden</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C43" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">43. gehoorzaamt te bereidwillig</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C44" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">44. overbeschermend</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C45" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">45. vaak onvriendelijk</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C46" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">46. door anderen gerespecteerd</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C47" value="4">
+      </td>
+      <td width="93%" valign="top" class="vraag">47. rebelleert tegen van alles</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C48" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">48. gepikeerd, wanneer een ander de baas over 
+        hem speelt</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C49" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">49. assertief en vertrouwend op zichzelf</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C50" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">50. sarcastisch</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C51" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">51. verlegen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C52" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">52. egoïstisch</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C53" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">53. sceptisch (twijfelzuchtig)</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C54" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">54. open en direct</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C55" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">55. koppig</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C56" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">56. te gemakkelijk te beïnvloeden door anderen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C57" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">57. denkt slechts aan zichzelf</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C58" value="3">
+      </td>
+      <td width="93%" valign="top" class="vraag">58. te toegeeflijk aan anderen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C59" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">59. lichtgeraakt en makkelijk gekwetst</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C60" value="4">
+      </td>
+      <td width="93%" valign="top" class="vraag">60. probeert ieder te troosten en te bemoedigen</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C61" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">61. geeft gewoonlijk toe</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C62" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">62. vol repect voor gezag</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C63" value="2">
+      </td>
+      <td width="93%" valign="top" class="vraag">63. wil dat ieder hem sympathiek vindt</td>
+    </tr>
+    <tr> 
+      <td width="7%" align="center" valign="top" class="vraag"> 
+        <input type="checkbox" name="C64" value="4">
+      </td>
+      <td width="93%" valign="top" class="vraag">64. zal ieder geloven</td>
+    </tr>
+  </table>
+  <table width="500" border="0" cellspacing="1" cellpadding="3" align="center">
+    <tr>
+      <td> 
+        <p align="center">Als je klaar bent met aanvinken van de woorden of zinnen 
+          die jou goed typeren dan kun je de resultaten opvragen door op de knop 
+          &quot;Toon resultaat&quot; te klikken.<br>
+          De getoonde resultaten kunnen desgewenst worden afgedrukt. </p>
+        <p align="center"><br>
+            <input type="button" name="Button" value="Toon resultaat" onClick="ControLeer();">
+            <input type="reset" name="reset" value=" Wis formulier ">
+        </p></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <p align="right">Bron: J. Remmerswaal,<br>
+    Handboek groepsdynamica,<br>
+    Soest, Uitg. Nelissen, 2001 (5e druk)<br>
+</form>
+<p>
+</p></div>
+
+</body>
+
+</html>

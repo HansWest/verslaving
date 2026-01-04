@@ -1,0 +1,151 @@
+<?php
+include "gegevens_sma.php";
+include "../assets/formulas.php";
+
+//Zorgen dat $_POST en $_GET niet meer vatbaar zijn voor SQL injection 
+anti_injection($_POST); 
+anti_injection($_GET);
+///
+session_start();
+$persoon_id = $_SESSION['persoon_id'];
+$voornaam = $_SESSION['voornaam'];
+$personalmax =  $_SESSION['personalmax'];
+$strategie = $_SESSION['strategie'];
+$strategieduur = $_SESSION['strategieduur'];
+$evaldatum = $_SESSION['evaldatum'];
+$totevaldatum = $_SESSION['totevaldatum'];
+$nextstep = $_SESSION['nextstep'];
+
+$datum = date('Y-m-d', strtotime($jjjjmmdd));
+$jaar= date('Y', strtotime($datum));
+$maand= date('m', strtotime($datum));
+$dag= date('d', strtotime($datum));
+///
+$layoutnr="361";
+
+$hiero1="hoofdmenu"; 
+
+include "layoutinc/inc.nltemplate0.php"; 
+include "voorber_aaa_inc.php";
+include "layoutinc/inc.nltemplate1.php";
+?>
+<br />
+<p><img src="../pics/macsmiley.gif" border="0" /> <b>een fase van voorbereiding</b><br>
+  Dit is het menu van de voorbereidingsfase.<br>
+  Er zijn in deze fase een hoop dingen waar over nagedacht moet worden. In de 
+  linker kolom zie je dan ook de verschillende onderwerpen die je aan kunt klikken 
+  om de onderwerpen verder te onderzoeken.<br>
+  In de verschillende dagen van de komende voorbereidingsfase zullen ze so-wie-zo 
+  aan bod komen maar als je graag wilt kan je jouw eigen volgorde aanhouden. Waar 
+  het om gaat is dat je er goed en rustig naar kijkt, invult, misschien nog eens 
+  nader bekijkt en misschien nog eens extra zuiver invult (en dan misschien n&ograve;g 
+  een keertje overdenkt). Het eerste antwoord heeft niet altijd de diepgang die 
+  nodig is om een ontwenning ook succesvol te doen.<br>
+  Het gaat namelijk nogal eens mis bij het ontwennen van (beginnende) verslavingen. 
+  Nou ga ik hier niet zeggen dat je verslaafd bent. Daar is eigenlijk ook juist 
+  deze voorbereidende fase voor om daar zelf over na te denken en zelf te beslissen 
+  of je nou eigenlijk &quot;niet-verslaafd&quot;, &quot;een tikkie verslaafd&quot;, 
+  &quot;erg verslaafd&quot; bent...<br>
+  Maar omdat het zo regelmatig misgaat lijkt het wel verstandig om voorbereid 
+  onderweg te gaan als je wilt bezig gaan met jouw ontwenning van een gewoonte 
+  die in ieder geval zo 'gewoon' is geworden dat jij besloten hebt dat je hier 
+  toch even mee aan de slag wilt... (terecht, lijkt me, er zijn genoeg mensen 
+  in die valkuil gestapt)<BR>
+  Vandaar dat ik deze voorbereidende fase voorstel.<br>
+  Ik kan alleen maar zeggen: 
+<ul>
+  <li>neem de tijd...</li>
+  <li>doe het goed genoeg...</li>
+  <li>laat me je een beetje helpen om het wiel niet opnieuw uit te vinden....</li>
+</ul>
+            
+<p>Hier aan je linkerhand vind je de mogelijkheden van de voorbereidingsfase (met 
+  onderwerpen die je later ook nog tegen gaat komen).</P>
+<p>Als je er iets tussen ziet dat je niet aan staat, laat het links liggen en 
+  kom er later op terug of sla het gewoon helemaal over omdat <i>jij </i>het gewoon 
+  niet nodig hebt. Ieder ontwenningstraject is persoonlijk en niet alles geldt 
+  voor iedereen.<br>
+  Mocht ik iets zeggen wat je werkelijk absolute onzin zou vinden dan vraag ik je te mailen. Misschien is er in het programmeren iets misgegaan of mogelijk kan ik uitleggen waar de schoen wringt.</P>
+            <?php
+ include "layoutinc/inc.nltemplate2.php";
+//open up database
+include '../assets/dbconnect.php';
+echo "<table border=0 cellspacing=1><tr>";
+echo "<td width=\"16%\"><img src=\"../pics/minifoldertje.gif\" alt=\"data\"> de afgelopen dagen, ".$voornaam . " </td>";
+
+$tellertje=0;
+$tellertje2=0;
+for ($cnt = 14; $cnt >= 0; $cnt--)
+{
+	///$zoekdatum1 = mktime (0, 0, 0, $maand, intval($dag-$cnt), $jaar);
+	$zoekdatum = date ('Y-m-d', mktime (0, 0, 0, $maand, intval($dag-$cnt), $jaar));
+	
+	$sql="SELECT * FROM dagelijksgebruik WHERE persoon_id = '$persoon_id' AND datum = '$zoekdatum'";
+	///@@@ echo $sql;
+	$result = mysql_query ($sql);
+	$daggebruik = mysql_fetch_row($result);
+if ($daggebruik[2]
+)
+	{
+		$tellertje = $tellertje + 1;
+		$tellersom = $tellersom + $daggebruik[3];
+		$tellertje2 = 0;
+	}else{
+		$tellertje2 = $tellertje2 + 1;
+	}
+if ($daggebruik[3] > $personalmax)
+	{
+		echo "<td class=\"tabelfineline\" width=\"6%\"><font color='#600050'><b><i>". $daggebruik[3]."</i></b></font><img src=";
+	}else{
+		echo "<td class=\"tabelfineline\" width=\"6%\"><b>".$daggebruik[3]."</b><img src=";
+	}
+	if ($daggebruik[3] > $personalmax)
+	{
+		echo('"../pics/macmandwn.gif" alt="sad" align="middle" border=0><BR>');
+	}else{
+		if ($daggebruik[3] == "")
+		{
+			echo('"../pics/macmanvraag.gif" alt="???" align="top" border=0><br>');
+		}else{
+			echo('"../pics/macmanup.gif" alt="happy" align="middle" border=0><BR>');
+		}
+	}
+	//echo "<a href=".($_SERVER['PHP_SELF'])."?jjjjmmdd=". date ('Ymd', mktime (0, 0, 0, $maand, intval($dag-$cnt), $jaar))." class='menubutton'> ";
+	echo date ('d/m', mktime (0, 0, 0, $maand, intval($dag-$cnt), $jaar));
+	//echo "</a>";
+}
+mysql_free_result($result);
+echo "</tr></table><br>";
+echo " het totaal van de ".$tellertje." ingevulde dagen is: ".$tellersom.",<BR>jouw persoonlijk maximum is: ". $personalmax;
+if ($tellertje > 1)
+{
+	echo "<BR>en jouw gemiddelde over ".$tellertje." dagen is: ".round(($tellersom/$tellertje),1); 
+}
+echo "<p>";
+if ($tellertje >= 11)
+{
+	echo "<span class=\"bordertje\"><img src=\"../pics/macmanup.gif\" alt=\"happy\" width=\"23\" height=\"28\">Je 
+	hebt nu m&eacute;&eacute;r dan 10 van de 14 dagen ingevuld: goed!</span>";
+}else{
+	if ($tellertje == 0){
+		echo "<span class=\"bordertje\"><img src=\"../pics/macsmiley.gif\" alt=\"neutral\" width=\"16\" height=\"14\"> 
+		opnieuw een aanvang...</span>";
+	}else{
+		echo "<span class=\"bordertje\"><img src=\"../pics/macsmiley.gif\" alt=\"neutral\" width=\"16\" height=\"14\"> 
+		je hebt tot nu toe $tellertje van de afgelopen 14 dagen ingevuld...</span>";
+	}
+}
+?>
+</p>
+<table border="0" width="100%"><tr><td  valign="top">
+	  <p align="right"><i>Deze site is een ondersteuning voor de mensen die<br>
+		een (beginnende) verslaving ontwennen.</i></p>
+ </td><td valign="top" align="right">
+	<h3><?php echo($prognaamkort);?>&nbsp; &nbsp; &nbsp;<?php echo($prognaamlang);?></h3>
+	<p>voorheen: SMD (Stop Met Drinken)</p>
+	  <b> onderdeel van Compu-Coach / HelpDisk.nl</b>
+	<br><i>voor computer aided self-coaching</i></p>
+</td></tr></table>
+<div align="right"><a href="http://www.kwfkankerbestrijding.nl/content/pages/Alcohol_2005.html" target="_blank"><img src="../pics/logo_kwf.gif" width="121" height="40" border="0"></a></div><?php
+include "layoutinc/inc.nltemplate3.php";
+?>           

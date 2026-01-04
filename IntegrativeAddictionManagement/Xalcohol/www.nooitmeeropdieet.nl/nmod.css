@@ -1,0 +1,115 @@
+        BODY {background-color: #655959}
+        * {font-family: Arial; font-size: 10pt}
+        a:link {color: #DE1E1D; font-weight: bold; font-size: 10pt}
+        a:visited {color: #DE1E1D; font-weight: bold; font-size: 10pt}
+        a:focus {color: #DE1E1D; font-weight: bold; font-size: 10pt}
+        a:active {color: #DE1E1D; font-weight: bold; font-size: 10pt}
+        a:hover {color: #DE1E1D; font-weight: bold; font-size: 10pt}
+
+        a:link.boven {color: #DE1E1D; font-weight: bold; font-size: 8pt}
+        a:visited.boven {color: #DE1E1D; font-weight: bold; font-size: 8pt}
+        a:focus.boven {color: #DE1E1D; font-weight: bold; font-size: 8pt}
+        a:active.boven {color: #DE1E1D; font-weight: bold; font-size: 8pt}
+        a:hover.boven {color: #DE1E1D; font-weight: bold; font-size: 8pt}
+
+        a:link.foot {color: #FFFFFF}
+        a:visited.foot {color: #FFFFFF}
+        a:focus.foot {color: #FFFFFF}
+        a:active.foot {color: #FFFFFF}
+        a:hover.foot {color: #FFFFFF}
+        .Kop {font-weight: 900; color: #DE1E1D; font-size: 13pt}
+        .subKop {font-weight: 900; color: #DE1E1D; font-size: 11pt}
+        .subKop2 {font-weight: 900; color: #000000; font-size: 11pt}
+        EM {color: #000000; font-weight: bold; font-size: 10pt}
+        EM.red {color: #DE1E1D; font-weight: bold; font-size: 10pt}
+	.boven {font-weight: bold; font-size: 8pt}
+	ul { margin-top: 0;
+        padding-top: 0;
+        margin-left: 0;
+        padding-left: 0;
+        list-style-position: inside;
+        }
+
+.main
+{
+position: absolute;
+top: 1px;
+left: 1px;
+width: 800px;
+height: 600px;
+border: no;
+margin: 0px;
+
+}
+.navigation
+{
+position: absolute;
+top: 1px;
+left: 10px;
+width: 743px;
+border: no;
+margin: 0px 9px 0px 28px;
+padding: 0px;
+
+}
+.white
+{
+position: absolute;
+top: 72px;
+left: 10px;
+width: 727px;
+height: 477px;
+background-color: #FFFFFF;
+border: no;
+margin: 0px 10px 1px 30px;
+padding: 0px;
+}
+.left
+{
+position: absolute;
+top: 1px;
+left: 1px;
+width: 160px;
+height: 473px;
+border: no;
+margin: 0px 0px 0px 0px;
+padding: 0px 20px 0px 0px;
+
+}
+.content
+{
+position: absolute;
+top: 1px;
+left: 194px;
+width: 531px;
+height: 473px;
+border: no;
+margin: 0px;
+padding: 0px 20px 0px 0px;
+overflow: auto;
+}
+.contentmain
+{
+position: absolute;
+top: 1px;
+left: 174px;
+width: 516px;
+height: 473px;
+border: no;
+margin: 0px;
+padding: 0px 20px 0px 0px;
+}
+.contentgreen
+{
+position: relative;
+top: 1px;
+left: 442px;
+width: 266;
+height: 473px;
+background-color: #A1B8A4;
+border: no;
+margin: 0px;
+padding: 0px 5px 0px 10px;
+}
+
+

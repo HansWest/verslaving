@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>galaxy defender II</title>
+</head>
+<body bgcolor="black"  onload="setInterval('viewcredits()',10)">
+<center>
+<img src="images/logo.jpg" width="300" height="100">
+<center>
+<br>
+<font color="GREEN" face="system">
+<div id="credits" style="position:absolute;top:400">
+
+</div>
+
+
+<script language="javascript">
+  
+ credits.innerHTML="PROGRAMMER<br>KIMSON FAJUTAG<br><br>No Pixels were harmed in making this javascript game..";
+ var x=600;
+ credits.style.left=50;
+ function viewcredits(){
+  x--;
+  if(x<=180 )
+   x=600;
+  else{
+   credits.style.top=x;
+   
+  }
+ }
+</script>
+</font>
+</center>
+<input type="button" value="exit" onClick="location.href='menu.html'">
+</body>
+</html>

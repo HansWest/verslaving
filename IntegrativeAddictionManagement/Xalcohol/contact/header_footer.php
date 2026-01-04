@@ -1,0 +1,1 @@
+<?phpfunction site_header($title){  $site_header = <<< EOHEADER<HTML><HEAD><TITLE>$title</TITLE></HEAD><BODY><h1>Self-Management ALCOHOL</h1>EOHEADER;  echo $site_header;}function site_footer(){  $site_footer = <<< EOFOOTER<p>visit www.HelpDisk.nl/alcohol  of StopOokMetDrinken.nl</p></BODY></HTML>EOFOOTER;  echo $site_footer;}?>

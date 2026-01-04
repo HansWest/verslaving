@@ -1,0 +1,72 @@
+#!/usr/bin/php -q
+<?
+// Based on verstuurSMS.php v 2.0 08-02-2005 13:56:11 - See http://www.mollie.nl/
+// Author: Laurens van Alphen (Keenondots) - http://www.keenondots.com/
+
+define(USERNAME, 'username');
+define(PASSWORD, 'password');
+define(EMAIL, 'email');
+
+require('class.mollie.php'); // get this class by downloading the PHP-API example
+
+// Open standard input and standard output
+$STDIN = fopen('php://stdin', 'r');
+$STDOUT = fopen('php://stdout', 'w');
+
+function usage() {
+	global $argv, $STDIN, $STDOUT;
+
+	fwrite($STDOUT, "Usage: ". basename($argv[0]) . " -f <sender> -r <recipient> [-g <gateway>]\n");
+	fwrite($STDOUT, "Send an SMS message through the mobile network. The message is read from STDIN and has a maximum length of 160 characters.\n\n");
+	fwrite($STDOUT, "-f <sender>     Set the sender address. This can be a name or a number\n");
+	fwrite($STDOUT, "-r <recipient>  Set the recipient address. Example: 0650674546\n");
+	fwrite($STDOUT, "-g <gateway>    Specify a gateway (1 = Dutch (default), 2 = International)\n");
+	exit(1);
+}
+
+// Get command line options
+$opt = getopt("f:r:g:");
+
+if ( $argc < 3 || $opt[f]=='' || $opt[r]=='' || (!empty($opt[g]) && !is_numeric($opt[g])) ) {
+	usage();
+}
+
+# Load class
+$sms = new mollie();
+
+// Kies een gateway
+$sms->setGateway = $opt[g]=='' ? 1 : $opt[g];
+
+// Stel gebruikersnaam en wachtwoord van Mollie.nl in
+$sms->setLogin(USERNAME, PASSWORD);
+
+// Stel de afzender in van het SMS-bericht
+$sms->setOriginator($opt[f]);
+
+// Voeg een ontvanger toe aan het bericht
+$sms->addRecipients($opt[r]);
+
+// Lees bericht van STDIN
+$message = fread ($STDIN, 156);
+
+// Verstuur het SMS-bericht
+$sms->sendSMS($message);
+
+// Resultaat verwerken
+if (!$sms->success) {
+	$body = "
+		Number: $opt[r]
+		Message: $message
+
+		Recipients: $sms->successcount
+		Code: $sms->resultcode
+		Message: $sms->resultmessage
+	";
+
+	mail(EMAIL,"Error sending SMS from \"$opt[f]\" to \"$opt[r]\"", $body);
+}
+
+fwrite($STDOUT, 'Recipients: '.$sms->successcount."\n");
+fwrite($STDOUT, 'Code: '.$sms->resultcode."\n");
+fwrite($STDOUT, 'Message: '.$sms->resultmessage ."\n");
+?>

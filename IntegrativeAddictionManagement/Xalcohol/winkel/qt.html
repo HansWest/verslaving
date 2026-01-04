@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+<title>ReinCheck - Reins</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" media="screen" type="text/css" href="../rc.css" />
+<script type="text/javascript" src="../rc.js"></script>
+<style type="text/css">
+<!--
+body { width: 780px; background-color: #ffc6e7; overflow-x: hidden; }
+a { color: #000099; text-decoration: none; }
+a:hover, active { color: #0000ff; text-decoration: underline; }
+hr { color: #a86484; width: 720px; height: 2px; }
+img { border: 0px; }
+sup { font-size: 9px; }
+.all {
+	position: absolute;
+	left: 427px;
+	top: 16px;
+	width: 622px;
+	margin-left: -390px;
+	height: 35px;
+}
+.top { position: absolute; width: 681px; height: 90px; left: 1px; top: 35px; background-image: url('images/top.gif'); background-repeat: repeat-x; }
+.logo { position: absolute; width: 500px; height: 66px; left: 116px; top: 1px; background-image: url('images/logo.gif'); background-repeat: no-repeat; z-index: 20; }
+.nav { position: absolute; width: 100px; height: 20px; top: 68px; z-index: 10; background-image: url('images/nav.gif'); background-repeat: no-repeat; color: #004080; font-family: Verdana, Arial, sans-serif; font-size: 11px; font-weight: bold; padding: 2px; text-align: center; }
+.nava { position: absolute; width: 100px; height: 20px; top: 62px; z-index: 10; background-image: url('images/nava.gif'); background-repeat: no-repeat; color: #4000ff; font-family: Verdana, Arial, sans-serif; font-size: 11px; font-weight: bold; padding: 2px; text-align: center; }
+.pain { position: absolute; width: 100px; left: 45px; top: 15px; z-index: 11; }
+.main { position: absolute; width: 740px; left: 20px; top: 108px; z-index: 10; }
+.main h2 { color: #004080; font-family: Verdana, Arial, sans-serif; font-size: 17px; font-weight: bold; text-align: center; }
+.main h3 { color: #004080; font-family: Verdana, Arial, sans-serif; font-size: 14px; font-weight: bold; text-align: center; }
+.main h4 { color: #004080; font-family: Verdana, Arial, sans-serif; font-size: 14px; font-weight: bold; }
+.main p { color: #000033; font-family: Verdana, Arial, sans-serif; font-size: 12px; bold; }
+.main td { color: #000033; font-family: Verdana, Arial, sans-serif; font-size: 12px; bold; vertical-align: top; }
+.foot { color: #000033; font-family: Verdana, Arial, sans-serif; font-size: 9px; text-align: center; padding: 20px; }
+.fl { color: #e00000; font-family: Verdana, Arial, sans-serif; font-size: 18px; font-weight: bold; font-style: italic; }
+.pop { position: absolute; z-index: 50; }
+.pop p { color: #000033; font-family: Verdana, Arial, sans-serif; font-size: 12px; bold; text-align: center; }
+.pic { margin 20px; text-align: center; }
+.lpic { margin: 10px; float: left; }
+.rpic {margin: 10px; float: right; }
+.tab { border: #e7abd3; }
+.ltb { width: 240px; height: 20px; background-color: #fff0f0; }
+.stb { width: 60px; height: 20px; background-color: #fff0f0; }
+.tar { width: 240px; height: 60px; background-color: #fff0f0; }
+.lta { width: 700px; height: 60px; background-color: #fff0f0; }
+.sel { width: 240px; height: 20px; background-color: #fff0f0; }
+.rad { width: 20px; height: 20px; }
+.chk { width: 20px; height: 20px; }
+.but { width: 80px; height: 20px; background-color: #fff0f0; }
+.splash { position: absolute; width: 560px; height: 300px; left: 100px; top: 100px; background-color: #ffffe7; border: solid 2px #888888; padding: 20px; visibility: hidden; z-index: 20; }
+.splash h2 { color: #ff0000; font-family: Verdana, Arial, sans-serif; font-size: 20px; font-weight: bold; text-align: center; }
+.splash h4 { color: #004080; font-family: Verdana, Arial, sans-serif; font-size: 14px; font-weight: bold; font-style: italic; }
+.splash p { color: #000033; font-family: Verdana, Arial, sans-serif; font-size: 12px; bold; }
+.splash hr { color: #a86484; width: 90%; height: 2px; }
+.pic1 { width: 80px; height: 100px; float: right; }
+.nochex { width: 88px; height: 33px; float: right; }
+.wink { font-family: Verdana, Arial, sans-serif; font-size: 24px; font-weight: bold; text-align: center; }
+.red { color: #f00000; }
+.ctr { text-align: center; clear: both; }
+#nav0 { left: 20px; }
+#nav1 { left: 124px; }
+#nav2 { left: 137px; }
+#nav3 { left: 250px; }
+#nav4 { left: 366px; }
+#nav5 { left: 484px; }
+#enlarge { position: absolute; width: 740px; left: 20px; top: 108px; text-align: center; visibility: hidden; }
+
+
+/*Credits: Dynamic Drive CSS Library */
+/*URL: http://www.dynamicdrive.com/style/ */
+.glossymenu{
+list-style-type: none;
+margin: 5px 0;
+padding: 0;
+width: 120px;
+border: 1px solid #9A9A9A;
+border-bottom-width: 0;
+}
+.glossymenu li a{
+background: white url(pics/glossyback.gif) repeat-x bottom left;
+font: bold 10px Verdana, Arial, Helvetica, sans-serif;
+color: white;
+display: block;
+width: auto;
+padding: 3px 0;
+padding-left: 10px;
+text-decoration: none;
+}
+* html .glossymenu li a{ /*IE only. Actual menu width minus left padding of A element (10px) */
+width: 160px;
+}
+.glossymenu li a:visited, .glossymenu li a:active{
+color: white;
+}
+.glossymenu li a:hover{
+background-image: url(pics/glossyback2.gif);
+}
+
+-->
+</style>
+</head>
+<body onload="setTimeout('playst()', 10000)"><embed name="mus" src="../music/nursery.mid" hidden="true" loop="false" autostart="true" />
+  <div id="content" class="pain"> 
+  <p>en nou eens effe klijken wat hier komt te staan links een verwijzing naar 
+	de producten op de pagina @@@ </p>
+  <p>&nbsp; </p>
+  <ul class="glossymenu">
+<li><a href="http://www.dynamicdrive.com/" >Dynamic Drive</a></li>
+<li><a href="http://www.dynamicdrive.com/style/" >CSS Examples</a></li>
+<li><a href="http://www.javascriptkit.com/jsref/">JavaScript Reference</a></li>
+<li><a href="http://www.javascriptkit.com/domref/">DOM Reference</a></li>
+<li><a href="http://www.cssdrive.com">CSS Drive</a></li>
+<li><a href="http://www.codingforums.com/" style="border-bottom-width: 0">Coding Forums</a></li>		
+</ul>
+
+<div class="all"> 
+<div style="margin-top: 1em; font-size: 90%">Credit: <a href="http://www.dynamicdrive.com/style/">Dynamic Drive CSS library</a></div>
+<img src="pics/glossyback.gif">
+</div>
+ 
+  <div class="top"></div>
+<a name="top"></a>
+  <div class="logo"></div>
+<div id="nav0" class="nav" onmouseover="this.className='nava'" onmouseout="this.className='nav'"><a href="../home.html">Home</a></div>
+  <div id="nav2" class="nav" onmouseover="this.className='nava'" onmouseout="this.className='nav'"><a href="reins.html">Reins</a></div>
+  <div id="nav3" class="nav" onmouseover="this.className='nava'" onmouseout="this.className='nav'"><a href="bibs.html">Bibs</a></div>
+  <div id="nav4" class="nav" onmouseover="this.className='nava'" onmouseout="this.className='nav'"><a href="other.html">Other 
+	Items</a></div>
+  <div id="nav5" class="nav" onmouseover="this.className='nava'" onmouseout="this.className='nav'"><a href="motif.html">Motifs</a></div>
+<embed name="mus" src="../music/nursery.mid" hidden="false" loop="false" autostart="false" />
+<div id="content" class="main">
+<p><span id="mussw"><a href="javascript:stopmus();">Play music</a>.</span></p>
+    <h2>Res publica - publiek terein</h2><br>
+
+
+
+<table width="100%" border="0" cellspacing="8" cellpadding="8" align="center" cols="2">
+<colgroup span="2" width="50%">
+
+<tr><td>Je zet de volgende code in de BODY van de pagina: <a href="Looney_Tunes.mid"> 
+	  Speel de muziek af!</a> of bij een .wav bestand: <a href="bestandsnaam.wav"> 
+	  Speel de muziek af!</a> 
+	<p>Muziekspeler zonder automatische start:
+<embed src="Looney_Tunes.mid" width="145" height="58" autostart="false">dit is een gesloten embed</embed><p><embed src="Looney_Tunes.mid" width="50" height="20" controls="smallconsole" autostart="false">en dit ook</embed><hr>
+Muziekspeler zonder automatische start:
+
+<embed src="Looney_Tunes.mid" width="145" height="58" autostart="false">gesloten zondestart is false</embed>
+
+Nu zie je een muziekspeler, waarbij je op de play-knop moet klikken om de muziek te starten.
+ Hieronder zie je het resultaat:
+
+Als je een kleinere muziekspeler wilt dan verander je de height en width attributen naar bijvoorbeeld height="120" width="30".
+Dan krijg je deze muziekspeler:
+
+Je kunt ook nog een hele kleine muziekspeler krijgen door het attribuut controls="smallconsole" te gebruiken.
+ Op deze manier:
+
+embed src="Looney_Tunes.mid" width="50" height="20" controls="smallconsole"
+
+<a name="rein"></a><img src="../images/reins.jpg" width="320" height="174" alt="Leather reins" /></td><td><h4>Leather Reins</h4><strong>Price: 88 GBP or 169 USD or 127 EUR</strong>&nbsp;&nbsp;&nbsp;[<a href="http://www.xe.com/ucc/" target="_blank">convert</a>]<br />plus shipping or air freight<br /><br />Leather harnesses come in any colour of your choosing.<br /><br />Click here for some <a href="motif.html">Example Motifs</a></td></tr>
+
+<tr><td colspan="2"><hr></td></tr>
+<tr><td><a name="gerh"></a><h4>German Style Leather Harnesses</h4><strong>Price: 88 GBP or 169 USD or 127 EUR</strong>&nbsp;&nbsp;&nbsp;[<a href="http://www.xe.com/ucc/" target="_blank">convert</a>]<br />plus shipping or air freight<br /><br />Leather harnesses come in any colour of your choosing.<br /><br />Click here for some <a href="motif.html">Example Motifs</a></td><td><img src="../images/germanh.jpg" width="320" height="182" alt="German harnesses" /></td></tr>
+
+<tr><td colspan="2"><hr></td></tr>
+<tr><td><a name="danh"></a><img src="../images/danish.jpg" width="320" height="264" alt="Danish harnesses" /></td><td><h4>Danish Style Leather Harnesses</h4><strong>Price: 102 GBP or 182 USD or 148 EUR</strong>&nbsp;&nbsp;&nbsp;[<a href="http://www.xe.com/ucc/" target="_blank">convert</a>]<br />plus shipping or air freight<br /><br />Leather harnesses come in any colour of your choosing.</td></tr>
+
+<tr><td colspan="2"><hr></td></tr>
+<tr><td><h4>Single Abbies Harness with Wrist Restraints</h4><strong>Price: 99 GBP or 190 USD or 143 EUR</strong>&nbsp;&nbsp;&nbsp;[<a href="http://www.xe.com/ucc/" target="_blank">convert</a>]<br />plus shipping or air freight<br />So no extra charge if asked for when purchasing the harness in the first place.</td><td><img src="../images/abbies.jpg" width="320" height="220" alt="Abbies Harness with wrist restrains" /></td></tr>
+
+
+<tr><td colspan="2"><hr></td></tr>
+<tr><td><a name="embr"></a><img src="../images/embr.jpg" width="320" height="160" alt="Reins with embroidered design" /></td><td><h4><em>New</em> - Embroidered Designs</h4><strong>Price: 10 GBP or 18 USD or 15 EUR extra</strong>&nbsp;&nbsp;&nbsp;[<a href="http://www.xe.com/ucc/" target="_blank">convert</a>]<br /><br />Leather reins and harnesses can now be ordered with a design embroidered onto fine white glove leather on the front panel instead of a transfer.  Please see the choice of designs on the <a href="bibs.html#motif">Bibs page</a>.</td></tr>
+
+<tr><td colspan="2"><hr></td></tr>
+<tr><td><h4>Nylon Webbing Reins</h4>Made of polypropylene. <a href="javascript:lg('webcol.jpg')">Click here for colours</a>.<br /><br /><strong>Price: 12 GBP or 22 USD or 18 EUR</strong>&nbsp;&nbsp;&nbsp;[<a href="http://www.xe.com/ucc/" target="_blank">convert</a>]<br />plus shipping or air freight</td><td><img src="../images/webbing.jpg" width="150" height="119" alt="Nylon Webbing Reins" /></td></tr>
+
+<tr><td colspan="2"><hr></td></tr>
+<tr><td><img src="../images/lockbuck.jpg" width="160" height="86" alt="Locking buckle for webbing reins" /></td><td><h4>Locking Nylon Webbing Reins</h4><strong>Price: 17 GBP or 36 USD or 26 EUR</strong>&nbsp;&nbsp;&nbsp;[<a href="http://www.xe.com/ucc/" target="_blank">convert</a>]<br />plus shipping or air freight<br /><br />Same as the Nylon Webbing Reins, however, a special plastic key is supplied. The wearer cannot remove the harness without the key! How Embarassing!<br /><br /><em>N.B. If you require a locking buckle on something else made of webbing, please call for a quote.</em></td></tr>
+
+<tr><td colspan="2"><hr></td></tr>
+<tr><td><h4>Locking Buckles</h4>Locking buckles without padlocks that you have to supply yourselves can now be added to all leather reins / harnesses and other accessories.<br /><br /><strong>Price: 5 GPB or 9 USD or 8 EUR</strong>&nbsp;&nbsp;&nbsp;[<a href="http://www.xe.com/ucc/" target="_blank">convert</a>] per buckle</td><td><img src="../images/buckle.jpg" width="133" height="91" alt="Locking buckle for leather reins" /></td></tr>
+<tr><td colspan="2"><hr></td></tr>
+</table>
+
+<p class="ctr"><a href="#top">Back to top</a> | <a href="reins2.html">Making Reins</a></p>
+<hr>
+<div class="foot">This site is best viewed in Internet Explorer 5+, Firefox or Netscape 6+ at 800X600.<br />Content &copy; 2003-5 <script>emlk('wilfred','reincheck.com','ReinCheck')</script>&nbsp;&nbsp;&nbsp;Web design &amp; technology &copy; 2003-5 <a href="http://www.elderberry.co.uk" target="_blank">elder<strong>berry</strong></a><br />Music: Traditional arr. elder<strong>berry</strong>.</div>
+
+</div>
+<div id="enlarge" class="pop">
+<p>Click image to close.</p>
+<img id="enimg" src="" alt="" onmouseover="shand(this)" onmouseout="xhand(this)" onclick="xlg()" />
+</div>
+</div>
+</body>
+</html>

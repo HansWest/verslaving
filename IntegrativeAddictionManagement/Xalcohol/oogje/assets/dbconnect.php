@@ -1,0 +1,1 @@
+<?php//mysql_connect('localhost', 'Admin', 'ronald') or die('Could not connect ' .mysql_error());$db_host = 'localhost';$db_user = 'Admin4';$db_password = 'ronald';$database = 'OOGJE';//establish user connectionmysql_connect($db_host, $db_user, $db_password) or die('Could not connect ' .mysql_error());mysql_select_db($database);?>

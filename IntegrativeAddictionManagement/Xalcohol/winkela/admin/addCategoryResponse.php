@@ -1,0 +1,1 @@
+<?require("../Cart.php");Brand();DBInfo();$Category=ereg_replace("\"","&quot;","$Category");mysql_connect("$DBHost","$DBUser","$DBPass");mysql("$DBName","INSERT INTO ACategory VALUES('$Category','')");Header("Location: ./index.php");?>
