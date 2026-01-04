@@ -1,1 +1,0 @@
-<?require("../Cart.php");DBInfo();Root();mysql_connect("$DBHost","$DBUser","$DBPass");mysql("$DBName","DELETE FROM AItems WHERE ItemID='$ItemID'");exec("rm $WebRoot/images/$ItemID.jpg");Header("Location: $Relative/admin/index.php");?>

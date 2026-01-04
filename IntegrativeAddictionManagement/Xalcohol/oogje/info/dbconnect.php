@@ -1,1 +1,0 @@
-<?php//establish user connectionmysql_connect('localhost', 'helpdisknl', '7D5tfGwM') or die('Could not connect ' .mysql_error());?>

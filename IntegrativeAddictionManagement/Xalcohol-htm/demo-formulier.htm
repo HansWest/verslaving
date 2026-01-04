@@ -1,0 +1,167 @@
+<html>
+<head>
+<title>Demo Formulier - SMA</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="assets/sma.css" type="text/css" />
+<script type="text/javascript" src="js/database.js"></script>
+<script type="text/javascript" src="js/praatmethans.js"></script>
+
+<script language="javascript">
+function hulpscherm() {
+    hulp_scherm(250, 'Demo Formulier', 
+        'Dit is een demo formulier om te laten zien hoe de localStorage integratie werkt.<br><br>' +
+        '<b>Knoppen:</b><br>' +
+        's = Save (opslaan)<br>' +
+        'r = Recover (herstellen)<br>' +
+        '∀ = Print<br><br>' +
+        'Alle data wordt lokaal in je browser opgeslagen!');
+}
+</script>
+</head>
+
+<body>
+<div style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #FFFFFF;">
+
+<h1>Demo Formulier - Self Management Alcohol</h1>
+
+<p>
+    Dit is een voorbeeldformulier dat laat zien hoe de localStorage functionaliteit werkt.
+    Vul het formulier in en klik op 's' om op te slaan, of 'r' om eerder opgeslagen data te herstellen.
+</p>
+
+<hr />
+
+<form name="demo_formulier">
+
+<h2>Persoonlijke Gegevens</h2>
+
+<table width="100%" border="0" cellpadding="5">
+    <tr>
+        <td width="30%"><b>Naam:</b></td>
+        <td>
+            <input type="text" name="naam" size="40" class="smainput" />
+        </td>
+    </tr>
+    <tr>
+        <td><b>Leeftijd:</b></td>
+        <td>
+            <input type="number" name="leeftijd" size="5" class="smainput" />
+        </td>
+    </tr>
+</table>
+
+<h2>Jouw Situatie</h2>
+
+<p><b>Waar maak je je zorgen over?</b></p>
+<textarea name="zorgen" rows="5" cols="60" class="smainput"></textarea>
+
+<p><b>Wat wil je bereiken?</b></p>
+<textarea name="doelen" rows="5" cols="60" class="smainput"></textarea>
+
+<h2>Frequentie van gebruik</h2>
+
+<p><b>Hoe vaak drink je alcohol?</b></p>
+<p>
+    <input type="radio" name="frequentie" value="dagelijks" /> Dagelijks<br>
+    <input type="radio" name="frequentie" value="weekly" /> Meerdere keren per week<br>
+    <input type="radio" name="frequentie" value="weekends" /> Alleen in het weekend<br>
+    <input type="radio" name="frequentie" value="maandelijks" /> Een paar keer per maand<br>
+    <input type="radio" name="frequentie" value="zelden" /> Zelden<br>
+</p>
+
+<h2>Motivatie</h2>
+
+<p><b>Waarom wil je veranderen? (meerdere antwoorden mogelijk)</b></p>
+<p>
+    <input type="checkbox" name="motief_gezondheid" value="ja" /> Gezondheid<br>
+    <input type="checkbox" name="motief_relaties" value="ja" /> Relaties verbeteren<br>
+    <input type="checkbox" name="motief_werk" value="ja" /> Werkprestaties<br>
+    <input type="checkbox" name="motief_financieel" value="ja" /> Geld besparen<br>
+    <input type="checkbox" name="motief_zelfrespect" value="ja" /> Zelfrespect<br>
+    <input type="checkbox" name="motief_anders" value="ja" /> Anders<br>
+</p>
+
+<p><b>Toelichting bij 'anders':</b></p>
+<input type="text" name="motief_anders_tekst" size="60" class="smainput" />
+
+<h2>Steun</h2>
+
+<p><b>Wie kan je steunen?</b></p>
+<textarea name="steun_personen" rows="3" cols="60" class="smainput" 
+          placeholder="Bijvoorbeeld: partner, vriend, therapeut..."></textarea>
+
+<p><b>Wat heb je nodig om te slagen?</b></p>
+<textarea name="hulpmiddelen" rows="5" cols="60" class="smainput"></textarea>
+
+<hr />
+
+<!-- Knoppen -->
+<p style="text-align: right">
+    <a href="javascript:void(0)" class="menubutton" onClick="hulpscherm();" 
+       title="Toelichting">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" 
+       class="menubutton" title="Save/bewaar de inhoud van alle velden">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" 
+       class="menubutton" title="Recover/herstel de inhoud uit opgeslagen data">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="javascript:void(0)" onClick="window.print();" 
+       class="menubutton" title="Print dit formulier">&nbsp;&nbsp;&nbsp;∀&nbsp;&nbsp;&nbsp;</a>
+</p>
+
+<noscript>
+    <p style="color: #CC0000;">
+        <b>Let op:</b> JavaScript is vereist voor de save/restore functionaliteit. 
+        Je kunt het formulier wel printen.
+    </p>
+</noscript>
+
+</form>
+
+<hr />
+
+<h2>Uitleg</h2>
+
+<div style="background-color: #FFFFEE; padding: 15px; border: 1px solid #CCCC99;">
+    <h3>Hoe werkt het?</h3>
+    
+    <p><b>Opslaan (s):</b></p>
+    <ul>
+        <li>Klik op de 's' knop om je antwoorden op te slaan</li>
+        <li>De data wordt opgeslagen in de localStorage van je browser</li>
+        <li>Als je bent ingelogd, wordt de data ook gekoppeld aan je account</li>
+    </ul>
+    
+    <p><b>Herstellen (r):</b></p>
+    <ul>
+        <li>Klik op de 'r' knop om eerder opgeslagen antwoorden te herstellen</li>
+        <li>Het formulier wordt automatisch ingevuld met je opgeslagen data</li>
+    </ul>
+    
+    <p><b>Privacy:</b></p>
+    <ul>
+        <li>Alle data blijft lokaal op jouw apparaat</li>
+        <li>Niets wordt naar een server gestuurd</li>
+        <li>Je hebt volledige controle over je eigen gegevens</li>
+    </ul>
+    
+    <p><b>Tips:</b></p>
+    <ul>
+        <li>Sla regelmatig op tijdens het invullen</li>
+        <li>Print het formulier voor je dossier</li>
+        <li>Maak een backup via de hoofdpagina</li>
+    </ul>
+</div>
+
+<hr />
+
+<p style="text-align: center;">
+    <a href="index.htm" class="menubutton">Terug naar hoofdpagina</a>
+    &nbsp;&nbsp;
+    <a href="main.htm" class="menubutton">Naar hoofdmenu</a>
+</p>
+
+</div>
+</body>
+</html>

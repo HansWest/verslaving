@@ -1,0 +1,131 @@
+/* SMA - Self Management Alcohol Stylesheet */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+.smakopje1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.smakopje2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-size: 18px;
+    color: #666666;
+}
+
+.smakopje4 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 14px;
+    color: #666666;
+}
+
+/* Menu button style */
+.menubutton {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 2px;
+    background-color: #CCCCCC;
+    color: #333333;
+    text-decoration: none;
+    border: 1px solid #999999;
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.menubutton:hover {
+    background-color: #DDDDDD;
+    border-color: #666666;
+}
+
+.menubutton:active {
+    background-color: #BBBBBB;
+}
+
+/* Input fields */
+.smainput {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding: 3px;
+    border: 1px solid #999999;
+    background-color: #FFFFFF;
+}
+
+.smainput:focus {
+    border-color: #666666;
+    background-color: #FFFFEE;
+}
+
+/* Messages */
+.errormess {
+    color: #CC0000;
+    background-color: #FFEEEE;
+    padding: 10px;
+    border: 1px solid #CC0000;
+    margin: 10px 0;
+}
+
+.successmess {
+    color: #006600;
+    background-color: #EEFFEE;
+    padding: 10px;
+    border: 1px solid #006600;
+    margin: 10px 0;
+}
+
+/* Links */
+a.hans {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 10px;
+    color: #666666;
+    text-decoration: none;
+}
+
+a.hans:hover {
+    text-decoration: underline;
+}
+
+/* Kleine letters */
+.kleineletters {
+    font-size: 9px;
+    color: #999999;
+}
+
+/* Content sections */
+.content-section {
+    padding: 10px;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+}
+
+/* Borders */
+.bordertje {
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+    display: inline-block;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .smakopje1 {
+        font-size: 20px;
+    }
+    
+    .smakopje2 {
+        font-size: 16px;
+    }
+}

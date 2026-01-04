@@ -1,1 +1,0 @@
-$strategie = $_SESSION['strategie'];$strategieduur = $_SESSION['strategieduur'];$evaldatum = $_SESSION['evaldatum'];$totevaldatum = $_SESSION['totevaldatum'];$nextstep = $_SESSION['nextstep'];

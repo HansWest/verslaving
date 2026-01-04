@@ -1,1 +1,0 @@
-<html><head><script>location.href="../contentnl/login.php";</script><meta name="robots" content="index,nofollow"><title>ttt</title><meta name="Microsoft Border" content="none"></head><body bgcolor="#FFFFFF" text="#000000"></body></html>

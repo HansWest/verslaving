@@ -1,1 +1,0 @@
-<?php   if (!get_magic_quotes_gpc()) {      foreach($_GET as $k => $v)        $_GET[$k] = addslashes($v);      foreach($_POST as $k => $v)        $_POST[$k] = addslashes($v);      foreach($_COOKIE as $k => $v)        $_COOKIE[$k] = addslashes($v);   }?>

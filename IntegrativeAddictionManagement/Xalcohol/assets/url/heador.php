@@ -1,1 +1,0 @@
-<HTML> <HEAD>  <TITLE>Search URL's</TITLE>  <link rel="stylesheet" type="text/css" href="muldor.css"> </HEAD> <BODY> <DIV ALIGN=CENTER>  <DIV CLASS="nav">  <a href="url.php">All</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="mainCat.php">Categories</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="search.php">Search</a> </DIV>   <br><p>  <br><p>

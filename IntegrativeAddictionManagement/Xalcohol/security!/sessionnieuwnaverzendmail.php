@@ -1,1 +1,0 @@
-<?php   session_start();             // Start the normal session   $sessionbackup = $_SESSION;  // Backup variables   session_destroy();           // Destroy current session   session_start();             // Start a brand new session   $_SESSION = $sessionbackup;  // And restore variables?>

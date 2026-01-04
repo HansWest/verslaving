@@ -1,1 +1,0 @@
-<?require("../Cart.php");Root();exec("mv $image '$WebRoot/images/".$ItemID.".jpg'");Header("Location: $Relative/admin/index.php");?>
