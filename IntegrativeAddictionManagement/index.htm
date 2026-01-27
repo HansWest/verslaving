@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Integrative Addiction Management - Overzicht</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+h1 {
+    color: #333;
+    border-bottom: 3px solid #666;
+    padding-bottom: 10px;
+}
+h2 {
+    color: #666;
+    margin-top: 30px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 5px;
+}
+h3 {
+    color: #888;
+    margin-top: 20px;
+}
+.section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-left: 4px solid #666;
+}
+.directory {
+    background-color: #e8f4f8;
+    border-left-color: #0066cc;
+}
+.file-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+.file-list li {
+    padding: 8px;
+    margin: 5px 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.file-list li:hover {
+    background-color: #f0f0f0;
+}
+.folder-icon::before {
+    content: "📁 ";
+}
+.file-icon::before {
+    content: "📄 ";
+}
+.html-icon::before {
+    content: "🌐 ";
+}
+.js-icon::before {
+    content: "⚙️ ";
+}
+.doc-icon::before {
+    content: "📖 ";
+}
+a {
+    text-decoration: none;
+    color: #0066cc;
+}
+a:hover {
+    text-decoration: underline;
+    color: #0044aa;
+}
+.description {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 5px;
+    font-style: italic;
+}
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-left: 10px;
+}
+.badge-new {
+    background-color: #4CAF50;
+    color: white;
+}
+.badge-old {
+    background-color: #ff9800;
+    color: white;
+}
+.badge-info {
+    background-color: #2196F3;
+    color: white;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+.card {
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.card h3 {
+    margin-top: 0;
+    color: #333;
+}
+.quick-links {
+    background-color: #fffbf0;
+    border: 2px solid #ffd700;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+.quick-links h3 {
+    margin-top: 0;
+    color: #ff8800;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🏥 Integrative Addiction Management</h1>
+<p style="font-size: 1.1em; color: #666;">
+    Overzicht van alle hulpmiddelen voor verslavingszorg en zelfmanagement
+</p>
+
+<div class="quick-links">
+    <h3>⚡ Snelle Links</h3>
+    <ul>
+        <li><a href="Xalcohol-htm/index.htm" target="_blank">🆕 <strong>Start Xalcohol-htm</strong> (Nieuwe versie met localStorage)</a></li>
+        <li><a href="Xalcohol-htm/login.htm" target="_blank">🔐 Direct naar Login/Registratie</a></li>
+        <li><a href="Xalcohol-htm/demo-formulier.htm" target="_blank">📝 Demo Formulier</a></li>
+        <li><a href="../htm-version/index.htm" target="_blank">📋 Formulieren Overzicht (Origineel)</a></li>
+    </ul>
+</div>
+
+<h2>📚 Projecten & Versies</h2>
+
+<div class="grid">
+    <!-- Xalcohol-htm (Nieuwe versie) -->
+    <div class="card">
+        <h3>
+            <span class="folder-icon"></span>
+            <a href="Xalcohol-htm/">Xalcohol-htm/</a>
+            <span class="badge badge-new">NIEUW</span>
+        </h3>
+        <p class="description">
+            Client-side versie met localStorage database - Vervangt MySQL met browser opslag
+        </p>
+        <ul class="file-list">
+            <li>
+                <span class="html-icon"></span>
+                <a href="Xalcohol-htm/index.htm" target="_blank">index.htm</a>
+                <span class="description">Hoofdpagina</span>
+            </li>
+            <li>
+                <span class="html-icon"></span>
+                <a href="Xalcohol-htm/login.htm" target="_blank">login.htm</a>
+                <span class="description">Login & Registratie</span>
+            </li>
+            <li>
+                <span class="html-icon"></span>
+                <a href="Xalcohol-htm/main.htm" target="_blank">main.htm</a>
+                <span class="description">Hoofdmenu (na login)</span>
+            </li>
+            <li>
+                <span class="html-icon"></span>
+                <a href="Xalcohol-htm/demo-formulier.htm" target="_blank">demo-formulier.htm</a>
+                <span class="description">Voorbeeld formulier</span>
+            </li>
+            <li>
+                <span class="doc-icon"></span>
+                <a href="Xalcohol-htm/README.md" target="_blank">README.md</a>
+                <span class="description">Uitgebreide documentatie</span>
+            </li>
+            <li>
+                <span class="doc-icon"></span>
+                <a href="Xalcohol-htm/INSTALLATIE.md" target="_blank">INSTALLATIE.md</a>
+                <span class="description">Installatie instructies</span>
+            </li>
+        </ul>
+        <h4>JavaScript Libraries:</h4>
+        <ul class="file-list">
+            <li>
+                <span class="js-icon"></span>
+                <a href="Xalcohol-htm/js/database.js" target="_blank">database.js</a>
+                <span class="description">localStorage database systeem</span>
+            </li>
+            <li>
+                <span class="js-icon"></span>
+                <a href="Xalcohol-htm/js/praatmethans.js" target="_blank">praatmethans.js</a>
+                <span class="description">Formulier beheer & opslag</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Xalcohol (Origineel, PHP verwijderd) -->
+    <div class="card">
+        <h3>
+            <span class="folder-icon"></span>
+            <a href="Xalcohol/">Xalcohol/</a>
+            <span class="badge badge-old">LEGACY</span>
+        </h3>
+        <p class="description">
+            Originele folder (PHP bestanden verwijderd, resources behouden)
+        </p>
+        <ul class="file-list">
+            <li>
+                <span class="folder-icon"></span>
+                <a href="Xalcohol/pics/">pics/</a>
+                <span class="description">Afbeeldingen en iconen</span>
+            </li>
+            <li>
+                <span class="folder-icon"></span>
+                <a href="Xalcohol/assets/">assets/</a>
+                <span class="description">CSS en andere bestanden</span>
+            </li>
+            <li>
+                <span class="folder-icon"></span>
+                <a href="Xalcohol/praatmethans/">praatmethans/</a>
+                <span class="description">Originele JavaScript</span>
+            </li>
+            <li>
+                <span class="folder-icon"></span>
+                <a href="Xalcohol/games/">games/</a>
+                <span class="description">Spelletjes</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<h2>📋 Formulieren (htm-version)</h2>
+
+<div class="section">
+    <p class="description">
+        Standalone formulieren die met cookies werken - Geen login vereist
+    </p>
+    <ul class="file-list">
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/index.htm" target="_blank">index.htm</a>
+            <span class="description">Overzichtspagina formulieren</span>
+        </li>
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/jouw-verslaving.htm" target="_blank">jouw-verslaving.htm</a>
+            <span class="description">Inzicht in jouw situatie</span>
+        </li>
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/risico-situaties.htm" target="_blank">risico-situaties.htm</a>
+            <span class="description">Identificeer risicovolle momenten</span>
+        </li>
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/risico-mensen.htm" target="_blank">risico-mensen.htm</a>
+            <span class="description">Mensen die invloed hebben</span>
+        </li>
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/craving-gevoel.htm" target="_blank">craving-gevoel.htm</a>
+            <span class="description">Omgaan met trek</span>
+        </li>
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/noodplan-tekst.htm" target="_blank">noodplan-tekst.htm</a>
+            <span class="description">Voor moeilijke momenten</span>
+        </li>
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/persoonlijke-waarden.htm" target="_blank">persoonlijke-waarden.htm</a>
+            <span class="description">Wat is belangrijk voor jou</span>
+        </li>
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/plan-van-aanpak.htm" target="_blank">plan-van-aanpak.htm</a>
+            <span class="description">Jouw strategie</span>
+        </li>
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/to-do-lijst.htm" target="_blank">to-do-lijst.htm</a>
+            <span class="description">Actiepunten</span>
+        </li>
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/evenwicht.htm" target="_blank">evenwicht.htm</a>
+            <span class="description">Balans in je leven</span>
+        </li>
+        <li>
+            <span class="html-icon"></span>
+            <a href="../htm-version/motiverende-mensen.htm" target="_blank">motiverende-mensen.htm</a>
+            <span class="description">Steunnetwerk</span>
+        </li>
+    </ul>
+</div>
+
+<h2>📖 Documentatie</h2>
+
+<div class="section directory">
+    <ul class="file-list">
+        <li>
+            <span class="doc-icon"></span>
+            <a href="../README.md" target="_blank">README.md</a>
+            <span class="description">Hoofdproject documentatie</span>
+        </li>
+        <li>
+            <span class="doc-icon"></span>
+            <a href="Xalcohol-htm/README.md" target="_blank">Xalcohol-htm README</a>
+            <span class="description">Uitleg nieuwe localStorage versie</span>
+        </li>
+        <li>
+            <span class="doc-icon"></span>
+            <a href="Xalcohol-htm/INSTALLATIE.md" target="_blank">Installatie Instructies</a>
+            <span class="description">Stap-voor-stap setup</span>
+        </li>
+    </ul>
+</div>
+
+<h2>ℹ️ Informatie</h2>
+
+<div class="section">
+    <h3>Over dit project</h3>
+    <p>
+        Dit project bevat verschillende tools en formulieren voor zelfmanagement 
+        bij verslavingsproblematiek. Het is ontwikkeld om mensen te helpen 
+        zelfstandig aan hun verslaving te werken.
+    </p>
+    
+    <h3>Technische details</h3>
+    <ul>
+        <li><strong>Xalcohol-htm:</strong> Moderne client-side versie met localStorage (geen server nodig)</li>
+        <li><strong>htm-version:</strong> Originele formulieren met cookie opslag</li>
+        <li><strong>Xalcohol:</strong> Legacy folder met resources (PHP verwijderd)</li>
+    </ul>
+    
+    <h3>Privacy</h3>
+    <p>
+        Alle data in de nieuwe Xalcohol-htm versie wordt <strong>100% lokaal</strong> 
+        op jouw apparaat opgeslagen. Niets wordt naar een server gestuurd.
+    </p>
+    
+    <h3>Contact</h3>
+    <p>
+        Voor vragen of suggesties: <a href="mailto:HansRJWest@Gmail.com">HansRJWest@Gmail.com</a>
+    </p>
+</div>
+
+<hr style="margin: 30px 0; border: none; border-top: 2px solid #ccc;">
+
+<div style="text-align: center; color: #888; font-size: 0.9em;">
+    <p>
+        <strong>Integrative Addiction Management</strong><br>
+        &copy; controleerjeverslaving.nl | Laatste update: 4 januari 2026
+    </p>
+</div>
+
+</div>
+</body>
+</html>
