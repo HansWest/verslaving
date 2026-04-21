@@ -201,6 +201,84 @@
 
     .nudge-list li { margin-bottom: 0.28rem; }
 
+    .weekly-review-box {
+      margin-top: 1.2rem;
+      background: #fffaf4;
+      border: 1px solid #ecd8c4;
+      border-left: 6px solid #bb4f00;
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    .weekly-review-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .weekly-review-box h3 {
+      margin: 0;
+      color: #7a3200;
+      font-size: 1rem;
+    }
+
+    .weekly-review-chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.36rem 0.74rem;
+      background: #fff0e1;
+      color: #7a3200;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .weekly-review-chip.due {
+      background: #fff3dd;
+      color: #8a5200;
+    }
+
+    .weekly-review-list {
+      margin: 0.75rem 0 0;
+      padding-left: 1.15rem;
+      color: #5b4637;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .weekly-review-list li { margin-bottom: 0.3rem; }
+
+    .weekly-review-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 0.9rem;
+    }
+
+    .weekly-review-actions a,
+    .weekly-review-actions button {
+      border: none;
+      border-radius: 10px;
+      min-height: 42px;
+      padding: 0.65rem 0.9rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .weekly-review-actions a {
+      background: #f7efe7;
+      color: #8a4c1f;
+    }
+
+    .weekly-review-actions button {
+      background: #bb4f00;
+      color: #fff;
+    }
+
     .action-bar {
       display: flex;
       flex-wrap: wrap;
@@ -360,6 +438,20 @@
           </section>
         </div>
 
+        <div class="weekly-review-box">
+          <div class="weekly-review-top">
+            <h3>Wekelijkse terugblik</h3>
+            <span class="weekly-review-chip" id="weeklyReviewStatus">Nog geen terugblik</span>
+          </div>
+          <ul class="weekly-review-list" id="weeklyReviewList">
+            <li>Nog geen weekreflectie opgeslagen op de homepage.</li>
+          </ul>
+          <div class="weekly-review-actions">
+            <button type="button" id="weeklyReviewApply">Neem volgende stap over in direct doen</button>
+            <a href="index.htm#weeklyReviewCard">Open terugblik op homepage</a>
+          </div>
+        </div>
+
         <div class="nudge-box">
           <h3>Cognitieve duwtjes (vanuit jouw eigen input)</h3>
           <ul class="nudge-list" id="cognitiveNudges">
@@ -386,6 +478,7 @@
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'noodplan-forse-trek';
+    const WEEKLY_REVIEW_KEY = 'weeklyReview';
     const fields = [
       'doen',
       'steunnetwerk',
@@ -452,6 +545,74 @@
       if (!text) return;
       if (nudges.includes(text)) return;
       nudges.push(text);
+    }
+
+    function getWeeklyReview() {
+      return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
+    }
+
+    function isWeeklyReviewDue(lastCompletedAt) {
+      if (!lastCompletedAt) return true;
+      const last = new Date(lastCompletedAt);
+      if (Number.isNaN(last.getTime())) return true;
+      return (Date.now() - last.getTime()) >= 7 * 24 * 60 * 60 * 1000;
+    }
+
+    function appendLine(textarea, line) {
+      if (!textarea || !line) return;
+      const clean = String(line).trim();
+      if (!clean) return;
+      const existing = textarea.value.split('\n').map((item) => item.trim()).filter(Boolean);
+      if (!existing.includes(clean)) {
+        textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
+      }
+    }
+
+    function renderWeeklyReviewPrompt() {
+      const weekly = getWeeklyReview();
+      const status = document.getElementById('weeklyReviewStatus');
+      const list = document.getElementById('weeklyReviewList');
+      const applyButton = document.getElementById('weeklyReviewApply');
+      if (!status || !list || !applyButton) return;
+
+      const due = isWeeklyReviewDue(weekly.lastCompletedAt);
+      status.textContent = weekly.lastCompletedAt
+        ? (due ? 'Tijd voor nieuwe terugblik' : 'Deze week bijgewerkt')
+        : 'Nog geen terugblik';
+      status.classList.toggle('due', due);
+
+      const lines = [];
+      if (weekly.reflection) lines.push(`Terugblik: ${previewText(weekly.reflection, 120)}`);
+      if (weekly.learning) lines.push(`Leerpunt: ${previewText(weekly.learning, 120)}`);
+      if (weekly.nextStep) lines.push(`Volgende stap: ${previewText(weekly.nextStep, 120)}`);
+      if (!lines.length) lines.push('Nog geen weekreflectie opgeslagen op de homepage.');
+
+      const sos = document.getElementById('sosSignaal')?.value.trim();
+      if (weekly.nextStep && !sos) {
+        lines.push('Check of die volgende stap ook uitvoerbaar blijft als trek ineens escaleert.');
+      }
+
+      list.innerHTML = '';
+      lines.slice(0, 4).forEach((line) => {
+        const item = document.createElement('li');
+        item.textContent = line;
+        list.appendChild(item);
+      });
+
+      applyButton.disabled = !weekly.nextStep;
+    }
+
+    function applyWeeklyReviewToForm() {
+      const weekly = getWeeklyReview();
+      if (!weekly.nextStep) {
+        showMessage('Nog geen volgende stap om over te nemen.', true);
+        return;
+      }
+
+      appendLine(document.getElementById('doen'), weekly.nextStep);
+      saveForm(true);
+      renderWeeklyReviewPrompt();
+      showMessage('Volgende stap toegevoegd aan direct doen.');
     }
 
     function renderCognitiveNudges(formData) {
@@ -549,11 +710,13 @@
       fillForm(existingData);
       updateMetaChips(existingData);
       renderCognitiveNudges(existingData);
+      renderWeeklyReviewPrompt();
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('noodplanForm').addEventListener('input', () => saveForm(false));
+      document.getElementById('weeklyReviewApply').addEventListener('click', applyWeeklyReviewToForm);
     });
   </script>
 </body>

@@ -57,6 +57,54 @@
     .message { display: none; border-left: 4px solid #5a8840; }
     .message.show { display: block; }
     .message.error { border-left-color: var(--page-accent); }
+
+    .weekly-review-box {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+      border-top: 4px solid #5a744a;
+    }
+
+    .weekly-review-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .weekly-review-box h2 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .weekly-review-chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.36rem 0.74rem;
+      background: #edf6e8;
+      color: #476236;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .weekly-review-chip.due {
+      background: #fff3dd;
+      color: #8a5200;
+    }
+
+    .weekly-review-list {
+      margin: 0.75rem 0 0;
+      padding-left: 1.15rem;
+      color: #435868;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .weekly-review-list li { margin-bottom: 0.3rem; }
   </style>
 </head>
 <body>
@@ -73,6 +121,20 @@
       </header>
 
       <div id="message" class="message"></div>
+
+      <section class="weekly-review-box">
+        <div class="weekly-review-top">
+          <h2>Wekelijkse terugblik</h2>
+          <span class="weekly-review-chip" id="weeklyReviewStatus">Nog geen terugblik</span>
+        </div>
+        <ul class="weekly-review-list" id="weeklyReviewList">
+          <li>Nog geen weekreflectie opgeslagen op de homepage.</li>
+        </ul>
+        <div class="action-bar" style="margin-top: 1rem;">
+          <button type="button" class="button-primary" id="weeklyReviewApply">Neem volgende stap over in reflectie</button>
+          <button type="button" class="button-secondary" id="weeklyReviewOpen">Open terugblik op homepage</button>
+        </div>
+      </section>
 
       <section class="intro-card">
         <h2>Inhoudelijke verbetering: van 1 label naar 3 profielen</h2>
@@ -190,6 +252,7 @@
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'soorten-trek';
+    const WEEKLY_REVIEW_KEY = 'weeklyReview';
     const fields = [
       'cravingType1Name',
       'cravingType1BodySignals',
@@ -242,6 +305,77 @@
       showMessage.timer = setTimeout(() => message.classList.remove('show'), 3000);
     }
 
+    function getWeeklyReview() {
+      return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
+    }
+
+    function isWeeklyReviewDue(lastCompletedAt) {
+      if (!lastCompletedAt) return true;
+      const last = new Date(lastCompletedAt);
+      if (Number.isNaN(last.getTime())) return true;
+      return (Date.now() - last.getTime()) >= 7 * 24 * 60 * 60 * 1000;
+    }
+
+    function appendUniqueLine(textarea, line) {
+      if (!line || !textarea) return;
+      const clean = String(line).trim();
+      if (!clean) return;
+      const existingLines = textarea.value
+        .split('\n')
+        .map((part) => part.trim())
+        .filter(Boolean);
+      if (!existingLines.includes(clean)) {
+        textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
+      }
+    }
+
+    function renderWeeklyReviewPrompt() {
+      const weekly = getWeeklyReview();
+      const status = document.getElementById('weeklyReviewStatus');
+      const list = document.getElementById('weeklyReviewList');
+      const applyButton = document.getElementById('weeklyReviewApply');
+      if (!status || !list || !applyButton) return;
+
+      const due = isWeeklyReviewDue(weekly.lastCompletedAt);
+      status.textContent = weekly.lastCompletedAt
+        ? (due ? 'Tijd voor nieuwe terugblik' : 'Deze week bijgewerkt')
+        : 'Nog geen terugblik';
+      status.classList.toggle('due', due);
+
+      const lines = [];
+      if (weekly.reflection) lines.push(`Terugblik: ${weekly.reflection}`);
+      if (weekly.learning) lines.push(`Leerpunt: ${weekly.learning}`);
+      if (weekly.nextStep) lines.push(`Volgende stap: ${weekly.nextStep}`);
+      if (!lines.length) lines.push('Nog geen weekreflectie opgeslagen op de homepage.');
+
+      const warning = document.getElementById('earlyWarningPattern')?.value.trim();
+      if (weekly.nextStep && warning) {
+        lines.push(`Check of die volgende stap past bij je vroege signalen: ${warning}.`);
+      }
+
+      list.innerHTML = '';
+      lines.slice(0, 4).forEach((line) => {
+        const item = document.createElement('li');
+        item.textContent = line;
+        list.appendChild(item);
+      });
+
+      applyButton.disabled = !weekly.nextStep;
+    }
+
+    function applyWeeklyReviewToForm() {
+      const weekly = getWeeklyReview();
+      if (!weekly.nextStep) {
+        showMessage('Nog geen volgende stap om over te nemen.', true);
+        return;
+      }
+
+      appendUniqueLine(document.getElementById('reflection'), weekly.nextStep);
+      saveForm(true);
+      renderWeeklyReviewPrompt();
+      showMessage('Volgende stap toegevoegd aan reflectie.');
+    }
+
     function saveForm(feedback = true) {
       try {
         iamData.updateFormData(formKey, collectFormData());
@@ -268,11 +402,16 @@
     document.addEventListener('DOMContentLoaded', () => {
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
+      renderWeeklyReviewPrompt();
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('soortenTrekForm').addEventListener('input', () => saveForm(false));
+      document.getElementById('weeklyReviewApply').addEventListener('click', applyWeeklyReviewToForm);
+      document.getElementById('weeklyReviewOpen').addEventListener('click', () => {
+        window.location.href = 'index.htm#weeklyReviewCard';
+      });
     });
   </script>
 <script src="../js/dataStore.js"></script>
