@@ -167,6 +167,7 @@
         </div>
 
         <div class="action-bar">
+          <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
           <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
@@ -246,17 +247,77 @@
       showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
     }
 
+    function firstNonEmpty(items) {
+      return items.find((item) => typeof item === 'string' && item.trim()) || '';
+    }
+
+    function appendUniqueLine(textarea, line) {
+      if (!line || !textarea) return;
+      const clean = line.trim();
+      if (!clean) return;
+      const existingLines = textarea.value
+        .split('\n')
+        .map((part) => part.trim())
+        .filter(Boolean);
+      if (!existingLines.includes(clean)) {
+        textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
+      }
+    }
+
+    function applySuggestionFromIntegration() {
+      const integration = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      const risicoSituaties = iamData.getFormData('risico-situaties') || {};
+      const risicoActiviteiten = iamData.getFormData('risico-activiteiten') || {};
+      const soortenTrek = iamData.getFormData('soorten-trek') || {};
+
+      const stimulus = document.getElementById('stimulus');
+      const functionalAlternative = document.getElementById('functionalAlternative');
+      const attention = document.getElementById('attention');
+      const socialSupport = document.getElementById('socialSupport');
+      const longTerm = document.getElementById('longTerm');
+
+      appendUniqueLine(stimulus, firstNonEmpty([
+        integration?.topTriggers?.[0],
+        risicoSituaties.riskySituations,
+        risicoActiviteiten.riskyActivities
+      ]));
+
+      appendUniqueLine(functionalAlternative, firstNonEmpty([
+        integration?.bestInterventions?.[0],
+        integration?.bestInterventions?.[1],
+        risicoSituaties.responsePlan
+      ]));
+
+      appendUniqueLine(attention, firstNonEmpty([
+        integration?.earlyWarnings?.[0],
+        soortenTrek.earlyWarningPattern
+      ]));
+
+      appendUniqueLine(socialSupport, firstNonEmpty([
+        integration?.supportNetwork?.[0],
+        integration?.supportNetwork?.[1]
+      ]));
+
+      appendUniqueLine(longTerm, firstNonEmpty([
+        integration?.motivationAnchors?.[0],
+        soortenTrek.reflection
+      ]));
+
+      saveForm(true);
+      showMessage('Voorstel ingevuld vanuit integratie-overzicht. Controleer en pas aan waar nodig.');
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
 
+      document.getElementById('suggestButton').addEventListener('click', applySuggestionFromIntegration);
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('stimulusResponsForm').addEventListener('input', () => saveForm(false));
     });
   </script>
-<script src="../js/dataStore.js"></script>
 </body>
 </html>
  

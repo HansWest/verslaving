@@ -166,6 +166,7 @@
         </section>
 
         <div class="action-bar">
+          <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
           <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
@@ -250,10 +251,67 @@
       showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
     }
 
+    function firstNonEmpty(items) {
+      return items.find((item) => typeof item === 'string' && item.trim()) || '';
+    }
+
+    function appendUniqueLine(textarea, line) {
+      if (!line || !textarea) return;
+      const clean = line.trim();
+      if (!clean) return;
+      const existingLines = textarea.value
+        .split('\n')
+        .map((part) => part.trim())
+        .filter(Boolean);
+      if (!existingLines.includes(clean)) {
+        textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
+      }
+    }
+
+    function applySuggestionFromIntegration() {
+      const integration = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
+
+      const riskySituationWithPerson = document.getElementById('riskySituationWithPerson');
+      const wiseWords = document.getElementById('wiseWords');
+      const planA = document.getElementById('planA');
+      const planB = document.getElementById('planB');
+      const boundarySummary = document.getElementById('boundarySummary');
+
+      appendUniqueLine(riskySituationWithPerson, firstNonEmpty([
+        integration?.topTriggers?.[0],
+        integration?.topTriggers?.[1]
+      ]));
+
+      appendUniqueLine(wiseWords, firstNonEmpty([
+        integration?.motivationAnchors?.[0],
+        gevoelens.reframing
+      ]));
+
+      appendUniqueLine(planA, firstNonEmpty([
+        integration?.bestInterventions?.[0],
+        integration?.supportNetwork?.[0]
+      ]));
+
+      appendUniqueLine(planB, firstNonEmpty([
+        integration?.fallbackMoves?.[0],
+        gevoelens.nextTimeAvoid
+      ]));
+
+      appendUniqueLine(boundarySummary, firstNonEmpty([
+        integration?.earlyWarnings?.[0],
+        integration?.motivationAnchors?.[0]
+      ]));
+
+      saveForm(true);
+      showMessage('Voorstel ingevuld vanuit integratie-overzicht. Controleer en pas aan waar nodig.');
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
 
+      document.getElementById('suggestButton').addEventListener('click', applySuggestionFromIntegration);
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
@@ -263,6 +321,5 @@
       });
     });
   </script>
-<script src="../js/dataStore.js"></script>
 </body>
 </html>

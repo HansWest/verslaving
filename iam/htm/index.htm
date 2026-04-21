@@ -230,15 +230,40 @@
 
         .progress-summary {
             background: white;
-            padding: 1.25rem;
             border-radius: 8px;
             margin-bottom: 2rem;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
-        .progress-summary h3 {
-            margin: 0 0 0.75rem 0;
+        .progress-summary-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.1rem 1.25rem;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .progress-summary-toggle::-webkit-details-marker {
+            display: none;
+        }
+
+        .progress-summary-toggle h3 {
+            margin: 0;
             color: #333;
+        }
+
+        .progress-summary-toggle-text {
+            font-size: 0.9rem;
+            color: #5d7385;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .progress-summary-body {
+            padding: 0 1.25rem 1.25rem;
         }
 
         .progress-stats {
@@ -433,30 +458,35 @@
             </div>
         </div>
 
-        <div class="progress-summary" id="progressSummary">
-            <h3>📍 Overzicht van je voortgang</h3>
-            <div class="progress-stats">
-                <span class="stat-chip" id="formsDoneChip">0 formulieren gestart</span>
-                <span class="stat-chip" id="formsCompleteChip">0 formulieren duidelijk ingevuld</span>
-                <span class="stat-chip" id="overallProgressChip">0% totaal</span>
-                <span class="stat-chip" id="qualityChip">0 legacy formulieren met data</span>
-                <span class="stat-chip" id="qualityPriorityChip">0 prioriteitspagina's</span>
-                <span class="stat-chip" id="integrationChip">0 integratie-inzichten</span>
-            </div>
-            <ul class="phase-list" id="phaseStatusList"></ul>
-            <div class="quality-box" id="qualityBox">
-                <h4>Datakwaliteit</h4>
-                <ul class="quality-list" id="qualityList"></ul>
-                <div class="quality-priority">
-                    <h5>Aanbevolen eerst moderniseren</h5>
-                    <ol class="quality-priority-list" id="qualityPriorityList"></ol>
+        <details class="progress-summary" id="progressSummary" open>
+            <summary class="progress-summary-toggle">
+                <h3>📍 Overzicht van je voortgang</h3>
+                <span class="progress-summary-toggle-text">Open of sluit</span>
+            </summary>
+            <div class="progress-summary-body">
+                <div class="progress-stats">
+                    <span class="stat-chip" id="formsDoneChip">0 formulieren gestart</span>
+                    <span class="stat-chip" id="formsCompleteChip">0 formulieren duidelijk ingevuld</span>
+                    <span class="stat-chip" id="overallProgressChip">0% totaal</span>
+                    <span class="stat-chip" id="qualityChip">0 legacy formulieren met data</span>
+                    <span class="stat-chip" id="qualityPriorityChip">0 prioriteitspagina's</span>
+                    <span class="stat-chip" id="integrationChip">0 integratie-inzichten</span>
                 </div>
-                <div class="integration-box">
-                    <h5>Kerninzichten uit meerdere formulieren</h5>
-                    <ul class="integration-list" id="integrationList"></ul>
+                <ul class="phase-list" id="phaseStatusList"></ul>
+                <div class="quality-box" id="qualityBox">
+                    <h4>Datakwaliteit</h4>
+                    <ul class="quality-list" id="qualityList"></ul>
+                    <div class="quality-priority">
+                        <h5>Aanbevolen eerst moderniseren</h5>
+                        <ol class="quality-priority-list" id="qualityPriorityList"></ol>
+                    </div>
+                    <div class="integration-box">
+                        <h5>Kerninzichten uit meerdere formulieren</h5>
+                        <ul class="integration-list" id="integrationList"></ul>
+                    </div>
                 </div>
             </div>
-        </div>
+        </details>
 
         <!-- FASE 1: ORIGINE & WAAROM -->
         <h2 class="section-title">① Fase: Waar ben ik mee begonnen?</h2>
@@ -857,6 +887,14 @@
             return items.slice(0, 2).join(' | ');
         }
 
+        function getInsightCoverage(summary, key) {
+            return summary?.insightMeta?.[key]?.coveragePct || 0;
+        }
+
+        function getInsightConfidence(summary, key) {
+            return summary?.insightMeta?.[key]?.confidenceLabel || 'laag';
+        }
+
         function renderIntegrationSummary() {
             const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
             const integrationList = document.getElementById('integrationList');
@@ -872,14 +910,21 @@
             }
 
             const rows = [
-                `Triggers: ${formatPreview(summary.topTriggers)}`,
-                `Interventies: ${formatPreview(summary.bestInterventions)}`,
-                `Steunnetwerk: ${formatPreview(summary.supportNetwork)}`,
-                `Vroege signalen: ${formatPreview(summary.earlyWarnings)}`
+                `Triggers: ${formatPreview(summary.topTriggers)} (dekking ${getInsightCoverage(summary, 'topTriggers')}%, vertrouwen ${getInsightConfidence(summary, 'topTriggers')})`,
+                `Interventies: ${formatPreview(summary.bestInterventions)} (dekking ${getInsightCoverage(summary, 'bestInterventions')}%, vertrouwen ${getInsightConfidence(summary, 'bestInterventions')})`,
+                `Steunnetwerk: ${formatPreview(summary.supportNetwork)} (dekking ${getInsightCoverage(summary, 'supportNetwork')}%, vertrouwen ${getInsightConfidence(summary, 'supportNetwork')})`,
+                `Vroege signalen: ${formatPreview(summary.earlyWarnings)} (dekking ${getInsightCoverage(summary, 'earlyWarnings')}%, vertrouwen ${getInsightConfidence(summary, 'earlyWarnings')})`
             ];
 
-            const filledCount = rows.filter((row) => !row.endsWith('nog niet ingevuld')).length;
-            integrationChip.textContent = `${filledCount}/4 integratie-inzichten`;
+            const filledCount = [
+                summary.topTriggers,
+                summary.bestInterventions,
+                summary.supportNetwork,
+                summary.earlyWarnings
+            ].filter((items) => Array.isArray(items) && items.length > 0).length;
+            const avgCoverage = summary?.metrics?.averageCoveragePct || 0;
+            const confidence = summary?.metrics?.confidenceLabel || 'laag';
+            integrationChip.textContent = `${filledCount}/4 integratie-inzichten | ${avgCoverage}% dekking | ${confidence} vertrouwen`;
 
             rows.forEach((row) => {
                 const item = document.createElement('li');
@@ -957,6 +1002,11 @@
 
         function viewProgress() {
             refreshDashboard();
+            const progressSummary = document.getElementById('progressSummary');
+            if (progressSummary) {
+                progressSummary.open = true;
+                progressSummary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
             const overallText = document.getElementById('overallProgressChip').textContent;
             const startedText = document.getElementById('formsDoneChip').textContent;
             const qualityText = document.getElementById('qualityChip').textContent;

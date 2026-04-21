@@ -263,68 +263,113 @@ class IamDataStore {
     const balans = getForm('voor-nadelen-balansen');
     const plan = getForm('plan-van-aanpak');
 
-    const topTriggers = this.uniqueLimited([
-      ...this.normalizeList(risicoSituaties.riskySituations),
-      ...this.normalizeList(risicoActiviteiten.riskyActivities),
-      ...this.normalizeList(stimulus.stimulus),
-      ...this.normalizeList(soortenTrek.cravingType1Context),
-      ...this.normalizeList(soortenTrek.cravingType2Context),
-      ...this.normalizeList(soortenTrek.cravingType3Context),
-      ...this.normalizeList(risicoMensen.riskySituationWithPerson)
+    const topTriggersBucket = this.buildInsightBucket([
+      risicoSituaties.riskySituations,
+      risicoActiviteiten.riskyActivities,
+      stimulus.stimulus,
+      soortenTrek.cravingType1Context,
+      soortenTrek.cravingType2Context,
+      soortenTrek.cravingType3Context,
+      risicoMensen.riskySituationWithPerson
     ], 8);
 
-    const supportNetwork = this.uniqueLimited([
-      ...this.normalizeList(stimulus.socialSupport),
-      ...this.normalizeList(gevoelens.talkPeople),
-      ...this.normalizeList(plan.supportPeople),
-      ...this.normalizeList(risicoMensen.personName)
+    const supportNetworkBucket = this.buildInsightBucket([
+      stimulus.socialSupport,
+      gevoelens.talkPeople,
+      plan.supportPeople,
+      risicoMensen.personName
     ], 8);
 
-    const bestInterventions = this.uniqueLimited([
-      ...this.normalizeList(stimulus.functionalAlternative),
-      ...this.normalizeList(stimulus.activeAvoidance),
-      ...this.normalizeList(stimulus.distraction),
-      ...this.normalizeList(stimulus.attention),
-      ...this.normalizeList(risicoSituaties.responsePlan),
-      ...this.normalizeList(risicoActiviteiten.preparationPlan),
-      ...this.normalizeList(risicoActiviteiten.exitStrategy),
-      ...this.normalizeList(gevoelens.enduranceSupport),
-      ...this.normalizeList(gevoelens.acceptancePractice),
-      ...this.normalizeList(plan.planA)
+    const bestInterventionsBucket = this.buildInsightBucket([
+      stimulus.functionalAlternative,
+      stimulus.activeAvoidance,
+      stimulus.distraction,
+      stimulus.attention,
+      risicoSituaties.responsePlan,
+      risicoActiviteiten.preparationPlan,
+      risicoActiviteiten.exitStrategy,
+      gevoelens.enduranceSupport,
+      gevoelens.acceptancePractice,
+      plan.planA
     ], 10);
 
-    const fallbackMoves = this.uniqueLimited([
-      ...this.normalizeList(plan.planB),
-      ...this.normalizeList(risicoMensen.planB),
-      ...this.normalizeList(risicoActiviteiten.afterRisks),
-      ...this.normalizeList(risicoSituaties.afterRisks),
-      ...this.normalizeList(gevoelens.nextTimeAvoid)
+    const fallbackMovesBucket = this.buildInsightBucket([
+      plan.planB,
+      risicoMensen.planB,
+      risicoActiviteiten.afterRisks,
+      risicoSituaties.afterRisks,
+      gevoelens.nextTimeAvoid
     ], 8);
 
-    const earlyWarnings = this.uniqueLimited([
-      ...this.normalizeList(soortenTrek.earlyWarningPattern),
-      ...this.normalizeList(soortenTrek.noGoSignals),
-      ...this.normalizeList(risicoSituaties.internalRisks),
-      ...this.normalizeList(risicoActiviteiten.internalRisks)
+    const earlyWarningsBucket = this.buildInsightBucket([
+      soortenTrek.earlyWarningPattern,
+      soortenTrek.noGoSignals,
+      risicoSituaties.internalRisks,
+      risicoActiviteiten.internalRisks
     ], 8);
 
-    const motivationAnchors = this.uniqueLimited([
-      ...this.normalizeList(plan.mainGoal),
-      ...this.normalizeList(plan.usageGoal),
-      ...this.normalizeList(balans.decisionNote),
-      ...this.normalizeList(soortenTrek.reflection),
-      ...this.normalizeList(gevoelens.learningPeriod)
+    const motivationAnchorsBucket = this.buildInsightBucket([
+      plan.mainGoal,
+      plan.usageGoal,
+      balans.decisionNote,
+      soortenTrek.reflection,
+      gevoelens.learningPeriod
     ], 8);
+
+    const insightMeta = {
+      topTriggers: topTriggersBucket.meta,
+      supportNetwork: supportNetworkBucket.meta,
+      bestInterventions: bestInterventionsBucket.meta,
+      fallbackMoves: fallbackMovesBucket.meta,
+      earlyWarnings: earlyWarningsBucket.meta,
+      motivationAnchors: motivationAnchorsBucket.meta
+    };
+
+    const metaList = Object.values(insightMeta);
+    const avgCoverage = metaList.length
+      ? Math.round(metaList.reduce((sum, meta) => sum + meta.coveragePct, 0) / metaList.length)
+      : 0;
 
     return {
-      topTriggers,
-      supportNetwork,
-      bestInterventions,
-      fallbackMoves,
-      earlyWarnings,
-      motivationAnchors,
+      topTriggers: topTriggersBucket.items,
+      supportNetwork: supportNetworkBucket.items,
+      bestInterventions: bestInterventionsBucket.items,
+      fallbackMoves: fallbackMovesBucket.items,
+      earlyWarnings: earlyWarningsBucket.items,
+      motivationAnchors: motivationAnchorsBucket.items,
+      insightMeta,
+      metrics: {
+        averageCoveragePct: avgCoverage,
+        confidenceLabel: this.coverageToConfidenceLabel(avgCoverage),
+        populatedInsightCount: metaList.filter((meta) => meta.filledSources > 0).length,
+        totalInsightCount: metaList.length
+      },
       updatedAt: new Date().toISOString()
     };
+  }
+
+  buildInsightBucket(sourceValues, limit = 8) {
+    const normalizedLists = sourceValues.map((value) => this.normalizeList(value));
+    const items = this.uniqueLimited(normalizedLists.flat(), limit);
+    const totalSources = sourceValues.length;
+    const filledSources = normalizedLists.filter((list) => list.length > 0).length;
+    const coveragePct = totalSources ? Math.round((filledSources / totalSources) * 100) : 0;
+
+    return {
+      items,
+      meta: {
+        totalSources,
+        filledSources,
+        coveragePct,
+        confidenceLabel: this.coverageToConfidenceLabel(coveragePct)
+      }
+    };
+  }
+
+  coverageToConfidenceLabel(coveragePct) {
+    if (coveragePct >= 75) return 'hoog';
+    if (coveragePct >= 40) return 'middel';
+    return 'laag';
   }
 
   normalizeList(value) {
