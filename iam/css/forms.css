@@ -1,0 +1,320 @@
+/* 
+ * Forms-specific Stylesheet for IAM
+ * Form layouts, fieldsets, and input styling
+ */
+
+/* Form containers */
+form {
+    margin: 0;
+}
+
+.form-section {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+}
+
+.form-section h2 {
+    margin-top: 0;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.75rem;
+}
+
+/* Fieldsets */
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+legend {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+/* Form groups and layout */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 600px) {
+    .form-row.cols-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 1024px) {
+    .form-row.cols-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+label .required {
+    color: var(--danger-color);
+}
+
+/* Input states */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+input:invalid {
+    border-color: var(--danger-color);
+}
+
+input:invalid:focus {
+    box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
+}
+
+/* Textareas */
+textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+/* Select dropdowns */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    select {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f0f0f0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    }
+}
+
+/* Checkboxes and Radio buttons */
+input[type="checkbox"],
+input[type="radio"] {
+    width: auto;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    min-height: 20px;
+    min-width: 20px;
+}
+
+.checkbox-group,
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.checkbox-item,
+.radio-item {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-item label,
+.radio-item label {
+    margin-bottom: 0;
+    margin-left: 0.5rem;
+    font-weight: normal;
+}
+
+/* Help text */
+.help-text,
+.form-help {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* Error messages */
+.error-message,
+.form-error {
+    color: var(--danger-color);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.form-group.has-error input,
+.form-group.has-error textarea,
+.form-group.has-error select {
+    border-color: var(--danger-color);
+}
+
+/* Success messages */
+.success-message,
+.form-success {
+    color: var(--success-color);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Form actions */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.form-actions button,
+.form-actions .button {
+    flex: 1;
+    min-width: 140px;
+}
+
+/* Button variations */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--border-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #d32f2f;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #388e3c;
+}
+
+/* Small buttons */
+.btn-sm {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+/* Loading state */
+button:disabled,
+button[aria-busy="true"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Alert boxes inside forms */
+.alert,
+.form-alert {
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    border-left: 4px solid;
+}
+
+.alert-info {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+    color: #1565c0;
+}
+
+.alert-success {
+    background-color: #f1f8f4;
+    border-color: #4caf50;
+    color: #2e7d32;
+}
+
+.alert-warning {
+    background-color: #fff3e0;
+    border-color: #ff9800;
+    color: #e65100;
+}
+
+.alert-danger {
+    background-color: #fef1f0;
+    border-color: #f44336;
+    color: #c62828;
+}
+
+/* Print styles for forms */
+@media print {
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        border: none;
+        border-bottom: 1px solid #000;
+        background: transparent;
+    }
+
+    select {
+        border: none;
+        background: transparent;
+    }
+
+    button,
+    .form-actions {
+        display: none;
+    }
+
+    .form-section {
+        page-break-inside: avoid;
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAM - Integrative Addiction Management</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/forms.css">
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5568d3;
+            --accent: #764ba2;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin: 0;
+            opacity: 0.95;
+        }
+
+        .intro-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1.8;
+        }
+
+        .intro-section h2 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+
+        .model-info {
+            background: #f0f7ff;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+
+        .model-info strong {
+            color: var(--primary);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .card-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .card-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card.phase-1 {
+            border-top-color: #e91e63;
+        }
+
+        .card.phase-2 {
+            border-top-color: var(--warning);
+        }
+
+        .card.phase-3 {
+            border-top-color: var(--primary);
+        }
+
+        .card.phase-4 {
+            border-top-color: var(--danger);
+        }
+
+        .card.phase-recovery {
+            border-top-color: var(--success);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card h3 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .card p {
+            margin: 0 0 1rem 0;
+            color: #666;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .card-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .card-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .card-link:hover {
+            background: var(--primary-dark);
+            text-decoration: none;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+
+        .phase-label {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .phase-1 .phase-label {
+            background: #e91e63;
+        }
+
+        .phase-2 .phase-label {
+            background: var(--warning);
+        }
+
+        .phase-3 .phase-label {
+            background: var(--primary);
+        }
+
+        .phase-4 .phase-label {
+            background: var(--danger);
+        }
+
+        .phase-recovery .phase-label {
+            background: var(--success);
+        }
+
+        .progress-indicator {
+            display: block;
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .quick-actions {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-actions h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            padding: 0.75rem 1.25rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .btn-action:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-action.export {
+            background: var(--success);
+        }
+
+        .btn-action.export:hover {
+            background: #388e3c;
+        }
+
+        @media print {
+            .hero, .quick-actions, .btn-action {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero -->
+        <div class="hero">
+            <h1>🧭 IAM</h1>
+            <p>Integrative Addiction Management</p>
+            <p style="font-size: 0.95rem; opacity: 0.85;">Jouw reis naar zelfbewustzijn en controle</p>
+        </div>
+
+        <!-- Intro -->
+        <div class="intro-section">
+            <h2>Wat is deze app?</h2>
+            <p>
+                Deze app helpt je om je eigen gebruikspatronen beter te begrijpen. Niet doordat we je antwoorden geven,
+                maar doordat we je de juiste vragen helpen stellen.
+            </p>
+            
+            <div class="model-info">
+                <strong>💡 De gedachte erachter:</strong>
+                <p style="margin: 0.5rem 0 0 0;">
+                    Je bent waarschijnlijk begonnen omdat iets je echt hielp. Vervolgens kan gebruik meer ruimte gaan innemen,
+                    terwijl bepaalde gevoelens en behoeften minder helder worden. Daardoor kan het middel steeds aantrekkelijker
+                    gaan voelen zonder dat je direct ziet waarom. Door jezelf beter te begrijpen, kun je dit patroon eerder herkennen.
+                </p>
+            </div>
+
+            <p style="margin-top: 1rem;">
+                Uiteindelijk willen mensen graag hun eigen weg kunnen kiezen. Daarom ligt de weg vooruit niet vooral in strijd voeren
+                met jezelf, maar in onderzoeken wat jij eigenlijk echt wilt, nodig hebt en belangrijk vindt.
+            </p>
+
+            <p>
+                De formulieren hieronder zijn georganiseerd in verschillende fases van zelfonderzoek. 
+                <strong>Je hoeft niet alles te doen.</strong> Start ergens en kijk wat voelt.
+            </p>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3>⚡ Snelle acties</h3>
+            <div class="action-buttons">
+                <button class="btn-action" onclick="exportAllData()">📥 Mijn gegevens exporteren</button>
+                <button class="btn-action export" onclick="viewProgress()">📊 Mijn voortgang</button>
+            </div>
+        </div>
+
+        <!-- FASE 1: ORIGINE & WAAROM -->
+        <h2 class="section-title">① Fase: Waar ben ik mee begonnen?</h2>
+        <p style="color: #666;">Terug naar het begin - wat was de positieve reden om te starten?</p>
+        
+        <div class="card-grid">
+            <div class="card phase-1">
+                <span class="phase-label">ORIGINE</span>
+                <div class="card-icon">🎯</div>
+                <h3>Waarom ben ik begonnen?</h3>
+                <p>
+                    Onderzoek wat je origineel aanlokte. Was het ontspanning, sociale contact, prestatie, of pijnbestrijding? 
+                    Dit helpt je de **echte behoefte** te vinden achter je gebruik.
+                </p>
+                <div class="card-links">
+                    <a href="waarom-wel-gebruiken.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-1">
+                <span class="phase-label">IDENTITEIT</span>
+                <div class="card-icon">🔍</div>
+                <h3>Wie ben ik zonder het middel?</h3>
+                <p>
+                    Onderzoek je identiteit onafhankelijk van je middel. Wat zijn je waarden, kwaliteiten, en dromen? 
+                    Dit is het fundament om op op te bouwen.
+                </p>
+                <div class="card-links">
+                    <a href="wat-is-mijn-ik.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-1">
+                <span class="phase-label">WAARDEN</span>
+                <div class="card-icon">💎</div>
+                <h3>Wat is mij belangrijk?</h3>
+                <p>
+                    Bepaal je persoonlijke waarden. Dit zijn je kompas — wanneer je van jezelf afwijkt, merk je dat sneller op.
+                </p>
+                <div class="card-links">
+                    <a href="persoonlijke-waarden.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+        </div>
+
+        <!-- FASE 2: BEWUSTZIJN & GEVOELENS -->
+        <h2 class="section-title">② Fase: Wat voel ik eigenlijk?</h2>
+        <p style="color: #666;">Gevoelens die je misschien lange tijd niet hebt gevoeld...</p>
+        
+        <div class="card-grid">
+            <div class="card phase-2">
+                <span class="phase-label">EMOTIONS</span>
+                <div class="card-icon">😔</div>
+                <h3>Lastige gevoelens herkennen</h3>
+                <p>
+                    Gebruik kan gevoelens naar de achtergrond drukken. Welke gevoelens ben je misschien gaan ontwijken? Angst, verdriet, schaamte, eenzaamheid?
+                </p>
+                <div class="card-links">
+                    <a href="lastige-gevoelens.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-2">
+                <span class="phase-label">CRAVING</span>
+                <div class="card-icon">🔥</div>
+                <h3>Trek voelen en meten</h3>
+                <p>
+                    Trek kan variëren van 1-10. Leer wat jouw patronen zijn. Wanneer is het het ergst? Wat helpt dan?
+                </p>
+                <div class="card-links">
+                    <a href="craving-1-10.htm" class="card-link">Start →</a>
+                    <a href="craving-gevoel.htm" class="card-link">Soorten →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-2">
+                <span class="phase-label">EVENWICHT</span>
+                <div class="card-icon">⚖️</div>
+                <h3>Voor- en nadelen wegen</h3>
+                <p>
+                    Gebruik biedt voordelen EN nadelen. Verandering ook. Zet beide op een rij en zie het patroon duidelijk.
+                </p>
+                <div class="card-links">
+                    <a href="voor-nadelen-balansen.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+        </div>
+
+        <!-- FASE 3: PATROON ERKENNEN -->
+        <h2 class="section-title">③ Fase: Hoe werkt de spiraal?</h2>
+        <p style="color: #666;">De triggers, reacties, en waarom je steeds terugkeert...</p>
+        
+        <div class="card-grid">
+            <div class="card phase-3">
+                <span class="phase-label">SPIRAAL</span>
+                <div class="card-icon">🌀</div>
+                <h3>Stimulus → Reactie → Gevolg</h3>
+                <p>
+                    Wat zijn jouw triggermomente? Wat voelt zich beter aan? Welke gevolgen volgen? De cyclus begrijpen is cruciaal.
+                </p>
+                <div class="card-links">
+                    <a href="stimulus-respons.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-3">
+                <span class="phase-label">RISICO'S</span>
+                <div class="card-icon">⚠️</div>
+                <h3>Mijn risicomomenten</h3>
+                <p>
+                    In welke situaties, gevoelens, of met welke mensen ben je het meest kwetsbaar? Ken je vijand.
+                </p>
+                <div class="card-links">
+                    <a href="risico-situaties.htm" class="card-link">Situaties →</a>
+                    <a href="risico-mensen.htm" class="card-link">Mensen →</a>
+                    <a href="risico-activiteiten.htm" class="card-link">Activiteiten →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-3">
+                <span class="phase-label">SOORTEN</span>
+                <div class="card-icon">🎭</div>
+                <h3>Soorten trek</h3>
+                <p>
+                    Niet alle trek is hetzelfde. Lichamelijk, emotioneel, habitual, of als vieren? Herken het verschil.
+                </p>
+                <div class="card-links">
+                    <a href="soorten-trek.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+        </div>
+
+        <!-- FASE 4: NOODPLAN & ALTERNATIEVEN -->
+        <h2 class="section-title">④ Fase: Hoe bouw ik alternatieven?</h2>
+        <p style="color: #666;">Strategieën om de spiraal te doorbreken...</p>
+        
+        <div class="card-grid">
+            <div class="card phase-4">
+                <span class="phase-label">NOODPLAN</span>
+                <div class="card-icon">🆘</div>
+                <h3>Plan voor forse trek</h3>
+                <p>
+                    Voor de momenten dat het héél moeilijk wordt. Wat kun je doen? Wie kun je bellen? Wat kalmeert je?
+                </p>
+                <div class="card-links">
+                    <a href="noodplan-forse-trek.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-4">
+                <span class="phase-label">COPING</span>
+                <div class="card-icon">🧠</div>
+                <h3>Trek opvangen</h3>
+                <p>
+                    Trek voorbijgaat. Leer technieken om trek op te vangen zonder er aan toe te geven. 30 seconden? Ga erbuiten.
+                </p>
+                <div class="card-links">
+                    <a href="trek-opvangen.htm" class="card-link">Technieken →</a>
+                    <a href="trek-opvangen-2.htm" class="card-link">Meer →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-4">
+                <span class="phase-label">PLAN</span>
+                <div class="card-icon">📋</div>
+                <h3>Mijn plan van aanpak</h3>
+                <p>
+                    Dit alles en meerdere formulieren samenbrengen in jouw persoonlijke actieplan. Wat ga je doen? Wanneer? Met wie?
+                </p>
+                <div class="card-links">
+                    <a href="plan-van-aanpak.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+        </div>
+
+        <!-- FASE 5: OPBOUW & STEUN -->
+        <h2 class="section-title">⑤ Fase: Wat maakt mij sterk?</h2>
+        <p style="color: #666;">Ondersteuning, beloning, en voortgang...</p>
+        
+        <div class="card-grid">
+            <div class="card phase-recovery">
+                <span class="phase-label">NETWERK</span>
+                <div class="card-icon">🤝</div>
+                <h3>Mijn steunnetwerk</h3>
+                <p>
+                    Je doet dit niet alleen. Wie steunt je? Familie, vrienden, therapeut? Hoe reiken ze je het?
+                </p>
+                <div class="card-links">
+                    <a href="motiverende-mensen.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-recovery">
+                <span class="phase-label">BELONING</span>
+                <div class="card-icon">🎉</div>
+                <h3>Genieten & Belonen</h3>
+                <p>
+                    Wat geeft je echt plezier? Zonder middel? Wat viert je voortgang? Creëer gezonde beloningen.
+                </p>
+                <div class="card-links">
+                    <a href="genieten-belonen.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-recovery">
+                <span class="phase-label">VOORTGANG</span>
+                <div class="card-icon">📈</div>
+                <h3>Mijn voortgang bijhouden</h3>
+                <p>
+                    Noteer wat je leert. Zie patronen. Wat werkt? Wat niet? Dit formulier helpt je je eigen expert te worden.
+                </p>
+                <div class="card-links">
+                    <a href="agenda.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="margin-top: 3rem; padding: 2rem; background: #f5f5f5; border-radius: 8px; text-align: center; color: #666;">
+            <p>
+                <strong>Privacygarantie:</strong> Al jouw gegevens blijven op jouw apparaat. Niets gaat naar een server.
+            </p>
+            <p style="font-size: 0.9rem; margin-top: 1rem; color: #999;">
+                © IAM Project | Voor vragen: HansRJWest@Gmail.com
+            </p>
+        </div>
+    </div>
+
+    <script src="../js/dataStore.js"></script>
+    <script>
+        function exportAllData() {
+            const jsonExport = iamData.exportJSON();
+            downloadFile(jsonExport.blob, jsonExport.filename);
+            alert('✅ Je gegevens zijn geëxporteerd als JSON');
+        }
+
+        function viewProgress() {
+            alert('📊 Voortgang feature coming soon!');
+        }
+
+        function downloadFile(blob, filename) {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
