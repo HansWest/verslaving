@@ -1,0 +1,408 @@
+<html>
+<head>
+<title>::: :: : Self-Management: ALCOHOL - Hoofdmenu : :: :::</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="assets/sma.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/database.js"></script>
+<script language="javascript">
+
+var currentUser = null;
+
+// Check of gebruiker is ingelogd
+window.addEventListener('load', function() {
+    if (!Auth.isLoggedIn()) {
+        alert('Je moet eerst inloggen');
+        location.href = 'login.htm';
+        return;
+    }
+    
+    currentUser = Auth.getCurrentUser();
+    
+    // Toon gebruikersnaam
+    document.getElementById('username_display').innerHTML = currentUser.user_name;
+    if (currentUser.voornaam) {
+        document.getElementById('welcome_name').innerHTML = currentUser.voornaam;
+    } else {
+        document.getElementById('welcome_name').innerHTML = currentUser.user_name;
+    }
+});
+
+// Uitloggen
+function doLogout() {
+    if (confirm('Weet je zeker dat je wilt uitloggen?')) {
+        Auth.logout();
+        location.href = 'index.htm';
+    }
+}
+
+// Export alle gebruikersdata
+function exportUserData() {
+    var allData = {
+        user: currentUser,
+        userData: UserData.getAll(),
+        exportDate: new Date().toISOString()
+    };
+    
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allData, null, 2));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "sma_backup_" + currentUser.user_name + ".json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+    
+    alert('Je data is geÃ«xporteerd naar een JSON bestand');
+}
+
+// Toon sectie
+function showSection(sectionId) {
+    // Verberg alle secties
+    var sections = document.getElementsByClassName('content-section');
+    for (var i = 0; i < sections.length; i++) {
+        sections[i].style.display = 'none';
+    }
+    
+    // Toon geselecteerde sectie
+    document.getElementById(sectionId).style.display = 'block';
+}
+
+</script>
+</head>
+
+<body bgcolor="#AAAAAA" text="#333333" link="#662222" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
+<div class="container">
+<table bgcolor="#AAAAAA" border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
+<tr><td align="center" valign="middle">
+<table width="800" height="590" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+    <td width="150" height="100%">
+        <table height="100%" width="100%" border="0" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF" 
+               style="border-bottom: 1px solid #333333; border-left: 1px solid #333333; border-top: 1px solid #333333;">
+        <tr valign="top">
+            <td width="137">
+                <p align="right">
+                    <span class="smakopje2">
+                        SMA<br>
+                        <i>Self-Management: ALCOHOL</i>
+                    </span>
+                </p>
+                
+                <hr size="1" align="right" width="50%">
+                
+                <p align="right">
+                    <font size="-1">
+                        Ingelogd als:<br>
+                        <b><span id="username_display"></span></b>
+                    </font>
+                </p>
+                
+                <p>&nbsp;</p>
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="2">
+                    <tr>
+                        <td colspan="2" align="right">
+                            <span class="smakopje4"><i>menu</i></span>
+                            <hr size="1" align="right" width="50%">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td width="10" align="center">
+                            <img src="pics/macmanup.gif" width="23" height="28" border="0">
+                        </td>
+                        <td align="right">
+                            <a href="javascript:void(0)" onclick="showSection('overview')" class="menubutton">
+                                overzicht
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    
+                    <tr>
+                        <td align="center">
+                            <img src="pics/grijs.gif" width="9" height="5" border="0">
+                        </td>
+                        <td align="right">
+                            <a href="../htm/index.htm" target="_blank" class="menubutton">
+                                formulieren
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    
+                    <tr>
+                        <td align="center">
+                            <img src="pics/grijs.gif" width="9" height="5" border="0">
+                        </td>
+                        <td align="right">
+                            <a href="javascript:void(0)" onclick="showSection('tools')" class="menubutton">
+                                hulpmiddelen
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    
+                    <tr>
+                        <td align="center">
+                            <img src="pics/grijs.gif" width="9" height="5" border="0">
+                        </td>
+                        <td align="right">
+                            <a href="javascript:void(0)" onclick="showSection('settings')" class="menubutton">
+                                instellingen
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    
+                    <tr>
+                        <td align="center">
+                            <img src="pics/grijs.gif" width="9" height="5" border="0">
+                        </td>
+                        <td align="right">
+                            <a href="javascript:void(0)" onclick="exportUserData()" class="menubutton">
+                                backup data
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    <tr><td colspan="2"><hr size="1" align="right" width="50%"></td></tr>
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    
+                    <tr>
+                        <td align="center">
+                            <img src="pics/macmandwn.gif" width="23" height="28" border="0">
+                        </td>
+                        <td align="right">
+                            <a href="javascript:void(0)" onclick="doLogout()" class="menubutton">
+                                uitloggen
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </table>
+    </td>
+    
+    <td>
+        <table bgcolor="#CCCCCC" width="100%" height="100%" cellpadding="20" cellspacing="0">
+        <tr>
+        <td valign="top">
+            
+             Overzicht Sectie -->
+            <div id="overview" class="content-section">
+                <p align="right">
+                    <span class="smakopje2">SMA<br><i>overzicht</i></span>
+                </p>
+                
+                <p>
+                    <img src="pics/macsmiley.gif" border="0">
+                    <b>Welkom <span id="welcome_name"></span>!</b>
+                </p>
+                
+                <p>
+                    Je bent ingelogd in het Self-Management: ALCOHOL programma.
+                    Dit is een hulpmiddel dat je ondersteunt bij het controleren 
+                    van je alcoholgebruik.
+                </p>
+                
+                <h3>Wat kun je hier doen?</h3>
+                
+                <table width="100%" border="0" cellpadding="10" cellspacing="0">
+                    <tr>
+                        <td width="50%" valign="top" bgcolor="#FFFFFF">
+                            <h4><img src="pics/macmanup.gif" width="23" height="28" align="absmiddle"> Formulieren invullen</h4>
+                            <p>
+                                Gebruik de verschillende formulieren om inzicht te krijgen in:
+                            </p>
+                            <ul>
+                                <li>Jouw verslaving</li>
+                                <li>Risicosituaties</li>
+                                <li>Craving (trek)</li>
+                                <li>Noodplannen</li>
+                                <li>Persoonlijke waarden</li>
+                                <li>En veel meer...</li>
+                            </ul>
+                            <p>
+                                <a href="../htm/index.htm" target="_blank" class="menubutton">
+                                    &nbsp;Open formulieren&nbsp;
+                                </a>
+                            </p>
+                        </td>
+                        <td width="50%" valign="top" bgcolor="#FFFFFF">
+                            <h4><img src="pics/grijs.gif" width="9" height="5" align="absmiddle"> Data beheer</h4>
+                            <p>
+                                Al je ingevulde formulieren worden automatisch opgeslagen 
+                                op jouw apparaat. Je kunt:
+                            </p>
+                            <ul>
+                                <li>Formulieren opslaan en herstellen</li>
+                                <li>Je voortgang bijhouden</li>
+                                <li>Data exporteren (backup)</li>
+                                <li>Alles lokaal - niets gaat naar een server</li>
+                            </ul>
+                            <p>
+                                <a href="javascript:void(0)" onclick="exportUserData()" class="menubutton">
+                                    &nbsp;Backup maken&nbsp;
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <p>&nbsp;</p>
+                
+                <div align="center" style="padding: 15px; background-color: #FFFFFF; border: 2px solid #666666;">
+                    <h3>Privacy & Veiligheid</h3>
+                    <p>
+                        <b>Alle data blijft op jouw apparaat.</b><br>
+                        Niets wordt naar een server gestuurd.<br>
+                        Je bent volledig in controle over jouw eigen gegevens.
+                    </p>
+                </div>
+            </div>
+            
+             Hulpmiddelen Sectie -->
+            <div id="tools" class="content-section" style="display:none;">
+                <p align="right">
+                    <span class="smakopje2">SMA<br><i>hulpmiddelen</i></span>
+                </p>
+                
+                <h3>Beschikbare hulpmiddelen</h3>
+                
+                <p>
+                    Hier vind je verschillende tools en formulieren die je kunnen helpen:
+                </p>
+                
+                <ul>
+                    <li><a href="../htm/jouw-verslaving.htm" target="_blank">Jouw verslaving</a> - Krijg inzicht in jouw situatie</li>
+                    <li><a href="../htm/risico-situaties.htm" target="_blank">Risico situaties</a> - Identificeer risicovolle momenten</li>
+                    <li><a href="../htm/risico-mensen.htm" target="_blank">Risico mensen</a> - Mensen die invloed hebben</li>
+                    <li><a href="../htm/craving-gevoel.htm" target="_blank">Craving gevoelens</a> - Omgaan met trek</li>
+                    <li><a href="../htm/noodplan-tekst.htm" target="_blank">Noodplan</a> - Voor moeilijke momenten</li>
+                    <li><a href="../htm/persoonlijke-waarden.htm" target="_blank">Persoonlijke waarden</a> - Wat is belangrijk voor jou</li>
+                    <li><a href="../htm/plan-van-aanpak.htm" target="_blank">Plan van aanpak</a> - Jouw strategie</li>
+                    <li><a href="../htm/to-do-lijst.htm" target="_blank">To-do lijst</a> - Actiepunten</li>
+                </ul>
+                
+                <p>
+                    <b>Tip:</b> Alle formulieren hebben een 's' (save) en 'r' (recover) knop 
+                    om je werk op te slaan en te herstellen.
+                </p>
+            </div>
+            
+             Instellingen Sectie -->
+            <div id="settings" class="content-section" style="display:none;">
+                <p align="right">
+                    <span class="smakopje2">SMA<br><i>instellingen</i></span>
+                </p>
+                
+                <h3>Accountinstellingen</h3>
+                
+                <p>Hier kun je je account beheren en instellingen wijzigen.</p>
+                
+                <table width="100%" border="0" cellpadding="10" cellspacing="0" bgcolor="#FFFFFF">
+                    <tr>
+                        <td width="30%"><b>Gebruikersnaam:</b></td>
+                        <td><span id="settings_username"></span></td>
+                    </tr>
+                    <tr>
+                        <td><b>Email:</b></td>
+                        <td><span id="settings_email"></span></td>
+                    </tr>
+                    <tr>
+                        <td><b>Naam:</b></td>
+                        <td><span id="settings_name"></span></td>
+                    </tr>
+                </table>
+                
+                <p>&nbsp;</p>
+                
+                <h3>Data beheer</h3>
+                
+                <p>
+                    <input type="button" value="Exporteer alle data (backup)" 
+                           onclick="exportUserData()" class="menubutton">
+                </p>
+                
+                <p>
+                    <input type="button" value="Wijzig wachtwoord" 
+                           onclick="changePassword()" class="menubutton">
+                </p>
+                
+                <p>&nbsp;</p>
+                
+                <div style="padding: 10px; background-color: #FFE0E0; border: 1px solid #FF0000;">
+                    <h4>Gevaarlijke zone</h4>
+                    <p>
+                        <input type="button" value="Verwijder alle data" 
+                               onclick="deleteAllData()" class="menubutton" 
+                               style="background-color: #FF0000; color: #FFFFFF;">
+                    </p>
+                    <p><font size="-1">Dit verwijdert ALLE opgeslagen formulieren en data. Dit kan niet ongedaan gemaakt worden!</font></p>
+                </div>
+                
+                <script>
+                // Vul instellingen in
+                if (currentUser) {
+                    document.getElementById('settings_username').innerHTML = currentUser.user_name;
+                    document.getElementById('settings_email').innerHTML = currentUser.emailadres;
+                    document.getElementById('settings_name').innerHTML = 
+                        (currentUser.voornaam || '') + ' ' + (currentUser.achternaam || '');
+                }
+                
+                function changePassword() {
+                    var newPass = prompt('Vul je nieuwe wachtwoord in (minimaal 6 tekens):');
+                    if (!newPass) return;
+                    
+                    if (newPass.length < 6) {
+                        alert('Wachtwoord moet minimaal 6 tekens zijn');
+                        return;
+                    }
+                    
+                    if (Auth.changePassword(currentUser.id, newPass)) {
+                        alert('Wachtwoord succesvol gewijzigd');
+                    } else {
+                        alert('Fout bij wijzigen wachtwoord');
+                    }
+                }
+                
+                function deleteAllData() {
+                    if (!confirm('Weet je ZEKER dat je alle data wilt verwijderen?\n\nDit verwijdert:\n- Alle formulieren\n- Alle opgeslagen antwoorden\n- Al je voortgang\n\nDit kan NIET ongedaan gemaakt worden!')) {
+                        return;
+                    }
+                    
+                    if (!confirm('Laatste waarschuwing!\n\nAlle data wordt permanent verwijderd!')) {
+                        return;
+                    }
+                    
+                    // Verwijder alle userdata
+                    var allKeys = UserData.getAll();
+                    for (var key in allKeys) {
+                        UserData.remove(key);
+                    }
+                    
+                    alert('Alle data is verwijderd');
+                    location.reload();
+                }
+                </script>
+            </div>
+            
+        </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>
+</td></tr>
+</table>
+</div>
+</body>
+</html>

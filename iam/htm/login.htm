@@ -1,0 +1,387 @@
+<html>
+<head>
+<title>::: :: : Self-Management: ALCOHOL - Inloggen : :: :::</title>
+<meta name="description" content="Login pagina voor Self-Management: ALCOHOL">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="assets/sma.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/database.js"></script>
+<script language="javascript">
+
+// Check of gebruiker al is ingelogd
+window.addEventListener('load', function() {
+    if (Auth.isLoggedIn()) {
+        var user = Auth.getCurrentUser();
+        if (confirm('Je bent al ingelogd als ' + user.user_name + '. Wil je uitloggen?')) {
+            Auth.logout();
+            location.reload();
+        } else {
+            location.href = 'main.htm';
+        }
+    }
+    
+    // Check of we van registratie komen
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('registered') === 'true') {
+        document.getElementById('feedback').innerHTML = 
+            '<p class="successmess"><b>Registratie gelukt! Je kunt nu inloggen.</b></p>';
+    }
+});
+
+// Login functie
+function doLogin() {
+    var username = document.getElementById('user_name').value.trim();
+    var password = document.getElementById('password').value;
+    
+    if (!username || !password) {
+        document.getElementById('feedback').innerHTML = 
+            '<p class="errormess"><b>Vul zowel gebruikersnaam als wachtwoord in</b></p>';
+        return false;
+    }
+    
+    if (username.length > 25 || password.length > 25) {
+        document.getElementById('feedback').innerHTML = 
+            '<p class="errormess"><b>Gebruikersnaam en wachtwoord mogen maximaal 25 tekens zijn</b></p>';
+        return false;
+    }
+    
+    var result = Auth.login(username, password);
+    
+    if (result.success) {
+        // Login gelukt - doorsturen naar hoofdpagina
+        location.href = 'main.htm';
+    } else {
+        document.getElementById('feedback').innerHTML = 
+            '<p class="errormess"><b>' + result.message + '</b></p>';
+    }
+    
+    return false;
+}
+
+// Toon registratie formulier
+function showRegister() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+    document.getElementById('feedback').innerHTML = '';
+}
+
+// Toon login formulier
+function showLogin() {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('feedback').innerHTML = '';
+}
+
+// Registratie functie
+function doRegister() {
+    var username = document.getElementById('reg_user_name').value.trim();
+    var password = document.getElementById('reg_password').value;
+    var password2 = document.getElementById('reg_password2').value;
+    var email = document.getElementById('reg_emailadres').value.trim().toLowerCase();
+    var voornaam = document.getElementById('reg_voornaam').value.trim();
+    var achternaam = document.getElementById('reg_achternaam').value.trim();
+    
+    // Validatie
+    if (!username || !password || !email) {
+        document.getElementById('feedback').innerHTML = 
+            '<p class="errormess"><b>Gebruikersnaam, wachtwoord en email zijn verplicht</b></p>';
+        return false;
+    }
+    
+    if (password !== password2) {
+        document.getElementById('feedback').innerHTML = 
+            '<p class="errormess"><b>Wachtwoorden komen niet overeen</b></p>';
+        return false;
+    }
+    
+    if (password.length < 6) {
+        document.getElementById('feedback').innerHTML = 
+            '<p class="errormess"><b>Wachtwoord moet minimaal 6 tekens zijn</b></p>';
+        return false;
+    }
+    
+    if (!validateEmail(email)) {
+        document.getElementById('feedback').innerHTML = 
+            '<p class="errormess"><b>Ongeldig emailadres</b></p>';
+        return false;
+    }
+    
+    // Probeer te registreren
+    var result = Auth.register({
+        user_name: username,
+        password: password,
+        emailadres: email,
+        voornaam: voornaam,
+        achternaam: achternaam
+    });
+    
+    if (result.success) {
+        // Registratie gelukt
+        location.href = 'login.htm?registered=true';
+    } else {
+        document.getElementById('feedback').innerHTML = 
+            '<p class="errormess"><b>' + result.message + '</b></p>';
+    }
+    
+    return false;
+}
+
+// Wachtwoord vergeten
+function forgotPassword() {
+    var email = prompt('Vul je emailadres in:');
+    
+    if (!email) return;
+    
+    if (!validateEmail(email)) {
+        alert('Ongeldig emailadres');
+        return;
+    }
+    
+    var result = Auth.resetPassword(email);
+    
+    if (result.success) {
+        alert('Nieuw wachtwoord: ' + result.newPassword + '\n\n' +
+              'Noteer dit wachtwoord en log daarmee in. Je kunt het later wijzigen in je instellingen.\n\n' +
+              'Let op: In een echte applicatie zou dit wachtwoord per email verstuurd worden.');
+    } else {
+        alert(result.message);
+    }
+}
+
+// Small screen detectie
+if (screen.width < 600) {
+    // In een echte implementatie zou hier naar small_login.htm verwezen worden
+    // location.href = "small_login.htm";
+}
+
+</script>
+</head>
+
+<body bgcolor="#AAAAAA" text="#333333" link="#662222" marginwidth="0" marginheight="0" leftmargin="0" topmargin="0">
+<div class="container">
+<table bgcolor="#AAAAAA" border="0" cellspacing="0" cellpadding="0" width="100%" height="100%">
+<tr><td align="center" valign="middle">
+<table width="800" height="590" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+<tr>
+    <td width="150" height="100%">
+        <table height="100%" width="100%" border="0" cellspacing="0" cellpadding="4" bgcolor="#FFFFFF" style="border-bottom: 1px solid #333333; border-left: 1px solid #333333; border-top: 1px solid #333333;">
+        <tr valign="top">
+            <td width="137">
+                <p align="right">
+                    <span class="smakopje2">
+                        SMA<br>
+                        <i>Self-Management: ALCOHOL</i>
+                    </span>
+                </p>
+                
+                <p>&nbsp;</p>
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td align="right">
+                            <span class="smakopje4"><i>menu</i></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td valign="middle" align="center">
+                            <img src="pics/macmanup.gif" width="23" height="28" border="0">
+                        </td>
+                        <td align="right">
+                            <a href="./index.htm" class="menubutton">terug naar home</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+                
+                <p>&nbsp;</p>
+                
+                <p align="right">
+                    <font size="-1" color="#666666">
+                        Alle data wordt lokaal<br>
+                        op jouw apparaat<br>
+                        opgeslagen
+                    </font>
+                </p>
+            </td>
+        </tr>
+        </table>
+    </td>
+    
+    <td>
+        <table bgcolor="#CCCCCC" width="100%" height="100%" cellpadding="20" cellspacing="0">
+        <tr>
+        <td valign="top">
+            <p align="right">
+                <span class="smakopje2">SMA<br><i>inloggen</i></span>
+            </p>
+            
+             Feedback berichten -->
+            <div id="feedback"></div>
+            
+             Login Formulier -->
+            <div id="loginForm">
+                <p>
+                    <img src="pics/macsmiley.gif" border="0">
+                    <b>Welkom op deze site</b>
+                </p>
+                
+                <p>
+                    <i>Een site die is gemaakt voor mensen met een (beginnend) probleem 
+                    om hun alcohol-inname te controleren.</i>
+                </p>
+                
+                <form name="login" onsubmit="return doLogin();">
+                    <table width="100%" border="0" cellpadding="5">
+                        <tr>
+                            <td width="40%" align="right">
+                                <b>Gebruikersnaam:</b>
+                            </td>
+                            <td>
+                                <input type="text" id="user_name" name="user_name" 
+                                       size="25" maxlength="25" class="smainput">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <b>Wachtwoord:</b>
+                            </td>
+                            <td>
+                                <input type="password" id="password" name="password" 
+                                       size="25" maxlength="25" class="smainput">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <input type="submit" value="nu inloggen" class="menubutton">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <a href="javascript:void(0)" onclick="showRegister()">
+                                    Nog geen account? Registreer hier
+                                </a>
+                                <br><br>
+                                <a href="javascript:void(0)" onclick="forgotPassword()">
+                                    Wachtwoord vergeten?
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                
+                <hr>
+                
+                <h3>Wanneer is verslaving nou <i>"verslaving"</i>?...</h3>
+                <p>
+                    Een logische vraag natuurlijk maar ondanks dat veel mensen dagelijks 
+                    met hun verslavingen worstelen, is deze vraag vaak eigenlijk behoorlijk 
+                    lastig te beantwoorden. Een 5% van de beroepsbevolking wordt geraakt 
+                    door verslaving (onderzoek Jellinek).
+                </p>
+                
+                <p>
+                    Als je merkt dat je je gebruik niet altijd meer de baas bent, of dat 
+                    je meer gebruikt dan je je had voorgenomen, dan kan het helpen om hier 
+                    aan te werken. Deze site biedt formulieren en tools om inzicht te krijgen.
+                </p>
+            </div>
+            
+             Registratie Formulier -->
+            <div id="registerForm" style="display:none;">
+                <p>
+                    <img src="pics/macmanup.gif" border="0">
+                    <b>Nieuw account aanmaken</b>
+                </p>
+                
+                <form name="register" onsubmit="return doRegister();">
+                    <table width="100%" border="0" cellpadding="5">
+                        <tr>
+                            <td width="40%" align="right">
+                                <b>Gebruikersnaam:*</b>
+                            </td>
+                            <td>
+                                <input type="text" id="reg_user_name" name="user_name" 
+                                       size="25" maxlength="25" class="smainput">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <b>Email:*</b>
+                            </td>
+                            <td>
+                                <input type="text" id="reg_emailadres" name="emailadres" 
+                                       size="30" maxlength="50" class="smainput">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <b>Wachtwoord:*</b>
+                            </td>
+                            <td>
+                                <input type="password" id="reg_password" name="password" 
+                                       size="25" maxlength="25" class="smainput">
+                                <br><font size="-1">minimaal 6 tekens</font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <b>Herhaal wachtwoord:*</b>
+                            </td>
+                            <td>
+                                <input type="password" id="reg_password2" name="password2" 
+                                       size="25" maxlength="25" class="smainput">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><hr></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Voornaam:</td>
+                            <td>
+                                <input type="text" id="reg_voornaam" name="voornaam" 
+                                       size="20" maxlength="20" class="smainput">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">Achternaam:</td>
+                            <td>
+                                <input type="text" id="reg_achternaam" name="achternaam" 
+                                       size="30" maxlength="30" class="smainput">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <p><font size="-1">* = verplicht</font></p>
+                                <input type="submit" value="registreer" class="menubutton">
+                                &nbsp;&nbsp;
+                                <input type="button" value="annuleer" class="menubutton" 
+                                       onclick="showLogin()">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            
+        </td>
+        </tr>
+        </table>
+    </td>
+</tr>
+</table>
+</td></tr>
+</table>
+</div>
+</body>
+</html>
