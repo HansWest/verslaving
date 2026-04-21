@@ -1,174 +1,287 @@
-<html>
-
-risico-activiteiten.htm
-
-deze code is van controleerjeverslavingszorg.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Risico-inventarisatie (activiteiten)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
-
-function aanvullen()
-{
-document.risicoactiviteiten.risicoactiviteit.value=document.risicoactiviteiten.risicoactiviteit.value+" "+document.risicoactiviteiten.lastigeopties.value;
-}
-
-
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
-
-function hulpscherm()
-{
-hulp_scherm(290,'risico-activiteiten','Bepaalde activiteiten brengen nou eenmaal meer risico met zich mee dan andere activiteiten. Het is daarom dat het voor bepaalde activiteiten echt verstandig om je te bedenken dat je bepaalde activiteiten misschien wel aan kunt als je jezelf hebt voorbereid maar dat ze zonder voorbereiding te zwaar zijn. Niet eens de eerste of de tweede keer. Maar juist als je zonder over de consequenties na te denken begint aan dit soort activiteiten.')
-}
-
-</script>
-
-
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Risico-inventarisatie Activiteiten</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #356f8f;
+      --page-accent: #cb6d4e;
+    }
+    body {
+      background:
+        radial-gradient(circle at top right, rgba(53, 111, 143, 0.14), transparent 30%),
+        linear-gradient(180deg, #f8f3ec 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
+    .page-shell { max-width: 920px; margin: 0 auto; }
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5a744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
+    .intro-card, .question-card, .note-card, .message {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
+    .question-card { border-top: 4px solid var(--page-main); }
+    .note-card { border-left: 4px solid var(--page-accent); }
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+    .helper-list { margin: 0; padding-left: 1.2rem; }
+    .helper-list li { margin-bottom: 0.35rem; }
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+    .message { display: none; border-left: 4px solid #5a8840; }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+  </style>
 </head>
 <body>
-<div class="container">
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./risico-mensen.htm">Vorige stap</a>
+          <a href="./soorten-trek.htm">Volgende stap</a>
+        </div>
+        <h1>Risico-inventarisatie: activiteiten</h1>
+        <p>Bepaalde activiteiten zijn prima te doen met voorbereiding, maar risicovol zonder plan. Hier maak je dat plan concreet.</p>
+      </header>
 
+      <div id="message" class="message"></div>
 
+      <section class="intro-card">
+        <h2>Typische risicomomenten</h2>
+        <ul class="helper-list">
+          <li>Late activiteiten met weinig energie of slaaptekort.</li>
+          <li>Sociale activiteiten met groepsdruk of beschikbaarheid.</li>
+          <li>Activiteiten die vroeger sterk met gebruik verbonden waren.</li>
+        </ul>
+      </section>
 
-<div class="shadow"><div class="content">
+      <form id="risicoActiviteitenForm">
+        <section class="question-card">
+          <h2>Activiteiten verzamelen</h2>
+          <div class="form-group">
+            <label for="presetActivity">Kies een voorbeeldactiviteit (optioneel)</label>
+            <select id="presetActivity">
+              <option value="">Kies een activiteit</option>
+              <option>Als ik uitga.</option>
+              <option>Als ik me verveel.</option>
+              <option>Als ik iets wil vieren.</option>
+              <option>Als ik ga dansen of naar een afterparty ga.</option>
+              <option>Als ik over emoties ga praten.</option>
+              <option>Als ik seks heb en spanning oploopt.</option>
+              <option>Als ik na sport in de kantine blijf hangen.</option>
+              <option>Als ik op feestdagen in drukte zit.</option>
+            </select>
+          </div>
+          <div class="form-group mt-2">
+            <label for="activityDraft">Eigen activiteit toevoegen</label>
+            <input id="activityDraft" type="text" placeholder="Typ hier een activiteit en voeg toe." />
+          </div>
+          <div class="action-bar">
+            <button type="button" class="button-secondary" id="addActivityButton">Voeg toe aan lijst</button>
+          </div>
+          <div class="form-group mt-2">
+            <label for="riskyActivities">Welke activiteiten zijn voor jou risicovol?</label>
+            <textarea id="riskyActivities" rows="6" placeholder="Zet per regel een activiteit of gebeurtenis."></textarea>
+          </div>
+        </section>
 
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>Externe risico's</h2>
+            <div class="form-group">
+              <label for="externalRisks">Wat maakt deze activiteit van buitenaf risicovol?</label>
+              <textarea id="externalRisks" rows="5" placeholder="Bijvoorbeeld: tijdstip, mensen, plekken, aanbod, drukte."></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>Interne risico's</h2>
+            <div class="form-group">
+              <label for="internalRisks">Wat gebeurt er van binnen dat het lastiger maakt?</label>
+              <textarea id="internalRisks" rows="5" placeholder="Bijvoorbeeld: gedachten, onrust, spanning, oude associaties."></textarea>
+            </div>
+          </section>
+        </div>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">risico's (gebeurtenissen &amp; activiteiten)</h1>
-</div><div class="rechtsitalic">4 vragen: 15 - 30 minuten</div>
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>Voorbereiding</h2>
+            <div class="form-group">
+              <label for="preparationPlan">Hoe bereid je je voor zodat het waarschijnlijk goed gaat?</label>
+              <textarea id="preparationPlan" rows="5" placeholder="Bijvoorbeeld: eten vooraf, steunpersoon, limiet, vervoer, rustmoment."></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>Exitstrategie</h2>
+            <div class="form-group">
+              <label for="exitStrategy">Hoe vertrek je veilig als risico oploopt?</label>
+              <textarea id="exitStrategy" rows="5" placeholder="Bijvoorbeeld: codewoord, taxi-plan, beltijd, duidelijke grens."></textarea>
+            </div>
+          </section>
+        </div>
 
-<h1>Risicovolle gebeurtenissen en activiteiten (en voorbereiding)</h1>
-<div class="printhide">
-<p>Sommige activiteiten brengen hun eigen risico's met zich mee, bijvoorbeeld
-  omdat zij nog laat op de dag, of eigenlijk tot vroeg in de ochtend duren. Dan
-  is meestal de wilskracht voor die dag wel zo'n beetje <i>op</i> als je niet
-  enorm hebt 'voorgeslapen', en krijgt trek dus meer grip. </p>
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>Risico's na afloop</h2>
+            <div class="form-group">
+              <label for="afterRisks">Wat gebeurt vaak pas na de activiteit?</label>
+              <textarea id="afterRisks" rows="5" placeholder="Bijvoorbeeld: leegte, overprikkeling, moeheid, trek op de terugweg."></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>Goedpraat-risico's</h2>
+            <div class="form-group">
+              <label for="rationalizationRisks">Welke gedachten kunnen gebruik achteraf goedpraten?</label>
+              <textarea id="rationalizationRisks" rows="5" placeholder="Bijvoorbeeld: ik heb het verdiend, iedereen doet dit, eentje kan wel."></textarea>
+            </div>
+          </section>
+        </div>
 
+        <section class="note-card">
+          <h2>Bijpassende vaardigheden</h2>
+          <div class="form-group">
+            <label for="matchingSkills">Welke vaardigheden zet je hierbij in?</label>
+            <textarea id="matchingSkills" rows="4" placeholder="Bijvoorbeeld: afleiding, steun vragen, anders denken, treksurfen, zelfbeloning."></textarea>
+          </div>
+        </section>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'risico-activiteiten';
+    const fields = [
+      'activityDraft',
+      'riskyActivities',
+      'externalRisks',
+      'internalRisks',
+      'preparationPlan',
+      'exitStrategy',
+      'afterRisks',
+      'rationalizationRisks',
+      'matchingSkills'
+    ];
 
-<form name="risicoactiviteiten">
-<h1>Risico's (activiteiten)</h1>
-Voor mij is een risicovolle activiteit: 
-<select name="lastigeopties" onChange="aanvullen()">
-<option selected="selected">selecteer een optie en kopieer deze naar het verzamelveld</option>
-<option value="Als ik uit ga.">Als ik uit ga</option>
-  <option value="Als ik mij verveel.">Als ik mij verveel</option>
-<option value="Als ik iemand wil versieren.">Als ik iemand wil versieren</option>
-  <option value="Als ik iets wil vieren.">Als ik iets wil vieren</option>
-  <option value="Als ik rondloop op nationale feestdagen.">Als ik rondloop op nationale feestdagen</option>
-  <option value="Als ik ga dansen.">Als ik ga dansen</option>
-  <option value="Als ik heb gesport.">Als ik heb gesport (in de kantine)</option>
-  <option value="Als ik seks ga hebben.">Als ik seks ga hebben</option>
-  <option value="Als ik over mijn emoties ga praten.">Als ik over mijn emoties ga praten</option>
-  <option value="Als ik naar een rave of afterparty ga.">Als ik naar een rave of afterparty ga</option>
-  </select>
+    function getDefaultData() {
+      const data = {};
+      fields.forEach((key) => { data[key] = ''; });
+      return data;
+    }
 
-<p>Wat zijn situaties waarin het lastiger voor mij word om de controle op m'n
-  gebruik vast te houden<br /> 
-  c.q. waarin trek zal ontstaan?<br/>
-<textarea name="risicoactiviteit" cols="55" rows="4" class="praatmethansformtextarea" title="activiteiten en gebeurtenissen die voor mij risicovol zouden kunnen gaan zijn."></textarea></p>
-<div class="praatmethansheader2">&quot;risico activiteiten uitkiezen en aanvullen&quot;</div>
-<p>&nbsp;</p>
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
 
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
 
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 3000);
+    }
 
+    function saveForm(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectFormData());
+        if (feedback) showMessage('Risico-activiteiten opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
 
+    function exportAll() {
+      const exportData = iamData.exportJSON();
+      const url = URL.createObjectURL(exportData.blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = exportData.filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
+    }
 
-<h1>Risico's tijdens deze activiteit </h1>
-<div class="rechtsitalic">vul dit in per activiteit</div>
-<p><b>externe risico's</b> zijn hierbij voor mij:<br />
-  <textarea name="externrisico" cols="55" rows="4" class="praatmethansformtextarea" title="externe risico's zijn bij deze activiteit."></textarea>
-  </p><div class="rechtsitalic">(dat zijn de risico's die
-  van buitenaf ontstaan)</div>
-<div class="praatmethansheader2">&quot;externe risico's zijn?&quot;</div>
-<p><b>interne risico's</b> zijn hierbij voor mij:<br />
-  <textarea name="internrisico" cols="55" rows="4" class="praatmethansformtextarea" title="hierbij zal ik gedachten en gevoelens of herinneringen hebben die het lastiger maken om gebruik te controleren... welke?."></textarea></p><div class="rechtsitalic">(de risico's die ontstaan doordat de dingen die je <b>denkt &amp; voelt </b>in
-  dit soort situaties)</div>
-<div class="praatmethansheader2">&quot;interne risico's zijn?&quot;</div>
-<p>Wat is mijn <b>voorbereiding</b> voor deze activiteit:<br />
-  <textarea name="textarea" cols="55" rows="4" class="praatmethansformtextarea" title="Hoe bereid ik mij voor zodat ik deze situatie waarschijnlijk aan zal kunnen."></textarea>
-</p>
-<div class="praatmethansheader2">&quot;deze   activiteit kan ik voorbereieden
-  door &quot;</div>
-<p>Wat is mijn <b>exit strategie uit</b> deze activiteit <br />
-  <textarea name="textarea2" cols="55" rows="4" class="praatmethansformtextarea" title="als ik merk dat dreigt dat ik mijn controle niet overeind weet te houden: wat is dan mijn exit manier, hoe kan ik gelijk weg?"></textarea>
-</p>
-<div class="praatmethansheader2">&quot;risico activiteiten en de exitstrategie naar een veiliger plek&quot;</div>
-<p></p>
-<p> </p>
-<p>&nbsp;</p>
-<p>Risico's n&aacute; deze activiteit zullen zijn voor mij:<br />
-  <textarea name="postrisico" cols="55" rows="4" class="praatmethansformtextarea" title="mogelijk is het voor mij juist een risico als deze activiteit voorbij is waardoor ik zal...?."></textarea>
-</p>
-<div class="praatmethansheader2">&quot;na deze risico risico-activiteiten is een risico...&quot;</div>
-<p></p>
-<p>&nbsp;</p>
-<p>Risico's<b> n&aacute; deze situatie</b> zullen mogelijk voor mij zijn (gevoelens
-  of gedachten bijvoorbeeld die het gebruik 'goed praten' -zie ook: <a href="smoezenboek.htm" target="formulieren">smoezenboek</a>-):<br />
-  <textarea name="nadien" cols="55" rows="4" class="praatmethansformtextarea" title="Van buitenaf komende risico's zijn in dit soort situaties... (bijv. groepsdruk, schaamte over verslaving, met je neus op gebruik geduwd worden, etc.)"></textarea></p>
-<div class="praatmethansheader2">&quot;na deze risico risico-activiteiten is
-  een risico...&quot;</div>
-<div class="rechtsitalic">sommige 'gevaren' ontstaan pas n&aacute; een activiteit.
-  na kicken komt soms pas de trek, bijvoorbeeld </div>
- <p></p><p></p>
-<p>&nbsp;</p>
-<p><b><i>Bijbehorende vaardigheden zijn mogelijk</i></b> </p><ul>
-<li>afleidingen (welke activiteit)</li>
-<li>praten (met wie?)</li>
-<li>anders denken (hoe moet ik dan denken over deze activiteit en z'n risico's?)</li>
-<li>treksurfen (is er in de omgeving van deze activiteit ook een plek waar ik mij even terug kan trekken?)</li>
-<li>zelfbeloning (wat is de beloning die ik verdiend heb als ik mijn zelfcontrole overeind hou tijdens deze activiteit -en waar ik naar uit kan kijken als ik trek heb door deze activiteit-?)</li>
-</ul><p></p>
+    function appendActivity(value) {
+      if (!value) return;
+      const target = document.getElementById('riskyActivities');
+      const clean = value.trim();
+      if (!clean) return;
+      target.value = target.value ? `${target.value}\n${clean}` : clean;
+      saveForm(false);
+    }
 
-</form><p>&nbsp;</p>
-<hr class="formhr" />
-<p><i>Als je de risico's kent dan kan je er over nadenken wat je er mee wilt.
-    Misschien azal je soms willen oefenen om deze lastiger activiteiten wel aan
-    te kunnen zonder gebruik, misschien zal je soms voelen dat activiteiten die
-    vroeger leuk waren inmiddels gewoon niet leuk meer zijn als je controle wilt
-    bewaren. <br />
-    Dat zal verschillen, als het goed is.</i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = iamData.getFormData(formKey);
+      fillForm({ ...getDefaultData(), ...(saved || {}) });
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div></div>
+      const preset = document.getElementById('presetActivity');
+      const draft = document.getElementById('activityDraft');
+
+      preset.addEventListener('change', () => {
+        appendActivity(preset.value);
+        preset.value = '';
+      });
+
+      document.getElementById('addActivityButton').addEventListener('click', () => {
+        appendActivity(draft.value);
+        draft.value = '';
+      });
+
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('risicoActiviteitenForm').addEventListener('input', () => saveForm(false));
+    });
+  </script>
+<script src="../js/dataStore.js"></script>
 </body>
 </html>

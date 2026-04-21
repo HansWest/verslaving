@@ -228,6 +228,126 @@
             color: #333;
         }
 
+        .progress-summary {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-summary h3 {
+            margin: 0 0 0.75rem 0;
+            color: #333;
+        }
+
+        .progress-stats {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-chip {
+            background: #f0f7ff;
+            color: #244c70;
+            border-radius: 999px;
+            padding: 0.45rem 0.85rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .phase-list {
+            margin: 0;
+            padding-left: 1.2rem;
+            color: #4d4d4d;
+        }
+
+        .phase-list li {
+            margin-bottom: 0.3rem;
+        }
+
+        .quality-box {
+            margin-top: 0.9rem;
+            padding: 0.9rem;
+            border-radius: 8px;
+            background: #f7fafc;
+            border: 1px solid #dde8ef;
+        }
+
+        .quality-box h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.98rem;
+            color: #2c4a63;
+        }
+
+        .quality-list {
+            margin: 0;
+            padding-left: 1.15rem;
+            color: #4d4d4d;
+            font-size: 0.93rem;
+        }
+
+        .quality-list li {
+            margin-bottom: 0.25rem;
+        }
+
+        .quality-priority {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed #c9d9e4;
+        }
+
+        .quality-priority h5 {
+            margin: 0 0 0.45rem 0;
+            font-size: 0.92rem;
+            color: #2c4a63;
+        }
+
+        .quality-priority-list {
+            margin: 0;
+            padding-left: 1.15rem;
+            font-size: 0.92rem;
+            color: #455866;
+        }
+
+        .quality-priority-list li {
+            margin-bottom: 0.25rem;
+        }
+
+        .quality-priority-list a {
+            color: #2f6b8f;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .quality-priority-list a:hover {
+            text-decoration: underline;
+        }
+
+        .integration-box {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px dashed #c9d9e4;
+        }
+
+        .integration-box h5 {
+            margin: 0 0 0.45rem 0;
+            font-size: 0.92rem;
+            color: #2c4a63;
+        }
+
+        .integration-list {
+            margin: 0;
+            padding-left: 1.15rem;
+            font-size: 0.92rem;
+            color: #455866;
+        }
+
+        .integration-list li {
+            margin-bottom: 0.25rem;
+        }
+
         .action-buttons {
             display: flex;
             gap: 0.75rem;
@@ -310,6 +430,31 @@
             <div class="action-buttons">
                 <button class="btn-action" onclick="exportAllData()">📥 Mijn gegevens exporteren</button>
                 <button class="btn-action export" onclick="viewProgress()">📊 Mijn voortgang</button>
+            </div>
+        </div>
+
+        <div class="progress-summary" id="progressSummary">
+            <h3>📍 Overzicht van je voortgang</h3>
+            <div class="progress-stats">
+                <span class="stat-chip" id="formsDoneChip">0 formulieren gestart</span>
+                <span class="stat-chip" id="formsCompleteChip">0 formulieren duidelijk ingevuld</span>
+                <span class="stat-chip" id="overallProgressChip">0% totaal</span>
+                <span class="stat-chip" id="qualityChip">0 legacy formulieren met data</span>
+                <span class="stat-chip" id="qualityPriorityChip">0 prioriteitspagina's</span>
+                <span class="stat-chip" id="integrationChip">0 integratie-inzichten</span>
+            </div>
+            <ul class="phase-list" id="phaseStatusList"></ul>
+            <div class="quality-box" id="qualityBox">
+                <h4>Datakwaliteit</h4>
+                <ul class="quality-list" id="qualityList"></ul>
+                <div class="quality-priority">
+                    <h5>Aanbevolen eerst moderniseren</h5>
+                    <ol class="quality-priority-list" id="qualityPriorityList"></ol>
+                </div>
+                <div class="integration-box">
+                    <h5>Kerninzichten uit meerdere formulieren</h5>
+                    <ul class="integration-list" id="integrationList"></ul>
+                </div>
             </div>
         </div>
 
@@ -557,6 +702,253 @@
 
     <script src="../js/dataStore.js"></script>
     <script>
+        const PAGE_TO_FORMKEY = {
+            'lastige-gevoelens.htm': 'lastige-gevoelens',
+            'voor-nadelen-balansen.htm': 'voor-nadelen-balansen',
+            'stimulus-respons.htm': 'stimulus-respons',
+            'risico-situaties.htm': 'risico-situaties',
+            'risico-mensen.htm': 'risico-mensen',
+            'risico-activiteiten.htm': 'risico-activiteiten',
+            'soorten-trek.htm': 'soorten-trek',
+            'craving-gevoel.htm': 'craving-gevoel',
+            'plan-van-aanpak.htm': 'plan-van-aanpak',
+            'waarom-wel-gebruiken.htm': 'waarom-wel-gebruiken',
+            'wat-is-mijn-ik.htm': 'wat-is-mijn-ik',
+            'persoonlijke-waarden.htm': 'persoonlijke-waarden',
+            'craving-1-10.htm': 'craving-1-10',
+            'noodplan-forse-trek.htm': 'noodplan-forse-trek',
+            'trek-opvangen.htm': 'trek-opvangen',
+            'trek-opvangen-2.htm': 'trek-opvangen-2',
+            'motiverende-mensen.htm': 'motiverende-mensen',
+            'genieten-belonen.htm': 'genieten-belonen',
+            'agenda.htm': 'agenda'
+        };
+
+        const PHASE_FORMS = {
+            'Fase 1': ['waarom-wel-gebruiken', 'wat-is-mijn-ik', 'persoonlijke-waarden'],
+            'Fase 2': ['lastige-gevoelens', 'craving-1-10', 'craving-gevoel', 'voor-nadelen-balansen'],
+            'Fase 3': ['stimulus-respons', 'risico-situaties', 'risico-mensen', 'risico-activiteiten', 'soorten-trek'],
+            'Fase 4': ['noodplan-forse-trek', 'trek-opvangen', 'trek-opvangen-2', 'plan-van-aanpak'],
+            'Fase 5': ['motiverende-mensen', 'genieten-belonen', 'agenda']
+        };
+
+        const MODERN_STRUCTURED_FORMS = new Set([
+            'lastige-gevoelens',
+            'craving-1-10',
+            'craving-gevoel',
+            'voor-nadelen-balansen',
+            'stimulus-respons',
+            'risico-situaties',
+            'risico-mensen',
+            'risico-activiteiten',
+            'soorten-trek',
+            'noodplan-forse-trek',
+            'trek-opvangen',
+            'trek-opvangen-2',
+            'plan-van-aanpak',
+            'waarom-wel-gebruiken',
+            'wat-is-mijn-ik',
+            'persoonlijke-waarden',
+            'motiverende-mensen',
+            'genieten-belonen',
+            'agenda'
+        ]);
+
+        function isMeaningful(value) {
+            if (value === null || value === undefined) return false;
+            if (typeof value === 'string') return value.trim().length > 0;
+            if (typeof value === 'number') return true;
+            if (typeof value === 'boolean') return value;
+            if (Array.isArray(value)) return value.some((item) => isMeaningful(item));
+            if (typeof value === 'object') {
+                return Object.entries(value)
+                    .filter(([key]) => key !== 'lastUpdated')
+                    .some(([, nestedValue]) => isMeaningful(nestedValue));
+            }
+            return false;
+        }
+
+        function collectLeafValues(value) {
+            if (value === null || value === undefined) return [];
+            if (typeof value !== 'object') return [value];
+            if (Array.isArray(value)) {
+                return value.flatMap((item) => collectLeafValues(item));
+            }
+            return Object.entries(value)
+                .filter(([key]) => key !== 'lastUpdated')
+                .flatMap(([, nestedValue]) => collectLeafValues(nestedValue));
+        }
+
+        function getFormCompletion(formKey) {
+            const data = iamData.getFormData(formKey);
+            if (!data) return 0;
+
+            const leaves = collectLeafValues(data);
+            if (!leaves.length) return 0;
+
+            const meaningfulCount = leaves.filter((item) => isMeaningful(item)).length;
+            return Math.round((meaningfulCount / leaves.length) * 100);
+        }
+
+        function getLinkedFormKeys(card) {
+            const links = Array.from(card.querySelectorAll('.card-link'));
+            const keys = links
+                .map((link) => {
+                    const href = (link.getAttribute('href') || '').split('?')[0];
+                    return PAGE_TO_FORMKEY[href] || null;
+                })
+                .filter(Boolean);
+            return [...new Set(keys)];
+        }
+
+        function updateCardProgress() {
+            const cards = Array.from(document.querySelectorAll('.card'));
+            cards.forEach((card) => {
+                const formKeys = getLinkedFormKeys(card);
+                const bar = card.querySelector('.progress-fill');
+                if (!bar) return;
+
+                if (!formKeys.length) {
+                    bar.style.width = '0%';
+                    return;
+                }
+
+                const percentages = formKeys.map((key) => getFormCompletion(key));
+                const average = Math.round(percentages.reduce((sum, value) => sum + value, 0) / percentages.length);
+                bar.style.width = `${average}%`;
+            });
+        }
+
+        function renderProgressSummary() {
+            const formKeys = Object.values(PAGE_TO_FORMKEY);
+            const uniqueKeys = [...new Set(formKeys)];
+            const completions = uniqueKeys.map((key) => getFormCompletion(key));
+            const startedCount = completions.filter((value) => value > 0).length;
+            const strongCount = completions.filter((value) => value >= 40).length;
+            const overall = completions.length
+                ? Math.round(completions.reduce((sum, value) => sum + value, 0) / completions.length)
+                : 0;
+
+            document.getElementById('formsDoneChip').textContent = `${startedCount} formulieren gestart`;
+            document.getElementById('formsCompleteChip').textContent = `${strongCount} formulieren duidelijk ingevuld`;
+            document.getElementById('overallProgressChip').textContent = `${overall}% totaal`;
+
+            const phaseList = document.getElementById('phaseStatusList');
+            phaseList.innerHTML = '';
+            Object.entries(PHASE_FORMS).forEach(([phaseLabel, keys]) => {
+                const item = document.createElement('li');
+                if (!keys.length) {
+                    item.textContent = `${phaseLabel}: nog geen gekoppelde kernformulieren`;
+                } else {
+                    const phaseCompletion = Math.round(
+                        keys.map((key) => getFormCompletion(key)).reduce((sum, value) => sum + value, 0) / keys.length
+                    );
+                    item.textContent = `${phaseLabel}: ${phaseCompletion}%`;
+                }
+                phaseList.appendChild(item);
+            });
+
+            renderIntegrationSummary();
+            renderDataQuality();
+        }
+
+        function formatPreview(items) {
+            if (!Array.isArray(items) || !items.length) return 'nog niet ingevuld';
+            return items.slice(0, 2).join(' | ');
+        }
+
+        function renderIntegrationSummary() {
+            const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+            const integrationList = document.getElementById('integrationList');
+            const integrationChip = document.getElementById('integrationChip');
+
+            integrationList.innerHTML = '';
+            if (!summary) {
+                integrationChip.textContent = '0 integratie-inzichten';
+                const item = document.createElement('li');
+                item.textContent = 'Nog geen samenvatting beschikbaar.';
+                integrationList.appendChild(item);
+                return;
+            }
+
+            const rows = [
+                `Triggers: ${formatPreview(summary.topTriggers)}`,
+                `Interventies: ${formatPreview(summary.bestInterventions)}`,
+                `Steunnetwerk: ${formatPreview(summary.supportNetwork)}`,
+                `Vroege signalen: ${formatPreview(summary.earlyWarnings)}`
+            ];
+
+            const filledCount = rows.filter((row) => !row.endsWith('nog niet ingevuld')).length;
+            integrationChip.textContent = `${filledCount}/4 integratie-inzichten`;
+
+            rows.forEach((row) => {
+                const item = document.createElement('li');
+                item.textContent = row;
+                integrationList.appendChild(item);
+            });
+        }
+
+        function renderDataQuality() {
+            const allData = iamData.getData() || {};
+            const forms = allData.forms || {};
+            const legacyWithData = Object.entries(forms)
+                .filter(([formKey, formValue]) => !MODERN_STRUCTURED_FORMS.has(formKey) && isMeaningful(formValue))
+                .map(([formKey]) => formKey)
+                .sort();
+
+            const legacyRanked = legacyWithData
+                .map((formKey) => ({
+                    formKey,
+                    completion: getFormCompletion(formKey)
+                }))
+                .sort((a, b) => b.completion - a.completion)
+                .slice(0, 5);
+
+            const qualityChip = document.getElementById('qualityChip');
+            const qualityPriorityChip = document.getElementById('qualityPriorityChip');
+            const qualityList = document.getElementById('qualityList');
+            const qualityPriorityList = document.getElementById('qualityPriorityList');
+
+            qualityChip.textContent = `${legacyWithData.length} legacy formulieren met data`;
+            qualityPriorityChip.textContent = `${legacyRanked.length} prioriteitspagina's`;
+            qualityList.innerHTML = '';
+            qualityPriorityList.innerHTML = '';
+
+            if (!legacyWithData.length) {
+                const item = document.createElement('li');
+                item.textContent = 'Geen legacy-data buiten de moderne kernmapping gevonden.';
+                qualityList.appendChild(item);
+
+                const priorityItem = document.createElement('li');
+                priorityItem.textContent = 'Geen prioriteiten: eerst nieuwe data verzamelen of extra formulieren gebruiken.';
+                qualityPriorityList.appendChild(priorityItem);
+                return;
+            }
+
+            legacyWithData.forEach((formKey) => {
+                const item = document.createElement('li');
+                item.textContent = `${formKey} - wel data, nog niet in moderne inhoudsmapping.`;
+                qualityList.appendChild(item);
+            });
+
+            legacyRanked.forEach((entry) => {
+                const item = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `${entry.formKey}.htm`;
+                link.textContent = entry.formKey;
+
+                const suffix = document.createTextNode(` (${entry.completion}% gevuld)`);
+                item.appendChild(link);
+                item.appendChild(suffix);
+                qualityPriorityList.appendChild(item);
+            });
+        }
+
+        function refreshDashboard() {
+            updateCardProgress();
+            renderProgressSummary();
+        }
+
         function exportAllData() {
             const jsonExport = iamData.exportJSON();
             downloadFile(jsonExport.blob, jsonExport.filename);
@@ -564,7 +956,11 @@
         }
 
         function viewProgress() {
-            alert('📊 Voortgang feature coming soon!');
+            refreshDashboard();
+            const overallText = document.getElementById('overallProgressChip').textContent;
+            const startedText = document.getElementById('formsDoneChip').textContent;
+            const qualityText = document.getElementById('qualityChip').textContent;
+            alert(`📊 ${overallText} | ${startedText} | ${qualityText}`);
         }
 
         function downloadFile(blob, filename) {
@@ -577,6 +973,8 @@
             window.URL.revokeObjectURL(url);
             document.body.removeChild(a);
         }
+
+        document.addEventListener('DOMContentLoaded', refreshDashboard);
     </script>
 </body>
 </html>

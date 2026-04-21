@@ -1,206 +1,374 @@
-<html>
-
-plan-van-aanpak.htm
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Plan van Aanpak</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
-
-
-function doelvullen()
-{
-document.aanpakplan.gebruiksdoel.value=document.aanpakplan.gebruiksdoelselect.value+ ", "+document.aanpakplan.gebruiksdoel.value;
-}
-
-
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
-
-function hulpscherm()
-{
-hulp_scherm(310,'Plan van Aanpak','Het is verstandig om jezelf een helder doel te hebben voor jezelf wat je wilt met jouw gebruik. Die verslaving die zuigt, dat moge duidelijk zijn. De veranderingen in het brein maken het lastig omhet doel ook als belangrijk te blijven voelen.Dat maakt dat veel mensen zo lang blijven dweilen met de kraan open. Daarom is een helder doel en een duidelijke aanpak gewoon htandig. Dan kan je makkelijker bijhouden of er aan het gebeuren is wat jij voor jezelf als doel had gesteld en kan je -als dat niet gebeurt- ook sneller kiezen voor een andere strategie of een haalbaarder doel.')
-}
-
-//evluatie nav datum("e")
-function willen()
-{
-var detekst,dedatum,delokatie,deopmerking,desprop;
-var variab1 = document.aanpakplan.doel.value.trim();
-if (variab1==""){alert("Het is mogelijk wel een beetje magisch denken van mij om eerst GEEN doel te stellen en vvervolgens WEL te verwachten dat het nu in mijn agenda komt?.. ;-)"); return;}
-detekst = "evaluatiemoment";
-dedatum=document.aanpakplan.yyyye.value+document.aanpakplan.mme.value+document.aanpakplan.dde.value+"T090000Z/"+document.aanpakplan.yyyye.value+document.aanpakplan.mme.value+document.aanpakplan.dde.value+"T094500Z";
-  //alert(dedatum+"//20130526T103000Z/20130526T114500Z");
-delokatie = "evaluatiemoment";
-deopmerking="op "+document.aanpakplan.dd.value+"/"+document.aanpakplan.mm.value+" gunde ik mij als plan van aanpak: "+variab1+" hoe is het daarmee?..";
-  alert(deopmerking);
-desprop="n.a.v.website:PraatmetHans.nl";
-  //alert(desprop);
-googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
-}
-
-
-//startdatum NB datum("")
-function startdatum()
-{
-var detekst,dedatum,delokatie,deopmerking,desprop;
-var variab1 = document.aanpakplan.strategie.value.trim();
-if (variab1==""){alert("Als ik geen aanpak (voor plan A) kies, dan is het misschien een beetje lastig om het als startdatum in mijn agenda te zetten??? :-)"); return;}
-detekst = "startmoment";
-dedatum=document.aanpakplan.yyyy.value+document.aanpakplan.mm.value+document.aanpakplan.dd.value+"T090000Z/"+document.aanpakplan.yyyy.value+document.aanpakplan.mm.value+document.aanpakplan.dd.value+"T094500Z";
- // alert(dedatum+"//20130526T103000Z/20130526T114500Z");
-delokatie = "evaluatiemoment";
-deopmerking="zodat ik op "+document.aanpakplan.dde.value+"/"+document.aanpakplan.mme.value+"/"+document.aanpakplan.yyyye.value+" mijn doel bereik gun ik mij als plan van aanpak: "+variab1+"...";
- // alert(deopmerking);
-desprop="n.a.v.website:PraatmetHans.nl";
-  //alert(desprop);
-googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
-}
-
-
-</script>
-
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan van Aanpak</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6587;
+      --page-accent: #c9684a;
+      --page-soft: #ebf2f5;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 101, 135, 0.14), transparent 32%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
+    .page-shell { max-width: 920px; margin: 0 auto; }
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
+    .question-card, .message {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
+    .question-card { border-top: 4px solid var(--page-main); }
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+    .message { display: none; border-left: 4px solid #5a8840; }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+  </style>
 </head>
 <body>
-<div class="container">
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./stimulus-respons.htm">Vorige stap</a>
+          <a href="./motiverende-mensen.htm">Volgende stap</a>
+        </div>
+        <h1>Plan van aanpak</h1>
+        <p>Een goed plan maakt je koers concreet: waar sta je nu, wat wil je bereiken, hoe begin je, en wat doe je als plan A niet genoeg werkt.</p>
+      </header>
 
+      <div id="message" class="message"></div>
 
-<div class="shadow"><div class="content">
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+      <form id="planForm">
+        <section class="question-card">
+          <h2>1. Startpunt</h2>
+          <div class="form-group">
+            <label for="startPoint">Wat is je situatie nu?</label>
+            <textarea id="startPoint" rows="4"></textarea>
+          </div>
+        </section>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">plan van Aanpak </h1>
-</div><div class="rechtsitalic">6 vragen: 25 - 50 minuten</div>
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>2. Hoofddoel</h2>
+            <div class="form-group">
+              <label for="mainGoal">Waar wil je naartoe groeien?</label>
+              <textarea id="mainGoal" rows="4"></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>3. Doeldatum</h2>
+            <div class="form-group">
+              <label for="goalDate">Wanneer wil je dit doel evalueren of bereikt hebben?</label>
+              <input id="goalDate" type="date" />
+            </div>
+          </section>
+        </div>
 
-<p></p>
-<h1>Het maken van een Plan van Aanpak </h1>
-<div class="printhide">
-<p>Plannen hebben een doel en een strategie.</p><div class="rechtsitalic">(en het nut van de strategie wordt
-  bepaald door het resultaat: &quot;is het doel tot een resultaat geworden?&quot;)</div>
-<p>Een strategie heeft een startpunt, een aantal dingen die gedaan moeten worden
-  en dat binnen een bepaalde tijd.</p><div class="rechtsitalic">(als het doel geen resultaat is geworden moet je de strategie aanpassen of het doel loslaten en een nieuw doel kiezen)</div>
-  <p>Nou ga je deze formulieren waarschijnlijk gebruiken met een soort van vaag
-    doel in je hoofd, en dat is goed. Sterker nog, het is vaak verstandig om
-    dat doel echt nauwkeurig voor jezelf te beschrijven. Als je het namelijk
-    zo'n beetje half-half beschrijft dan heb je ineens eigenlijk veel minder
-    grip op jezelf. Maar als je het doel helder hebt dan kan je ook halverwege
-    bepalen dat je een andere strategie wilt gaan volgen om dat doel te bereiken. &Ograve;f
-  natuurlijk, dat je ergens bepaalt dat het doel gewoon niet haalbaar blijkt
-  en dat je een nieuw doel gaat stellen.</p>
+        <section class="question-card">
+          <h2>4. Gebruikdoel</h2>
+          <div class="form-group">
+            <label for="usageGoalTemplate">Kies een startzin (optioneel)</label>
+            <select id="usageGoalTemplate">
+              <option value="">Kies een optie</option>
+              <option value="Ik kies voorlopig om niets te veranderen aan mijn gebruik en dit eerlijk te monitoren.">Ik kies voorlopig om niets te veranderen.</option>
+              <option value="Ik wil minderen en werk met concrete maxima per dag en per week.">Ik wil minderen.</option>
+              <option value="Ik kies voor tijdelijk stoppen en plan een evaluatiemoment.">Ik kies voor tijdelijk stoppen.</option>
+              <option value="Ik kies om niet te gebruiken en richt mijn leven daarop in.">Ik kies voor niet-gebruiken.</option>
+            </select>
+          </div>
+          <div class="form-group mt-2">
+            <label for="usageGoal">Hoe ziet ander gedrag er concreet uit voor jou en voor anderen?</label>
+            <textarea id="usageGoal" rows="4"></textarea>
+          </div>
+        </section>
 
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>5. Houdbaarheid</h2>
+            <div class="form-group">
+              <label for="sustainabilityTerm">Hoe lang wil je dit doel vasthouden voordat je heroverweegt?</label>
+              <textarea id="sustainabilityTerm" rows="3"></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>6. Startdatum plan A</h2>
+            <div class="form-group">
+              <label for="startDate">Vanaf welke datum start je plan A?</label>
+              <input id="startDate" type="date" />
+            </div>
+          </section>
+        </div>
 
+        <section class="question-card">
+          <h2>7. Plan A</h2>
+          <div class="form-group">
+            <label for="planA">Welke acties ga je doen, en met wie?</label>
+            <textarea id="planA" rows="5"></textarea>
+          </div>
+        </section>
 
-  <p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>8. Plan B</h2>
+            <div class="form-group">
+              <label for="planB">Wat ga je anders doen als plan A niet voldoende werkt?</label>
+              <textarea id="planB" rows="5"></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>9. Doel B</h2>
+            <div class="form-group">
+              <label for="fallbackGoal">Wat wordt je tweede-keus doel als het hoofddoel te hoog gegrepen blijkt?</label>
+              <textarea id="fallbackGoal" rows="5"></textarea>
+            </div>
+          </section>
+        </div>
 
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>Steun</h2>
+            <div class="form-group">
+              <label for="supportPeople">Wie helpt je actief dit plan vol te houden?</label>
+              <textarea id="supportPeople" rows="4"></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>Beloning</h2>
+            <div class="form-group">
+              <label for="rewards">Hoe beloon je jezelf voor het uitvoeren van je plan?</label>
+              <textarea id="rewards" rows="4"></textarea>
+            </div>
+          </section>
+        </div>
 
-<h1>PLAN VAN AANPAK MAKEN </h1>
-</div>
-<form name="aanpakplan">
-<p>Geef een korte beschrijving van <b>de situatie NU: start</b>-punt<br/>
-  <textarea name="startpunt" cols="55" rows="4" class="praatmethansformtextarea" title="Wanneer je beschrijft waar je vandaan komt dan helpt het ook om de stappen voorwaarts te herkennen?"></textarea>
-</p>
-<div class="praatmethansheader2">&quot;Wat is jouw startpunt, NU?&quot;</div>
-<p>Beschrijf <b>mijn doel</b>. Waar wil ik <b>naartoe</b> groeien?: <b>Doel
-    </b> <br/> 
- <textarea name="doel" cols="55" rows="4" class="praatmethansformtextarea" title="Beschrijf dat doel liefst zo concreet mogelijk in termen van gedrag en getallen."></textarea></p>
-<p>en wanneer wil ik dat doel bereikt hebben? (<b>doeldatum</b>)<br /><script language="javascript">
- 
-selectdatum("e");
--->
-</script>  &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="willen();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a>
-</p>
-<div class="praatmethansheader2">&quot;waar wil jij naartoe?&quot;</div>
-<p>Wat betekent dit doel voor  <b>mijn gebruik?</b> Hoe gaan <i>andere mensen</i> zien
-  dat ik mijn doel bereikt heb? (concreet gedrag): <b>Gebruiksdoel</b> <br/>
-  <select name="gebruiksdoelselect" onChange="doelvullen();">
-    <option selected="selected">selecteer een optie en kopieer naar het gebruiksdoel</option>
-  <option value="Ik wil nog niks veranderen ..en moet dus helaas waarschijnlijk niet verwachten dat ik veel doelen zal kunnen bereiken door niets te veranderen ;-)">Ik wil niets veranderen aan mijn gebruik</option>
-    <option value="Ik ga minderen dus gebruik nog maximaal ?? eenheden per week.">Ik wil minderen.</option>
-    <option value="Ik ga tijdelijk stoppen (tot wanneer?) en daarna beslis ik opnieuw.">Ik ga tijdelijk stoppen.</option>
-    <option value="Ik maak een niet-gebruiker van mijzelf.">Ik maak een niet-gebruiker van mijzelf</option>
-   </select>
-  <br />
-  <textarea name="gebruiksdoel" cols="55" rows="3" class="praatmethansformtextarea" title="Beschrijf dat doel liefst zo concreet mogelijk in termen van gedrag en getallen."></textarea>
-</p>
-<div class="praatmethansheader2">&quot;waar wil jij naartoe?&quot;</div>
-<p>Wat wordt dus de houdbaarheidsdatum van dit doel: <b>wanneer</b> wil ik daar
-  op z'n vroegst weer over beginnen na te denken: <b>Duur</b> <br/> 
- <textarea name="houdbaarheid" cols="55" rows="2" class="praatmethansformtextarea" title="Voor welke duur/tot wanneer wil jij dit doel vasthouden voor jezelf (ook al duurt het ongetwijfeld soms wat lang als de ergste ellende opgelost is)">dit doe ik: een jaar? een half jaar? voortaan?</textarea>
-</p>
-<div class="praatmethansheader2">&quot;welke houdbaarheidsdatum geef jij dit doel mee?&quot;</div>
-<p>Welke dingen  ga<b> ik doen</b> om mijn doel te bereiken? En <b>wie</b> gaan
-  mij daarbij helpen? <b>Plan A</b> <br/> 
- <textarea name="strategie" cols="55" rows="4" class="praatmethansformtextarea" title="Wat ga jij DOEN (niet wat je niet gaat doen) en WIE gaat jou daarbij helpen (prive of professioneel?)."></textarea></p>
-<div class="praatmethansheader2">&quot;wat worden jouw acties? (plan A) &quot;</div>
-<p>Als deze dingen nou niet helpen om  <b>mijn doel</b> te bereiken, wat wil
-  ik dan <b>ANDERS</b> gaan doen om dat doel WEL te gaan bereiken (ook al is
-  dat misschien minder leuk)?: <b>Plan B</b> <br/> 
- <textarea name="andersdoen" cols="55" rows="4" class="praatmethansformtextarea" title="beschrijf welke ANDERE AANPAK jij nu alvast kiest als jouw eerste aanpak niet werkt."></textarea></p>
-<div class="praatmethansheader2">&quot;Welke ANDERE aanpak moet het doel bereiken?&quot;</div>
-<p>Als dit nou ook niet werkt, dan is mijn doel misschien hoog gegrepen. Wat
-  wordt dan  <b>mijn
-    tweede keus doel</b> dat ik dan wil gaan nastreven (ook al is dat misschien
-    minder leuk)?:
-    <b>Doel B</b> <br/> 
- <textarea name="anderdoel" cols="55" rows="4" class="praatmethansformtextarea" title="beschrijf welk ANDERE DOEL jij nu alvast kiest als jouw eerste doel te hoog gegrepen blijkt te zijn (ex-gebruiker worden is bijvoorbeeld lastig maar makkelijker dan gecontroleerd gebruiken voor de meeste mensen."></textarea></p>
-<div class="praatmethansheader2">&quot;Welke ANDER DOEL wil je dan gaan bereiken?&quot;</div>
-<p>&nbsp;</p>
-<p>Vanaf welke <b>datum start</b> ik met  <b>plan A?</b><br /> 
-  <script language="javascript">
- 
-selectdatum("");
--->
-</script>  &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="startdatum();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p>
-<div class="praatmethansheader2">&quot;Wat wordt jouw START-datum?&quot;</div>
-<div class="rechtsitalic">Het helpt je om een duidelijk startpunt te kiezen: &quot;Vanaf die-en-die datum ben ik dingen ANDERS gaan doen!&quot;</div>
-<p>&nbsp;</p>
+        <div class="action-bar">
+          <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'plan-van-aanpak';
+    const fields = [
+      'startPoint',
+      'mainGoal',
+      'goalDate',
+      'usageGoal',
+      'sustainabilityTerm',
+      'planA',
+      'planB',
+      'fallbackGoal',
+      'startDate',
+      'supportPeople',
+      'rewards'
+    ];
 
+    function getDefaultData() {
+      const data = {};
+      fields.forEach((key) => { data[key] = ''; });
+      return data;
+    }
 
-<div class="stickit">Een heel concreet <b>gebruiksdoel</b> zou kunnen zijn:<br />
-minderen van ____ per dag en ____ per week naar:<br />- Maximaal per dag: __<br />- Maximaal per week: __<br />- Aantal middelenvrije dagen per week: __<br />- Ik start hiermee op: __ / __ / __<br />- dit wil ik __ weken/maanden volhouden</div>
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
 
-</form><hr class="formhr" />
-<p>&nbsp;</p>
-<p><i>Denk niet te makkelijk over jouw <b>plan van aanpak</b>, raad ik aan. Ik heb al veel mensen zien struikelen omdat zij eigenlijk halverwege niet meer wisten waar zij ook al weer mee bezig waren en omdat het aallemaal niet zo vervelend meer voelde begonnen zij gewoon weer te doen wat zij altijd deden: met hetzelfde resultaat... ze hadden geen plan om op terug te vallen</i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div>
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectFormData());
+        if (feedback) showMessage('Plan van aanpak opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      const exportData = iamData.exportJSON();
+      const url = URL.createObjectURL(exportData.blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = exportData.filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
+    }
+
+    function firstNonEmpty(items) {
+      return items.find((item) => typeof item === 'string' && item.trim()) || '';
+    }
+
+    function appendUniqueLine(textarea, line) {
+      if (!line || !textarea) return;
+      const clean = line.trim();
+      if (!clean) return;
+      const existingLines = textarea.value
+        .split('\n')
+        .map((part) => part.trim())
+        .filter(Boolean);
+      if (!existingLines.includes(clean)) {
+        textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
+      }
+    }
+
+    function applySuggestionFromPreviousSteps() {
+      const integration = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      const balans = iamData.getFormData('voor-nadelen-balansen') || {};
+      const trek = iamData.getFormData('soorten-trek') || {};
+      const risicoSituaties = iamData.getFormData('risico-situaties') || {};
+      const risicoMensen = iamData.getFormData('risico-mensen') || {};
+      const risicoActiviteiten = iamData.getFormData('risico-activiteiten') || {};
+      const stimulus = iamData.getFormData('stimulus-respons') || {};
+      const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
+
+      const startPoint = document.getElementById('startPoint');
+      const mainGoal = document.getElementById('mainGoal');
+      const planA = document.getElementById('planA');
+      const planB = document.getElementById('planB');
+      const supportPeople = document.getElementById('supportPeople');
+      const rewards = document.getElementById('rewards');
+      const fallbackGoal = document.getElementById('fallbackGoal');
+
+      appendUniqueLine(startPoint, firstNonEmpty([
+        integration?.topTriggers?.[0],
+        risicoSituaties.riskySituations,
+        risicoActiviteiten.riskyActivities,
+        stimulus.stimulus
+      ]));
+
+      appendUniqueLine(mainGoal, firstNonEmpty([
+        integration?.motivationAnchors?.[0],
+        balans.decisionNote,
+        trek.reflection,
+        gevoelens.learningPeriod
+      ]));
+
+      appendUniqueLine(planA, firstNonEmpty([
+        integration?.bestInterventions?.[0],
+        integration?.bestInterventions?.[1],
+        stimulus.functionalAlternative,
+        risicoSituaties.responsePlan,
+        risicoActiviteiten.preparationPlan,
+        gevoelens.enduranceSupport
+      ]));
+
+      appendUniqueLine(planA, firstNonEmpty([
+        integration?.bestInterventions?.[2],
+        risicoActiviteiten.exitStrategy
+      ]));
+
+      appendUniqueLine(planB, firstNonEmpty([
+        integration?.fallbackMoves?.[0],
+        risicoActiviteiten.afterRisks,
+        risicoSituaties.afterRisks,
+        risicoMensen.planB,
+        gevoelens.nextTimeAvoid
+      ]));
+
+      appendUniqueLine(supportPeople, firstNonEmpty([
+        integration?.supportNetwork?.[0],
+        integration?.supportNetwork?.[1],
+        stimulus.socialSupport,
+        risicoMensen.personName,
+        gevoelens.talkPeople
+      ]));
+
+      appendUniqueLine(rewards, firstNonEmpty([
+        stimulus.contingencyReward,
+        gevoelens.enduranceSupport
+      ]));
+
+      appendUniqueLine(fallbackGoal, firstNonEmpty([
+        integration?.earlyWarnings?.[0],
+        risicoMensen.boundarySummary,
+        trek.noGoSignals,
+        risicoActiviteiten.rationalizationRisks
+      ]));
+
+      saveForm(true);
+      showMessage('Voorstel ingevuld op basis van eerdere stappen. Check en pas aan waar nodig.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = iamData.getFormData(formKey);
+      fillForm({ ...getDefaultData(), ...(saved || {}) });
+
+      const template = document.getElementById('usageGoalTemplate');
+      const usageGoal = document.getElementById('usageGoal');
+      template.addEventListener('change', () => {
+        if (!template.value) return;
+        usageGoal.value = usageGoal.value ? `${template.value}\n${usageGoal.value}` : template.value;
+        saveForm(false);
+      });
+
+      document.getElementById('suggestButton').addEventListener('click', applySuggestionFromPreviousSteps);
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('planForm').addEventListener('input', () => saveForm(false));
+    });
+  </script>
 </body>
 </html>

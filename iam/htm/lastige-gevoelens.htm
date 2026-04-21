@@ -1,194 +1,471 @@
-<html>
-
-lastige-gevoelens.htm
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>omgaan met gevoelens</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omgaan met lastige gevoelens</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #213547;
+      --page-navy: #2d5b7c;
+      --page-sand: #f5eee4;
+      --page-accent: #c9684a;
+      --page-soft: #edf3f5;
+      --page-leaf: #6f8c49;
+      --page-gold: #c9982f;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(45, 91, 124, 0.15), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(201, 104, 74, 0.12), transparent 32%),
+        linear-gradient(180deg, #f8f3ed 0%, #eef4f6 100%);
+      color: var(--page-ink);
+    }
 
+    .page-shell {
+      max-width: 940px;
+      margin: 0 auto;
+    }
 
+    .page-header {
+      background: linear-gradient(135deg, var(--page-navy) 0%, #5b7b4d 100%);
+      color: #fff;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(33, 53, 71, 0.14);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .page-header h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
 
+    .page-header p {
+      margin-bottom: 0;
+      max-width: 44rem;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
 
-function hulpscherm()
-{
-hulp_scherm(320,'omgaan met gevoelens','Gevoelens die meestal alleen maar de ruimte kregen met hulp van een (beetje) gebruik, dat zijn tricky gevoelens geworden. Gewoon omdat je niet zo goed geleerd hebt om die gevoelens <b>nuchter</b> te <i>uiten</i>, uit te houden of er nuchter iets <i>mee te doen</i>. Dat zijn dus de <b>risico-gevoelens</b> in een periode waarin je de controle wilt terugwinnen op gebruik, dat zijn de gevoelens die je nuchter zult moeten leren tackelen.<br/>Dan is het vaak handig om alvast te bedenken wat die gevoelens zijn en wat jij er <b>nuchter</b> mee wilt leren doen om ze niet zo hoog op te laten lopen dat het lastiger wordt om het gebruik te laten staan...')
-}
+    .top-links a {
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
 
-</script>
+    .top-links a:hover {
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.2);
+    }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .intro-card,
+    .question-card,
+    .note-card,
+    .message {
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 18px;
+      padding: 1.15rem;
+      box-shadow: 0 10px 24px rgba(33, 53, 71, 0.08);
+      margin-top: 1rem;
+    }
+
+    .intro-card {
+      border-left: 5px solid var(--page-navy);
+    }
+
+    .question-card {
+      border-top: 5px solid var(--page-navy);
+    }
+
+    .question-card.prevent {
+      border-top-color: var(--page-leaf);
+    }
+
+    .question-card.regulate {
+      border-top-color: var(--page-gold);
+    }
+
+    .question-card.process {
+      border-top-color: var(--page-accent);
+    }
+
+    .note-card {
+      border-left: 5px solid var(--page-gold);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: var(--page-soft);
+      color: var(--page-ink);
+      margin-bottom: 0.6rem;
+    }
+
+    .helper-list {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    .helper-list li {
+      margin-bottom: 0.35rem;
+    }
+
+    .question-card h2,
+    .intro-card h2,
+    .note-card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+      color: var(--page-ink);
+    }
+
+    .grid-two {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 760px) {
+      .grid-two {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .helper-text {
+      color: #4e6474;
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+    }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+
+    .action-bar button,
+    .action-bar a {
+      flex: 1 1 180px;
+    }
+
+    .message {
+      display: none;
+      border-left: 5px solid var(--page-leaf);
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      border-left-color: var(--page-accent);
+    }
+
+    .footer-note {
+      margin-top: 1.25rem;
+      color: #4a6273;
+      font-size: 0.95rem;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
+  <div class="container">
+    <div class="page-shell">
+      <div class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./persoonlijke-waarden.htm">Vorige stap</a>
+          <a href="./craving-1-10.htm">Volgende stap</a>
+        </div>
+        <h1>Omgaan met lastige gevoelens</h1>
+        <p>Lastige gevoelens verdwijnen niet altijd als je stopt met automatisch reageren. Deze pagina helpt je om meerdere nuchtere routes klaar te leggen, zodat je niet van maar één oplossing afhankelijk bent.</p>
+      </div>
 
-<div class="shadow"><div class="content">
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+      <div id="message" class="message"></div>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">omgaan met gevoelens</h1>
-</div>
+      <section class="intro-card">
+        <span class="eyebrow">Werkidee</span>
+        <h2>Maak meer dan één antwoord per gevoel</h2>
+        <p>Sommige gevoelens vragen om afstand, andere om ontlading, troost, gesprek, acceptatie of tijd. Hoe meer bruikbare antwoorden jij verzamelt, hoe kleiner de kans dat gebruik de enige uitweg lijkt.</p>
+        <ul class="helper-list">
+          <li>Denk klein en concreet: wat kun jij echt doen op een moeilijke dag?</li>
+          <li>Je hoeft niet alles nu in te vullen. Een paar bruikbare antwoorden is al winst.</li>
+          <li>Probeer verschillende soorten antwoorden te verzamelen, niet alleen afleiding.</li>
+        </ul>
+      </section>
 
-<h1>Nuchtere strategie&euml;n voor risicovolle gevoelens</h1>
-<div class="printhide">
-<p>We hebben het elders gehad over <a href="risico-gevoelens.htm" target="formulieren">risicogevoelens</a>.
-  Die kom je in een mensenleven helaas nou eenmaal regelmatig tegen. Dus je zult
-  een aantal nuchtere strategie&euml;n in huis moeten hebben. En liefst een aantal,
-  zodat je kunt kiezen. De ene dag zal de ene truuk beter werken om met het ene
-  gevoel om te gaan. Maar na 9 keer is het misschien wel op zodat je de 10e keer
-  toch iets anders bij de hand moet hebben.<br />
-  Het is vaak ook handig om bij echt lastige gevoelens meerdere mogelijkheden
-  te hebben want vaak zijn er ook m&eacute;&eacute;rdere wegen nodig dan &eacute;&eacute;n enkele. Stel je
-  voor dat je boos bnent op iemand die er niet meer is. Dan kan je wel even pushups
-  doen maar waarschijnlijk is er toch wat mee nodig om het op de lange duur een
-  plekje te geven in je leven. </p>
+      <form id="lastigeGevoelensForm">
+        <div class="grid-two">
+          <section class="question-card prevent">
+            <span class="eyebrow">Voorkomen</span>
+            <h2>Wat kun je voorlopig loslaten of vermijden?</h2>
+            <p>Welke situaties, onderwerpen, contacten of verwachtingen maken lastige gevoelens sneller te groot?</p>
+            <div class="form-group">
+              <label for="avoidTriggers">Wat wil je tijdelijk beperken, uitstellen of simpeler maken?</label>
+              <textarea id="avoidTriggers" name="avoidTriggers" rows="6" placeholder="Bijvoorbeeld: ruziegesprekken uitstellen, minder overwerken, later pas naar bepaalde plekken gaan."></textarea>
+            </div>
+          </section>
 
+          <section class="question-card prevent">
+            <span class="eyebrow">Afleiden</span>
+            <h2>Welke gezonde afleiding werkt bij jou?</h2>
+            <p>Noem minstens drie activiteiten die je uit een piek kunnen halen zonder dat je jezelf kwijtraakt.</p>
+            <div class="form-group">
+              <label for="distractionIdeas">Welke afleiding helpt vaak binnen 10 tot 30 minuten?</label>
+              <textarea id="distractionIdeas" name="distractionIdeas" rows="6" placeholder="Bijvoorbeeld: lopen, douchen, iemand appen, muziek op, opruimen, even naar buiten."></textarea>
+            </div>
+          </section>
+        </div>
 
+        <div class="grid-two">
+          <section class="question-card regulate">
+            <span class="eyebrow">Sterke prikkel</span>
+            <h2>Welke nuchtere intensiteit helpt even?</h2>
+            <p>Soms helpt een stevige, maar gezonde prikkel om niet door een gevoel overspoeld te worden.</p>
+            <div class="form-group">
+              <label for="healthyIntensity">Welke sterke prikkel kun jij veilig en nuchter gebruiken?</label>
+              <textarea id="healthyIntensity" name="healthyIntensity" rows="6" placeholder="Bijvoorbeeld: stevig wandelen, koud water, sporten, harde muziek, kracht zetten, ademwerk."></textarea>
+            </div>
+          </section>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript>
-<p>Er zijn een aantal vaardigheden die je kunt gebruiken </p>
+          <section class="question-card process">
+            <span class="eyebrow">Oplossen</span>
+            <h2>Wat vraagt echte verwerking?</h2>
+            <p>Niet alles is weg te regelen met afleiding. Sommige gevoelens hebben gesprek, ritueel, rouw, herstel of duidelijkheid nodig.</p>
+            <div class="form-group">
+              <label for="resolveApproach">Wat helpt jou om iets echt een plek te geven?</label>
+              <textarea id="resolveApproach" name="resolveApproach" rows="6" placeholder="Met wie wil je praten? Welke stap, brief, oefening of ritueel helpt echt op langere termijn?"></textarea>
+            </div>
+          </section>
+        </div>
 
+        <div class="grid-two">
+          <section class="question-card regulate">
+            <span class="eyebrow">Uithouden</span>
+            <h2>Hoe help je jezelf door gewone frustratie heen?</h2>
+            <p>Sommige dagen zijn niet op te lossen. Dan gaat het om steun, ritme, rust en kleine positieve ervaringen.</p>
+            <div class="form-group">
+              <label for="enduranceSupport">Wat helpt jou om een moeilijke dag uit te houden zonder terug te vallen?</label>
+              <textarea id="enduranceSupport" name="enduranceSupport" rows="6" placeholder="Bijvoorbeeld: vroeg naar bed, wandelen met iemand, simpele planning, eten, rust, humor, contact."></textarea>
+            </div>
+          </section>
 
-<p><b><i>Bijbehorende vaardigheden</i></b></p>
-</div>
-<form name="risicogevoelens">
-  <h1>VOORKOMEN</h1>
-  <p>Soms moet je dingen loslaten of achterwege laten zodat de lastige gevoelens
-    niet hoeven te ontstaan. Wat is er </p>
-  <h1>AFLEIDEN</h1>
-  <p>Welke afleidingen moet ik soms hebben (noem minstens drie activiteiten
-    die als afleiding werkzaam kunnen zijn)</p>
-  <h1>OVERSCHREEUWEN</h1>
-  <p>Welke sterke prikkel is degelijk genoeg om lastige geveoelens even niet
-    te hoeven voelen (en hoe gun ik mijzelf dat op een nuchtere manier) </p>
-  <h1>OPLOSSEN</h1>
-  <p>Met wie kan ik praten om mijn verleden ook meer tot het verleden te laten
-    horen. Welke nuchtere rituelen helpen mij om met het verleden te leren leven
-    zoals het is. </p>
-  <h1>UITHOUDEN</h1>
-  <p>Welke positieve ervaringen moet ik mee maken om met de dagelijkse frust
-    of de tegenvallers die er nou eenmaal bij horen te kunnen leven.<br>
-    En alleen is ook maar alleen, genieten wordt vaak sterkeral;s je het samen
-    doet: Met wie kan ik dat doen?
-</p>
-  <h1>ACCEPTEREN</h1>
-  <p>Hoe kan ik mijzelf oefenen in stilstaan bij hel leven zoals het is. Niet
-    beter en ook niet slechter. Is er een mediatie methode die mij helpt (en
-    hoe vaak oefen ik die per week) of is er een gebed dat ik kan uitspreken
-    waarin ik zowel om kracht vraag als dank voor wat ik wel heb. </p>
-  <h1>praten met (wie?)</h1>
-<p>Met welke professionele mensen of met welke vrienden of vriendinnen kan ik
-  praten over voorgaande dingen. </p>
-<h1>anders denken </h1>
-<p>Anders denken waardoor ander gevoel ontstaat (hoe doe ik dat, wie gaat mij
-  daarbij helpen om dat te oefenen?)</p>
-<p>-zijn er mensen in mijn situatiue die daar zonder gebruik mee om kunnen gaan
-  en wat doen die mensen om dat te kunnen (wat kan ik van ze leren?) </p>
-<h1>Gevoelsurfen:</h1>
-<p>Gevoelens hebben  een golfvorm: ze hebben  een aanloop,
-  een top en een uitklink-fase. Sommigge gevoelens zwellen langzaam aan als honger
-  of eenzaamheid. Zolang je <b>niets</b> doet wordt het groter en groter..
-  Sommige andere gevoelens komen sneller en klinken dan langer uit, meer als
-  een gongslag die naklinkt na de klap. Dat zijn eerder gevoelens als er wel
-  iets <b>wel</b> gebeurde. Als er iets vervelends gebeurt bijvoorbeeld. Dat
-  zijn meer gevoelens die meer voelen als een steen in de vijver. </p>
-<p>Bij gevoelssurfen gaat het er om dat je <b>niets doet</b> om jezelf af te
-  leiden van het gevoel dat de emotie geeft, dat je niets doet om het gevoel
-  op te lossen, weg te werken of te overschreeuwen. Dat je niks doet dan voelen
-  hoe het gevoel voelt, hoe het nog even stijgt als je er op let, en hoe de top
-  dan voelt en hoe het verveolgens voelt als het weer wegzakt om ruimte te maken
-  voor het volgend gevoel. Gevoels surfen is niet jezelf schrap zetten om de
-  klap op te vangen die de emotie gaat geven maar dat je er met aandacht bij
-  blijft hoe eigenlijk de golf gaat verlopen. Want ook als je <i> niks</i>  doet
-  zakt een gevoel na verloop van tijd weg. Je kunt gaan ademen en ontspannen
-  om het gevoel zo snel mogelijk weg tre laten zakken maar dat is neit de bedoeling.
-  Gewoon het gevoel nemen zoals het komt. Het is namelijk jouw gevoel. Gewoon
-  merken dat het gevoel er is zonder er bang voor te zijn. Eventueel kan je rustig
-  doen wat je van plan was te doen. Of je kan de heftigheid van het gevoel bijhouden
-  op een ruitjespapiertje door er een grafiekje van te maken. Gewoon de heftigheid
-  weergeven van het gevoel in een cijfer van 0 tot 10 (als je al bij tien aan zou
-  komen). Gewoon bijhouden hoe het weer terugzakt naar nul zodat je eigenlijk de
-  golf getekend hebt van het gevoel van die gevoelsgolf.</p>
-<p>Kijken naar de gedachten die er door dat gevoel ontstaan. Niet dat je iets
-  met die gedachten gaat doen, niet dat je die gevoelens serieus gaat nemen.
-  H&eacute;, het zijn maar gedachten, je <i>hoeft </i>er niks mee te doen! </p>
-<p>Een apart verhaal is het gevoel van trek. Dat beschrijf ik onder treksurfen. </p>
-<p>treksurfen (plus de vraag: &quot;wat is dan mijn verdiende beloning als ik de golf
-  weer eens voorbij heb laten trekken zonder te gebruiken&quot;?) Het aardige is dat
-  je iedere keer dat je het gevoel van trek hebt uitgehouden zonder er gedrag
-  aan te verbinden, dus iedere keer dat je trek hebt uitgehouden zonder te gebruiken,
-  dat maakt dat je iets hebt afgekrabt van het belang dat een middel heeft in
-  jouw leven. Daartegenover, iedere keer dat jij w&egrave;l hebt gebruikt doordat je
-  het gevoel van trek had, dan heb je het gewicht van de trek wat groter gemaakt.
-  Zeker als je bent gaan gebruiken terwijl je het eingenlijk niet wilde. Wat
-  dingen w&egrave;l doen die je eigenlijk niet wilt, dat doe je natuurlijk alleen bij
-  gewichtige en belangrijke dingen. </p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>voor een volgende keer vermijden (welke risico's moet ik -voorlopig even-
-  schrappen?)</p>
-<p>&nbsp;</p>
-<p></p>
-<hr class="formhr" />
+          <section class="question-card process">
+            <span class="eyebrow">Accepteren</span>
+            <h2>Hoe oefen je in stilstaan bij wat er is?</h2>
+            <p>Niet alles wordt beter door harder te vechten. Soms helpt leren verdragen, ademen, bidden, mediteren of observeren.</p>
+            <div class="form-group">
+              <label for="acceptancePractice">Welke acceptatie-oefening past bij jou?</label>
+              <textarea id="acceptancePractice" name="acceptancePractice" rows="6" placeholder="Bijvoorbeeld: 10 minuten stil zitten, gebed, bodyscan, ademruimte, schrijven zonder oordeel."></textarea>
+            </div>
+          </section>
+        </div>
 
+        <div class="grid-two">
+          <section class="question-card process">
+            <span class="eyebrow">Praten</span>
+            <h2>Met wie kun je dit bespreken?</h2>
+            <p>Denk aan professionele steun, vrienden, familie of lotgenoten die niet meteen meespringen in paniek of gebruik.</p>
+            <div class="form-group">
+              <label for="talkPeople">Wie kun je bellen, appen of opzoeken?</label>
+              <textarea id="talkPeople" name="talkPeople" rows="5" placeholder="Noem namen, rollen of plekken waar je steun kunt vragen."></textarea>
+            </div>
+          </section>
 
-<p>&nbsp;</p>
+          <section class="question-card process">
+            <span class="eyebrow">Anders denken</span>
+            <h2>Welke andere gedachte helpt?</h2>
+            <p>Een gevoel wordt vaak heftiger door een verhaal dat je erbij vertelt. Welke gedachte maakt ruimte zonder alles weg te poetsen?</p>
+            <div class="form-group">
+              <label for="reframing">Welke zinnen helpen jou om niet mee te schieten in de eerste impuls?</label>
+              <textarea id="reframing" name="reframing" rows="5" placeholder="Bijvoorbeeld: dit gaat voorbij, ik hoef nu niets te beslissen, ik mag steun vragen, dit gevoel is niet mijn hele waarheid."></textarea>
+            </div>
+          </section>
+        </div>
 
+        <section class="question-card regulate">
+          <span class="eyebrow">Leren van anderen</span>
+          <h2>Wie doet dit al zonder gebruik?</h2>
+          <p>Kijk om je heen: wie in een vergelijkbare situatie kan met moeilijke gevoelens omgaan zonder te gebruiken, en wat doen zij concreet?</p>
+          <div class="form-group">
+            <label for="examplesFromOthers">Wat kun je van anderen overnemen of uitproberen?</label>
+            <textarea id="examplesFromOthers" name="examplesFromOthers" rows="5" placeholder="Beschrijf voorbeelden, gewoontes of houdingen die jij ziet bij anderen."></textarea>
+          </div>
+        </section>
 
-<H1>Risico-inventarisatie (situaties) </H1>
+        <section class="note-card">
+          <span class="eyebrow">Gevoelsurfen</span>
+          <h2>Laat een gevoel bewegen zonder het meteen op te lossen</h2>
+          <p>Een gevoel heeft vaak een golf: opkomst, piek en afname. Oefenen kan zijn dat je even niets hoeft te fixen, maar merkt hoe het verandert als je erbij blijft.</p>
+          <div class="form-group">
+            <label for="feelingSurfing">Hoe wil jij gevoelsurfen oefenen als een emotie oploopt?</label>
+            <textarea id="feelingSurfing" name="feelingSurfing" rows="6" placeholder="Bijvoorbeeld: 10 minuten observeren, cijfer geven, adem volgen, noteren hoe het opkomt en weer afneemt."></textarea>
+          </div>
+          <p class="helper-text">Trek vraagt soms een eigen aanpak. Deze pagina gaat vooral over andere lastige gevoelens daaromheen.</p>
+        </section>
 
-<p>Je hebt inmiddels nagedacht over de risico's van <a href="risico-situaties.htm" target="formulieren" title="lastige situaties en plekken">situaties
-  en plekken</a>, van gebeurtenissen en activiteiten, </p>
-<p>P.S.<br />
-  en
-  nog een vraagje om even bij stil te staan:
-  Hoeveel tijd geef jij jezelf tot je deze gevoelens beter kunt 'handelen'? Dat
-  is namelijk wel een periode waarin je meer 'last' zult hebben van deze gevoelens..
-    dus dat kan je dan maar beter in calculeren.
+        <div class="grid-two">
+          <section class="question-card prevent">
+            <span class="eyebrow">Volgende keer</span>
+            <h2>Wat wil je voorlopig schrappen?</h2>
+            <p>Als een risico nog te groot is, kan tijdelijk vermijden een sterke keuze zijn.</p>
+            <div class="form-group">
+              <label for="nextTimeAvoid">Welke risico's wil je de komende tijd bewust mijden?</label>
+              <textarea id="nextTimeAvoid" name="nextTimeAvoid" rows="5" placeholder="Bijvoorbeeld: bepaalde afspraak, plek, discussie, vermoeidheid, eenzaamheid of online trigger."></textarea>
+            </div>
+          </section>
 
-</p><p>&nbsp;</p>
+          <section class="question-card regulate">
+            <span class="eyebrow">Tijd geven</span>
+            <h2>Hoeveel tijd geef je jezelf om dit te leren?</h2>
+            <p>Nieuwe manieren van omgaan met gevoelens kosten tijd. Reken die leertijd mee in je verwachtingen.</p>
+            <div class="form-group">
+              <label for="learningPeriod">Wat is een realistische oefenperiode voor jou?</label>
+              <textarea id="learningPeriod" name="learningPeriod" rows="5" placeholder="Bijvoorbeeld: zes weken oefenen, eerst steun organiseren, in kleine stappen werken, terugval meenemen als leermoment."></textarea>
+            </div>
+          </section>
+        </div>
 
-</form><hr class="formhr" />
-<p>&nbsp;</p>
-<p><i>zie ook <a href="risico-tekst.htm" target="formulieren">risico-analyse (algemeen)</a> en <a href="risico-gevoelens.htm" target="formulieren">risico's van lastige gevoelens</a></i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+        </div>
+      </form>
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div>
+      <p class="footer-note">Alles blijft standaard op dit toestel. Exporteer alleen bewust als je je gegevens ergens anders wilt openen.</p>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'lastige-gevoelens';
+    const fieldIds = [
+      'avoidTriggers',
+      'distractionIdeas',
+      'healthyIntensity',
+      'resolveApproach',
+      'enduranceSupport',
+      'acceptancePractice',
+      'talkPeople',
+      'reframing',
+      'examplesFromOthers',
+      'feelingSurfing',
+      'nextTimeAvoid',
+      'learningPeriod'
+    ];
+
+    function getDefaultData() {
+      return {
+        avoidTriggers: '',
+        distractionIdeas: '',
+        healthyIntensity: '',
+        resolveApproach: '',
+        enduranceSupport: '',
+        acceptancePractice: '',
+        talkPeople: '',
+        reframing: '',
+        examplesFromOthers: '',
+        feelingSurfing: '',
+        nextTimeAvoid: '',
+        learningPeriod: ''
+      };
+    }
+
+    function mergeData(savedData) {
+      return {
+        ...getDefaultData(),
+        ...(savedData || {})
+      };
+    }
+
+    function fillForm(data) {
+      fieldIds.forEach((fieldId) => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+          field.value = data[fieldId] || '';
+        }
+      });
+    }
+
+    function collectFormData() {
+      return fieldIds.reduce((accumulator, fieldId) => {
+        const field = document.getElementById(fieldId);
+        accumulator[fieldId] = field ? field.value.trim() : '';
+        return accumulator;
+      }, {});
+    }
+
+    function saveForm(showFeedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectFormData());
+        if (showFeedback) {
+          showMessage('Je antwoorden zijn opgeslagen op dit toestel.');
+        }
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet. Probeer het opnieuw.', true);
+      }
+    }
+
+    function exportAllData() {
+      try {
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showMessage('Je volledige IAM-gegevens zijn als JSON geëxporteerd.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      window.clearTimeout(showMessage.timeoutId);
+      showMessage.timeoutId = window.setTimeout(() => {
+        message.classList.remove('show');
+      }, 3200);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedData = iamData.getFormData(formKey);
+      fillForm(mergeData(savedData));
+
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAllData);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+
+      const form = document.getElementById('lastigeGevoelensForm');
+      form.addEventListener('input', () => saveForm(false));
+    });
+  </script>
+<script src="../js/dataStore.js"></script>
 </body>
 </html>

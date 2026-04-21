@@ -1,201 +1,275 @@
-<html>
-
-risico-situaties.htm
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Risico-inventarisatie (situaties)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
-
-
-function aanvullen()
-{
-document.risicosituaties.risicosituaties.value=document.risicosituaties.risicosituaties.value+" "+document.risicosituaties.lastigeopties.value;
-}
-
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
-
-function hulpscherm()
-{
-hulp_scherm(300,'risico-situaties','De voor- en nadelen van gebruik op korte en lange termijn heb je inmiddels duidelijk voor jezelf.<br>Je hebt nagedacht over wat verslaving voor jou eigenlijk is en in hoeverre het mogelijk iets is om rekening mee te houden in jouw leven. Dan wordt het nu tijd om na te denken over risicosituaties die maken dat er dingen gebeuren waar je achteraf van baalt. Juist als <b>voorbereiding</b> op een lastige situatie of gebeurtenis is het goed om over het risico te hebben nagedacht. ')
-}
-
-
-function willen()
-{
-var detekst,dedatum,delokatie,deopmerking,desprop;
-var variab1 = document.risicosituaties.agenda.value.trim();
-if (variab1==""){alert("Het is mogelijk wel een beetje magisch denken van mij om eerst NIETS als risico te benoemen en dan WEL te verwachten dat het in mijn agenda komt... ;-)"); return;}
-detekst = "aandacht voor: ["+ variab1 + "]";
-  //alert(detekst);
-dedatum=document.risicosituaties.yyyy.value+document.risicosituaties.mm.value+document.risicosituaties.dd.value+"T090000Z/"+document.risicosituaties.yyyy.value+document.risicosituaties.mm.value+document.risicosituaties.dd.value+"T094500Z";
-  //alert(dedatum+"//20130526T103000Z/20130526T114500Z");
-delokatie = "Waar?";
-  //alert(delokatie);
-deopmerking="op "+document.risicosituaties.dd.value+"/"+document.risicosituaties.mm.value+" zei ik tegen mijzelf: ik wil dat dit goed gaat vandaag...";
-  //alert(deopmerking);
-desprop="n.a.v.website:PraatmetHans.nl";
-  //alert(desprop);
-googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
-//alert(deopmerking);
-}
-
-
-</script>
-
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Risico-inventarisatie Situaties</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #336f90;
+      --page-accent: #cc6e4f;
+      --page-soft: #ebf3f6;
+    }
+    body {
+      background:
+        radial-gradient(circle at top right, rgba(51, 111, 144, 0.14), transparent 30%),
+        linear-gradient(180deg, #f8f3ec 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
+    .page-shell { max-width: 920px; margin: 0 auto; }
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
+    .intro-card, .question-card, .note-card, .message {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
+    .question-card { border-top: 4px solid var(--page-main); }
+    .note-card { border-left: 4px solid var(--page-accent); }
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+    .helper-list { margin: 0; padding-left: 1.2rem; }
+    .helper-list li { margin-bottom: 0.35rem; }
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+    .message { display: none; border-left: 4px solid #5a8840; }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+  </style>
 </head>
 <body>
-<div class="container">
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./stimulus-respons.htm">Vorige stap</a>
+          <a href="./risico-mensen.htm">Volgende stap</a>
+        </div>
+        <h1>Risico-inventarisatie: situaties</h1>
+        <p>Door risicosituaties vooraf te herkennen, kun je eerder bijsturen. Het doel is niet perfect vermijden, maar beter voorbereid zijn.</p>
+      </header>
 
-<div class="shadow"><div class="content">
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+      <div id="message" class="message"></div>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">risico-inventarisatie (situaties)</h1>
-</div><div class="rechtsitalic">4 vragen: 15 - 30 minuten</div>
+      <section class="intro-card">
+        <h2>Waar kan het lastig worden?</h2>
+        <ul class="helper-list">
+          <li>Leuke of bekende situaties die vroeger met gebruik verbonden waren.</li>
+          <li>Situaties met stress, spanning, schaamte of conflict.</li>
+          <li>Momenten na afloop, als de trek of het goedpraten later opkomt.</li>
+        </ul>
+      </section>
 
-<h1>Risicovolle situaties en plekken </h1>
-<div class="printhide">
+      <form id="risicoSituatiesForm">
+        <section class="question-card">
+          <h2>Situaties verzamelen</h2>
+          <div class="form-group">
+            <label for="presetSituation">Kies een voorbeeldsituatie (optioneel)</label>
+            <select id="presetSituation">
+              <option value="">Kies een situatie</option>
+              <option>Als ik langer in cafees zit.</option>
+              <option>Als ik klaar ben met werk en wil ontladen.</option>
+              <option>Als ik ruzie heb met partner, familie of vrienden.</option>
+              <option>Als anderen gebruiken in mijn omgeving.</option>
+              <option>Als ik me ontevreden of leeg voel.</option>
+              <option>Als ik iets te vieren heb.</option>
+              <option>Als ik langs een plek loop waar ik eerder haalde of gebruikte.</option>
+              <option>Als ik moe ben en stress oploopt.</option>
+              <option>Als er feestdagen of vakanties zijn.</option>
+            </select>
+          </div>
+          <div class="form-group mt-2">
+            <label for="situationDraft">Eigen situatie toevoegen</label>
+            <input id="situationDraft" type="text" placeholder="Typ hier een situatie en voeg toe." />
+          </div>
+          <div class="action-bar">
+            <button type="button" class="button-secondary" id="addSituationButton">Voeg toe aan lijst</button>
+          </div>
+          <div class="form-group mt-2">
+            <label for="riskySituations">Welke situaties zijn voor jou risicovol?</label>
+            <textarea id="riskySituations" rows="6" placeholder="Zet per regel een situatie."></textarea>
+          </div>
+        </section>
 
-<p>Hieronder staat een lijst die u kan helpen om jouw eigen
-  risico<i>situaties</i> te ontdekken.</p>
-<p>Bepaalde situaties of bepaalde plekken kunnen het knap lastig maken
-  om jouw gebruik in de hand te houden, ook (of misschien
-  zelfs juist!) als ze leuk zijn.</p>
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>Externe risico's</h2>
+            <div class="form-group">
+              <label for="externalRisks">Wat komt van buitenaf en verhoogt risico?</label>
+              <textarea id="externalRisks" rows="5" placeholder="Bijvoorbeeld: groepsdruk, beschikbaarheid, plekken, mensen, timing."></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>Interne risico's</h2>
+            <div class="form-group">
+              <label for="internalRisks">Welke gedachten of gevoelens maken het intern lastiger?</label>
+              <textarea id="internalRisks" rows="5" placeholder="Bijvoorbeeld: ik verdien het, ik kan dit toch niet, ik wil erbij horen."></textarea>
+            </div>
+          </section>
+        </div>
 
-<ul>
-  <li>Dat kan door situaties die vroeger altijd met gebruik verbonden waren (denk
-    aan terrasjes of koning(inne)dag. </li>
-  <li>Dat kan doordat situaties bepaalde gevoelens of herinneringen geven die
-    met gebruik gekanaliseerd moesten worden (zie straks ook: <a href="risico-gevoelens.htm" target="formulieren" title="formulier wat op zioek gaat naar de verschillende lastige gevoelens">'lastige
-    gevoelens'</a>)</li>
-  <li>Dat kan doordat bepaalde dingen alleen met behulp van een (beetje) gebruik
-    lijken te kunnen worden beleefd.</li>
-  <li>Dat kan omdat sommige situaties alleen met (een beetje) gebruik  zijn
-    uit te houden. </li>
-  <li>dat kan doordat de stress te groot is en dat gebruik de belangrijkste manier is om met stress om te gaan.</li>
-  <li>...en mogelijk heb jij hier nog persoonlijke aanvullingen?</li>
-  </ul>
-<p>Om jou een idee te geven van situaties die lastig zouden kunnen zijn heb ik hier een rij van situaties gegeven die voor veel mensen aanleiding zijn geweest tot terugval.</p>
-<p>Kies uit de onderstaande lijst (onder de selectie-button) en/of beschrijf
-  je eigen risico situaties en bedenk je wat je nodig zou kunnen hebben om er vroeg genoeg op te reageren of wat je nodig hebt om er op te kunnen reageren.</p><div class="rechtsitalic">(mocht ik belangrijke situaties gemist hebben
-  wat jou betreft, dan hoor ik dat trouwens graag)</div> 
+        <section class="question-card">
+          <h2>Risico's na afloop</h2>
+          <div class="form-group">
+            <label for="afterRisks">Wat gebeurt vaak pas later, na een situatie?</label>
+            <textarea id="afterRisks" rows="4" placeholder="Bijvoorbeeld: leegte, vermoeidheid, goedpraten, extra trek in de avond."></textarea>
+          </div>
+        </section>
 
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>Eerstvolgende risicomoment</h2>
+            <div class="form-group">
+              <label for="nextRiskDate">Welke datum verwacht je?</label>
+              <input id="nextRiskDate" type="date" />
+            </div>
+            <div class="form-group mt-2">
+              <label for="nextRiskLabel">Hoe noem je dit moment voor jezelf?</label>
+              <input id="nextRiskLabel" type="text" placeholder="Bijvoorbeeld: vrijdag borrel met collega's" />
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>Responsplan</h2>
+            <div class="form-group">
+              <label for="responsePlan">Wat ga je vooraf doen zodat dit moment goed verloopt?</label>
+              <textarea id="responsePlan" rows="5" placeholder="Bijvoorbeeld: buddy appen, eindtijd afspreken, alternatief drankje, vertrekplan."></textarea>
+            </div>
+          </section>
+        </div>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'risico-situaties';
+    const fields = [
+      'situationDraft',
+      'riskySituations',
+      'externalRisks',
+      'internalRisks',
+      'afterRisks',
+      'nextRiskDate',
+      'nextRiskLabel',
+      'responsePlan'
+    ];
 
-<h1>Risico volle situaties</h1>
-</div>
-<form name="risicosituaties">
-Lastige situaties zouden mogelijk kunnen zijn:
-<select name="lastigeopties" onChange="aanvullen()"><option selected="selected">selecteer een optie en kopieer deze naar het verzamelveld</option>
-<option value="Als ik wat langer in  cafeetjes zit (hoe lang, eigenlijk?).">Als ik wat langer in  cafeetjes zit (hoe lang, eigenlijk?).</option>
-<option value="Als ik me gelukkig of lekker wil voelen.">Als ik me gelukkig of lekker wil voelen.</option>
-  <option value="Als ik klaar ben met mijn werk.">Als ik klaar ben met mijn werk.</option>
-  <option value="Als ik het gevoel heb dat alles misgaat.">Als ik het gevoel heb dat alles misgaat.</option>
-  <option value="Als iemand mij middelen aanbiedt op straat.">Als iemand mij middelen aanbiedt op straat.</option>
-  <option value="Als ik kijk naar anderen die hun gebruik wel in de hand lijken te hebben.">Als ik kijk naar anderen die hun gebruik wel in de hand lijken te hebben.</option>
-  <option value="Als anderen mensen drinken of andere middelen gebruiken in mijn omgeving (of op een feestje).">Als anderen mensen drinken of andere middelen gebruiken in mijn omgeving (of op een feestje).</option>
-  <option value="Als ik ruzie heb met mijn partner, of met mijn familieleden of met vrienden.">Als ik ruzie heb met mijn partner, of met mijn familieleden of met vrienden.</option>
-  <option value="Als ik alcohol of drugs ruik.">Als ik alcohol of drugs ruik.</option>
-  <option value="Als alles weer goed gaat.">Als alles weer goed gaat.</option>
-  <option value="Als ik lichamelijke pijn heb.">Als ik lichamelijke pijn heb.</option>
-  <option value="Als ik langs een slijterij, of een avondwinkel of mijn dealer loop.">Als ik langs een slijterij, of een avondwinkel of mijn dealer loop.</option>
-  <option value="Als ik iets moet doen waar ik erg tegen op zie.">Als ik iets moet doen waar ik erg tegen op zie.</option>
-  <option value="Als ik financiele problemen heb.">Als ik financi&euml;le problemen heb.</option>
-  <option value="Als ik op bruiloften of recepties kom.">Als ik op bruiloften of recepties kom.</option>
-  <option value="Als ik iets te vieren heb.">Als ik iets te vieren heb.</option>
-  <option value="Als ik mij ontevreden voel over mijzelf.">Als ik mij ontevreden voel over mijzelf.</option>
-  <option value="Als mensen er bij mij op aandringen dat ik iets drink of gebruik.">Als mensen er bij mij op aandringen dat ik iets drink of gebruik.</option>
-  <option value="Als ik op vakantie ben.">Als ik op vakantie ben.</option>
-  <option value="Als ik zie hoe alcohol of drugs gebruikt worden op tv of in de bioscoop voorkomt (bijv. reclame).">Als ik zie hoe alcohol of drugs gebruikt worden op tv of in de bioscoop voorkomt (bijv. reclame).</option>
-  <option value="Als ik heb gesport (in de kantine).">Als ik heb gesport (in de kantine).</option>
-  <option value="Als ik geconfronteerd wordt met de feestdagen, met name de kerstdagen en oud en nieuw.">Als ik geconfronteerd wordt met de feestdagen, met name de kerstdagen en oud en nieuw.</option>
-  <option value="Als er een dierbaar iemand overlijdt.">Als er een dierbaar iemand overlijdt.</option>
-  <option value="Als de zon schijnt.">Als de zon schijnt.</option>
-  <option value="Als het regent.">Als het regent.</option>
-  </select>
+    function getDefaultData() {
+      const data = {};
+      fields.forEach((key) => { data[key] = ''; });
+      return data;
+    }
 
-<p>Wat zijn situaties waarin het lastiger voor je wordt om de controle op jouw
-  gebruik te houden c.q. trek zal ontstaan?<br/>
-<textarea name="risicosituaties" cols="55" rows="4" class="praatmethansformtextarea" title="situaties en plekken die voor jou risicovol zouden kunnen gaan zijn."></textarea></p>
-<div class="praatmethansheader2">&quot;risico situaties uitkiezen en aanvullen&quot;</div>
-<p>&nbsp;</p>
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
 
-<p>De reden voor het risico's tijdens deze situaties zijn vooral:</p><div class="rechtsitalic">(het kan zijn dat je deze onderstaande vragen meerdere keren moet invullen <br />
-  omdat de antgwoorden voor verschillende <b>soorten</b> situaties verchillend zijn)</div>
-<p><b>externe risico's</b> (de risico's die van buitenaf ontstaan)<br />
-  <textarea name="extern" cols="55" rows="4" class="praatmethansformtextarea" title="Van buitenaf komende risico's zijn in dit soort situaties... (bijv. groepsdruk, schaamte over verslaving, met je neus op gebruik geduwd worden, etc.)"></textarea></p>
-<div class="praatmethansheader2">&quot;externe risico's zijn in deze situaties...&quot;</div>
- <p>&nbsp;</p>
-<p><b>interne risico's </b>(de risico's die ontstaan doordat de dingen die je
-  <i>denkt &amp; voelt </i>in dit soort situaties)<br />
-  <textarea name="tern" cols="55" rows="4" class="praatmethansformtextarea" title="Van binnenuit komende risico's zijn in dit soort situaties... (bijv. de gedachte dat ik er bij moet horen, verslaafd zijn is schaamtevol, ik zou dit aan moeten kunnen, etc.)"></textarea></p>
-<div class="praatmethansheader2">&quot;interne risico's zijn in deze situaties...&quot;</div>
- <p>&nbsp;</p>
-<p>Risico's<b> n&aacute; deze situatie</b> zullen zijn (gevoelens of gedachten
-  bijvoorbeeld die het gebruik 'goed praten' -zie ook: <a href="smoezenboek.htm" target="formulieren">smoezenboek</a>-):<br />
-  <textarea name="nadien" cols="55" rows="4" class="praatmethansformtextarea" title="Van buitenaf komende risico's zijn in dit soort situaties... (bijv. groepsdruk, schaamte over verslaving, met je neus op gebruik geduwd worden, etc.)"></textarea></p>
-<div class="praatmethansheader2">&quot;risico's nadien zijn bij dit soort situaties...&quot;</div>
-<div class="rechtsitalic">sommige 'gevaren' ontstaan pas n&aacute; een situatie. na
-  een leuke dag komt soms pas de trek bijvoorbeeld </div>
-  
- <p>Wanneer is de eerstvolgende risicosituatie (dat je weet)?<br />
-  <script language="javascript">
- 
-selectdatum("");
--->
-</script>
- <br />
- en hoe noemen we dat in je agenda?<br />
- <textarea name="agenda" cols="55" rows="1" class="praatmethansformtextarea" title="Hoe noemen we dit in jouw agenda (als een reminder dat je dat goed wilt laten gaan)"></textarea> &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="willen();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a>
-</p><p>&nbsp;</p>
-</form><hr class="formhr" />
-<p><i>Als je de risico's kent dan kan je er over nadenken wat je er mee wilt.
-    Misschien azal je soms willen oefenen om deze lastiger situiaties wel uit
-    te houden zonder gebruik, misschien zal je soms voelen dat je soms niet zo sterk
-    in je schoenen staat (doordat je moe bent of doordat er andere dingen spelen) en dat je dan liever zo'n lastige situatie voorkomt. <br />
-    Dat zal verschillen, als het goed is.</i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div>
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 3000);
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectFormData());
+        if (feedback) showMessage('Risico-inventarisatie opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      const exportData = iamData.exportJSON();
+      const url = URL.createObjectURL(exportData.blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = exportData.filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
+    }
+
+    function appendSituation(value) {
+      if (!value) return;
+      const target = document.getElementById('riskySituations');
+      const clean = value.trim();
+      if (!clean) return;
+      target.value = target.value ? `${target.value}\n${clean}` : clean;
+      saveForm(false);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = iamData.getFormData(formKey);
+      fillForm({ ...getDefaultData(), ...(saved || {}) });
+
+      const preset = document.getElementById('presetSituation');
+      const draft = document.getElementById('situationDraft');
+
+      preset.addEventListener('change', () => {
+        appendSituation(preset.value);
+        preset.value = '';
+      });
+
+      document.getElementById('addSituationButton').addEventListener('click', () => {
+        appendSituation(draft.value);
+        draft.value = '';
+      });
+
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('risicoSituatiesForm').addEventListener('input', () => saveForm(false));
+    });
+  </script>
+<script src="../js/dataStore.js"></script>
 </body>
 </html>

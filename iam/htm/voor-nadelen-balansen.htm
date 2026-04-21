@@ -1,254 +1,261 @@
-<html>
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Voor- / nadelen balansen</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
-
-
-function hulpscherm()
-{
-hulp_scherm(250,'Voor- en Nadelen', 'Verandedren heeft nadelen, een verslaving verder laten groeien heeft dat ook..<br/>Het is heel makkelijk om te zeggen dat je maar aan je versl;aving moet gaan werken. Maar daar moet je dan wel zin in hebben.<br/> Daarom is het goed om voor jezelf(!) voor en nadelen eens op een rij te zetten')
-}
-
-</script>
-
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voor- en Nadelen Balans</title>
+    <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    <style>
+        :root {
+            --page-ink: #1e374a;
+            --page-main: #2f6b8f;
+            --page-accent: #c96a4b;
+            --page-soft: #eaf2f5;
+        }
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(47, 107, 143, 0.16), transparent 30%),
+                linear-gradient(180deg, #f8f3ec 0%, #eef4f6 100%);
+            color: var(--page-ink);
+        }
+        .page-shell { max-width: 920px; margin: 0 auto; }
+        .page-header {
+            background: linear-gradient(140deg, var(--page-main) 0%, #57744a 100%);
+            color: #fff;
+            border-radius: 18px;
+            padding: 1.4rem;
+            box-shadow: 0 14px 32px rgba(30, 55, 74, 0.16);
+        }
+        .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .top-links a {
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.35);
+            background: rgba(255,255,255,0.12);
+            border-radius: 999px;
+            padding: 0.5rem 0.85rem;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        .intro-card, .question-card, .note-card, .message {
+            background: rgba(255,255,255,0.94);
+            border-radius: 16px;
+            padding: 1.1rem;
+            margin-top: 1rem;
+            box-shadow: 0 8px 22px rgba(30, 55, 74, 0.09);
+        }
+        .question-card { border-top: 4px solid var(--page-main); }
+        .note-card { border-left: 4px solid var(--page-accent); }
+        .grid-two { display: grid; gap: 1rem; }
+        @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+        .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+        .action-bar button { flex: 1 1 180px; }
+        .message { display: none; border-left: 4px solid #5a8840; }
+        .message.show { display: block; }
+        .message.error { border-left-color: var(--page-accent); }
+    </style>
 </head>
 <body>
-<div class="container">
+    <div class="container">
+        <div class="page-shell">
+            <header class="page-header">
+                <div class="top-links">
+                    <a href="./index.htm">Terug naar overzicht</a>
+                    <a href="./craving-1-10.htm">Vorige stap</a>
+                    <a href="./stimulus-respons.htm">Volgende stap</a>
+                </div>
+                <h1>Voor- en nadelen balans</h1>
+                <p>Je hoeft nu geen eindbeslissing te nemen. Deze balans helpt om eerlijk te zien wat aantrekkelijk is en wat het kost, op korte en langere termijn.</p>
+            </header>
 
+            <div id="message" class="message"></div>
 
-<div class="shadow"><div class="content">
-<div class="praatmethansheader"><a href="www.praatmehans.nl" class="praatmethanslink">PraatmetHans.nl</a><h1 class="praatmethansheader">Voor- / nadelen balansen</h1></div>
+            <section class="intro-card">
+                <h2>Werk met concrete zinnen</h2>
+                <p>Probeer per vak meerdere punten op te schrijven. Hoe concreter je schrijft, hoe bruikbaarder deze pagina wordt op moeilijke momenten.</p>
+            </section>
 
-<p>&nbsp;</p>
+            <form id="balansForm">
+                <div class="grid-two">
+                    <section class="question-card">
+                        <h2>Voordelen van gebruik</h2>
+                        <div class="form-group">
+                            <label for="usageAdvantagesText">Wat lijkt gebruik je te geven?</label>
+                            <textarea id="usageAdvantagesText" rows="8" placeholder="Elke regel is een punt."></textarea>
+                        </div>
+                    </section>
+                    <section class="question-card">
+                        <h2>Nadelen van gebruik</h2>
+                        <div class="form-group">
+                            <label for="usageDisadvantagesText">Wat kost gebruik je direct of later?</label>
+                            <textarea id="usageDisadvantagesText" rows="8" placeholder="Elke regel is een punt."></textarea>
+                        </div>
+                    </section>
+                </div>
 
-<h1>Voor- / nadelen balansen</h1>
-<div class="printhide">
-<p>Aan elk gedrag kleven voor- en nadelen, dit
-geldt ook voor verandering van gedrag. In deze balans worden de voor- en
-nadelen van gebruik en van verandering op een rijtje te gezet. Daarbij is het
-belangrijk om te kijken naar de korte- en de lange termijn. De balans opmaken
-kan helpen bij het nemen van een beslissing.</p>
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton" title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het scherm met toelichting zien">&nbsp;&nbsp;&nbsp;?!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&nbsp;&forall;&nbsp;&nbsp;&nbsp;</a>
-</p>
-</div>
-<form name="voornabalans">
+                <div class="grid-two">
+                    <section class="question-card">
+                        <h2>Voordelen van veranderen</h2>
+                        <div class="form-group">
+                            <label for="changeAdvantagesText">Wat levert veranderen je op?</label>
+                            <textarea id="changeAdvantagesText" rows="8" placeholder="Elke regel is een punt."></textarea>
+                        </div>
+                    </section>
+                    <section class="question-card">
+                        <h2>Nadelen van veranderen</h2>
+                        <div class="form-group">
+                            <label for="changeDisadvantagesText">Wat maakt veranderen lastig of spannend?</label>
+                            <textarea id="changeDisadvantagesText" rows="8" placeholder="Elke regel is een punt."></textarea>
+                        </div>
+                    </section>
+                </div>
 
-<p>In het bijgevoegde schema op de volgende
-bladzijden kunt u uw eigen balans opmaken.</p>
+                <section class="note-card">
+                    <h2>Tussenconclusie voor nu</h2>
+                    <div class="form-group">
+                        <label for="decisionNote">Wat neem je mee uit deze balans voor de komende periode?</label>
+                        <textarea id="decisionNote" rows="4" placeholder="Bijvoorbeeld: welke 1-2 punten wegen nu het zwaarst, en wat wil je de komende week testen?"></textarea>
+                    </div>
+                </section>
 
-<p>&nbsp;</p>
+                <div class="action-bar">
+                    <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+                    <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+                    <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-<p>De volgende vragen kunnen daarbij belangrijk
-zijn:</p>
+    <script src="../js/dataStore.js"></script>
+    <script>
+        const formKey = 'voor-nadelen-balansen';
+        const fields = [
+            'usageAdvantagesText',
+            'usageDisadvantagesText',
+            'changeAdvantagesText',
+            'changeDisadvantagesText',
+            'decisionNote'
+        ];
 
-<p>-&nbsp;&nbsp;-&nbsp;&nbsp; Waar
-kijkt u naar uit wanneer u trek heeft in alcohol of drugs, waar verlangt u
-naar?</p>
+        function toLines(text) {
+            return (text || '')
+                .split('\n')
+                .map((line) => line.trim())
+                .filter(Boolean);
+        }
 
-<p>-&nbsp;&nbsp;-&nbsp;&nbsp; Wat verwacht u van alcohol of drugs? </p>
+        function linesToText(value) {
+            if (Array.isArray(value)) {
+                return value.join('\n');
+            }
+            return value || '';
+        }
 
-<p>-&nbsp;&nbsp;-&nbsp;&nbsp; Kloppen
-deze verwachtingen?</p>
+        function getDefaultData() {
+            return {
+                usageAdvantagesText: '',
+                usageDisadvantagesText: '',
+                changeAdvantagesText: '',
+                changeDisadvantagesText: '',
+                decisionNote: '',
+                usage: { advantages: [], disadvantages: [] },
+                change: { advantages: [], disadvantages: [] }
+            };
+        }
 
-<p>-&nbsp;&nbsp;-&nbsp;&nbsp; Wat
-mist u wanneer u niet drinkt of gebruikt?</p>
+        function normalizeSavedData(saved) {
+            const base = getDefaultData();
+            const data = { ...base, ...(saved || {}) };
 
-<p>-&nbsp;&nbsp;-&nbsp;&nbsp; Welke
-nadelen of problemen merkt u zodra u drinkt of gebruikt? </p>
+            if (!data.usageAdvantagesText && data.usage?.advantages) {
+                data.usageAdvantagesText = linesToText(data.usage.advantages);
+            }
+            if (!data.usageDisadvantagesText && data.usage?.disadvantages) {
+                data.usageDisadvantagesText = linesToText(data.usage.disadvantages);
+            }
+            if (!data.changeAdvantagesText && data.change?.advantages) {
+                data.changeAdvantagesText = linesToText(data.change.advantages);
+            }
+            if (!data.changeDisadvantagesText && data.change?.disadvantages) {
+                data.changeDisadvantagesText = linesToText(data.change.disadvantages);
+            }
 
-<p>-&nbsp;&nbsp;-&nbsp;&nbsp; Welke
-nadelen of problemen ondervindt u in een later stadium?</p>
+            return data;
+        }
 
-<p>En dat veranderen in een nieuwe versie van
-jezelf, dat is ook niet allÃ©Ã©n maar leuk en aardig. </p>
+        function fillForm(data) {
+            fields.forEach((id) => {
+                const el = document.getElementById(id);
+                if (el) el.value = data[id] || '';
+            });
+        }
 
-<p>Noem zelf per kolom tenminste minstens twee
-redenen en zet de datum erbij. In de toekomst zal je dit ongetwijfeld nog
-aanvullen.</p>
+        function collectFormData() {
+            const collected = {};
+            fields.forEach((id) => {
+                const el = document.getElementById(id);
+                collected[id] = el ? el.value.trim() : '';
+            });
 
-<p>&nbsp;</p>
+            collected.usage = {
+                advantages: toLines(collected.usageAdvantagesText),
+                disadvantages: toLines(collected.usageDisadvantagesText)
+            };
+            collected.change = {
+                advantages: toLines(collected.changeAdvantagesText),
+                disadvantages: toLines(collected.changeDisadvantagesText)
+            };
 
-<p>&nbsp;</p>
+            return collected;
+        }
 
-<p>&nbsp;</p>
+        function showMessage(text, isError = false) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.classList.add('show');
+            message.classList.toggle('error', isError);
+            clearTimeout(showMessage.timer);
+            showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+        }
 
-<p>&nbsp;&nbsp;-&nbsp;&nbsp; alcohol/drugs/medicijnen/gokken</p>
+        function saveForm(feedback = true) {
+            try {
+                iamData.updateFormData(formKey, collectFormData());
+                if (feedback) showMessage('Balans opgeslagen op dit toestel.');
+            } catch (error) {
+                console.error(error);
+                showMessage('Opslaan lukte niet.', true);
+            }
+        }
 
-<table border=1 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
- border:none;mso-border-alt:solid windowtext .5pt;mso-padding-alt:0in 3.5pt 0in 3.5pt'>
- <tr>
-  <td width=230 valign=top style='border:solid windowtext .5pt;
-  background:#0C0C0C;padding:0in 3.5pt 0in 3.5pt'>
-  <p>&nbsp;</p>
-  <p>Voordelen van gebruik</p>
-  </td>
-  <td width=230 valign=top style='border:solid windowtext .5pt;
-  border-left:none;background:#0C0C0C;
-  padding:0in 3.5pt 0in 3.5pt'>
-  <p>&nbsp;</p>
-  <p>Nadelen van gebruik</p>
-  </td>
- </tr>
- <tr>
-  <td width=230 valign=top style='border:solid windowtext .5pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 3.5pt 0in 3.5pt'>
-  <p>Voorbeeld: </p>
-  <p>Wanneer ik gebruikt heb kan ik de wereld aan</p>
-  <p>&nbsp;</p>
-  <p>1</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>2</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>3</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>4</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>5</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  </td>
-  <td width=230 valign=top style='border-top:none;border-left:
-  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
-  mso-border-top-alt:solid windowtext .5pt;
-  padding:0in 3.5pt 0in 3.5pt'>
-  <p>Voorbeeld:</p>
-  <p>Door gebruik kom ik niet meer toe aan andere
-  dingen</p>
-  <p>&nbsp;</p>
-  <p>1</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>2</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>3</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>4</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>5</p>
-  </td>
- </tr>
-</table>
+        function exportAll() {
+            const exportData = iamData.exportJSON();
+            const url = URL.createObjectURL(exportData.blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = exportData.filename;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+            showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
+        }
 
-<p>&nbsp;</p>
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = iamData.getFormData(formKey);
+            fillForm(normalizeSavedData(saved));
 
-<hr class="formhr" />
-<p>&nbsp;</p>
-
-<p>&nbsp;&nbsp;-&nbsp;&nbsp;veranderen/therapie</p>
-
-<table border=1 cellspacing=0 cellpadding=0 style='border-collapse:collapse;
- border:none;mso-border-alt:solid windowtext .5pt;mso-padding-alt:0in 3.5pt 0in 3.5pt'>
- <tr>
-  <td width=230 valign=top style='border:solid windowtext .5pt;
-  background:#0C0C0C;padding:0in 3.5pt 0in 3.5pt'>
-  <p>&nbsp;</p>
-  <p>Voordelen van veranderen
-  in niet-gebruiker</p>
-  </td>
-  <td width=230 valign=top style='border:solid windowtext .5pt;
-  border-left:none;background:#0C0C0C;
-  padding:0in 3.5pt 0in 3.5pt'>
-  <p>&nbsp;</p>
-  <p>Nadelen van veranderen
-  in niet-gebruiker</p>
-  </td>
- </tr>
- <tr>
-  <td width=230 valign=top style='border:solid windowtext .5pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 3.5pt 0in 3.5pt'>
-  <p>Voorbeeld: </p>
-  <p>Mijn partner/kinderen/werkgever zal trots op
-  mij zijn</p>
-  <p>&nbsp;</p>
-  <p>1</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>2</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>3</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>4</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>5</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  </td>
-  <td width=230 valign=top style='border-top:none;border-left:
-  none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
-  mso-border-top-alt:solid windowtext .5pt;
-  padding:0in 3.5pt 0in 3.5pt'>
-  <p>Voorbeeld:</p>
-  <p>Ik moet dagelijks gaan oefenen om te kunnen
-  slapen of Ik moet dan mijn mening uitspreken</p>
-  <p>&nbsp;</p>
-  <p>1</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>2</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>3</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>4</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>5</p>
-  </td>
- </tr>
-</table>
-
-</form>
-<p>&nbsp;</p>
-<hr class="formhr" />
-<p><i>@@@</i></p>
-<p align='right' ><i>Copyright 2011 Hans RJ West</i></p>
-
- /inhoud -->
-</div></div>
-</div>
+            document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+            document.getElementById('exportButton').addEventListener('click', exportAll);
+            document.getElementById('printButton').addEventListener('click', () => window.print());
+            document.getElementById('balansForm').addEventListener('input', () => saveForm(false));
+        });
+    </script>
+<script src="../js/dataStore.js"></script>
 </body>
 </html>
 
