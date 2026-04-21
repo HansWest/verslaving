@@ -1,201 +1,532 @@
-<html>
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>craving/trek opvangen -ABCD(aaah)&copy;-</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trek Opvangen - IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #13232f;
+      --muted: #556670;
+      --primary: #0a7a7a;
+      --primary-dark: #085f5f;
+      --accent: #e56b2f;
+      --soft: #f4fbfb;
+      --card: #ffffff;
+      --border: #d8e7e7;
+      --ok: #2e7d32;
+      --warn: #a15c00;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="controleerjeverslaving(.nl) is een product van PraatmetHans(.nl) om mensen te helpen om zelfstandig aan de slag te laten gaan met hun verslaving of afhankelijkheid middels verantwoorde formulieren." />
-<meta name="keywords" content="huisarts, poh, verslaving, addiction, zelfstandig, persoonlijk, formulieren, gesprek, keuze, controleerjeverslaving, PraatmetHans.nl" />
+    body {
+      background:
+        radial-gradient(circle at 12% 5%, rgba(229, 107, 47, 0.12), transparent 34%),
+        radial-gradient(circle at 85% 18%, rgba(10, 122, 122, 0.16), transparent 36%),
+        linear-gradient(180deg, #fdfefe 0%, #f3fbfb 100%);
+      color: var(--ink);
+    }
 
+    .page-shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding-bottom: 2.5rem;
+    }
 
+    .hero {
+      margin-top: 1.1rem;
+      background: linear-gradient(140deg, #0b5858 0%, #0a7a7a 54%, #e56b2f 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.6rem;
+      box-shadow: 0 16px 30px rgba(11, 88, 88, 0.24);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .hero-top {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.9rem;
+    }
 
+    .hero-top a {
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 0.46rem 0.85rem;
+      font-weight: 700;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/craving-trek-opvangen-loslaten-abcdaaah/","controleerjeverslaving");
-}
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 3.8vw, 2rem);
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
 
-function hulpscherm()
-{
-hulp_scherm(310,'Trek Opvangen', 'Het gevoel van trek opvangen is <i>uiteindelijk</i> niet echt moeilijk. Maar het is zeker aanvankelijk best lastig om het aan te leren. Want het voelt heel ongewoon, in het begin.<br>Het vereist ook een paar dingen: het is belangrijk om <b>duidelijkheid</b> te hebben, je zult dit vaak moeten  <b>herhalen</b> en je moet er <b>vroeg genoeg</b> bij zijn. Want daarna wordt het rap moeilijker om te reageren.<BR>Dit is een degelijke strategie die je helpt om te oefenen zodat je, op een moment dat je dat nodig hebt, ook de stappen kunt doen die geoefend zijn.')
-}
+    .hero p {
+      margin: 0.65rem 0 0;
+      color: rgba(255, 255, 255, 0.92);
+      max-width: 75ch;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
 
-</script>
+    .quick-flow {
+      margin-top: 1rem;
+      display: grid;
+      gap: 0.5rem;
+      grid-template-columns: 1fr;
+      list-style: none;
+      padding: 0;
+    }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .quick-flow li {
+      background: rgba(255, 255, 255, 0.13);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.93rem;
+    }
+
+    @media (min-width: 840px) {
+      .quick-flow {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .status-row {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .status-chip {
+      background: #ffffff;
+      color: #145151;
+      border-radius: 999px;
+      padding: 0.38rem 0.8rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .cards {
+      margin-top: 1.2rem;
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 860px) {
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 9px 22px rgba(19, 35, 47, 0.1);
+      overflow: hidden;
+    }
+
+    .card h2 {
+      margin: 0;
+      padding: 1rem 1rem 0.65rem;
+      font-size: 1.08rem;
+      color: #0b5d5d;
+      border-bottom: 1px solid #e7efef;
+      background: var(--soft);
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 0.9rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      color: #173746;
+      margin-bottom: 0.35rem;
+    }
+
+    textarea {
+      width: 100%;
+      border: 1px solid #c6d8d8;
+      border-radius: 10px;
+      padding: 0.72rem;
+      font: inherit;
+      resize: vertical;
+      min-height: 88px;
+      background: #fff;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(229, 107, 47, 0.15);
+    }
+
+    .cue {
+      background: #fff8ef;
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      margin-top: 0.45rem;
+      color: #7d441f;
+      font-size: 0.9rem;
+    }
+
+    .practice-box {
+      margin-top: 1.2rem;
+      background: #ecf8f0;
+      border: 1px solid #cde8d1;
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    .practice-box h3 {
+      margin: 0 0 0.4rem;
+      color: var(--ok);
+      font-size: 1.02rem;
+    }
+
+    .action-bar {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+
+    .action-bar button {
+      flex: 1 1 180px;
+      border: none;
+      border-radius: 10px;
+      min-height: 46px;
+      font-weight: 700;
+      padding: 0.68rem 0.9rem;
+      cursor: pointer;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .action-bar button.secondary {
+      background: #4b6070;
+    }
+
+    .action-bar button.warn {
+      background: var(--accent);
+      color: #1f1209;
+    }
+
+    .message {
+      margin-top: 1rem;
+      display: none;
+      border-radius: 10px;
+      padding: 0.78rem 0.9rem;
+      font-size: 0.93rem;
+      background: #eef8ee;
+      border-left: 4px solid var(--ok);
+      color: #204f22;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: #fff4f4;
+      border-left-color: #c03636;
+      color: #7a1e1e;
+    }
+
+    .footer-nav {
+      margin-top: 1.1rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-nav a {
+      color: var(--primary-dark);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .footer-nav a:hover {
+      text-decoration: underline;
+    }
+
+    @media print {
+      .hero-top,
+      .action-bar,
+      .message {
+        display: none !important;
+      }
+      body {
+        background: #fff;
+      }
+      .hero {
+        box-shadow: none;
+      }
+      .card {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-top">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./trek-opvangen-2.htm">Extra technieken</a>
+          <a href="./noodplan-forse-trek.htm">Noodplan</a>
+        </div>
+        <h1>ABCD(aaah): trek opvangen en loslaten</h1>
+        <p>
+          Trek voelt vaak als "nu of nooit", maar hij piekt en zakt weer. Dit formulier helpt je om op het moment zelf
+          van automatische reactie naar bewuste actie te gaan. Kort, praktisch, en bedoeld om vaker te oefenen.
+        </p>
+        <ul class="quick-flow">
+          <li><strong>1. Stop & adem:</strong> eerst vertragen voordat je beslist.</li>
+          <li><strong>2. Actualiteit:</strong> wat gebeurt er nu echt, hier en nu?</li>
+          <li><strong>3. Behoefte:</strong> wat heb je onder de trek eigenlijk nodig?</li>
+          <li><strong>4. Consequenties:</strong> wat kost gebruik je op korte en lange termijn?</li>
+          <li><strong>5. Doen:</strong> afscheid, alternatief, accepteren, afleiding, herhalen.</li>
+        </ul>
+        <div class="status-row">
+          <span class="status-chip" id="progressChip">Voortgang: 0%</span>
+          <span class="status-chip" id="lastSavedChip">Nog niet opgeslagen</span>
+        </div>
+      </header>
 
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
+      <div id="message" class="message"></div>
 
-</script>
+      <form id="trekForm">
+        <div class="cards">
+          <section class="card">
+            <h2>1) Stop en adem</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="stopAdem">Wat helpt jou om te stoppen en 3 ademhalingen te nemen?</label>
+                <textarea id="stopAdem" placeholder="Bijv. handen op tafel, 3x uitademen, water drinken..."></textarea>
+                <div class="cue">Cue: "Ik hoef nu nog niets te beslissen. Eerst rust in mijn lichaam."</div>
+              </div>
+            </div>
+          </section>
 
+          <section class="card">
+            <h2>2) A - Actualiteit</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="actualiteit">Waar ben je, wat gebeurt er, en hoe sterk is de trek nu?</label>
+                <textarea id="actualiteit" placeholder="Context, trigger, intensiteit (1-10), veiligheid..."></textarea>
+                <div class="cue">Vraag: "Wat is feit, en wat is paniekverhaal?"</div>
+              </div>
+            </div>
+          </section>
 
-<div class="shadow"><div class="content">
-<script language="javascript">
- 
-writelogo();
--->
-</script>
-<div class="praatmethansheader">
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">craving/trek opvangen en loslaten </h1>
-</div>
-<div class="rechtsitalic">7 vragen: aanvankelijk 15 minuten (steeds korter) </div>
+          <section class="card">
+            <h2>3) B - Beeld en behoefte</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="behoefte">Welke behoefte zit er onder de trek?</label>
+                <textarea id="behoefte" placeholder="Bijv. ontladen, contact, rust, verdoving, spanning... "></textarea>
+                <div class="cue">Vraag: "Wat wil ik eigenlijk voelen als ik niet gebruik?"</div>
+              </div>
+            </div>
+          </section>
 
+          <section class="card">
+            <h2>4) C - Consequenties</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="consequenties">Wat zijn de gevolgen als je nu wel gebruikt?</label>
+                <textarea id="consequenties" placeholder="Lichaam, stemming, relaties, werk, zelfrespect, morgen..."></textarea>
+                <div class="cue">Vraag: "Welke versie van mij betaal ik hiermee?"</div>
+              </div>
+            </div>
+          </section>
 
+          <section class="card">
+            <h2>5) D - DOEN</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="afscheid">Actief afscheid: wat zeg je hardop dat je nu niet gaat doen?</label>
+                <textarea id="afscheid" placeholder="Bijv. 'Ik ga nu niet gebruiken. Ik kies voor herstel.'"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="alternatief">Alternatieve actie: wat ga je nu concreet doen?</label>
+                <textarea id="alternatief" placeholder="Bijv. douchen, lopen, iemand bellen, eten, muziek..."></textarea>
+              </div>
+            </div>
+          </section>
 
+          <section class="card">
+            <h2>5) D - Doorzetten</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="accepteren">Actief accepteren: waar voel je het in je lichaam?</label>
+                <textarea id="accepteren" placeholder="Beschrijf plek, druk, temperatuur, beweging..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="afleiding">Tijdelijke afleiding: wat werkt veilig voor 10-20 minuten?</label>
+                <textarea id="afleiding" placeholder="Bijv. lopen, opruimen, adem-app, korte taak..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="herhaling">Herhalen: wanneer oefen je dit opnieuw (ook zonder sterke trek)?</label>
+                <textarea id="herhaling" placeholder="Plan voor vandaag/deze week: tijdstippen en reminders..."></textarea>
+              </div>
+            </div>
+          </section>
+        </div>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <div class="practice-box">
+          <h3>Praktijktip</h3>
+          <p>
+            Oefen deze stappen op rustige momenten. Dan heb je ze beschikbaar als trek hoog is.
+            Hoe vaker je traint, hoe sneller je zenuwstelsel de nieuwe route pakt.
+          </p>
+        </div>
 
+        <div class="action-bar">
+          <button type="button" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="secondary" id="exportButton">Exporteer alle IAM-data</button>
+          <button type="button" class="warn" id="printButton">Print / Bewaar als PDF</button>
+        </div>
+      </form>
 
-<form name="trekopvangen">
-<h1><font color="#990033">ABCD(aaah)&copy;</font> van PraatmetHans - doel: het
-  opvangen en loslaten van trek - </h1>
-p class="rechtsitalic">kijk eventueel ook eens naar <a href="prezi.com/@@@@@">deze
-    prezi</a> over het afpellen
-  van het trekgevoel</p-->
-<div class="printhide">
-  <div class="stickit">
-    <h1>Het opvangen en loslaten van trek</h1>
-      <p><i>in het kort:</i> </p>
-    <ol>
-<li><b>Stop!</b> en adem...</li>
-<li><b>A</b>ctualiteit echt zien</li>
-<li>Beeld en <b>B</b>ehoefte (be)grijpen</li>
-<li><b>C</b>onsequenties  van gebruik onder ogen zien voor de verschillende lagen
-  in jezelf</li>
-<li><b>DOEN!</b></li>
-<ul>
-<li>Actief <b>A</b>fscheid</li>
-<li><b>A</b>lternatieve Actie</li>
-<li>Actief <b>A</b>ccepteren</li>
-<ul><li><b>A</b>fleiding zoeken</li></ul>
-<li><b>H</b>erhalen, <font size="-1"><b>H</b>erhalen, </font><font size="-2"><b>H</b>erhalen
-    ( = <b>A</b>utomatiseren )</font></li>
-</ul>
-</ol>
-<div class="rechtsitalic">&copy; HRJWest, 2009, Utrecht</div></div>
+      <div class="footer-nav">
+        <p>
+          <a href="index.htm">Overzicht</a> | <a href="trek-opvangen-2.htm">Extra technieken</a> |
+          <a href="noodplan-forse-trek.htm">Noodplan forse trek</a>
+        </p>
+      </div>
+    </div>
+  </div>
 
-<p>
-</p></div>
-<p>&nbsp;</p>
-<h1>TREK KAN JE OPVANGEN middels ABCD(aaah)&copy;</h1>
-<p>De stappen  met de vragen<br>
-  ...ik raad je STERK aan om minstens &eacute;&eacute;n keer <a href="trek-opvangen-uitleg.htm">de
-  uitleg van de ABCD(aaah)&copy;-stappen te lezen *klik*</a> anders klinkt dit
-  waarschijnlijk erg vaag. </p>
-<p><b>&bull; 1 - Stop!</b> en adem...</p>
-<p class="rechtsitalic">dat is iets dat je  <b>letterlijk</b> even moet doen.</p>
-<p><b>&bull; 2 - <font color="#990033">A</font>ctualiteit</b> echt zien
-  (het <i>is</i> zoals
-  het is)<br />
-  Waar
-  ben ik nu, wat gebeurt er, wat voor soort trek ontstaat er en waar is het veilig
-  voor mij? <br />
-  <textarea name="actualiteit" class="praatmethansformtextarea" cols="55" rows="3" title="waar ben je? wat gebeurt er om je heen, dat je ineens trek krijgt? (of wat gebeurde er niet?)"></textarea>
-</p>
-<div class="praatmethansheader2">&quot;Wat gebeurt er om jou heen, dat je trek krijgt...&quot;</div>
-<p><b>&bull; 3 - </b>Beeld en <b><font color="#990033">B</font>ehoefte</b> (be)grijpen<br />
-  Wat zijn naast, of onder, mijn trek de mogelijke
-  gevoelens of (onderliggende) behoeftes die ik  voel op dit moment: <br />
-  <textarea name="behoefte" class="praatmethansformtextarea" cols="55" rows="3" title="welk beeld ziet jouw beestje? wat maakt het mee? en vooral: wat is de behoefte ervan op dit moment EIGENLIJK?"></textarea></p>
-<div class="praatmethansheader2">&quot;Wat wil je eigenlijk als je niet gaat gebruiken...&quot;</div><p></p>
-<p><b>&bull; 4 - <font color="#990033">C</font>onsequenties</b>  van
-  gebruik onder ogen zien voor de verschillende lagen van mijzelf<br />
-  Wat zijn nou de consequenties waar ik voor kies, als ik kies voor gebruik:<br />
-  <textarea name="actualiteit" class="praatmethansformtextarea" cols="55" rows="3" title="Als ik even nadenk over de verschillende aspecten van mijzelf: wat betekent gebruik voor mijn hart, voor mijn toekomst... ook al LIJKT het nu te kunnen (anders had ik geen trek)"></textarea>
-</p>
-<div class="praatmethansheader2">&quot;wat worden de consequenties van 'gebruik'...&quot;</div><p></p>
-<p><b>&bull; 5 - <font color="#990033">D</font>OEN !!!</b><br />
-  minstrens twee van de 
-  drie A's: </p>
-<div class="praatmethansheader2">&quot;het denken is niet belangrijk, het gaat om het DOEN...&quot;</div>
-<p><b>&nbsp;-&nbsp;- A </b>Actief <b><font color="#990033">A</font>fscheid</b><br />
-  Hoe
-  neem ik op d&agrave;t moment <i>actief</i> afscheid?<br /> 
-  <textarea name="afscheid" class="praatmethansformtextarea" cols="55" rows="3" title="wat voel ik als ik hardop besluit NIET te gebruiken?"></textarea>
-</p>
-<div class="praatmethansheader2">&quot;bewust en hardop iets NIET gaan doen ...&quot;</div>
-<p><b>&nbsp;&nbsp;-&nbsp;- B <font color="#990033">A</font>lternatieve</b> Actie
-  (gericht op de <i>eigenlijke</i> behoefte, <i>anders</i> dan de behoefte om
-  te gebruiken) 
-  <br />
-  Wat ga ik <i>doen</i> om
-  die <i>(onderliggende)
-  behoefte</i> te
-  bevredigen? <br />
-  <textarea name="alternatief" class="praatmethansformtextarea" cols="55" rows="3" title="wat kan ik dan WEL doen voor mijzelf als ik die eigenlijke behoefte wel besluit te voelen? (DOEN!)"></textarea></p>
-<div class="praatmethansheader2">&quot;wat kan je w&egrave;l doen voor jezelf als je
-  die behoefte hebt...&quot;</div>
-<p><b>&nbsp;&nbsp;-&nbsp;- C </b>Actief <b><font color="#990033">A</font>ccepteren</b><br />
-<i>Waar</i> voel ik dat gevoel dat hoort bij die behoefte? ..en hoe ontwikkelt het zich als ik niks anders doe dan voelen dat het van mij is.<br />
-  <textarea name="accepteren" class="praatmethansformtextarea" cols="55" rows="3" title="WAAR voel ik die behoefte of dat gevoel in mijn lichaam? Ik hou mijn aandacht daarbij tot ik voel dat het verandert of verduidelijkt (zodat ik mijzelf ineens toch een alternatief kan gaan bieden)"></textarea></p>
-<div class="praatmethansheader2">&quot;WAAR voel je dat in jouw levende lijf? ...&quot;</div>
-<p><b>&nbsp;&nbsp;-&nbsp;- Cb - &bull; <font color="#990033">a</font>fleiding</b> zoeken<br />
-  Hoe
-  en waar zoek ik (tijdelijk) afleiding?<br />
-  <textarea name="afleiding" class="praatmethansformtextarea" cols="55" rows="3" title="als de eigenlijke behoefte te heftig voelt, hoe kan ik dan mijzelf dan nu even afleiden? (actie DOEN)"></textarea>
-</p>
-<div class="praatmethansheader2">&quot;beter afleiden dan lijden&quot;</div>
-<p><b>&nbsp;-&nbsp;-  D - <font color="#990033">H</font></b>erhalen, <font size="-1"><b>H</b>erhalen, </font><font size="-2"><b>H</b>erhalen</font>  =<b> Automatiseren</b>!<br />
-  
-Hoe zorg ik ervoor dat ik het herhaal (misschien zelfs ook als ik het niet gelijk
-'nodig' heb)?
-  <textarea name="herhaling" class="praatmethansformtextarea" cols="55" rows="3" title="hoe vaak per dag wil ik dit herhalen, op welke momenten wil ik dit dagelijks oefenen?"></textarea>
-</p>
-<div class="praatmethansheader2">&quot;alleen wat je <i>vaak</i> herhaalt wordt automatisch...&quot;</div>
-<div class="rechtsitalic">Alles wat je vaak doet daar word je goed in<br />
-  zodat je  het kunt op momenten dat je het nodig hebt.<br/>
-  ...dus wacht niet te veel tot je het nodig hebt.</div>
-</FORM>
-<SCRIPT language=JavaScript type="">loadSelections(document.forms[0]);</SCRIPT>
-<hr class="formhr" />
-<p><i>zie ook:<ul><li>de <a href="trek-opvangen-uitleg.htm">de
-  uitleg van de ABCD(aaah)&copy;-stappen</a></li><li><a href="trek-opvangen-2.htm">Andere truuks</a></li></ul>
-</i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'trek-opvangen';
+    const fields = [
+      'stopAdem',
+      'actualiteit',
+      'behoefte',
+      'consequenties',
+      'afscheid',
+      'alternatief',
+      'accepteren',
+      'afleiding',
+      'herhaling'
+    ];
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function showMessage(text, isError = false) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.classList.add('show');
+      el.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => el.classList.remove('show'), 2800);
+    }
+
+    function collectFormData() {
+      const data = {};
+      fields.forEach((id) => {
+        const input = document.getElementById(id);
+        data[id] = input ? input.value.trim() : '';
+      });
+      return data;
+    }
+
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const input = document.getElementById(id);
+        if (input) {
+          input.value = data[id] || '';
+        }
+      });
+    }
+
+    function calculateProgress(data) {
+      const values = fields.map((id) => (data[id] || '').trim());
+      const filled = values.filter((value) => value.length > 0).length;
+      return Math.round((filled / fields.length) * 100);
+    }
+
+    function updateMetaChips(data) {
+      const progress = calculateProgress(data);
+      const progressChip = document.getElementById('progressChip');
+      if (progressChip) {
+        progressChip.textContent = `Voortgang: ${progress}%`;
+      }
+
+      const lastSavedChip = document.getElementById('lastSavedChip');
+      if (lastSavedChip) {
+        if (data.lastUpdated) {
+          const stamp = new Date(data.lastUpdated).toLocaleString('nl-NL');
+          lastSavedChip.textContent = `Laatst opgeslagen: ${stamp}`;
+        } else {
+          lastSavedChip.textContent = 'Nog niet opgeslagen';
+        }
+      }
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        const saved = iamData.updateFormData(formKey, collectFormData());
+        updateMetaChips(saved || {});
+        if (feedback) {
+          showMessage('Trek-opvangen formulier opgeslagen op dit toestel.');
+        }
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      try {
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = exportData.filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-data geëxporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const existingData = iamData.getFormData(formKey) || {};
+      fillForm(existingData);
+      updateMetaChips(existingData);
+
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('trekForm').addEventListener('input', () => saveForm(false));
+    });
+  </script>
 </body>
 </html>
-
