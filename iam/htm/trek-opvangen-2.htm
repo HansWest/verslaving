@@ -1,96 +1,577 @@
-<html>
-
-trek-opvangen-2.htm
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>craving/trek opvangen</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trek Opvangen 2 - IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #17262f;
+      --muted: #52636e;
+      --primary: #2f6fba;
+      --primary-dark: #235790;
+      --accent: #f08a24;
+      --soft: #f3f8ff;
+      --border: #d4e0ef;
+      --ok: #2e7d32;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    body {
+      background:
+        radial-gradient(circle at 8% 10%, rgba(47, 111, 186, 0.14), transparent 30%),
+        radial-gradient(circle at 82% 16%, rgba(240, 138, 36, 0.12), transparent 34%),
+        linear-gradient(180deg, #fcfeff 0%, #f4f8ff 100%);
+      color: var(--ink);
+    }
 
+    .page-shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding-bottom: 2.4rem;
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .hero {
+      margin-top: 1.1rem;
+      background: linear-gradient(135deg, #235790 0%, #2f6fba 58%, #f08a24 100%);
+      border-radius: 16px;
+      color: #fff;
+      padding: 1.45rem;
+      box-shadow: 0 14px 28px rgba(35, 87, 144, 0.24);
+    }
 
+    .hero-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 0.85rem;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .hero-top a {
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.13);
+      border-radius: 999px;
+      padding: 0.45rem 0.82rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+    }
 
-function hulpscherm()
-{
-hulp_scherm(250,'Trek Opvangen', 'Het gevoel van trek opvangewn is niet moeilijk maar dan moet je wel duidelijkheid hebben en je moet er vooral vroeg genoeg bij zijn...<br/>'+'want daarna wordt het rap moeilijker.<BR><b>Hier staan een aantal tips</b>')
-}
--->
-</script>
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.3rem, 3.6vw, 1.92rem);
+      line-height: 1.24;
+    }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .hero p {
+      margin: 0.55rem 0 0;
+      max-width: 72ch;
+      line-height: 1.58;
+      color: rgba(255, 255, 255, 0.93);
+      font-size: 0.96rem;
+    }
+
+    .status-row {
+      margin-top: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .status-chip {
+      background: #fff;
+      color: #174476;
+      border-radius: 999px;
+      padding: 0.36rem 0.78rem;
+      font-size: 0.87rem;
+      font-weight: 700;
+    }
+
+    .theory-box {
+      margin-top: 1rem;
+      background: #edf5ff;
+      border: 1px solid var(--border);
+      border-left: 6px solid var(--primary);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+    }
+
+    .theory-box h2 {
+      margin: 0 0 0.45rem;
+      color: #174476;
+      font-size: 1.03rem;
+    }
+
+    .theory-box ol {
+      margin: 0;
+      padding-left: 1.15rem;
+      font-size: 0.92rem;
+      color: #254258;
+      line-height: 1.55;
+    }
+
+    .cards {
+      margin-top: 1.2rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 860px) {
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(23, 38, 47, 0.08);
+      overflow: hidden;
+    }
+
+    .card h2 {
+      margin: 0;
+      padding: 0.95rem 1rem 0.65rem;
+      font-size: 1.05rem;
+      color: #1a4f89;
+      border-bottom: 1px solid #e7edf6;
+      background: var(--soft);
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 0.85rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+      color: #1d3546;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      border-radius: 10px;
+      border: 1px solid #c8d8ea;
+      padding: 0.7rem;
+      font: inherit;
+      background: #fff;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(240, 138, 36, 0.16);
+    }
+
+    .cue {
+      margin-top: 0.45rem;
+      background: #fff5e9;
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.55rem 0.72rem;
+      color: #7b4720;
+      font-size: 0.9rem;
+    }
+
+    .nudge-box {
+      margin-top: 1.2rem;
+      background: #fff7ec;
+      border: 1px solid #f0d2ab;
+      border-left: 6px solid var(--accent);
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    .nudge-box h3 {
+      margin: 0 0 0.5rem;
+      color: #6f401e;
+      font-size: 1.01rem;
+    }
+
+    .nudge-list {
+      margin: 0;
+      padding-left: 1.12rem;
+      color: #58331b;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .nudge-list li { margin-bottom: 0.28rem; }
+
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1.2rem;
+    }
+
+    .action-bar button {
+      flex: 1 1 180px;
+      border: none;
+      border-radius: 10px;
+      min-height: 46px;
+      font-weight: 700;
+      padding: 0.67rem 0.9rem;
+      cursor: pointer;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .action-bar button.secondary { background: #4f6172; }
+    .action-bar button.warn {
+      background: var(--accent);
+      color: #231407;
+    }
+
+    .message {
+      margin-top: 0.95rem;
+      display: none;
+      border-radius: 10px;
+      padding: 0.74rem 0.9rem;
+      background: #eef8ee;
+      border-left: 4px solid var(--ok);
+      color: #214b24;
+      font-size: 0.92rem;
+    }
+
+    .message.show { display: block; }
+    .message.error {
+      background: #fff5f5;
+      border-left-color: #c03a3a;
+      color: #7a1f1f;
+    }
+
+    .footer-nav {
+      margin-top: 1.1rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.89rem;
+    }
+
+    .footer-nav a {
+      color: var(--primary-dark);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .footer-nav a:hover { text-decoration: underline; }
+
+    @media print {
+      .hero-top,
+      .action-bar,
+      .message {
+        display: none !important;
+      }
+      body { background: #fff; }
+      .hero,
+      .card { box-shadow: none; }
+      .card { break-inside: avoid; }
+    }
+  </style>
 </head>
 <body>
-<div class="container"> 
-<div class="shadow"><div class="content">
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-top">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./trek-opvangen.htm">ABCDaaah basis</a>
+          <a href="./noodplan-forse-trek.htm">Noodplan</a>
+        </div>
+        <h1>Trek opvangen 2: tijdsperspectief omdraaien</h1>
+        <p>
+          Deze pagina is je extra module naast ABCDaaah. Je oefent hier met uitstellen van korte-termijn bevrediging
+          en het actief kiezen voor het gevoel dat past bij je langere termijn.
+        </p>
+        <div class="status-row">
+          <span class="status-chip" id="progressChip">Voortgang: 0%</span>
+          <span class="status-chip" id="lastSavedChip">Nog niet opgeslagen</span>
+        </div>
+      </header>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a><h1 class="praatmethansheader">craving/trek opvangen</h1></div>
+      <div class="theory-box">
+        <h2>Kern van deze extra techniek</h2>
+        <ol>
+          <li><strong>A:</strong> wat lijkt de directe winst van nu gebruiken?</li>
+          <li><strong>B:</strong> wat is je lange-termijndoel?</li>
+          <li><strong>B2:</strong> hoe voelt het als je dat doel bereikt?</li>
+          <li><strong>C:</strong> stel directe bevrediging uit.</li>
+          <li><strong>D:</strong> doe nu iets dat je richting B/B2 brengt.</li>
+        </ol>
+      </div>
 
+      <div id="message" class="message"></div>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+      <form id="trek2Form">
+        <div class="cards">
+          <section class="card">
+            <h2>A) Korte termijn</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="directEffect">Wat lijkt nu het effect van gebruiken?</label>
+                <textarea id="directEffect" placeholder="Bijv. snel rust, demping, spanning, ontlading..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="directCost">Wat kost dat je binnen 24-72 uur?</label>
+                <textarea id="directCost" placeholder="Bijv. dip, onrust, schaamte, problemen, uitputting..."></textarea>
+                <div class="cue">Duwtje: wat lijkt snel fijn, maar schuift vaak een rekening door?</div>
+              </div>
+            </div>
+          </section>
 
+          <section class="card">
+            <h2>B) Lange termijn</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="longGoal">Wat is je lange-termijndoel?</label>
+                <textarea id="longGoal" placeholder="Bijv. betrouwbaar zijn, fit worden, rust in hoofd, vrijheid..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="goalFeeling">Hoe voelt dat doel als het lukt (B2)?</label>
+                <textarea id="goalFeeling" placeholder="Bijv. trots, licht, rustig, verbonden, waardig..."></textarea>
+                <div class="cue">Duwtje: benoem het gevoel concreet, dan is uitstellen makkelijker.</div>
+              </div>
+            </div>
+          </section>
 
-<form name="trekopvangen">
-zie ook: <a href="trek-opvangen.htm"><font color="#990033">ABCD(aaaa)</font> van PraatmetHans
-- Het afpellen van trek</a>
-</form><h1>Andere truuks</h1>
-<h1>- De lange termijn doelen versus direct behoefte-bevrediging.</h1>
-<p>Doe deze mind trick!</p>
-<p><b>A</b> - wat is het effect van gebruiken op dit moment?</p>
-<p><b>B</b> - wat is het lange termijndoel</p>
-<p><b>B2</b>- wat is het effect van dat lange termijn doel (hoe gaat dat voelen?)</p>
-<p><b>C</b> - stel
-  de directe bevrediging even uit (je kan straks altijd nog anders beslissen
-  maar bedenk je hoe jij jezelf k&agrave;n gaan voelen in de toekomst</p>
-<p><b>D</b> - OK.. je <i>kan</i> dus uitstellen door te bedenken wat je werkelijk het
-  liefst zou voelen.<br />
-  Het gevoel van de korte termijn behoefte-bevrediging, <i>&ograve;f</i> het
-  gevoel dat je zou <i>kunnen</i> hebben als je jouw doel bereikt hebt...</p>
-<div class="praatmethansheader2">&quot;tijdsperspectief omdraaaien&quot;</div>
+          <section class="card">
+            <h2>C) Uitstellen</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="delayPlan">Hoe stel je directe bevrediging 20-30 minuten uit?</label>
+                <textarea id="delayPlan" placeholder="Bijv. timer zetten, lopen, douchen, water drinken, iemand appen..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="ifThen">Als-dan zin (implementation intention)</label>
+                <textarea id="ifThen" placeholder="Als ik trek op 8/10 voel, dan doe ik eerst X en Y voor 20 minuten."></textarea>
+              </div>
+            </div>
+          </section>
 
-<p>&nbsp;</p>
-<hr class="formhr" />
-<p><i>to be continued </i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+          <section class="card">
+            <h2>D) Doen richting doel</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="nextAction">Welke 1 concrete actie doe je nu die je richting B brengt?</label>
+                <textarea id="nextAction" placeholder="Bijv. steun bellen, eten, slaap klaarmaken, agenda aanpassen..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="repeatPlan">Hoe ga je deze techniek herhalen?</label>
+                <textarea id="repeatPlan" placeholder="Bijv. elke dag 2 minuten oefening, vaste reminder, notitie op telefoon..."></textarea>
+                <div class="cue">Herhalen maakt deze keuze sneller beschikbaar als trek hoog is.</div>
+              </div>
+            </div>
+          </section>
+        </div>
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+        <div class="nudge-box">
+          <h3>Cognitieve duwtjes (vanuit jouw eigen input)</h3>
+          <ul class="nudge-list" id="cognitiveNudges">
+            <li>Vul een paar velden in; dan verschijnen hier persoonlijke duwtjes op basis van wat je eerder invulde.</li>
+          </ul>
+        </div>
+
+        <div class="action-bar">
+          <button type="button" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="secondary" id="exportButton">Exporteer alle IAM-data</button>
+          <button type="button" class="warn" id="printButton">Print / Bewaar als PDF</button>
+        </div>
+      </form>
+
+      <div class="footer-nav">
+        <p>
+          <a href="index.htm">Overzicht</a> | <a href="trek-opvangen.htm">ABCDaaah basis</a> |
+          <a href="noodplan-forse-trek.htm">Noodplan forse trek</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'trek-opvangen-2';
+    const fields = [
+      'directEffect',
+      'directCost',
+      'longGoal',
+      'goalFeeling',
+      'delayPlan',
+      'ifThen',
+      'nextAction',
+      'repeatPlan'
+    ];
+
+    function showMessage(text, isError = false) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.classList.add('show');
+      el.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => el.classList.remove('show'), 2800);
+    }
+
+    function collectFormData() {
+      const data = {};
+      fields.forEach((id) => {
+        const input = document.getElementById(id);
+        data[id] = input ? input.value.trim() : '';
+      });
+      return data;
+    }
+
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const input = document.getElementById(id);
+        if (input) input.value = data[id] || '';
+      });
+    }
+
+    function calculateProgress(data) {
+      const values = fields.map((id) => (data[id] || '').trim());
+      const filled = values.filter((value) => value.length > 0).length;
+      return Math.round((filled / fields.length) * 100);
+    }
+
+    function updateMetaChips(data) {
+      const progressChip = document.getElementById('progressChip');
+      const lastSavedChip = document.getElementById('lastSavedChip');
+      if (progressChip) progressChip.textContent = `Voortgang: ${calculateProgress(data)}%`;
+      if (lastSavedChip) {
+        if (data.lastUpdated) {
+          const stamp = new Date(data.lastUpdated).toLocaleString('nl-NL');
+          lastSavedChip.textContent = `Laatst opgeslagen: ${stamp}`;
+        } else {
+          lastSavedChip.textContent = 'Nog niet opgeslagen';
+        }
+      }
+    }
+
+    function previewText(value, maxLength = 72) {
+      const text = String(value || '').trim().replace(/\s+/g, ' ');
+      if (!text) return '';
+      return text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text;
+    }
+
+    function addNudge(nudges, text) {
+      if (!text) return;
+      if (nudges.includes(text)) return;
+      nudges.push(text);
+    }
+
+    function renderCognitiveNudges(formData) {
+      const nudges = [];
+
+      if (formData.longGoal && !formData.nextAction) {
+        addNudge(nudges, `Je noemde als lange-termijndoel: "${previewText(formData.longGoal)}". Welke actie doe je nu die daar direct naartoe beweegt?`);
+      }
+
+      if (formData.goalFeeling && !formData.delayPlan) {
+        addNudge(nudges, `Je wil je uiteindelijk "${previewText(formData.goalFeeling)}" voelen. Welke uitstelactie helpt je de eerste 20 minuten door?`);
+      }
+
+      if (formData.directEffect && formData.directCost && !formData.ifThen) {
+        addNudge(nudges, 'Je ziet zowel korte winst als korte rekening. Maak nu een als-dan zin zodat je keuze in actie komt bij hoge trek.');
+      }
+
+      if (!formData.repeatPlan && calculateProgress(formData) >= 40) {
+        addNudge(nudges, 'Je bent al bezig. Leg nu herhaling vast: wanneer oefen je deze techniek opnieuw?');
+      }
+
+      const trek1 = iamData.getFormData ? (iamData.getFormData('trek-opvangen') || {}) : {};
+      if (trek1.behoefte && !formData.longGoal) {
+        addNudge(nudges, `Op de basispagina noemde je behoefte: "${previewText(trek1.behoefte)}". Kun je hier je lange-termijndoel daar expliciet aan koppelen?`);
+      }
+
+      if (trek1.alternatief && !formData.nextAction) {
+        addNudge(nudges, `Je schreef eerder alternatief gedrag: "${previewText(trek1.alternatief)}". Past dat ook als D-actie op deze pagina?`);
+      }
+
+      const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      if (summary) {
+        const intervention = Array.isArray(summary.bestInterventions) && summary.bestInterventions.length ? summary.bestInterventions[0] : '';
+        const support = Array.isArray(summary.supportNetwork) && summary.supportNetwork.length ? summary.supportNetwork[0] : '';
+
+        if (intervention && !formData.nextAction) {
+          addNudge(nudges, `Eerder werkte "${previewText(intervention)}". Is dat nu je snelste D-actie?`);
+        }
+
+        if (support && !formData.delayPlan) {
+          addNudge(nudges, `Steun uit je netwerk: "${previewText(support)}". Kun je die steun al in je uitstelplan opnemen?`);
+        }
+      }
+
+      const list = document.getElementById('cognitiveNudges');
+      if (!list) return;
+      list.innerHTML = '';
+
+      if (!nudges.length) {
+        const item = document.createElement('li');
+        item.textContent = 'Nog geen specifieke duwtjes. Vul eerst een paar velden in, dan leggen we verbindingen met eerdere input.';
+        list.appendChild(item);
+        return;
+      }
+
+      nudges.slice(0, 6).forEach((text) => {
+        const item = document.createElement('li');
+        item.textContent = text;
+        list.appendChild(item);
+      });
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        const saved = iamData.updateFormData(formKey, collectFormData());
+        updateMetaChips(saved || {});
+        renderCognitiveNudges(saved || {});
+        if (feedback) showMessage('Trek-opvangen 2 opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      try {
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = exportData.filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-data geëxporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const existingData = iamData.getFormData(formKey) || {};
+      fillForm(existingData);
+      updateMetaChips(existingData);
+      renderCognitiveNudges(existingData);
+
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('trek2Form').addEventListener('input', () => saveForm(false));
+    });
+  </script>
 </body>
 </html>
-

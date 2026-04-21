@@ -1,128 +1,560 @@
-<html>
-
-noodplan-forse-trek.htm
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Noodplan forse trek</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noodplan Forse Trek - IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #1f2730;
+      --muted: #5a6570;
+      --primary: #bb4f00;
+      --primary-dark: #8f3d00;
+      --accent: #2e7d32;
+      --soft: #fff7ef;
+      --border: #ecd2bd;
+      --ok: #2e7d32;
+      --danger-soft: #fff3f0;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    body {
+      background:
+        radial-gradient(circle at 10% 8%, rgba(187, 79, 0, 0.13), transparent 33%),
+        radial-gradient(circle at 84% 14%, rgba(46, 125, 50, 0.12), transparent 34%),
+        linear-gradient(180deg, #fffdfa 0%, #fff6ef 100%);
+      color: var(--ink);
+    }
 
+    .page-shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding-bottom: 2.4rem;
+    }
 
+    .hero {
+      margin-top: 1.1rem;
+      background: linear-gradient(135deg, #8f3d00 0%, #bb4f00 58%, #2e7d32 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 1.45rem;
+      box-shadow: 0 14px 28px rgba(143, 61, 0, 0.24);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .hero-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 0.85rem;
+    }
 
+    .hero-top a {
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.13);
+      border-radius: 999px;
+      padding: 0.45rem 0.82rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.3rem, 3.6vw, 1.92rem);
+      line-height: 1.24;
+    }
 
-function hulpscherm()
-{
-hulp_scherm(280,'forse trek','Als je af-en-toe tegen forse trek oploopt dan is het vaak wel verstandig je daar ook op voor te bereiden met een degelijk plan.<br/> Tegen jezelf te vertellen: &quot;ik moet gewoon niet gaan gebruiken&quot; is niet zo realistisch. Het is immers niet &quot;gewoon&quot; om een trek te voelen die maakt dat er dingen <i>belangrijk</i> voelen die je achteraf niet gaat willen. Dan is het misschien zelfs wel zaak om <i>ongewone</i> maatregelen te nemen..')
-}
+    .hero p {
+      margin: 0.55rem 0 0;
+      max-width: 74ch;
+      line-height: 1.58;
+      color: rgba(255, 255, 255, 0.93);
+      font-size: 0.96rem;
+    }
 
-</script>
+    .status-row {
+      margin-top: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .status-chip {
+      background: #fff;
+      color: #7a3200;
+      border-radius: 999px;
+      padding: 0.36rem 0.78rem;
+      font-size: 0.87rem;
+      font-weight: 700;
+    }
+
+    .warning-box {
+      margin-top: 1rem;
+      background: var(--danger-soft);
+      border: 1px solid #f1c9c2;
+      border-left: 6px solid #c0392b;
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      color: #6b2a24;
+      font-size: 0.93rem;
+      line-height: 1.55;
+    }
+
+    .cards {
+      margin-top: 1.2rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 860px) {
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(31, 39, 48, 0.08);
+      overflow: hidden;
+    }
+
+    .card h2 {
+      margin: 0;
+      padding: 0.95rem 1rem 0.65rem;
+      font-size: 1.05rem;
+      color: #8f3d00;
+      border-bottom: 1px solid #f0e2d5;
+      background: var(--soft);
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 0.85rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+      color: #3a332b;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      border-radius: 10px;
+      border: 1px solid #decdbd;
+      padding: 0.7rem;
+      font: inherit;
+      background: #fff;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #bb4f00;
+      box-shadow: 0 0 0 3px rgba(187, 79, 0, 0.14);
+    }
+
+    .cue {
+      margin-top: 0.45rem;
+      background: #f2fbf2;
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.55rem 0.72rem;
+      color: #205d24;
+      font-size: 0.9rem;
+    }
+
+    .nudge-box {
+      margin-top: 1.2rem;
+      background: #fff7ec;
+      border: 1px solid #f0d2ab;
+      border-left: 6px solid #bb4f00;
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    .nudge-box h3 {
+      margin: 0 0 0.5rem;
+      color: #6f401e;
+      font-size: 1.01rem;
+    }
+
+    .nudge-list {
+      margin: 0;
+      padding-left: 1.12rem;
+      color: #58331b;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .nudge-list li { margin-bottom: 0.28rem; }
+
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1.2rem;
+    }
+
+    .action-bar button {
+      flex: 1 1 180px;
+      border: none;
+      border-radius: 10px;
+      min-height: 46px;
+      font-weight: 700;
+      padding: 0.67rem 0.9rem;
+      cursor: pointer;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .action-bar button.secondary { background: #4f6172; }
+    .action-bar button.warn {
+      background: #2e7d32;
+      color: #f8fff8;
+    }
+
+    .message {
+      margin-top: 0.95rem;
+      display: none;
+      border-radius: 10px;
+      padding: 0.74rem 0.9rem;
+      background: #eef8ee;
+      border-left: 4px solid var(--ok);
+      color: #214b24;
+      font-size: 0.92rem;
+    }
+
+    .message.show { display: block; }
+    .message.error {
+      background: #fff5f5;
+      border-left-color: #c03a3a;
+      color: #7a1f1f;
+    }
+
+    .footer-nav {
+      margin-top: 1.1rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.89rem;
+    }
+
+    .footer-nav a {
+      color: var(--primary-dark);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .footer-nav a:hover { text-decoration: underline; }
+
+    @media print {
+      .hero-top,
+      .action-bar,
+      .message {
+        display: none !important;
+      }
+      body { background: #fff; }
+      .hero,
+      .card { box-shadow: none; }
+      .card { break-inside: avoid; }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-<div class="shadow"><div class="content"><div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-top">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./trek-opvangen.htm">ABCDaaah</a>
+          <a href="./trek-opvangen-2.htm">Trek opvangen 2</a>
+        </div>
+        <h1>Noodplan voor forse trek</h1>
+        <p>
+          Dit plan is voor piekmomenten waarop trek groot voelt en redeneren moeilijker wordt. Daarom maak je hier een
+          kort, concreet en uitvoerbaar protocol voor wat jij en anderen meteen kunnen doen.
+        </p>
+        <div class="status-row">
+          <span class="status-chip" id="progressChip">Voortgang: 0%</span>
+          <span class="status-chip" id="lastSavedChip">Nog niet opgeslagen</span>
+        </div>
+      </header>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-  <h1 class="praatmethansheader">Plan voor forse trek</h1>
-</div>
-<div class="rechtsitalic">5 vragen: 20 - 40 minuten</div>
+      <div class="warning-box">
+        In forse trek werkt "ik mag niet gebruiken" vaak te zwak. Wat helpt is: direct doen, wrijving verlagen,
+        steun inschakelen en jezelf veilig houden tot de piek zakt.
+      </div>
 
-<h2>(nood)plan voor forse trek</h2>
-<div class="printhide">
-<p> Ik raad je aan: maak  een plan voor jezelf om je voor te bereiden voor
-  momenten dat je echt <i>trek</i> krijgt. Veel mensen worden daar toch door
-  overvallen. Maar als je daar van te voren over nadenkt en jezelf er op voorbereidt dan is de kans groter
-  dat zo'n moment goed verloopt in jouw ogen, achteraf. </p>
+      <div id="message" class="message"></div>
 
+      <form id="noodplanForm">
+        <div class="cards">
+          <section class="card">
+            <h2>1) Direct doen (eerste 10 minuten)</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="doen">Wat doe je direct als trek hard stijgt?</label>
+                <textarea id="doen" placeholder="Bijv. douchen, water drinken, schoenen aan en lopen, ademprotocol..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="steunnetwerk">Wie bel/app je direct uit je steunnetwerk?</label>
+                <textarea id="steunnetwerk" placeholder="Naam + nummer + wat je vraagt (bijv. 15 min aan de lijn blijven)"></textarea>
+                <div class="cue">Hoe specifieker je hulpvraag, hoe groter de kans dat je die hulp ook krijgt.</div>
+              </div>
+            </div>
+          </section>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+          <section class="card">
+            <h2>2) Schrappen en blokkeren</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="schrappen">Wat ga je dan juist niet doen?</label>
+                <textarea id="schrappen" placeholder="Bijv. niet alleen thuis blijven, niet pinnen, niet naar X locatie..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="omgeving">Welke omgeving-aanpassing helpt direct?</label>
+                <textarea id="omgeving" placeholder="Bijv. geld/keys weggeven, apps blokkeren, deur uit, trigger-route vermijden..."></textarea>
+              </div>
+            </div>
+          </section>
 
+          <section class="card">
+            <h2>3) Cognitieve houvast</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="ratio">Welke rationele zinnen helpen je in piek-trek?</label>
+                <textarea id="ratio" placeholder="Bijv. 'Dit is een golf, geen bevel.' 'Over 20 min denk ik anders.'"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="piekeren">Welke piekergedachten stel je uit?</label>
+                <textarea id="piekeren" placeholder="Wat parkeer je tijdelijk omdat je in piek toch geen goed besluit neemt?"></textarea>
+                <div class="cue">Uitstellen van piekeren is ook een vorm van actief doen.</div>
+              </div>
+            </div>
+          </section>
 
-</p><form name="forsetrek">
-  <h3>zelf-controle</h3>
+          <section class="card">
+            <h2>4) Veiligheidsplan</h2>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="sosSignaal">Wat is je SOS-signaal als het escaleert?</label>
+                <textarea id="sosSignaal" placeholder="Bijv. codewoord naar steunpersoon, crisislijn, locatie delen..."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="herstelstap">Wat doe je na de piek (herstelfase)?</label>
+                <textarea id="herstelstap" placeholder="Bijv. eten, slapen, kort evalueren, vervolgafspraak, mild blijven."></textarea>
+              </div>
+            </div>
+          </section>
+        </div>
 
-<p>zelf-controle SNEL &amp; ALGEMEEN:</p>
-<p>Wat moet er gelijk gebeuren? Dus wat ga je gelijk(!) <b>w&egrave;l</b> <i><b>DOEN</b></i> als je forse trek
-  krijgt?<br />
-  (wat je "niet gaat doen" is niet meer interessant op zo'n moment)<br/>
-<textarea name="doen" cols="55" rows="4" class="praatmethansformtextarea" title="De dingen die je gelijk gaat doen, als je trek krijgt, mensen bellen, onder de douche staan, water drinken etc. etc.."></textarea>  </p><div class="praatmethansheader2">&quot;dingen die je gelijk gaat doen&quot;</div>
-<div class="rechtsitalic">Wat zijn dingen die ik zelf kan <i><b>DOEN</b></i> (onder de douche staan, bellen -wie?-, water drinken, eten, dagboek of brief schrijven)<BR/>
-Wat zijn de dingen die <i><b>anderen</b></i> <b>voor mij</b> kunnen DOEN</div>
-<p>&nbsp;</p>
-<p>Wat ga je maar liever <b>niet</b> meer doen als je eenmaal grote trek hebt? (welke
-  dingen kan je beter <i><b>schrappen</b></i>!)<br/>
-<textarea name="schrappen" cols="55" rows="4" class="praatmethansformtextarea" title="Dingen die je achterwege wilt laten."></textarea>  </p><div class="praatmethansheader2">&quot;Wat ga je schrappen?&quot;</div>
-<p>&nbsp;</p>
+        <div class="nudge-box">
+          <h3>Cognitieve duwtjes (vanuit jouw eigen input)</h3>
+          <ul class="nudge-list" id="cognitiveNudges">
+            <li>Vul een paar velden in; dan verschijnen hier persoonlijke duwtjes op basis van wat je eerder invulde.</li>
+          </ul>
+        </div>
 
-<p>Wat zijn dingen die ik kan BE<b>DENKEN</b> die mij kunnen helpen om rationeel
-  tegen trek aan te blijven kijken: &nbsp;(en -eventueel- welke smoezen kan ik
-  tijdig herkennen die gebruik juist telkens dichterbij bleken te brengen)<br/>
-<textarea name="ratio" cols="55" rows="4" class="praatmethansformtextarea" title="hoe kan ik rationeel blijven denken over het gevoel dat ik voel."></textarea></p><div class="praatmethansheader2">&quot;rationeel blijven denken over trek&quot;</div><p></p>
-<p class="rechtsitalic">(en welke van mijn favoriete smoezen kan ik eventueel
-  tijdig herkennen) (zie: <a href="smoezenboek.htm" title="open het smoezenboek" target="formulieren">'smoezenboek'</a>)</p>
+        <div class="action-bar">
+          <button type="button" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="secondary" id="exportButton">Exporteer alle IAM-data</button>
+          <button type="button" class="warn" id="printButton">Print / Bewaar als PDF</button>
+        </div>
+      </form>
 
-<p>&nbsp;</p>
+      <div class="footer-nav">
+        <p>
+          <a href="index.htm">Overzicht</a> | <a href="trek-opvangen.htm">ABCDaaah</a> |
+          <a href="trek-opvangen-2.htm">Trek opvangen 2</a>
+        </p>
+      </div>
+    </div>
+  </div>
 
-<p>Wat zijn de <b>pieker</b>-gedachten die ik maar beter <b><i>UIT</i></b> kan <b><i>STELLEN</i></b> omdat ik er
-  op dat moment toch niet uit zal gaan komen.<br/>
-<textarea name="piekeren" cols="55" rows="4" class="praatmethansformtextarea" title="de piekergedachten die ik beter uit kan stellen."></textarea>  </p><div class="praatmethansheader2">&quot;piekeren uitstellen&quot;</div>
-<p>&nbsp;</p>
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'noodplan-forse-trek';
+    const fields = [
+      'doen',
+      'steunnetwerk',
+      'schrappen',
+      'omgeving',
+      'ratio',
+      'piekeren',
+      'sosSignaal',
+      'herstelstap'
+    ];
 
-<p><b>WIE</b> uit mijn steunnetwerk kan ik inschakelen om die trek (samen) uit te houden of om me te helpen om mijzelf af te leiden van de trek of om samen te kijken wat er onder zit:<br/>
-&nbsp;(en is deze persoon / instantie ervan op de hoogte dat je zo maar kunt bellen?)<br/>
-<textarea name="steunnetwerk" cols="55" rows="4" class="praatmethansformtextarea" title="De mensen die met mij mee kunnen denken of die mij motiveren om verstandig bezig te zijn."></textarea>  </p><div class="praatmethansheader2">&quot;mijn steunnetwerk inschakelen&quot;</div>
-</form><hr class="formhr" />
-<p><i>(nood)plannen bij trek, bij uitglijders en bij wegglijders hebben overlap
-    maar zijn wel wezenlijk verschillend.<br />
-zie ook:</i></p>
-<i><ul>
-	<li><a href="noodplan-forse-trek.htm" target="formulieren">noodplan bij forse trek</a></li>
-	<li><a href="plan-bij-uitglijden.htm" target="formulieren">plan bij uitglijden</a></li>
-	<li><a href="noodplan-wegglijden.htm" target="formulieren">noodplan bij wegglijden</a></li>
-	</ul>
-	</i>
-<p></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    function showMessage(text, isError = false) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.classList.add('show');
+      el.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => el.classList.remove('show'), 2800);
+    }
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div></div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function collectFormData() {
+      const data = {};
+      fields.forEach((id) => {
+        const input = document.getElementById(id);
+        data[id] = input ? input.value.trim() : '';
+      });
+      return data;
+    }
+
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const input = document.getElementById(id);
+        if (input) input.value = data[id] || '';
+      });
+    }
+
+    function calculateProgress(data) {
+      const values = fields.map((id) => (data[id] || '').trim());
+      const filled = values.filter((value) => value.length > 0).length;
+      return Math.round((filled / fields.length) * 100);
+    }
+
+    function updateMetaChips(data) {
+      const progressChip = document.getElementById('progressChip');
+      const lastSavedChip = document.getElementById('lastSavedChip');
+      if (progressChip) progressChip.textContent = `Voortgang: ${calculateProgress(data)}%`;
+      if (lastSavedChip) {
+        if (data.lastUpdated) {
+          const stamp = new Date(data.lastUpdated).toLocaleString('nl-NL');
+          lastSavedChip.textContent = `Laatst opgeslagen: ${stamp}`;
+        } else {
+          lastSavedChip.textContent = 'Nog niet opgeslagen';
+        }
+      }
+    }
+
+    function previewText(value, maxLength = 72) {
+      const text = String(value || '').trim().replace(/\s+/g, ' ');
+      if (!text) return '';
+      return text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text;
+    }
+
+    function addNudge(nudges, text) {
+      if (!text) return;
+      if (nudges.includes(text)) return;
+      nudges.push(text);
+    }
+
+    function renderCognitiveNudges(formData) {
+      const nudges = [];
+
+      if (formData.doen && !formData.steunnetwerk) {
+        addNudge(nudges, 'Je hebt al een doe-plan. Wie schakel je concreet in als extra anker tijdens piek-trek?');
+      }
+
+      if (formData.schrappen && !formData.omgeving) {
+        addNudge(nudges, 'Je weet wat je wilt schrappen. Welke directe omgevingsmaatregel maakt dat nu makkelijker?');
+      }
+
+      if (formData.ratio && !formData.piekeren) {
+        addNudge(nudges, 'Sterk: je hebt rationele zinnen. Welke piekergedachten parkeer je bewust tot later?');
+      }
+
+      if (!formData.sosSignaal && calculateProgress(formData) >= 50) {
+        addNudge(nudges, 'Je plan groeit. Voeg nu ook een SOS-signaal toe voor escalatie, zodat je niet hoeft te improviseren.');
+      }
+
+      const trek1 = iamData.getFormData ? (iamData.getFormData('trek-opvangen') || {}) : {};
+      if (trek1.afleiding && !formData.doen) {
+        addNudge(nudges, `Eerder noemde je afleiding: "${previewText(trek1.afleiding)}". Kan dit in je eerste 10-minuten noodstap?`);
+      }
+
+      if (trek1.alternatief && !formData.herstelstap) {
+        addNudge(nudges, `Je alternatief uit ABCDaaah was: "${previewText(trek1.alternatief)}". Is dit ook bruikbaar in je herstelfase na piek-trek?`);
+      }
+
+      const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      if (summary) {
+        const support = Array.isArray(summary.supportNetwork) && summary.supportNetwork.length ? summary.supportNetwork[0] : '';
+        const warning = Array.isArray(summary.earlyWarnings) && summary.earlyWarnings.length ? summary.earlyWarnings[0] : '';
+
+        if (support && !formData.steunnetwerk) {
+          addNudge(nudges, `Uit eerdere formulieren komt steun "${previewText(support)}" naar voren. Komt die ook expliciet in dit noodplan?`);
+        }
+
+        if (warning && !formData.sosSignaal) {
+          addNudge(nudges, `Vroeg signaal uit eerdere input: "${previewText(warning)}". Wat is je SOS-actie zodra dit signaal opduikt?`);
+        }
+      }
+
+      const list = document.getElementById('cognitiveNudges');
+      if (!list) return;
+      list.innerHTML = '';
+
+      if (!nudges.length) {
+        const item = document.createElement('li');
+        item.textContent = 'Nog geen specifieke duwtjes. Vul eerst een paar velden in, dan leggen we verbindingen met eerdere input.';
+        list.appendChild(item);
+        return;
+      }
+
+      nudges.slice(0, 6).forEach((text) => {
+        const item = document.createElement('li');
+        item.textContent = text;
+        list.appendChild(item);
+      });
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        const saved = iamData.updateFormData(formKey, collectFormData());
+        updateMetaChips(saved || {});
+        renderCognitiveNudges(saved || {});
+        if (feedback) showMessage('Noodplan opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      try {
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = exportData.filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-data geëxporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const existingData = iamData.getFormData(formKey) || {};
+      fillForm(existingData);
+      updateMetaChips(existingData);
+      renderCognitiveNudges(existingData);
+
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('noodplanForm').addEventListener('input', () => saveForm(false));
+    });
+  </script>
 </body>
 </html>

@@ -117,6 +117,33 @@
       font-weight: 700;
     }
 
+    .theory-box {
+      margin-top: 1rem;
+      background: #eef9f9;
+      border: 1px solid #cbe3e3;
+      border-left: 6px solid var(--primary);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+    }
+
+    .theory-box h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.05rem;
+      color: #0a4f4f;
+    }
+
+    .theory-box ol {
+      margin: 0;
+      padding-left: 1.15rem;
+      color: #1f3a46;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .theory-box li {
+      margin-bottom: 0.25rem;
+    }
+
     .cards {
       margin-top: 1.2rem;
       display: grid;
@@ -195,6 +222,33 @@
       border: 1px solid #cde8d1;
       border-radius: 14px;
       padding: 1rem;
+    }
+
+    .nudge-box {
+      margin-top: 1.2rem;
+      background: #fff7ec;
+      border: 1px solid #f1d2af;
+      border-left: 6px solid var(--accent);
+      border-radius: 14px;
+      padding: 1rem;
+    }
+
+    .nudge-box h3 {
+      margin: 0 0 0.5rem;
+      color: #7a431f;
+      font-size: 1.02rem;
+    }
+
+    .nudge-list {
+      margin: 0;
+      padding-left: 1.15rem;
+      color: #59321a;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .nudge-list li {
+      margin-bottom: 0.3rem;
     }
 
     .practice-box h3 {
@@ -303,17 +357,28 @@
           van automatische reactie naar bewuste actie te gaan. Kort, praktisch, en bedoeld om vaker te oefenen.
         </p>
         <ul class="quick-flow">
-          <li><strong>1. Stop & adem:</strong> eerst vertragen voordat je beslist.</li>
-          <li><strong>2. Actualiteit:</strong> wat gebeurt er nu echt, hier en nu?</li>
-          <li><strong>3. Behoefte:</strong> wat heb je onder de trek eigenlijk nodig?</li>
-          <li><strong>4. Consequenties:</strong> wat kost gebruik je op korte en lange termijn?</li>
-          <li><strong>5. Doen:</strong> afscheid, alternatief, accepteren, afleiding, herhalen.</li>
+          <li><strong>1. Stop & adem:</strong> vertraag zodat je de actualiteit kunt zien.</li>
+          <li><strong>2. A - Actualiteit:</strong> onder ogen zien wat er nu echt gebeurt.</li>
+          <li><strong>3. B - Behoefte:</strong> de behoefte onder de trek herkennen.</li>
+          <li><strong>4. C - Cognitieve afweging:</strong> lange termijn meenemen en kiezen: gebruik of D van Doen.</li>
+          <li><strong>5. D - Doen:</strong> afscheid, accepteren (evt. afleiding), alternatief gedrag op behoefte B, herhalen.</li>
         </ul>
         <div class="status-row">
           <span class="status-chip" id="progressChip">Voortgang: 0%</span>
           <span class="status-chip" id="lastSavedChip">Nog niet opgeslagen</span>
         </div>
       </header>
+
+      <div class="theory-box">
+        <h2>Algemene theorie: ABCDaaah</h2>
+        <ol>
+          <li><strong>A - Actualiteit:</strong> onder ogen zien wat er speelt, door eerst te stoppen en te ademen.</li>
+          <li><strong>B - Behoefte:</strong> zien welke behoefte onder de trek zit.</li>
+          <li><strong>C - Cognitieve afweging:</strong> lange-termijn overwegingen meenemen en kiezen: gebruik of D van Doen.</li>
+          <li><strong>D - Doen:</strong> dingen om te doen, niet om in te blijven denken.</li>
+          <li><strong>aaah:</strong> actief afscheid, actief accepteren (met eventueel afleiding als tussenstap), alternatief gedrag dat behoefte B helpt vervullen, en herhalen-herhalen-herhalen.</li>
+        </ol>
+      </div>
 
       <div id="message" class="message"></div>
 
@@ -347,18 +412,18 @@
               <div class="form-group">
                 <label for="behoefte">Welke behoefte zit er onder de trek?</label>
                 <textarea id="behoefte" placeholder="Bijv. ontladen, contact, rust, verdoving, spanning... "></textarea>
-                <div class="cue">Vraag: "Wat wil ik eigenlijk voelen als ik niet gebruik?"</div>
+                <div class="cue">Vraag: "Wat wil ik eigenlijk voelen door te gebruiken?"</div>
               </div>
             </div>
           </section>
 
           <section class="card">
-            <h2>4) C - Consequenties</h2>
+            <h2>4) C - Cognitieve afweging en keuze</h2>
             <div class="card-body">
               <div class="form-group">
-                <label for="consequenties">Wat zijn de gevolgen als je nu wel gebruikt?</label>
-                <textarea id="consequenties" placeholder="Lichaam, stemming, relaties, werk, zelfrespect, morgen..."></textarea>
-                <div class="cue">Vraag: "Welke versie van mij betaal ik hiermee?"</div>
+                <label for="consequenties">Welke lange-termijn overwegingen zie je nu, en welke keuze maak je (gebruik of D van Doen)?</label>
+                <textarea id="consequenties" placeholder="Wat betekent gebruik op langere termijn voor lichaam, stemming, relaties, werk en zelfrespect? Welke keuze maak je nu bewust?"></textarea>
+                <div class="cue">Vraag: "Welke keuze past bij mijn langere termijn, niet alleen bij deze minuut?"</div>
               </div>
             </div>
           </section>
@@ -368,25 +433,27 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="afscheid">Actief afscheid: wat zeg je hardop dat je nu niet gaat doen?</label>
-                <textarea id="afscheid" placeholder="Bijv. 'Ik ga nu niet gebruiken. Ik kies voor herstel.'"></textarea>
+                <textarea id="afscheid" placeholder="Bijv. 'Ik ga nu niet 'X' gebruiken. Ik kies ervoor om mijn Behoefte te vervullen op een andere manier.'"></textarea>
               </div>
               <div class="form-group">
-                <label for="alternatief">Alternatieve actie: wat ga je nu concreet doen?</label>
-                <textarea id="alternatief" placeholder="Bijv. douchen, lopen, iemand bellen, eten, muziek..."></textarea>
+                <label for="alternatief">Alternatieve actie: hoe ga je behoefte B nu (gedeeltelijk) vervullen zonder te gebruiken?</label>
+                <textarea id="alternatief" placeholder="Koppel aan behoefte B. Bijv. rust: warm douchen + ademen; contact: iemand bellen; ontladen: wandelen of bewegen; troost: eten/thee/muziek."></textarea>
+                <div class="cue">Vraag: "Wat is nu een haalbare 10-minuten actie die mijn behoefte B deels voedt, zonder gebruik?"</div>
               </div>
             </div>
           </section>
 
           <section class="card">
-            <h2>5) D - Doorzetten</h2>
+            <h2>5) D - DOEN (vervolg)</h2>
             <div class="card-body">
               <div class="form-group">
-                <label for="accepteren">Actief accepteren: waar voel je het in je lichaam?</label>
-                <textarea id="accepteren" placeholder="Beschrijf plek, druk, temperatuur, beweging..."></textarea>
+                <label for="accepteren">Actief accepteren: waar voel je het in je lichaam, en wat verandert er als je erbij blijft?</label>
+                <textarea id="accepteren" placeholder="Beschrijf plek, druk, temperatuur, beweging, golfbeweging en wat er na 2-5 minuten verandert..."></textarea>
+                <div class="cue">Eerst accepteren, dan pas schakelen: afleiding is hier een bewuste tussenstap als de spanning te hoog blijft.</div>
               </div>
               <div class="form-group">
-                <label for="afleiding">Tijdelijke afleiding: wat werkt veilig voor 10-20 minuten?</label>
-                <textarea id="afleiding" placeholder="Bijv. lopen, opruimen, adem-app, korte taak..."></textarea>
+                <label for="afleiding">Afleiding als onderdeel van accepteren: welke veilige tussenstap helpt je 10-20 minuten overbruggen?</label>
+                <textarea id="afleiding" placeholder="Bijv. lopen, koud water, opruimen, adem-app, korte taak, muziek. Doel: reguleren zodat je weer kunt kiezen."></textarea>
               </div>
               <div class="form-group">
                 <label for="herhaling">Herhalen: wanneer oefen je dit opnieuw (ook zonder sterke trek)?</label>
@@ -399,9 +466,16 @@
         <div class="practice-box">
           <h3>Praktijktip</h3>
           <p>
-            Oefen deze stappen op rustige momenten. Dan heb je ze beschikbaar als trek hoog is.
-            Hoe vaker je traint, hoe sneller je zenuwstelsel de nieuwe route pakt.
+            Oefen deze stappen juist ook op rustige momenten. Dan heb je ze beschikbaar als trek hoog is.
+            Herhalen, herhalen, herhalen maakt Doen toegankelijker op het moment dat het echt telt.
           </p>
+        </div>
+
+        <div class="nudge-box">
+          <h3>Cognitieve duwtjes (vanuit jouw eigen input)</h3>
+          <ul class="nudge-list" id="cognitiveNudges">
+            <li>Vul een paar velden in; dan verschijnen hier persoonlijke herinneringen die tekst van eerder op deze en andere IAM-pagina's terughalen.</li>
+          </ul>
         </div>
 
         <div class="action-bar">
@@ -468,6 +542,78 @@
       return Math.round((filled / fields.length) * 100);
     }
 
+    function previewText(value, maxLength = 72) {
+      const text = String(value || '').trim().replace(/\s+/g, ' ');
+      if (!text) return '';
+      return text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text;
+    }
+
+    function addNudge(nudges, text) {
+      if (!text) return;
+      if (nudges.includes(text)) return;
+      nudges.push(text);
+    }
+
+    function renderCognitiveNudges(formData) {
+      const nudges = [];
+
+      if (formData.behoefte && !formData.alternatief) {
+        addNudge(nudges, `Je noemde bij B: "${previewText(formData.behoefte)}". Komt die behoefte terug in je alternatieve actie?`);
+      }
+
+      if (formData.consequenties && !formData.afscheid) {
+        addNudge(nudges, `Je schreef bij C: "${previewText(formData.consequenties)}". Welke zin helpt je nu hardop afscheid nemen?`);
+      }
+
+      if (formData.accepteren && !formData.afleiding) {
+        addNudge(nudges, `Je bent al bezig met accepteren. Welke korte afleiding helpt je reguleren als de golf te sterk wordt?`);
+      }
+
+      if (formData.behoefte && formData.alternatief) {
+        addNudge(nudges, `Check: vervult je alternatief je behoefte B echt deels, of is het vooral "niet gebruiken"?`);
+      }
+
+      if (!formData.herhaling && calculateProgress(formData) >= 40) {
+        addNudge(nudges, 'Je bent al goed op weg. Zet nu ook herhaalmomenten klaar, zodat Doen automatisch wordt bij hoge trek.');
+      }
+
+      const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      if (summary) {
+        const topTrigger = Array.isArray(summary.topTriggers) && summary.topTriggers.length ? summary.topTriggers[0] : '';
+        const bestIntervention = Array.isArray(summary.bestInterventions) && summary.bestInterventions.length ? summary.bestInterventions[0] : '';
+        const supportPerson = Array.isArray(summary.supportNetwork) && summary.supportNetwork.length ? summary.supportNetwork[0] : '';
+
+        if (topTrigger && !formData.actualiteit) {
+          addNudge(nudges, `Uit je andere formulieren komt vaak trigger "${previewText(topTrigger)}" terug. Zie je die nu ook in A (Actualiteit)?`);
+        }
+
+        if (bestIntervention && !formData.alternatief) {
+          addNudge(nudges, `Je eerdere interventie "${previewText(bestIntervention)}" werkte eerder. Past die nu als alternatief gedrag bij behoefte B?`);
+        }
+
+        if (supportPerson && !formData.alternatief) {
+          addNudge(nudges, `Je noemde steunnetwerk "${previewText(supportPerson)}". Is dit een moment om die steun actief in te zetten?`);
+        }
+      }
+
+      const list = document.getElementById('cognitiveNudges');
+      if (!list) return;
+
+      list.innerHTML = '';
+      if (!nudges.length) {
+        const item = document.createElement('li');
+        item.textContent = 'Nog geen specifieke duwtjes. Vul eerst een paar velden in, dan leggen we verbindingen met wat je al eerder invulde.';
+        list.appendChild(item);
+        return;
+      }
+
+      nudges.slice(0, 6).forEach((text) => {
+        const item = document.createElement('li');
+        item.textContent = text;
+        list.appendChild(item);
+      });
+    }
+
     function updateMetaChips(data) {
       const progress = calculateProgress(data);
       const progressChip = document.getElementById('progressChip');
@@ -490,6 +636,7 @@
       try {
         const saved = iamData.updateFormData(formKey, collectFormData());
         updateMetaChips(saved || {});
+        renderCognitiveNudges(saved || {});
         if (feedback) {
           showMessage('Trek-opvangen formulier opgeslagen op dit toestel.');
         }
@@ -521,6 +668,7 @@
       const existingData = iamData.getFormData(formKey) || {};
       fillForm(existingData);
       updateMetaChips(existingData);
+      renderCognitiveNudges(existingData);
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
