@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemsex — IAM</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/forms.css">
+    <style>
+        :root {
+            --ink:     #111;
+            --muted:   #555;
+            --accent:  #9b3fcc;
+            --accent2: #e9437a;
+            --soft:    #f8f4ff;
+            --border:  #e0d4f0;
+            --success: #4caf50;
+        }
+
+        body {
+            background: #fff;
+            color: var(--ink);
+        }
+
+        /* ── language toggle ───────────────────────── */
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0.75rem 1rem 0;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            border: 2px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* ── opener ─────────────────────────────────── */
+        .opener {
+            max-width: 680px;
+            margin: 3rem auto 2.5rem;
+            padding: 0 1.25rem;
+        }
+
+        .opener-line {
+            font-size: clamp(1.25rem, 3.5vw, 1.85rem);
+            font-weight: 700;
+            color: #000;
+            margin: 0 0 0.55rem;
+            line-height: 1.25;
+        }
+
+        .opener-line.fun     { color: #111; }
+        .opener-line.morefun { color: #111; }
+        .opener-line.maybe   { color: var(--accent); }
+        .opener-line.problem { color: var(--accent2); }
+
+        .opener-divider {
+            width: 3rem;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 2px;
+            margin: 2rem 0;
+        }
+
+        .opener-sub {
+            font-size: 1.05rem;
+            color: var(--muted);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* ── section cards ───────────────────────────── */
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            max-width: 680px;
+            margin: 0 auto 2.5rem;
+            padding: 0 1.25rem;
+        }
+
+        @media (min-width: 600px) {
+            .section-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .cs-card {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.3rem 1.4rem;
+            cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .cs-card:hover {
+            box-shadow: 0 6px 18px rgba(155, 63, 204, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .cs-card-icon {
+            font-size: 2rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .cs-card h3 {
+            margin: 0 0 0.4rem;
+            font-size: 1.05rem;
+            color: var(--accent);
+        }
+
+        .cs-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* ── expandable topic blocks ─────────────────── */
+        .topic-section {
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            padding: 0 1.25rem;
+        }
+
+        .topic-details {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .topic-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            list-style: none;
+            background: var(--soft);
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--accent);
+            gap: 0.5rem;
+        }
+
+        .topic-summary::-webkit-details-marker { display: none; }
+
+        .topic-toggle-icon {
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: 999px;
+            border: 2px solid var(--accent);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .topic-details[open] .topic-toggle-icon::before { content: '−'; }
+        .topic-toggle-icon::before { content: '+'; }
+
+        .topic-body {
+            padding: 1rem 1.25rem 1.25rem;
+            background: #fff;
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: #333;
+        }
+
+        .topic-body ul {
+            padding-left: 1.25rem;
+            margin: 0.5rem 0;
+        }
+
+        .topic-body li {
+            margin-bottom: 0.35rem;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border-left: 4px solid var(--success);
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.92rem;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .warn-box {
+            background: #fff8e1;
+            border-left: 4px solid #f9a825;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.92rem;
+            color: #6d4c00;
+        }
+
+        /* ── self-check ──────────────────────────────── */
+        .selfcheck {
+            max-width: 680px;
+            margin: 0 auto 2.5rem;
+            padding: 0 1.25rem;
+        }
+
+        .selfcheck-inner {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+        }
+
+        .selfcheck-inner h2 {
+            margin: 0 0 0.25rem;
+            color: var(--accent);
+        }
+
+        .selfcheck-inner p.sub {
+            margin: 0 0 1.1rem;
+            color: var(--muted);
+            font-size: 0.93rem;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.65rem;
+        }
+
+        .check-item input[type="checkbox"] {
+            margin-top: 0.2rem;
+            width: 1.1rem;
+            height: 1.1rem;
+            accent-color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .check-label {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .score-bar-wrap {
+            margin-top: 1.25rem;
+            background: #e8d9f5;
+            border-radius: 999px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 999px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .score-message {
+            margin-top: 0.75rem;
+            font-size: 0.93rem;
+            color: var(--muted);
+            min-height: 1.4em;
+        }
+
+        /* ── footer nav ──────────────────────────────── */
+        .cs-footer {
+            max-width: 680px;
+            margin: 0 auto 3rem;
+            padding: 0 1.25rem;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .cs-footer a {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .cs-footer a:hover { text-decoration: underline; }
+
+        /* ── language hide/show ──────────────────────── */
+        [data-nl], [data-en] { display: none; }
+        body.lang-nl [data-nl] { display: revert; }
+        body.lang-en [data-en] { display: revert; }
+
+        /* inline bilingual spans */
+        span[data-nl], span[data-en] { display: unset; }
+        body.lang-nl span[data-nl] { display: inline; }
+        body.lang-en span[data-en] { display: inline; }
+    </style>
+</head>
+<body class="lang-nl">
+<div class="container">
+
+    <!-- Language toggle -->
+    <div class="lang-bar">
+        <button class="lang-btn active" id="btnNL" onclick="setLang('nl')">NL</button>
+        <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+    </div>
+
+    <!-- ══ OPENER ══════════════════════════════════════ -->
+    <div class="opener">
+        <p class="opener-line fun">Sex is meant to be Fun!</p>
+        <p class="opener-line morefun">Kinky Sex is meant to be more Fun!</p>
+        <p class="opener-line maybe">(Kinky) sex on chems can be fun…</p>
+        <p class="opener-line problem">Chemsex can be a problem.</p>
+
+        <div class="opener-divider"></div>
+
+        <p class="opener-sub" data-nl>
+            Deze pagina is er voor iedereen die sex on chems kent — of nieuwsgierig is, of merkt dat het soms anders loopt dan gehoopt.
+            Geen oordeel. Geen preek. Wel eerlijke informatie en een paar handige vragen aan jezelf.
+        </p>
+        <p class="opener-sub" data-en>
+            This page is for everyone who knows sex on chems — or is curious, or notices it doesn't always go the way they hoped.
+            No judgement. No lecture. Just honest information and a few useful questions to ask yourself.
+        </p>
+    </div>
+
+    <!-- ══ TOPIC CARDS GRID ════════════════════════════ -->
+    <div class="section-grid">
+        <a class="cs-card" href="#wat-is-chemsex">
+            <div class="cs-card-icon">🔬</div>
+            <h3><span data-nl>Wat is chemsex?</span><span data-en>What is chemsex?</span></h3>
+            <p><span data-nl>Welke middelen, hoe werken ze, wat maakt het anders.</span><span data-en>Which substances, how they work, what makes it different.</span></p>
+        </a>
+        <a class="cs-card" href="#risicos">
+            <div class="cs-card-icon">⚠️</div>
+            <h3><span data-nl>Risico's</span><span data-en>Risks</span></h3>
+            <p><span data-nl>Lichamelijk, mentaal, sociaal — en hoe je ze kleiner maakt.</span><span data-en>Physical, mental, social — and how to reduce them.</span></p>
+        </a>
+        <a class="cs-card" href="#wanneer-probleem">
+            <div class="cs-card-icon">🌀</div>
+            <h3><span data-nl>Wanneer wordt het een probleem?</span><span data-en>When does it become a problem?</span></h3>
+            <p><span data-nl>Het glijdt soms ongemerkt van plezier naar patroon.</span><span data-en>It can slip from pleasure to pattern without you noticing.</span></p>
+        </a>
+        <a class="cs-card" href="#zelfcheck">
+            <div class="cs-card-icon">✅</div>
+            <h3><span data-nl>Zelfcheck</span><span data-en>Self-check</span></h3>
+            <p><span data-nl>Eerlijke vragen die je alleen aan jezelf hoeft te beantwoorden.</span><span data-en>Honest questions you only need to answer to yourself.</span></p>
+        </a>
+        <a class="cs-card" href="#harm-reduction">
+            <div class="cs-card-icon">🛡️</div>
+            <h3>Harm Reduction</h3>
+            <p><span data-nl>Slimmer gebruiken als dat je keuze is.</span><span data-en>Using more safely if that's your choice.</span></p>
+        </a>
+        <a class="cs-card" href="#hulp">
+            <div class="cs-card-icon">🤝</div>
+            <h3><span data-nl>Hulp & contact</span><span data-en>Help & contact</span></h3>
+            <p><span data-nl>Waar je terechtkan als je wil praten of stoppen.</span><span data-en>Where to go if you want to talk or stop.</span></p>
+        </a>
+    </div>
+
+    <!-- ══ TOPICS ═══════════════════════════════════════ -->
+    <div class="topic-section">
+
+        <!-- WAT IS CHEMSEX -->
+        <details class="topic-details" id="wat-is-chemsex">
+            <summary class="topic-summary">
+                <span>🔬 <span data-nl>Wat is chemsex?</span><span data-en>What is chemsex?</span></span>
+                <span class="topic-toggle-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="topic-body">
+                <p data-nl>Chemsex is seks waarbij bewust psychoactieve middelen worden gebruikt om de ervaring te intensiveren, te verlengen of drempels te verlagen. Het speelt voor in alle seksuele oriëntaties en relatiestijlen, maar is het meest beschreven in de MSM-gemeenschap (mannen die seks hebben met mannen).</p>
+                <p data-en>Chemsex is sex where psychoactive substances are intentionally used to intensify, extend, or lower the threshold of the experience. It occurs across all sexual orientations and relationship styles, but is most documented in the MSM (men who have sex with men) community.</p>
+
+                <p data-nl><strong>Veelgebruikte middelen:</strong></p>
+                <p data-en><strong>Commonly used substances:</strong></p>
+                <ul>
+                    <li><strong>GHB / GBL</strong> — <span data-nl>ontspannend, euforisch, libidoverbeterend; smal veiligheidsvenster</span><span data-en>relaxing, euphoric, libido-enhancing; narrow safety window</span></li>
+                    <li><strong>Crystal meth (TINA)</strong> — <span data-nl>sterk stimulerend, lang werkend, hoog verslavingspotentieel</span><span data-en>strongly stimulating, long-lasting, high addiction potential</span></li>
+                    <li><strong>Mephedrone (4-MMC)</strong> — <span data-nl>entactogeen, empathieverhogend, korte werking → snelle hergebruiksdrang</span><span data-en>entactogenic, empathy-enhancing, short duration → rapid re-use urge</span></li>
+                    <li><strong>Ketamine</strong> — <span data-nl>disociatief, droomachtig, pijndempend</span><span data-en>dissociative, dreamlike, pain-numbing</span></li>
+                    <li><strong>Cocaine / MDMA / poppers</strong> — <span data-nl>ook gebruikt, vaak in combinatie</span><span data-en>also used, often in combination</span></li>
+                </ul>
+                <div class="warn-box" data-nl>⚠️ Combinaties van GHB met andere dempende middelen (alcohol, benzo's) verhogen het risico op bewusteloosheid drastisch.</div>
+                <div class="warn-box" data-en>⚠️ Combining GHB with other depressants (alcohol, benzos) drastically increases the risk of losing consciousness.</div>
+            </div>
+        </details>
+
+        <!-- RISICO'S -->
+        <details class="topic-details" id="risicos">
+            <summary class="topic-summary">
+                <span>⚠️ <span data-nl>Risico's</span><span data-en>Risks</span></span>
+                <span class="topic-toggle-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="topic-body">
+                <p data-nl><strong>Lichamelijk:</strong></p>
+                <p data-en><strong>Physical:</strong></p>
+                <ul>
+                    <li data-nl>Overdosering (met name GHB: verlies van bewustzijn)</li>
+                    <li data-en>Overdose (especially GHB: loss of consciousness)</li>
+                    <li data-nl>Pijnprikkels worden gedempt → verwondingen die je tijdens de seks niet merkt</li>
+                    <li data-en>Pain signals are blunted → injuries you don't notice during sex</li>
+                    <li data-nl>Verhoogd risico op soa's (hiv, syfilis, hepatitis C) door combinatie van langere sessies, meer partners en minder condoomgebruik</li>
+                    <li data-en>Higher risk of STIs (HIV, syphilis, hepatitis C) due to longer sessions, more partners and reduced condom use</li>
+                    <li data-nl>Uitputting: slaapdeprivatie, dehydratie, immuniteitsverlies</li>
+                    <li data-en>Exhaustion: sleep deprivation, dehydration, immune suppression</li>
+                </ul>
+                <p data-nl><strong>Mentaal:</strong></p>
+                <p data-en><strong>Mental:</strong></p>
+                <ul>
+                    <li data-nl>Comedown: depressie, angst, schaamte — vaak meerdere dagen</li>
+                    <li data-en>Comedown: depression, anxiety, shame — often lasting several days</li>
+                    <li data-nl>Nuchter seks kan tijdelijk minder aantrekkelijk voelen ("seks desensitisatie")</li>
+                    <li data-en>Sober sex can temporarily feel less appealing ("sexual desensitisation")</li>
+                    <li data-nl>Psychose en paranoia bij overmatig methgebruik</li>
+                    <li data-en>Psychosis and paranoia with heavy meth use</li>
+                </ul>
+                <p data-nl><strong>Sociaal:</strong></p>
+                <p data-en><strong>Social:</strong></p>
+                <ul>
+                    <li data-nl>Sessies (slams, parties) kunnen dagenlang duren → werk, relaties, financiën komen onder druk</li>
+                    <li data-en>Sessions (slams, parties) can last days → work, relationships, finances come under pressure</li>
+                    <li data-nl>Consent-grenzen vervagen wanneer iemand in een middel zit</li>
+                    <li data-en>Consent boundaries blur when someone is under the influence</li>
+                </ul>
+                <div class="tip-box" data-nl>✅ Wetend welke risico's er zijn, kun je bewustere keuzes maken — of je nu besluit te minderen, te stoppen, of harm reduction toe te passen.</div>
+                <div class="tip-box" data-en>✅ Knowing the risks lets you make more conscious choices — whether you decide to cut back, stop, or apply harm reduction.</div>
+            </div>
+        </details>
+
+        <!-- WANNEER PROBLEEM -->
+        <details class="topic-details" id="wanneer-probleem">
+            <summary class="topic-summary">
+                <span>🌀 <span data-nl>Wanneer wordt het een probleem?</span><span data-en>When does it become a problem?</span></span>
+                <span class="topic-toggle-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="topic-body">
+                <p data-nl>Niet elke keer chemsex is een verslaving. Maar het kan langzaam verschuiven. Signalen dat het meer is geworden dan een plezierige keuze:</p>
+                <p data-en>Not every instance of chemsex is an addiction. But it can shift gradually. Signs it has become more than a pleasurable choice:</p>
+                <ul>
+                    <li data-nl>Je plant seks nu bijna altijd met middelen in — nuchter seks voelt leeg of onmogelijk</li>
+                    <li data-en>You now plan sex almost exclusively with substances — sober sex feels empty or impossible</li>
+                    <li data-nl>Je gebruikt vaker of meer dan je van plan was</li>
+                    <li data-en>You use more often or more than you planned</li>
+                    <li data-nl>Comedowns worden zwaarder en duren langer</li>
+                    <li data-en>Comedowns get heavier and last longer</li>
+                    <li data-nl>Je mist werk, afspraken, slaap</li>
+                    <li data-en>You miss work, appointments, sleep</li>
+                    <li data-nl>Je denkt er veel aan en verheugt je er vooral op als manier om moeilijke gevoelens te vermijden</li>
+                    <li data-en>You think about it a lot and look forward to it mainly as a way to avoid difficult feelings</li>
+                    <li data-nl>Je hebt al geprobeerd te stoppen of minderen, maar het lukte niet</li>
+                    <li data-en>You've tried to stop or cut back, but couldn't</li>
+                </ul>
+                <div class="warn-box" data-nl>Herkenning is geen veroordeling — het is informatie. Je kunt er iets mee doen of niet. Dat is jouw keuze.</div>
+                <div class="warn-box" data-en>Recognition is not judgement — it is information. You can act on it or not. That is your choice.</div>
+            </div>
+        </details>
+
+        <!-- HARM REDUCTION -->
+        <details class="topic-details" id="harm-reduction">
+            <summary class="topic-summary">
+                <span>🛡️ Harm Reduction</span>
+                <span class="topic-toggle-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="topic-body">
+                <p data-nl>Als je wil blijven gebruiken, zijn er manieren om het veiliger te doen:</p>
+                <p data-en>If you choose to continue using, there are ways to do it more safely:</p>
+                <ul>
+                    <li data-nl><strong>Test je middelen</strong> — drugtestservice zoals <em>Unity</em> of <em>Drugs-test.nl</em></li>
+                    <li data-en><strong>Test your substances</strong> — drug testing services such as <em>Unity</em> or <em>Drugs-test.nl</em></li>
+                    <li data-nl><strong>GHB: gebruik een maatlepel</strong>, nooit combineren met alcohol, benzo's of ketamine</li>
+                    <li data-en><strong>GHB: use a measuring spoon</strong>, never combine with alcohol, benzos or ketamine</li>
+                    <li data-nl><strong>Buddy-systeem</strong>: zorg dat iemand weet waar je bent en wanneer je terug wordt verwacht</li>
+                    <li data-en><strong>Buddy system</strong>: make sure someone knows where you are and when you're expected back</li>
+                    <li data-nl><strong>Neem pauzes</strong>: eet iets, drink water, slaap</li>
+                    <li data-en><strong>Take breaks</strong>: eat something, drink water, sleep</li>
+                    <li data-nl><strong>PrEP en condooms</strong>: combineer beide voor maximale SOA-bescherming</li>
+                    <li data-en><strong>PrEP and condoms</strong>: combine both for maximum STI protection</li>
+                    <li data-nl><strong>Rescue kit</strong>: zorg dat iemand nabij weet wat GHB-overdosering eruit ziet en hoe te handelen (stabiele zijligging)</li>
+                    <li data-en><strong>Rescue kit</strong>: make sure someone nearby knows what a GHB overdose looks like and how to respond (recovery position)</li>
+                    <li data-nl><strong>Plan een hersteldag</strong>: niets plannen de dag na een sessie</li>
+                    <li data-en><strong>Plan a recovery day</strong>: nothing scheduled the day after a session</li>
+                </ul>
+                <div class="tip-box" data-nl>✅ Harm reduction veroordeelt gebruik niet — het erkent dat mensen keuzes maken en probeert die zo veilig mogelijk te laten verlopen.</div>
+                <div class="tip-box" data-en>✅ Harm reduction doesn't condemn use — it recognises that people make choices and tries to make those as safe as possible.</div>
+            </div>
+        </details>
+
+        <!-- HULP -->
+        <details class="topic-details" id="hulp">
+            <summary class="topic-summary">
+                <span>🤝 <span data-nl>Hulp & contact</span><span data-en>Help & contact</span></span>
+                <span class="topic-toggle-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="topic-body">
+                <p data-nl><strong>Nederland:</strong></p>
+                <p data-en><strong>Netherlands:</strong></p>
+                <ul>
+                    <li><strong>Man tot Man</strong> — <a href="https://www.mantotman.nl" target="_blank" rel="noopener">mantotman.nl</a> <span data-nl>(specifiek voor MSM en chemsex)</span><span data-en>(specifically for MSM and chemsex)</span></li>
+                    <li><strong>Mainline</strong> — <a href="https://www.mainline.nl" target="_blank" rel="noopener">mainline.nl</a> <span data-nl>(harm reduction)</span><span data-en>(harm reduction)</span></li>
+                    <li><strong>Jellinek</strong> — <a href="https://www.jellinek.nl" target="_blank" rel="noopener">jellinek.nl</a></li>
+                    <li><strong>Seks onder invloed</strong> — <span data-nl>bespreekbaar bij huisarts, SOA-poli of GGD</span><span data-en>can be discussed with GP, STI clinic or GGD</span></li>
+                </ul>
+                <p data-nl><strong>International / English:</strong></p>
+                <p data-en><strong>International / English:</strong></p>
+                <ul>
+                    <li><strong>ChemSex Support</strong> — <a href="https://www.chemsexsupport.com" target="_blank" rel="noopener">chemsexsupport.com</a></li>
+                    <li><strong>56 Dean Street (London)</strong> — <a href="https://dean.st" target="_blank" rel="noopener">dean.st</a></li>
+                    <li><strong>David Stuart / Antidote</strong> — <span data-nl>grondlegger van chemsex-zorg, veel materiaal online</span><span data-en>pioneer of chemsex care, lots of material online</span></li>
+                </ul>
+                <div class="tip-box" data-nl>✅ Hulp zoeken is geen zwakte — het is het slimste wat je kunt doen als je merkt dat iets je meer kost dan het oplevert.</div>
+                <div class="tip-box" data-en>✅ Seeking help is not weakness — it's the smartest thing you can do when you notice something costs you more than it delivers.</div>
+            </div>
+        </details>
+
+    </div><!-- /topic-section -->
+
+    <!-- ══ ZELFCHECK ════════════════════════════════════ -->
+    <div class="selfcheck" id="zelfcheck">
+        <div class="selfcheck-inner">
+            <h2>✅ <span data-nl>Zelfcheck</span><span data-en>Self-check</span></h2>
+            <p class="sub" data-nl>Vink aan wat op jou van toepassing is. Niemand ziet dit — het is alleen voor jezelf.</p>
+            <p class="sub" data-en>Check what applies to you. Nobody sees this — it's just for yourself.</p>
+
+            <div id="checkList">
+                <div class="check-item">
+                    <input type="checkbox" id="c1" onchange="updateScore()">
+                    <label class="check-label" for="c1">
+                        <span data-nl>Ik gebruik middelen bij seks vaker dan ik van plan was.</span>
+                        <span data-en>I use substances during sex more often than I planned.</span>
+                    </label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="c2" onchange="updateScore()">
+                    <label class="check-label" for="c2">
+                        <span data-nl>Nuchter seks voelt oninteressant of bijna onmogelijk.</span>
+                        <span data-en>Sober sex feels uninteresting or almost impossible.</span>
+                    </label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="c3" onchange="updateScore()">
+                    <label class="check-label" for="c3">
+                        <span data-nl>Mijn comedowns worden zwaarder (depressie, angst, schaamte).</span>
+                        <span data-en>My comedowns are getting heavier (depression, anxiety, shame).</span>
+                    </label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="c4" onchange="updateScore()">
+                    <label class="check-label" for="c4">
+                        <span data-nl>Ik heb werk, slaap of belangrijke afspraken laten schieten vanwege een sessie.</span>
+                        <span data-en>I've let work, sleep, or important appointments slip because of a session.</span>
+                    </label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="c5" onchange="updateScore()">
+                    <label class="check-label" for="c5">
+                        <span data-nl>Ik gebruik chemsex om moeilijke gevoelens te ontsnappen (stress, eenzaamheid, verdriet).</span>
+                        <span data-en>I use chemsex to escape difficult feelings (stress, loneliness, sadness).</span>
+                    </label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="c6" onchange="updateScore()">
+                    <label class="check-label" for="c6">
+                        <span data-nl>Ik heb al geprobeerd te minderen of stoppen maar het lukte niet.</span>
+                        <span data-en>I've already tried to cut back or stop but couldn't manage it.</span>
+                    </label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="c7" onchange="updateScore()">
+                    <label class="check-label" for="c7">
+                        <span data-nl>Ik verberg mijn gebruik voor mensen die me na staan.</span>
+                        <span data-en>I hide my use from people close to me.</span>
+                    </label>
+                </div>
+                <div class="check-item">
+                    <input type="checkbox" id="c8" onchange="updateScore()">
+                    <label class="check-label" for="c8">
+                        <span data-nl>Ik maak risico's tijdens seks die ik nuchter niet zou nemen.</span>
+                        <span data-en>I take sexual risks under the influence that I wouldn't take sober.</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="score-bar-wrap">
+                <div class="score-bar-fill" id="scoreBar"></div>
+            </div>
+            <p class="score-message" id="scoreMsg" data-nl>Vink iets aan om een beeld te krijgen.</p>
+
+        </div>
+    </div>
+
+    <!-- ══ FOOTER ════════════════════════════════════════ -->
+    <div class="cs-footer">
+        <p data-nl>← <a href="index.htm">Terug naar het overzicht</a> &nbsp;|&nbsp; <a href="trek-opvangen.htm">Trek opvangen</a> &nbsp;|&nbsp; <a href="noodplan-forse-trek.htm">Noodplan</a></p>
+        <p data-en>← <a href="index.htm">Back to overview</a> &nbsp;|&nbsp; <a href="trek-opvangen.htm">Coping with cravings</a> &nbsp;|&nbsp; <a href="noodplan-forse-trek.htm">Emergency plan</a></p>
+        <p style="margin-top:1rem; color:#aaa; font-size:0.82rem;">© IAM Project &nbsp;|&nbsp; HansRJWest@Gmail.com</p>
+    </div>
+
+</div><!-- /container -->
+
+<script>
+    /* ── Language switching ─────────────────────── */
+    function setLang(lang) {
+        document.body.className = 'lang-' + lang;
+        document.getElementById('btnNL').classList.toggle('active', lang === 'nl');
+        document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+        updateScore(); // refresh score message in right language
+    }
+
+    /* ── Self-check score ───────────────────────── */
+    const SCORE_MSGS = {
+        nl: [
+            'Goed om te weten — chemsex is voor jou nu vooral een plezierige keuze.',
+            'Een paar signalen — fijn dat je het opmerkt. Houd het in de gaten.',
+            'Meerdere signalen — het loont om er eens rustig over na te denken of met iemand over te praten.',
+            'Veel signalen — dit vraagt aandacht. Je hoeft dit niet alleen uit te zoeken.'
+        ],
+        en: [
+            'Good to know — chemsex is mostly a pleasurable choice for you right now.',
+            'A few signals — good that you notice. Keep an eye on it.',
+            'Multiple signals — it's worth taking a quiet moment to reflect or talk to someone.',
+            'Many signals — this deserves attention. You don't have to figure this out alone.'
+        ]
+    };
+
+    function updateScore() {
+        const checkboxes = document.querySelectorAll('#checkList input[type="checkbox"]');
+        const total = checkboxes.length;
+        const checked = Array.from(checkboxes).filter(c => c.checked).length;
+        const pct = Math.round((checked / total) * 100);
+
+        document.getElementById('scoreBar').style.width = pct + '%';
+
+        const lang = document.body.classList.contains('lang-en') ? 'en' : 'nl';
+        const msgs = SCORE_MSGS[lang];
+        let msg = '';
+        if (checked === 0) {
+            msg = lang === 'nl' ? 'Vink iets aan om een beeld te krijgen.' : 'Check something to get a picture.';
+        } else if (checked <= 2) {
+            msg = msgs[1];
+        } else if (checked <= 4) {
+            msg = msgs[2];
+        } else {
+            msg = msgs[3];
+        }
+        document.getElementById('scoreMsg').textContent = msg;
+    }
+
+    /* ── Smooth scroll for card links ──────────── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (!target) return;
+            e.preventDefault();
+            target.open = true;
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+</script>
+</body>
+</html>

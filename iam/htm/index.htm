@@ -228,6 +228,89 @@
             color: #333;
         }
 
+        .priority-note {
+            margin: 1rem 0 0;
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            background: #fff7e8;
+            border: 1px solid #f1d39a;
+            color: #7a5415;
+            font-weight: 600;
+        }
+
+        .featured-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(102,126,234,0.18);
+            border-top: 5px solid var(--success);
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 2rem;
+        }
+
+        .featured-card .featured-tag {
+            display: inline-block;
+            padding: 0.2rem 0.75rem;
+            background: var(--success);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            align-self: flex-start;
+        }
+
+        .featured-card h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        .featured-card p {
+            margin: 0 0 1.1rem 0;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .featured-card .card-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .featured-card .card-link {
+            background: var(--success);
+        }
+
+        .featured-card .card-link:hover {
+            background: #388e3c;
+        }
+
+        .featured-progress {
+            margin-top: 1rem;
+            font-size: 0.87rem;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .featured-progress-bar {
+            display: block;
+            width: 100%;
+            height: 6px;
+            background: #c8e6c9;
+            border-radius: 3px;
+            margin-top: 0.4rem;
+            overflow: hidden;
+        }
+
+        .featured-progress-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
         .progress-summary {
             background: white;
             border-radius: 8px;
@@ -260,6 +343,30 @@
             color: #5d7385;
             font-weight: 600;
             white-space: nowrap;
+        }
+
+        .progress-summary-toggle-icon {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 999px;
+            border: 2px solid #9bb6c9;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c4a63;
+            background: #f7fafc;
+            flex-shrink: 0;
+        }
+
+        .progress-summary-toggle-icon::before {
+            content: '+';
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .progress-summary[open] .progress-summary-toggle-icon::before {
+            content: '-';
         }
 
         .progress-summary-body {
@@ -427,17 +534,12 @@
             <p>
                 Deze app helpt je om je eigen gebruikspatronen beter te begrijpen. Niet doordat we je antwoorden geven,
                 maar doordat we je de juiste vragen helpen stellen.
-            </p>
-            
-            <div class="model-info">
-                <strong>💡 De gedachte erachter:</strong>
-            </div>
-
+            </p>    
             <p style="margin-top: 1rem;">
                 Uiteindelijk willen mensen graag hun eigen weg kunnen kiezen. Daarom ligt de weg vooruit niet vooral in strijd voeren
                 met jezelf, maar in onderzoeken wat jij eigenlijk echt wilt, nodig hebt en belangrijk vindt.
             </p>
-
+            
             <p>
                 De formulieren hieronder zijn georganiseerd in verschillende fases van zelfonderzoek. 
                 <strong>Je hoeft niet alles te doen.</strong> Start ergens en kijk wat voelt.
@@ -448,15 +550,17 @@
         <div class="quick-actions">
             <h3>⚡ Snelle acties</h3>
             <div class="action-buttons">
+                <button class="btn-action export" onclick="window.location.href='trek-opvangen.htm'">🧠 Eerst trek opvangen</button>
                 <button class="btn-action" onclick="exportAllData()">📥 Mijn gegevens exporteren</button>
                 <button class="btn-action export" onclick="viewProgress()">📊 Mijn voortgang</button>
             </div>
+            <p class="priority-note">Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.</p>
         </div>
 
         <details class="progress-summary" id="progressSummary" open>
             <summary class="progress-summary-toggle">
                 <h3>📍 Overzicht van je voortgang</h3>
-                <span class="progress-summary-toggle-text">Open of sluit</span>
+                <span class="progress-summary-toggle-icon" aria-hidden="true"></span>
             </summary>
             <div class="progress-summary-body">
                 <div class="progress-stats">
@@ -482,6 +586,21 @@
                 </div>
             </div>
         </details>
+
+        <!-- UITGELICHT: Trek opvangen -->
+        <div class="featured-card">
+            <span class="featured-tag">⭐ Aanbevolen startpunt</span>
+            <h3>🧠 Trek opvangen</h3>
+            <p>
+                Trek gaat altijd voorbij — ook zonder eraan toe te geven. Leer praktische technieken om een moment van sterke trek door te komen. Dit is het meest direct toepasbare gereedschap van de hele app.
+            </p>
+            <div class="card-links">
+                <a href="trek-opvangen.htm" class="card-link">Technieken →</a>
+                <a href="trek-opvangen-2.htm" class="card-link">Extra →</a>
+            </div>
+            <span class="featured-progress" id="featuredProgressLabel">Voortgang: laden…</span>
+            <span class="featured-progress-bar"><span class="featured-progress-fill" id="featuredProgressFill" style="width:0%"></span></span>
+        </div>
 
         <!-- FASE 1: ORIGINE & WAAROM -->
         <h2 class="section-title">① Fase: Waar ben ik mee begonnen?</h2>
@@ -712,6 +831,18 @@
                 </div>
                 <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
             </div>
+        </div>
+
+        <!-- Chemsex section link -->
+        <div style="margin-bottom: 2rem; padding: 1.25rem 1.5rem; background: #fdf4ff; border: 1px solid #e0d4f0; border-radius: 12px; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <span style="font-size: 2rem;">💊</span>
+            <div style="flex: 1; min-width: 180px;">
+                <strong style="color: #9b3fcc; font-size: 1.05rem;">Chemsex</strong>
+                <p style="margin: 0.2rem 0 0; color: #555; font-size: 0.92rem;">
+                    Sex on chems — plezier, risico's, harm reduction en een eerlijke zelfcheck. NL/EN.
+                </p>
+            </div>
+            <a href="chemsex.htm" style="padding: 0.6rem 1.2rem; background: #9b3fcc; color: white; border-radius: 8px; text-decoration: none; font-weight: 700; white-space: nowrap;">Naar Chemsex →</a>
         </div>
 
         <!-- Footer -->
@@ -984,9 +1115,20 @@
             });
         }
 
+        function updateFeaturedProgress() {
+            const keys = ['trek-opvangen', 'trek-opvangen-2'];
+            const pcts = keys.map(k => getFormCompletion(k));
+            const avg = Math.round(pcts.reduce((s, v) => s + v, 0) / pcts.length);
+            const fill = document.getElementById('featuredProgressFill');
+            const label = document.getElementById('featuredProgressLabel');
+            if (fill) fill.style.width = `${avg}%`;
+            if (label) label.textContent = avg > 0 ? `Voortgang: ${avg}% ingevuld` : 'Nog niet gestart';
+        }
+
         function refreshDashboard() {
             updateCardProgress();
             renderProgressSummary();
+            updateFeaturedProgress();
         }
 
         function exportAllData() {
