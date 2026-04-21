@@ -238,6 +238,112 @@
             font-weight: 600;
         }
 
+        .weekly-review {
+            background: linear-gradient(135deg, #fffaf0 0%, #f6fbff 100%);
+            border: 1px solid #d7e6f3;
+            border-radius: 12px;
+            padding: 1.4rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 10px rgba(59, 92, 122, 0.08);
+        }
+
+        .weekly-review-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .weekly-review-header h3 {
+            margin: 0;
+            color: #244c70;
+        }
+
+        .weekly-review-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            background: #e9f5ff;
+            color: #245377;
+        }
+
+        .weekly-review-status.due {
+            background: #fff1cf;
+            color: #8a5a00;
+        }
+
+        .weekly-review-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .weekly-review textarea {
+            width: 100%;
+            min-height: 88px;
+            resize: vertical;
+            border-radius: 10px;
+            border: 1px solid #c9d9e4;
+            padding: 0.8rem;
+            font: inherit;
+            color: #294256;
+            background: #fff;
+        }
+
+        .weekly-review textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.14);
+        }
+
+        .weekly-review label {
+            display: block;
+            margin-bottom: 0.45rem;
+            color: #244c70;
+            font-weight: 700;
+        }
+
+        .weekly-review-help {
+            margin: 0.75rem 0 0;
+            color: #5a6f7f;
+            font-size: 0.92rem;
+        }
+
+        .weekly-review-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .weekly-review-link {
+            display: inline-block;
+            text-decoration: none;
+            padding: 0.5rem 0.85rem;
+            border-radius: 999px;
+            background: #edf5ff;
+            color: #26557a;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .weekly-review-link:hover {
+            background: #dcecff;
+            text-decoration: none;
+        }
+
+        .weekly-review-meta {
+            margin-top: 0.75rem;
+            color: #607585;
+            font-size: 0.88rem;
+        }
+
         .featured-card {
             background: white;
             border-radius: 12px;
@@ -570,6 +676,36 @@
             <p class="priority-note">Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.</p>
         </div>
 
+        <section class="weekly-review" id="weeklyReviewCard">
+            <div class="weekly-review-header">
+                <div>
+                    <h3>🗓️ Wekelijkse herkijk</h3>
+                    <p class="weekly-review-help">Kijk kort terug: wat werkte, wat leerde je, en wat wordt je volgende kleine stap?</p>
+                </div>
+                <span class="weekly-review-status" id="weeklyReviewStatus">Nog niet ingepland</span>
+            </div>
+            <div class="weekly-review-grid">
+                <div>
+                    <label for="weeklyReflection">Wat klopt nog uit de afgelopen week?</label>
+                    <textarea id="weeklyReflection" placeholder="Bijvoorbeeld: deze trigger kwam terug, dit hielp nog steeds, dit inzicht bleef overeind..."></textarea>
+                </div>
+                <div>
+                    <label for="weeklyLearning">Wat heb je geleerd van je pogingen of oefenmomenten?</label>
+                    <textarea id="weeklyLearning" placeholder="Bijvoorbeeld: ik begon te laat, plan A hielp deels, steun werkte beter dan verwacht..."></textarea>
+                </div>
+                <div>
+                    <label for="weeklyNextStep">Wat wordt je volgende kleine stap?</label>
+                    <textarea id="weeklyNextStep" placeholder="Bijvoorbeeld: noodplan aanscherpen, plan B invullen, 3 keer oefenen, steun eerder inschakelen..."></textarea>
+                </div>
+            </div>
+            <div class="action-buttons" style="margin-top: 1rem;">
+                <button class="btn-action export" type="button" onclick="saveWeeklyReview()">💾 Weekreflectie bewaren</button>
+                <button class="btn-action" type="button" onclick="prefillWeeklyReview()">✨ Vul suggesties in</button>
+            </div>
+            <div class="weekly-review-links" id="weeklyReviewLinks"></div>
+            <p class="weekly-review-meta" id="weeklyReviewMeta">Nog geen weekreflectie opgeslagen.</p>
+        </section>
+
         <details class="progress-summary" id="progressSummary" open>
             <summary class="progress-summary-toggle">
                 <h3>📍 Overzicht van je voortgang</h3>
@@ -668,7 +804,7 @@
         
         <div class="card-grid">
             <div class="card phase-2">
-                <span class="phase-label">EMOTIONS</span>
+                <span class="phase-label">GEVOELENS</span>
                 <div class="card-icon">😔</div>
                 <h3>Lastige gevoelens herkennen</h3>
                 <p>
@@ -681,7 +817,7 @@
             </div>
 
             <div class="card phase-2">
-                <span class="phase-label">CRAVING</span>
+                <span class="phase-label">TREK</span>
                 <div class="card-icon">🔥</div>
                 <h3>Trek voelen en meten</h3>
                 <p>
@@ -881,7 +1017,7 @@
             <div style="flex: 1; min-width: 180px;">
                 <strong style="color: #9b3fcc; font-size: 1.05rem;">Chemsex</strong>
                 <p style="margin: 0.2rem 0 0; color: #555; font-size: 0.92rem;">
-                    Sex on chems — plezier, risico's, harm reduction en een eerlijke zelfcheck. NL/EN.
+                    Seks op chems — plezier, risico's, schadebeperking en een eerlijke zelfcheck.
                 </p>
             </div>
             <a href="chemsex.htm" style="padding: 0.6rem 1.2rem; background: #9b3fcc; color: white; border-radius: 8px; text-decoration: none; font-weight: 700; white-space: nowrap;">Naar Chemsex →</a>
@@ -958,6 +1094,8 @@
             'agenda'
         ]);
 
+        const WEEKLY_REVIEW_KEY = 'weeklyReview';
+
         function isMeaningful(value) {
             if (value === null || value === undefined) return false;
             if (typeof value === 'string') return value.trim().length > 0;
@@ -992,6 +1130,167 @@
 
             const meaningfulCount = leaves.filter((item) => isMeaningful(item)).length;
             return Math.round((meaningfulCount / leaves.length) * 100);
+        }
+
+        function getWeeklyReviewData() {
+            return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
+        }
+
+        function isWeeklyReviewDue(lastCompletedAt) {
+            if (!lastCompletedAt) return true;
+
+            const last = new Date(lastCompletedAt);
+            if (Number.isNaN(last.getTime())) return true;
+
+            const now = new Date();
+            const diffMs = now.getTime() - last.getTime();
+            return diffMs >= 7 * 24 * 60 * 60 * 1000;
+        }
+
+        function formatDateTimeNl(value) {
+            if (!value) return '';
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return '';
+            return date.toLocaleString('nl-NL');
+        }
+
+        function getWeeklyReviewSuggestions(summary) {
+            const suggestions = {
+                reflection: '',
+                learning: '',
+                nextStep: ''
+            };
+
+            if (!summary) return suggestions;
+
+            if (Array.isArray(summary.topTriggers) && summary.topTriggers.length) {
+                suggestions.reflection = `Deze week kwam waarschijnlijk vooral dit terug: ${summary.topTriggers.slice(0, 2).join(' | ')}.`;
+            }
+
+            if (Array.isArray(summary.bestInterventions) && summary.bestInterventions.length) {
+                suggestions.learning = `Wat leek het meest behulpzaam? ${summary.bestInterventions.slice(0, 2).join(' | ')}.`;
+            }
+
+            const nextSources = [];
+            if (Array.isArray(summary.earlyWarnings) && summary.earlyWarnings.length) {
+                nextSources.push(`vroeg signaal: ${summary.earlyWarnings[0]}`);
+            }
+            if (Array.isArray(summary.supportNetwork) && summary.supportNetwork.length) {
+                nextSources.push(`steun inschakelen: ${summary.supportNetwork[0]}`);
+            }
+            if (nextSources.length) {
+                suggestions.nextStep = `Volgende mini-stap: ${nextSources.join(' | ')}.`;
+            }
+
+            return suggestions;
+        }
+
+        function prefillWeeklyReview() {
+            const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+            const suggestions = getWeeklyReviewSuggestions(summary);
+
+            const reflection = document.getElementById('weeklyReflection');
+            const learning = document.getElementById('weeklyLearning');
+            const nextStep = document.getElementById('weeklyNextStep');
+
+            if (reflection && !reflection.value.trim() && suggestions.reflection) reflection.value = suggestions.reflection;
+            if (learning && !learning.value.trim() && suggestions.learning) learning.value = suggestions.learning;
+            if (nextStep && !nextStep.value.trim() && suggestions.nextStep) nextStep.value = suggestions.nextStep;
+        }
+
+        function saveWeeklyReview() {
+            if (!iamData.updateAppMeta) return;
+
+            const current = getWeeklyReviewData();
+            const reflection = document.getElementById('weeklyReflection').value.trim();
+            const learning = document.getElementById('weeklyLearning').value.trim();
+            const nextStep = document.getElementById('weeklyNextStep').value.trim();
+            const completedAt = new Date().toISOString();
+            const history = Array.isArray(current.history) ? current.history.slice(-5) : [];
+
+            if (reflection || learning || nextStep) {
+                history.push({ completedAt, reflection, learning, nextStep });
+            }
+
+            iamData.updateAppMeta(WEEKLY_REVIEW_KEY, {
+                reflection,
+                learning,
+                nextStep,
+                lastCompletedAt: completedAt,
+                history
+            });
+
+            renderWeeklyReview();
+            alert('✅ Weekreflectie opgeslagen op dit toestel');
+        }
+
+        function renderWeeklyReviewLinks(summary) {
+            const container = document.getElementById('weeklyReviewLinks');
+            if (!container) return;
+
+            const links = [];
+            if (Array.isArray(summary?.topTriggers) && summary.topTriggers.length) {
+                links.push({ href: 'stimulus-respons.htm', label: 'Werk triggers bij' });
+            }
+            if (Array.isArray(summary?.bestInterventions) && summary.bestInterventions.length) {
+                links.push({ href: 'trek-opvangen.htm', label: 'Verfijn je aanpak' });
+            }
+            if (Array.isArray(summary?.earlyWarnings) && summary.earlyWarnings.length) {
+                links.push({ href: 'noodplan-forse-trek.htm', label: 'Scherp je noodplan aan' });
+            }
+            if (Array.isArray(summary?.supportNetwork) && summary.supportNetwork.length) {
+                links.push({ href: 'plan-van-aanpak.htm', label: 'Werk je plan bij' });
+            }
+
+            const uniqueLinks = links.filter((link, index, arr) => arr.findIndex((item) => item.href === link.href) === index).slice(0, 4);
+            container.innerHTML = '';
+
+            if (!uniqueLinks.length) {
+                container.innerHTML = '<span class="weekly-review-link">Nog geen gerichte doorklikken beschikbaar</span>';
+                return;
+            }
+
+            uniqueLinks.forEach((link) => {
+                const anchor = document.createElement('a');
+                anchor.href = link.href;
+                anchor.className = 'weekly-review-link';
+                anchor.textContent = link.label;
+                container.appendChild(anchor);
+            });
+        }
+
+        function renderWeeklyReview() {
+            const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+            const weekly = getWeeklyReviewData();
+            const status = document.getElementById('weeklyReviewStatus');
+            const meta = document.getElementById('weeklyReviewMeta');
+            const reflection = document.getElementById('weeklyReflection');
+            const learning = document.getElementById('weeklyLearning');
+            const nextStep = document.getElementById('weeklyNextStep');
+
+            if (reflection && document.activeElement !== reflection) reflection.value = weekly.reflection || '';
+            if (learning && document.activeElement !== learning) learning.value = weekly.learning || '';
+            if (nextStep && document.activeElement !== nextStep) nextStep.value = weekly.nextStep || '';
+
+            const due = isWeeklyReviewDue(weekly.lastCompletedAt);
+            if (status) {
+                status.textContent = due ? 'Nu zinvol om te herkijken' : 'Deze week al bijgewerkt';
+                status.classList.toggle('due', due);
+            }
+
+            if (meta) {
+                const lastText = weekly.lastCompletedAt
+                    ? `Laatst bewaard: ${formatDateTimeNl(weekly.lastCompletedAt)}`
+                    : 'Nog geen weekreflectie opgeslagen.';
+
+                const summaryText = Array.isArray(summary?.motivationAnchors) && summary.motivationAnchors.length
+                    ? ` Motivatie-anker: ${summary.motivationAnchors[0]}.`
+                    : '';
+
+                meta.textContent = `${lastText}${summaryText}`;
+            }
+
+            renderWeeklyReviewLinks(summary);
         }
 
         function getLinkedFormKeys(card) {
@@ -1177,6 +1476,7 @@
             updateCardProgress();
             renderProgressSummary();
             updateFeaturedProgress();
+            renderWeeklyReview();
         }
 
         function exportAllData() {

@@ -34,6 +34,15 @@ class IamDataStore {
       userId: this.generateUUID(),
       created: new Date().toISOString(),
       lastModified: new Date().toISOString(),
+      appMeta: {
+        weeklyReview: {
+          lastCompletedAt: null,
+          reflection: '',
+          learning: '',
+          nextStep: '',
+          history: []
+        }
+      },
       forms: {
         'craving-gevoel': {
           layer1: {
@@ -213,6 +222,27 @@ class IamDataStore {
   getFormData(formType) {
     const data = this.getData();
     return data?.forms?.[formType] || null;
+  }
+
+  getAppMeta(key) {
+    const data = this.getData();
+    return key ? data?.appMeta?.[key] || null : data?.appMeta || null;
+  }
+
+  updateAppMeta(key, value) {
+    const data = this.getData();
+    if (!data.appMeta) {
+      data.appMeta = {};
+    }
+
+    const currentValue = data.appMeta[key] || {};
+    data.appMeta[key] = {
+      ...currentValue,
+      ...value
+    };
+
+    this.saveData(data);
+    return data.appMeta[key];
   }
 
   /**
