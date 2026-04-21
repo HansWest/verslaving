@@ -114,3 +114,4 @@ Deze sectie bevat alles wat nodig is om consistent en goed aan IAM te werken.
 - Geen onnodige destructieve acties op bestaande user-content.
 - Bij onverwachte grote afwijkingen: eerst expliciet vastleggen wat leidend is, daarna opschonen.
 - Bij twijfel over inhoudelijke richting: documentatie en kernflow zijn beslissend.
+- Niet gokken: liever eerst nakijken in code, documentatie of gitgeschiedenis. Als iets daarna nog onduidelijk is, gericht navragen.
