@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chemsex - wat wil ik eigenlijk?</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #1f3540;
+      --main: #2f5f8f;
+      --accent: #3d7d44;
+      --soft: #f1f7ff;
+    }
+    body {
+      background:
+        radial-gradient(circle at top right, rgba(47, 95, 143, 0.16), transparent 34%),
+        linear-gradient(180deg, #fff 0%, #eef6ff 100%);
+      color: var(--ink);
+    }
+    .page-shell { max-width: 920px; margin: 0 auto; }
+    .page-header {
+      background: linear-gradient(140deg, var(--main) 0%, #3d7d44 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 53, 64, 0.16);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
+    .lang-toggle { margin-left: auto; display: inline-flex; gap: 0.4rem; }
+    .lang-btn {
+      border: 1px solid rgba(255,255,255,0.6);
+      background: transparent;
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .lang-btn.active { background: #fff; color: var(--main); }
+    .question-card, .message {
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 53, 64, 0.09);
+    }
+    .question-card { border-top: 4px solid var(--main); }
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+    .message { display: none; border-left: 4px solid var(--accent); }
+    .message.show { display: block; }
+    .message.error { border-left-color: #8a2f2f; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./chemsex.htm" data-nl>Terug naar Chemsex</a>
+          <a href="./chemsex.htm" data-en>Back to Chemsex</a>
+          <a href="./wat-is-mijn-ik.htm" data-nl>Aansluiting op identiteit</a>
+          <a href="./wat-is-mijn-ik.htm" data-en>Connect with identity page</a>
+          <a href="./chemsex-noodplan.htm" data-nl>Vorige: noodplan</a>
+          <a href="./chemsex-noodplan.htm" data-en>Previous: emergency plan</a>
+          <div class="lang-toggle">
+            <button type="button" id="btnNL" class="lang-btn" onclick="setLang('nl')">NL</button>
+            <button type="button" id="btnEN" class="lang-btn" onclick="setLang('en')">EN</button>
+          </div>
+        </div>
+        <h1 data-nl>Wat wil ik eigenlijk?</h1>
+        <h1 data-en>What do I actually want?</h1>
+        <p data-nl>Reflectie over de functie van chemsex in je leven: opwinding, verbinding, escapisme, schaamte en wat jij op langere termijn wilt.</p>
+        <p data-en>Reflection on the role of chemsex in your life: arousal, connection, escapism, shame, and what you want long term.</p>
+      </header>
+
+      <div id="message" class="message"></div>
+
+      <form id="chemsexMeaningForm">
+        <div class="grid-two">
+          <section class="question-card">
+            <h2 data-nl>1. Wat zoek ik erin?</h2>
+            <h2 data-en>1. What am I seeking in it?</h2>
+            <div class="form-group">
+              <label for="coreNeed" data-nl>Welke behoefte wordt geraakt (opwinding, nabijheid, ontspanning, ontsnappen)?</label>
+              <label for="coreNeed" data-en>Which need gets met (arousal, closeness, relaxation, escape)?</label>
+              <textarea id="coreNeed" rows="5"></textarea>
+            </div>
+          </section>
+
+          <section class="question-card">
+            <h2 data-nl>2. Wat vermijd ik?</h2>
+            <h2 data-en>2. What am I avoiding?</h2>
+            <div class="form-group">
+              <label for="avoidFeeling" data-nl>Welke gevoelens probeer ik niet te voelen?</label>
+              <label for="avoidFeeling" data-en>Which feelings am I trying not to feel?</label>
+              <textarea id="avoidFeeling" rows="5"></textarea>
+            </div>
+          </section>
+        </div>
+
+        <div class="grid-two">
+          <section class="question-card">
+            <h2 data-nl>3. Mijn waarden</h2>
+            <h2 data-en>3. My values</h2>
+            <div class="form-group">
+              <label for="importantValues" data-nl>Welke waarden zijn voor mij belangrijk in seks, relaties en gezondheid?</label>
+              <label for="importantValues" data-en>Which values matter to me in sex, relationships and health?</label>
+              <textarea id="importantValues" rows="5"></textarea>
+            </div>
+          </section>
+
+          <section class="question-card">
+            <h2 data-nl>4. Waar schuurt het?</h2>
+            <h2 data-en>4. Where is the friction?</h2>
+            <div class="form-group">
+              <label for="valueConflict" data-nl>Waar botst mijn huidige patroon met mijn waarden?</label>
+              <label for="valueConflict" data-en>Where does my current pattern conflict with my values?</label>
+              <textarea id="valueConflict" rows="5"></textarea>
+            </div>
+          </section>
+        </div>
+
+        <div class="grid-two">
+          <section class="question-card">
+            <h2 data-nl>5. Mijn richting</h2>
+            <h2 data-en>5. My direction</h2>
+            <div class="form-group">
+              <label for="futureVision" data-nl>Hoe wil ik dat mijn seksleven er over 6 maanden uitziet?</label>
+              <label for="futureVision" data-en>How do I want my sex life to look in 6 months?</label>
+              <textarea id="futureVision" rows="5"></textarea>
+            </div>
+          </section>
+
+          <section class="question-card">
+            <h2 data-nl>6. Eerste haalbare stap</h2>
+            <h2 data-en>6. First realistic step</h2>
+            <div class="form-group">
+              <label for="firstStep" data-nl>Welke concrete stap zet ik deze week?</label>
+              <label for="firstStep" data-en>Which concrete step will I take this week?</label>
+              <textarea id="firstStep" rows="5"></textarea>
+            </div>
+          </section>
+        </div>
+
+        <section class="question-card">
+          <h2 data-nl>7. Steunvraag</h2>
+          <h2 data-en>7. Support request</h2>
+          <div class="form-group">
+            <label for="supportRequest" data-nl>Wie kan je hierbij helpen, en wat vraag je precies?</label>
+            <label for="supportRequest" data-en>Who can support you in this, and what exactly will you ask?</label>
+            <textarea id="supportRequest" rows="5"></textarea>
+          </div>
+        </section>
+
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton" data-nl>Opslaan op dit toestel</button>
+          <button type="button" class="button-primary" id="saveButtonEn" data-en>Save on this device</button>
+          <button type="button" class="button-secondary" id="exportButton" data-nl>Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="exportButtonEn" data-en>Export all as JSON</button>
+          <button type="button" class="button-secondary" id="printButton" data-nl>Print of bewaar als pdf</button>
+          <button type="button" class="button-secondary" id="printButtonEn" data-en>Print or save as pdf</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'chemsex-wat-wil-ik';
+    const fields = [
+      'coreNeed',
+      'avoidFeeling',
+      'importantValues',
+      'valueConflict',
+      'futureVision',
+      'firstStep',
+      'supportRequest'
+    ];
+
+    function applyLanguageVisibility(lang) {
+      document.querySelectorAll('[data-nl]').forEach((el) => {
+        el.hidden = lang !== 'nl';
+      });
+      document.querySelectorAll('[data-en]').forEach((el) => {
+        el.hidden = lang !== 'en';
+      });
+    }
+
+    function setLang(lang) {
+      document.documentElement.setAttribute('lang', lang);
+      applyLanguageVisibility(lang);
+      document.getElementById('btnNL').classList.toggle('active', lang === 'nl');
+      document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+      localStorage.setItem('chemsexLang', lang);
+    }
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
+
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectFormData());
+        if (feedback) {
+          const lang = document.documentElement.lang === 'en' ? 'en' : 'nl';
+          showMessage(lang === 'en' ? 'Reflection saved on this device.' : 'Reflectie opgeslagen op dit toestel.');
+        }
+      } catch (error) {
+        console.error(error);
+        const lang = document.documentElement.lang === 'en' ? 'en' : 'nl';
+        showMessage(lang === 'en' ? 'Saving failed.' : 'Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      const exportData = iamData.exportJSON();
+      const url = URL.createObjectURL(exportData.blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = exportData.filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      const lang = document.documentElement.lang === 'en' ? 'en' : 'nl';
+      showMessage(lang === 'en' ? 'IAM data exported as JSON.' : 'Volledige IAM-gegevens geëxporteerd als JSON.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fillForm(iamData.getFormData(formKey) || {});
+
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('saveButtonEn').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('exportButtonEn').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('printButtonEn').addEventListener('click', () => window.print());
+      document.getElementById('chemsexMeaningForm').addEventListener('input', () => saveForm(false));
+
+      const savedLang = localStorage.getItem('chemsexLang');
+      setLang(savedLang === 'en' ? 'en' : 'nl');
+    });
+  </script>
+</body>
+</html>

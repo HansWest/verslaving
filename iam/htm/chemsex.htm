@@ -62,10 +62,10 @@
             line-height: 1.25;
         }
 
-        .opener-line.fun     { color: #111; }
-        .opener-line.morefun { color: #111; }
-        .opener-line.maybe   { color: var(--accent); }
-        .opener-line.problem { color: var(--accent2); }
+        .opener-line.fun     { color: #ff4f7a; }
+        .opener-line.morefun { color: #d7263d; }
+        .opener-line.maybe   { color: #6d31a8; }
+        .opener-line.problem { color: #111; }
 
         .opener-divider {
             width: 3rem;
@@ -304,15 +304,7 @@
 
         .cs-footer a:hover { text-decoration: underline; }
 
-        /* ── language hide/show ──────────────────────── */
-        [data-nl], [data-en] { display: none; }
-        body.lang-nl [data-nl] { display: revert; }
-        body.lang-en [data-en] { display: revert; }
-
-        /* inline bilingual spans */
-        span[data-nl], span[data-en] { display: unset; }
-        body.lang-nl span[data-nl] { display: inline; }
-        body.lang-en span[data-en] { display: inline; }
+        /* Language visibility is handled in JS via the hidden attribute. */
     </style>
 </head>
 <body class="lang-nl">
@@ -374,6 +366,24 @@
             <div class="cs-card-icon">🤝</div>
             <h3><span data-nl>Hulp & contact</span><span data-en>Help & contact</span></h3>
             <p><span data-nl>Waar je terechtkan als je wil praten of stoppen.</span><span data-en>Where to go if you want to talk or stop.</span></p>
+        </a>
+    </div>
+
+    <div class="section-grid">
+        <a class="cs-card" href="chemsex-patroon.htm">
+            <div class="cs-card-icon">🧭</div>
+            <h3><span data-nl>Werkblad: mijn chemsex-patroon</span><span data-en>Worksheet: my chemsex pattern</span></h3>
+            <p><span data-nl>Wanneer, met wie, welke middelen, en hoe de comedown verloopt.</span><span data-en>When, with whom, which substances, and how the comedown unfolds.</span></p>
+        </a>
+        <a class="cs-card" href="chemsex-noodplan.htm">
+            <div class="cs-card-icon">🆘</div>
+            <h3><span data-nl>Werkblad: persoonlijk noodplan</span><span data-en>Worksheet: personal emergency plan</span></h3>
+            <p><span data-nl>Praktisch plan voor het moment dat een sessie escaleert.</span><span data-en>Practical plan for the moment a session escalates.</span></p>
+        </a>
+        <a class="cs-card" href="chemsex-wat-wil-ik.htm">
+            <div class="cs-card-icon">🪞</div>
+            <h3><span data-nl>Werkblad: wat wil ik eigenlijk?</span><span data-en>Worksheet: what do I actually want?</span></h3>
+            <p><span data-nl>Reflectie op opwinding, verbinding, escapisme en je echte richting.</span><span data-en>Reflection on arousal, connection, escapism and your real direction.</span></p>
         </a>
     </div>
 
@@ -602,7 +612,7 @@
             <div class="score-bar-wrap">
                 <div class="score-bar-fill" id="scoreBar"></div>
             </div>
-            <p class="score-message" id="scoreMsg" data-nl>Vink iets aan om een beeld te krijgen.</p>
+            <p class="score-message" id="scoreMsg">Vink iets aan om een beeld te krijgen.</p>
 
         </div>
     </div>
@@ -618,10 +628,23 @@
 
 <script>
     /* ── Language switching ─────────────────────── */
+    function applyLanguageVisibility(lang) {
+        document.querySelectorAll('[data-nl]').forEach((el) => {
+            el.hidden = lang !== 'nl';
+        });
+        document.querySelectorAll('[data-en]').forEach((el) => {
+            el.hidden = lang !== 'en';
+        });
+    }
+
     function setLang(lang) {
-        document.body.className = 'lang-' + lang;
+        document.body.classList.remove('lang-nl', 'lang-en');
+        document.body.classList.add('lang-' + lang);
+        document.documentElement.setAttribute('lang', lang);
+        applyLanguageVisibility(lang);
         document.getElementById('btnNL').classList.toggle('active', lang === 'nl');
         document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+        localStorage.setItem('chemsexLang', lang);
         updateScore(); // refresh score message in right language
     }
 
@@ -674,6 +697,9 @@
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
+
+    const savedLang = localStorage.getItem('chemsexLang');
+    setLang(savedLang === 'en' ? 'en' : 'nl');
 </script>
 </body>
 </html>

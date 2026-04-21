@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chemsex-noodplan</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #1f3545;
+      --main: #8b2332;
+      --accent: #c65a39;
+      --soft: #fff5f5;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(139, 35, 50, 0.14), transparent 34%),
+        linear-gradient(180deg, #fff 0%, #fff4f4 100%);
+      color: var(--ink);
+    }
+    .page-shell { max-width: 920px; margin: 0 auto; }
+    .page-header {
+      background: linear-gradient(140deg, var(--main) 0%, #c65a39 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 53, 69, 0.16);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
+    .lang-toggle { margin-left: auto; display: inline-flex; gap: 0.4rem; }
+    .lang-btn {
+      border: 1px solid rgba(255,255,255,0.6);
+      background: transparent;
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .lang-btn.active { background: #fff; color: var(--main); }
+    .question-card, .message {
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 53, 69, 0.09);
+    }
+    .question-card { border-top: 4px solid var(--main); }
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+    .message { display: none; border-left: 4px solid var(--accent); }
+    .message.show { display: block; }
+    .message.error { border-left-color: #6b1f2a; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./chemsex.htm" data-nl>Terug naar Chemsex</a>
+          <a href="./chemsex.htm" data-en>Back to Chemsex</a>
+          <a href="./chemsex-patroon.htm" data-nl>Vorige: patroon</a>
+          <a href="./chemsex-patroon.htm" data-en>Previous: pattern</a>
+          <a href="./chemsex-wat-wil-ik.htm" data-nl>Volgende: reflectie</a>
+          <a href="./chemsex-wat-wil-ik.htm" data-en>Next: reflection</a>
+          <div class="lang-toggle">
+            <button type="button" id="btnNL" class="lang-btn" onclick="setLang('nl')">NL</button>
+            <button type="button" id="btnEN" class="lang-btn" onclick="setLang('en')">EN</button>
+          </div>
+        </div>
+        <h1 data-nl>Chemsex-noodplan bij escalatie</h1>
+        <h1 data-en>Chemsex emergency plan for escalation</h1>
+        <p data-nl>Voor het moment dat een sessie uit de hand dreigt te lopen. Kort, concreet en direct uitvoerbaar.</p>
+        <p data-en>For the moment a session starts to spiral. Short, concrete and directly usable.</p>
+      </header>
+
+      <div id="message" class="message"></div>
+
+      <form id="chemsexEmergencyForm">
+        <div class="grid-two">
+          <section class="question-card">
+            <h2 data-nl>1. Stop-signalen</h2>
+            <h2 data-en>1. Stop signals</h2>
+            <div class="form-group">
+              <label for="escalationSignals" data-nl>Waaraan merk je dat het niet veilig meer loopt?</label>
+              <label for="escalationSignals" data-en>How do you notice things are no longer safe?</label>
+              <textarea id="escalationSignals" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="stopRule" data-nl>Wat is je harde stop-regel?</label>
+              <label for="stopRule" data-en>What is your hard stop rule?</label>
+              <textarea id="stopRule" rows="4"></textarea>
+            </div>
+          </section>
+
+          <section class="question-card">
+            <h2 data-nl>2. Eerste 10 minuten</h2>
+            <h2 data-en>2. First 10 minutes</h2>
+            <div class="form-group">
+              <label for="firstActions" data-nl>Welke 3 acties doe je direct?</label>
+              <label for="firstActions" data-en>Which 3 actions do you take immediately?</label>
+              <textarea id="firstActions" rows="6"></textarea>
+            </div>
+          </section>
+        </div>
+
+        <div class="grid-two">
+          <section class="question-card">
+            <h2 data-nl>3. Mensen</h2>
+            <h2 data-en>3. People</h2>
+            <div class="form-group">
+              <label for="trustedPeople" data-nl>Wie bel of app je als eerste?</label>
+              <label for="trustedPeople" data-en>Who do you call or message first?</label>
+              <textarea id="trustedPeople" rows="5"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="buddyText" data-nl>Welke korte tekst stuur je?</label>
+              <label for="buddyText" data-en>Which short message do you send?</label>
+              <textarea id="buddyText" rows="4"></textarea>
+            </div>
+          </section>
+
+          <section class="question-card">
+            <h2 data-nl>4. Veiligheid</h2>
+            <h2 data-en>4. Safety</h2>
+            <div class="form-group">
+              <label for="consentBoundary" data-nl>Welke consent-grenzen wil je direct bewaken?</label>
+              <label for="consentBoundary" data-en>Which consent boundaries must be protected immediately?</label>
+              <textarea id="consentBoundary" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="medicalTrigger" data-nl>Wanneer moet je medische hulp inschakelen?</label>
+              <label for="medicalTrigger" data-en>When should you call medical help?</label>
+              <textarea id="medicalTrigger" rows="4"></textarea>
+            </div>
+          </section>
+        </div>
+
+        <div class="grid-two">
+          <section class="question-card">
+            <h2 data-nl>5. Herstel na de sessie</h2>
+            <h2 data-en>5. Recovery after session</h2>
+            <div class="form-group">
+              <label for="recoveryPlan" data-nl>Wat heb je nodig in de 24 uur erna?</label>
+              <label for="recoveryPlan" data-en>What do you need in the 24 hours after?</label>
+              <textarea id="recoveryPlan" rows="5"></textarea>
+            </div>
+          </section>
+
+          <section class="question-card">
+            <h2 data-nl>6. Preventie volgende keer</h2>
+            <h2 data-en>6. Prevention next time</h2>
+            <div class="form-group">
+              <label for="nextBoundary" data-nl>Welke grens zet je vooraf scherper?</label>
+              <label for="nextBoundary" data-en>Which boundary will you set earlier and clearer?</label>
+              <textarea id="nextBoundary" rows="5"></textarea>
+            </div>
+          </section>
+        </div>
+
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton" data-nl>Opslaan op dit toestel</button>
+          <button type="button" class="button-primary" id="saveButtonEn" data-en>Save on this device</button>
+          <button type="button" class="button-secondary" id="exportButton" data-nl>Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="exportButtonEn" data-en>Export all as JSON</button>
+          <button type="button" class="button-secondary" id="printButton" data-nl>Print of bewaar als pdf</button>
+          <button type="button" class="button-secondary" id="printButtonEn" data-en>Print or save as pdf</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'chemsex-noodplan';
+    const fields = [
+      'escalationSignals',
+      'stopRule',
+      'firstActions',
+      'trustedPeople',
+      'buddyText',
+      'consentBoundary',
+      'medicalTrigger',
+      'recoveryPlan',
+      'nextBoundary'
+    ];
+
+    function applyLanguageVisibility(lang) {
+      document.querySelectorAll('[data-nl]').forEach((el) => {
+        el.hidden = lang !== 'nl';
+      });
+      document.querySelectorAll('[data-en]').forEach((el) => {
+        el.hidden = lang !== 'en';
+      });
+    }
+
+    function setLang(lang) {
+      document.documentElement.setAttribute('lang', lang);
+      applyLanguageVisibility(lang);
+      document.getElementById('btnNL').classList.toggle('active', lang === 'nl');
+      document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+      localStorage.setItem('chemsexLang', lang);
+    }
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
+
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectFormData());
+        if (feedback) {
+          const lang = document.documentElement.lang === 'en' ? 'en' : 'nl';
+          showMessage(lang === 'en' ? 'Emergency plan saved on this device.' : 'Noodplan opgeslagen op dit toestel.');
+        }
+      } catch (error) {
+        console.error(error);
+        const lang = document.documentElement.lang === 'en' ? 'en' : 'nl';
+        showMessage(lang === 'en' ? 'Saving failed.' : 'Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      const exportData = iamData.exportJSON();
+      const url = URL.createObjectURL(exportData.blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = exportData.filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      const lang = document.documentElement.lang === 'en' ? 'en' : 'nl';
+      showMessage(lang === 'en' ? 'IAM data exported as JSON.' : 'Volledige IAM-gegevens geëxporteerd als JSON.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fillForm(iamData.getFormData(formKey) || {});
+
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('saveButtonEn').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('exportButtonEn').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('printButtonEn').addEventListener('click', () => window.print());
+      document.getElementById('chemsexEmergencyForm').addEventListener('input', () => saveForm(false));
+
+      const savedLang = localStorage.getItem('chemsexLang');
+      setLang(savedLang === 'en' ? 'en' : 'nl');
+    });
+  </script>
+</body>
+</html>
