@@ -48,6 +48,17 @@
       box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
     }
     .question-card { border-top: 4px solid var(--page-main); }
+    .legacy-note {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+      border-left: 4px solid var(--page-accent);
+    }
+    .legacy-note h2 { margin-top: 0; }
+    .legacy-note ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
+    .legacy-note li { margin-bottom: 0.35rem; }
     .grid-two { display: grid; gap: 1rem; }
     @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
     .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
@@ -131,6 +142,16 @@
           <button type="button" class="button-primary" id="weeklyReviewApply">Neem volgende stap over in plan A</button>
           <button type="button" class="button-secondary" id="weeklyReviewOpen">Open terugblik op homepage</button>
         </div>
+      </section>
+
+      <section class="legacy-note" aria-labelledby="planLegacyTitle">
+        <h2 id="planLegacyTitle">Strategie-check uit eerdere versie</h2>
+        <ul>
+          <li>Een plan heeft altijd <strong>doel</strong> en <strong>strategie</strong>.</li>
+          <li>Het nut van je strategie blijkt uit het resultaat: kom je dichter bij je doel?</li>
+          <li>Als plan A niet werkt: pas eerst je strategie aan (plan B), en herijk daarna pas je doel.</li>
+          <li>Maak je gebruiksdoel zo concreet mogelijk: aantallen, grenzen, startdatum en duur.</li>
+        </ul>
       </section>
 
       <form id="planForm">

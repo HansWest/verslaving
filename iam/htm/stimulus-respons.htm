@@ -48,6 +48,33 @@
       box-shadow: 0 8px 22px rgba(30, 55, 74, 0.09);
     }
     .question-card { border-top: 4px solid var(--page-main); }
+    .legacy-note {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(30, 55, 74, 0.09);
+      border-left: 4px solid var(--page-accent);
+    }
+    .legacy-note h2 { margin-top: 0; }
+    .legacy-note ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
+    .legacy-note li { margin-bottom: 0.35rem; }
+    .legacy-links {
+      margin-top: 0.85rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .legacy-links a {
+      text-decoration: none;
+      border: 1px solid rgba(58, 111, 144, 0.25);
+      border-radius: 999px;
+      background: #f3f8fb;
+      color: var(--page-main);
+      padding: 0.35rem 0.7rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
     .grid-two { display: grid; gap: 1rem; }
     @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
     .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
@@ -131,6 +158,23 @@
         <div class="action-bar" style="margin-top: 1rem;">
           <button type="button" class="button-primary" id="weeklyReviewApply">Neem volgende stap over in oefenplan</button>
           <button type="button" class="button-secondary" id="weeklyReviewOpen">Open terugblik op homepage</button>
+        </div>
+      </section>
+
+      <section class="legacy-note" aria-labelledby="techniqueCompassTitle">
+        <h2 id="techniqueCompassTitle">Technieken-kompas</h2>
+        <p>Uit de oudere werkbladen komt een nuttige kapstok: kies bewust waar je op ingrijpt.</p>
+        <ul>
+          <li><strong>Stimulus voorkomen:</strong> passief vermijden of actief regelen/begrenzen.</li>
+          <li><strong>Respons voorkomen:</strong> alternatief gedrag, afleiding, anders denken, aandacht en steun.</li>
+          <li><strong>Consequentie sturen:</strong> belonen en lange termijn voor ogen houden.</li>
+        </ul>
+        <div class="legacy-links">
+          <a href="./smoezenboek.htm">Smoezenboek</a>
+          <a href="./trek-opvangen-2.htm">Treksurfen</a>
+          <a href="./sociaal-netwerk.htm">Sociaal netwerk</a>
+          <a href="./steunnetwerk.htm">Steunnetwerk</a>
+          <a href="./oefenen-voor-toekomst.htm">Lange termijn oefenen</a>
         </div>
       </section>
 
