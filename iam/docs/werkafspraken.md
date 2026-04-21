@@ -109,6 +109,13 @@ Deze sectie bevat alles wat nodig is om consistent en goed aan IAM te werken.
 - Centrale lokale data-opslag via `iam/js/dataStore.js`.
 - Exportmogelijkheden (JSON/CSV) behouden of uitbreiden waar relevant.
 
+### UX-interactieafspraak: tegelklik opent doelgebied
+
+- Als een tegel/link in dezelfde pagina verwijst naar een tekstgebied of sectie, dan opent het doelgebied automatisch.
+- Concreet: bij links naar een `details`-sectie (of een element binnen zo'n sectie) wordt die sectie eerst geopend en daarna gescrold.
+- De gebruiker kan de sectie daarna handmatig weer dichtklikken.
+- Dit gedrag is een vaste designafspraak voor IAM-pagina's met tegelnavigatie.
+
 ### Veilig en beheersbaar werken
 
 - Geen onnodige destructieve acties op bestaande user-content.
