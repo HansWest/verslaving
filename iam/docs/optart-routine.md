@@ -10,5 +10,5 @@ Ga verder waar we gebleven waren: week-check-in op index.htm en koppel die aan d
 
 Als je extra zeker wilt zijn, vraag me dan expliciet:
 
-Controleer eerst huidige inhoud van deze bestanden en behoud bestaande keuzes/taal.
+Controleer eerst huidige inhoud van deze bestanden en behoud bestaande keuzes.
 Dan kan ik niets “vergeten”, want alles staat in je eigen bestanden en ik lees die dan eerst opnieuw.

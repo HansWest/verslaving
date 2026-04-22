@@ -14,15 +14,98 @@
             --success: #4caf50;
             --warning: #ff9800;
             --danger: #f44336;
+            --page-bg: #eef3f7;
+            --surface: #ffffff;
+            --surface-soft: #f7fafc;
+            --surface-tint: #f0f7ff;
+            --text-main: #22313d;
+            --text-muted: #526473;
+            --text-soft: #687988;
+            --border-soft: #d7e3ec;
+            --hero-start: #5f75d8;
+            --hero-end: #6e4d96;
+            --hero-text: #ffffff;
+            --shadow-soft: 0 6px 18px rgba(26, 46, 64, 0.1);
+            --info-bg: #eef5ff;
+            --info-text: #2c4a63;
+            --warm-bg: #fff7e8;
+            --warm-border: #f1d39a;
+            --warm-text: #7a5415;
+            --weekly-bg: linear-gradient(135deg, #fffaf0 0%, #f6fbff 100%);
+            --weekly-border: #d7e6f3;
+            --weekly-title: #244c70;
+            --weekly-help: #5a6f7f;
+            --weekly-chip-bg: #e9f5ff;
+            --weekly-chip-text: #245377;
+            --weekly-chip-due-bg: #fff1cf;
+            --weekly-chip-due-text: #8a5a00;
+            --featured-shadow: 0 6px 18px rgba(76, 175, 80, 0.16);
+            --featured-progress-bg: #c8e6c9;
+            --summary-chip-bg: #f0f7ff;
+            --summary-chip-text: #244c70;
+            --chemsex-bg: #fdf4ff;
+            --chemsex-border: #e0d4f0;
+            --chemsex-title: #9b3fcc;
+            --chemsex-text: #555555;
+            --footer-bg: #f5f5f5;
+            --footer-text: #666666;
+            --footer-meta: #999999;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --page-bg: #121a21;
+                --surface: #1b2630;
+                --surface-soft: #22303a;
+                --surface-tint: #1d3142;
+                --text-main: #edf4fa;
+                --text-muted: #c1d0db;
+                --text-soft: #9fb1be;
+                --border-soft: #324552;
+                --hero-start: #3b5e94;
+                --hero-end: #5a4678;
+                --hero-text: #f7fbff;
+                --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.28);
+                --info-bg: #21384a;
+                --info-text: #d5e8f8;
+                --warm-bg: #40321d;
+                --warm-border: #7b6437;
+                --warm-text: #f5dfb2;
+                --weekly-bg: linear-gradient(135deg, #2b3440 0%, #1e3140 100%);
+                --weekly-border: #365165;
+                --weekly-title: #d8ebfa;
+                --weekly-help: #aac0cf;
+                --weekly-chip-bg: #26475f;
+                --weekly-chip-text: #d7eefe;
+                --weekly-chip-due-bg: #554523;
+                --weekly-chip-due-text: #ffe3a1;
+                --featured-shadow: 0 10px 26px rgba(0, 0, 0, 0.24);
+                --featured-progress-bg: #35583a;
+                --summary-chip-bg: #223a4d;
+                --summary-chip-text: #d6ebfb;
+                --chemsex-bg: #372642;
+                --chemsex-border: #6d4e7c;
+                --chemsex-title: #e0b8ff;
+                --chemsex-text: #e3d5ec;
+                --footer-bg: #1a242c;
+                --footer-text: #c7d3db;
+                --footer-meta: #9cadb9;
+            }
+        }
+
+        body {
+            background: var(--page-bg);
+            color: var(--text-main);
         }
 
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--hero-start) 0%, var(--hero-end) 100%);
+            color: var(--hero-text);
             padding: 3rem 1rem;
             text-align: center;
             margin-bottom: 2rem;
             border-radius: 12px;
+            box-shadow: var(--shadow-soft);
         }
 
         .hero h1 {
@@ -33,34 +116,52 @@
         .hero p {
             font-size: 1.1rem;
             margin: 0;
+            color: var(--hero-text);
             opacity: 0.95;
         }
 
         .intro-section {
-            background: white;
+            background: var(--surface);
             padding: 1.5rem;
             border-radius: 8px;
             margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-soft);
             line-height: 1.8;
         }
 
         .intro-section h2 {
-            color: var(--primary);
+            color: var(--text-main);
             border-bottom: 3px solid var(--primary);
             padding-bottom: 0.5rem;
         }
 
+        .intro-section p {
+            color: var(--text-main);
+        }
+
         .model-info {
-            background: #f0f7ff;
+            background: var(--info-bg);
             border-left: 4px solid var(--primary);
             padding: 1rem;
             border-radius: 4px;
             margin-top: 1rem;
+            color: var(--info-text);
         }
 
         .model-info strong {
             color: var(--primary);
+        }
+
+        .model-list {
+            margin: 0.55rem 0 0;
+            padding-left: 1.2rem;
+            color: var(--info-text);
+            line-height: 1.6;
+        }
+
+        .model-note {
+            margin: 0.7rem 0 0;
+            color: var(--info-text);
         }
 
         .card-grid {
@@ -83,10 +184,10 @@
         }
 
         .card {
-            background: white;
+            background: var(--surface);
             border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-soft);
             border-top: 4px solid var(--primary);
             transition: all 0.3s ease;
             display: flex;
@@ -126,13 +227,13 @@
 
         .card h3 {
             margin: 0 0 0.5rem 0;
-            color: #333;
+            color: var(--text-main);
             font-size: 1.2rem;
         }
 
         .card p {
             margin: 0 0 1rem 0;
-            color: #666;
+            color: var(--text-muted);
             font-size: 0.95rem;
             flex-grow: 1;
         }
@@ -162,10 +263,14 @@
 
         .section-title {
             font-size: 1.8rem;
-            color: #333;
+            color: var(--text-main);
             margin: 2rem 0 1rem 0;
             border-bottom: 3px solid var(--primary);
             padding-bottom: 0.5rem;
+        }
+
+        .phase-intro {
+            color: var(--text-muted);
         }
 
         .phase-label {
@@ -216,35 +321,35 @@
         }
 
         .quick-actions {
-            background: white;
+            background: var(--surface);
             padding: 1.5rem;
             border-radius: 8px;
             margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-soft);
         }
 
         .quick-actions h3 {
             margin-top: 0;
-            color: #333;
+            color: var(--text-main);
         }
 
         .priority-note {
             margin: 1rem 0 0;
             padding: 0.85rem 1rem;
             border-radius: 8px;
-            background: #fff7e8;
-            border: 1px solid #f1d39a;
-            color: #7a5415;
+            background: var(--warm-bg);
+            border: 1px solid var(--warm-border);
+            color: var(--warm-text);
             font-weight: 600;
         }
 
         .weekly-review {
-            background: linear-gradient(135deg, #fffaf0 0%, #f6fbff 100%);
-            border: 1px solid #d7e6f3;
+            background: var(--weekly-bg);
+            border: 1px solid var(--weekly-border);
             border-radius: 12px;
             padding: 1.4rem;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 10px rgba(59, 92, 122, 0.08);
+            box-shadow: var(--shadow-soft);
         }
 
         .weekly-review-header {
@@ -257,7 +362,7 @@
 
         .weekly-review-header h3 {
             margin: 0;
-            color: #244c70;
+            color: var(--weekly-title);
         }
 
         .weekly-review-status {
@@ -268,13 +373,13 @@
             border-radius: 999px;
             font-size: 0.88rem;
             font-weight: 700;
-            background: #e9f5ff;
-            color: #245377;
+            background: var(--weekly-chip-bg);
+            color: var(--weekly-chip-text);
         }
 
         .weekly-review-status.due {
-            background: #fff1cf;
-            color: #8a5a00;
+            background: var(--weekly-chip-due-bg);
+            color: var(--weekly-chip-due-text);
         }
 
         .weekly-review-grid {
@@ -289,11 +394,11 @@
             min-height: 88px;
             resize: vertical;
             border-radius: 10px;
-            border: 1px solid #c9d9e4;
+            border: 1px solid var(--border-soft);
             padding: 0.8rem;
             font: inherit;
-            color: #294256;
-            background: #fff;
+            color: var(--text-main);
+            background: var(--surface);
         }
 
         .weekly-review textarea:focus {
@@ -305,13 +410,13 @@
         .weekly-review label {
             display: block;
             margin-bottom: 0.45rem;
-            color: #244c70;
+            color: var(--weekly-title);
             font-weight: 700;
         }
 
         .weekly-review-help {
             margin: 0.75rem 0 0;
-            color: #5a6f7f;
+            color: var(--weekly-help);
             font-size: 0.92rem;
         }
 
@@ -327,28 +432,28 @@
             text-decoration: none;
             padding: 0.5rem 0.85rem;
             border-radius: 999px;
-            background: #edf5ff;
-            color: #26557a;
+            background: var(--surface-tint);
+            color: var(--weekly-chip-text);
             font-weight: 600;
             font-size: 0.9rem;
         }
 
         .weekly-review-link:hover {
-            background: #dcecff;
+            background: rgba(102, 126, 234, 0.18);
             text-decoration: none;
         }
 
         .weekly-review-meta {
             margin-top: 0.75rem;
-            color: #607585;
+            color: var(--text-soft);
             font-size: 0.88rem;
         }
 
         .featured-card {
-            background: white;
+            background: var(--surface);
             border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(102,126,234,0.18);
+            box-shadow: var(--featured-shadow);
             border-top: 5px solid var(--success);
             display: flex;
             flex-direction: column;
@@ -370,12 +475,12 @@
         .featured-card h3 {
             margin: 0 0 0.5rem 0;
             font-size: 1.3rem;
-            color: #333;
+            color: var(--text-main);
         }
 
         .featured-card p {
             margin: 0 0 1.1rem 0;
-            color: #555;
+            color: var(--text-muted);
             line-height: 1.6;
         }
 
@@ -396,7 +501,7 @@
         .featured-progress {
             margin-top: 1rem;
             font-size: 0.87rem;
-            color: #2e7d32;
+            color: var(--success);
             font-weight: 600;
         }
 
@@ -404,7 +509,7 @@
             display: block;
             width: 100%;
             height: 6px;
-            background: #c8e6c9;
+            background: var(--featured-progress-bg);
             border-radius: 3px;
             margin-top: 0.4rem;
             overflow: hidden;
@@ -418,10 +523,10 @@
         }
 
         .progress-summary {
-            background: white;
+            background: var(--surface);
             border-radius: 8px;
             margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-soft);
             overflow: hidden;
         }
 
@@ -441,12 +546,12 @@
 
         .progress-summary-toggle h3 {
             margin: 0;
-            color: #333;
+            color: var(--text-main);
         }
 
         .progress-summary-toggle-text {
             font-size: 0.9rem;
-            color: #5d7385;
+            color: var(--text-soft);
             font-weight: 600;
             white-space: nowrap;
         }
@@ -455,12 +560,12 @@
             width: 2rem;
             height: 2rem;
             border-radius: 999px;
-            border: 2px solid #9bb6c9;
+            border: 2px solid var(--border-soft);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #2c4a63;
-            background: #f7fafc;
+            color: var(--text-main);
+            background: var(--surface-soft);
             flex-shrink: 0;
         }
 
@@ -487,8 +592,8 @@
         }
 
         .stat-chip {
-            background: #f0f7ff;
-            color: #244c70;
+            background: var(--summary-chip-bg);
+            color: var(--summary-chip-text);
             border-radius: 999px;
             padding: 0.45rem 0.85rem;
             font-weight: 600;
@@ -498,7 +603,7 @@
         .phase-list {
             margin: 0;
             padding-left: 1.2rem;
-            color: #4d4d4d;
+            color: var(--text-muted);
         }
 
         .phase-list li {
@@ -509,20 +614,20 @@
             margin-top: 0.9rem;
             padding: 0.9rem;
             border-radius: 8px;
-            background: #f7fafc;
-            border: 1px solid #dde8ef;
+            background: var(--surface-soft);
+            border: 1px solid var(--border-soft);
         }
 
         .quality-box h4 {
             margin: 0 0 0.5rem 0;
             font-size: 0.98rem;
-            color: #2c4a63;
+            color: var(--text-main);
         }
 
         .quality-list {
             margin: 0;
             padding-left: 1.15rem;
-            color: #4d4d4d;
+            color: var(--text-muted);
             font-size: 0.93rem;
         }
 
@@ -533,20 +638,20 @@
         .quality-priority {
             margin-top: 0.75rem;
             padding-top: 0.75rem;
-            border-top: 1px dashed #c9d9e4;
+            border-top: 1px dashed var(--border-soft);
         }
 
         .quality-priority h5 {
             margin: 0 0 0.45rem 0;
             font-size: 0.92rem;
-            color: #2c4a63;
+            color: var(--text-main);
         }
 
         .quality-priority-list {
             margin: 0;
             padding-left: 1.15rem;
             font-size: 0.92rem;
-            color: #455866;
+            color: var(--text-muted);
         }
 
         .quality-priority-list li {
@@ -554,7 +659,7 @@
         }
 
         .quality-priority-list a {
-            color: #2f6b8f;
+            color: var(--primary);
             font-weight: 600;
             text-decoration: none;
         }
@@ -566,20 +671,80 @@
         .integration-box {
             margin-top: 0.75rem;
             padding-top: 0.75rem;
-            border-top: 1px dashed #c9d9e4;
+            border-top: 1px dashed var(--border-soft);
         }
 
         .integration-box h5 {
             margin: 0 0 0.45rem 0;
             font-size: 0.92rem;
-            color: #2c4a63;
+            color: var(--text-main);
         }
 
         .integration-list {
             margin: 0;
             padding-left: 1.15rem;
             font-size: 0.92rem;
-            color: #455866;
+            color: var(--text-muted);
+        }
+
+        .chemsex-callout {
+            margin-bottom: 2rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--chemsex-bg);
+            border: 1px solid var(--chemsex-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .chemsex-callout-content {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .chemsex-callout-title {
+            color: var(--chemsex-title);
+            font-size: 1.05rem;
+        }
+
+        .chemsex-callout-text {
+            margin: 0.2rem 0 0;
+            color: var(--chemsex-text);
+            font-size: 0.92rem;
+        }
+
+        .chemsex-callout-link {
+            padding: 0.6rem 1.2rem;
+            background: var(--chemsex-title);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .chemsex-callout-link:hover {
+            text-decoration: none;
+            filter: brightness(1.05);
+        }
+
+        .page-footer {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--footer-bg);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--footer-text);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .page-footer-meta {
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            color: var(--footer-meta);
         }
 
         .integration-list li {
@@ -653,13 +818,13 @@
 
             <div class="model-info">
                 <strong>ABCDaaah in het kort:</strong>
-                <ul style="margin: 0.55rem 0 0; padding-left: 1.2rem; color: #2c4a63; line-height: 1.6;">
+                <ul class="model-list">
                     <li><strong>A - Actualiteit:</strong> stop en adem, zodat je ziet wat er nu echt gebeurt.</li>
                     <li><strong>B - Behoefte:</strong> onderzoek welke behoefte onder de trek zit.</li>
                     <li><strong>C - Cognitieve afweging:</strong> neem lange-termijn mee en kies: gebruik of de D van Doen.</li>
                     <li><strong>D - Doen:</strong> actief afscheid, accepteren (zo nodig kort afleiden), alternatief gedrag op behoefte B, en herhalen.</li>
                 </ul>
-                <p style="margin: 0.7rem 0 0; color: #2c4a63;">
+                <p class="model-note">
                     Herhalen is essentieel: juist oude, automatische breinreacties veranderen door vaak oefenen op rustige momenten.
                 </p>
             </div>
@@ -753,7 +918,7 @@
 
         <!-- FASE 1: ORIGINE & WAAROM -->
         <h2 class="section-title">① Fase: Waar ben ik mee begonnen?</h2>
-        <p style="color: #666;">Terug naar het begin - wat was de positieve reden om te starten?</p>
+        <p class="phase-intro">Terug naar het begin - wat was de positieve reden om te starten?</p>
         
         <div class="card-grid">
             <div class="card phase-1">
@@ -800,7 +965,7 @@
 
         <!-- FASE 2: BEWUSTZIJN & GEVOELENS -->
         <h2 class="section-title">② Fase: Wat voel ik eigenlijk?</h2>
-        <p style="color: #666;">Gevoelens die je misschien lange tijd niet hebt gevoeld...</p>
+        <p class="phase-intro">Gevoelens die je misschien lange tijd niet hebt gevoeld...</p>
         
         <div class="card-grid">
             <div class="card phase-2">
@@ -825,6 +990,7 @@
                 </p>
                 <div class="card-links">
                     <a href="craving-1-10.htm" class="card-link">Start →</a>
+                    <a href="dagelijks-gevolg.htm" class="card-link">Het gebruik van de dag →</a>
                     <a href="craving-gevoel.htm" class="card-link">Soorten →</a>
                 </div>
                 <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
@@ -846,7 +1012,7 @@
 
         <!-- FASE 3: PATROON ERKENNEN -->
         <h2 class="section-title">③ Fase: Hoe werkt de spiraal?</h2>
-        <p style="color: #666;">De triggers, reacties, en waarom je steeds terugkeert...</p>
+        <p class="phase-intro">De triggers, reacties, en waarom je steeds terugkeert...</p>
         
         <div class="card-grid">
             <div class="card phase-3">
@@ -893,7 +1059,7 @@
 
         <!-- FASE 4: NOODPLAN & ALTERNATIEVEN -->
         <h2 class="section-title">④ Fase: Hoe bouw ik alternatieven?</h2>
-        <p style="color: #666;">Strategieën om de spiraal te doorbreken...</p>
+        <p class="phase-intro">Strategieën om de spiraal te doorbreken...</p>
         
         <div class="card-grid">
             <div class="card phase-4">
@@ -968,7 +1134,7 @@
 
         <!-- FASE 5: OPBOUW & STEUN -->
         <h2 class="section-title">⑤ Fase: Wat maakt mij sterk?</h2>
-        <p style="color: #666;">Ondersteuning, beloning, en voortgang...</p>
+        <p class="phase-intro">Ondersteuning, beloning, en voortgang...</p>
         
         <div class="card-grid">
             <div class="card phase-recovery">
@@ -1012,23 +1178,23 @@
         </div>
 
         <!-- Chemsex section link -->
-        <div style="margin-bottom: 2rem; padding: 1.25rem 1.5rem; background: #fdf4ff; border: 1px solid #e0d4f0; border-radius: 12px; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <div class="chemsex-callout">
             <span style="font-size: 2rem;">💊</span>
-            <div style="flex: 1; min-width: 180px;">
-                <strong style="color: #9b3fcc; font-size: 1.05rem;">Chemsex</strong>
-                <p style="margin: 0.2rem 0 0; color: #555; font-size: 0.92rem;">
+            <div class="chemsex-callout-content">
+                <strong class="chemsex-callout-title">Chemsex</strong>
+                <p class="chemsex-callout-text">
                     Seks op chems — plezier, risico's, schadebeperking en een eerlijke zelfcheck.
                 </p>
             </div>
-            <a href="chemsex.htm" style="padding: 0.6rem 1.2rem; background: #9b3fcc; color: white; border-radius: 8px; text-decoration: none; font-weight: 700; white-space: nowrap;">Naar Chemsex →</a>
+            <a href="chemsex.htm" class="chemsex-callout-link">Naar Chemsex →</a>
         </div>
 
         <!-- Footer -->
-        <div style="margin-top: 3rem; padding: 2rem; background: #f5f5f5; border-radius: 8px; text-align: center; color: #666;">
+        <div class="page-footer">
             <p>
                 <strong>Privacygarantie:</strong> Al jouw gegevens blijven op jouw apparaat. Niets gaat naar een server.
             </p>
-            <p style="font-size: 0.9rem; margin-top: 1rem; color: #999;">
+            <p class="page-footer-meta">
                 © IAM Project | Voor vragen: HansRJWest@Gmail.com
             </p>
         </div>

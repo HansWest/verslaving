@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Het gebruik van de dag</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #173249;
+      --main: #466d8c;
+      --accent: #cb7a47;
+      --ok: #3b7f45;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(63, 122, 161, 0.16), transparent 32%),
+        linear-gradient(180deg, #f8f3ec 0%, #edf4f7 100%);
+      color: var(--ink);
+    }
+    .page-shell { max-width: 920px; margin: 0 auto; }
+    .hero {
+      margin-top: 1.1rem;
+      background: linear-gradient(140deg, var(--main) 0%, #7b7d4d 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.35rem;
+      box-shadow: 0 14px 30px rgba(23, 50, 73, 0.18);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .top-links a {
+      color: #fff; text-decoration: none; border: 1px solid rgba(255, 255, 255, 0.38);
+      background: rgba(255, 255, 255, 0.12); border-radius: 999px; padding: 0.48rem 0.85rem;
+      min-height: 44px; display: inline-flex; align-items: center; font-weight: 700;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.94); border-radius: 16px; padding: 1.1rem;
+      margin-top: 1rem; box-shadow: 0 9px 22px rgba(23, 50, 73, 0.09);
+    }
+    .legacy-note { border-left: 5px solid var(--accent); }
+    .level-list { margin: 0; padding-left: 1.2rem; line-height: 1.55; }
+    .level-list li { margin-bottom: 0.45rem; }
+    .zone {
+      border-radius: 12px; padding: 0.8rem; background: #f2f7fb; border-left: 5px solid var(--main);
+      margin-top: 0.8rem;
+    }
+    .zone.warn { border-left-color: #d29b2f; background: #fff8eb; }
+    .zone.alert { border-left-color: var(--accent); background: #fff3f0; }
+    .zone.safe { border-left-color: var(--ok); background: #edf8ef; }
+    .action-box { display: grid; gap: 0.8rem; }
+    .score-row { display: grid; gap: 0.5rem; }
+    .score-row input[type="range"] { width: 100%; }
+    .tracker-shell { display: grid; gap: 1rem; }
+    .tracker-toolbar {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.7rem;
+      align-items: end;
+    }
+    .nav-day {
+      min-height: 44px;
+      min-width: 44px;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .tracker-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #eef4f7;
+      color: #235171;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .tracker-grid {
+      display: grid;
+      gap: 0.9rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .tracker-grid .form-group,
+    .tracker-shell .form-group { margin: 0; }
+    input[type="number"],
+    input[type="date"] {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      padding: 0.65rem 0.8rem;
+      background: #fff;
+      color: var(--ink);
+    }
+    .history-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: center;
+    }
+    .history-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .history-tools {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: center;
+      margin: 1rem 0;
+    }
+    .filter-group,
+    .export-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .filter-chip {
+      border: 1px solid rgba(23, 50, 73, 0.14);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0.45rem 0.85rem;
+      min-height: 40px;
+      font-weight: 700;
+    }
+    .filter-chip.is-active {
+      background: var(--main);
+      color: #fff;
+      border-color: var(--main);
+    }
+    .chart-card {
+      border: 1px solid rgba(23, 50, 73, 0.09);
+      border-radius: 14px;
+      padding: 0.9rem;
+      background: #fbfdfe;
+      margin-bottom: 1rem;
+    }
+    .chart-card h3,
+    .future-head h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+    }
+    .chart-card p,
+    .future-head p {
+      margin: 0;
+      color: #4d6476;
+    }
+    .chart-wrap {
+      margin-top: 0.9rem;
+      overflow-x: auto;
+    }
+    .usage-chart {
+      width: 100%;
+      min-width: 280px;
+      height: 240px;
+      display: block;
+    }
+    .chart-axis {
+      stroke: rgba(23, 50, 73, 0.25);
+      stroke-width: 1;
+    }
+    .chart-bar-positive { fill: rgba(63, 122, 161, 0.85); }
+    .chart-bar-negative { fill: rgba(215, 107, 78, 0.88); }
+    .chart-label {
+      fill: #486173;
+      font-size: 10px;
+    }
+    .chart-value {
+      fill: #173249;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .future-block {
+      margin-top: 1rem;
+      border-top: 1px solid rgba(23, 50, 73, 0.08);
+      padding-top: 1rem;
+    }
+    .future-head {
+      display: grid;
+      gap: 0.25rem;
+      margin-bottom: 0.8rem;
+    }
+    .history-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+    .history-item {
+      border: 1px solid rgba(23, 50, 73, 0.09);
+      border-radius: 14px;
+      padding: 0.9rem;
+      background: #fbfdfe;
+    }
+    .history-item h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1rem;
+    }
+    .history-item p {
+      margin: 0.2rem 0;
+      line-height: 1.45;
+    }
+    .history-empty {
+      margin: 0;
+      color: #4d6476;
+    }
+    .section-inline-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .hulpzinnetje-button {
+      border: 1px solid rgba(70, 109, 140, 0.25);
+      background: #f3f8fc;
+      color: var(--main);
+      border-radius: 999px;
+      min-height: 40px;
+      padding: 0.45rem 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .hulpzinnetje-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(20, 31, 40, 0.58);
+      z-index: 1000;
+    }
+    .hulpzinnetje-modal.open { display: flex; }
+    .hulpzinnetje-dialog {
+      width: min(560px, 100%);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 18px;
+      box-shadow: 0 24px 48px rgba(20, 31, 40, 0.22);
+      border-top: 6px solid var(--main);
+      padding: 1.2rem;
+    }
+    .hulpzinnetje-dialog h3 {
+      margin: 0 0 0.75rem;
+      color: var(--main);
+    }
+    .hulpzinnetje-dialog p {
+      margin: 0;
+      line-height: 1.6;
+    }
+    .hulpzinnetje-dialog .action-bar {
+      margin-top: 1rem;
+    }
+    .score-pill {
+      display: inline-block; border-radius: 999px; background: #e8f1f7; color: #235171;
+      font-weight: 700; padding: 0.3rem 0.75rem;
+    }
+    textarea { width: 100%; min-height: 96px; }
+    .message {
+      margin-top: 0.7rem; display: none; border-radius: 10px; padding: 0.72rem 0.9rem;
+      background: #eef8ee; border-left: 4px solid var(--ok); color: #204f22;
+    }
+    .message.show { display: block; }
+    .chart-legend {
+      display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.7rem;
+      color: #486173; font-size: 0.92rem;
+    }
+    .legend-swatch {
+      width: 12px; height: 12px; border-radius: 3px;
+      display: inline-block; margin-right: 0.3rem; vertical-align: middle;
+    }
+    .chart-bar-plan {
+      fill: rgba(63, 122, 161, 0.16);
+      stroke: rgba(63, 122, 161, 0.85);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 3;
+    }
+    .chart-bar-plan-neg {
+      fill: rgba(215, 107, 78, 0.14);
+      stroke: rgba(215, 107, 78, 0.85);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 3;
+    }
+    .reg-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.6rem;
+    }
+    .reg-day { display: grid; gap: 0.3rem; }
+    .reg-day label { font-size: 0.8rem; text-align: center; font-weight: 700; color: #486173; }
+    .reg-day input { text-align: center; min-height: 40px; padding: 0.4rem; }
+    .reg-status {
+      display: none; margin-top: 0.7rem; border-radius: 10px;
+      padding: 0.6rem 0.85rem; background: #edf8ef;
+      border-left: 4px solid var(--ok); color: #204f22; font-weight: 600;
+    }
+    .reg-status.show { display: block; }
+    .evaluation-grid {
+      display: grid; gap: 0.9rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-bottom: 1rem;
+    }
+    .evaluation-box {
+      border: 1px solid rgba(23, 50, 73, 0.09); border-radius: 14px;
+      padding: 0.9rem; background: #fbfdfe; display: grid; gap: 0.7rem;
+    }
+    .evaluation-box h3 { margin: 0; font-size: 1rem; }
+    .evaluation-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+    .evaluation-status {
+      border-radius: 12px; padding: 0.75rem 0.85rem; font-weight: 700;
+      background: #edf8ef; color: #204f22;
+    }
+    .evaluation-status.warn { background: #fff8eb; color: #7a5411; }
+    .evaluation-status.alert { background: #fff3f0; color: #8a2f1c; }
+    @media (max-width: 640px) {
+      .tracker-toolbar { grid-template-columns: 1fr; }
+      .nav-day { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./craving-1-10.htm">Craving van 1 tot 10</a>
+          <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
+        </div>
+        <h1>Het gebruik van de dag</h1>
+        <p>Hier volg je per dag wat je van plan was, wat er werkelijk gebeurde en wat je daaruit wilt leren. Zo maak je gebruik zichtbaar zonder jezelf vast te zetten in oordeel.</p>
+      </header>
+
+      <section class="card legacy-note">
+        <h2>Waarom deze pagina apart staat</h2>
+        <p>Het gebruik van de dag volgen is iets anders dan trek meten. Trek zegt iets over de druk in het moment; deze pagina laat zien wat je uiteindelijk deed, wat je wilde doen en wat dat vraagt in je planning of zelfzorg.</p>
+      </section>
+
+      <div id="message" class="message"></div>
+
+      <section class="card tracker-shell">
+        <div>
+          <div class="section-inline-head">
+            <h2>Dagkaart gebruik in eenheden</h2>
+            <button
+              type="button"
+              class="hulpzinnetje-button"
+              data-hulpzinnetje-title="Hulpzinnetje bij Het gebruik van de dag"
+              data-hulpzinnetje-content="Het gebruik van de dag is geen rapportcijfer, maar een spiegel. Door geplande en werkelijke inname naast elkaar te zetten, zie je beter wat moeilijke dagen van je vragen en waar je plan nog steun of bijstelling nodig heeft."
+            >[?] Hulpzinnetje</button>
+          </div>
+          <p>Kies een datum en leg per dag vast hoeveel je gebruikte, wat het risico was en wat je motivatie is. Je kunt ook terugwerken of alvast een toekomstige dag voorbereiden.</p>
+        </div>
+
+        <div class="tracker-toolbar">
+          <button type="button" class="nav-day" id="prevDayButton" aria-label="Ga naar vorige dag">&lt;</button>
+          <div class="form-group">
+            <label for="usageDate">Datum</label>
+            <input id="usageDate" type="date" />
+          </div>
+          <button type="button" class="nav-day" id="nextDayButton" aria-label="Ga naar volgende dag">&gt;</button>
+        </div>
+
+        <div class="tracker-meta">
+          <span class="meta-pill" id="selectedDateLabel">Vandaag</span>
+          <span class="meta-pill" id="selectedDateState">Nog geen invoer voor deze dag</span>
+        </div>
+
+        <div class="tracker-grid">
+          <div class="form-group">
+            <label for="plannedUnits">Gepland gebruik (eenheden)</label>
+            <input id="plannedUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 0.5 of 2" />
+          </div>
+          <div class="form-group">
+            <label for="usageUnits">Werkelijk gebruik (eenheden)</label>
+            <input id="usageUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 1.5 of -0.5" />
+          </div>
+          <div class="form-group">
+            <label for="usageNote">Korte toelichting op gebruik</label>
+            <textarea id="usageNote" placeholder="Bijvoorbeeld: alleen thuis, feestje, stress na werk."></textarea>
+          </div>
+        </div>
+
+        <div class="tracker-grid">
+          <div class="form-group">
+            <label for="riskNote">Risico op deze dag</label>
+            <textarea id="riskNote" placeholder="Wat maakt deze dag kwetsbaar of risicovol?"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="motivationNote">Motivatie voor deze dag</label>
+            <textarea id="motivationNote" placeholder="Wat wil je vandaag onthouden of waar doe je het voor?"></textarea>
+          </div>
+        </div>
+
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveDayButton">Sla deze dag op</button>
+          <button type="button" class="button-secondary" id="copyTodayButton">Gebruik vandaag als datum</button>
+          <button type="button" class="button-secondary" id="printButton">Print / bewaar als pdf</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="history-head">
+          <div>
+            <h2>Periode-overzicht</h2>
+            <p>Hier zie je de meest recente ingevulde dagen, inclusief toekomstige notities als je die hebt voorbereid.</p>
+          </div>
+          <div class="history-stats" id="historyStats"></div>
+        </div>
+        <div class="history-tools">
+          <div class="filter-group" role="group" aria-label="Kies een periode">
+            <button type="button" class="filter-chip is-active" data-range="7">7 dagen</button>
+            <button type="button" class="filter-chip" data-range="30">30 dagen</button>
+            <button type="button" class="filter-chip" data-range="90">90 dagen</button>
+          </div>
+          <div class="export-group">
+            <button type="button" class="button-secondary" id="exportDailyJsonButton">Exporteer dagkaart JSON</button>
+            <button type="button" class="button-secondary" id="exportDailyCsvButton">Exporteer dagkaart CSV</button>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Gebruiksgrafiek &ndash; plan vs werkelijk</h3>
+          <div class="chart-legend">
+            <span><span class="legend-swatch" style="background:rgba(63,122,161,0.85);"></span>Werkelijk gebruik</span>
+            <span><span class="legend-swatch" style="background:rgba(63,122,161,0.16);border:1px dashed rgba(63,122,161,0.85);"></span>Gepland gebruik</span>
+          </div>
+          <p id="chartCaption">Nog geen daggegevens beschikbaar voor de gekozen periode.</p>
+          <div class="chart-wrap" id="chartWrap"></div>
+        </div>
+        <div class="evaluation-grid">
+          <div class="evaluation-box">
+            <h3>Weekplan bewaken</h3>
+            <div class="form-group">
+              <label for="evaluationStartDate">Startdatum van de te evalueren 7-daagse periode</label>
+              <input id="evaluationStartDate" type="date" />
+            </div>
+            <div class="form-group">
+              <label for="allowedOveruseUnits">Maximaal te veel gebruikt t.o.v. plan voor plan A</label>
+              <input id="allowedOveruseUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 10" />
+            </div>
+          </div>
+          <div class="evaluation-box">
+            <h3>Haalbaarheid plan A</h3>
+            <ul class="evaluation-list" id="evaluationList"><li>Kies een startdatum om te evalueren.</li></ul>
+            <div class="evaluation-status" id="evaluationStatus">Vul een weekstart en grens in om plan A te bewaken.</div>
+          </div>
+        </div>
+        <div id="historyContent">
+          <p class="history-empty">Nog geen daggegevens opgeslagen.</p>
+        </div>
+      </section>
+
+      <div id="hulpzinnetjeModal" class="hulpzinnetje-modal" aria-hidden="true">
+        <div class="hulpzinnetje-dialog" role="dialog" aria-modal="true" aria-labelledby="hulpzinnetjeTitle">
+          <h3 id="hulpzinnetjeTitle">Hulpzinnetje</h3>
+          <p id="hulpzinnetjeText"></p>
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="closeHulpzinnetjeButton">Sluiten</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'craving-1-10';
+    const historyLimit = 14;
+    let selectedHistoryRange = 7;
+
+    function openHulpzinnetjeModal(title, text) {
+      const modal = document.getElementById('hulpzinnetjeModal');
+      const titleEl = document.getElementById('hulpzinnetjeTitle');
+      const textEl = document.getElementById('hulpzinnetjeText');
+      if (!modal || !titleEl || !textEl) return;
+      titleEl.textContent = title;
+      textEl.textContent = text;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeHulpzinnetjeModal() {
+      const modal = document.getElementById('hulpzinnetjeModal');
+      if (!modal) return;
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    function toDateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function fromDateKey(value) {
+      const [year, month, day] = (value || '').split('-').map(Number);
+      if (!year || !month || !day) return new Date();
+      return new Date(year, month - 1, day, 12, 0, 0, 0);
+    }
+
+    function formatDateLabel(value) {
+      return fromDateKey(value).toLocaleDateString('nl-NL', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    }
+
+    function shiftSelectedDate(days) {
+      const dateInput = document.getElementById('usageDate');
+      const baseDate = fromDateKey(dateInput.value || toDateKey(new Date()));
+      baseDate.setDate(baseDate.getDate() + days);
+      dateInput.value = toDateKey(baseDate);
+      renderSelectedDay();
+    }
+
+    function getFormState() {
+      return iamData.getFormData(formKey) || {};
+    }
+
+    function getDailyEntries() {
+      const state = getFormState();
+      return state.dailyEntries && typeof state.dailyEntries === 'object' ? state.dailyEntries : {};
+    }
+
+    function setSelectedFields(entry) {
+      document.getElementById('plannedUnits').value = entry && entry.plannedUnits !== '' && entry.plannedUnits !== null && entry.plannedUnits !== undefined ? entry.plannedUnits : '';
+      document.getElementById('usageUnits').value = entry && entry.units !== '' && entry.units !== null && entry.units !== undefined ? entry.units : '';
+      document.getElementById('usageNote').value = entry?.usageNote || '';
+      document.getElementById('riskNote').value = entry?.riskNote || '';
+      document.getElementById('motivationNote').value = entry?.motivationNote || '';
+    }
+
+    function renderSelectedDayMeta(entry, dateKey) {
+      const label = document.getElementById('selectedDateLabel');
+      const state = document.getElementById('selectedDateState');
+      const todayKey = toDateKey(new Date());
+      label.textContent = formatDateLabel(dateKey);
+
+      if (!entry) {
+        state.textContent = dateKey === todayKey ? 'Nog geen invoer voor vandaag' : 'Nog geen invoer voor deze dag';
+        return;
+      }
+
+      const parts = [];
+      if (entry.plannedUnits !== '' && entry.plannedUnits !== null && entry.plannedUnits !== undefined) {
+        parts.push(`Plan: ${entry.plannedUnits} eenheden`);
+      }
+      if (entry.units !== '' && entry.units !== null && entry.units !== undefined) {
+        parts.push(`Gebruik: ${entry.units} eenheden`);
+      }
+      if (entry.riskNote) parts.push('Risico ingevuld');
+      if (entry.motivationNote) parts.push('Motivatie ingevuld');
+      state.textContent = parts.length ? parts.join(' | ') : 'Dag opgeslagen';
+    }
+
+    function renderSelectedDay() {
+      const dateKey = document.getElementById('usageDate').value || toDateKey(new Date());
+      const entry = getDailyEntries()[dateKey] || null;
+      setSelectedFields(entry);
+      renderSelectedDayMeta(entry, dateKey);
+    }
+
+    function collectSelectedDayData() {
+      const rawPlanned = document.getElementById('plannedUnits').value.trim().replace(',', '.');
+      const rawUnits = document.getElementById('usageUnits').value.trim().replace(',', '.');
+      return {
+        plannedUnits: rawPlanned === '' ? '' : Number(rawPlanned),
+        units: rawUnits === '' ? '' : Number(rawUnits),
+        usageNote: document.getElementById('usageNote').value.trim(),
+        riskNote: document.getElementById('riskNote').value.trim(),
+        motivationNote: document.getElementById('motivationNote').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    function hasEntryContent(entry) {
+      return entry && (
+        (entry.plannedUnits !== '' && entry.plannedUnits !== null && entry.plannedUnits !== undefined) ||
+        (entry.units !== '' && entry.units !== null && entry.units !== undefined) ||
+        Boolean(entry.usageNote) ||
+        Boolean(entry.riskNote) ||
+        Boolean(entry.motivationNote)
+      );
+    }
+
+    function saveSelectedDay() {
+      const dateKey = document.getElementById('usageDate').value;
+      if (!dateKey) {
+        showMessage('Kies eerst een datum voor deze dagkaart.');
+        return;
+      }
+
+      const state = getFormState();
+      const entries = { ...(state.dailyEntries || {}) };
+      const entry = collectSelectedDayData();
+
+      if (entry.plannedUnits !== '' && Number.isNaN(entry.plannedUnits)) {
+        showMessage('Gepland gebruik moet een geldig getal zijn.');
+        return;
+      }
+      if (entry.units !== '' && Number.isNaN(entry.units)) {
+        showMessage('Gebruik in eenheden moet een geldig getal zijn.');
+        return;
+      }
+
+      if (hasEntryContent(entry)) {
+        entries[dateKey] = entry;
+      } else {
+        delete entries[dateKey];
+      }
+
+      iamData.updateFormData(formKey, {
+        dailyEntries: entries,
+        lastTrackedDate: dateKey
+      });
+
+      renderSelectedDay();
+      renderHistory();
+      showMessage('Dagkaart opgeslagen.');
+    }
+
+    function formatUnits(value) {
+      return Number(value).toLocaleString('nl-NL', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 1
+      });
+    }
+
+    function buildHistoryStats(entries) {
+      const keys = Object.keys(entries);
+      const filledUnits = keys
+        .map((key) => entries[key]?.units)
+        .filter((v) => isNumericUnits(v))
+        .map(Number);
+      const filledPlanned = keys
+        .map((key) => entries[key]?.plannedUnits)
+        .filter((v) => isNumericUnits(v))
+        .map(Number);
+      const total = filledUnits.reduce((sum, v) => sum + v, 0);
+      const plannedTotal = filledPlanned.reduce((sum, v) => sum + v, 0);
+      const average = filledUnits.length ? total / filledUnits.length : 0;
+
+      const stats = [
+        `Dagen ingevuld: ${keys.length}`,
+        `Totaal werkelijk: ${formatUnits(total)}`,
+        `Gemiddeld per ingevulde dag: ${formatUnits(average)}`
+      ];
+      if (filledPlanned.length) {
+        stats.push(`Totaal gepland: ${formatUnits(plannedTotal)}`);
+        stats.push(`Verschil plan vs. werkelijk: ${formatUnits(total - plannedTotal)}`);
+      }
+      return stats;
+    }
+
+    function isNumericUnits(value) {
+      return value !== '' && value !== null && value !== undefined && !Number.isNaN(Number(value));
+    }
+
+    function getDateDiffInDays(dateKey, todayKey) {
+      const date = fromDateKey(dateKey);
+      const today = fromDateKey(todayKey);
+      const diffMs = date.getTime() - today.getTime();
+      return Math.round(diffMs / 86400000);
+    }
+
+    function splitEntriesByRange(entries, range) {
+      const todayKey = toDateKey(new Date());
+      const inRange = [];
+      const future = [];
+
+      Object.entries(entries).forEach(([dateKey, entry]) => {
+        const dayDiff = getDateDiffInDays(dateKey, todayKey);
+        if (dayDiff > 0) {
+          future.push({ dateKey, entry, dayDiff });
+          return;
+        }
+        if (dayDiff >= -(range - 1) && dayDiff <= 0) {
+          inRange.push({ dateKey, entry, dayDiff });
+        }
+      });
+
+      inRange.sort((left, right) => right.dateKey.localeCompare(left.dateKey));
+      future.sort((left, right) => left.dateKey.localeCompare(right.dateKey));
+      return { inRange, future };
+    }
+
+    function buildChartMarkup(items) {
+      if (!items.length) {
+        return '<p class="history-empty">Nog geen gebruikswaarden in deze periode.</p>';
+      }
+
+      const chartWidth = Math.max(320, items.length * 52 + 40);
+      const chartHeight = 220;
+      const topPadding = 18;
+      const bottomPadding = 32;
+      const zeroLine = Math.round(chartHeight / 2);
+      const maxAbs = Math.max(
+        1,
+        ...items.map(({ entry }) => Math.max(
+          Math.abs(Number(entry.units || 0)),
+          Math.abs(Number(entry.plannedUnits || 0))
+        ))
+      );
+      const usableHalfHeight = zeroLine - topPadding - 8;
+      const slotWidth = (chartWidth - 40) / Math.max(items.length, 1);
+      const barW = Math.max(8, Math.min(16, Math.floor(slotWidth / 2) - 3));
+
+      const bars = items.map(({ dateKey, entry }, index) => {
+        const actual = Number(entry.units);
+        const planned = Number(entry.plannedUnits);
+        const hasActual = isNumericUnits(entry.units);
+        const hasPlanned = isNumericUnits(entry.plannedUnits);
+        const xCenter = 24 + index * slotWidth + slotWidth / 2;
+        const shortLabel = dateKey.slice(5).replace('-', '/');
+
+        let result = `<text class="chart-label" x="${xCenter}" y="${chartHeight - 10}" text-anchor="middle">${shortLabel}</text>`;
+
+        if (hasPlanned) {
+          const ph = Math.max(2, Math.round((Math.abs(planned) / maxAbs) * usableHalfHeight));
+          const px = xCenter - barW - 2;
+          const py = planned >= 0 ? zeroLine - ph : zeroLine;
+          const cls = planned >= 0 ? 'chart-bar-plan' : 'chart-bar-plan-neg';
+          const vy = planned >= 0 ? Math.max(12, py - 4) : Math.min(chartHeight - 6, py + ph + 12);
+          result += `<rect class="${cls}" x="${px}" y="${py}" width="${barW}" height="${ph}" rx="3" ry="3"></rect>`;
+          result += `<text class="chart-value" x="${px + barW / 2}" y="${vy}" text-anchor="middle" opacity="0.7">${formatUnits(planned)}</text>`;
+        }
+
+        if (hasActual) {
+          const ah = Math.max(2, Math.round((Math.abs(actual) / maxAbs) * usableHalfHeight));
+          const ax = xCenter + 2;
+          const ay = actual >= 0 ? zeroLine - ah : zeroLine;
+          const cls = actual >= 0 ? 'chart-bar-positive' : 'chart-bar-negative';
+          const vy = actual >= 0 ? Math.max(12, ay - 4) : Math.min(chartHeight - 6, ay + ah + 12);
+          result += `<rect class="${cls}" x="${ax}" y="${ay}" width="${barW}" height="${ah}" rx="3" ry="3"></rect>`;
+          result += `<text class="chart-value" x="${ax + barW / 2}" y="${vy}" text-anchor="middle">${formatUnits(actual)}</text>`;
+        }
+
+        return result;
+      }).join('');
+
+      return `
+        <svg class="usage-chart" viewBox="0 0 ${chartWidth} ${chartHeight}" role="img" aria-label="Grafiek van gebruik in eenheden">
+          <line class="chart-axis" x1="12" y1="${zeroLine}" x2="${chartWidth - 12}" y2="${zeroLine}"></line>
+          <line class="chart-axis" x1="12" y1="${topPadding}" x2="12" y2="${chartHeight - bottomPadding}"></line>
+          ${bars}
+        </svg>
+      `;
+    }
+
+    function renderChart(items) {
+      const chartWrap = document.getElementById('chartWrap');
+      const caption = document.getElementById('chartCaption');
+      const withData = items
+        .filter(({ entry }) => isNumericUnits(entry.units) || isNumericUnits(entry.plannedUnits))
+        .sort((left, right) => left.dateKey.localeCompare(right.dateKey));
+
+      if (!withData.length) {
+        caption.textContent = `Nog geen gebruikswaarden beschikbaar in de laatste ${selectedHistoryRange} dagen.`;
+        chartWrap.innerHTML = '<p class="history-empty">Vul eenheden in op een of meer dagen om de grafiek te zien.</p>';
+        return;
+      }
+
+      caption.textContent = `Gebruik in eenheden voor de laatste ${selectedHistoryRange} dagen. Gestreept = gepland, vol = werkelijk.`;
+      chartWrap.innerHTML = buildChartMarkup(withData);
+    }
+
+    function buildWindowDateKeys(startDateKey, length) {
+      const keys = [];
+      const start = fromDateKey(startDateKey);
+      for (let i = 0; i < length; i++) {
+        const d = new Date(start);
+        d.setDate(d.getDate() + i);
+        keys.push(toDateKey(d));
+      }
+      return keys;
+    }
+
+    function renderEvaluation() {
+      const state = getFormState();
+      const entries = state.dailyEntries || {};
+      const startInput = document.getElementById('evaluationStartDate');
+      const allowedInput = document.getElementById('allowedOveruseUnits');
+      const listEl = document.getElementById('evaluationList');
+      const statusEl = document.getElementById('evaluationStatus');
+      if (!startInput || !listEl || !statusEl) return;
+
+      const startKey = startInput.value || toDateKey(new Date());
+      const allowed = parseFloat((allowedInput?.value || '').replace(',', '.'));
+      const windowKeys = buildWindowDateKeys(startKey, 7);
+
+      let plannedTotal = 0;
+      let actualTotal = 0;
+      const rows = windowKeys.map((key) => {
+        const entry = entries[key] || {};
+        const planned = isNumericUnits(entry.plannedUnits) ? Number(entry.plannedUnits) : null;
+        const actual = isNumericUnits(entry.units) ? Number(entry.units) : null;
+        if (planned !== null) plannedTotal += planned;
+        if (actual !== null) actualTotal += actual;
+        const diff = (planned !== null && actual !== null) ? actual - planned : null;
+        const diffStr = diff !== null ? ` (${diff >= 0 ? '+' : ''}${formatUnits(diff)})` : '';
+        const plannedStr = planned !== null ? formatUnits(planned) : '–';
+        const actualStr = actual !== null ? formatUnits(actual) : '–';
+        return `<li>${formatDateLabel(key)}: gepland ${plannedStr}, werkelijk ${actualStr}${diffStr}</li>`;
+      });
+
+      listEl.innerHTML = rows.join('');
+
+      const diff = actualTotal - plannedTotal;
+      if (!isNaN(allowed) && diff > allowed) {
+        statusEl.className = 'evaluation-status alert';
+        statusEl.textContent = `Overschrijding: +${formatUnits(diff)} eenheden deze week – overweeg Plan B.`;
+      } else if (!isNaN(allowed) && diff > allowed * 0.5) {
+        statusEl.className = 'evaluation-status warn';
+        statusEl.textContent = `Let op: +${formatUnits(diff)} eenheden boven plan deze week.`;
+      } else {
+        statusEl.className = 'evaluation-status';
+        statusEl.textContent = `Binnen plan: ${formatUnits(diff >= 0 ? diff : 0)} eenheden verschil.`;
+      }
+    }
+
+    function loadRegulationFields() {
+      const state = getFormState();
+      const evalStartEl = document.getElementById('evaluationStartDate');
+      const allowedEl = document.getElementById('allowedOveruseUnits');
+      if (evalStartEl && state.evaluationStartDate) evalStartEl.value = state.evaluationStartDate;
+      if (allowedEl && state.allowedOveruseUnits !== undefined) allowedEl.value = String(state.allowedOveruseUnits).replace('.', ',');
+    }
+
+    function renderFutureList(items) {
+      if (!items.length) return '';
+
+      const futureItems = items.slice(0, historyLimit).map(({ dateKey, entry }) => {
+        const parts = [];
+        if (isNumericUnits(entry.plannedUnits)) parts.push(`Gepland: ${formatUnits(entry.plannedUnits)} eenheden`);
+        if (isNumericUnits(entry.units)) parts.push(`Werkelijk: ${formatUnits(entry.units)} eenheden`);
+        if (isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units)) {
+          parts.push(`Verschil: ${formatUnits(Number(entry.units) - Number(entry.plannedUnits))} eenheden`);
+        }
+        if (entry.riskNote) parts.push(`Risico: ${entry.riskNote}`);
+        if (entry.motivationNote) parts.push(`Motivatie: ${entry.motivationNote}`);
+        if (entry.usageNote) parts.push(`Toelichting: ${entry.usageNote}`);
+
+        return `
+          <li class="history-item">
+            <h3>${formatDateLabel(dateKey)}</h3>
+            ${parts.map((part) => `<p>${part}</p>`).join('') || '<p>Nog geen extra toelichting ingevuld.</p>'}
+          </li>
+        `;
+      }).join('');
+
+      return `
+        <div class="future-block">
+          <div class="future-head">
+            <h3>Toekomstige dagen</h3>
+            <p>Vooruit ingevulde risico- of motivatienotities blijven hieronder zichtbaar.</p>
+          </div>
+          <ul class="history-list">${futureItems}</ul>
+        </div>
+      `;
+    }
+
+    function setHistoryFilter(range) {
+      selectedHistoryRange = range;
+      document.querySelectorAll('[data-range]').forEach((button) => {
+        button.classList.toggle('is-active', Number(button.dataset.range) === range);
+      });
+      renderHistory();
+    }
+
+    function exportDailyEntries(format) {
+      const entries = getDailyEntries();
+      const sortedEntries = Object.keys(entries)
+        .sort((left, right) => left.localeCompare(right))
+        .map((dateKey) => ({ date: dateKey, ...entries[dateKey] }));
+
+      if (!sortedEntries.length) {
+        showMessage('Er zijn nog geen dagregistraties om te exporteren.');
+        return;
+      }
+
+      let content = '';
+      let mimeType = 'application/json;charset=utf-8';
+      let filename = `iam-dagkaart-${toDateKey(new Date())}.json`;
+
+      if (format === 'csv') {
+        mimeType = 'text/csv;charset=utf-8';
+        filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
+        const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+        const rows = [
+          ['date', 'plannedUnits', 'units', 'difference', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ...sortedEntries.map((entry) => {
+            const hasBoth = isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units);
+            const difference = hasBoth ? Number(entry.units) - Number(entry.plannedUnits) : '';
+            return [
+              entry.date,
+              entry.plannedUnits ?? '',
+              entry.units ?? '',
+              difference,
+              entry.usageNote || '',
+              entry.riskNote || '',
+              entry.motivationNote || '',
+              entry.updatedAt || ''
+            ];
+          })
+        ];
+        content = rows.map((row) => row.map(escapeCsv).join(',')).join('\n');
+      } else {
+        content = JSON.stringify({ exportedAt: new Date().toISOString(), entries: sortedEntries }, null, 2);
+      }
+
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage(`Dagregistraties geëxporteerd als ${format.toUpperCase()}.`);
+    }
+
+    function renderHistory() {
+      const entries = getDailyEntries();
+      const keys = Object.keys(entries).sort((left, right) => right.localeCompare(left));
+      const split = splitEntriesByRange(entries, selectedHistoryRange);
+      const stats = document.getElementById('historyStats');
+      const container = document.getElementById('historyContent');
+
+      stats.innerHTML = '';
+      buildHistoryStats(Object.fromEntries(split.inRange.map(({ dateKey, entry }) => [dateKey, entry]))).forEach((text) => {
+        const pill = document.createElement('span');
+        pill.className = 'meta-pill';
+        pill.textContent = text;
+        stats.appendChild(pill);
+      });
+
+      if (split.future.length) {
+        const futurePill = document.createElement('span');
+        futurePill.className = 'meta-pill';
+        futurePill.textContent = `Toekomstige dagen: ${split.future.length}`;
+        stats.appendChild(futurePill);
+      }
+
+      renderChart(split.inRange);
+
+      if (!keys.length) {
+        container.innerHTML = '<p class="history-empty">Nog geen daggegevens opgeslagen.</p>';
+        return;
+      }
+
+      if (!split.inRange.length) {
+        container.innerHTML = `<p class="history-empty">Nog geen ingevulde dagen in de laatste ${selectedHistoryRange} dagen.</p>${renderFutureList(split.future)}`;
+        return;
+      }
+
+      const list = document.createElement('ul');
+      list.className = 'history-list';
+
+      split.inRange.slice(0, historyLimit).forEach(({ dateKey, entry }) => {
+        const item = document.createElement('li');
+        item.className = 'history-item';
+
+        const title = document.createElement('h3');
+        title.textContent = formatDateLabel(dateKey);
+        item.appendChild(title);
+
+        const usage = document.createElement('p');
+        const hasActual = entry.units !== '' && entry.units !== null && entry.units !== undefined;
+        const hasPlanned = isNumericUnits(entry.plannedUnits);
+        if (hasPlanned) {
+          const planP = document.createElement('p');
+          planP.textContent = `Gepland: ${formatUnits(entry.plannedUnits)} eenheden`;
+          item.appendChild(planP);
+        }
+        usage.textContent = hasActual
+          ? `Werkelijk: ${formatUnits(entry.units)} eenheden`
+          : 'Werkelijk gebruik: geen waarde ingevuld';
+        item.appendChild(usage);
+
+        if (hasPlanned && hasActual) {
+          const diffP = document.createElement('p');
+          diffP.textContent = `Verschil: ${formatUnits(Number(entry.units) - Number(entry.plannedUnits))} eenheden`;
+          item.appendChild(diffP);
+        }
+
+        if (entry.usageNote) {
+          const usageNote = document.createElement('p');
+          usageNote.textContent = `Toelichting: ${entry.usageNote}`;
+          item.appendChild(usageNote);
+        }
+
+        if (entry.riskNote) {
+          const risk = document.createElement('p');
+          risk.textContent = `Risico: ${entry.riskNote}`;
+          item.appendChild(risk);
+        }
+
+        if (entry.motivationNote) {
+          const motivation = document.createElement('p');
+          motivation.textContent = `Motivatie: ${entry.motivationNote}`;
+          item.appendChild(motivation);
+        }
+
+        list.appendChild(item);
+      });
+
+      container.innerHTML = '';
+      container.appendChild(list);
+      container.insertAdjacentHTML('beforeend', renderFutureList(split.future));
+    }
+
+    function showMessage(text) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.classList.add('show');
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => el.classList.remove('show'), 2500);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const existing = iamData.getFormData(formKey) || {};
+      const dateInput = document.getElementById('usageDate');
+
+      dateInput.value = existing.lastTrackedDate || toDateKey(new Date());
+      renderSelectedDay();
+      renderHistory();
+
+      document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
+        button.addEventListener('click', () => {
+          openHulpzinnetjeModal(button.dataset.hulpzinnetjeTitle || 'Hulpzinnetje', button.dataset.hulpzinnetjeContent || '');
+        });
+      });
+      document.getElementById('closeHulpzinnetjeButton').addEventListener('click', closeHulpzinnetjeModal);
+      document.getElementById('hulpzinnetjeModal').addEventListener('click', (event) => {
+        if (event.target.id === 'hulpzinnetjeModal') {
+          closeHulpzinnetjeModal();
+        }
+      });
+      document.getElementById('prevDayButton').addEventListener('click', () => shiftSelectedDate(-1));
+      document.getElementById('nextDayButton').addEventListener('click', () => shiftSelectedDate(1));
+      document.getElementById('usageDate').addEventListener('change', renderSelectedDay);
+      document.getElementById('saveDayButton').addEventListener('click', saveSelectedDay);
+      document.getElementById('copyTodayButton').addEventListener('click', () => {
+        dateInput.value = toDateKey(new Date());
+        renderSelectedDay();
+      });
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.querySelectorAll('[data-range]').forEach((button) => {
+        button.addEventListener('click', () => setHistoryFilter(Number(button.dataset.range)));
+      });
+      document.getElementById('exportDailyJsonButton').addEventListener('click', () => exportDailyEntries('json'));
+      document.getElementById('exportDailyCsvButton').addEventListener('click', () => exportDailyEntries('csv'));
+
+      loadRegulationFields();
+      renderEvaluation();
+
+      const evalStartInput = document.getElementById('evaluationStartDate');
+      const allowedInput = document.getElementById('allowedOveruseUnits');
+      if (evalStartInput) {
+        evalStartInput.addEventListener('change', () => {
+          const state = getFormState();
+          iamData.updateFormData('craving-1-10', { ...state, evaluationStartDate: evalStartInput.value });
+          renderEvaluation();
+        });
+      }
+      if (allowedInput) {
+        allowedInput.addEventListener('input', () => {
+          const v = parseFloat(allowedInput.value.replace(',', '.'));
+          if (!isNaN(v)) {
+            const state = getFormState();
+            iamData.updateFormData('craving-1-10', { ...state, allowedOveruseUnits: v });
+          }
+          renderEvaluation();
+        });
+      }
+    });
+  </script>
+</body>
+</html>

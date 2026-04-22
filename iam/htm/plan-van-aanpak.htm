@@ -113,6 +113,127 @@
     }
 
     .weekly-review-list li { margin-bottom: 0.3rem; }
+
+    .subtle-help {
+      margin: 0.35rem 0 0.6rem;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .section-inline-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .hulpzinnetje-button {
+      border: 1px solid rgba(47, 101, 135, 0.22);
+      background: #f4f8fb;
+      color: var(--page-main);
+      border-radius: 999px;
+      min-height: 40px;
+      padding: 0.45rem 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .regulation-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.65rem;
+      margin-top: 0.85rem;
+    }
+
+    .regulation-day {
+      display: grid;
+      gap: 0.3rem;
+    }
+
+    .regulation-day label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+      color: #496072;
+    }
+
+    .regulation-day input {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(31, 56, 73, 0.18);
+      padding: 0.65rem 0.55rem;
+      text-align: center;
+      background: #fff;
+      color: var(--page-ink);
+    }
+
+    .regulation-status {
+      display: none;
+      margin-top: 0.85rem;
+      border-left: 4px solid #5a8840;
+      border-radius: 12px;
+      background: #eef8ee;
+      color: #234f24;
+      padding: 0.75rem 0.9rem;
+      font-weight: 600;
+    }
+
+    .regulation-status.show {
+      display: block;
+    }
+
+    textarea.readonly-rules {
+      background: #f5f8fa;
+      color: #2c4352;
+    }
+
+    .hulpzinnetje-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(20, 31, 40, 0.58);
+      z-index: 1000;
+    }
+
+    .hulpzinnetje-modal.open {
+      display: flex;
+    }
+
+    .hulpzinnetje-dialog {
+      width: min(560px, 100%);
+      background: #fff;
+      color: var(--page-ink);
+      border-radius: 18px;
+      box-shadow: 0 24px 48px rgba(20, 31, 40, 0.22);
+      border-top: 6px solid var(--page-main);
+      padding: 1.2rem;
+    }
+
+    .hulpzinnetje-dialog h3 {
+      margin: 0 0 0.75rem;
+      color: var(--page-main);
+    }
+
+    .hulpzinnetje-dialog p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .hulpzinnetje-dialog .action-bar {
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 720px) {
+      .regulation-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
   </style>
 </head>
 <body>
@@ -196,6 +317,33 @@
             <label for="usageGoal">Hoe ziet ander gedrag er concreet uit voor jou en voor anderen?</label>
             <textarea id="usageGoal" rows="4"></textarea>
           </div>
+          <div class="form-group mt-2">
+            <div class="section-inline-head">
+              <label for="selfRegulationRules">Zelf-regulatieplanning</label>
+              <button
+                type="button"
+                class="hulpzinnetje-button"
+                data-hulpzinnetje-title="Hulpzinnetje bij regulatie"
+                data-hulpzinnetje-content="Uiteindelijk is dat gebruik natuurlijk wel een uitkomstmaat van de manier waarop je met jezelf omgaat. Dus behalve dat je in je plan hopelijk hebt opgenomen hoe je beter voor jezelf zorgt, kun je hier ook een weekplanning maken van het gebruik al-dan-niet dat jij voor jezelf voor ogen hebt."
+              >[?] Hulpzinnetje</button>
+            </div>
+            <p class="subtle-help">Leg hier alleen je eigen regels vast: hoeveel inname op welke dag, als weekpatroon dat repeteert vanaf Startdatum plan A tot Evaluatiedatum plan A.</p>
+            <div class="regulation-grid" aria-label="Weekplanning gebruik">
+              <div class="regulation-day"><label for="reg-1">Ma</label><input id="reg-1" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+              <div class="regulation-day"><label for="reg-2">Di</label><input id="reg-2" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+              <div class="regulation-day"><label for="reg-3">Wo</label><input id="reg-3" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+              <div class="regulation-day"><label for="reg-4">Do</label><input id="reg-4" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+              <div class="regulation-day"><label for="reg-5">Vr</label><input id="reg-5" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+              <div class="regulation-day"><label for="reg-6">Za</label><input id="reg-6" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+              <div class="regulation-day"><label for="reg-0">Zo</label><input id="reg-0" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+            </div>
+            <div class="action-bar" style="margin-top: 0.9rem;">
+              <button type="button" class="button-secondary" id="saveRegulationButton">Sla weekplanning op</button>
+              <button type="button" class="button-primary" id="applyRegulationButton">Zet weekplanning klaar tot Evaluatiedatum plan A</button>
+            </div>
+            <div id="regulationStatus" class="regulation-status"></div>
+            <textarea id="selfRegulationRules" class="readonly-rules" rows="7" readonly></textarea>
+          </div>
         </section>
 
         <div class="grid-two">
@@ -211,6 +359,10 @@
             <div class="form-group">
               <label for="startDate">Vanaf welke datum start je plan A?</label>
               <input id="startDate" type="date" />
+            </div>
+            <div class="form-group mt-2">
+              <label for="evaluationDatePlanA">Evaluatiedatum plan A</label>
+              <input id="evaluationDatePlanA" type="date" />
             </div>
           </section>
         </div>
@@ -264,12 +416,23 @@
           <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
         </div>
       </form>
+
+      <div id="hulpzinnetjeModal" class="hulpzinnetje-modal" aria-hidden="true">
+        <div class="hulpzinnetje-dialog" role="dialog" aria-modal="true" aria-labelledby="hulpzinnetjeTitle">
+          <h3 id="hulpzinnetjeTitle">Hulpzinnetje</h3>
+          <p id="hulpzinnetjeText"></p>
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="closeHulpzinnetjeButton">Sluiten</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'plan-van-aanpak';
+    const REGULATION_FORM_KEY = 'craving-1-10';
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
     const fields = [
       'startPoint',
@@ -281,8 +444,19 @@
       'planB',
       'fallbackGoal',
       'startDate',
+      'evaluationDatePlanA',
       'supportPeople',
       'rewards'
+    ];
+
+    const weekdayOrder = [
+      { idx: 1, label: 'Ma' },
+      { idx: 2, label: 'Di' },
+      { idx: 3, label: 'Wo' },
+      { idx: 4, label: 'Do' },
+      { idx: 5, label: 'Vr' },
+      { idx: 6, label: 'Za' },
+      { idx: 0, label: 'Zo' }
     ];
 
     function getDefaultData() {
@@ -314,6 +488,181 @@
       message.classList.toggle('error', isError);
       clearTimeout(showMessage.timer);
       showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function formatDateShort(value) {
+      if (!value) return '';
+      const d = new Date(`${value}T12:00:00`);
+      if (Number.isNaN(d.getTime())) return value;
+      return d.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function formatUnitsRule(value) {
+      return Number(value).toLocaleString('nl-NL', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function toDateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function fromDateKey(value) {
+      const [year, month, day] = (value || '').split('-').map(Number);
+      if (!year || !month || !day) return null;
+      return new Date(year, month - 1, day, 12, 0, 0, 0);
+    }
+
+    function buildWindowDateKeys(startDateKey, endDateKey) {
+      const start = fromDateKey(startDateKey);
+      const end = fromDateKey(endDateKey);
+      if (!start || !end || end < start) return [];
+      const keys = [];
+      const cursor = new Date(start);
+      while (cursor <= end) {
+        keys.push(toDateKey(cursor));
+        cursor.setDate(cursor.getDate() + 1);
+      }
+      return keys;
+    }
+
+    function getRegulationState() {
+      return iamData.getFormData(REGULATION_FORM_KEY) || {};
+    }
+
+    function getRegulation() {
+      const state = getRegulationState();
+      return state.regulation || { pattern: [null, null, null, null, null, null, null] };
+    }
+
+    function loadRegulationFields() {
+      const reg = getRegulation();
+      for (let i = 0; i < 7; i += 1) {
+        const field = document.getElementById(`reg-${i}`);
+        if (field) {
+          const value = reg.pattern?.[i];
+          field.value = value !== null && value !== undefined ? String(value).replace('.', ',') : '';
+        }
+      }
+    }
+
+    function collectRegulationPattern() {
+      return [0, 1, 2, 3, 4, 5, 6].map((index) => {
+        const field = document.getElementById(`reg-${index}`);
+        if (!field || field.value.trim() === '') return null;
+        const parsed = parseFloat(field.value.replace(',', '.'));
+        return Number.isNaN(parsed) ? null : parsed;
+      });
+    }
+
+    function showRegulationStatus(text, isError = false) {
+      const status = document.getElementById('regulationStatus');
+      if (!status) return;
+      status.textContent = text;
+      status.classList.add('show');
+      status.style.borderLeftColor = isError ? 'var(--page-accent)' : '#5a8840';
+      status.style.background = isError ? '#fff1ed' : '#eef8ee';
+      status.style.color = isError ? '#8a3b24' : '#234f24';
+      clearTimeout(showRegulationStatus.timer);
+      showRegulationStatus.timer = setTimeout(() => status.classList.remove('show'), 3200);
+    }
+
+    function persistRegulation({ applyToEntries = false, feedback = true } = {}) {
+      const pattern = collectRegulationPattern();
+      const state = getRegulationState();
+      const startDate = document.getElementById('startDate')?.value || '';
+      const evaluationDate = document.getElementById('evaluationDatePlanA')?.value || '';
+      const nextState = {
+        ...state,
+        regulation: {
+          pattern,
+          applyFrom: startDate,
+          applyUntil: evaluationDate
+        }
+      };
+
+      if (applyToEntries) {
+        if (!startDate || !evaluationDate) {
+          showRegulationStatus('Vul eerst Startdatum plan A en Evaluatiedatum plan A in.', true);
+          return false;
+        }
+        const dateKeys = buildWindowDateKeys(startDate, evaluationDate);
+        if (!dateKeys.length) {
+          showRegulationStatus('Evaluatiedatum plan A moet op of na de startdatum liggen.', true);
+          return false;
+        }
+        const entries = { ...(state.dailyEntries || {}) };
+        dateKeys.forEach((dateKey) => {
+          const date = fromDateKey(dateKey);
+          const weekday = date.getDay();
+          const planned = pattern[weekday];
+          if (planned !== null && planned !== undefined) {
+            entries[dateKey] = { ...(entries[dateKey] || {}), plannedUnits: planned };
+          }
+        });
+        nextState.dailyEntries = entries;
+      }
+
+      iamData.updateFormData(REGULATION_FORM_KEY, nextState);
+      renderSelfRegulationRules();
+      if (feedback) {
+        showRegulationStatus(
+          applyToEntries
+            ? 'Weekplanning opgeslagen en klaargezet in Het gebruik van de dag.'
+            : 'Weekplanning opgeslagen.'
+        );
+      }
+      return true;
+    }
+
+    function renderSelfRegulationRules() {
+      const rulesEl = document.getElementById('selfRegulationRules');
+      if (!rulesEl) return;
+
+      const reg = getRegulation();
+      const pattern = Array.isArray(reg.pattern) ? reg.pattern : [];
+
+      const lines = weekdayOrder
+        .filter(({ idx }) => pattern[idx] !== null && pattern[idx] !== undefined && pattern[idx] !== '')
+        .map(({ idx, label }) => `${label}: ${formatUnitsRule(pattern[idx])} eenheden`);
+
+      const startDate = document.getElementById('startDate')?.value || reg.applyFrom || '';
+      const evaluationDate = document.getElementById('evaluationDatePlanA')?.value || '';
+
+      if (lines.length) {
+        if (startDate && evaluationDate) {
+          lines.push(`Herhaal weekpatroon van ${formatDateShort(startDate)} t/m ${formatDateShort(evaluationDate)}.`);
+        } else if (evaluationDate) {
+          lines.push(`Herhaal weekpatroon tot Evaluatiedatum plan A: ${formatDateShort(evaluationDate)}.`);
+        } else if (startDate) {
+          lines.push(`Weekpatroon start op ${formatDateShort(startDate)}.`);
+        }
+        rulesEl.value = lines.join('\n');
+      } else {
+        rulesEl.value = 'Nog geen weekpatroon ingevuld.';
+      }
+    }
+
+    function openHulpzinnetjeModal(title, text) {
+      const modal = document.getElementById('hulpzinnetjeModal');
+      const titleEl = document.getElementById('hulpzinnetjeTitle');
+      const textEl = document.getElementById('hulpzinnetjeText');
+      if (!modal || !titleEl || !textEl) return;
+      titleEl.textContent = title;
+      textEl.textContent = text;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeHulpzinnetjeModal() {
+      const modal = document.getElementById('hulpzinnetjeModal');
+      if (!modal) return;
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
     }
 
     function getWeeklyReview() {
@@ -495,7 +844,9 @@
     document.addEventListener('DOMContentLoaded', () => {
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
+      loadRegulationFields();
       renderWeeklyReviewPrompt();
+      renderSelfRegulationRules();
 
       const template = document.getElementById('usageGoalTemplate');
       const usageGoal = document.getElementById('usageGoal');
@@ -510,9 +861,31 @@
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('planForm').addEventListener('input', () => saveForm(false));
+      document.getElementById('startDate').addEventListener('change', renderSelfRegulationRules);
+      document.getElementById('evaluationDatePlanA').addEventListener('change', renderSelfRegulationRules);
+      document.getElementById('saveRegulationButton').addEventListener('click', () => persistRegulation({ applyToEntries: false, feedback: true }));
+      document.getElementById('applyRegulationButton').addEventListener('click', () => persistRegulation({ applyToEntries: true, feedback: true }));
+      document.querySelectorAll('[id^="reg-"]').forEach((field) => {
+        field.addEventListener('input', renderSelfRegulationRules);
+      });
+      document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
+        button.addEventListener('click', () => {
+          openHulpzinnetjeModal(button.dataset.hulpzinnetjeTitle || 'Hulpzinnetje', button.dataset.hulpzinnetjeContent || '');
+        });
+      });
+      document.getElementById('closeHulpzinnetjeButton').addEventListener('click', closeHulpzinnetjeModal);
+      document.getElementById('hulpzinnetjeModal').addEventListener('click', (event) => {
+        if (event.target.id === 'hulpzinnetjeModal') {
+          closeHulpzinnetjeModal();
+        }
+      });
       document.getElementById('weeklyReviewApply').addEventListener('click', applyWeeklyReviewToForm);
       document.getElementById('weeklyReviewOpen').addEventListener('click', () => {
         window.location.href = 'index.htm#weeklyReviewCard';
+      });
+      window.addEventListener('focus', () => {
+        loadRegulationFields();
+        renderSelfRegulationRules();
       });
     });
   </script>
