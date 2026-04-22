@@ -113,6 +113,87 @@
       flex-wrap: wrap;
       gap: 0.5rem;
     }
+    .history-tools {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: center;
+      margin: 1rem 0;
+    }
+    .filter-group,
+    .export-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .filter-chip {
+      border: 1px solid rgba(23, 50, 73, 0.14);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink);
+      padding: 0.45rem 0.85rem;
+      min-height: 40px;
+      font-weight: 700;
+    }
+    .filter-chip.is-active {
+      background: var(--main);
+      color: #fff;
+      border-color: var(--main);
+    }
+    .chart-card {
+      border: 1px solid rgba(23, 50, 73, 0.09);
+      border-radius: 14px;
+      padding: 0.9rem;
+      background: #fbfdfe;
+      margin-bottom: 1rem;
+    }
+    .chart-card h3,
+    .future-head h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+    }
+    .chart-card p,
+    .future-head p {
+      margin: 0;
+      color: #4d6476;
+    }
+    .chart-wrap {
+      margin-top: 0.9rem;
+      overflow-x: auto;
+    }
+    .usage-chart {
+      width: 100%;
+      min-width: 280px;
+      height: 240px;
+      display: block;
+    }
+    .chart-axis {
+      stroke: rgba(23, 50, 73, 0.25);
+      stroke-width: 1;
+    }
+    .chart-bar-positive { fill: rgba(63, 122, 161, 0.85); }
+    .chart-bar-negative { fill: rgba(215, 107, 78, 0.88); }
+    .chart-label {
+      fill: #486173;
+      font-size: 10px;
+    }
+    .chart-value {
+      fill: #173249;
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .future-block {
+      margin-top: 1rem;
+      border-top: 1px solid rgba(23, 50, 73, 0.08);
+      padding-top: 1rem;
+    }
+    .future-head {
+      display: grid;
+      gap: 0.25rem;
+      margin-bottom: 0.8rem;
+    }
     .history-list {
       list-style: none;
       padding: 0;
@@ -264,6 +345,22 @@
           </div>
           <div class="history-stats" id="historyStats"></div>
         </div>
+        <div class="history-tools">
+          <div class="filter-group" role="group" aria-label="Kies een periode">
+            <button type="button" class="filter-chip is-active" data-range="7">7 dagen</button>
+            <button type="button" class="filter-chip" data-range="30">30 dagen</button>
+            <button type="button" class="filter-chip" data-range="90">90 dagen</button>
+          </div>
+          <div class="export-group">
+            <button type="button" class="button-secondary" id="exportDailyJsonButton">Exporteer dagkaart JSON</button>
+            <button type="button" class="button-secondary" id="exportDailyCsvButton">Exporteer dagkaart CSV</button>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Gebruiksgrafiek</h3>
+          <p id="chartCaption">Nog geen daggegevens beschikbaar voor de gekozen periode.</p>
+          <div class="chart-wrap" id="chartWrap"></div>
+        </div>
         <div id="historyContent">
           <p class="history-empty">Nog geen daggegevens opgeslagen.</p>
         </div>
@@ -275,6 +372,7 @@
   <script>
     const formKey = 'craving-1-10';
     const historyLimit = 14;
+    let selectedHistoryRange = 7;
 
     function toDateKey(date) {
       const year = date.getFullYear();
@@ -424,30 +522,218 @@
       ];
     }
 
+    function isNumericUnits(value) {
+      return value !== '' && value !== null && value !== undefined && !Number.isNaN(Number(value));
+    }
+
+    function getDateDiffInDays(dateKey, todayKey) {
+      const date = fromDateKey(dateKey);
+      const today = fromDateKey(todayKey);
+      const diffMs = date.getTime() - today.getTime();
+      return Math.round(diffMs / 86400000);
+    }
+
+    function splitEntriesByRange(entries, range) {
+      const todayKey = toDateKey(new Date());
+      const inRange = [];
+      const future = [];
+
+      Object.entries(entries).forEach(([dateKey, entry]) => {
+        const dayDiff = getDateDiffInDays(dateKey, todayKey);
+        if (dayDiff > 0) {
+          future.push({ dateKey, entry, dayDiff });
+          return;
+        }
+        if (dayDiff >= -(range - 1) && dayDiff <= 0) {
+          inRange.push({ dateKey, entry, dayDiff });
+        }
+      });
+
+      inRange.sort((left, right) => right.dateKey.localeCompare(left.dateKey));
+      future.sort((left, right) => left.dateKey.localeCompare(right.dateKey));
+      return { inRange, future };
+    }
+
+    function buildChartMarkup(items) {
+      if (!items.length) {
+        return '<p class="history-empty">Nog geen gebruikswaarden in deze periode.</p>';
+      }
+
+      const chartWidth = Math.max(320, items.length * 44 + 40);
+      const chartHeight = 220;
+      const topPadding = 18;
+      const bottomPadding = 32;
+      const zeroLine = Math.round(chartHeight / 2);
+      const maxAbs = Math.max(
+        1,
+        ...items.map(({ entry }) => Math.abs(Number(entry.units || 0)))
+      );
+      const usableHalfHeight = zeroLine - topPadding - 8;
+      const barWidth = Math.max(12, Math.min(26, Math.floor((chartWidth - 40) / Math.max(items.length, 1)) - 8));
+
+      const bars = items.map(({ dateKey, entry }, index) => {
+        const value = Number(entry.units || 0);
+        const scaledHeight = Math.round((Math.abs(value) / maxAbs) * usableHalfHeight);
+        const x = 24 + index * ((chartWidth - 40) / Math.max(items.length, 1));
+        const y = value >= 0 ? zeroLine - scaledHeight : zeroLine;
+        const cssClass = value >= 0 ? 'chart-bar-positive' : 'chart-bar-negative';
+        const shortLabel = dateKey.slice(5).replace('-', '/');
+        const valueY = value >= 0 ? Math.max(12, y - 4) : Math.min(chartHeight - 6, y + scaledHeight + 12);
+        return `
+          <rect class="${cssClass}" x="${x}" y="${y}" width="${barWidth}" height="${Math.max(scaledHeight, 2)}" rx="4" ry="4"></rect>
+          <text class="chart-value" x="${x + barWidth / 2}" y="${valueY}" text-anchor="middle">${formatUnits(value)}</text>
+          <text class="chart-label" x="${x + barWidth / 2}" y="${chartHeight - 10}" text-anchor="middle">${shortLabel}</text>
+        `;
+      }).join('');
+
+      return `
+        <svg class="usage-chart" viewBox="0 0 ${chartWidth} ${chartHeight}" role="img" aria-label="Grafiek van gebruik in eenheden">
+          <line class="chart-axis" x1="12" y1="${zeroLine}" x2="${chartWidth - 12}" y2="${zeroLine}"></line>
+          <line class="chart-axis" x1="12" y1="${topPadding}" x2="12" y2="${chartHeight - bottomPadding}"></line>
+          ${bars}
+        </svg>
+      `;
+    }
+
+    function renderChart(items) {
+      const chartWrap = document.getElementById('chartWrap');
+      const caption = document.getElementById('chartCaption');
+      const withUnits = items
+        .filter(({ entry }) => isNumericUnits(entry.units))
+        .sort((left, right) => left.dateKey.localeCompare(right.dateKey));
+
+      if (!withUnits.length) {
+        caption.textContent = `Nog geen gebruikswaarden beschikbaar in de laatste ${selectedHistoryRange} dagen.`;
+        chartWrap.innerHTML = '<p class="history-empty">Vul eenheden in op een of meer dagen om de grafiek te zien.</p>';
+        return;
+      }
+
+      caption.textContent = `Gebruik in eenheden voor de laatste ${selectedHistoryRange} dagen tot en met vandaag.`;
+      chartWrap.innerHTML = buildChartMarkup(withUnits);
+    }
+
+    function renderFutureList(items) {
+      if (!items.length) return '';
+
+      const futureItems = items.slice(0, historyLimit).map(({ dateKey, entry }) => {
+        const parts = [];
+        if (isNumericUnits(entry.units)) parts.push(`Gebruik: ${formatUnits(entry.units)} eenheden`);
+        if (entry.riskNote) parts.push(`Risico: ${entry.riskNote}`);
+        if (entry.motivationNote) parts.push(`Motivatie: ${entry.motivationNote}`);
+        if (entry.usageNote) parts.push(`Toelichting: ${entry.usageNote}`);
+
+        return `
+          <li class="history-item">
+            <h3>${formatDateLabel(dateKey)}</h3>
+            ${parts.map((part) => `<p>${part}</p>`).join('') || '<p>Nog geen extra toelichting ingevuld.</p>'}
+          </li>
+        `;
+      }).join('');
+
+      return `
+        <div class="future-block">
+          <div class="future-head">
+            <h3>Toekomstige dagen</h3>
+            <p>Vooruit ingevulde risico- of motivatienotities blijven hieronder zichtbaar.</p>
+          </div>
+          <ul class="history-list">${futureItems}</ul>
+        </div>
+      `;
+    }
+
+    function setHistoryFilter(range) {
+      selectedHistoryRange = range;
+      document.querySelectorAll('[data-range]').forEach((button) => {
+        button.classList.toggle('is-active', Number(button.dataset.range) === range);
+      });
+      renderHistory();
+    }
+
+    function exportDailyEntries(format) {
+      const entries = getDailyEntries();
+      const sortedEntries = Object.keys(entries)
+        .sort((left, right) => left.localeCompare(right))
+        .map((dateKey) => ({ date: dateKey, ...entries[dateKey] }));
+
+      if (!sortedEntries.length) {
+        showMessage('Er zijn nog geen dagregistraties om te exporteren.');
+        return;
+      }
+
+      let content = '';
+      let mimeType = 'application/json;charset=utf-8';
+      let filename = `iam-dagkaart-${toDateKey(new Date())}.json`;
+
+      if (format === 'csv') {
+        mimeType = 'text/csv;charset=utf-8';
+        filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
+        const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+        const rows = [
+          ['date', 'units', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ...sortedEntries.map((entry) => [
+            entry.date,
+            entry.units ?? '',
+            entry.usageNote || '',
+            entry.riskNote || '',
+            entry.motivationNote || '',
+            entry.updatedAt || ''
+          ])
+        ];
+        content = rows.map((row) => row.map(escapeCsv).join(',')).join('\n');
+      } else {
+        content = JSON.stringify({ exportedAt: new Date().toISOString(), entries: sortedEntries }, null, 2);
+      }
+
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage(`Dagregistraties geëxporteerd als ${format.toUpperCase()}.`);
+    }
+
     function renderHistory() {
       const entries = getDailyEntries();
       const keys = Object.keys(entries).sort((left, right) => right.localeCompare(left));
+      const split = splitEntriesByRange(entries, selectedHistoryRange);
       const stats = document.getElementById('historyStats');
       const container = document.getElementById('historyContent');
 
       stats.innerHTML = '';
-      buildHistoryStats(entries).forEach((text) => {
+      buildHistoryStats(Object.fromEntries(split.inRange.map(({ dateKey, entry }) => [dateKey, entry]))).forEach((text) => {
         const pill = document.createElement('span');
         pill.className = 'meta-pill';
         pill.textContent = text;
         stats.appendChild(pill);
       });
 
+      if (split.future.length) {
+        const futurePill = document.createElement('span');
+        futurePill.className = 'meta-pill';
+        futurePill.textContent = `Toekomstige dagen: ${split.future.length}`;
+        stats.appendChild(futurePill);
+      }
+
+      renderChart(split.inRange);
+
       if (!keys.length) {
         container.innerHTML = '<p class="history-empty">Nog geen daggegevens opgeslagen.</p>';
+        return;
+      }
+
+      if (!split.inRange.length) {
+        container.innerHTML = `<p class="history-empty">Nog geen ingevulde dagen in de laatste ${selectedHistoryRange} dagen.</p>${renderFutureList(split.future)}`;
         return;
       }
 
       const list = document.createElement('ul');
       list.className = 'history-list';
 
-      keys.slice(0, historyLimit).forEach((dateKey) => {
-        const entry = entries[dateKey] || {};
+      split.inRange.slice(0, historyLimit).forEach(({ dateKey, entry }) => {
         const item = document.createElement('li');
         item.className = 'history-item';
 
@@ -484,6 +770,7 @@
 
       container.innerHTML = '';
       container.appendChild(list);
+      container.insertAdjacentHTML('beforeend', renderFutureList(split.future));
     }
 
     function showMessage(text) {
@@ -551,6 +838,11 @@
         dateInput.value = toDateKey(new Date());
         renderSelectedDay();
       });
+      document.querySelectorAll('[data-range]').forEach((button) => {
+        button.addEventListener('click', () => setHistoryFilter(Number(button.dataset.range)));
+      });
+      document.getElementById('exportDailyJsonButton').addEventListener('click', () => exportDailyEntries('json'));
+      document.getElementById('exportDailyCsvButton').addEventListener('click', () => exportDailyEntries('csv'));
     });
   </script>
 </body>
