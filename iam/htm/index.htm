@@ -151,8 +151,7 @@
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
-            cursor: default;
-            position: relative;
+            cursor: pointer;
         }
 
         .card:hover {
@@ -160,25 +159,22 @@
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .card-toggle {
-            position: absolute;
-            top: 0.7rem;
-            right: 0.7rem;
-            min-height: 34px;
+        .chapter-toggle {
+            margin-left: 0.6rem;
+            min-height: 32px;
             border: 1px solid var(--border-soft);
             background: var(--surface-soft);
             color: var(--text-main);
             border-radius: 999px;
-            padding: 0.2rem 0.65rem;
+            padding: 0.15rem 0.65rem;
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
+            vertical-align: middle;
         }
 
-        .card.card-collapsed p,
-        .card.card-collapsed .card-links,
-        .card.card-collapsed .progress-indicator {
-            display: none;
+        .chapter-collapsed {
+            display: none !important;
         }
 
         .card.phase-1 {
@@ -1382,20 +1378,12 @@
             'niet-nuttig': 'Niet nuttig',
             'later': 'Later opnieuw proberen'
         };
-        const CARD_COLLAPSE_STORAGE_KEY = 'iam.index.cardCollapse';
+        const CHAPTER_COLLAPSE_STORAGE_KEY = 'iam.index.chapterCollapse';
         let weeklyHistoryFilter = 'all';
 
-        function normalizeCardId(value) {
-            return String(value || '')
-                .toLowerCase()
-                .replace(/\.htm$/i, '')
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/^-+|-+$/g, '');
-        }
-
-        function loadCardCollapseState() {
+        function loadChapterCollapseState() {
             try {
-                const raw = localStorage.getItem(CARD_COLLAPSE_STORAGE_KEY);
+                const raw = localStorage.getItem(CHAPTER_COLLAPSE_STORAGE_KEY);
                 if (!raw) return {};
                 const parsed = JSON.parse(raw);
                 return parsed && typeof parsed === 'object' ? parsed : {};
@@ -1404,57 +1392,88 @@
             }
         }
 
-        function saveCardCollapseState(state) {
+        function saveChapterCollapseState(state) {
             try {
-                localStorage.setItem(CARD_COLLAPSE_STORAGE_KEY, JSON.stringify(state || {}));
+                localStorage.setItem(CHAPTER_COLLAPSE_STORAGE_KEY, JSON.stringify(state || {}));
             } catch (error) {
                 // Storage failures should not block UI interaction.
             }
         }
 
-        function applyCardCollapseState(card, toggle, collapsed) {
-            card.classList.toggle('card-collapsed', collapsed);
+        function applyChapterCollapse(elements, toggle, collapsed) {
+            elements.forEach((el) => el.classList.toggle('chapter-collapsed', collapsed));
             toggle.textContent = collapsed ? 'Uitklappen' : 'Inklappen';
             toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-            toggle.setAttribute('title', collapsed ? 'Kaart uitklappen' : 'Kaart inklappen');
+            toggle.setAttribute('title', collapsed ? 'Hoofdstuk uitklappen' : 'Hoofdstuk inklappen');
         }
 
-        function initializeCollapsibleCards() {
-            const collapseState = loadCardCollapseState();
+        function getDefaultChapterCollapsed(chapterKey) {
+            if (chapterKey === 'intro') return false;
+            if (chapterKey === 'weekly-review') return false;
+            return true;
+        }
 
-            document.querySelectorAll('.card').forEach((card, index) => {
-                if (card.dataset.collapsibleInit === 'true') return;
+        function makeChapterCollapsible(chapterKey, headingEl, contentEls, collapseState) {
+            if (!headingEl || !contentEls.length) return;
+            if (headingEl.dataset.chapterInit === 'true') return;
 
-                const firstHref = card.querySelector('.card-link')?.getAttribute('href') || '';
-                const heading = card.querySelector('h3')?.textContent || `kaart-${index + 1}`;
-                const cardId = normalizeCardId(firstHref || heading || `kaart-${index + 1}`) || `kaart-${index + 1}`;
-                card.dataset.cardCollapseId = cardId;
+            const toggle = document.createElement('button');
+            toggle.type = 'button';
+            toggle.className = 'chapter-toggle';
+            headingEl.appendChild(toggle);
 
-                const toggle = document.createElement('button');
-                toggle.type = 'button';
-                toggle.className = 'card-toggle';
-                toggle.setAttribute('aria-controls', cardId);
-                card.id = card.id || cardId;
-                card.appendChild(toggle);
+            const hasStored = Object.prototype.hasOwnProperty.call(collapseState, chapterKey);
+            const initialCollapsed = hasStored
+                ? Boolean(collapseState[chapterKey])
+                : getDefaultChapterCollapsed(chapterKey);
 
-                applyCardCollapseState(card, toggle, Boolean(collapseState[cardId]));
+            applyChapterCollapse(contentEls, toggle, initialCollapsed);
 
-                toggle.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    const nextCollapsed = !card.classList.contains('card-collapsed');
-                    applyCardCollapseState(card, toggle, nextCollapsed);
-                    collapseState[cardId] = nextCollapsed;
-                    saveCardCollapseState(collapseState);
-                });
+            toggle.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const nextCollapsed = !Boolean(collapseState[chapterKey]);
+                collapseState[chapterKey] = nextCollapsed;
+                applyChapterCollapse(contentEls, toggle, nextCollapsed);
+                saveChapterCollapseState(collapseState);
+            });
 
-                card.addEventListener('click', (event) => {
-                    if (event.target.closest('a, button')) return;
-                    const selectedText = String(window.getSelection ? window.getSelection() : '').trim();
-                    if (selectedText) return;
-                    toggle.click();
-                });
+            headingEl.dataset.chapterInit = 'true';
+        }
 
-                card.dataset.collapsibleInit = 'true';
+        function initializeCollapsibleChapters() {
+            const collapseState = loadChapterCollapseState();
+
+            const intro = document.querySelector('.intro-section');
+            const introHeading = intro?.querySelector('h2');
+            const introContent = intro ? Array.from(intro.children).filter((el) => el !== introHeading) : [];
+            makeChapterCollapsible('intro', introHeading, introContent, collapseState);
+
+            const quick = document.querySelector('.quick-actions');
+            const quickHeading = quick?.querySelector('h3');
+            const quickContent = quick ? Array.from(quick.children).filter((el) => el !== quickHeading) : [];
+            makeChapterCollapsible('quick-actions', quickHeading, quickContent, collapseState);
+
+            const weekly = document.getElementById('weeklyReviewCard');
+            const weeklyHeading = weekly?.querySelector('.weekly-review-header h3');
+            const weeklyHeader = weekly?.querySelector('.weekly-review-header');
+            const weeklyContent = weekly ? Array.from(weekly.children).filter((el) => el !== weeklyHeader) : [];
+            makeChapterCollapsible('weekly-review', weeklyHeading, weeklyContent, collapseState);
+
+            const featured = document.querySelector('.featured-card');
+            const featuredHeading = featured?.querySelector('h3');
+            const featuredContent = featured ? Array.from(featured.children).filter((el) => el !== featuredHeading) : [];
+            makeChapterCollapsible('featured', featuredHeading, featuredContent, collapseState);
+
+            const sectionTitles = Array.from(document.querySelectorAll('.section-title'));
+            sectionTitles.forEach((titleEl, index) => {
+                const chapterKey = `phase-${index + 1}`;
+                const content = [];
+                let cursor = titleEl.nextElementSibling;
+                while (cursor && !cursor.classList.contains('section-title') && !cursor.classList.contains('chemsex-callout') && !cursor.classList.contains('page-footer')) {
+                    content.push(cursor);
+                    cursor = cursor.nextElementSibling;
+                }
+                makeChapterCollapsible(chapterKey, titleEl, content, collapseState);
             });
         }
 
@@ -2052,7 +2071,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initializeCollapsibleCards();
+            initializeCollapsibleChapters();
             document.querySelectorAll('[data-attempt-filter]').forEach((button) => {
                 button.addEventListener('click', () => {
                     weeklyHistoryFilter = button.dataset.attemptFilter || 'all';
