@@ -52,47 +52,6 @@
             --footer-meta: #999999;
         }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --page-bg: #121a21;
-                --surface: #1b2630;
-                --surface-soft: #22303a;
-                --surface-tint: #1d3142;
-                --text-main: #edf4fa;
-                --text-muted: #c1d0db;
-                --text-soft: #9fb1be;
-                --border-soft: #324552;
-                --hero-start: #3b5e94;
-                --hero-end: #5a4678;
-                --hero-text: #f7fbff;
-                --shadow-soft: 0 10px 26px rgba(0, 0, 0, 0.28);
-                --info-bg: #21384a;
-                --info-text: #d5e8f8;
-                --warm-bg: #40321d;
-                --warm-border: #7b6437;
-                --warm-text: #f5dfb2;
-                --weekly-bg: linear-gradient(135deg, #2b3440 0%, #1e3140 100%);
-                --weekly-border: #365165;
-                --weekly-title: #d8ebfa;
-                --weekly-help: #aac0cf;
-                --weekly-chip-bg: #26475f;
-                --weekly-chip-text: #d7eefe;
-                --weekly-chip-due-bg: #554523;
-                --weekly-chip-due-text: #ffe3a1;
-                --featured-shadow: 0 10px 26px rgba(0, 0, 0, 0.24);
-                --featured-progress-bg: #35583a;
-                --summary-chip-bg: #223a4d;
-                --summary-chip-text: #d6ebfb;
-                --chemsex-bg: #372642;
-                --chemsex-border: #6d4e7c;
-                --chemsex-title: #e0b8ff;
-                --chemsex-text: #e3d5ec;
-                --footer-bg: #1a242c;
-                --footer-text: #c7d3db;
-                --footer-meta: #9cadb9;
-            }
-        }
-
         body {
             background: var(--page-bg);
             color: var(--text-main);
@@ -1268,7 +1227,10 @@
                     Je doet dit niet alleen. Wie steunt je? Familie, vrienden, therapeut? Hoe reiken ze je het?
                 </p>
                 <div class="card-links">
-                    <a href="motiverende-mensen.htm" class="card-link">Start →</a>
+                    <a href="sociaal-netwerk.htm" class="card-link">Sociaal netwerk →</a>
+                    <a href="steunnetwerk.htm" class="card-link">Steunnetwerk →</a>
+                    <a href="iam_social_network/index.htm" class="card-link">Visualisatie →</a>
+                    <a href="motiverende-mensen.htm" class="card-link">Motiverende mensen →</a>
                 </div>
                 <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
             </div>
@@ -1345,6 +1307,8 @@
             'chemsex-patroon.htm': 'chemsex-patroon',
             'chemsex-noodplan.htm': 'chemsex-noodplan',
             'chemsex-wat-wil-ik.htm': 'chemsex-wat-wil-ik',
+            'sociaal-netwerk.htm': 'sociaal-netwerk',
+            'steunnetwerk.htm': 'steunnetwerk',
             'motiverende-mensen.htm': 'motiverende-mensen',
             'genieten-belonen.htm': 'genieten-belonen',
             'agenda.htm': 'agenda'
@@ -1355,7 +1319,7 @@
             'Fase 2': ['lastige-gevoelens', 'craving-1-10', 'craving-gevoel', 'voor-nadelen-balansen'],
             'Fase 3': ['stimulus-respons', 'risico-situaties', 'risico-mensen', 'risico-activiteiten', 'soorten-trek'],
             'Fase 4': ['noodplan-forse-trek', 'trek-opvangen', 'trek-opvangen-2', 'plan-van-aanpak', 'chemsex-patroon', 'chemsex-noodplan', 'chemsex-wat-wil-ik'],
-            'Fase 5': ['motiverende-mensen', 'genieten-belonen', 'agenda']
+            'Fase 5': ['sociaal-netwerk', 'steunnetwerk', 'motiverende-mensen', 'genieten-belonen', 'agenda']
         };
 
         const MODERN_STRUCTURED_FORMS = new Set([
@@ -1378,6 +1342,8 @@
             'waarom-wel-gebruiken',
             'wat-is-mijn-ik',
             'persoonlijke-waarden',
+            'sociaal-netwerk',
+            'steunnetwerk',
             'motiverende-mensen',
             'genieten-belonen',
             'agenda'

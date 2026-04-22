@@ -180,6 +180,54 @@ class IamDataStore {
           goals: [],
           steps: [],
           lastUpdated: null
+        },
+        'sociaal-netwerk': {
+          closeRing: '',
+          middleRing: '',
+          farRing: '',
+          desiredConnections: '',
+          networkReflection: '',
+          motivatingPerson: '',
+          motivatingWhy: '',
+          reachableSupport: '',
+          supportType: '',
+          firstReachOut: '',
+          nextContactDate: '',
+          trustLevel: '',
+          contactRoute: '',
+          anchor1Name: '',
+          anchor1Quality: '',
+          anchor2Name: '',
+          anchor2Quality: '',
+          anchor3Name: '',
+          anchor3Quality: '',
+          lastUpdated: null
+        },
+        'steunnetwerk': {
+          support1Name: '',
+          support1Reachability: '',
+          support1Speed: '',
+          support1Route: '',
+          support1SupportType: '',
+          support1Reliability: '',
+          support1Guide: '',
+          support2Name: '',
+          support2Reachability: '',
+          support2Speed: '',
+          support2Route: '',
+          support2SupportType: '',
+          support2Reliability: '',
+          support2Guide: '',
+          support3Name: '',
+          support3Reachability: '',
+          support3Speed: '',
+          support3Route: '',
+          support3SupportType: '',
+          support3Reliability: '',
+          support3Guide: '',
+          startDate: '',
+          networkSummary: '',
+          lastUpdated: null
         }
       },
       integrationSummary: null
@@ -292,6 +340,11 @@ class IamDataStore {
     const gevoelens = getForm('lastige-gevoelens');
     const balans = getForm('voor-nadelen-balansen');
     const plan = getForm('plan-van-aanpak');
+    const sociaalNetwerk = getForm('sociaal-netwerk');
+    const steunnetwerk = getForm('steunnetwerk');
+    const combineParts = (...parts) => parts
+      .filter((part) => typeof part === 'string' && part.trim())
+      .join(' - ');
 
     const topTriggersBucket = this.buildInsightBucket([
       risicoSituaties.riskySituations,
@@ -307,7 +360,16 @@ class IamDataStore {
       stimulus.socialSupport,
       gevoelens.talkPeople,
       plan.supportPeople,
-      risicoMensen.personName
+      risicoMensen.personName,
+      sociaalNetwerk.reachableSupport,
+      sociaalNetwerk.firstReachOut,
+      combineParts(sociaalNetwerk.anchor1Name, sociaalNetwerk.anchor1Quality),
+      combineParts(sociaalNetwerk.anchor2Name, sociaalNetwerk.anchor2Quality),
+      combineParts(sociaalNetwerk.anchor3Name, sociaalNetwerk.anchor3Quality),
+      combineParts(steunnetwerk.support1Name, steunnetwerk.support1SupportType),
+      combineParts(steunnetwerk.support2Name, steunnetwerk.support2SupportType),
+      combineParts(steunnetwerk.support3Name, steunnetwerk.support3SupportType),
+      steunnetwerk.networkSummary
     ], 8);
 
     const bestInterventionsBucket = this.buildInsightBucket([
