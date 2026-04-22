@@ -678,6 +678,20 @@
         addNudge(nudges, `Je alternatief uit ABCDaaah was: "${previewText(trek1.alternatief)}". Is dit ook bruikbaar in je herstelfase na piek-trek?`);
       }
 
+      const plan = iamData.getFormData ? (iamData.getFormData('plan-van-aanpak') || {}) : {};
+      if (plan.planB && !formData.herstelstap) {
+        addNudge(nudges, `Uit plan van aanpak: je plan B noemt "${previewText(plan.planB)}". Welke stap daaruit wordt je herstelfase na piek-trek?`);
+      }
+
+      if (plan.supportPeople && !formData.steunnetwerk) {
+        addNudge(nudges, `Uit plan van aanpak: steunpersoon "${previewText(plan.supportPeople)}". Zet die persoon concreet in je noodbel-lijst.`);
+      }
+
+      const trek2 = iamData.getFormData ? (iamData.getFormData('trek-opvangen-2') || {}) : {};
+      if (trek2.ifThen && !formData.sosSignaal) {
+        addNudge(nudges, `Uit trek-opvangen 2: als-dan zin "${previewText(trek2.ifThen)}". Welk SOS-signaal activeert die stap in dit noodplan?`);
+      }
+
       const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
       if (summary) {
         const support = Array.isArray(summary.supportNetwork) && summary.supportNetwork.length ? summary.supportNetwork[0] : '';
@@ -752,6 +766,11 @@
       document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('noodplanForm').addEventListener('input', () => saveForm(false));
       document.getElementById('weeklyReviewApply').addEventListener('click', applyWeeklyReviewToForm);
+      window.addEventListener('focus', () => {
+        const current = collectFormData();
+        renderCognitiveNudges(current);
+        renderWeeklyReviewPrompt();
+      });
     });
   </script>
 </body>

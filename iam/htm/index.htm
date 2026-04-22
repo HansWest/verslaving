@@ -449,6 +449,110 @@
             font-size: 0.88rem;
         }
 
+        .weekly-attempt-tools {
+            margin-top: 1rem;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .weekly-attempt-tools label {
+            color: var(--weekly-title);
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+            display: block;
+        }
+
+        .weekly-attempt-tools select {
+            width: 100%;
+            min-height: 42px;
+            border-radius: 10px;
+            border: 1px solid var(--border-soft);
+            background: var(--surface);
+            color: var(--text-main);
+            padding: 0.55rem 0.7rem;
+            font: inherit;
+        }
+
+        .weekly-attempt-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+        }
+
+        .weekly-filter-btn {
+            border: 1px solid var(--border-soft);
+            background: var(--surface);
+            color: var(--text-main);
+            border-radius: 999px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            min-height: 38px;
+        }
+
+        .weekly-filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .weekly-attempt-stats {
+            font-size: 0.86rem;
+            color: var(--text-soft);
+        }
+
+        .weekly-history-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .weekly-history-item {
+            border: 1px solid var(--border-soft);
+            border-radius: 10px;
+            background: var(--surface-soft);
+            padding: 0.72rem 0.8rem;
+        }
+
+        .weekly-history-item-top {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.6rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .weekly-history-date {
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            font-weight: 600;
+        }
+
+        .weekly-history-tag {
+            font-size: 0.76rem;
+            border-radius: 999px;
+            padding: 0.22rem 0.62rem;
+            font-weight: 700;
+            background: var(--surface-tint);
+            color: var(--weekly-chip-text);
+        }
+
+        .weekly-history-note {
+            margin: 0;
+            font-size: 0.89rem;
+            color: var(--text-main);
+            line-height: 1.45;
+        }
+
+        .weekly-history-empty {
+            margin: 0;
+            color: var(--text-soft);
+            font-size: 0.88rem;
+        }
+
         .featured-card {
             background: var(--surface);
             border-radius: 12px;
@@ -869,6 +973,25 @@
             </div>
             <div class="weekly-review-links" id="weeklyReviewLinks"></div>
             <p class="weekly-review-meta" id="weeklyReviewMeta">Nog geen weekreflectie opgeslagen.</p>
+            <div class="weekly-attempt-tools">
+                <div>
+                    <label for="weeklyAttemptTag">Hoe label je deze poging in je historielijst?</label>
+                    <select id="weeklyAttemptTag">
+                        <option value="nuttig">Nuttig</option>
+                        <option value="niet-nuttig">Niet nuttig</option>
+                        <option value="later">Later opnieuw proberen</option>
+                    </select>
+                </div>
+                <div class="weekly-attempt-filters" id="weeklyAttemptFilters">
+                    <button type="button" class="weekly-filter-btn active" data-attempt-filter="all">Alles</button>
+                    <button type="button" class="weekly-filter-btn" data-attempt-filter="nuttig">Nuttig</button>
+                    <button type="button" class="weekly-filter-btn" data-attempt-filter="niet-nuttig">Niet nuttig</button>
+                    <button type="button" class="weekly-filter-btn" data-attempt-filter="later">Later</button>
+                </div>
+                <p class="weekly-attempt-stats" id="weeklyAttemptStats">Nog geen pogingen in historielijst.</p>
+                <ul class="weekly-history-list" id="weeklyHistoryList"></ul>
+                <p class="weekly-history-empty" id="weeklyHistoryEmpty">Sla je eerste weekcheck-in op om je attemptMeta-historie te starten.</p>
+            </div>
         </section>
 
         <details class="progress-summary" id="progressSummary" open>
@@ -1261,6 +1384,12 @@
         ]);
 
         const WEEKLY_REVIEW_KEY = 'weeklyReview';
+        const ATTEMPT_TAG_LABELS = {
+            'nuttig': 'Nuttig',
+            'niet-nuttig': 'Niet nuttig',
+            'later': 'Later opnieuw proberen'
+        };
+        let weeklyHistoryFilter = 'all';
 
         function isMeaningful(value) {
             if (value === null || value === undefined) return false;
@@ -1300,6 +1429,30 @@
 
         function getWeeklyReviewData() {
             return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
+        }
+
+        function normalizeAttemptMeta(weekly) {
+            const source = weekly && typeof weekly === 'object' ? weekly : {};
+            const fallbackHistory = Array.isArray(source.history) ? source.history : [];
+            const attemptMeta = source.attemptMeta && typeof source.attemptMeta === 'object'
+                ? source.attemptMeta
+                : {};
+
+            const history = Array.isArray(attemptMeta.history) && attemptMeta.history.length
+                ? attemptMeta.history
+                : fallbackHistory.map((entry) => ({
+                    completedAt: entry.completedAt,
+                    reflection: entry.reflection || '',
+                    learning: entry.learning || '',
+                    nextStep: entry.nextStep || '',
+                    attemptTag: 'nuttig'
+                }));
+
+            return {
+                attemptCount: Number(attemptMeta.attemptCount) || history.length,
+                lastAttemptAt: attemptMeta.lastAttemptAt || source.lastCompletedAt || null,
+                history: history.slice(-24)
+            };
         }
 
         function isWeeklyReviewDue(lastCompletedAt) {
@@ -1371,11 +1524,13 @@
             const reflection = document.getElementById('weeklyReflection').value.trim();
             const learning = document.getElementById('weeklyLearning').value.trim();
             const nextStep = document.getElementById('weeklyNextStep').value.trim();
+            const attemptTag = document.getElementById('weeklyAttemptTag')?.value || 'nuttig';
             const completedAt = new Date().toISOString();
-            const history = Array.isArray(current.history) ? current.history.slice(-5) : [];
+            const attemptMeta = normalizeAttemptMeta(current);
+            const history = attemptMeta.history.slice(-23);
 
             if (reflection || learning || nextStep) {
-                history.push({ completedAt, reflection, learning, nextStep });
+                history.push({ completedAt, reflection, learning, nextStep, attemptTag });
             }
 
             iamData.updateAppMeta(WEEKLY_REVIEW_KEY, {
@@ -1383,11 +1538,93 @@
                 learning,
                 nextStep,
                 lastCompletedAt: completedAt,
-                history
+                history: history.slice(-5).map((entry) => ({
+                    completedAt: entry.completedAt,
+                    reflection: entry.reflection || '',
+                    learning: entry.learning || '',
+                    nextStep: entry.nextStep || ''
+                })),
+                attemptMeta: {
+                    attemptCount: (reflection || learning || nextStep)
+                        ? attemptMeta.attemptCount + 1
+                        : attemptMeta.attemptCount,
+                    lastAttemptAt: completedAt,
+                    history
+                }
             });
 
             renderWeeklyReview();
             alert('✅ Weekreflectie opgeslagen op dit toestel');
+        }
+
+        function renderWeeklyAttemptHistory(weekly) {
+            const stats = document.getElementById('weeklyAttemptStats');
+            const list = document.getElementById('weeklyHistoryList');
+            const empty = document.getElementById('weeklyHistoryEmpty');
+            if (!stats || !list || !empty) return;
+
+            const attemptMeta = normalizeAttemptMeta(weekly);
+            const fullHistory = attemptMeta.history.slice().sort((a, b) => {
+                const left = new Date(a.completedAt || 0).getTime();
+                const right = new Date(b.completedAt || 0).getTime();
+                return right - left;
+            });
+
+            const filtered = weeklyHistoryFilter === 'all'
+                ? fullHistory
+                : fullHistory.filter((entry) => (entry.attemptTag || 'nuttig') === weeklyHistoryFilter);
+
+            const counts = {
+                nuttig: fullHistory.filter((entry) => (entry.attemptTag || 'nuttig') === 'nuttig').length,
+                'niet-nuttig': fullHistory.filter((entry) => entry.attemptTag === 'niet-nuttig').length,
+                later: fullHistory.filter((entry) => entry.attemptTag === 'later').length
+            };
+
+            stats.textContent = `Pogingen totaal: ${attemptMeta.attemptCount} | Nuttig: ${counts.nuttig} | Niet nuttig: ${counts['niet-nuttig']} | Later: ${counts.later}`;
+
+            document.querySelectorAll('[data-attempt-filter]').forEach((button) => {
+                button.classList.toggle('active', button.dataset.attemptFilter === weeklyHistoryFilter);
+            });
+
+            list.innerHTML = '';
+
+            if (!filtered.length) {
+                empty.textContent = 'Geen entries voor dit filter. Kies een andere filter of voeg een nieuwe weekcheck-in toe.';
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            filtered.slice(0, 8).forEach((entry) => {
+                const item = document.createElement('li');
+                item.className = 'weekly-history-item';
+
+                const top = document.createElement('div');
+                top.className = 'weekly-history-item-top';
+
+                const date = document.createElement('span');
+                date.className = 'weekly-history-date';
+                date.textContent = formatDateTimeNl(entry.completedAt) || 'Onbekende datum';
+
+                const tag = document.createElement('span');
+                tag.className = 'weekly-history-tag';
+                tag.textContent = ATTEMPT_TAG_LABELS[entry.attemptTag] || ATTEMPT_TAG_LABELS.nuttig;
+
+                top.appendChild(date);
+                top.appendChild(tag);
+
+                const note = document.createElement('p');
+                note.className = 'weekly-history-note';
+                const parts = [];
+                if (entry.reflection) parts.push(`Terugblik: ${entry.reflection}`);
+                if (entry.learning) parts.push(`Leerpunt: ${entry.learning}`);
+                if (entry.nextStep) parts.push(`Volgende stap: ${entry.nextStep}`);
+                note.textContent = parts.length ? parts.join(' | ') : 'Geen extra toelichting bij deze poging.';
+
+                item.appendChild(top);
+                item.appendChild(note);
+                list.appendChild(item);
+            });
         }
 
         function renderWeeklyReviewLinks(summary) {
@@ -1433,10 +1670,16 @@
             const reflection = document.getElementById('weeklyReflection');
             const learning = document.getElementById('weeklyLearning');
             const nextStep = document.getElementById('weeklyNextStep');
+            const attemptTag = document.getElementById('weeklyAttemptTag');
 
             if (reflection && document.activeElement !== reflection) reflection.value = weekly.reflection || '';
             if (learning && document.activeElement !== learning) learning.value = weekly.learning || '';
             if (nextStep && document.activeElement !== nextStep) nextStep.value = weekly.nextStep || '';
+            if (attemptTag && document.activeElement !== attemptTag) {
+                const attemptMeta = normalizeAttemptMeta(weekly);
+                const latest = attemptMeta.history[attemptMeta.history.length - 1];
+                attemptTag.value = latest?.attemptTag || 'nuttig';
+            }
 
             const due = isWeeklyReviewDue(weekly.lastCompletedAt);
             if (status) {
@@ -1457,6 +1700,7 @@
             }
 
             renderWeeklyReviewLinks(summary);
+            renderWeeklyAttemptHistory(weekly);
         }
 
         function getLinkedFormKeys(card) {
@@ -1675,7 +1919,15 @@
             document.body.removeChild(a);
         }
 
-        document.addEventListener('DOMContentLoaded', refreshDashboard);
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('[data-attempt-filter]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    weeklyHistoryFilter = button.dataset.attemptFilter || 'all';
+                    renderWeeklyReview();
+                });
+            });
+            refreshDashboard();
+        });
     </script>
 </body>
 </html>

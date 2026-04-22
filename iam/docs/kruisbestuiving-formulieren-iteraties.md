@@ -15,7 +15,7 @@ Doel: informatie die op de ene pagina wordt ingevuld, slim en behulpzaam laten t
 ### 2.1 Live veld-naar-veld duwtjes
 
 Voorbeelden:
-- "Je noemde bij Behoefte: <tekst>. Komt dat terug in je Alternatief?"
+- "Je noemde bij Behoefte: <tekst>. Komt dat terug in je Alternatief, en/of in je plan van Aanpak?"
 - "Je schreef eerder dat <interventie> helpt. Is dat nu je eerste stap?"
 - "Je noemt nu een trigger die vorige week ook terugkwam. Wil je je noodstap aanscherpen?"
 

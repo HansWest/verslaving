@@ -68,6 +68,43 @@
     .followup-card {
       border-top: 4px solid #5a64b6;
     }
+    .attempt-summary-box {
+      border-top: 4px solid #7b5b2e;
+    }
+    .attempt-summary-title {
+      margin: 0;
+      color: #3d4d5a;
+      font-size: 1rem;
+    }
+    .attempt-summary-meta {
+      margin: 0.45rem 0 0;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+    .attempt-summary-list {
+      margin: 0.75rem 0 0;
+      padding-left: 1.15rem;
+      color: #3f5463;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .attempt-summary-list li { margin-bottom: 0.3rem; }
+    .attempt-summary-link {
+      margin-top: 0.7rem;
+      font-size: 0.9rem;
+    }
+    .attempt-summary-link a {
+      color: var(--main);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(63, 122, 161, 0.35);
+    }
+    .attempt-summary-link a:hover,
+    .attempt-summary-link a:focus-visible {
+      color: #2f5670;
+      border-bottom-color: #2f5670;
+    }
     .followup-links {
       display: flex;
       flex-wrap: wrap;
@@ -161,6 +198,15 @@
         <p>De oorspronkelijke pagina had een sterk punt: denken in intensiteit in plaats van alleen "wel of geen trek". Dat principe blijft hier centraal.</p>
       </section>
 
+      <section class="card attempt-summary-box" aria-labelledby="attemptSummaryTitle">
+        <h2 class="attempt-summary-title" id="attemptSummaryTitle">Vorige week: pogingen in het kort</h2>
+        <p class="attempt-summary-meta" id="attemptSummaryMeta">Nog geen attemptMeta-historie gevonden.</p>
+        <ul class="attempt-summary-list" id="attemptSummaryList">
+          <li>Sla op de homepage een weekcheck-in op om hier een samenvatting te zien.</li>
+        </ul>
+        <p class="attempt-summary-link"><a href="./index.htm#weeklyReviewCard">Bekijk volledige historielijst op homepage</a></p>
+      </section>
+
       <section class="card">
         <h2>Schaal 0 t/m 10</h2>
         <ol class="level-list">
@@ -229,6 +275,98 @@
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'craving-1-10';
+    const WEEKLY_REVIEW_KEY = 'weeklyReview';
+    const ATTEMPT_TAG_LABELS = {
+      nuttig: 'Nuttig',
+      'niet-nuttig': 'Niet nuttig',
+      later: 'Later opnieuw proberen'
+    };
+
+    function getWeeklyReview() {
+      return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
+    }
+
+    function normalizeAttemptMeta(weekly) {
+      const source = weekly && typeof weekly === 'object' ? weekly : {};
+      const fallbackHistory = Array.isArray(source.history) ? source.history : [];
+      const attemptMeta = source.attemptMeta && typeof source.attemptMeta === 'object'
+        ? source.attemptMeta
+        : {};
+
+      const history = Array.isArray(attemptMeta.history) && attemptMeta.history.length
+        ? attemptMeta.history
+        : fallbackHistory.map((entry) => ({
+          completedAt: entry.completedAt,
+          reflection: entry.reflection || '',
+          learning: entry.learning || '',
+          nextStep: entry.nextStep || '',
+          attemptTag: 'nuttig'
+        }));
+
+      return {
+        attemptCount: Number(attemptMeta.attemptCount) || history.length,
+        lastAttemptAt: attemptMeta.lastAttemptAt || source.lastCompletedAt || null,
+        history: history.slice(-24)
+      };
+    }
+
+    function renderAttemptSummary() {
+      const metaEl = document.getElementById('attemptSummaryMeta');
+      const listEl = document.getElementById('attemptSummaryList');
+      if (!metaEl || !listEl) return;
+
+      const weekly = getWeeklyReview();
+      const attemptMeta = normalizeAttemptMeta(weekly);
+      const fullHistory = attemptMeta.history.slice().sort((a, b) => {
+        const left = new Date(a.completedAt || 0).getTime();
+        const right = new Date(b.completedAt || 0).getTime();
+        return right - left;
+      });
+
+      if (!fullHistory.length) {
+        metaEl.textContent = 'Nog geen attemptMeta-historie gevonden.';
+        listEl.innerHTML = '<li>Sla op de homepage een weekcheck-in op om hier een samenvatting te zien.</li>';
+        return;
+      }
+
+      const counts = {
+        nuttig: fullHistory.filter((entry) => (entry.attemptTag || 'nuttig') === 'nuttig').length,
+        'niet-nuttig': fullHistory.filter((entry) => entry.attemptTag === 'niet-nuttig').length,
+        later: fullHistory.filter((entry) => entry.attemptTag === 'later').length
+      };
+
+      const lastAttempt = new Date(attemptMeta.lastAttemptAt || fullHistory[0].completedAt);
+      const lastAttemptText = Number.isNaN(lastAttempt.getTime())
+        ? 'onbekend'
+        : lastAttempt.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' });
+
+      metaEl.textContent = `Pogingen totaal: ${attemptMeta.attemptCount} | Nuttig: ${counts.nuttig} | Niet nuttig: ${counts['niet-nuttig']} | Later: ${counts.later} | Laatste poging: ${lastAttemptText}`;
+
+      listEl.innerHTML = '';
+      fullHistory.slice(0, 5).forEach((entry) => {
+        const item = document.createElement('li');
+        const parts = [];
+        const entryDate = new Date(entry.completedAt || 0);
+        const dateText = Number.isNaN(entryDate.getTime())
+          ? 'datum onbekend'
+          : entryDate.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' });
+        const tagText = ATTEMPT_TAG_LABELS[entry.attemptTag] || ATTEMPT_TAG_LABELS.nuttig;
+
+        if (entry.nextStep) {
+          parts.push(`Volgende stap: ${entry.nextStep}`);
+        } else if (entry.learning) {
+          parts.push(`Leerpunt: ${entry.learning}`);
+        } else if (entry.reflection) {
+          parts.push(`Terugblik: ${entry.reflection}`);
+        } else {
+          parts.push('Geen extra toelichting.');
+        }
+
+        item.textContent = `${dateText} (${tagText}) - ${parts.join(' ')}`;
+        listEl.appendChild(item);
+      });
+    }
+
     function openHulpzinnetjeModal(title, text) {
       const modal = document.getElementById('hulpzinnetjeModal');
       const titleEl = document.getElementById('hulpzinnetjeTitle');
@@ -293,6 +431,7 @@
       const scoreInput = document.getElementById('currentScore');
       const noteInput = document.getElementById('scoreNote');
 
+      renderAttemptSummary();
       scoreInput.value = Number.isFinite(Number(existing.currentScore)) ? Number(existing.currentScore) : 0;
       noteInput.value = existing.scoreNote || '';
       renderAdvice(Number(scoreInput.value));
@@ -311,6 +450,9 @@
       scoreInput.addEventListener('input', () => renderAdvice(Number(scoreInput.value)));
       document.getElementById('saveButton').addEventListener('click', saveData);
       document.getElementById('printButton').addEventListener('click', () => window.print());
+      window.addEventListener('focus', () => {
+        renderAttemptSummary();
+      });
     });
   </script>
 </body>

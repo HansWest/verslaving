@@ -114,6 +114,88 @@
 
     .weekly-review-list li { margin-bottom: 0.3rem; }
 
+    .attempt-summary-box {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+      border-top: 4px solid #7b5b2e;
+    }
+
+    .attempt-summary-title {
+      margin: 0;
+      color: #3d4d5a;
+      font-size: 1rem;
+    }
+
+    .attempt-summary-meta {
+      margin: 0.45rem 0 0;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .attempt-summary-list {
+      margin: 0.75rem 0 0;
+      padding-left: 1.15rem;
+      color: #3f5463;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .attempt-summary-list li { margin-bottom: 0.3rem; }
+
+    .attempt-summary-link {
+      margin-top: 0.7rem;
+      font-size: 0.9rem;
+    }
+
+    .attempt-summary-link a {
+      color: var(--page-main);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(47, 101, 135, 0.35);
+    }
+
+    .attempt-summary-link a:hover,
+    .attempt-summary-link a:focus-visible {
+      color: #214e69;
+      border-bottom-color: #214e69;
+    }
+
+    .contradiction-box {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+      border-top: 4px solid #9b7a3a;
+    }
+
+    .contradiction-box h2 {
+      margin: 0;
+      color: #3d4d5a;
+      font-size: 1rem;
+    }
+
+    .contradiction-meta {
+      margin: 0.45rem 0 0;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .contradiction-list {
+      margin: 0.75rem 0 0;
+      padding-left: 1.15rem;
+      color: #3f5463;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .contradiction-list li { margin-bottom: 0.3rem; }
+
     .subtle-help {
       margin: 0.35rem 0 0.6rem;
       color: #4d6270;
@@ -265,6 +347,15 @@
         </div>
       </section>
 
+      <section class="attempt-summary-box" aria-labelledby="attemptSummaryTitle">
+        <h2 class="attempt-summary-title" id="attemptSummaryTitle">Vorige week: pogingen in het kort</h2>
+        <p class="attempt-summary-meta" id="attemptSummaryMeta">Nog geen attemptMeta-historie gevonden.</p>
+        <ul class="attempt-summary-list" id="attemptSummaryList">
+          <li>Sla op de homepage een weekcheck-in op om hier een samenvatting te zien.</li>
+        </ul>
+        <p class="attempt-summary-link"><a href="./index.htm#weeklyReviewCard">Bekijk volledige historielijst op homepage</a></p>
+      </section>
+
       <section class="legacy-note" aria-labelledby="planLegacyTitle">
         <h2 id="planLegacyTitle">Strategie-check uit eerdere versie</h2>
         <ul>
@@ -273,6 +364,17 @@
           <li>Als plan A niet werkt: pas eerst je strategie aan (plan B), en herijk daarna pas je doel.</li>
           <li>Maak je gebruiksdoel zo concreet mogelijk: aantallen, grenzen, startdatum en duur.</li>
         </ul>
+      </section>
+
+      <section class="contradiction-box" aria-labelledby="contradictionTitle">
+        <h2 id="contradictionTitle">Zachte check: doel en stappen</h2>
+        <p class="contradiction-meta" id="contradictionMeta">We tonen hier alleen milde checks om je plan concreter te maken.</p>
+        <ul class="contradiction-list" id="contradictionList">
+          <li>Nog geen check nodig. Je planonderdelen sluiten al goed op elkaar aan.</li>
+        </ul>
+        <div class="action-bar" style="margin-top: 0.9rem;">
+          <button type="button" class="button-secondary" id="contradictionApply" disabled>Neem 1 mini-stap over in plan A</button>
+        </div>
       </section>
 
       <form id="planForm">
@@ -434,6 +536,11 @@
     const formKey = 'plan-van-aanpak';
     const REGULATION_FORM_KEY = 'craving-1-10';
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
+    const ATTEMPT_TAG_LABELS = {
+      nuttig: 'Nuttig',
+      'niet-nuttig': 'Niet nuttig',
+      later: 'Later opnieuw proberen'
+    };
     const fields = [
       'startPoint',
       'mainGoal',
@@ -669,6 +776,30 @@
       return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
     }
 
+    function normalizeAttemptMeta(weekly) {
+      const source = weekly && typeof weekly === 'object' ? weekly : {};
+      const fallbackHistory = Array.isArray(source.history) ? source.history : [];
+      const attemptMeta = source.attemptMeta && typeof source.attemptMeta === 'object'
+        ? source.attemptMeta
+        : {};
+
+      const history = Array.isArray(attemptMeta.history) && attemptMeta.history.length
+        ? attemptMeta.history
+        : fallbackHistory.map((entry) => ({
+          completedAt: entry.completedAt,
+          reflection: entry.reflection || '',
+          learning: entry.learning || '',
+          nextStep: entry.nextStep || '',
+          attemptTag: 'nuttig'
+        }));
+
+      return {
+        attemptCount: Number(attemptMeta.attemptCount) || history.length,
+        lastAttemptAt: attemptMeta.lastAttemptAt || source.lastCompletedAt || null,
+        history: history.slice(-24)
+      };
+    }
+
     function isWeeklyReviewDue(lastCompletedAt) {
       if (!lastCompletedAt) return true;
       const last = new Date(lastCompletedAt);
@@ -678,7 +809,9 @@
 
     function saveForm(feedback = true) {
       try {
-        iamData.updateFormData(formKey, collectFormData());
+        const formData = collectFormData();
+        iamData.updateFormData(formKey, formData);
+        renderContradictionCheck(formData);
         if (feedback) showMessage('Plan van aanpak opgeslagen op dit toestel.');
       } catch (error) {
         console.error(error);
@@ -714,6 +847,87 @@
       if (!existingLines.includes(clean)) {
         textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
       }
+    }
+
+    function previewText(value, maxLength = 72) {
+      const text = String(value || '').trim().replace(/\s+/g, ' ');
+      if (!text) return '';
+      return text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text;
+    }
+
+    function renderContradictionCheck(data = collectFormData()) {
+      const metaEl = document.getElementById('contradictionMeta');
+      const listEl = document.getElementById('contradictionList');
+      const applyButton = document.getElementById('contradictionApply');
+      if (!metaEl || !listEl || !applyButton) return;
+
+      const nudges = [];
+      let miniStep = '';
+      const hasPattern = (document.getElementById('selfRegulationRules')?.value || '').trim() !== 'Nog geen weekpatroon ingevuld.';
+
+      if (data.mainGoal && !data.planA) {
+        nudges.push(`Je hoofddoel is helder ("${previewText(data.mainGoal, 84)}"), maar plan A staat nog open. Kies 1 mini-stap voor de komende 24 uur.`);
+        miniStep = miniStep || `Mini-stap komende 24 uur: 1 concrete actie richting ${previewText(data.mainGoal, 44)}.`;
+      }
+
+      if (data.planA && !data.planB) {
+        nudges.push('Plan A staat al. Een korte plan B-zin kan rust geven als het lastig wordt.');
+      }
+
+      if ((data.mainGoal || data.usageGoal) && !data.startDate) {
+        nudges.push('Je richting is ingevuld, maar een startdatum voor plan A ontbreekt nog. Dat helpt om echt te beginnen.');
+      }
+
+      if (data.startDate && !data.evaluationDatePlanA) {
+        nudges.push('Je startdatum is gezet. Voeg ook Evaluatiedatum plan A toe zodat je een duidelijk checkmoment hebt.');
+      }
+
+      if (data.planA && !data.supportPeople) {
+        nudges.push('Je acties staan klaar. Wie is je eerste steunpersoon als het lastig wordt?');
+      }
+
+      if (data.usageGoal && !hasPattern) {
+        nudges.push('Je gebruiksdoel is ingevuld. Wil je daarbij ook een weekpatroon toevoegen zodat het concreter wordt?');
+      }
+
+      if (!miniStep && data.planA && data.mainGoal) {
+        miniStep = `Mini-stap: plan morgen 1 klein moment om plan A uit te voeren richting ${previewText(data.mainGoal, 44)}.`;
+      }
+
+      listEl.innerHTML = '';
+      if (!nudges.length) {
+        metaEl.textContent = 'Geen spanning gevonden tussen je doel en je huidige plan. Mooi in balans.';
+        const item = document.createElement('li');
+        item.textContent = 'Nog geen check nodig. Je planonderdelen sluiten al goed op elkaar aan.';
+        listEl.appendChild(item);
+        applyButton.disabled = true;
+        applyButton.dataset.miniStep = '';
+        return;
+      }
+
+      metaEl.textContent = 'Kleine checks zonder oordeel: kies wat nu helpt en laat de rest liggen.';
+      nudges.slice(0, 4).forEach((line) => {
+        const item = document.createElement('li');
+        item.textContent = line;
+        listEl.appendChild(item);
+      });
+
+      applyButton.dataset.miniStep = miniStep || '';
+      applyButton.disabled = !miniStep;
+    }
+
+    function applyContradictionMiniStep() {
+      const applyButton = document.getElementById('contradictionApply');
+      const step = applyButton?.dataset?.miniStep || '';
+      if (!step) {
+        showMessage('Nog geen mini-stap beschikbaar om over te nemen.', true);
+        return;
+      }
+
+      appendUniqueLine(document.getElementById('planA'), step);
+      saveForm(true);
+      renderContradictionCheck();
+      showMessage('Mini-stap toegevoegd aan plan A.');
     }
 
     function renderWeeklyReviewPrompt() {
@@ -761,6 +975,62 @@
       saveForm(true);
       renderWeeklyReviewPrompt();
       showMessage('Volgende stap toegevoegd aan plan A.');
+    }
+
+    function renderAttemptSummary() {
+      const metaEl = document.getElementById('attemptSummaryMeta');
+      const listEl = document.getElementById('attemptSummaryList');
+      if (!metaEl || !listEl) return;
+
+      const weekly = getWeeklyReview();
+      const attemptMeta = normalizeAttemptMeta(weekly);
+      const fullHistory = attemptMeta.history.slice().sort((a, b) => {
+        const left = new Date(a.completedAt || 0).getTime();
+        const right = new Date(b.completedAt || 0).getTime();
+        return right - left;
+      });
+
+      if (!fullHistory.length) {
+        metaEl.textContent = 'Nog geen attemptMeta-historie gevonden.';
+        listEl.innerHTML = '<li>Sla op de homepage een weekcheck-in op om hier een samenvatting te zien.</li>';
+        return;
+      }
+
+      const counts = {
+        nuttig: fullHistory.filter((entry) => (entry.attemptTag || 'nuttig') === 'nuttig').length,
+        'niet-nuttig': fullHistory.filter((entry) => entry.attemptTag === 'niet-nuttig').length,
+        later: fullHistory.filter((entry) => entry.attemptTag === 'later').length
+      };
+
+      const lastAttempt = new Date(attemptMeta.lastAttemptAt || fullHistory[0].completedAt);
+      const lastAttemptText = Number.isNaN(lastAttempt.getTime())
+        ? 'onbekend'
+        : lastAttempt.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' });
+
+      metaEl.textContent = `Pogingen totaal: ${attemptMeta.attemptCount} | Nuttig: ${counts.nuttig} | Niet nuttig: ${counts['niet-nuttig']} | Later: ${counts.later} | Laatste poging: ${lastAttemptText}`;
+
+      listEl.innerHTML = '';
+      fullHistory.slice(0, 5).forEach((entry) => {
+        const item = document.createElement('li');
+        const parts = [];
+        const dateText = entry.completedAt
+          ? new Date(entry.completedAt).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })
+          : 'datum onbekend';
+        const tagText = ATTEMPT_TAG_LABELS[entry.attemptTag] || ATTEMPT_TAG_LABELS.nuttig;
+
+        if (entry.nextStep) {
+          parts.push(`Volgende stap: ${entry.nextStep}`);
+        } else if (entry.learning) {
+          parts.push(`Leerpunt: ${entry.learning}`);
+        } else if (entry.reflection) {
+          parts.push(`Terugblik: ${entry.reflection}`);
+        } else {
+          parts.push('Geen extra toelichting.');
+        }
+
+        item.textContent = `${dateText} (${tagText}) - ${parts.join(' ')}`;
+        listEl.appendChild(item);
+      });
     }
 
     function applySuggestionFromPreviousSteps() {
@@ -846,7 +1116,9 @@
       fillForm({ ...getDefaultData(), ...(saved || {}) });
       loadRegulationFields();
       renderWeeklyReviewPrompt();
+      renderAttemptSummary();
       renderSelfRegulationRules();
+      renderContradictionCheck(saved || getDefaultData());
 
       const template = document.getElementById('usageGoalTemplate');
       const usageGoal = document.getElementById('usageGoal');
@@ -861,6 +1133,7 @@
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('planForm').addEventListener('input', () => saveForm(false));
+      document.getElementById('contradictionApply').addEventListener('click', applyContradictionMiniStep);
       document.getElementById('startDate').addEventListener('change', renderSelfRegulationRules);
       document.getElementById('evaluationDatePlanA').addEventListener('change', renderSelfRegulationRules);
       document.getElementById('saveRegulationButton').addEventListener('click', () => persistRegulation({ applyToEntries: false, feedback: true }));
@@ -885,7 +1158,10 @@
       });
       window.addEventListener('focus', () => {
         loadRegulationFields();
+        renderWeeklyReviewPrompt();
+        renderAttemptSummary();
         renderSelfRegulationRules();
+        renderContradictionCheck();
       });
     });
   </script>

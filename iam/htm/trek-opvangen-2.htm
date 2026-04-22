@@ -499,6 +499,20 @@
         addNudge(nudges, `Je schreef eerder alternatief gedrag: "${previewText(trek1.alternatief)}". Past dat ook als D-actie op deze pagina?`);
       }
 
+      const plan = iamData.getFormData ? (iamData.getFormData('plan-van-aanpak') || {}) : {};
+      if (plan.mainGoal && !formData.longGoal) {
+        addNudge(nudges, `Uit plan van aanpak: je hoofddoel is "${previewText(plan.mainGoal)}". Neem dat hier letterlijk mee bij je lange-termijndoel.`);
+      }
+
+      if (plan.planA && !formData.nextAction) {
+        addNudge(nudges, `Uit plan van aanpak: je plan A noemt "${previewText(plan.planA)}". Welke mini-actie daarvan doe je nu direct?`);
+      }
+
+      const noodplan = iamData.getFormData ? (iamData.getFormData('noodplan-forse-trek') || {}) : {};
+      if (noodplan.sosSignaal && !formData.ifThen) {
+        addNudge(nudges, `Uit noodplan forse trek: SOS-signaal "${previewText(noodplan.sosSignaal)}". Maak hier een als-dan zin zodra dat signaal opduikt.`);
+      }
+
       const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
       if (summary) {
         const intervention = Array.isArray(summary.bestInterventions) && summary.bestInterventions.length ? summary.bestInterventions[0] : '';
@@ -571,6 +585,10 @@
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('trek2Form').addEventListener('input', () => saveForm(false));
+      window.addEventListener('focus', () => {
+        const current = collectFormData();
+        renderCognitiveNudges(current);
+      });
     });
   </script>
 </body>
