@@ -14,6 +14,11 @@
     --text-secondary: #666666;
     --border-color: #dddddd;
     --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --form-label-color: #22313d;
+    --form-control-text: #22313d;
+    --form-control-bg: #ffffff;
+    --form-control-border: #c7d3dd;
+    --form-placeholder-color: #6f8090;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,6 +28,12 @@
         --text-primary: #f0f0f0;
         --text-secondary: #aaaaaa;
         --border-color: #444444;
+        /* Keep form fields readable on light cards used throughout IAM pages. */
+        --form-label-color: #22313d;
+        --form-control-text: #22313d;
+        --form-control-bg: #ffffff;
+        --form-control-border: #c7d3dd;
+        --form-placeholder-color: #6f8090;
     }
 }
 
@@ -148,10 +159,10 @@ button:disabled {
 input, textarea, select {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--form-control-border, var(--border-color));
     border-radius: 6px;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+    background-color: var(--form-control-bg, var(--bg-primary));
+    color: var(--form-control-text, var(--text-primary));
     font-family: inherit;
 }
 
@@ -162,13 +173,14 @@ input:focus, textarea:focus, select:focus {
 }
 
 input::placeholder {
-    color: var(--text-secondary);
+    color: var(--form-placeholder-color, var(--text-secondary));
 }
 
 label {
     display: block;
     margin-bottom: 0.25rem;
     font-weight: 600;
+    color: var(--form-label-color, var(--text-primary));
 }
 
 .form-group {
