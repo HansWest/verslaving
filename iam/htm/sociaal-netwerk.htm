@@ -1,185 +1,644 @@
-<html>
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
-)(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
-
-
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Sociaal netwerk</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sociaal netwerk</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6587;
+      --page-accent: #c9684a;
+      --page-soft: #ebf2f5;
+      --page-ok: #4e7b43;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="controleerjeverslaving(.nl) is een product van PraatmetHans(.nl) om mensen te helpen om zelfstandig aan de slag te laten gaan met hun verslaving of afhankelijkheid middels verantwoorde formulieren." />
-<meta name="keywords" content="huisarts, poh, verslaving, addiction, zelfstandig, persoonlijk, formulieren, gesprek, keuze, controleerjeverslaving, PraatmetHans.nl" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 101, 135, 0.14), transparent 32%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
 
+    .page-shell { max-width: 940px; margin: 0 auto; }
 
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .question-card,
+    .message,
+    .legacy-note,
+    .nudge-box {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
 
-function hulpscherm()
-{
-hulp_scherm(250,'steunnetwerk', 'Je loopt ook niet in je eentje de K7 in de Himalya op. Dat vereist vaak wat samenwerking.<br/>'+'Mogelijk zijn er mensen die je kunnen helpen om een beetje te trekken of te duwen op lastige momenten.')
-}
+    .question-card { border-top: 4px solid var(--page-main); }
 
-</script>
+    .legacy-note { border-left: 4px solid var(--page-accent); }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .legacy-note h2,
+    .nudge-box h2,
+    .question-card h2 { margin-top: 0; }
+
+    .legacy-note ul,
+    .nudge-list {
+      margin: 0.5rem 0 0;
+      padding-left: 1.2rem;
+      line-height: 1.55;
+    }
+
+    .legacy-note li,
+    .nudge-list li { margin-bottom: 0.35rem; }
+
+    .grid-two,
+    .grid-three { display: grid; gap: 1rem; }
+
+    @media (min-width: 760px) {
+      .grid-two { grid-template-columns: 1fr 1fr; }
+      .grid-three { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+
+    .message { display: none; border-left: 4px solid var(--page-ok); }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+
+    .subtle-help {
+      margin: 0.35rem 0 0.6rem;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .section-inline-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .hulpzinnetje-button {
+      border: 1px solid rgba(47, 101, 135, 0.22);
+      background: #f4f8fb;
+      color: var(--page-main);
+      border-radius: 999px;
+      min-height: 40px;
+      padding: 0.45rem 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .network-card {
+      border: 1px solid rgba(31, 56, 73, 0.1);
+      border-radius: 14px;
+      padding: 0.9rem;
+      background: #fbfdfe;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .network-card h3 {
+      margin: 0;
+      color: #345369;
+      font-size: 1rem;
+    }
+
+    .summary-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.7rem;
+    }
+
+    .summary-chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #eef4f7;
+      color: #235171;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .hulpzinnetje-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(20, 31, 40, 0.58);
+      z-index: 1000;
+    }
+
+    .hulpzinnetje-modal.open { display: flex; }
+
+    .hulpzinnetje-dialog {
+      width: min(560px, 100%);
+      background: #fff;
+      color: var(--page-ink);
+      border-radius: 18px;
+      box-shadow: 0 24px 48px rgba(20, 31, 40, 0.22);
+      border-top: 6px solid var(--page-main);
+      padding: 1.2rem;
+    }
+
+    .hulpzinnetje-dialog h3 {
+      margin: 0 0 0.75rem;
+      color: var(--page-main);
+    }
+
+    .hulpzinnetje-dialog p { margin: 0; line-height: 1.6; }
+    .hulpzinnetje-dialog .action-bar { margin-top: 1rem; }
+  </style>
 </head>
 <body>
-<div class="container">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./steunnetwerk.htm">Steunnetwerk</a>
+          <a href="./motiverende-mensen.htm">Motiverende mensen</a>
+        </div>
+        <h1>Sociaal netwerk</h1>
+        <p>Breng in kaart wie dichtbij staat, wie verder weg staat, wie kan helpen en waar nog ruimte zit om je netwerk sterker te maken.</p>
+      </header>
 
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
+      <div id="message" class="message"></div>
 
-</script>
-</head>
-<body>
-<div class="shadow"><div class="content">
-<script language="javascript">
- 
-writelogo();
--->
-</script>
-<div class="praatmethansheader">
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">steun-netwerk uitwerken</h1>
-</div>
+      <section class="legacy-note">
+        <h2>Legacy-kern behouden</h2>
+        <ul>
+          <li>Het oude formulier draaide om het idee van een sociaal atoom: dichtbij, middencirkel en verder weg.</li>
+          <li>Die gedachte blijft hier leidend: niet alleen wie er is, maar ook hoe dichtbij iemand voor jouw gevoel staat.</li>
+          <li>Je kunt deze pagina gebruiken als overzicht, en daarna doorwerken in steunnetwerk of motiverende mensen.</li>
+        </ul>
+      </section>
 
-<h1>Steun netwerk uitwerken</h1>
-<div class="printhide">
-<p>Als voorbereiding op onderstaande vragen kan het verstandig zijn om een sociaal
-  atoom te tekenen: zet drie cirkels op een A4 of print het <a href="http://wp.me/a1O3rG-Dr" title="Sociaal Atoom" target="_blank">sociaal
-  atoom formulier</a>. Zet jezelf in het midden neer en teken iedereen om jou
-  heen in de kring waar hij/zij voor jouw gevoel thuis hoort in jouw leven (dichtbij
-  - middel - veraf) en kijk eens wat het zegt over het gevoel van afstand (je
-  kan ook eens kijken hoe het zit met energie -kosten of krijgen-)
-</p>
+      <section class="nudge-box">
+        <div class="section-inline-head">
+          <h2>Cognitieve duwtjes</h2>
+          <button
+            type="button"
+            class="hulpzinnetje-button"
+            data-hulpzinnetje-title="Hulpzinnetje bij sociaal netwerk"
+            data-hulpzinnetje-content="Je netwerk hoeft niet perfect te zijn om toch helpend te worden. Het gaat erom dat je zicht krijgt op wie dichtbij voelt, wie bruikbaar is op lastige momenten en waar je nog iets wilt opbouwen."
+          >[?] Hulpzinnetje</button>
+        </div>
+        <p class="subtle-help" id="nudgeMeta">We verbinden deze pagina zachtjes met andere formulieren, zodat je sneller ziet waar steun al zichtbaar is.</p>
+        <ul class="nudge-list" id="networkNudges">
+          <li>Vul een paar velden in; dan verschijnen hier persoonlijke duwtjes op basis van eerdere input.</li>
+        </ul>
+      </section>
 
+      <form id="networkForm">
+        <section class="question-card">
+          <h2>1. Sociaal atoom</h2>
+          <p class="subtle-help">Beschrijf per cirkel wie daar nu ongeveer thuishoort. Dat mag met namen, bijnamen of rollen.</p>
+          <div class="grid-three">
+            <div class="form-group">
+              <label for="closeRing">Dichtbij</label>
+              <textarea id="closeRing" rows="6" placeholder="Wie voelt dichtbij? Bijvoorbeeld partner, vriend, zus, collega."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="middleRing">Middencirkel</label>
+              <textarea id="middleRing" rows="6" placeholder="Wie is belangrijk, maar niet heel dichtbij?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="farRing">Verder weg</label>
+              <textarea id="farRing" rows="6" placeholder="Wie hoort wel bij je netwerk, maar staat verder weg?"></textarea>
+            </div>
+          </div>
+        </section>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <section class="question-card">
+          <h2>2. Wat ontbreekt nog?</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="desiredConnections">Welke mensen of soorten contact zou je meer willen in je leven?</label>
+              <textarea id="desiredConnections" rows="5" placeholder="Bijvoorbeeld: iemand die eerlijk doorvraagt, een rustige vriend, lotgenoten, familieherstel."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="networkReflection">Wat valt je op als je naar je netwerk kijkt?</label>
+              <textarea id="networkReflection" rows="5" placeholder="Bijvoorbeeld: veel mensen om lol mee te maken, weinig mensen voor echte steun."></textarea>
+            </div>
+          </div>
+        </section>
 
-</div>
-<form name="socnetw">
+        <section class="question-card">
+          <h2>3. Motiverende en steunende mensen</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="motivatingPerson">Voor wie of met wie wil je deze verandering waarmaken?</label>
+              <textarea id="motivatingPerson" rows="4" placeholder="Naam, rol of groep."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="motivatingWhy">Wat maakt die persoon of groep motiverend voor jou?</label>
+              <textarea id="motivatingWhy" rows="4" placeholder="Bijvoorbeeld: voorbeeld, liefde, vertrouwen, schaamte willen omzetten in trots."></textarea>
+            </div>
+          </div>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="reachableSupport">Wie is nu het snelst bruikbaar als steun?</label>
+              <textarea id="reachableSupport" rows="4" placeholder="Wie kun je echt bellen, appen of zien als het lastig wordt?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="supportType">Welke soort steun verwacht je dan van die persoon?</label>
+              <textarea id="supportType" rows="4" placeholder="Bijvoorbeeld: afleiding, luisteren, meedenken, samen weggaan uit situatie."></textarea>
+            </div>
+          </div>
+        </section>
 
-<h3>Sociaal-netwerk</h3>
- 
+        <section class="question-card">
+          <h2>4. Eerste concrete stap</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="firstReachOut">Wie benader je als eerste of opnieuw?</label>
+              <textarea id="firstReachOut" rows="4" placeholder="Naam + wat je ongeveer gaat zeggen."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="nextContactDate">Wanneer ga je dat doen?</label>
+              <input id="nextContactDate" type="date" />
+            </div>
+          </div>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="trustLevel">Hoe betrouwbaar voelt deze eerste steunoptie nu?</label>
+              <select id="trustLevel">
+                <option value="">Kies een inschatting</option>
+                <option value="laag">Nog onzeker</option>
+                <option value="wisselend">Wisselend maar mogelijk bruikbaar</option>
+                <option value="redelijk">Redelijk betrouwbaar</option>
+                <option value="hoog">Sterk en betrouwbaar</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="contactRoute">Hoe neem je het liefst contact op?</label>
+              <select id="contactRoute">
+                <option value="">Kies een route</option>
+                <option value="bellen">Bellen</option>
+                <option value="appen">Appen</option>
+                <option value="face-to-face">Face-to-face</option>
+                <option value="mailen">Mailen</option>
+                <option value="nog-niet-zeker">Nog niet zeker</option>
+              </select>
+            </div>
+          </div>
+        </section>
 
-<p>&nbsp;</p>
+        <section class="question-card">
+          <h2>5. Drie ankers in het kort</h2>
+          <p class="subtle-help">Gebruik dit compact om drie mogelijke steunfiguren of netwerkankers naast elkaar te zetten.</p>
+          <div class="grid-three">
+            <div class="network-card">
+              <h3>Anker 1</h3>
+              <div class="form-group">
+                <label for="anchor1Name">Naam of rol</label>
+                <input id="anchor1Name" type="text" />
+              </div>
+              <div class="form-group">
+                <label for="anchor1Quality">Wat brengt deze persoon?</label>
+                <textarea id="anchor1Quality" rows="4"></textarea>
+              </div>
+            </div>
+            <div class="network-card">
+              <h3>Anker 2</h3>
+              <div class="form-group">
+                <label for="anchor2Name">Naam of rol</label>
+                <input id="anchor2Name" type="text" />
+              </div>
+              <div class="form-group">
+                <label for="anchor2Quality">Wat brengt deze persoon?</label>
+                <textarea id="anchor2Quality" rows="4"></textarea>
+              </div>
+            </div>
+            <div class="network-card">
+              <h3>Anker 3</h3>
+              <div class="form-group">
+                <label for="anchor3Name">Naam of rol</label>
+                <input id="anchor3Name" type="text" />
+              </div>
+              <div class="form-group">
+                <label for="anchor3Quality">Wat brengt deze persoon?</label>
+                <textarea id="anchor3Quality" rows="4"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="summary-chips" id="networkSummaryChips"></div>
+        </section>
 
-<p>Hoe snel is deze persoon bereikbaar:</p>
+        <div class="action-bar">
+          <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+        </div>
+      </form>
 
+      <div id="hulpzinnetjeModal" class="hulpzinnetje-modal" aria-hidden="true">
+        <div class="hulpzinnetje-dialog" role="dialog" aria-modal="true" aria-labelledby="hulpzinnetjeTitle">
+          <h3 id="hulpzinnetjeTitle">Hulpzinnetje</h3>
+          <p id="hulpzinnetjeText"></p>
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="closeHulpzinnetjeButton">Sluiten</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<p>(niet altijd betrouwbaar)
-0-1-2-3-4-5-6-7-8-9-10 (altijd betrouwbaar)</p>
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'sociaal-netwerk';
+    const fields = [
+      'closeRing',
+      'middleRing',
+      'farRing',
+      'desiredConnections',
+      'networkReflection',
+      'motivatingPerson',
+      'motivatingWhy',
+      'reachableSupport',
+      'supportType',
+      'firstReachOut',
+      'nextContactDate',
+      'trustLevel',
+      'contactRoute',
+      'anchor1Name',
+      'anchor1Quality',
+      'anchor2Name',
+      'anchor2Quality',
+      'anchor3Name',
+      'anchor3Quality'
+    ];
 
-<p>&nbsp;</p>
+    function getDefaultData() {
+      const data = {};
+      fields.forEach((key) => { data[key] = ''; });
+      return data;
+    }
 
-<hr class="formhr" />
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
 
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
 
-<p>&nbsp;</p>
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
 
-<h3>* Motiverende mensen: mensen om het voor te doen</h3>
+    function previewText(value, maxLength = 72) {
+      const text = String(value || '').trim().replace(/\s+/g, ' ');
+      if (!text) return '';
+      return text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text;
+    }
 
-<p>Behalve voor jezelf: voor wie wil jij deze
-verandering aanbrengen in je leven?</p>
+    function appendUniqueLine(textarea, line) {
+      if (!line || !textarea) return;
+      const clean = line.trim();
+      if (!clean) return;
+      const existingLines = textarea.value.split('\n').map((item) => item.trim()).filter(Boolean);
+      if (!existingLines.includes(clean)) {
+        textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
+      }
+    }
 
-<p>&nbsp;</p>
+    function openHulpzinnetjeModal(title, text) {
+      const modal = document.getElementById('hulpzinnetjeModal');
+      const titleEl = document.getElementById('hulpzinnetjeTitle');
+      const textEl = document.getElementById('hulpzinnetjeText');
+      if (!modal || !titleEl || !textEl) return;
+      titleEl.textContent = title;
+      textEl.textContent = text;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
 
-<p>Wie/Wat: . . . . . . . . . . . . . . . . .
-(naam of nickname of rol in jouw leven)</p>
+    function closeHulpzinnetjeModal() {
+      const modal = document.getElementById('hulpzinnetjeModal');
+      if (!modal) return;
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
 
-<p>&nbsp;</p>
+    function renderSummaryChips(data) {
+      const chips = document.getElementById('networkSummaryChips');
+      if (!chips) return;
+      chips.innerHTML = '';
 
-<p>Bestaat die persoon al in jouw leven of is dat
-(nog) een doel</p>
+      const items = [];
+      if (data.reachableSupport) items.push(`Snelle steun: ${previewText(data.reachableSupport, 40)}`);
+      if (data.firstReachOut) items.push(`Eerste contact: ${previewText(data.firstReachOut, 40)}`);
+      if (data.nextContactDate) items.push(`Contactdatum: ${data.nextContactDate}`);
+      if (data.trustLevel) items.push(`Betrouwbaarheid: ${data.trustLevel}`);
 
-<p>&nbsp;</p>
+      if (!items.length) {
+        const chip = document.createElement('span');
+        chip.className = 'summary-chip';
+        chip.textContent = 'Nog geen netwerkankers samengevat';
+        chips.appendChild(chip);
+        return;
+      }
 
-<p>Bereikbaarheid: (slecht bereikbaar)
-0-1-2-3-4-5-6-7-8-9-10 (goed bereikbaar)</p>
+      items.forEach((text) => {
+        const chip = document.createElement('span');
+        chip.className = 'summary-chip';
+        chip.textContent = text;
+        chips.appendChild(chip);
+      });
+    }
 
-<p>&nbsp;</p>
+    function addNudge(nudges, text) {
+      if (!text) return;
+      if (nudges.includes(text)) return;
+      nudges.push(text);
+    }
 
-<p>Hoe snel is deze persoon bereikbaar:</p>
+    function renderNetworkNudges(formData) {
+      const nudges = [];
+      const list = document.getElementById('networkNudges');
+      const meta = document.getElementById('nudgeMeta');
+      if (!list || !meta) return;
 
-<p>(kan ik altijd direct bereiken)
-0-1-2-3-4-5-6-7-8-9-10 (afspreken kost tijd) *</p>
+      if (formData.motivatingPerson && !formData.motivatingWhy) {
+        addNudge(nudges, `Je noemt al een motiverende persoon of groep: "${previewText(formData.motivatingPerson)}". Wat maakt die precies motiverend voor jou?`);
+      }
 
-<p>
+      if (formData.desiredConnections && !formData.firstReachOut) {
+        addNudge(nudges, 'Je weet al wat je mist in je netwerk. Kies nu 1 eerste contact of hernieuwd contact.');
+      }
 
-</p><p>Hoe stimulerend is deze persoon </p>
+      if (formData.firstReachOut && !formData.nextContactDate) {
+        addNudge(nudges, 'Goed dat je een eerste contact noemt. Zet er ook een datum bij zodat het niet vaag blijft.');
+      }
 
-<p>(weinig stimulerend) 0-1-2-3-4-5-6-7-8-9-10
-(enorm stimulerend) *</p>
+      if (formData.reachableSupport && !formData.supportType) {
+        addNudge(nudges, 'Je weet wie snel steun kan geven. Benoem ook wat voor steun je precies van die persoon vraagt.');
+      }
 
-<p>&nbsp;</p>
+      const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      const plan = iamData.getFormData ? (iamData.getFormData('plan-van-aanpak') || {}) : {};
+      const risicoMensen = iamData.getFormData ? (iamData.getFormData('risico-mensen') || {}) : {};
 
-<p>Betrouwbaarheid (is de stimulans er altijd ...
-of is dat erg wisselend -en weet je dat tevoren of niet-, bij voorbeeld door
-misverstanden of ruzie, middelen gebruik, werk, eigen problemen o.i.d.)</p>
+      const support = Array.isArray(summary?.supportNetwork) && summary.supportNetwork.length
+        ? summary.supportNetwork[0]
+        : '';
 
-<p class=MsoNormal style='tab-stops:right 6.3in'>(niet altijd
-betrouwbaar) 0-1-2-3-4-5-6-7-8-9-10 (altijd betrouwbaar) *</p>
+      if (support && !formData.reachableSupport) {
+        addNudge(nudges, `Uit eerdere formulieren komt steun naar voren: "${previewText(support)}". Is dit ook je snelst bruikbare steun?`);
+      }
 
-<p>&nbsp;</p>
+      if (plan.supportPeople && !formData.reachableSupport) {
+        addNudge(nudges, `In plan van aanpak noemde je steun: "${previewText(plan.supportPeople)}". Kun je die hier concreet neerzetten als eerste optie?`);
+      }
 
-<p>Soort van stimulans: . . . . . </p>
+      if (risicoMensen.personName && !formData.networkReflection) {
+        addNudge(nudges, `Bij risico-mensen noemde je "${previewText(risicoMensen.personName)}". Wat zegt dat over afstand of nabijheid in je netwerk?`);
+      }
 
-<p>op welke manier stimuleert iemand mij
-(bijvoorbeeld: iemand om het voor te doen, iemand die een voorbeeld is voor
-mij, iemand die mij bij de les houdt etc. etc.)</p>
+      meta.textContent = nudges.length
+        ? 'Kleine, concrete duwtjes op basis van wat je al invulde.'
+        : 'Nog geen spanning gevonden. Deze pagina kan nu vooral dienen als rustig overzicht.';
 
-<p>&nbsp;</p>
+      list.innerHTML = '';
+      if (!nudges.length) {
+        const item = document.createElement('li');
+        item.textContent = 'Nog geen specifieke duwtjes. Vul eerst een paar velden in, dan leggen we verbindingen met eerdere input.';
+        list.appendChild(item);
+        return;
+      }
 
--->
-<p>&nbsp;</p>
-</form><hr class="formhr" />
-<p>&nbsp;</p>
+      nudges.slice(0, 5).forEach((text) => {
+        const item = document.createElement('li');
+        item.textContent = text;
+        list.appendChild(item);
+      });
+    }
 
-<i>Andere formulieren op het gebied van jouw sociale netwerk zijn:
-<ul><li><a href="sociaal-netwerk.htm" target="formulieren" title="De mensen uit jouw sociale netwerk van de toekomst">Sociaal Netwerk</a></li><li><a href="steunnetwerk.htm" target="formulieren" title="Mensen die helpen om te doen wat er moet gebeuren">Steun netwerk</a></li><li><a href="motiverende-mensen.htm" target="formulieren" title="mensen waar je het voor doet">Motiverende Mensen</a></li></ul></i><p></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p> /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function saveForm(feedback = true) {
+      try {
+        const formData = collectFormData();
+        const saved = iamData.updateFormData(formKey, formData);
+        renderSummaryChips(saved || formData);
+        renderNetworkNudges(saved || formData);
+        if (feedback) showMessage('Sociaal netwerk opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      try {
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    function applySuggestionFromPreviousSteps() {
+      const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      const plan = iamData.getFormData('plan-van-aanpak') || {};
+      const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
+
+      appendUniqueLine(document.getElementById('reachableSupport'), Array.isArray(summary?.supportNetwork) ? summary.supportNetwork[0] || '' : '');
+      appendUniqueLine(document.getElementById('supportType'), gevoelens.talkPeople || '');
+      appendUniqueLine(document.getElementById('motivatingPerson'), plan.supportPeople || '');
+      appendUniqueLine(document.getElementById('firstReachOut'), Array.isArray(summary?.supportNetwork) ? summary.supportNetwork[1] || summary.supportNetwork[0] || '' : '');
+
+      saveForm(true);
+      showMessage('Voorstel ingevuld op basis van eerdere stappen. Check en pas aan waar nodig.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = iamData.getFormData(formKey);
+      const initial = { ...getDefaultData(), ...(saved || {}) };
+      fillForm(initial);
+      renderSummaryChips(initial);
+      renderNetworkNudges(initial);
+
+      document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
+        button.addEventListener('click', () => {
+          openHulpzinnetjeModal(button.dataset.hulpzinnetjeTitle || 'Hulpzinnetje', button.dataset.hulpzinnetjeContent || '');
+        });
+      });
+
+      document.getElementById('closeHulpzinnetjeButton').addEventListener('click', closeHulpzinnetjeModal);
+      document.getElementById('hulpzinnetjeModal').addEventListener('click', (event) => {
+        if (event.target.id === 'hulpzinnetjeModal') {
+          closeHulpzinnetjeModal();
+        }
+      });
+
+      document.getElementById('suggestButton').addEventListener('click', applySuggestionFromPreviousSteps);
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('networkForm').addEventListener('input', () => saveForm(false));
+
+      window.addEventListener('focus', () => {
+        const current = collectFormData();
+        renderSummaryChips(current);
+        renderNetworkNudges(current);
+      });
+    });
+  </script>
 </body>
 </html>
