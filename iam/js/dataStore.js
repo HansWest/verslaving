@@ -347,6 +347,7 @@ class IamDataStore {
     const plan = getForm('plan-van-aanpak');
     const sociaalNetwerk = getForm('sociaal-netwerk');
     const steunnetwerk = getForm('steunnetwerk');
+    const motiverendeMensen = getForm('motiverende-mensen');
     const combineParts = (...parts) => parts
       .filter((part) => typeof part === 'string' && part.trim())
       .join(' - ');
@@ -378,7 +379,9 @@ class IamDataStore {
       combineParts(steunnetwerk.support1Name, steunnetwerk.support1SupportType),
       combineParts(steunnetwerk.support2Name, steunnetwerk.support2SupportType),
       combineParts(steunnetwerk.support3Name, steunnetwerk.support3SupportType),
-      steunnetwerk.networkSummary
+      steunnetwerk.networkSummary,
+      motiverendeMensen.personName,
+      combineParts(motiverendeMensen.personName, motiverendeMensen.personRole)
     ], 8);
 
     const bestInterventionsBucket = this.buildInsightBucket([
@@ -414,7 +417,13 @@ class IamDataStore {
       plan.usageGoal,
       balans.decisionNote,
       soortenTrek.reflection,
-      gevoelens.learningPeriod
+      gevoelens.learningPeriod,
+      motiverendeMensen.motivationType,
+      motiverendeMensen.visibleProgress,
+      motiverendeMensen.messageToPerson,
+      combineParts(motiverendeMensen.anchor1Name, motiverendeMensen.anchor1Why),
+      combineParts(motiverendeMensen.anchor2Name, motiverendeMensen.anchor2Why),
+      combineParts(motiverendeMensen.anchor3Name, motiverendeMensen.anchor3Why)
     ], 8);
 
     const insightMeta = {
