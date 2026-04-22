@@ -22,6 +22,10 @@ Status: legacybestand verwijderd uit oude paden, noodkader toegevoegd aan `iam/h
 Status: legacybestand verwijderd uit oude Integrative-pad, herhaal- en timingkader toegevoegd aan `iam/htm/trek-opvangen.htm`.
 6. `craving-gevoel.htm`
 Status: legacybestanden verwijderd uit oude paden, niveauverschil-kader toegevoegd aan `iam/htm/craving-gevoel.htm`.
+7. `craving-1-10.htm`
+Status: legacybestanden verwijderd uit oude paden, schaal + actiezone met lokale opslag toegevoegd aan `iam/htm/craving-1-10.htm`.
+8. `noodplan-tekst.htm`
+Status: legacybestanden verwijderd uit oude paden, planniveaus + beslisregel met lokale opslag toegevoegd aan `iam/htm/noodplan-tekst.htm`.
 
 Opschoning ronde 1 (uitgevoerd):
 1. Verwijderd uit `IntegrativeAddictionManagement/htm`:
@@ -34,6 +38,14 @@ Opschoning ronde 2 (uitgevoerd):
 `craving-gevoel.htm`.
 2. Verwijderd uit `htm-version`:
 `craving-gevoel.htm`.
+3. Verwijderd uit `IntegrativeAddictionManagement/htm`:
+`craving-1-10.htm`.
+4. Verwijderd uit `htm-version`:
+`craving-1-10.htm`.
+5. Verwijderd uit `IntegrativeAddictionManagement/htm`:
+`noodplan-tekst.htm`.
+6. Verwijderd uit `htm-version`:
+`noodplan-tekst.htm`.
 
 Nog te doen (volgende rondes):
 1. Zelfde migratiepatroon toepassen op overige 1-op-1 overlapbestanden.

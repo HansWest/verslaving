@@ -1,119 +1,180 @@
-<html>
-
-noodplan-tekst.htm
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Noodplannen en plannen</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
-
-
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
-
-function hulpscherm()
-{
-hulp_scherm(280,'Noodplannnen','Als je af-en-toe tegen forse trek oploopt dan is het vaak wel verstandig je daar ook op voor te bereiden met een degelijk plan.<br/>'+'Tegen jezelf te vertellen: &quot;ik moet gewoon niet gaan gebruiken&quot; is niet zo realistisch. Het is immers niet &quot;gewoon&quot; om een trek te voelen die maakt dat er dingen <i>belangrijk</i> voelen die je achteraf niet gaat willen. '+'Dan is het misschien zelfs wel zaak om <i>ongewone</i> maatregelen te nemen..')
-}
-
-</script>
-
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plannen en Noodplannen</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #1b3446;
+      --main: #3d7498;
+      --accent: #c9694a;
+      --safe: #3e7f47;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(61, 116, 152, 0.15), transparent 32%),
+        linear-gradient(180deg, #f8f3ed 0%, #edf4f7 100%);
+      color: var(--ink);
+    }
+    .page-shell { max-width: 920px; margin: 0 auto; }
+    .hero {
+      margin-top: 1.1rem;
+      background: linear-gradient(140deg, var(--main) 0%, #5f6ab4 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.35rem;
+      box-shadow: 0 14px 30px rgba(27, 52, 70, 0.18);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.38);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.48rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+    }
+    .card {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 9px 22px rgba(27, 52, 70, 0.09);
+    }
+    .legacy-note { border-left: 5px solid var(--accent); }
+    .plan-grid { display: grid; gap: 0.8rem; grid-template-columns: 1fr; }
+    @media (min-width: 760px) { .plan-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .plan-tile {
+      border: 1px solid #d4e2ec;
+      border-left: 5px solid var(--main);
+      border-radius: 12px;
+      padding: 0.85rem;
+      background: #f5f9fc;
+    }
+    .plan-tile h3 { margin: 0 0 0.45rem; font-size: 1rem; }
+    .plan-tile a { font-weight: 700; }
+    .plan-tile.warn { border-left-color: #d19c30; background: #fff8eb; }
+    .plan-tile.alert { border-left-color: var(--accent); background: #fff2ef; }
+    .decision-box {
+      border: 1px solid #d6e6d9;
+      border-left: 5px solid var(--safe);
+      border-radius: 12px;
+      background: #eef8f0;
+      padding: 0.85rem;
+    }
+    .message {
+      display: none;
+      margin-top: 0.7rem;
+      border-radius: 10px;
+      padding: 0.72rem 0.9rem;
+      background: #eef8ee;
+      border-left: 4px solid var(--safe);
+      color: #214f25;
+    }
+    .message.show { display: block; }
+  </style>
 </head>
 <body>
-<div class="container">
-<div class="shadow"><div class="content"><div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./risico-tekst.htm">Risico-tekst</a>
+          <a href="./noodplan-forse-trek.htm">Noodplan forse trek</a>
+        </div>
+        <h1>Het plannen van (nood)plannen</h1>
+        <p>Niet elk moeilijk moment vraagt hetzelfde plan. Deze pagina helpt je bewust kiezen welk type plan past bij de situatie, zodat je sneller en duidelijker kunt handelen.</p>
+      </header>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-  <h1 class="praatmethansheader">het plannen van (nood)plannen</h1>
-</div>
-<div class="rechtsitalic">5 vragen: 20 - 40 minuten</div>
+      <section class="card legacy-note">
+        <h2>Legacy-kern behouden</h2>
+        <p>De oorspronkelijke boodschap blijft: maak niveauverschillen tussen plannen. Als alles in een plan komt, wordt het onduidelijk wanneer je wat doet en geeft het minder steun.</p>
+      </section>
 
-<h2>(nood)plannen</h2>
-<div class="printhide">
-<p> In de algemene verslavingszorg wordt er meestal weinig verschil gemaakt tussen
-  de verschillende plannen en noodplannen. Daardoor worden (nood)plannen vaak
-  onduidelijk (wanneer doe je nou wat?) en geven daardoor ook niet zo veel steun. </p>
+      <section class="card">
+        <h2>Wat moet er worden opgevangen?</h2>
+        <p>Er is een wezenlijk verschil tussen:
+        een moeilijke trekpiek zonder gebruik,
+        een uitglijder,
+        en wegglijden waarbij gebruik uit de hand loopt. Daarom zijn er drie planroutes.</p>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <div class="plan-grid">
+          <article class="plan-tile warn">
+            <h3>1. Forse trek</h3>
+            <p>Hoge drang, maar nog geen uitglijder.</p>
+            <a href="./noodplan-forse-trek.htm">Open noodplan forse trek</a>
+          </article>
+          <article class="plan-tile">
+            <h3>2. Uitglijden</h3>
+            <p>Er is een terugvalmoment, focus op direct herstel.</p>
+            <a href="./plan-bij-uitglijden.htm">Open plan bij uitglijden</a>
+          </article>
+          <article class="plan-tile alert">
+            <h3>3. Wegglijden</h3>
+            <p>Gebruik raakt uit de hand, zwaardere noodstappen nodig.</p>
+            <a href="./noodplan-wegglijden.htm">Open noodplan bij wegglijden</a>
+          </article>
+        </div>
+      </section>
 
-</div>
-<form name="forsetrek">
+      <section class="card decision-box">
+        <h2>Jouw beslisregel (kort)</h2>
+        <div class="form-group">
+          <label for="decisionRule">Wanneer kies jij welk plan?</label>
+          <textarea id="decisionRule" rows="4" placeholder="Bijv. score 7-8 zonder gebruik -> forse trek. Bij gebruiksmoment -> uitglijden. Bij controleverlies >24u -> wegglijden."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="riskLink">Welke risico's zijn hierbij jouw belangrijkste alarmsignalen?</label>
+          <textarea id="riskLink" rows="3" placeholder="Koppel dit aan je risico-tekst of risico-inventarisatie."></textarea>
+        </div>
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="printButton">Print / bewaar als pdf</button>
+        </div>
+        <div id="message" class="message"></div>
+      </section>
+    </div>
+  </div>
 
-<p>&nbsp;</p>
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'noodplan-tekst';
 
-<h3>Wat moet er worden opgevangen?</h3>
+    function showMessage(text) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.classList.add('show');
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => el.classList.remove('show'), 2500);
+    }
 
-<p>Er zijn verschillende dingen om op te vangen. Het is een groot verschil of
-  we het hebben over het opvangen van een moment waarop jij veel last hebt van
-  trek en waar je het moeilijk hebt maar waar er nog helemaal geen sprake is
-  van uitglijders of terugval of hoe jij het voor jezelf wilt noemen. <br />
-Wanneer er sprake is van gebruik  en dat gebruik is uit de hand aan het lopen
-dan hebben we het ineens over niet meer over een simpel 'ongelukje' (of dat nou
-een zogenaamd 'gepland ongelukje' was of niet). Er is ook lang niet altijd sprake
-van <i>nood</i>.</p>
-<div class="rechtsitalic">voor een discussie over <a href="http://hanswest.wordpress.com/2011/09/28/discussie-over-terugvallen" target="praatmethans">&quot;wat is terugvallen?&quot;</a></div>
-<p>Lang verhaal kort: ik raad je aan om (anders dan dat vaak wordt gezegd)  niveau-verschillen
-  aan te brengen in jouw plannen.</p><ol>
-<li><a href="noodplan-forse-trek.htm" target="formulieren">noodplan bij forse trek</a></li>
-  <li><a href="plan-bij-uitglijden.htm" target="formulieren">plan bij uitglijden</a></li>
-	<li><a href="noodplan-wegglijden.htm" target="formulieren">noodplan bij wegglijden</a></li>
-	</ol>
-  <p></p> Daarnaast is het ook wel zinnig om even na te denken over <a href="risico-tekst.htm" target="formulieren">risico's
-  en hun aanpak</a>.
-  <div class="praatmethansheader2">&quot;mijn steunnetwerk inschakelen&quot;</div>
+    function saveData() {
+      const decisionRule = document.getElementById('decisionRule').value.trim();
+      const riskLink = document.getElementById('riskLink').value.trim();
+      iamData.updateFormData(formKey, {
+        decisionRule,
+        riskLink,
+        lastUpdated: new Date().toISOString()
+      });
+      showMessage('Plan-keuze opgeslagen.');
+    }
 
-<p>&nbsp;</p>
-</form><hr class="formhr" />
-<p><i>(nood)plannen bij trek, bij uitglijders en bij wegglijders hebben overlap
-    maar zijn wel wezenlijk verschillend.<br />
-zie ook:</i></p>
-<i><ul>
-	<li><a href="noodplan-forse-trek.htm" target="formulieren">noodplan bij forse trek</a></li>
-	<li><a href="plan-bij-uitglijden.htm" target="formulieren">plan bij uitglijden</a></li>
-	<li><a href="noodplan-wegglijden.htm" target="formulieren">noodplan bij wegglijden</a></li>
-	</ul>
-	</i>
-<p></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+      const existing = iamData.getFormData(formKey) || {};
+      document.getElementById('decisionRule').value = existing.decisionRule || '';
+      document.getElementById('riskLink').value = existing.riskLink || '';
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+      document.getElementById('saveButton').addEventListener('click', saveData);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+    });
+  </script>
 </body>
 </html>

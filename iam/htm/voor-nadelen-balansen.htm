@@ -78,20 +78,35 @@
                 <p>Probeer per vak meerdere punten op te schrijven. Hoe concreter je schrijft, hoe bruikbaarder deze pagina wordt op moeilijke momenten.</p>
             </section>
 
+            <section class="note-card">
+                <h2>Legacy-aanvulling: verdiepende vragen</h2>
+                <ul class="helper-list">
+                    <li>Waar kijk je naar uit wanneer je trek voelt, waar verlang je dan naar?</li>
+                    <li>Wat verwacht je van gebruik, en klopt die verwachting achteraf meestal?</li>
+                    <li>Wat mis je wanneer je niet gebruikt?</li>
+                    <li>Welke nadelen merk je meteen, en welke pas later?</li>
+                </ul>
+                <div class="form-group mt-2">
+                    <label for="reflectionDate">Datum van deze balans (optioneel)</label>
+                    <input id="reflectionDate" type="date" />
+                </div>
+                <p>Tip uit de oude versie: noteer per kolom minstens twee punten. Deze balans groeit vaak over tijd.</p>
+            </section>
+
             <form id="balansForm">
                 <div class="grid-two">
                     <section class="question-card">
                         <h2>Voordelen van gebruik</h2>
                         <div class="form-group">
                             <label for="usageAdvantagesText">Wat lijkt gebruik je te geven?</label>
-                            <textarea id="usageAdvantagesText" rows="8" placeholder="Elke regel is een punt."></textarea>
+                            <textarea id="usageAdvantagesText" rows="8" placeholder="Bijv. snelle rust, minder spanning, me socialer voelen. Elke regel is een punt."></textarea>
                         </div>
                     </section>
                     <section class="question-card">
                         <h2>Nadelen van gebruik</h2>
                         <div class="form-group">
                             <label for="usageDisadvantagesText">Wat kost gebruik je direct of later?</label>
-                            <textarea id="usageDisadvantagesText" rows="8" placeholder="Elke regel is een punt."></textarea>
+                            <textarea id="usageDisadvantagesText" rows="8" placeholder="Bijv. onrust, gedoe thuis/werk, herstelkost, schaamte. Elke regel is een punt."></textarea>
                         </div>
                     </section>
                 </div>
@@ -101,14 +116,14 @@
                         <h2>Voordelen van veranderen</h2>
                         <div class="form-group">
                             <label for="changeAdvantagesText">Wat levert veranderen je op?</label>
-                            <textarea id="changeAdvantagesText" rows="8" placeholder="Elke regel is een punt."></textarea>
+                            <textarea id="changeAdvantagesText" rows="8" placeholder="Bijv. trots, betrouwbaarheid, rust, betere relaties. Elke regel is een punt."></textarea>
                         </div>
                     </section>
                     <section class="question-card">
                         <h2>Nadelen van veranderen</h2>
                         <div class="form-group">
                             <label for="changeDisadvantagesText">Wat maakt veranderen lastig of spannend?</label>
-                            <textarea id="changeDisadvantagesText" rows="8" placeholder="Elke regel is een punt."></textarea>
+                            <textarea id="changeDisadvantagesText" rows="8" placeholder="Bijv. ongemak, oefenen, gemis, sociale spanning. Elke regel is een punt."></textarea>
                         </div>
                     </section>
                 </div>
@@ -138,7 +153,8 @@
             'usageDisadvantagesText',
             'changeAdvantagesText',
             'changeDisadvantagesText',
-            'decisionNote'
+            'decisionNote',
+            'reflectionDate'
         ];
 
         function toLines(text) {
@@ -161,6 +177,7 @@
                 usageDisadvantagesText: '',
                 changeAdvantagesText: '',
                 changeDisadvantagesText: '',
+                reflectionDate: '',
                 decisionNote: '',
                 usage: { advantages: [], disadvantages: [] },
                 change: { advantages: [], disadvantages: [] }
