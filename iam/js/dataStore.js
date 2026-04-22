@@ -191,6 +191,11 @@ class IamDataStore {
           motivatingWhy: '',
           reachableSupport: '',
           supportType: '',
+          carefulPeople: '',
+          uncarefulPeople: '',
+          cravingPeople: '',
+          safePeople: '',
+          safetyCareOverlap: '',
           firstReachOut: '',
           nextContactDate: '',
           trustLevel: '',
@@ -353,7 +358,9 @@ class IamDataStore {
       soortenTrek.cravingType1Context,
       soortenTrek.cravingType2Context,
       soortenTrek.cravingType3Context,
-      risicoMensen.riskySituationWithPerson
+      risicoMensen.riskySituationWithPerson,
+      sociaalNetwerk.cravingPeople,
+      sociaalNetwerk.uncarefulPeople
     ], 8);
 
     const supportNetworkBucket = this.buildInsightBucket([
@@ -362,6 +369,8 @@ class IamDataStore {
       plan.supportPeople,
       risicoMensen.personName,
       sociaalNetwerk.reachableSupport,
+      sociaalNetwerk.carefulPeople,
+      sociaalNetwerk.safePeople,
       sociaalNetwerk.firstReachOut,
       combineParts(sociaalNetwerk.anchor1Name, sociaalNetwerk.anchor1Quality),
       combineParts(sociaalNetwerk.anchor2Name, sociaalNetwerk.anchor2Quality),

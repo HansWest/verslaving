@@ -152,6 +152,7 @@ class SocialNetworkApp {
             this.people = data.map(p => {
                 if (p.type === 'me') p.radius = 10;
                 else p.radius = 7;
+                if (!Array.isArray(p.iamTags)) p.iamTags = [];
                 return p;
             });
             this.me = this.people.find(p => p.type === 'me');
@@ -186,6 +187,10 @@ class SocialNetworkApp {
         document.getElementById('exportBtn').onclick = () => this.exportData();
         document.getElementById('importBtn').onclick = () => document.getElementById('importFile').click();
         document.getElementById('importFile').onchange = (e) => this.importData(e);
+        const importIamBtn = document.getElementById('importIamBtn');
+        const exportIamBtn = document.getElementById('exportIamBtn');
+        if (importIamBtn) importIamBtn.onclick = () => this.importFromIam();
+        if (exportIamBtn) exportIamBtn.onclick = () => this.exportToIam();
 
         document.getElementById('resetBtn').onclick = async () => {
             if (confirm("Factory reset? This will delete everyone.")) {
@@ -520,11 +525,41 @@ class SocialNetworkApp {
         this.ctx.arc(x, y, radius, 0, Math.PI * 2);
         this.ctx.fill();
 
+        this.drawIamTagMarkers(p);
+
         // Name Label
         this.ctx.fillStyle = '#fff';
         this.ctx.font = '500 11px Outfit';
         this.ctx.textAlign = 'center';
         this.ctx.fillText(p.name, x, y + radius + 15);
+    }
+
+    drawIamTagMarkers(person) {
+        if (!person || person.type === 'me') return;
+        const tags = Array.isArray(person.iamTags) ? person.iamTags : [];
+        if (!tags.length) return;
+
+        const markerMap = {
+            careful: { color: '#14b8a6', xOffset: -8, yOffset: -10 },
+            uncareful: { color: '#f59e0b', xOffset: 8, yOffset: -10 },
+            craving: { color: '#ef4444', xOffset: -8, yOffset: 10 },
+            safe: { color: '#22c55e', xOffset: 8, yOffset: 10 }
+        };
+
+        tags.forEach((tag) => {
+            const marker = markerMap[tag];
+            if (!marker) return;
+            this.ctx.beginPath();
+            this.ctx.fillStyle = marker.color;
+            this.ctx.arc(person.x + marker.xOffset, person.y + marker.yOffset, 3.3, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            this.ctx.beginPath();
+            this.ctx.strokeStyle = 'rgba(255,255,255,0.75)';
+            this.ctx.lineWidth = 0.7;
+            this.ctx.arc(person.x + marker.xOffset, person.y + marker.yOffset, 3.3, 0, Math.PI * 2);
+            this.ctx.stroke();
+        });
     }
 
     // Input Handling
@@ -619,6 +654,11 @@ class SocialNetworkApp {
         form.editEnergy.value = person.energy || 'balance';
         form.editColor.value = person.color || '#ffffff';
 
+        const tags = Array.isArray(person.iamTags) ? person.iamTags : [];
+        form.querySelectorAll('input[name="editTag"]').forEach((checkbox) => {
+            checkbox.checked = tags.includes(checkbox.value);
+        });
+
         this.renderRelationshipList(person);
 
         document.getElementById('deletePersonBtn').style.display = 'block';
@@ -678,7 +718,8 @@ class SocialNetworkApp {
             radius: 7, // Reduced from 20
             vx: 0,
             vy: 0,
-            relationships: {}
+            relationships: {},
+            iamTags: []
         } : this.people.find(p => p.id === id);
 
         person.name = form.editName.value;
@@ -687,6 +728,7 @@ class SocialNetworkApp {
         person.field = form.editField.value;
         person.energy = form.editEnergy.value;
         person.color = form.editColor.value;
+        person.iamTags = Array.from(form.querySelectorAll('input[name="editTag"]:checked')).map((input) => input.value);
 
         // Save relationships
         if (!person.relationships) person.relationships = {};
@@ -766,6 +808,171 @@ class SocialNetworkApp {
         if (label) {
             label.textContent = Math.round(this.speedFactor * 100) + '%';
         }
+    }
+
+    normalizeList(value) {
+        if (value === null || value === undefined) return [];
+        if (Array.isArray(value)) return value.flatMap((item) => this.normalizeList(item));
+        if (typeof value !== 'string') return [String(value)].filter(Boolean);
+        return value
+            .split(/\n|;|\u2022|•|,/) 
+            .map((item) => item.trim())
+            .filter(Boolean)
+            .filter((item) => item.length >= 2);
+    }
+
+    uniquePreserveOrder(items) {
+        const seen = new Set();
+        const out = [];
+        items.forEach((item) => {
+            const clean = String(item || '').trim();
+            if (!clean) return;
+            const key = clean.toLowerCase();
+            if (seen.has(key)) return;
+            seen.add(key);
+            out.push(clean);
+        });
+        return out;
+    }
+
+    mergeListText(existingValue, newItems) {
+        const merged = this.uniquePreserveOrder([
+            ...this.normalizeList(existingValue || ''),
+            ...(Array.isArray(newItems) ? newItems : this.normalizeList(newItems || ''))
+        ]);
+        return merged.join('\n');
+    }
+
+    findPersonByName(name) {
+        const key = String(name || '').trim().toLowerCase();
+        if (!key) return null;
+        return this.people.find((p) => p.type !== 'me' && String(p.name || '').trim().toLowerCase() === key) || null;
+    }
+
+    async ensurePersonFromIam(name, tag) {
+        const cleanName = String(name || '').trim();
+        if (!cleanName) return null;
+
+        let person = this.findPersonByName(cleanName);
+        const isNew = !person;
+
+        if (!person) {
+            const near = (tag === 'safe' || tag === 'careful');
+            const importance = near ? 'close' : 'far';
+            person = {
+                id: crypto.randomUUID(),
+                name: cleanName,
+                type: 'other',
+                x: this.me.x + (Math.random() - 0.5) * 140,
+                y: this.me.y + (Math.random() - 0.5) * 140,
+                radius: 7,
+                vx: 0,
+                vy: 0,
+                relationships: {},
+                importance,
+                field: 'other',
+                energy: (tag === 'craving' || tag === 'uncareful') ? 'costs' : 'balance',
+                color: '#ffffff',
+                iamTags: []
+            };
+        }
+
+        if (!Array.isArray(person.iamTags)) person.iamTags = [];
+        if (tag && !person.iamTags.includes(tag)) person.iamTags.push(tag);
+
+        if (person.iamTags.includes('craving') || person.iamTags.includes('uncareful')) {
+            person.energy = 'costs';
+        }
+
+        await this.db.savePerson(person);
+
+        if (isNew) {
+            this.people.push(person);
+        } else {
+            const idx = this.people.findIndex((p) => p.id === person.id);
+            if (idx >= 0) this.people[idx] = person;
+        }
+
+        return person;
+    }
+
+    getTaggedPeople(tag) {
+        return this.people
+            .filter((p) => p.type !== 'me' && Array.isArray(p.iamTags) && p.iamTags.includes(tag))
+            .map((p) => String(p.name || '').trim())
+            .filter(Boolean);
+    }
+
+    async importFromIam() {
+        if (!window.iamData || typeof window.iamData.getFormData !== 'function') {
+            alert('IAM dataStore is niet beschikbaar op deze pagina.');
+            return;
+        }
+
+        const sociaal = window.iamData.getFormData('sociaal-netwerk') || {};
+        const taggedLists = {
+            careful: this.normalizeList(sociaal.carefulPeople),
+            uncareful: this.normalizeList(sociaal.uncarefulPeople),
+            craving: this.normalizeList(sociaal.cravingPeople),
+            safe: this.normalizeList(sociaal.safePeople)
+        };
+
+        const extras = this.uniquePreserveOrder([
+            ...this.normalizeList(sociaal.reachableSupport),
+            ...this.normalizeList(sociaal.firstReachOut),
+            ...this.normalizeList(sociaal.anchor1Name),
+            ...this.normalizeList(sociaal.anchor2Name),
+            ...this.normalizeList(sociaal.anchor3Name)
+        ]);
+
+        let importedCount = 0;
+        for (const [tag, names] of Object.entries(taggedLists)) {
+            for (const name of names) {
+                const person = await this.ensurePersonFromIam(name, tag);
+                if (person) importedCount += 1;
+            }
+        }
+
+        for (const name of extras) {
+            const person = await this.ensurePersonFromIam(name, 'careful');
+            if (person) importedCount += 1;
+        }
+
+        alert(`IAM-import klaar. ${importedCount} labels/personen verwerkt.`);
+    }
+
+    async exportToIam() {
+        if (!window.iamData || typeof window.iamData.getFormData !== 'function' || typeof window.iamData.updateFormData !== 'function') {
+            alert('IAM dataStore is niet beschikbaar op deze pagina.');
+            return;
+        }
+
+        const careful = this.uniquePreserveOrder(this.getTaggedPeople('careful'));
+        const uncareful = this.uniquePreserveOrder(this.getTaggedPeople('uncareful'));
+        const craving = this.uniquePreserveOrder(this.getTaggedPeople('craving'));
+        const safe = this.uniquePreserveOrder(this.getTaggedPeople('safe'));
+
+        const combinedSupport = this.uniquePreserveOrder([...safe, ...careful]);
+        const existing = window.iamData.getFormData('sociaal-netwerk') || {};
+        const overlapHint = safe.length && careful.length
+            ? `Overlap veilig/zorgvuldig: ${this.uniquePreserveOrder(safe.filter((name) => careful.map((c) => c.toLowerCase()).includes(name.toLowerCase()))).join(', ') || 'beperkt'}`
+            : '';
+
+        const payload = {
+            carefulPeople: this.mergeListText(existing.carefulPeople, careful),
+            uncarefulPeople: this.mergeListText(existing.uncarefulPeople, uncareful),
+            cravingPeople: this.mergeListText(existing.cravingPeople, craving),
+            safePeople: this.mergeListText(existing.safePeople, safe),
+            reachableSupport: this.mergeListText(existing.reachableSupport, combinedSupport[0] ? [combinedSupport[0]] : []),
+            firstReachOut: this.mergeListText(existing.firstReachOut, combinedSupport.slice(0, 2)),
+            anchor1Name: existing.anchor1Name || combinedSupport[0] || '',
+            anchor2Name: existing.anchor2Name || combinedSupport[1] || '',
+            anchor3Name: existing.anchor3Name || combinedSupport[2] || '',
+            safetyCareOverlap: this.mergeListText(existing.safetyCareOverlap, overlapHint ? [overlapHint] : [])
+        };
+
+        window.iamData.updateFormData('sociaal-netwerk', payload);
+        alert('Export naar IAM sociaal-netwerk is opgeslagen op dit toestel.');
     }
 }
 

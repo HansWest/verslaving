@@ -282,7 +282,36 @@
         </section>
 
         <section class="question-card">
-          <h2>4. Eerste concrete stap</h2>
+          <h2>4. Zorgvuldig, onzorgvuldig, craving en veiligheid</h2>
+          <p class="subtle-help">Deze indeling helpt om nuances te zien. Vaak overlappen "veilig" en "zorgvuldig", maar niet altijd. Iemand kan zorgzaam zijn en toch craving triggeren, of omgekeerd.</p>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="carefulPeople">Mensen die zorgvuldig omgaan met je verslaving</label>
+              <textarea id="carefulPeople" rows="4" placeholder="Wie luistert, houdt grenzen, en helpt zonder te pushen?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="uncarefulPeople">Mensen die onzorgvuldig omgaan met je verslaving</label>
+              <textarea id="uncarefulPeople" rows="4" placeholder="Wie bagatelliseert, triggert, drukt of maakt het juist moeilijker?"></textarea>
+            </div>
+          </div>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="cravingPeople">Mensen die je craving geven (gebruikers of juist niet)</label>
+              <textarea id="cravingPeople" rows="4" placeholder="Bij wie merk je extra trek, druk, conflict, onrust of overprikkeling?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="safePeople">Mensen bij wie je veilig bent met je verslaving</label>
+              <textarea id="safePeople" rows="4" placeholder="Bij wie kun je eerlijk zijn over terugvalrisico, schaamte en hulpvragen?"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="safetyCareOverlap">Overlap-check: is "veilig" voor jou hetzelfde als "zorgvuldig"?</label>
+            <textarea id="safetyCareOverlap" rows="3" placeholder="Zo niet: wat is het verschil, en wat betekent dat voor je steunkeuzes?"></textarea>
+          </div>
+        </section>
+
+        <section class="question-card">
+          <h2>5. Eerste concrete stap</h2>
           <div class="grid-two">
             <div class="form-group">
               <label for="firstReachOut">Wie benader je als eerste of opnieuw?</label>
@@ -319,7 +348,7 @@
         </section>
 
         <section class="question-card">
-          <h2>5. Drie ankers in het kort</h2>
+          <h2>6. Drie ankers in het kort</h2>
           <p class="subtle-help">Gebruik dit compact om drie mogelijke steunfiguren of netwerkankers naast elkaar te zetten.</p>
           <div class="grid-three">
             <div class="network-card">
@@ -392,6 +421,11 @@
       'motivatingWhy',
       'reachableSupport',
       'supportType',
+      'carefulPeople',
+      'uncarefulPeople',
+      'cravingPeople',
+      'safePeople',
+      'safetyCareOverlap',
       'firstReachOut',
       'nextContactDate',
       'trustLevel',
@@ -479,6 +513,8 @@
       if (data.firstReachOut) items.push(`Eerste contact: ${previewText(data.firstReachOut, 40)}`);
       if (data.nextContactDate) items.push(`Contactdatum: ${data.nextContactDate}`);
       if (data.trustLevel) items.push(`Betrouwbaarheid: ${data.trustLevel}`);
+      if (data.safePeople) items.push(`Veilig: ${previewText(data.safePeople, 34)}`);
+      if (data.cravingPeople) items.push(`Craving-trigger: ${previewText(data.cravingPeople, 34)}`);
 
       if (!items.length) {
         const chip = document.createElement('span');
@@ -524,6 +560,22 @@
         addNudge(nudges, 'Je weet wie snel steun kan geven. Benoem ook wat voor steun je precies van die persoon vraagt.');
       }
 
+      if (formData.safePeople && !formData.carefulPeople) {
+        addNudge(nudges, 'Je noemt al mensen bij wie je veilig bent. Zijn dat ook de mensen die zorgvuldig met je verslaving omgaan?');
+      }
+
+      if (formData.carefulPeople && !formData.safePeople) {
+        addNudge(nudges, 'Je hebt zorgvuldige mensen benoemd. Bij wie voel je je ook echt veilig om eerlijk te zijn over cravings of uitglijders?');
+      }
+
+      if (formData.uncarefulPeople && !formData.cravingPeople) {
+        addNudge(nudges, 'Je noemde onzorgvuldige contacten. Welke daarvan geven je ook daadwerkelijk craving of druk?');
+      }
+
+      if (formData.cravingPeople && !formData.safetyCareOverlap) {
+        addNudge(nudges, 'Je cravings rondom mensen zijn in beeld. Leg kort vast hoe "veilig" en "zorgvuldig" voor jou verschillen.');
+      }
+
       const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
       const plan = iamData.getFormData ? (iamData.getFormData('plan-van-aanpak') || {}) : {};
       const risicoMensen = iamData.getFormData ? (iamData.getFormData('risico-mensen') || {}) : {};
@@ -542,6 +594,10 @@
 
       if (risicoMensen.personName && !formData.networkReflection) {
         addNudge(nudges, `Bij risico-mensen noemde je "${previewText(risicoMensen.personName)}". Wat zegt dat over afstand of nabijheid in je netwerk?`);
+      }
+
+      if (risicoMensen.personName && !formData.uncarefulPeople) {
+        addNudge(nudges, `Je noemde eerder risicopersoon "${previewText(risicoMensen.personName)}". Past die in je onzorgvuldig- of craving-lijst?`);
       }
 
       meta.textContent = nudges.length
@@ -598,11 +654,16 @@
       const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
       const plan = iamData.getFormData('plan-van-aanpak') || {};
       const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
+      const risicoMensen = iamData.getFormData('risico-mensen') || {};
 
       appendUniqueLine(document.getElementById('reachableSupport'), Array.isArray(summary?.supportNetwork) ? summary.supportNetwork[0] || '' : '');
       appendUniqueLine(document.getElementById('supportType'), gevoelens.talkPeople || '');
       appendUniqueLine(document.getElementById('motivatingPerson'), plan.supportPeople || '');
       appendUniqueLine(document.getElementById('firstReachOut'), Array.isArray(summary?.supportNetwork) ? summary.supportNetwork[1] || summary.supportNetwork[0] || '' : '');
+      appendUniqueLine(document.getElementById('safePeople'), plan.supportPeople || '');
+      appendUniqueLine(document.getElementById('carefulPeople'), Array.isArray(summary?.supportNetwork) ? summary.supportNetwork[0] || '' : '');
+      appendUniqueLine(document.getElementById('uncarefulPeople'), risicoMensen.personName || '');
+      appendUniqueLine(document.getElementById('cravingPeople'), risicoMensen.riskySituationWithPerson || '');
 
       saveForm(true);
       showMessage('Voorstel ingevuld op basis van eerdere stappen. Check en pas aan waar nodig.');

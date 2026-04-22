@@ -1,135 +1,651 @@
-<html>
-
-motiverende-mensen.htm
-
-deze code is van controleerjeverslavingszorg.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
-
-
-Basisgedachte:
-een mens kan het niet alleen doen en als inderdaad de theorie terecht zou zijn dat mensewn met een verslaving geholpen zouden zijn dooor het ervaren van meer binding dan is het minstens verstandig om de motivatie scherp te krijgen: waarom doe ik het voor wie.
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Motiverende mensen</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motiverende mensen</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6587;
+      --page-accent: #c9684a;
+      --page-ok: #4e7b43;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 101, 135, 0.14), transparent 32%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
 
+    .page-shell { max-width: 960px; margin: 0 auto; }
 
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .question-card,
+    .message,
+    .legacy-note,
+    .nudge-box {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
 
-function hulpscherm()
-{
-hulp_scherm(350,'moteverende mensen', 'Een mens heeft mensen nodig om het voor te doen. Je kunt immers niet altijd alleen maar op jezelf steunen, uiteindelijk heb je ook anderen nodig om het voor te doen<br/>'+'Mogelijk zijn dat zelfs mensen die je nog niet eens hebt leren kennen of die nog niet bestaan. Ik heb wel mensen geholpen om te stoppen zodat zij aantrekkelijk werden voor de partner die zij nog moesten vinden. Mensen die interessant moesten worden voor de baan die zij nog moesten vinden. Ik heb meerdere ouders geholpen om hun gebruik onder controle te krijgen zodat zij verantwoord de kinderen konden krijgen die zij graag wilden hebben.')
-}
+    .question-card { border-top: 4px solid var(--page-main); }
+    .legacy-note { border-left: 4px solid var(--page-accent); }
 
-</script>
+    .legacy-note h2,
+    .nudge-box h2,
+    .question-card h2,
+    .person-card h3 { margin-top: 0; }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .legacy-note ul,
+    .nudge-list {
+      margin: 0.5rem 0 0;
+      padding-left: 1.2rem;
+      line-height: 1.55;
+    }
+
+    .legacy-note li,
+    .nudge-list li { margin-bottom: 0.35rem; }
+
+    .grid-two,
+    .grid-three { display: grid; gap: 1rem; }
+
+    @media (min-width: 760px) {
+      .grid-two { grid-template-columns: 1fr 1fr; }
+      .grid-three { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .person-card {
+      border: 1px solid rgba(31, 56, 73, 0.1);
+      border-radius: 14px;
+      padding: 0.9rem;
+      background: #fbfdfe;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .person-card h3 {
+      color: #345369;
+      font-size: 1rem;
+    }
+
+    .summary-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.6rem;
+    }
+
+    .summary-chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #eef4f7;
+      color: #235171;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+
+    .message { display: none; border-left: 4px solid var(--page-ok); }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+
+    .subtle-help {
+      margin: 0.35rem 0 0.6rem;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .section-inline-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .hulpzinnetje-button {
+      border: 1px solid rgba(47, 101, 135, 0.22);
+      background: #f4f8fb;
+      color: var(--page-main);
+      border-radius: 999px;
+      min-height: 40px;
+      padding: 0.45rem 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .hulpzinnetje-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(20, 31, 40, 0.58);
+      z-index: 1000;
+    }
+
+    .hulpzinnetje-modal.open { display: flex; }
+
+    .hulpzinnetje-dialog {
+      width: min(560px, 100%);
+      background: #fff;
+      color: var(--page-ink);
+      border-radius: 18px;
+      box-shadow: 0 24px 48px rgba(20, 31, 40, 0.22);
+      border-top: 6px solid var(--page-main);
+      padding: 1.2rem;
+    }
+
+    .hulpzinnetje-dialog h3 { margin: 0 0 0.75rem; color: var(--page-main); }
+    .hulpzinnetje-dialog p { margin: 0; line-height: 1.6; }
+    .hulpzinnetje-dialog .action-bar { margin-top: 1rem; }
+  </style>
 </head>
 <body>
-<div class="container">
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./sociaal-netwerk.htm">Sociaal netwerk</a>
+          <a href="./steunnetwerk.htm">Steunnetwerk</a>
+          <a href="./iam_social_network/index.htm">Visualisatie netwerk</a>
+        </div>
+        <h1>Motiverende mensen</h1>
+        <p>Voor wie doe je dit? Maak je motivatie concreet met personen of rollen die jij als kompas wilt gebruiken op moeilijke momenten.</p>
+      </header>
 
-<div class="shadow"><div class="content">
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+      <div id="message" class="message"></div>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">motiverende mensen</h1>
-</div><div class="rechtsitalic">7 vragen: 15 - 30 minuten</div>
+      <section class="legacy-note">
+        <h2>Legacy-kern behouden</h2>
+        <ul>
+          <li>De oude pagina draaide om een motiverende persoon, diens rol en jouw boodschap. Dat blijft behouden.</li>
+          <li>Ook de lijn "bestaand contact of toekomstdoel" en het thema "gedoe in relatie" blijft in de kern hetzelfde.</li>
+          <li>Bestaande legacy-velden worden bij openen meegenomen en omgezet naar deze nieuwe opzet.</li>
+        </ul>
+      </section>
 
-<h1>Motiverende mensen:<br/>
-...mensen om het voor te doen</h1>
-<div class="printhide"><p>Vroeger werd wel gezegd: &quot;als je niet van jezelf houdt, dan kan je niet van
-  een ander houden&quot; Maar vaak genoeg helpt het om je te bedenken voor wie je
-  het doet, zodat je doet waardoor je van jezelf kan houden. Daarom de vraag:
-  behalve voor jezelf, voor wie wil jij deze draai in jouw leven 
-  aan gaan brengen?  </p>
-  
+      <section class="nudge-box">
+        <div class="section-inline-head">
+          <h2>Cognitieve duwtjes</h2>
+          <button
+            type="button"
+            class="hulpzinnetje-button"
+            data-hulpzinnetje-title="Hulpzinnetje bij motiverende mensen"
+            data-hulpzinnetje-content="Motivatie wordt sterker als je niet alleen denkt aan wie belangrijk is, maar ook aan wat jij die persoon wilt laten zien en wat jij wilt zeggen als je eerlijk bent."
+          >[?] Hulpzinnetje</button>
+        </div>
+        <p class="subtle-help" id="nudgeMeta">Hier verschijnen zachte koppelingen met je andere formulieren en met wat je al over steun invulde.</p>
+        <ul class="nudge-list" id="motivationNudges">
+          <li>Vul een paar velden in; dan verschijnen hier persoonlijke duwtjes op basis van eerdere input.</li>
+        </ul>
+      </section>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+      <form id="motivationForm">
+        <section class="question-card">
+          <h2>1. Jouw motiverende persoon of rol</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="personName">Wie is deze persoon of rol?</label>
+              <input id="personName" type="text" placeholder="Naam, nickname of rol" />
+            </div>
+            <div class="form-group">
+              <label for="personRole">Welke rol heeft deze persoon in jouw leven?</label>
+              <input id="personRole" type="text" placeholder="Bijvoorbeeld: partner, kind, vriend, mentor" />
+            </div>
+          </div>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="contactType">Is dit nu al een bestaand contact of een toekomstdoel?</label>
+              <select id="contactType">
+                <option value="">Kies</option>
+                <option value="bestaand">Bestaand contact</option>
+                <option value="doel">Toekomstdoel</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="relationshipStatus">Als dit contact al bestaat: wat is de impact van gebruik op jullie relatie?</label>
+              <select id="relationshipStatus">
+                <option value="">Kies</option>
+                <option value="OK">Gebruik gaf al gedoe in de relatie</option>
+                <option value="problemen">Gebruik heeft relatie nog niet gekleurd</option>
+              </select>
+            </div>
+          </div>
+        </section>
 
+        <section class="question-card">
+          <h2>2. Waarom motiveert dit jou?</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="motivationType">Op welke manier is deze persoon motivatie voor jou?</label>
+              <textarea id="motivationType" rows="4" placeholder="Bijvoorbeeld: iemand voor wie ik het wil doen, iemand die mij stimuleert, iemand die ik trots wil maken."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="visibleProgress">Hoe kan deze persoon zien dat jij op lange termijn goed bezig bent?</label>
+              <textarea id="visibleProgress" rows="4" placeholder="Noem concreet gedrag, keuzes of resultaten die zichtbaar worden."></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="messageToPerson">Wat wil je eigenlijk tegen deze motiverende persoon zeggen?</label>
+            <textarea id="messageToPerson" rows="4" placeholder="Schrijf het zoals je het echt zou willen zeggen."></textarea>
+          </div>
+        </section>
 
-</div>
-<form name="motivmensen">
-<p><b>Wie</b> is deze persoon:<br /> 
-  <input type="text" class="praatmethansformtexfield" name="wiewat" size="35" maxlength="45" title="hoe heet deze persoon of hoe wil je hem/haar noemen?" />
-</p>
-<div class="praatmethansheader2">wie is het in jouw leven</div>
-<div class="rechtsitalic">(wat is de naam of de nickname)</div>
-<p><b>Wat</b> is de rol in jouw leven: <br />
-<input type="text" class="praatmethansformtexfield" name="welkerol" size="35" maxlength="45" title="wat is de rol in jouw leven? (kind, partner, ouder, vriendschap, collega)" />
-</p>
-<div class="praatmethansheader2">wie is het in jouw leven</div>
-<div class="rechtsitalic">(wat is de rol in jouw leven)</div>
-<p>&nbsp;</p>
+        <section class="question-card">
+          <h2>3. Drie motivatie-ankers in het kort</h2>
+          <p class="subtle-help">Gebruik dit om meerdere personen of rollen compact naast elkaar te zetten. Zo heb je altijd back-upmotivatie.</p>
+          <div class="grid-three">
+            <div class="person-card">
+              <h3>Anker 1</h3>
+              <div class="form-group">
+                <label for="anchor1Name">Naam of rol</label>
+                <input id="anchor1Name" type="text" />
+              </div>
+              <div class="form-group">
+                <label for="anchor1Why">Waarom is dit anker belangrijk?</label>
+                <textarea id="anchor1Why" rows="4"></textarea>
+              </div>
+            </div>
+            <div class="person-card">
+              <h3>Anker 2</h3>
+              <div class="form-group">
+                <label for="anchor2Name">Naam of rol</label>
+                <input id="anchor2Name" type="text" />
+              </div>
+              <div class="form-group">
+                <label for="anchor2Why">Waarom is dit anker belangrijk?</label>
+                <textarea id="anchor2Why" rows="4"></textarea>
+              </div>
+            </div>
+            <div class="person-card">
+              <h3>Anker 3</h3>
+              <div class="form-group">
+                <label for="anchor3Name">Naam of rol</label>
+                <input id="anchor3Name" type="text" />
+              </div>
+              <div class="form-group">
+                <label for="anchor3Why">Waarom is dit anker belangrijk?</label>
+                <textarea id="anchor3Why" rows="4"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="summary-chips" id="motivationSummaryChips"></div>
+        </section>
 
-<p>is dat een al <b>bestaand</b> contact of is dat nog iets van de <b>toekomst</b>? </p>
+        <div class="action-bar">
+          <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+        </div>
+      </form>
 
-<p><input name="bestaandofniet" type="radio" value="bestaand" /> Bestaat die persoon al in jouw leven of<br />
-<input name="bestaandofniet" type="radio" value="doel" /> 
-is het (nog) een doel dat je nastreeft/waar je op hoopt?<br /></p>
-<div class="praatmethansheader2">heden of toekomst</div><div class="rechtsitalic"> mogelijk ook even kijken naar <a href="oefenen-voor-toekomst.htm" target="formulieren">de
-    toekomst</a>?</div>
-<p>Als die persoon al in jouw leven bestaat<br />
-<input name="gedoe" type="radio" value="OK" /> 
-heeft jouw gebruik al tot &quot;gedoe in de relatie&quot; geleid of<br />
-<input name="gedoe" type="radio" value="problemen" /> 
-heeft jouw gebruik de relatie met deze persoon nog totaal niet gekleurd?<br />
-</p>
-<div class="praatmethansheader2">gedoe dat nonu eenmaal ontstaat door gebruik?</div>
-<p>&nbsp;</p>
+      <div id="hulpzinnetjeModal" class="hulpzinnetje-modal" aria-hidden="true">
+        <div class="hulpzinnetje-dialog" role="dialog" aria-modal="true" aria-labelledby="hulpzinnetjeTitle">
+          <h3 id="hulpzinnetjeTitle">Hulpzinnetje</h3>
+          <p id="hulpzinnetjeText"></p>
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="closeHulpzinnetjeButton">Sluiten</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<p>Op <b>welke</b> manier is hij/zij een <b>motivatie</b> voor jou?<br />
-<textarea name="motivatie" cols="55" rows="3" title="op wat voor manier kan deze persoon een motivatie zijn voor jou"></textarea></p><div class="praatmethansheader2">soort van stimulans/ motivatie</div><br /><div class="rechtsitalic">(bijvoorbeeld: iemand om het voor te doen waar ik een voorbeeld voor wil zijn, iemand die een voorbeeld is voor mij, iemand die mij stimuleert en bij de les houdt etc. etc.)</div>
-<p>&nbsp;</p>
-<p>Hoe zou iemand kunnen <b>zien</b> dat jij goed bezig bent op de lange termijn?<br />
-<textarea name="ziet" cols="55" rows="3" title="als jij goed bezig bent, wat zou er dan voor deze persoon te zien zijn (gedrag of resultaten)?"></textarea></p>
-<div class="praatmethansheader2">wat is er voor hem/haar te zien aan gedrag of
-  resultaten</div>
-<br /><div class="rechtsitalic">te zien zou zijn...</div>
-<p>&nbsp;</p>
-<p> Ik zou eigenlijk tegen deze motiverende persoon willen (gaan) zeggen:<br />
-<textarea name="boodschap" cols="55" rows="3" title="als jij vanuit je hart zou kunnen spreken tegen hem/haar, wat zou je zeggen?"></textarea></p><div class="praatmethansheader2">wat voor motivatie</div><br /><div class="rechtsitalic">eigenlijk wil ik zeggen dat...</div>
-</form><hr class="formhr" />
-<p>&nbsp;</p>
-<i>Andere formulieren op het gebied van jouw sociale netwerk zijn:
-<ul><li><a href="sociaal-netwerk.htm" target="formulieren" title="De mensen uit jouw sociale netwerk van de toekomst">Sociaal Netwerk</a></li><li><a href="steunnetwerk.htm" target="formulieren" title="Mensen die helpen om te doen wat er moet gebeuren">Steun netwerk</a></li><li><a href="motiverende-mensen.htm" target="formulieren" title="mensen waar je het voor doet">Motiverende Mensen</a></li></ul></i><p></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'motiverende-mensen';
+    const fields = [
+      'personName',
+      'personRole',
+      'contactType',
+      'relationshipStatus',
+      'motivationType',
+      'visibleProgress',
+      'messageToPerson',
+      'anchor1Name',
+      'anchor1Why',
+      'anchor2Name',
+      'anchor2Why',
+      'anchor3Name',
+      'anchor3Why'
+    ];
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function getDefaultData() {
+      const data = {};
+      fields.forEach((key) => { data[key] = ''; });
+      return data;
+    }
+
+    function firstNonEmpty(items) {
+      return items.find((item) => typeof item === 'string' && item.trim()) || '';
+    }
+
+    function previewText(value, maxLength = 72) {
+      const text = String(value || '').trim().replace(/\s+/g, ' ');
+      if (!text) return '';
+      return text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text;
+    }
+
+    function appendUniqueLine(textarea, line) {
+      if (!line || !textarea) return;
+      const clean = line.trim();
+      if (!clean) return;
+      const existing = textarea.value.split('\n').map((item) => item.trim()).filter(Boolean);
+      if (!existing.includes(clean)) {
+        textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
+      }
+    }
+
+    function normalizeLegacyData(saved) {
+      const base = { ...getDefaultData(), ...(saved || {}) };
+      if (base.personName || base.personRole || base.motivationType) return base;
+
+      return {
+        ...base,
+        personName: firstNonEmpty([base.wiewat, base.personName]),
+        personRole: firstNonEmpty([base.welkerol, base.personRole]),
+        contactType: firstNonEmpty([base.bestaandofniet, base.contactType]),
+        relationshipStatus: firstNonEmpty([base.gedoe, base.relationshipStatus]),
+        motivationType: firstNonEmpty([base.motivatie, base.motivationType]),
+        visibleProgress: firstNonEmpty([base.ziet, base.visibleProgress]),
+        messageToPerson: firstNonEmpty([base.boodschap, base.messageToPerson]),
+        anchor1Name: firstNonEmpty([base.wiewat, base.anchor1Name]),
+        anchor1Why: firstNonEmpty([base.motivatie, base.anchor1Why])
+      };
+    }
+
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
+
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function openHulpzinnetjeModal(title, text) {
+      const modal = document.getElementById('hulpzinnetjeModal');
+      const titleEl = document.getElementById('hulpzinnetjeTitle');
+      const textEl = document.getElementById('hulpzinnetjeText');
+      if (!modal || !titleEl || !textEl) return;
+      titleEl.textContent = title;
+      textEl.textContent = text;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeHulpzinnetjeModal() {
+      const modal = document.getElementById('hulpzinnetjeModal');
+      if (!modal) return;
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    function renderSummaryChips(data) {
+      const chips = document.getElementById('motivationSummaryChips');
+      if (!chips) return;
+      chips.innerHTML = '';
+
+      const items = [];
+      if (data.personName) items.push(`Persoon: ${previewText(data.personName, 34)}`);
+      if (data.personRole) items.push(`Rol: ${previewText(data.personRole, 34)}`);
+      if (data.motivationType) items.push(`Motivatie: ${previewText(data.motivationType, 40)}`);
+
+      const anchorNames = [data.anchor1Name, data.anchor2Name, data.anchor3Name].filter(Boolean);
+      if (anchorNames.length) items.push(`Ankers: ${anchorNames.join(', ')}`);
+
+      if (!items.length) {
+        const chip = document.createElement('span');
+        chip.className = 'summary-chip';
+        chip.textContent = 'Nog geen motivatie-ankers samengevat';
+        chips.appendChild(chip);
+        return;
+      }
+
+      items.forEach((text) => {
+        const chip = document.createElement('span');
+        chip.className = 'summary-chip';
+        chip.textContent = text;
+        chips.appendChild(chip);
+      });
+    }
+
+    function addNudge(nudges, text) {
+      if (!text) return;
+      if (nudges.includes(text)) return;
+      nudges.push(text);
+    }
+
+    function renderMotivationNudges(formData) {
+      const nudges = [];
+      const list = document.getElementById('motivationNudges');
+      const meta = document.getElementById('nudgeMeta');
+      if (!list || !meta) return;
+
+      if (formData.personName && !formData.motivationType) {
+        addNudge(nudges, `Je noemt al iemand (${previewText(formData.personName)}). Schrijf ook waarom die persoon jou echt in beweging zet.`);
+      }
+
+      if (formData.motivationType && !formData.visibleProgress) {
+        addNudge(nudges, 'Je motivatie is al in beeld. Maak nu concreet waaraan iemand kan zien dat jij op koers blijft.');
+      }
+
+      if (formData.personName && !formData.messageToPerson) {
+        addNudge(nudges, `Maak het persoonlijk: wat wil je ${previewText(formData.personName, 28)} eigenlijk rechtstreeks zeggen?`);
+      }
+
+      if (formData.contactType === 'doel' && !formData.anchor2Name) {
+        addNudge(nudges, 'Omdat dit ook over toekomstige verbinding gaat: voeg een tweede anker toe voor extra richting.');
+      }
+
+      const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      const sociaal = iamData.getFormData ? (iamData.getFormData('sociaal-netwerk') || {}) : {};
+      const plan = iamData.getFormData ? (iamData.getFormData('plan-van-aanpak') || {}) : {};
+      const waarden = iamData.getFormData ? (iamData.getFormData('persoonlijke-waarden') || {}) : {};
+      const waardenKort = firstNonEmpty([
+        [waarden.waarde01, waarden.waarde02, waarden.waarde03].filter(Boolean).join(', '),
+        waarden.waardenterugzien,
+        waarden.waardenterugzien02,
+        waarden.waardenterugzien03
+      ]);
+
+      const motivation = Array.isArray(summary?.motivationAnchors) && summary.motivationAnchors.length
+        ? summary.motivationAnchors[0]
+        : '';
+
+      if (motivation && !formData.motivationType) {
+        addNudge(nudges, `Uit eerdere formulieren komt motivatie naar voren: "${previewText(motivation)}". Past dit bij jouw motiverende persoon?`);
+      }
+
+      if (sociaal.motivatingPerson && !formData.personName) {
+        addNudge(nudges, `In sociaal netwerk noemde je al: "${previewText(sociaal.motivatingPerson)}". Maak dat hier concreet als persoon of rol.`);
+      }
+
+      if (sociaal.motivatingWhy && !formData.motivationType) {
+        addNudge(nudges, `In sociaal netwerk schreef je waarom iemand motiveert: "${previewText(sociaal.motivatingWhy)}". Neem dat hier over of scherp het aan.`);
+      }
+
+      if (plan.mainGoal && !formData.messageToPerson) {
+        addNudge(nudges, `Koppel je boodschap aan je hoofddoel: "${previewText(plan.mainGoal)}". Dat maakt je motivatie sterker en meetbaar.`);
+      }
+
+      if (waardenKort && !formData.visibleProgress) {
+        addNudge(nudges, `Je noemde waarden: "${previewText(waardenKort)}". Waaraan kunnen anderen straks zien dat je volgens die waarden leeft?`);
+      }
+
+      meta.textContent = nudges.length
+        ? 'Kleine, concrete duwtjes op basis van wat je al invulde.'
+        : 'Nog geen spanning gevonden. Deze pagina kan nu vooral dienen als heldere motivatiekaart.';
+
+      list.innerHTML = '';
+      if (!nudges.length) {
+        const item = document.createElement('li');
+        item.textContent = 'Nog geen specifieke duwtjes. Vul eerst een paar velden in, dan leggen we verbindingen met eerdere input.';
+        list.appendChild(item);
+        return;
+      }
+
+      nudges.slice(0, 5).forEach((text) => {
+        const item = document.createElement('li');
+        item.textContent = text;
+        list.appendChild(item);
+      });
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        const formData = collectFormData();
+        const saved = iamData.updateFormData(formKey, formData);
+        renderSummaryChips(saved || formData);
+        renderMotivationNudges(saved || formData);
+        if (feedback) showMessage('Motiverende mensen opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      try {
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    function applySuggestionFromPreviousSteps() {
+      const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      const sociaal = iamData.getFormData('sociaal-netwerk') || {};
+      const plan = iamData.getFormData('plan-van-aanpak') || {};
+
+      appendUniqueLine(document.getElementById('personName'), firstNonEmpty([
+        sociaal.motivatingPerson,
+        sociaal.reachableSupport,
+        Array.isArray(summary?.supportNetwork) ? summary.supportNetwork[0] : ''
+      ]));
+      appendUniqueLine(document.getElementById('personRole'), firstNonEmpty([
+        plan.supportPeople,
+        sociaal.motivatingPerson
+      ]));
+      appendUniqueLine(document.getElementById('motivationType'), firstNonEmpty([
+        sociaal.motivatingWhy,
+        Array.isArray(summary?.motivationAnchors) ? summary.motivationAnchors[0] : '',
+        plan.mainGoal
+      ]));
+      appendUniqueLine(document.getElementById('visibleProgress'), firstNonEmpty([
+        plan.usageGoal,
+        plan.mainGoal
+      ]));
+      appendUniqueLine(document.getElementById('messageToPerson'), firstNonEmpty([
+        plan.mainGoal,
+        sociaal.firstReachOut
+      ]));
+
+      appendUniqueLine(document.getElementById('anchor1Name'), document.getElementById('personName').value);
+      appendUniqueLine(document.getElementById('anchor1Why'), document.getElementById('motivationType').value);
+      appendUniqueLine(document.getElementById('anchor2Name'), sociaal.reachableSupport || '');
+      appendUniqueLine(document.getElementById('anchor2Why'), sociaal.supportType || '');
+
+      saveForm(true);
+      showMessage('Voorstel ingevuld op basis van eerdere stappen. Check en pas aan waar nodig.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = iamData.getFormData(formKey);
+      const initial = normalizeLegacyData(saved || {});
+      fillForm(initial);
+      renderSummaryChips(initial);
+      renderMotivationNudges(initial);
+
+      document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
+        button.addEventListener('click', () => {
+          openHulpzinnetjeModal(button.dataset.hulpzinnetjeTitle || 'Hulpzinnetje', button.dataset.hulpzinnetjeContent || '');
+        });
+      });
+
+      document.getElementById('closeHulpzinnetjeButton').addEventListener('click', closeHulpzinnetjeModal);
+      document.getElementById('hulpzinnetjeModal').addEventListener('click', (event) => {
+        if (event.target.id === 'hulpzinnetjeModal') {
+          closeHulpzinnetjeModal();
+        }
+      });
+
+      document.getElementById('suggestButton').addEventListener('click', applySuggestionFromPreviousSteps);
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('motivationForm').addEventListener('input', () => saveForm(false));
+
+      window.addEventListener('focus', () => {
+        const current = collectFormData();
+        renderSummaryChips(current);
+        renderMotivationNudges(current);
+      });
+    });
+  </script>
 </body>
 </html>

@@ -489,6 +489,18 @@
         addNudge(nudges, `In sociaal netwerk noemde je snelle steun: "${previewText(sociaal.reachableSupport)}". Maak die hier concreet als steunfiguur.`);
       }
 
+      if (sociaal.safePeople && !formData.support1Name) {
+        addNudge(nudges, `In sociaal netwerk noemde je veilige mensen: "${previewText(sociaal.safePeople)}". Is dit je eerste anker in steunnetwerk?`);
+      }
+
+      if (sociaal.carefulPeople && !formData.networkSummary) {
+        addNudge(nudges, `Je noemde zorgvuldige mensen: "${previewText(sociaal.carefulPeople)}". Vat kort samen hoe je die inzet op moeilijke momenten.`);
+      }
+
+      if (sociaal.cravingPeople && !formData.support2Guide) {
+        addNudge(nudges, `Craving-triggers in je netwerk zijn benoemd. Welke handleiding geef je steunfiguur 2 zodat die je helpt begrenzen?`);
+      }
+
       if (plan.supportPeople && !formData.networkSummary) {
         addNudge(nudges, `In plan van aanpak staat steun genoemd: "${previewText(plan.supportPeople)}". Vat kort samen hoe je die steun gaat inzetten.`);
       }
@@ -550,8 +562,12 @@
 
       appendUniqueLine(document.getElementById('support1Name'), firstNonEmpty([sociaal.reachableSupport, summary?.supportNetwork?.[0]]));
       appendUniqueLine(document.getElementById('support1SupportType'), firstNonEmpty([sociaal.supportType, plan.supportPeople]));
+      appendUniqueLine(document.getElementById('support2Name'), sociaal.safePeople || '');
+      appendUniqueLine(document.getElementById('support2SupportType'), sociaal.carefulPeople || sociaal.supportType || '');
+      appendUniqueLine(document.getElementById('support2Guide'), sociaal.safetyCareOverlap || '');
       appendUniqueLine(document.getElementById('networkSummary'), firstNonEmpty([
         sociaal.firstReachOut,
+        sociaal.safePeople,
         Array.isArray(summary?.supportNetwork) ? summary.supportNetwork[0] : ''
       ]));
 

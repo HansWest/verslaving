@@ -38,6 +38,8 @@
                     <button class="help-circle-btn" id="helpBtn" title="Help">?</button>
                 </div>
                 <div class="controls-row controls-row-secondary">
+                    <button id="importIamBtn" class="btn btn-text" title="Load suggested people from IAM forms">Import IAM ↙</button>
+                    <button id="exportIamBtn" class="btn btn-text" title="Write tagged people back to IAM sociaal netwerk">Export IAM ↗</button>
                     <button id="exportBtn" class="btn btn-text" title="Download backup">Export ⬇️</button>
                     <button id="importBtn" class="btn btn-text" title="Restore from backup">Import ⬆️</button>
                     <input type="file" id="importFile" accept=".json" style="display: none;">
@@ -59,6 +61,19 @@
             </div>
             <div class="legend-item">
                 <span class="dot far"></span> Far
+            </div>
+            <div class="legend-divider"></div>
+            <div class="legend-item">
+                <span class="tag-dot careful"></span> Zorgvuldig
+            </div>
+            <div class="legend-item">
+                <span class="tag-dot uncareful"></span> Onzorgvuldig
+            </div>
+            <div class="legend-item">
+                <span class="tag-dot craving"></span> Craving-trigger
+            </div>
+            <div class="legend-item">
+                <span class="tag-dot safe"></span> Veilig
             </div>
         </div>
 
@@ -114,6 +129,16 @@
                     </div>
 
                     <div class="form-group">
+                        <label>IAM social labels</label>
+                        <div class="tag-checks">
+                            <label><input type="checkbox" name="editTag" value="careful"> Zorgvuldig</label>
+                            <label><input type="checkbox" name="editTag" value="uncareful"> Onzorgvuldig</label>
+                            <label><input type="checkbox" name="editTag" value="craving"> Craving-trigger</label>
+                            <label><input type="checkbox" name="editTag" value="safe"> Veilig</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label>Relationships with others</label>
                         <div id="relationshipList" class="relationship-list">
                             <!-- Populated by JS -->
@@ -141,6 +166,7 @@
     </footer>
 
     <script src="../v4v.js"></script>
+    <script src="../../js/dataStore.js"></script>
     <script src="app.js"></script>
 </body>
 
