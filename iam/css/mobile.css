@@ -155,6 +155,47 @@ button:disabled {
     cursor: not-allowed;
 }
 
+/* Inklapbare secties (chapter-host / collapse-toggle) */
+.chapter-host {
+    position: relative;
+}
+
+.chapter-toggle {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.65rem;
+    width: 2rem;
+    height: 2rem;
+    min-height: 2rem;
+    min-width: 2rem;
+    border: 1px solid var(--border-soft);
+    background: var(--surface-soft);
+    color: var(--text-main);
+    border-radius: 999px;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+    line-height: 1;
+}
+
+.chapter-toggle::before {
+    content: '+';
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.chapter-toggle[aria-expanded="true"]::before {
+    content: '-';
+}
+
+.chapter-toggle:hover {
+    background: rgba(47, 107, 143, 0.12);
+}
+
+.chapter-collapsed {
+    display: none !important;
+}
+
 /* Forms */
 input, textarea, select {
     width: 100%;

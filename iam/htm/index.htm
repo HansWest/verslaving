@@ -159,23 +159,6 @@
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .chapter-toggle {
-            margin-left: 0.6rem;
-            min-height: 32px;
-            border: 1px solid var(--border-soft);
-            background: var(--surface-soft);
-            color: var(--text-main);
-            border-radius: 999px;
-            padding: 0.15rem 0.65rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            vertical-align: middle;
-        }
-
-        .chapter-collapsed {
-            display: none !important;
-        }
 
         .card.phase-1 {
             border-top-color: #e91e63;
@@ -903,10 +886,14 @@
                     <li><strong>A - Actualiteit:</strong> stop en adem, zodat je ziet wat er nu echt gebeurt.</li>
                     <li><strong>B - Behoefte:</strong> onderzoek welke behoefte onder de trek zit.</li>
                     <li><strong>C - Cognitieve afweging:</strong> neem lange-termijn mee en kies: gebruik of de D van Doen.</li>
-                    <li><strong>D - Doen:</strong> actief afscheid, accepteren (zo nodig kort afleiden), alternatief gedrag op behoefte B, en herhalen.</li>
-                </ul>
+                    <li><strong>D - Doen:</strong> </li>
+                    <li><strong>&nbsp;a - actief afscheid:</strong> wat doe ik niet meer (en wat dus wel)?</li>
+                    <li><strong>&nbsp;a - alternatief gedrag:</strong> om behoefte B <em>anders</em> te bereiken.</li>
+                    <li><strong>&nbsp;a - actief accepteren:</strong> voelen welke B je <em>mist</em> (met zo nodig afleiden).</li>
+                    <li><strong>&nbsp;h - herhalen:</strong> herhalen, herhalen, en <em>herhalen</em>.</li>
+                    </ul>
                 <p class="model-note">
-                    Herhalen is essentieel: juist oude, automatische breinreacties veranderen door vaak oefenen op rustige momenten.
+                    {Het is misschien interressant om te weten dat het gevoel(!) van verslaving en het gevoel(!) vsn craving/trek voortkomt uit de oude delen van het brein die niet zo veel te maken hebben met denken of vinden of wilskracht.[!]}...herhalen is essentieel: juist oude, automatische breinreacties veranderen door vaak te <em>oefenen</em> op rustige momenten.
                 </p>
             </div>
         </div>
@@ -1402,8 +1389,8 @@
 
         function applyChapterCollapse(elements, toggle, collapsed) {
             elements.forEach((el) => el.classList.toggle('chapter-collapsed', collapsed));
-            toggle.textContent = collapsed ? 'Uitklappen' : 'Inklappen';
             toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+            toggle.setAttribute('aria-label', collapsed ? 'Hoofdstuk uitklappen' : 'Hoofdstuk inklappen');
             toggle.setAttribute('title', collapsed ? 'Hoofdstuk uitklappen' : 'Hoofdstuk inklappen');
         }
 
@@ -1413,14 +1400,16 @@
             return true;
         }
 
-        function makeChapterCollapsible(chapterKey, headingEl, contentEls, collapseState) {
-            if (!headingEl || !contentEls.length) return;
+        function makeChapterCollapsible(chapterKey, headingEl, contentEls, collapseState, hostEl) {
+            if (!headingEl || !contentEls.length || !hostEl) return;
             if (headingEl.dataset.chapterInit === 'true') return;
+
+            hostEl.classList.add('chapter-host');
 
             const toggle = document.createElement('button');
             toggle.type = 'button';
             toggle.className = 'chapter-toggle';
-            headingEl.appendChild(toggle);
+            hostEl.appendChild(toggle);
 
             const hasStored = Object.prototype.hasOwnProperty.call(collapseState, chapterKey);
             const initialCollapsed = hasStored
@@ -1431,7 +1420,8 @@
 
             toggle.addEventListener('click', (event) => {
                 event.stopPropagation();
-                const nextCollapsed = !Boolean(collapseState[chapterKey]);
+                const currentlyCollapsed = contentEls.some((el) => el.classList.contains('chapter-collapsed'));
+                const nextCollapsed = !currentlyCollapsed;
                 collapseState[chapterKey] = nextCollapsed;
                 applyChapterCollapse(contentEls, toggle, nextCollapsed);
                 saveChapterCollapseState(collapseState);
@@ -1446,23 +1436,23 @@
             const intro = document.querySelector('.intro-section');
             const introHeading = intro?.querySelector('h2');
             const introContent = intro ? Array.from(intro.children).filter((el) => el !== introHeading) : [];
-            makeChapterCollapsible('intro', introHeading, introContent, collapseState);
+            makeChapterCollapsible('intro', introHeading, introContent, collapseState, intro);
 
             const quick = document.querySelector('.quick-actions');
             const quickHeading = quick?.querySelector('h3');
             const quickContent = quick ? Array.from(quick.children).filter((el) => el !== quickHeading) : [];
-            makeChapterCollapsible('quick-actions', quickHeading, quickContent, collapseState);
+            makeChapterCollapsible('quick-actions', quickHeading, quickContent, collapseState, quick);
 
             const weekly = document.getElementById('weeklyReviewCard');
             const weeklyHeading = weekly?.querySelector('.weekly-review-header h3');
             const weeklyHeader = weekly?.querySelector('.weekly-review-header');
             const weeklyContent = weekly ? Array.from(weekly.children).filter((el) => el !== weeklyHeader) : [];
-            makeChapterCollapsible('weekly-review', weeklyHeading, weeklyContent, collapseState);
+            makeChapterCollapsible('weekly-review', weeklyHeading, weeklyContent, collapseState, weekly);
 
             const featured = document.querySelector('.featured-card');
             const featuredHeading = featured?.querySelector('h3');
             const featuredContent = featured ? Array.from(featured.children).filter((el) => el !== featuredHeading) : [];
-            makeChapterCollapsible('featured', featuredHeading, featuredContent, collapseState);
+            makeChapterCollapsible('featured', featuredHeading, featuredContent, collapseState, featured);
 
             const sectionTitles = Array.from(document.querySelectorAll('.section-title'));
             sectionTitles.forEach((titleEl, index) => {
@@ -1473,7 +1463,16 @@
                     content.push(cursor);
                     cursor = cursor.nextElementSibling;
                 }
-                makeChapterCollapsible(chapterKey, titleEl, content, collapseState);
+
+                if (!content.length) return;
+
+                const wrapper = document.createElement('section');
+                const parent = titleEl.parentNode;
+                parent.insertBefore(wrapper, titleEl);
+                wrapper.appendChild(titleEl);
+                content.forEach((el) => wrapper.appendChild(el));
+
+                makeChapterCollapsible(chapterKey, titleEl, content, collapseState, wrapper);
             });
         }
 

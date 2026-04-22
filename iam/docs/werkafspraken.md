@@ -109,6 +109,17 @@ Deze sectie bevat alles wat nodig is om consistent en goed aan IAM te werken.
 - Centrale lokale data-opslag via `iam/js/dataStore.js`.
 - Exportmogelijkheden (JSON/CSV) behouden of uitbreiden waar relevant.
 
+### UX-beslissing: inklapbare secties via ronde +/− knop
+
+- Secties en hoofdstukken die inklapbaar zijn, krijgen altijd een ronde iconknop rechtsboven in hun container.
+- De knop toont **−** als de sectie open is, **+** als de sectie dicht is.
+- De knop heeft `aria-expanded` voor toegankelijkheid; de `::before` pseudo-selector toont het icoon — geen zichtbare tekst in het element zelf.
+- De container van de sectie krijgt de klasse `chapter-host` (met `position: relative`) zodat de knop absoluut gepositioneerd kan worden.
+- Verborgen content krijgt de klasse `chapter-collapsed` (`display: none !important`).
+- De CSS-regels voor dit patroon staan centraal in `iam/css/mobile.css` (sectie "Inklapbare secties"), niet inline per pagina.
+- Inklapstate wordt opgeslagen in `localStorage` per pagina met een eigen sleutel.
+- Standaard zijn secties die direct actief zijn voor de gebruiker open; ondersteunende of aanvullende secties starten ingeklapt.
+
 ### UX-interactieafspraak: tegelklik opent doelgebied
 
 - Als een tegel/link in dezelfde pagina verwijst naar een tekstgebied of sectie, dan opent het doelgebied automatisch.
