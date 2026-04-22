@@ -51,6 +51,93 @@
     .action-box { display: grid; gap: 0.8rem; }
     .score-row { display: grid; gap: 0.5rem; }
     .score-row input[type="range"] { width: 100%; }
+    .tracker-shell { display: grid; gap: 1rem; }
+    .tracker-toolbar {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.7rem;
+      align-items: end;
+    }
+    .nav-day {
+      min-height: 44px;
+      min-width: 44px;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .tracker-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #eef4f7;
+      color: #235171;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .tracker-grid {
+      display: grid;
+      gap: 0.9rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .tracker-grid .form-group,
+    .tracker-shell .form-group { margin: 0; }
+    input[type="number"],
+    input[type="date"] {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      padding: 0.65rem 0.8rem;
+      background: #fff;
+      color: var(--ink);
+    }
+    .history-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: center;
+    }
+    .history-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .history-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+    .history-item {
+      border: 1px solid rgba(23, 50, 73, 0.09);
+      border-radius: 14px;
+      padding: 0.9rem;
+      background: #fbfdfe;
+    }
+    .history-item h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1rem;
+    }
+    .history-item p {
+      margin: 0.2rem 0;
+      line-height: 1.45;
+    }
+    .history-empty {
+      margin: 0;
+      color: #4d6476;
+    }
     .score-pill {
       display: inline-block; border-radius: 999px; background: #e8f1f7; color: #235171;
       font-weight: 700; padding: 0.3rem 0.75rem;
@@ -61,6 +148,10 @@
       background: #eef8ee; border-left: 4px solid var(--ok); color: #204f22;
     }
     .message.show { display: block; }
+    @media (max-width: 640px) {
+      .tracker-toolbar { grid-template-columns: 1fr; }
+      .nav-day { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -116,12 +207,284 @@
         </div>
         <div id="message" class="message"></div>
       </section>
+
+      <section class="card tracker-shell">
+        <div>
+          <h2>Dagkaart gebruik in eenheden</h2>
+          <p>Kies een datum en leg per dag vast hoeveel je gebruikte, wat het risico was en wat je motivatie is. Je kunt ook terugwerken of alvast een toekomstige dag voorbereiden.</p>
+        </div>
+
+        <div class="tracker-toolbar">
+          <button type="button" class="nav-day" id="prevDayButton" aria-label="Ga naar vorige dag">&lt;</button>
+          <div class="form-group">
+            <label for="usageDate">Datum</label>
+            <input id="usageDate" type="date" />
+          </div>
+          <button type="button" class="nav-day" id="nextDayButton" aria-label="Ga naar volgende dag">&gt;</button>
+        </div>
+
+        <div class="tracker-meta">
+          <span class="meta-pill" id="selectedDateLabel">Vandaag</span>
+          <span class="meta-pill" id="selectedDateState">Nog geen invoer voor deze dag</span>
+        </div>
+
+        <div class="tracker-grid">
+          <div class="form-group">
+            <label for="usageUnits">Gebruik in eenheden</label>
+            <input id="usageUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 1.5 of -0.5" />
+          </div>
+          <div class="form-group">
+            <label for="usageNote">Korte toelichting op gebruik</label>
+            <textarea id="usageNote" placeholder="Bijvoorbeeld: alleen thuis, feestje, stress na werk."></textarea>
+          </div>
+        </div>
+
+        <div class="tracker-grid">
+          <div class="form-group">
+            <label for="riskNote">Risico op deze dag</label>
+            <textarea id="riskNote" placeholder="Wat maakt deze dag kwetsbaar of risicovol?"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="motivationNote">Motivatie voor deze dag</label>
+            <textarea id="motivationNote" placeholder="Wat wil je vandaag onthouden of waar doe je het voor?"></textarea>
+          </div>
+        </div>
+
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveDayButton">Sla deze dag op</button>
+          <button type="button" class="button-secondary" id="copyTodayButton">Gebruik vandaag als datum</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="history-head">
+          <div>
+            <h2>Periode-overzicht</h2>
+            <p>Hier zie je de meest recente ingevulde dagen, inclusief toekomstige notities als je die hebt voorbereid.</p>
+          </div>
+          <div class="history-stats" id="historyStats"></div>
+        </div>
+        <div id="historyContent">
+          <p class="history-empty">Nog geen daggegevens opgeslagen.</p>
+        </div>
+      </section>
     </div>
   </div>
 
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'craving-1-10';
+    const historyLimit = 14;
+
+    function toDateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function fromDateKey(value) {
+      const [year, month, day] = (value || '').split('-').map(Number);
+      if (!year || !month || !day) return new Date();
+      return new Date(year, month - 1, day, 12, 0, 0, 0);
+    }
+
+    function formatDateLabel(value) {
+      return fromDateKey(value).toLocaleDateString('nl-NL', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    }
+
+    function shiftSelectedDate(days) {
+      const dateInput = document.getElementById('usageDate');
+      const baseDate = fromDateKey(dateInput.value || toDateKey(new Date()));
+      baseDate.setDate(baseDate.getDate() + days);
+      dateInput.value = toDateKey(baseDate);
+      renderSelectedDay();
+    }
+
+    function getFormState() {
+      return iamData.getFormData(formKey) || {};
+    }
+
+    function getDailyEntries() {
+      const state = getFormState();
+      return state.dailyEntries && typeof state.dailyEntries === 'object' ? state.dailyEntries : {};
+    }
+
+    function setSelectedFields(entry) {
+      document.getElementById('usageUnits').value = entry && entry.units !== '' ? entry.units : '';
+      document.getElementById('usageNote').value = entry?.usageNote || '';
+      document.getElementById('riskNote').value = entry?.riskNote || '';
+      document.getElementById('motivationNote').value = entry?.motivationNote || '';
+    }
+
+    function renderSelectedDayMeta(entry, dateKey) {
+      const label = document.getElementById('selectedDateLabel');
+      const state = document.getElementById('selectedDateState');
+      const todayKey = toDateKey(new Date());
+      label.textContent = formatDateLabel(dateKey);
+
+      if (!entry) {
+        state.textContent = dateKey === todayKey ? 'Nog geen invoer voor vandaag' : 'Nog geen invoer voor deze dag';
+        return;
+      }
+
+      const parts = [];
+      if (entry.units !== '' && entry.units !== null && entry.units !== undefined) {
+        parts.push(`Gebruik: ${entry.units} eenheden`);
+      }
+      if (entry.riskNote) parts.push('Risico ingevuld');
+      if (entry.motivationNote) parts.push('Motivatie ingevuld');
+      state.textContent = parts.length ? parts.join(' | ') : 'Dag opgeslagen';
+    }
+
+    function renderSelectedDay() {
+      const dateKey = document.getElementById('usageDate').value || toDateKey(new Date());
+      const entry = getDailyEntries()[dateKey] || null;
+      setSelectedFields(entry);
+      renderSelectedDayMeta(entry, dateKey);
+    }
+
+    function collectSelectedDayData() {
+      const rawUnits = document.getElementById('usageUnits').value.trim().replace(',', '.');
+      return {
+        units: rawUnits === '' ? '' : Number(rawUnits),
+        usageNote: document.getElementById('usageNote').value.trim(),
+        riskNote: document.getElementById('riskNote').value.trim(),
+        motivationNote: document.getElementById('motivationNote').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    function hasEntryContent(entry) {
+      return entry && (
+        entry.units !== '' ||
+        Boolean(entry.usageNote) ||
+        Boolean(entry.riskNote) ||
+        Boolean(entry.motivationNote)
+      );
+    }
+
+    function saveSelectedDay() {
+      const dateKey = document.getElementById('usageDate').value;
+      if (!dateKey) {
+        showMessage('Kies eerst een datum voor deze dagkaart.');
+        return;
+      }
+
+      const state = getFormState();
+      const entries = { ...(state.dailyEntries || {}) };
+      const entry = collectSelectedDayData();
+
+      if (entry.units !== '' && Number.isNaN(entry.units)) {
+        showMessage('Gebruik in eenheden moet een geldig getal zijn.');
+        return;
+      }
+
+      if (hasEntryContent(entry)) {
+        entries[dateKey] = entry;
+      } else {
+        delete entries[dateKey];
+      }
+
+      iamData.updateFormData(formKey, {
+        dailyEntries: entries,
+        lastTrackedDate: dateKey
+      });
+
+      renderSelectedDay();
+      renderHistory();
+      showMessage('Dagkaart opgeslagen.');
+    }
+
+    function formatUnits(value) {
+      return Number(value).toLocaleString('nl-NL', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 1
+      });
+    }
+
+    function buildHistoryStats(entries) {
+      const keys = Object.keys(entries);
+      const filledUnits = keys
+        .map((key) => entries[key]?.units)
+        .filter((value) => value !== '' && value !== null && value !== undefined && !Number.isNaN(Number(value)))
+        .map(Number);
+      const total = filledUnits.reduce((sum, value) => sum + value, 0);
+      const average = filledUnits.length ? total / filledUnits.length : 0;
+
+      return [
+        `Dagen ingevuld: ${keys.length}`,
+        `Totaal eenheden: ${formatUnits(total)}`,
+        `Gemiddeld per ingevulde dag: ${formatUnits(average)}`
+      ];
+    }
+
+    function renderHistory() {
+      const entries = getDailyEntries();
+      const keys = Object.keys(entries).sort((left, right) => right.localeCompare(left));
+      const stats = document.getElementById('historyStats');
+      const container = document.getElementById('historyContent');
+
+      stats.innerHTML = '';
+      buildHistoryStats(entries).forEach((text) => {
+        const pill = document.createElement('span');
+        pill.className = 'meta-pill';
+        pill.textContent = text;
+        stats.appendChild(pill);
+      });
+
+      if (!keys.length) {
+        container.innerHTML = '<p class="history-empty">Nog geen daggegevens opgeslagen.</p>';
+        return;
+      }
+
+      const list = document.createElement('ul');
+      list.className = 'history-list';
+
+      keys.slice(0, historyLimit).forEach((dateKey) => {
+        const entry = entries[dateKey] || {};
+        const item = document.createElement('li');
+        item.className = 'history-item';
+
+        const title = document.createElement('h3');
+        title.textContent = formatDateLabel(dateKey);
+        item.appendChild(title);
+
+        const usage = document.createElement('p');
+        usage.textContent = entry.units !== '' && entry.units !== null && entry.units !== undefined
+          ? `Gebruik: ${formatUnits(entry.units)} eenheden`
+          : 'Gebruik: geen waarde ingevuld';
+        item.appendChild(usage);
+
+        if (entry.usageNote) {
+          const usageNote = document.createElement('p');
+          usageNote.textContent = `Toelichting: ${entry.usageNote}`;
+          item.appendChild(usageNote);
+        }
+
+        if (entry.riskNote) {
+          const risk = document.createElement('p');
+          risk.textContent = `Risico: ${entry.riskNote}`;
+          item.appendChild(risk);
+        }
+
+        if (entry.motivationNote) {
+          const motivation = document.createElement('p');
+          motivation.textContent = `Motivatie: ${entry.motivationNote}`;
+          item.appendChild(motivation);
+        }
+
+        list.appendChild(item);
+      });
+
+      container.innerHTML = '';
+      container.appendChild(list);
+    }
 
     function showMessage(text) {
       const el = document.getElementById('message');
@@ -168,14 +531,26 @@
       const existing = iamData.getFormData(formKey) || {};
       const scoreInput = document.getElementById('currentScore');
       const noteInput = document.getElementById('scoreNote');
+      const dateInput = document.getElementById('usageDate');
 
       scoreInput.value = Number.isFinite(Number(existing.currentScore)) ? Number(existing.currentScore) : 0;
       noteInput.value = existing.scoreNote || '';
+      dateInput.value = existing.lastTrackedDate || toDateKey(new Date());
       renderAdvice(Number(scoreInput.value));
+      renderSelectedDay();
+      renderHistory();
 
       scoreInput.addEventListener('input', () => renderAdvice(Number(scoreInput.value)));
       document.getElementById('saveButton').addEventListener('click', saveData);
       document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('prevDayButton').addEventListener('click', () => shiftSelectedDate(-1));
+      document.getElementById('nextDayButton').addEventListener('click', () => shiftSelectedDate(1));
+      document.getElementById('usageDate').addEventListener('change', renderSelectedDay);
+      document.getElementById('saveDayButton').addEventListener('click', saveSelectedDay);
+      document.getElementById('copyTodayButton').addEventListener('click', () => {
+        dateInput.value = toDateKey(new Date());
+        renderSelectedDay();
+      });
     });
   </script>
 </body>
