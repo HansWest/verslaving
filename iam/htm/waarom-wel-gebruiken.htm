@@ -1,110 +1,660 @@
-<html>
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>waarom wil ik wel gebruiken (functieanalyse)?</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waarom wel gebruiken</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6587;
+      --page-accent: #c9684a;
+      --page-ok: #4e7b43;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 101, 135, 0.14), transparent 32%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
 
+    .page-shell { max-width: 960px; margin: 0 auto; }
 
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 
-<script language="javascript">
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
 
+    .question-card,
+    .message,
+    .legacy-note,
+    .nudge-box {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
 
-function hulpscherm()
-{
-hulp_scherm(330,'functie analyse', 'Als jij niet soms behoefte had aan &quot;gebruik&quot; dan zat je dit nu niet '+'te lezen. Dus hoewel je waarschijnlijk &oacute;&oacute;k behoefte hebt aan controle op je gedrag (van middelengebruik' + ' en hoewel je er waarschijnlijk &oacute;&oacute;k van baalt, zijn er dus &oacute;&oacute;k momenten dat het '+ 
-'een goed idee lijkt. Dat kunnen we heel makkelijk braaf gaan ontkennen. Maar het is waarschijnlijk veel handiger om nou eens te kijken naar de vraag: &quot;waarom is het soms zo <b>aantrekkelijk</b>?&quot;<br>'+ 'Dat geeft waarschijnlijk veel meer overzicht voor jezelf.')
-}
+    .question-card { border-top: 4px solid var(--page-main); }
+    .legacy-note { border-left: 4px solid var(--page-accent); }
 
-</script>
+    .legacy-note h2,
+    .nudge-box h2,
+    .question-card h2 { margin-top: 0; }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .legacy-note ul,
+    .nudge-list {
+      margin: 0.5rem 0 0;
+      padding-left: 1.2rem;
+      line-height: 1.55;
+    }
+
+    .legacy-note li,
+    .nudge-list li { margin-bottom: 0.35rem; }
+
+    .grid-two { display: grid; gap: 1rem; }
+
+    @media (min-width: 760px) {
+      .grid-two { grid-template-columns: 1fr 1fr; }
+    }
+
+    .summary-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.6rem;
+    }
+
+    .summary-chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #eef4f7;
+      color: #235171;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+
+    .message { display: none; border-left: 4px solid var(--page-ok); }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+
+    .subtle-help {
+      margin: 0.35rem 0 0.6rem;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .section-inline-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .hulpzinnetje-button {
+      border: 1px solid rgba(47, 101, 135, 0.22);
+      background: #f4f8fb;
+      color: var(--page-main);
+      border-radius: 999px;
+      min-height: 40px;
+      padding: 0.45rem 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .hulpzinnetje-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(20, 31, 40, 0.58);
+      z-index: 1000;
+    }
+
+    .hulpzinnetje-modal.open { display: flex; }
+
+    .hulpzinnetje-dialog {
+      width: min(560px, 100%);
+      background: #fff;
+      color: var(--page-ink);
+      border-radius: 18px;
+      box-shadow: 0 24px 48px rgba(20, 31, 40, 0.22);
+      border-top: 6px solid var(--page-main);
+      padding: 1.2rem;
+    }
+
+    .hulpzinnetje-dialog h3 { margin: 0 0 0.75rem; color: var(--page-main); }
+    .hulpzinnetje-dialog p { margin: 0; line-height: 1.6; }
+    .hulpzinnetje-dialog .action-bar { margin-top: 1rem; }
+  </style>
 </head>
 <body>
-<div class="container">
- onUnload="saveSelections(document.forms[0])"-->
-<div class="shadow"><div class="content">
-<div class="praatmethansheader"><a href="www.praatmehans.nl" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader"><b>Waaarom wil ik wel gebruiken?<br />
-(functie analyse) </b></h1>
-</div>
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./wat-is-mijn-ik.htm">Wat is mijn ik</a>
+          <a href="./persoonlijke-waarden.htm">Persoonlijke waarden</a>
+          <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
+        </div>
+        <h1>Waarom wil ik soms wel gebruiken?</h1>
+        <p>Breng de functie van gebruik in kaart: wat levert het op korte termijn op, wat hoef je dan niet te voelen of denken, en wat vraagt dit van je alternatief plan?</p>
+      </header>
 
-<p>&nbsp;</p>
+      <div id="message" class="message"></div>
 
-<h1>Vraagje: Waarom wil jij (soms) wel gebruiken?</h1>
-<div class="printhide"><p>Dit is een vraag naar de functie van het gebruik voor jou. <br>
-  Zeg niet te snel
-  dat gebruik geen nut heeft maar zet eens op een rij waarom het (minstens vroeger)
-  leuk, prettig, verstandig of lekker was om w&egrave;l te gebruiken. Sta eens
-  ztil bij de vraag: &quot;waarom denk ik eigenlijk dat ik zonder drank of drugs het
-  leven niet meer aan zou kunnen? Wat zou ik dan werkelijk gaan missen?&quot; En zeg
-  niet te snel: &quot;niks&quot; maar ga eens bedenken welke dingen je nuchter zal moeten
-  gaan doen.</p>
-  <p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton" title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het scherm met toelichting zien">&nbsp;&nbsp;&nbsp;?!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&nbsp;&forall;&nbsp;&nbsp;&nbsp;</a>
-</p>
-</div>
-<form name="waaromwel">
-<h1>Wat is voor jou &quot;de functie van het gebruik/gedrag&quot;?</h1> 
+      <section class="legacy-note">
+        <h2>Legacy-kern behouden</h2>
+        <ul>
+          <li>De oude functieanalyse blijft intact: rust versus actie, zelfmedicatie, niet voelen, niet denken en ruimte voor gedrag.</li>
+          <li>Bestaande legacy-velden worden bij openen meegenomen en omgezet naar deze opzet.</li>
+          <li>Deze pagina koppelt met je andere formulieren zodat je analyse niet op zichzelf blijft staan.</li>
+        </ul>
+      </section>
 
-<p>Is <b>gebruiken eerder iets dat jou:</b><br />
-<input name="rustactie" type="radio" value="rust gevend" /> rust geeft<br />
-<input name="rustactie" type="radio" value="actie brengend" /> zorg voor actie<br />
-</p><div class="praatmethansheader2">&quot;geeft het eerder rust of eerder actie?</div><p></p>
+      <section class="nudge-box">
+        <div class="section-inline-head">
+          <h2>Cognitieve duwtjes</h2>
+          <button
+            type="button"
+            class="hulpzinnetje-button"
+            data-hulpzinnetje-title="Hulpzinnetje bij functieanalyse"
+            data-hulpzinnetje-content="Erken de functie van gebruik zonder jezelf af te schrijven. Hoe eerlijker je bent over de korte termijn winst, hoe sterker je plan wordt voor de lange termijn."
+          >[?] Hulpzinnetje</button>
+        </div>
+        <p class="subtle-help" id="nudgeMeta">Hier verschijnen zachte koppelingen met je andere formulieren en met wat je al invulde.</p>
+        <ul class="nudge-list" id="whyUseNudges">
+          <li>Vul een paar velden in; dan verschijnen hier persoonlijke duwtjes op basis van eerdere input.</li>
+        </ul>
+      </section>
 
-<p>&nbsp;</p>
-<p>Is gebruik voor jou iets dat te maken heeft met <b>zelfmedicatie</b><br />
-<input name="zelfmed" type="radio" value="zelfmedicatie" /> ja<br />
-<input name="zelfmed" type="radio" value="geen zelfmedicatie" /> nee<br />
-indien &quot;ja&quot;, voor welke '(zelf)diagnose' -
-<input name="diagnose" type="text" class="praatmethansformtexfield" size="15" maxlength="20" /><br/>
-</p><div class="praatmethansheader2">&quot;gebruik  als een soort van (nood)medicatie?</div>
-<p></p>
+      <form id="whyUseForm">
+        <section class="question-card">
+          <h2>1. Functie in een oogopslag</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="useDirection">Is gebruik voor jou vaker rustgevend of actie-gevend?</label>
+              <select id="useDirection">
+                <option value="">Kies</option>
+                <option value="rust gevend">Rust gevend</option>
+                <option value="actie brengend">Actie brengend</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="selfMedication">Voelt dit als zelfmedicatie?</label>
+              <select id="selfMedication">
+                <option value="">Kies</option>
+                <option value="zelfmedicatie">Ja</option>
+                <option value="geen zelfmedicatie">Nee</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="selfMedicationDiagnosis">Als ja: voor welke diagnose of klacht voelt het als noodmedicatie?</label>
+            <input id="selfMedicationDiagnosis" type="text" placeholder="Bijvoorbeeld: angst, spanning, slapeloosheid, sociale druk." />
+          </div>
+        </section>
 
-<p>&nbsp;</p>
-<p><b>Wat hoef jij niet meer te voelen</b> op
-  bepaalde momenten? (aspecten als geen vermoeidheid, geen verdriet, geen depressie,
-  geen angst, geen eenzaamheid etc.)<br/>
-    <textarea name="nietvoelen" cols="55" rows="3" class="praatmethansformtextarea" title="Wat hoef jij dankzij het gebruik niet meer te voelen op bepaalde momenten? (aspecten als geen vermoeidheid, geen verdriet, geen depressie, geen eenzaamheid, geen angst, geen schaamte etc.)?"></textarea><br /></p><div class="praatmethansheader2">&quot;even niet voelen?&quot;</div><div class="rechtsitalic">uitzondering hierop is &quot;gebruik om niet meer
-  te hoeven voelen dat ik trek heb&quot;<br /> 
-  want dat is gewoon de biologische kant van verslaving,<br />
-  behalve met medicijnen of duidelijkheid voor jezelf is d&aacute;&aacute;r niet zo veel aan te doen </div><p></p>
-<p>&nbsp;</p>
+        <section class="question-card">
+          <h2>2. Wat helpt gebruik tijdelijk te vermijden?</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="notFeeling">Wat hoef je niet meer te voelen op die momenten?</label>
+              <textarea id="notFeeling" rows="4" placeholder="Bijvoorbeeld: vermoeidheid, verdriet, angst, schaamte, eenzaamheid."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="notThinking">Welke gedachten of herinneringen hoef je dan niet te hebben?</label>
+              <textarea id="notThinking" rows="4" placeholder="Welke gedachten verdwijnen tijdelijk door gebruik?"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="spaceGiven">Welk gedrag krijgt door gebruik juist de ruimte?</label>
+            <textarea id="spaceGiven" rows="4" placeholder="Bijvoorbeeld sociaal, seksueel, creatief, rebels, uitbundig gedrag."></textarea>
+          </div>
+        </section>
 
-<p><b>Welke gedachten of herinneringen</b> hoef jij (even) niet te hebben door te gebruiken<br/>
-<textarea name="Psycho" cols="55" rows="4" class="praatmethansformtextarea" title="Welke gedachten (angstgedachten of ontevredenheid) of herinneringen (aan ellendige ervaringen uit het verleden) hoef jij even niet te hebben door het gebruik?"></textarea>
-<br /></p><div class="praatmethansheader2">&quot;even niet denken...&quot;</div><p></p>
-<p>&nbsp;</p>
+        <section class="question-card">
+          <h2>3. Korte kernsamenvatting</h2>
+          <div class="form-group">
+            <label for="functionSummary">Vat jouw functieanalyse samen in 2-3 zinnen</label>
+            <textarea id="functionSummary" rows="4" placeholder="Bijvoorbeeld: wanneer gebruik rust geeft, wat ik dan vermijd, en wat ik als alternatief moet leren."></textarea>
+          </div>
+          <div class="summary-chips" id="whyUseSummaryChips"></div>
+        </section>
 
-<p><b>Welk gedrag krijgt de ruimte</b> door te gebruiken (sociaal, seksueel,
-  spiritueel, creatief) <br/>
-<textarea name="gedrag" cols="55" rows="4" class="praatmethansformtextarea" title="Welke dingen kan je beter uitleven? Welke kicks? Welke kinks? Welke gevoelens krijgen eindelijk de ruimte die ze niet krijgen zonder gebruik?"></textarea>
-</p><div class="praatmethansheader2">&quot;even de ruimte krijgen?</div><p></p>
+        <div class="action-bar">
+          <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
+          <button type="button" class="button-secondary" id="toBalanceButton">Stuur naar voor-nadelen balans</button>
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+        </div>
+      </form>
 
-<p>&nbsp;</p>
+      <div id="hulpzinnetjeModal" class="hulpzinnetje-modal" aria-hidden="true">
+        <div class="hulpzinnetje-dialog" role="dialog" aria-modal="true" aria-labelledby="hulpzinnetjeTitle">
+          <h3 id="hulpzinnetjeTitle">Hulpzinnetje</h3>
+          <p id="hulpzinnetjeText"></p>
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="closeHulpzinnetjeButton">Sluiten</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<hr class="formhr" />
-<p><i>Die 'functie' heeft natuurlijk ook te maken met <a href="risico-activiteiten.htm">dingen
-      die je doet</a>, de <a href="risico-situaties.htm">situaties</a> waar
-    je in verkeert, de <a href="risico-mensen.htm">mensen</a> die
-    je tegen komt en de <a href="risico-gevoelens.htm">gevoelens</a> die
-    je meemaakt dus mogelijk wil je nog even kijken naar die risico-analyses
-    en de dingen die je wilt oefenen in jezelf. </i></p>
-<p align='right' ><i>Copyright 2011 Hans RJ West</i></p>
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'waarom-wel-gebruiken';
+    const fields = [
+      'useDirection',
+      'selfMedication',
+      'selfMedicationDiagnosis',
+      'notFeeling',
+      'notThinking',
+      'spaceGiven',
+      'functionSummary'
+    ];
 
-</FORM>SCRIPT language=JavaScript type="">loadSelections(document.forms[0]);</SCRIPT-->
+    function getDefaultData() {
+      const data = {};
+      fields.forEach((key) => { data[key] = ''; });
+      return data;
+    }
 
- /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function firstNonEmpty(items) {
+      return items.find((item) => typeof item === 'string' && item.trim()) || '';
+    }
+
+    function previewText(value, maxLength = 72) {
+      const text = String(value || '').trim().replace(/\s+/g, ' ');
+      if (!text) return '';
+      return text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text;
+    }
+
+    function isMeaningfulText(value, minLetters = 8) {
+      const text = String(value || '').trim();
+      if (!text) return false;
+      const letters = (text.match(/[a-zA-Z\u00C0-\u024F]/g) || []).length;
+      const hasVowel = /[aeiouyAEIOUY\u00C0-\u024F]/.test(text);
+      return letters >= minLetters && hasVowel;
+    }
+
+    function persoonlijkeWaardenSamenvatting(waarden) {
+      return firstNonEmpty([
+        [waarden.waarde01, waarden.waarde02, waarden.waarde03].filter(Boolean).join(', '),
+        waarden.waardenterugzien,
+        waarden.waardenterugzien02,
+        waarden.waardenterugzien03
+      ]);
+    }
+
+    function normalizeLegacyData(saved) {
+      const base = { ...getDefaultData(), ...(saved || {}) };
+      if (base.useDirection || base.notFeeling || base.notThinking || base.spaceGiven) return base;
+
+      return {
+        ...base,
+        useDirection: firstNonEmpty([base.rustactie, base.useDirection]),
+        selfMedication: firstNonEmpty([base.zelfmed, base.selfMedication]),
+        selfMedicationDiagnosis: firstNonEmpty([base.diagnose, base.selfMedicationDiagnosis]),
+        notFeeling: firstNonEmpty([base.nietvoelen, base.notFeeling]),
+        notThinking: firstNonEmpty([base.Psycho, base.notThinking]),
+        spaceGiven: firstNonEmpty([base.gedrag, base.spaceGiven]),
+        functionSummary: firstNonEmpty([base.functionSummary])
+      };
+    }
+
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
+
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function appendUniqueLine(textarea, line) {
+      if (!line || !textarea) return;
+      const clean = line.trim();
+      if (!clean) return;
+      const existing = textarea.value.split('\n').map((item) => item.trim()).filter(Boolean);
+      if (!existing.includes(clean)) {
+        textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
+      }
+    }
+
+    function mergeMultilineUnique(existingText, lines) {
+      const current = String(existingText || '').split('\n').map((line) => line.trim()).filter(Boolean);
+      const additions = Array.isArray(lines) ? lines : [];
+      additions.forEach((line) => {
+        const clean = String(line || '').trim();
+        if (clean && !current.includes(clean)) {
+          current.push(clean);
+        }
+      });
+      return current.join('\n');
+    }
+
+    function collectPositiveReasonsForBalance(formData) {
+      const lines = [];
+      if (formData.useDirection) lines.push(`Gebruik voelt voor mij vaker ${formData.useDirection}.`);
+      if (formData.selfMedication === 'zelfmedicatie') {
+        lines.push(`Gebruik voelt als zelfmedicatie${formData.selfMedicationDiagnosis ? ` (${formData.selfMedicationDiagnosis})` : ''}.`);
+      }
+      if (formData.notFeeling) lines.push(`Ik hoef dan minder te voelen: ${formData.notFeeling}.`);
+      if (formData.notThinking) lines.push(`Ik hoef dan minder te denken aan: ${formData.notThinking}.`);
+      if (formData.spaceGiven) lines.push(`Gebruik geeft ruimte aan: ${formData.spaceGiven}.`);
+      if (formData.functionSummary) lines.push(`Kernfunctie van gebruik: ${formData.functionSummary}.`);
+      return lines;
+    }
+
+    function openHulpzinnetjeModal(title, text) {
+      const modal = document.getElementById('hulpzinnetjeModal');
+      const titleEl = document.getElementById('hulpzinnetjeTitle');
+      const textEl = document.getElementById('hulpzinnetjeText');
+      if (!modal || !titleEl || !textEl) return;
+      titleEl.textContent = title;
+      textEl.textContent = text;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeHulpzinnetjeModal() {
+      const modal = document.getElementById('hulpzinnetjeModal');
+      if (!modal) return;
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    function renderSummaryChips(data) {
+      const chips = document.getElementById('whyUseSummaryChips');
+      if (!chips) return;
+      chips.innerHTML = '';
+
+      const items = [];
+      if (data.useDirection) items.push(`Richting: ${data.useDirection}`);
+      if (data.selfMedication) items.push(`Zelfmedicatie: ${data.selfMedication}`);
+      if (data.notFeeling) items.push(`Niet voelen: ${previewText(data.notFeeling, 34)}`);
+      if (data.functionSummary) items.push(`Kern: ${previewText(data.functionSummary, 40)}`);
+
+      if (!items.length) {
+        const chip = document.createElement('span');
+        chip.className = 'summary-chip';
+        chip.textContent = 'Nog geen functieanalyse samengevat';
+        chips.appendChild(chip);
+        return;
+      }
+
+      items.forEach((text) => {
+        const chip = document.createElement('span');
+        chip.className = 'summary-chip';
+        chip.textContent = text;
+        chips.appendChild(chip);
+      });
+    }
+
+    function addNudge(nudges, text) {
+      if (!text) return;
+      if (nudges.includes(text)) return;
+      nudges.push(text);
+    }
+
+    function renderWhyUseNudges(formData) {
+      const nudges = [];
+      const list = document.getElementById('whyUseNudges');
+      const meta = document.getElementById('nudgeMeta');
+      if (!list || !meta) return;
+
+      if (formData.useDirection && !formData.notFeeling) {
+        addNudge(nudges, 'Je koos al rust of actie. Benoem ook welk gevoel je via gebruik probeert te dempen of vermijden.');
+      }
+
+      if (formData.selfMedication === 'zelfmedicatie' && !formData.selfMedicationDiagnosis) {
+        addNudge(nudges, 'Als dit zelfmedicatie voelt, maak dan ook concreet welke klacht of spanning je probeert te reguleren.');
+      }
+
+      if (formData.notFeeling && !isMeaningfulText(formData.notFeeling, 12)) {
+        addNudge(nudges, 'Je noemde iets bij niet voelen, maar nog vaag. Maak het concreet met een situatie en emotie.');
+      }
+
+      if (formData.functionSummary && !isMeaningfulText(formData.functionSummary, 18)) {
+        addNudge(nudges, 'Je kernsamenvatting is nog erg kort of vaag. Schrijf 2 concrete zinnen over functie en alternatief.');
+      }
+
+      const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      const gevoelens = iamData.getFormData ? (iamData.getFormData('lastige-gevoelens') || {}) : {};
+      const plan = iamData.getFormData ? (iamData.getFormData('plan-van-aanpak') || {}) : {};
+      const waarden = iamData.getFormData ? (iamData.getFormData('persoonlijke-waarden') || {}) : {};
+      const waardenKort = persoonlijkeWaardenSamenvatting(waarden);
+
+      const topTrigger = Array.isArray(summary?.topTriggers) && summary.topTriggers.length
+        ? summary.topTriggers[0]
+        : '';
+
+      if (topTrigger && !formData.notThinking) {
+        addNudge(nudges, `Uit eerdere formulieren komt trigger naar voren: "${previewText(topTrigger)}". Welke gedachten wil je daarmee juist niet voelen of denken?`);
+      }
+
+      if (gevoelens.currentEmotions && !formData.notFeeling) {
+        addNudge(nudges, `Bij lastige gevoelens noemde je: "${previewText(gevoelens.currentEmotions)}". Past dat bij wat je via gebruik probeert te dempen?`);
+      }
+
+      if (plan.planA && !formData.functionSummary) {
+        addNudge(nudges, `Koppel je functieanalyse aan Plan A: "${previewText(plan.planA)}". Dat maakt je alternatief direct uitvoerbaar.`);
+      }
+
+      if (waardenKort && !formData.functionSummary) {
+        addNudge(nudges, `Je noemde waarden: "${previewText(waardenKort)}". Hoe botst de functie van gebruik met die waarden?`);
+      }
+
+      meta.textContent = nudges.length
+        ? 'Kleine, concrete duwtjes op basis van wat je al invulde.'
+        : 'Nog geen spanning gevonden. Deze pagina kan nu vooral dienen als heldere functieanalyse.';
+
+      list.innerHTML = '';
+      if (!nudges.length) {
+        const item = document.createElement('li');
+        item.textContent = 'Nog geen specifieke duwtjes. Vul eerst een paar velden in, dan leggen we verbindingen met eerdere input.';
+        list.appendChild(item);
+        return;
+      }
+
+      nudges.slice(0, 5).forEach((text) => {
+        const item = document.createElement('li');
+        item.textContent = text;
+        list.appendChild(item);
+      });
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        const formData = collectFormData();
+        const saved = iamData.updateFormData(formKey, formData);
+        renderSummaryChips(saved || formData);
+        renderWhyUseNudges(saved || formData);
+        if (feedback) showMessage('Waarom-wel-gebruiken opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      try {
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geexporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    function applySuggestionFromPreviousSteps() {
+      const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
+      const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
+      const risicoGevoelens = iamData.getFormData('risico-gevoelens') || {};
+      const plan = iamData.getFormData('plan-van-aanpak') || {};
+      const waarden = iamData.getFormData('persoonlijke-waarden') || {};
+      const waardenKort = persoonlijkeWaardenSamenvatting(waarden);
+
+      const topTrigger = Array.isArray(summary?.topTriggers) ? summary.topTriggers[0] || '' : '';
+
+      appendUniqueLine(document.getElementById('notFeeling'), firstNonEmpty([
+        gevoelens.currentEmotions,
+        risicoGevoelens.riskyFeelings,
+        topTrigger
+      ]));
+      appendUniqueLine(document.getElementById('notThinking'), firstNonEmpty([
+        risicoGevoelens.riskyThoughts,
+        topTrigger
+      ]));
+      appendUniqueLine(document.getElementById('spaceGiven'), firstNonEmpty([
+        risicoGevoelens.riskyBehavior,
+        plan.planA
+      ]));
+      appendUniqueLine(document.getElementById('functionSummary'), firstNonEmpty([
+        waardenKort,
+        plan.mainGoal,
+        topTrigger
+      ]));
+
+      saveForm(true);
+      showMessage('Voorstel ingevuld op basis van eerdere stappen. Check en pas aan waar nodig.');
+    }
+
+    function sendToBalance() {
+      try {
+        const whyUseData = collectFormData();
+        const balans = iamData.getFormData('voor-nadelen-balansen') || {};
+        const trek = iamData.getFormData('trek-opvangen') || {};
+
+        const usageLines = collectPositiveReasonsForBalance(whyUseData);
+        const changeLines = [];
+        if (trek.behoefte) {
+          changeLines.push(`Als ik niet gebruik, kan ik behoefte B (${trek.behoefte}) gezonder invullen.`);
+        }
+        if (trek.alternatief) {
+          changeLines.push(`Alternatief op behoefte B: ${trek.alternatief}.`);
+        }
+
+        const usageAdvantagesText = mergeMultilineUnique(balans.usageAdvantagesText, usageLines);
+        const changeAdvantagesText = mergeMultilineUnique(balans.changeAdvantagesText, changeLines);
+        const decisionNote = mergeMultilineUnique(balans.decisionNote, [
+          whyUseData.functionSummary ? `Functieanalyse meenemen: ${whyUseData.functionSummary}.` : ''
+        ]);
+
+        iamData.updateFormData('voor-nadelen-balansen', {
+          ...balans,
+          usageAdvantagesText,
+          changeAdvantagesText,
+          decisionNote,
+          usage: {
+            advantages: usageAdvantagesText.split('\n').map((line) => line.trim()).filter(Boolean),
+            disadvantages: (balans.usageDisadvantagesText || '').split('\n').map((line) => line.trim()).filter(Boolean)
+          },
+          change: {
+            advantages: changeAdvantagesText.split('\n').map((line) => line.trim()).filter(Boolean),
+            disadvantages: (balans.changeDisadvantagesText || '').split('\n').map((line) => line.trim()).filter(Boolean)
+          }
+        });
+
+        sessionStorage.setItem('iam.balanceAutofillJustApplied', new Date().toISOString());
+        window.location.href = './voor-nadelen-balansen.htm?from=waarom-wel-gebruiken';
+      } catch (error) {
+        console.error(error);
+        showMessage('Doorsturen naar balans lukte niet.', true);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = iamData.getFormData(formKey);
+      const initial = normalizeLegacyData(saved || {});
+      fillForm(initial);
+      renderSummaryChips(initial);
+      renderWhyUseNudges(initial);
+
+      document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
+        button.addEventListener('click', () => {
+          openHulpzinnetjeModal(button.dataset.hulpzinnetjeTitle || 'Hulpzinnetje', button.dataset.hulpzinnetjeContent || '');
+        });
+      });
+      document.getElementById('closeHulpzinnetjeButton').addEventListener('click', closeHulpzinnetjeModal);
+      document.getElementById('hulpzinnetjeModal').addEventListener('click', (event) => {
+        if (event.target.id === 'hulpzinnetjeModal') {
+          closeHulpzinnetjeModal();
+        }
+      });
+
+      document.getElementById('suggestButton').addEventListener('click', applySuggestionFromPreviousSteps);
+      document.getElementById('toBalanceButton').addEventListener('click', sendToBalance);
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('whyUseForm').addEventListener('input', () => saveForm(false));
+
+      window.addEventListener('focus', () => {
+        const current = collectFormData();
+        renderSummaryChips(current);
+        renderWhyUseNudges(current);
+      });
+    });
+  </script>
 </body>
 </html>

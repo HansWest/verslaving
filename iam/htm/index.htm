@@ -979,6 +979,11 @@
                         <h5>Kerninzichten uit meerdere formulieren</h5>
                         <ul class="integration-list" id="integrationList"></ul>
                     </div>
+                    <details class="integration-box" id="overlapDebugBox">
+                        <summary><h5 style="display:inline; margin:0;">Technische overlap-map (debug)</h5></summary>
+                        <p id="overlapDebugMeta" style="margin:0.55rem 0 0.35rem; color:#4d6270;">Laden...</p>
+                        <ul class="integration-list" id="overlapDebugList"></ul>
+                    </details>
                 </div>
             </div>
         </details>
@@ -1729,6 +1734,7 @@
 
             renderIntegrationSummary();
             renderDataQuality();
+            renderFieldOverlapDebug();
         }
 
         function formatPreview(items) {
@@ -1835,6 +1841,70 @@
                 item.appendChild(link);
                 item.appendChild(suffix);
                 qualityPriorityList.appendChild(item);
+            });
+        }
+
+        function renderFieldOverlapDebug() {
+            const list = document.getElementById('overlapDebugList');
+            const meta = document.getElementById('overlapDebugMeta');
+            if (!list || !meta) return;
+
+            list.innerHTML = '';
+
+            const overlapMap = (typeof iamData.getFieldOverlapMap === 'function')
+                ? iamData.getFieldOverlapMap()
+                : null;
+
+            if (!overlapMap || typeof overlapMap !== 'object') {
+                meta.textContent = 'Geen overlap-map beschikbaar in deze build.';
+                const item = document.createElement('li');
+                item.textContent = 'Tip: update dataStore met getFieldOverlapMap().';
+                list.appendChild(item);
+                return;
+            }
+
+            const entries = Object.entries(overlapMap);
+            meta.textContent = `${entries.length} overlapdomeinen geladen.`;
+
+            entries.forEach(([domainKey, domain]) => {
+                const fields = Array.isArray(domain?.fields) ? domain.fields : [];
+                const buckets = Array.isArray(domain?.integrationBuckets) && domain.integrationBuckets.length
+                    ? domain.integrationBuckets.join(', ')
+                    : 'geen';
+
+                const formKeys = [...new Set(fields
+                    .map((field) => String(field || '').split('.')[0])
+                    .filter(Boolean))];
+
+                const item = document.createElement('li');
+                const header = document.createElement('div');
+                header.textContent = `${domainKey}: ${domain?.description || 'geen beschrijving'} | velden ${fields.length} | buckets ${buckets}`;
+                item.appendChild(header);
+
+                if (formKeys.length) {
+                    const linksWrap = document.createElement('div');
+                    linksWrap.style.marginTop = '0.25rem';
+                    linksWrap.style.display = 'flex';
+                    linksWrap.style.flexWrap = 'wrap';
+                    linksWrap.style.gap = '0.4rem';
+
+                    formKeys.forEach((formKey) => {
+                        const link = document.createElement('a');
+                        link.href = `${formKey}.htm`;
+                        link.textContent = formKey;
+                        link.style.fontWeight = '600';
+                        link.style.textDecoration = 'none';
+                        link.style.border = '1px solid rgba(47,107,143,0.25)';
+                        link.style.borderRadius = '999px';
+                        link.style.padding = '0.1rem 0.55rem';
+                        link.style.background = 'rgba(47,107,143,0.08)';
+                        linksWrap.appendChild(link);
+                    });
+
+                    item.appendChild(linksWrap);
+                }
+
+                list.appendChild(item);
             });
         }
 

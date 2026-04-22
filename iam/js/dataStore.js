@@ -12,7 +12,77 @@ class IamDataStore {
     this.version = '1.0';
     this.autoSaveInterval = 30000; // 30 seconds
     this.autoSaveTimer = null;
+    this.fieldOverlapMap = this.buildFieldOverlapMap();
     this.init();
+  }
+
+  /**
+   * Maintainer note: semantic overlap map for cross-form fields.
+   *
+   * Naming convention:
+   * - Keep form-local fields specific (e.g. support1Name, personName).
+   * - Use integration summary buckets as canonical cross-form meaning.
+   * - Treat entries below as "semantic equivalents", not strict schema aliases.
+   */
+  buildFieldOverlapMap() {
+    return {
+      supportPerson: {
+        description: 'People that can provide support, from quick contact to concrete support plan.',
+        fields: [
+          'plan-van-aanpak.supportPeople',
+          'sociaal-netwerk.reachableSupport',
+          'sociaal-netwerk.firstReachOut',
+          'steunnetwerk.support1Name',
+          'steunnetwerk.support2Name',
+          'steunnetwerk.support3Name',
+          'motiverende-mensen.personName'
+        ],
+        integrationBuckets: ['supportNetwork']
+      },
+      motivationAnchor: {
+        description: 'Motivational direction and why-change anchors.',
+        fields: [
+          'plan-van-aanpak.mainGoal',
+          'voor-nadelen-balansen.decisionNote',
+          'motiverende-mensen.motivationType',
+          'motiverende-mensen.messageToPerson',
+          'waarom-wel-gebruiken.functionSummary'
+        ],
+        integrationBuckets: ['motivationAnchors']
+      },
+      triggerPressure: {
+        description: 'Pressure and trigger-like content including what use dampens/avoids.',
+        fields: [
+          'sociaal-netwerk.cravingPeople',
+          'risico-mensen.riskySituationWithPerson',
+          'waarom-wel-gebruiken.notFeeling',
+          'waarom-wel-gebruiken.notThinking',
+          'waarom-wel-gebruiken.spaceGiven'
+        ],
+        integrationBuckets: ['topTriggers']
+      },
+      needSignalABCD: {
+        description: 'Need signal (ABCDaaah B) that should map to alternatives and change advantages.',
+        fields: [
+          'trek-opvangen.behoefte',
+          'trek-opvangen.alternatief',
+          'voor-nadelen-balansen.changeAdvantagesText'
+        ],
+        integrationBuckets: []
+      },
+      dateStartSemantics: {
+        description: 'Start date appears in multiple forms with form-specific meaning.',
+        fields: [
+          'plan-van-aanpak.startDate',
+          'steunnetwerk.startDate'
+        ],
+        integrationBuckets: []
+      }
+    };
+  }
+
+  getFieldOverlapMap() {
+    return this.fieldOverlapMap;
   }
 
   /**
@@ -343,7 +413,9 @@ class IamDataStore {
     const risicoActiviteiten = getForm('risico-activiteiten');
     const soortenTrek = getForm('soorten-trek');
     const gevoelens = getForm('lastige-gevoelens');
+    const waaromWel = getForm('waarom-wel-gebruiken');
     const balans = getForm('voor-nadelen-balansen');
+    const waarden = getForm('persoonlijke-waarden');
     const plan = getForm('plan-van-aanpak');
     const sociaalNetwerk = getForm('sociaal-netwerk');
     const steunnetwerk = getForm('steunnetwerk');
@@ -361,7 +433,11 @@ class IamDataStore {
       soortenTrek.cravingType3Context,
       risicoMensen.riskySituationWithPerson,
       sociaalNetwerk.cravingPeople,
-      sociaalNetwerk.uncarefulPeople
+      sociaalNetwerk.uncarefulPeople,
+      waaromWel.notFeeling,
+      waaromWel.notThinking,
+      waaromWel.spaceGiven,
+      waaromWel.functionSummary
     ], 8);
 
     const supportNetworkBucket = this.buildInsightBucket([
@@ -416,11 +492,18 @@ class IamDataStore {
       plan.mainGoal,
       plan.usageGoal,
       balans.decisionNote,
+      waarden.waarde01,
+      waarden.waarde02,
+      waarden.waarde03,
+      waarden.waardenterugzien,
+      waarden.waardenterugzien02,
+      waarden.waardenterugzien03,
       soortenTrek.reflection,
       gevoelens.learningPeriod,
       motiverendeMensen.motivationType,
       motiverendeMensen.visibleProgress,
       motiverendeMensen.messageToPerson,
+      waaromWel.functionSummary,
       combineParts(motiverendeMensen.anchor1Name, motiverendeMensen.anchor1Why),
       combineParts(motiverendeMensen.anchor2Name, motiverendeMensen.anchor2Why),
       combineParts(motiverendeMensen.anchor3Name, motiverendeMensen.anchor3Why)

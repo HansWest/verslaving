@@ -56,6 +56,16 @@
         .message { display: none; border-left: 4px solid #5a8840; }
         .message.show { display: block; }
         .message.error { border-left-color: var(--page-accent); }
+        .autofill-flash {
+            animation: autofillPulse 1.7s ease-out 1;
+            outline: 2px solid rgba(47, 107, 143, 0.45);
+            background: #f1f8fc;
+        }
+        @keyframes autofillPulse {
+            0% { box-shadow: 0 0 0 0 rgba(47, 107, 143, 0.35); }
+            70% { box-shadow: 0 0 0 10px rgba(47, 107, 143, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(47, 107, 143, 0); }
+        }
     </style>
 </head>
 <body>
@@ -91,6 +101,14 @@
                     <input id="reflectionDate" type="date" />
                 </div>
                 <p>Tip uit de oude versie: noteer per kolom minstens twee punten. Deze balans groeit vaak over tijd.</p>
+            </section>
+
+            <section class="note-card">
+                <h2>Koppeling met functieanalyse en behoefte B</h2>
+                <p id="bridgeMeta">Hier verschijnen verbindingen met waarom-wel-gebruiken en ABCDaaah (behoefte B), zodat je voordelen-kolom concreter wordt.</p>
+                <ul class="helper-list" id="balanceNudges">
+                    <li>Vul een paar velden in; dan verschijnen hier persoonlijke koppelingen.</li>
+                </ul>
             </section>
 
             <form id="balansForm">
@@ -137,6 +155,7 @@
                 </section>
 
                 <div class="action-bar">
+                    <button type="button" class="button-secondary" id="suggestButton">Vul vanuit waarom-wel-gebruiken</button>
                     <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
                     <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
                     <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
@@ -239,6 +258,137 @@
             showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
         }
 
+        function previewText(value, maxLength = 72) {
+            const text = String(value || '').trim().replace(/\s+/g, ' ');
+            if (!text) return '';
+            return text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text;
+        }
+
+        function firstNonEmpty(items) {
+            return items.find((item) => typeof item === 'string' && item.trim()) || '';
+        }
+
+        function appendUniqueLine(textarea, line) {
+            if (!line || !textarea) return;
+            const clean = String(line).trim();
+            if (!clean) return;
+            const existing = textarea.value.split('\n').map((item) => item.trim()).filter(Boolean);
+            if (!existing.includes(clean)) {
+                textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
+            }
+        }
+
+        function addNudge(nudges, text) {
+            if (!text) return;
+            if (nudges.includes(text)) return;
+            nudges.push(text);
+        }
+
+        function whyUsePositiveReasons(waaromWel) {
+            const lines = [];
+            if (waaromWel.useDirection) lines.push(`Gebruik voelt voor mij vaak ${waaromWel.useDirection}.`);
+            if (waaromWel.selfMedication === 'zelfmedicatie') {
+                lines.push(`Gebruik voelt als zelfmedicatie${waaromWel.selfMedicationDiagnosis ? ` (${waaromWel.selfMedicationDiagnosis})` : ''}.`);
+            }
+            if (waaromWel.notFeeling) lines.push(`Het dempt gevoelens: ${waaromWel.notFeeling}.`);
+            if (waaromWel.notThinking) lines.push(`Het dempt gedachten/herinneringen: ${waaromWel.notThinking}.`);
+            if (waaromWel.spaceGiven) lines.push(`Het geeft ruimte aan gedrag: ${waaromWel.spaceGiven}.`);
+            if (waaromWel.functionSummary) lines.push(`Kernfunctie: ${waaromWel.functionSummary}.`);
+            return lines;
+        }
+
+        function renderBalanceNudges(formData) {
+            const nudges = [];
+            const list = document.getElementById('balanceNudges');
+            const meta = document.getElementById('bridgeMeta');
+            if (!list || !meta) return;
+
+            const waaromWel = iamData.getFormData ? (iamData.getFormData('waarom-wel-gebruiken') || {}) : {};
+            const trek = iamData.getFormData ? (iamData.getFormData('trek-opvangen') || {}) : {};
+            const positiveReasons = whyUsePositiveReasons(waaromWel);
+
+            if (!formData.usageAdvantagesText && positiveReasons.length) {
+                addNudge(nudges, `Je functieanalyse bevat positieve redenen voor gebruik. Zet die in 'Voordelen van gebruik' om eerlijk te blijven in je balans.`);
+            }
+
+            if (positiveReasons.length && !trek.behoefte) {
+                addNudge(nudges, 'Je positieve redenen wijzen vaak op een onderliggende behoefte. Werk die uit in ABCDaaah bij B (behoefte).');
+            }
+
+            if (trek.behoefte && !formData.changeAdvantagesText) {
+                addNudge(nudges, `In ABCDaaah noemde je behoefte B: "${previewText(trek.behoefte)}". Zet bij 'Voordelen van veranderen' wat er beter gaat als je die behoefte zonder gebruik invult.`);
+            }
+
+            if (waaromWel.functionSummary && !formData.decisionNote) {
+                addNudge(nudges, `Gebruik je functie-kern in je tussenconclusie: "${previewText(waaromWel.functionSummary)}".`);
+            }
+
+            meta.textContent = nudges.length
+                ? 'Koppelingen gevonden tussen functieanalyse, balans en behoefte B.'
+                : 'Nog geen duidelijke koppeling gevonden. Deze balans kan nu vooral dienen als rustig overzicht.';
+
+            list.innerHTML = '';
+            if (!nudges.length) {
+                const item = document.createElement('li');
+                item.textContent = 'Nog geen specifieke koppelingen. Vul eerst een paar velden in op deze of gekoppelde pagina\'s.';
+                list.appendChild(item);
+                return;
+            }
+
+            nudges.slice(0, 5).forEach((text) => {
+                const item = document.createElement('li');
+                item.textContent = text;
+                list.appendChild(item);
+            });
+        }
+
+        function applySuggestionFromWhyUse() {
+            const waaromWel = iamData.getFormData('waarom-wel-gebruiken') || {};
+            const trek = iamData.getFormData('trek-opvangen') || {};
+            const usageAdvantages = document.getElementById('usageAdvantagesText');
+            const changeAdvantages = document.getElementById('changeAdvantagesText');
+            const decisionNote = document.getElementById('decisionNote');
+
+            whyUsePositiveReasons(waaromWel).forEach((line) => appendUniqueLine(usageAdvantages, line));
+
+            appendUniqueLine(changeAdvantages, firstNonEmpty([
+                trek.behoefte ? `Zonder gebruik kan ik behoefte B (${trek.behoefte}) gerichter vervullen.` : '',
+                trek.alternatief ? `Alternatieve actie die al werkt: ${trek.alternatief}.` : ''
+            ]));
+
+            appendUniqueLine(decisionNote, firstNonEmpty([
+                waaromWel.functionSummary ? `Functieanalyse meewegen: ${waaromWel.functionSummary}.` : '',
+                trek.behoefte ? `ABCDaaah-behoefte expliciet meenemen: ${trek.behoefte}.` : ''
+            ]));
+
+            saveForm(true);
+            showMessage('Voorstel toegevoegd vanuit waarom-wel-gebruiken en ABCDaaah-behoefte.');
+        }
+
+        function showAutofillHighlightIfNeeded() {
+            const marker = sessionStorage.getItem('iam.balanceAutofillJustApplied');
+            if (!marker) return;
+
+            const markerDate = new Date(marker);
+            const markerTs = markerDate.getTime();
+            if (Number.isNaN(markerTs) || (Date.now() - markerTs) > 2 * 60 * 1000) {
+                sessionStorage.removeItem('iam.balanceAutofillJustApplied');
+                return;
+            }
+
+            const targets = ['usageAdvantagesText', 'changeAdvantagesText', 'decisionNote']
+                .map((id) => document.getElementById(id))
+                .filter(Boolean);
+
+            targets.forEach((el) => {
+                el.classList.add('autofill-flash');
+                setTimeout(() => el.classList.remove('autofill-flash'), 1900);
+            });
+
+            showMessage('Ingevulde punten uit waarom-wel-gebruiken zijn hier gemarkeerd.');
+            sessionStorage.removeItem('iam.balanceAutofillJustApplied');
+        }
+
         function saveForm(feedback = true) {
             try {
                 iamData.updateFormData(formKey, collectFormData());
@@ -264,12 +414,24 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const saved = iamData.getFormData(formKey);
-            fillForm(normalizeSavedData(saved));
+            const initial = normalizeSavedData(saved);
+            fillForm(initial);
+            renderBalanceNudges(initial);
 
+            document.getElementById('suggestButton').addEventListener('click', applySuggestionFromWhyUse);
             document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
             document.getElementById('exportButton').addEventListener('click', exportAll);
             document.getElementById('printButton').addEventListener('click', () => window.print());
-            document.getElementById('balansForm').addEventListener('input', () => saveForm(false));
+            document.getElementById('balansForm').addEventListener('input', () => {
+                saveForm(false);
+                renderBalanceNudges(collectFormData());
+            });
+
+            window.addEventListener('focus', () => {
+                renderBalanceNudges(collectFormData());
+            });
+
+            showAutofillHighlightIfNeeded();
         });
     </script>
 <script src="../js/dataStore.js"></script>

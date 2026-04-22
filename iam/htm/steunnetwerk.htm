@@ -318,6 +318,23 @@
       return text.length > maxLength ? `${text.slice(0, maxLength - 1)}...` : text;
     }
 
+    function isMeaningfulText(value, minLetters = 8) {
+      const text = String(value || '').trim();
+      if (!text) return false;
+      const letters = (text.match(/[a-zA-Z\u00C0-\u024F]/g) || []).length;
+      const hasVowel = /[aeiouyAEIOUY\u00C0-\u024F]/.test(text);
+      return letters >= minLetters && hasVowel;
+    }
+
+    function persoonlijkeWaardenSamenvatting(waarden) {
+      return firstNonEmpty([
+        [waarden.waarde01, waarden.waarde02, waarden.waarde03].filter(Boolean).join(', '),
+        waarden.waardenterugzien,
+        waarden.waardenterugzien02,
+        waarden.waardenterugzien03
+      ]);
+    }
+
     function collectCheckedLegacyChannels(data, prefix) {
       const channels = [];
       if (data[`${prefix}ftf`]) channels.push('face-to-face');
@@ -479,6 +496,8 @@
       const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
       const sociaal = iamData.getFormData ? (iamData.getFormData('sociaal-netwerk') || {}) : {};
       const plan = iamData.getFormData ? (iamData.getFormData('plan-van-aanpak') || {}) : {};
+      const waarden = iamData.getFormData ? (iamData.getFormData('persoonlijke-waarden') || {}) : {};
+      const waardenKort = persoonlijkeWaardenSamenvatting(waarden);
 
       const support = Array.isArray(summary?.supportNetwork) && summary.supportNetwork.length ? summary.supportNetwork[0] : '';
       if (support && !formData.support1Name) {
@@ -503,6 +522,18 @@
 
       if (plan.supportPeople && !formData.networkSummary) {
         addNudge(nudges, `In plan van aanpak staat steun genoemd: "${previewText(plan.supportPeople)}". Vat kort samen hoe je die steun gaat inzetten.`);
+      }
+
+      if (waardenKort && !formData.networkSummary) {
+        addNudge(nudges, `Je noemde persoonlijke waarden: "${previewText(waardenKort)}". Hoe helpt je steunnetwerk je om volgens die waarden te leven?`);
+      }
+
+      if (formData.networkSummary && !isMeaningfulText(formData.networkSummary, 16)) {
+        addNudge(nudges, 'Je samenvatting is nog erg kort of vaag. Schrijf 1-2 concrete zinnen met wie je eerst benadert en wat je vraagt.');
+      }
+
+      if (formData.support1SupportType && !isMeaningfulText(formData.support1SupportType, 12)) {
+        addNudge(nudges, 'Bij steunfiguur 1 staat iets ingevuld, maar nog weinig concreet. Benoem specifieke steun zoals bellen, afleiden of samen weggaan.');
       }
 
       meta.textContent = nudges.length
@@ -559,6 +590,8 @@
       const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
       const sociaal = iamData.getFormData('sociaal-netwerk') || {};
       const plan = iamData.getFormData('plan-van-aanpak') || {};
+      const waarden = iamData.getFormData('persoonlijke-waarden') || {};
+      const waardenKort = persoonlijkeWaardenSamenvatting(waarden);
 
       appendUniqueLine(document.getElementById('support1Name'), firstNonEmpty([sociaal.reachableSupport, summary?.supportNetwork?.[0]]));
       appendUniqueLine(document.getElementById('support1SupportType'), firstNonEmpty([sociaal.supportType, plan.supportPeople]));
@@ -566,6 +599,7 @@
       appendUniqueLine(document.getElementById('support2SupportType'), sociaal.carefulPeople || sociaal.supportType || '');
       appendUniqueLine(document.getElementById('support2Guide'), sociaal.safetyCareOverlap || '');
       appendUniqueLine(document.getElementById('networkSummary'), firstNonEmpty([
+        waardenKort,
         sociaal.firstReachOut,
         sociaal.safePeople,
         Array.isArray(summary?.supportNetwork) ? summary.supportNetwork[0] : ''
