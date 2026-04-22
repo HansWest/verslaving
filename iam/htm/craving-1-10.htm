@@ -229,6 +229,57 @@
       background: #eef8ee; border-left: 4px solid var(--ok); color: #204f22;
     }
     .message.show { display: block; }
+    .chart-legend {
+      display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.7rem;
+      color: #486173; font-size: 0.92rem;
+    }
+    .legend-swatch {
+      width: 12px; height: 12px; border-radius: 3px;
+      display: inline-block; margin-right: 0.3rem; vertical-align: middle;
+    }
+    .chart-bar-plan {
+      fill: rgba(63, 122, 161, 0.16);
+      stroke: rgba(63, 122, 161, 0.85);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 3;
+    }
+    .chart-bar-plan-neg {
+      fill: rgba(215, 107, 78, 0.14);
+      stroke: rgba(215, 107, 78, 0.85);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 3;
+    }
+    .reg-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.6rem;
+    }
+    .reg-day { display: grid; gap: 0.3rem; }
+    .reg-day label { font-size: 0.8rem; text-align: center; font-weight: 700; color: #486173; }
+    .reg-day input { text-align: center; min-height: 40px; padding: 0.4rem; }
+    .reg-status {
+      display: none; margin-top: 0.7rem; border-radius: 10px;
+      padding: 0.6rem 0.85rem; background: #edf8ef;
+      border-left: 4px solid var(--ok); color: #204f22; font-weight: 600;
+    }
+    .reg-status.show { display: block; }
+    .evaluation-grid {
+      display: grid; gap: 0.9rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-bottom: 1rem;
+    }
+    .evaluation-box {
+      border: 1px solid rgba(23, 50, 73, 0.09); border-radius: 14px;
+      padding: 0.9rem; background: #fbfdfe; display: grid; gap: 0.7rem;
+    }
+    .evaluation-box h3 { margin: 0; font-size: 1rem; }
+    .evaluation-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+    .evaluation-status {
+      border-radius: 12px; padding: 0.75rem 0.85rem; font-weight: 700;
+      background: #edf8ef; color: #204f22;
+    }
+    .evaluation-status.warn { background: #fff8eb; color: #7a5411; }
+    .evaluation-status.alert { background: #fff3f0; color: #8a2f1c; }
     @media (max-width: 640px) {
       .tracker-toolbar { grid-template-columns: 1fr; }
       .nav-day { width: 100%; }
@@ -311,7 +362,11 @@
 
         <div class="tracker-grid">
           <div class="form-group">
-            <label for="usageUnits">Gebruik in eenheden</label>
+            <label for="plannedUnits">Gepland gebruik (eenheden)</label>
+            <input id="plannedUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 0.5 of 2" />
+          </div>
+          <div class="form-group">
+            <label for="usageUnits">Werkelijk gebruik (eenheden)</label>
             <input id="usageUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 1.5 of -0.5" />
           </div>
           <div class="form-group">
@@ -338,6 +393,35 @@
       </section>
 
       <section class="card">
+        <h2>Regulatie &ndash; weekpatroon voor gepland gebruik</h2>
+        <p>Stel per weekdag in hoeveel eenheden je van plan bent te gebruiken. Klik op <strong>Toepassen</strong> om dit patroon als geplande waarde in te vullen voor een aankomende periode. Bestaande waarden worden overschreven.</p>
+        <div class="reg-grid">
+          <div class="reg-day"><label for="reg-1">Ma</label><input id="reg-1" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+          <div class="reg-day"><label for="reg-2">Di</label><input id="reg-2" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+          <div class="reg-day"><label for="reg-3">Wo</label><input id="reg-3" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+          <div class="reg-day"><label for="reg-4">Do</label><input id="reg-4" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+          <div class="reg-day"><label for="reg-5">Vr</label><input id="reg-5" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+          <div class="reg-day"><label for="reg-6">Za</label><input id="reg-6" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+          <div class="reg-day"><label for="reg-0">Zo</label><input id="reg-0" type="number" step="0.01" inputmode="decimal" placeholder="0" /></div>
+        </div>
+        <div class="tracker-grid" style="margin-top:0.9rem;">
+          <div class="form-group">
+            <label for="regStartDate">Startdatum (eerste dag van de periode)</label>
+            <input id="regStartDate" type="date" />
+          </div>
+          <div class="form-group">
+            <label for="regDays">Aantal dagen (bijv. 30 voor een maand)</label>
+            <input id="regDays" type="number" min="1" max="365" step="1" value="30" />
+          </div>
+        </div>
+        <div class="action-bar" style="margin-top:0.9rem;">
+          <button type="button" class="button-primary" id="applyRegulationButton">Toepassen voor komende periode</button>
+          <button type="button" class="button-secondary" id="saveRegulationButton">Sla patroon op (zonder toepassen)</button>
+        </div>
+        <div class="reg-status" id="regStatus"></div>
+      </section>
+
+      <section class="card">
         <div class="history-head">
           <div>
             <h2>Periode-overzicht</h2>
@@ -357,9 +441,31 @@
           </div>
         </div>
         <div class="chart-card">
-          <h3>Gebruiksgrafiek</h3>
+          <h3>Gebruiksgrafiek &ndash; plan vs werkelijk</h3>
+          <div class="chart-legend">
+            <span><span class="legend-swatch" style="background:rgba(63,122,161,0.85);"></span>Werkelijk gebruik</span>
+            <span><span class="legend-swatch" style="background:rgba(63,122,161,0.16);border:1px dashed rgba(63,122,161,0.85);"></span>Gepland gebruik</span>
+          </div>
           <p id="chartCaption">Nog geen daggegevens beschikbaar voor de gekozen periode.</p>
           <div class="chart-wrap" id="chartWrap"></div>
+        </div>
+        <div class="evaluation-grid">
+          <div class="evaluation-box">
+            <h3>Weekplan bewaken</h3>
+            <div class="form-group">
+              <label for="evaluationStartDate">Startdatum van de te evalueren 7-daagse periode</label>
+              <input id="evaluationStartDate" type="date" />
+            </div>
+            <div class="form-group">
+              <label for="allowedOveruseUnits">Maximaal te veel gebruikt t.o.v. plan voor plan A</label>
+              <input id="allowedOveruseUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 10" />
+            </div>
+          </div>
+          <div class="evaluation-box">
+            <h3>Haalbaarheid plan A</h3>
+            <ul class="evaluation-list" id="evaluationList"><li>Kies een startdatum om te evalueren.</li></ul>
+            <div class="evaluation-status" id="evaluationStatus">Vul een weekstart en grens in om plan A te bewaken.</div>
+          </div>
         </div>
         <div id="historyContent">
           <p class="history-empty">Nog geen daggegevens opgeslagen.</p>
@@ -414,7 +520,8 @@
     }
 
     function setSelectedFields(entry) {
-      document.getElementById('usageUnits').value = entry && entry.units !== '' ? entry.units : '';
+      document.getElementById('plannedUnits').value = entry && entry.plannedUnits !== '' && entry.plannedUnits !== null && entry.plannedUnits !== undefined ? entry.plannedUnits : '';
+      document.getElementById('usageUnits').value = entry && entry.units !== '' && entry.units !== null && entry.units !== undefined ? entry.units : '';
       document.getElementById('usageNote').value = entry?.usageNote || '';
       document.getElementById('riskNote').value = entry?.riskNote || '';
       document.getElementById('motivationNote').value = entry?.motivationNote || '';
@@ -432,6 +539,9 @@
       }
 
       const parts = [];
+      if (entry.plannedUnits !== '' && entry.plannedUnits !== null && entry.plannedUnits !== undefined) {
+        parts.push(`Plan: ${entry.plannedUnits} eenheden`);
+      }
       if (entry.units !== '' && entry.units !== null && entry.units !== undefined) {
         parts.push(`Gebruik: ${entry.units} eenheden`);
       }
@@ -448,8 +558,10 @@
     }
 
     function collectSelectedDayData() {
+      const rawPlanned = document.getElementById('plannedUnits').value.trim().replace(',', '.');
       const rawUnits = document.getElementById('usageUnits').value.trim().replace(',', '.');
       return {
+        plannedUnits: rawPlanned === '' ? '' : Number(rawPlanned),
         units: rawUnits === '' ? '' : Number(rawUnits),
         usageNote: document.getElementById('usageNote').value.trim(),
         riskNote: document.getElementById('riskNote').value.trim(),
@@ -460,7 +572,8 @@
 
     function hasEntryContent(entry) {
       return entry && (
-        entry.units !== '' ||
+        (entry.plannedUnits !== '' && entry.plannedUnits !== null && entry.plannedUnits !== undefined) ||
+        (entry.units !== '' && entry.units !== null && entry.units !== undefined) ||
         Boolean(entry.usageNote) ||
         Boolean(entry.riskNote) ||
         Boolean(entry.motivationNote)
@@ -478,6 +591,10 @@
       const entries = { ...(state.dailyEntries || {}) };
       const entry = collectSelectedDayData();
 
+      if (entry.plannedUnits !== '' && Number.isNaN(entry.plannedUnits)) {
+        showMessage('Gepland gebruik moet een geldig getal zijn.');
+        return;
+      }
       if (entry.units !== '' && Number.isNaN(entry.units)) {
         showMessage('Gebruik in eenheden moet een geldig getal zijn.');
         return;
@@ -510,16 +627,26 @@
       const keys = Object.keys(entries);
       const filledUnits = keys
         .map((key) => entries[key]?.units)
-        .filter((value) => value !== '' && value !== null && value !== undefined && !Number.isNaN(Number(value)))
+        .filter((v) => isNumericUnits(v))
         .map(Number);
-      const total = filledUnits.reduce((sum, value) => sum + value, 0);
+      const filledPlanned = keys
+        .map((key) => entries[key]?.plannedUnits)
+        .filter((v) => isNumericUnits(v))
+        .map(Number);
+      const total = filledUnits.reduce((sum, v) => sum + v, 0);
+      const plannedTotal = filledPlanned.reduce((sum, v) => sum + v, 0);
       const average = filledUnits.length ? total / filledUnits.length : 0;
 
-      return [
+      const stats = [
         `Dagen ingevuld: ${keys.length}`,
-        `Totaal eenheden: ${formatUnits(total)}`,
+        `Totaal werkelijk: ${formatUnits(total)}`,
         `Gemiddeld per ingevulde dag: ${formatUnits(average)}`
       ];
+      if (filledPlanned.length) {
+        stats.push(`Totaal gepland: ${formatUnits(plannedTotal)}`);
+        stats.push(`Verschil plan vs. werkelijk: ${formatUnits(total - plannedTotal)}`);
+      }
+      return stats;
     }
 
     function isNumericUnits(value) {
@@ -559,31 +686,53 @@
         return '<p class="history-empty">Nog geen gebruikswaarden in deze periode.</p>';
       }
 
-      const chartWidth = Math.max(320, items.length * 44 + 40);
+      const chartWidth = Math.max(320, items.length * 52 + 40);
       const chartHeight = 220;
       const topPadding = 18;
       const bottomPadding = 32;
       const zeroLine = Math.round(chartHeight / 2);
       const maxAbs = Math.max(
         1,
-        ...items.map(({ entry }) => Math.abs(Number(entry.units || 0)))
+        ...items.map(({ entry }) => Math.max(
+          Math.abs(Number(entry.units || 0)),
+          Math.abs(Number(entry.plannedUnits || 0))
+        ))
       );
       const usableHalfHeight = zeroLine - topPadding - 8;
-      const barWidth = Math.max(12, Math.min(26, Math.floor((chartWidth - 40) / Math.max(items.length, 1)) - 8));
+      const slotWidth = (chartWidth - 40) / Math.max(items.length, 1);
+      const barW = Math.max(8, Math.min(16, Math.floor(slotWidth / 2) - 3));
 
       const bars = items.map(({ dateKey, entry }, index) => {
-        const value = Number(entry.units || 0);
-        const scaledHeight = Math.round((Math.abs(value) / maxAbs) * usableHalfHeight);
-        const x = 24 + index * ((chartWidth - 40) / Math.max(items.length, 1));
-        const y = value >= 0 ? zeroLine - scaledHeight : zeroLine;
-        const cssClass = value >= 0 ? 'chart-bar-positive' : 'chart-bar-negative';
+        const actual = Number(entry.units);
+        const planned = Number(entry.plannedUnits);
+        const hasActual = isNumericUnits(entry.units);
+        const hasPlanned = isNumericUnits(entry.plannedUnits);
+        const xCenter = 24 + index * slotWidth + slotWidth / 2;
         const shortLabel = dateKey.slice(5).replace('-', '/');
-        const valueY = value >= 0 ? Math.max(12, y - 4) : Math.min(chartHeight - 6, y + scaledHeight + 12);
-        return `
-          <rect class="${cssClass}" x="${x}" y="${y}" width="${barWidth}" height="${Math.max(scaledHeight, 2)}" rx="4" ry="4"></rect>
-          <text class="chart-value" x="${x + barWidth / 2}" y="${valueY}" text-anchor="middle">${formatUnits(value)}</text>
-          <text class="chart-label" x="${x + barWidth / 2}" y="${chartHeight - 10}" text-anchor="middle">${shortLabel}</text>
-        `;
+
+        let result = `<text class="chart-label" x="${xCenter}" y="${chartHeight - 10}" text-anchor="middle">${shortLabel}</text>`;
+
+        if (hasPlanned) {
+          const ph = Math.max(2, Math.round((Math.abs(planned) / maxAbs) * usableHalfHeight));
+          const px = xCenter - barW - 2;
+          const py = planned >= 0 ? zeroLine - ph : zeroLine;
+          const cls = planned >= 0 ? 'chart-bar-plan' : 'chart-bar-plan-neg';
+          const vy = planned >= 0 ? Math.max(12, py - 4) : Math.min(chartHeight - 6, py + ph + 12);
+          result += `<rect class="${cls}" x="${px}" y="${py}" width="${barW}" height="${ph}" rx="3" ry="3"></rect>`;
+          result += `<text class="chart-value" x="${px + barW / 2}" y="${vy}" text-anchor="middle" opacity="0.7">${formatUnits(planned)}</text>`;
+        }
+
+        if (hasActual) {
+          const ah = Math.max(2, Math.round((Math.abs(actual) / maxAbs) * usableHalfHeight));
+          const ax = xCenter + 2;
+          const ay = actual >= 0 ? zeroLine - ah : zeroLine;
+          const cls = actual >= 0 ? 'chart-bar-positive' : 'chart-bar-negative';
+          const vy = actual >= 0 ? Math.max(12, ay - 4) : Math.min(chartHeight - 6, ay + ah + 12);
+          result += `<rect class="${cls}" x="${ax}" y="${ay}" width="${barW}" height="${ah}" rx="3" ry="3"></rect>`;
+          result += `<text class="chart-value" x="${ax + barW / 2}" y="${vy}" text-anchor="middle">${formatUnits(actual)}</text>`;
+        }
+
+        return result;
       }).join('');
 
       return `
@@ -598,18 +747,142 @@
     function renderChart(items) {
       const chartWrap = document.getElementById('chartWrap');
       const caption = document.getElementById('chartCaption');
-      const withUnits = items
-        .filter(({ entry }) => isNumericUnits(entry.units))
+      const withData = items
+        .filter(({ entry }) => isNumericUnits(entry.units) || isNumericUnits(entry.plannedUnits))
         .sort((left, right) => left.dateKey.localeCompare(right.dateKey));
 
-      if (!withUnits.length) {
+      if (!withData.length) {
         caption.textContent = `Nog geen gebruikswaarden beschikbaar in de laatste ${selectedHistoryRange} dagen.`;
         chartWrap.innerHTML = '<p class="history-empty">Vul eenheden in op een of meer dagen om de grafiek te zien.</p>';
         return;
       }
 
-      caption.textContent = `Gebruik in eenheden voor de laatste ${selectedHistoryRange} dagen tot en met vandaag.`;
-      chartWrap.innerHTML = buildChartMarkup(withUnits);
+      caption.textContent = `Gebruik in eenheden voor de laatste ${selectedHistoryRange} dagen. Gestreept = gepland, vol = werkelijk.`;
+      chartWrap.innerHTML = buildChartMarkup(withData);
+    }
+
+    function buildWindowDateKeys(startDateKey, length) {
+      const keys = [];
+      const start = fromDateKey(startDateKey);
+      for (let i = 0; i < length; i++) {
+        const d = new Date(start);
+        d.setDate(d.getDate() + i);
+        keys.push(toDateKey(d));
+      }
+      return keys;
+    }
+
+    function renderEvaluation() {
+      const state = getFormState();
+      const entries = state.dailyEntries || {};
+      const startInput = document.getElementById('evaluationStartDate');
+      const allowedInput = document.getElementById('allowedOveruseUnits');
+      const listEl = document.getElementById('evaluationList');
+      const statusEl = document.getElementById('evaluationStatus');
+      if (!startInput || !listEl || !statusEl) return;
+
+      const startKey = startInput.value || toDateKey(new Date());
+      const allowed = parseFloat((allowedInput?.value || '').replace(',', '.'));
+      const windowKeys = buildWindowDateKeys(startKey, 7);
+
+      let plannedTotal = 0;
+      let actualTotal = 0;
+      const rows = windowKeys.map((key) => {
+        const entry = entries[key] || {};
+        const planned = isNumericUnits(entry.plannedUnits) ? Number(entry.plannedUnits) : null;
+        const actual = isNumericUnits(entry.units) ? Number(entry.units) : null;
+        if (planned !== null) plannedTotal += planned;
+        if (actual !== null) actualTotal += actual;
+        const diff = (planned !== null && actual !== null) ? actual - planned : null;
+        const diffStr = diff !== null ? ` (${diff >= 0 ? '+' : ''}${formatUnits(diff)})` : '';
+        const plannedStr = planned !== null ? formatUnits(planned) : '–';
+        const actualStr = actual !== null ? formatUnits(actual) : '–';
+        return `<li>${formatDateLabel(key)}: gepland ${plannedStr}, werkelijk ${actualStr}${diffStr}</li>`;
+      });
+
+      listEl.innerHTML = rows.join('');
+
+      const diff = actualTotal - plannedTotal;
+      if (!isNaN(allowed) && diff > allowed) {
+        statusEl.className = 'evaluation-status alert';
+        statusEl.textContent = `Overschrijding: +${formatUnits(diff)} eenheden deze week – overweeg Plan B.`;
+      } else if (!isNaN(allowed) && diff > allowed * 0.5) {
+        statusEl.className = 'evaluation-status warn';
+        statusEl.textContent = `Let op: +${formatUnits(diff)} eenheden boven plan deze week.`;
+      } else {
+        statusEl.className = 'evaluation-status';
+        statusEl.textContent = `Binnen plan: ${formatUnits(diff >= 0 ? diff : 0)} eenheden verschil.`;
+      }
+    }
+
+    function getRegulation() {
+      const state = getFormState();
+      return state.regulation || { pattern: [null, null, null, null, null, null, null], applyFrom: '', applyDays: 30 };
+    }
+
+    function loadRegulationFields() {
+      const reg = getRegulation();
+      const state = getFormState();
+      for (let i = 0; i < 7; i++) {
+        const el = document.getElementById(`reg-${i}`);
+        if (el) el.value = reg.pattern[i] !== null && reg.pattern[i] !== undefined ? String(reg.pattern[i]).replace('.', ',') : '';
+      }
+      const startEl = document.getElementById('regStartDate');
+      const daysEl = document.getElementById('regDays');
+      if (startEl) startEl.value = reg.applyFrom || toDateKey(new Date());
+      if (daysEl) daysEl.value = reg.applyDays || 30;
+
+      const evalStartEl = document.getElementById('evaluationStartDate');
+      const allowedEl = document.getElementById('allowedOveruseUnits');
+      if (evalStartEl && state.evaluationStartDate) evalStartEl.value = state.evaluationStartDate;
+      if (allowedEl && state.allowedOveruseUnits !== undefined) allowedEl.value = String(state.allowedOveruseUnits).replace('.', ',');
+    }
+
+    function collectRegulationPattern() {
+      return [0, 1, 2, 3, 4, 5, 6].map((i) => {
+        const el = document.getElementById(`reg-${i}`);
+        if (!el || el.value.trim() === '') return null;
+        const v = parseFloat(el.value.replace(',', '.'));
+        return isNaN(v) ? null : v;
+      });
+    }
+
+    function saveRegulation() {
+      const startEl = document.getElementById('regStartDate');
+      const daysEl = document.getElementById('regDays');
+      const pattern = collectRegulationPattern();
+      const reg = {
+        pattern,
+        applyFrom: startEl ? startEl.value : toDateKey(new Date()),
+        applyDays: daysEl ? parseInt(daysEl.value, 10) || 30 : 30
+      };
+      const state = getFormState();
+      iamData.updateFormData('craving-1-10', { ...state, regulation: reg });
+      const statusEl = document.getElementById('regStatus');
+      if (statusEl) { statusEl.textContent = 'Regulatie opgeslagen.'; setTimeout(() => { statusEl.textContent = ''; }, 2000); }
+    }
+
+    function applyRegulationToRange() {
+      const startEl = document.getElementById('regStartDate');
+      const daysEl = document.getElementById('regDays');
+      const pattern = collectRegulationPattern();
+      const startKey = startEl ? startEl.value : toDateKey(new Date());
+      const days = daysEl ? parseInt(daysEl.value, 10) || 30 : 30;
+      const state = getFormState();
+      const entries = { ...(state.dailyEntries || {}) };
+      const dateKeys = buildWindowDateKeys(startKey, days);
+      dateKeys.forEach((key) => {
+        const d = fromDateKey(key);
+        const dow = d.getDay(); // 0=Sun ... 6=Sat
+        const planned = pattern[dow];
+        if (planned !== null && planned !== undefined) {
+          entries[key] = { ...(entries[key] || {}), plannedUnits: planned };
+        }
+      });
+      iamData.updateFormData('craving-1-10', { ...state, dailyEntries: entries, regulation: { pattern, applyFrom: startKey, applyDays: days } });
+      renderHistory();
+      const statusEl = document.getElementById('regStatus');
+      if (statusEl) { statusEl.textContent = `Regulatie toegepast op ${days} dagen vanaf ${formatDateLabel(startKey)}.`; setTimeout(() => { statusEl.textContent = ''; }, 3000); }
     }
 
     function renderFutureList(items) {
@@ -617,7 +890,11 @@
 
       const futureItems = items.slice(0, historyLimit).map(({ dateKey, entry }) => {
         const parts = [];
-        if (isNumericUnits(entry.units)) parts.push(`Gebruik: ${formatUnits(entry.units)} eenheden`);
+        if (isNumericUnits(entry.plannedUnits)) parts.push(`Gepland: ${formatUnits(entry.plannedUnits)} eenheden`);
+        if (isNumericUnits(entry.units)) parts.push(`Werkelijk: ${formatUnits(entry.units)} eenheden`);
+        if (isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units)) {
+          parts.push(`Verschil: ${formatUnits(Number(entry.units) - Number(entry.plannedUnits))} eenheden`);
+        }
         if (entry.riskNote) parts.push(`Risico: ${entry.riskNote}`);
         if (entry.motivationNote) parts.push(`Motivatie: ${entry.motivationNote}`);
         if (entry.usageNote) parts.push(`Toelichting: ${entry.usageNote}`);
@@ -669,15 +946,21 @@
         filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
         const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
         const rows = [
-          ['date', 'units', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
-          ...sortedEntries.map((entry) => [
-            entry.date,
-            entry.units ?? '',
-            entry.usageNote || '',
-            entry.riskNote || '',
-            entry.motivationNote || '',
-            entry.updatedAt || ''
-          ])
+          ['date', 'plannedUnits', 'units', 'difference', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ...sortedEntries.map((entry) => {
+            const hasBoth = isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units);
+            const difference = hasBoth ? Number(entry.units) - Number(entry.plannedUnits) : '';
+            return [
+              entry.date,
+              entry.plannedUnits ?? '',
+              entry.units ?? '',
+              difference,
+              entry.usageNote || '',
+              entry.riskNote || '',
+              entry.motivationNote || '',
+              entry.updatedAt || ''
+            ];
+          })
         ];
         content = rows.map((row) => row.map(escapeCsv).join(',')).join('\n');
       } else {
@@ -742,10 +1025,23 @@
         item.appendChild(title);
 
         const usage = document.createElement('p');
-        usage.textContent = entry.units !== '' && entry.units !== null && entry.units !== undefined
-          ? `Gebruik: ${formatUnits(entry.units)} eenheden`
-          : 'Gebruik: geen waarde ingevuld';
+        const hasActual = entry.units !== '' && entry.units !== null && entry.units !== undefined;
+        const hasPlanned = isNumericUnits(entry.plannedUnits);
+        if (hasPlanned) {
+          const planP = document.createElement('p');
+          planP.textContent = `Gepland: ${formatUnits(entry.plannedUnits)} eenheden`;
+          item.appendChild(planP);
+        }
+        usage.textContent = hasActual
+          ? `Werkelijk: ${formatUnits(entry.units)} eenheden`
+          : 'Werkelijk gebruik: geen waarde ingevuld';
         item.appendChild(usage);
+
+        if (hasPlanned && hasActual) {
+          const diffP = document.createElement('p');
+          diffP.textContent = `Verschil: ${formatUnits(Number(entry.units) - Number(entry.plannedUnits))} eenheden`;
+          item.appendChild(diffP);
+        }
 
         if (entry.usageNote) {
           const usageNote = document.createElement('p');
@@ -843,6 +1139,34 @@
       });
       document.getElementById('exportDailyJsonButton').addEventListener('click', () => exportDailyEntries('json'));
       document.getElementById('exportDailyCsvButton').addEventListener('click', () => exportDailyEntries('csv'));
+
+      loadRegulationFields();
+      renderEvaluation();
+
+      const saveRegBtn = document.getElementById('saveRegulationButton');
+      const applyRegBtn = document.getElementById('applyRegulationButton');
+      if (saveRegBtn) saveRegBtn.addEventListener('click', saveRegulation);
+      if (applyRegBtn) applyRegBtn.addEventListener('click', applyRegulationToRange);
+
+      const evalStartInput = document.getElementById('evaluationStartDate');
+      const allowedInput = document.getElementById('allowedOveruseUnits');
+      if (evalStartInput) {
+        evalStartInput.addEventListener('change', () => {
+          const state = getFormState();
+          iamData.updateFormData('craving-1-10', { ...state, evaluationStartDate: evalStartInput.value });
+          renderEvaluation();
+        });
+      }
+      if (allowedInput) {
+        allowedInput.addEventListener('input', () => {
+          const v = parseFloat(allowedInput.value.replace(',', '.'));
+          if (!isNaN(v)) {
+            const state = getFormState();
+            iamData.updateFormData('craving-1-10', { ...state, allowedOveruseUnits: v });
+          }
+          renderEvaluation();
+        });
+      }
     });
   </script>
 </body>
