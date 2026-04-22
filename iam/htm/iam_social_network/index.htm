@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!-- This taxonomy was researched and curated by Hans West as part of the KinkAware Coach project - a free, privacy-first toolkit for kink-aware self-reflection and communication. If you find it useful, a small token of appreciation is warmly welcomed: PayPal https://paypal.me/WestCoaching | GitHub Sponsors https://github.com/sponsors/HansWest | IBAN NL77 INGB 0008 2096 84 | Project https://github.com/HansWest/kink_aware_coach - Thank you for your interest and for supporting open, shame-free kink education. -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Network Reflection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app-container">
+        <canvas id="networkCanvas"></canvas>
+
+        <!-- UI Overlay -->
+        <header class="header">
+            <div class="header-content">
+            <div class="header-main">
+                <h1>KinkAwareCoach<br/>Social Network</h1>
+                <p class="subtitle">🕸️ Map the people around you, reflect on closeness, and notice how your network supports or drains you.</p>
+                <span class="badge">Checking</span>
+            </div>
+            <div class="header-actions controls">
+                <div class="controls-row">
+                    <button id="addPersonBtn" class="btn btn-primary">Add Person</button>
+                    <button id="shakeBtn" class="btn btn-secondary">Shake it up! 🎲</button>
+                    <button id="pauseBtn" class="btn btn-secondary">Pause ⏸️</button>
+                    <div class="divider-vertical"></div>
+                    <button id="slowerBtn" class="btn btn-secondary" title="Slower">⏪</button>
+                    <span id="speedLabel"
+                        style="color: white; font-variant-numeric: tabular-nums; width: 40px; text-align: center;">50%</span>
+                    <button id="fasterBtn" class="btn btn-secondary" title="Faster">⏩</button>
+                    <div class="divider-vertical"></div>
+                    <button class="help-circle-btn" id="helpBtn" title="Help">?</button>
+                </div>
+                <div class="controls-row controls-row-secondary">
+                    <button id="exportBtn" class="btn btn-text" title="Download backup">Export ⬇️</button>
+                    <button id="importBtn" class="btn btn-text" title="Restore from backup">Import ⬆️</button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;">
+                    <button id="resetBtn" class="btn btn-text" title="Clear all data">Reset</button>
+                </div>
+            </div>
+            </div>
+        </header>
+
+        <div class="legend">
+            <div class="legend-item">
+                <span class="dot intimate"></span> Intimate
+            </div>
+            <div class="legend-item">
+                <span class="dot close"></span> Close
+            </div>
+            <div class="legend-item">
+                <span class="dot intermediate"></span> Intermediate
+            </div>
+            <div class="legend-item">
+                <span class="dot far"></span> Far
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div id="editModal" class="modal hidden">
+            <div class="modal-content glass-panel">
+                <div class="modal-header">
+                    <h2>Edit Person</h2>
+                    <button class="close-btn">&times;</button>
+                </div>
+                <form id="editForm">
+                    <input type="hidden" id="editId">
+
+                    <div class="form-group">
+                        <label for="editName">Name</label>
+                        <input type="text" id="editName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editImportance">Importance (Distance)</label>
+                        <select id="editImportance">
+                            <option value="intimate">Intimate</option>
+                            <option value="close">Close</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="far">Far</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editField">Field</label>
+                        <select id="editField">
+                            <option value="work">Work</option>
+                            <option value="friendship">Friendship</option>
+                            <option value="family">Family</option>
+                            <option value="leisure">Leisure</option>
+                            <option value="sex">Sex</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editEnergy">Energy Label</label>
+                        <select id="editEnergy">
+                            <option value="gives">Gives Energy ⚡</option>
+                            <option value="costs">Costs Energy 🔋</option>
+                            <option value="balance">Neutral / Balance ⚖️</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editColor">Color</label>
+                        <input type="color" id="editColor" value="#ffffff">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Relationships with others</label>
+                        <div id="relationshipList" class="relationship-list">
+                            <!-- Populated by JS -->
+                            <p class="empty-state">No other people to relate to yet.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="deletePersonBtn" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer style="position: fixed; bottom: 0.75rem; left: 50%; transform: translateX(-50%); text-align: center; font-size: 0.75rem; color: rgba(248, 250, 252, 0.85); z-index: 25; max-width: calc(100vw - 1rem); background: rgba(15, 23, 42, 0.72); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 0.45rem 0.8rem; backdrop-filter: blur(6px);">
+        <button data-v4v-trigger onclick="openV4VModal()"
+            style="background:none; border:none; color:inherit; cursor:pointer; font-size:0.85rem; text-decoration:underline;">
+            ❤️ Value for Value 💰
+        </button><br>
+        © 2026 <a href="https://kinkawarecoach.com" target="_blank" rel="noopener noreferrer"
+            style="color:inherit; text-decoration:underline;">KinkAwareCoach</a> · Privacy First · Local Data
+        Only
+    </footer>
+
+    <script src="../v4v.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
