@@ -197,6 +197,15 @@ class SocialNetworkApp {
             button.addEventListener('click', () => this.setActiveFilter(button.dataset.filter || 'all'));
         });
 
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const legendToggleBtn = document.getElementById('legendToggleBtn');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.onclick = () => this.toggleMobileMenu();
+        }
+        if (legendToggleBtn) {
+            legendToggleBtn.onclick = () => this.toggleLegendPanel();
+        }
+
         document.getElementById('resetBtn').onclick = async () => {
             if (confirm("Factory reset? This will delete everyone.")) {
                 await this.db.reset();
@@ -591,6 +600,26 @@ class SocialNetworkApp {
         document.querySelectorAll('[data-filter]').forEach((button) => {
             button.classList.toggle('active', button.dataset.filter === this.activeFilter);
         });
+    }
+
+    toggleMobileMenu() {
+        const header = document.querySelector('.header');
+        const button = document.getElementById('mobileMenuBtn');
+        if (!header || !button) return;
+
+        const isExpanded = header.classList.toggle('mobile-expanded');
+        button.setAttribute('aria-expanded', String(isExpanded));
+        button.textContent = isExpanded ? 'Minder' : 'Meer';
+    }
+
+    toggleLegendPanel() {
+        const legend = document.getElementById('legendPanel');
+        const button = document.getElementById('legendToggleBtn');
+        if (!legend || !button) return;
+
+        const isExpanded = legend.classList.toggle('expanded');
+        button.setAttribute('aria-expanded', String(isExpanded));
+        button.textContent = isExpanded ? 'Legenda sluiten' : 'Legenda';
     }
 
     personMatchesFilter(person, filter) {

@@ -29,6 +29,7 @@
                     <button id="addPersonBtn" class="btn btn-primary">Add Person</button>
                     <button id="shakeBtn" class="btn btn-secondary">Shake it up! 🎲</button>
                     <button id="pauseBtn" class="btn btn-secondary">Pause ⏸️</button>
+                    <button id="mobileMenuBtn" class="btn btn-secondary compact-only" type="button" aria-expanded="false">Meer</button>
                     <div class="divider-vertical"></div>
                     <button id="slowerBtn" class="btn btn-secondary" title="Slower">⏪</button>
                     <span id="speedLabel"
@@ -58,49 +59,52 @@
             </div>
         </header>
 
-        <div class="legend">
-            <div class="legend-item">
-                <span class="dot intimate"></span> Intimate
-            </div>
-            <div class="legend-item">
-                <span class="dot close"></span> Close
-            </div>
-            <div class="legend-item">
-                <span class="dot intermediate"></span> Intermediate
-            </div>
-            <div class="legend-item">
-                <span class="dot far"></span> Far
-            </div>
-            <div class="legend-divider"></div>
-            <div class="legend-item">
-                <span class="tag-dot careful"></span> Zorgvuldig
-            </div>
-            <div class="legend-item">
-                <span class="tag-dot uncareful"></span> Onzorgvuldig
-            </div>
-            <div class="legend-item">
-                <span class="tag-dot craving"></span> Craving-trigger
-            </div>
-            <div class="legend-item">
-                <span class="tag-dot safe"></span> Veilig
-            </div>
-            <div class="legend-item">
-                <span class="tag-dot support"></span> Steunnetwerk
-            </div>
-            <div class="legend-item">
-                <span class="tag-dot craving-user"></span> Trek door gebruiker
-            </div>
-            <div class="legend-item">
-                <span class="tag-dot craving-non-user"></span> Trek door niet-gebruiker
-            </div>
-            <div class="legend-item">
-                <span class="tag-dot co-user"></span> Medegebruiker
-            </div>
-            <div class="legend-item">
-                <span class="tag-dot unaware"></span> Weet van niets
-            </div>
-            <div class="legend-item">
-                <span class="tag-dot talk-craving"></span> Praat over trek
+        <div class="legend" id="legendPanel">
+            <button id="legendToggleBtn" class="legend-toggle-btn compact-only" type="button" aria-expanded="false">Legenda</button>
+            <div class="legend-content" id="legendContent">
+                <div class="legend-item">
+                    <span class="dot intimate"></span> Intimate
+                </div>
+                <div class="legend-item">
+                    <span class="dot close"></span> Close
+                </div>
+                <div class="legend-item">
+                    <span class="dot intermediate"></span> Intermediate
+                </div>
+                <div class="legend-item">
+                    <span class="dot far"></span> Far
+                </div>
+                <div class="legend-divider"></div>
+                <div class="legend-item">
+                    <span class="tag-dot careful"></span> Zorgvuldig
+                </div>
+                <div class="legend-item">
+                    <span class="tag-dot uncareful"></span> Onzorgvuldig
+                </div>
+                <div class="legend-item">
+                    <span class="tag-dot craving"></span> Craving-trigger
+                </div>
+                <div class="legend-item">
+                    <span class="tag-dot safe"></span> Veilig
+                </div>
+                <div class="legend-item">
+                    <span class="tag-dot support"></span> Steunnetwerk
+                </div>
+                <div class="legend-item">
+                    <span class="tag-dot craving-user"></span> Trek door gebruiker
+                </div>
+                <div class="legend-item">
+                    <span class="tag-dot craving-non-user"></span> Trek door niet-gebruiker
+                </div>
+                <div class="legend-item">
+                    <span class="tag-dot co-user"></span> Medegebruiker
+                </div>
+                <div class="legend-item">
+                    <span class="tag-dot unaware"></span> Weet van niets
+                </div>
+                <div class="legend-item">
+                    <span class="tag-dot talk-craving"></span> Praat over trek
+                </div>
             </div>
         </div>
 

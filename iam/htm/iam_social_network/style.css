@@ -125,6 +125,10 @@ h1 {
     justify-content: flex-start;
 }
 
+.compact-only {
+    display: none;
+}
+
 .filter-chip {
     border: 1px solid rgba(255, 255, 255, 0.16);
     background: rgba(15, 23, 42, 0.72);
@@ -243,6 +247,24 @@ h1 {
     flex-direction: column;
     gap: 0.5rem;
     pointer-events: auto;
+}
+
+.legend-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.legend-toggle-btn {
+    display: none;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(15, 23, 42, 0.82);
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.42rem 0.78rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
 }
 
 .legend-item {
@@ -531,6 +553,110 @@ input[type="color"] {
     h1,
     .subtitle {
         transform: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .header {
+        top: 0.35rem;
+        width: calc(100vw - 0.7rem);
+    }
+
+    .header-content {
+        padding: 0.55rem 0.65rem;
+        gap: 0.45rem;
+        border-radius: 14px;
+    }
+
+    .header-main {
+        gap: 0.2rem;
+    }
+
+    h1 {
+        font-size: 0.92rem;
+        line-height: 1.05;
+    }
+
+    .subtitle,
+    .badge {
+        display: none;
+    }
+
+    .controls {
+        gap: 0.28rem;
+    }
+
+    .controls-row {
+        gap: 0.3rem;
+    }
+
+    .btn,
+    .help-circle-btn,
+    .filter-chip,
+    .legend-toggle-btn {
+        min-height: 34px;
+        font-size: 0.76rem;
+    }
+
+    .btn {
+        padding: 0.4rem 0.68rem;
+    }
+
+    .help-circle-btn {
+        width: 34px;
+        height: 34px;
+    }
+
+    .divider-vertical {
+        display: none;
+    }
+
+    .compact-only {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .controls-row-secondary,
+    .controls-row-filters {
+        display: none;
+    }
+
+    .header.mobile-expanded .controls-row-secondary,
+    .header.mobile-expanded .controls-row-filters {
+        display: flex;
+    }
+
+    .legend {
+        bottom: 0.65rem;
+        right: 0.45rem;
+        max-width: calc(100vw - 0.9rem);
+        padding: 0.45rem;
+        gap: 0;
+        border-radius: 14px;
+    }
+
+    .legend-toggle-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+    }
+
+    .legend-content {
+        display: none;
+        margin-top: 0.45rem;
+        max-height: 36vh;
+        overflow-y: auto;
+        padding-right: 0.2rem;
+    }
+
+    .legend.expanded .legend-content {
+        display: flex;
+    }
+
+    .legend-item {
+        font-size: 0.78rem;
     }
 }
 /* Global accessible link contrast */
