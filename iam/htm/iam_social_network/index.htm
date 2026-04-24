@@ -45,6 +45,15 @@
                     <input type="file" id="importFile" accept=".json" style="display: none;">
                     <button id="resetBtn" class="btn btn-text" title="Clear all data">Reset</button>
                 </div>
+                <div class="controls-row controls-row-filters" id="iamFilterBar" aria-label="Netwerkfilters">
+                    <button type="button" class="filter-chip active" data-filter="all">Alles</button>
+                    <button type="button" class="filter-chip" data-filter="support">Steunnetwerk</button>
+                    <button type="button" class="filter-chip" data-filter="craving-user">Trek door gebruikers</button>
+                    <button type="button" class="filter-chip" data-filter="craving-non-user">Trek door niet-gebruikers</button>
+                    <button type="button" class="filter-chip" data-filter="co-user">Medegebruikers</button>
+                    <button type="button" class="filter-chip" data-filter="unaware">Weten van niets</button>
+                    <button type="button" class="filter-chip" data-filter="talk-craving">Praten over trek</button>
+                </div>
             </div>
             </div>
         </header>
@@ -74,6 +83,24 @@
             </div>
             <div class="legend-item">
                 <span class="tag-dot safe"></span> Veilig
+            </div>
+            <div class="legend-item">
+                <span class="tag-dot support"></span> Steunnetwerk
+            </div>
+            <div class="legend-item">
+                <span class="tag-dot craving-user"></span> Trek door gebruiker
+            </div>
+            <div class="legend-item">
+                <span class="tag-dot craving-non-user"></span> Trek door niet-gebruiker
+            </div>
+            <div class="legend-item">
+                <span class="tag-dot co-user"></span> Medegebruiker
+            </div>
+            <div class="legend-item">
+                <span class="tag-dot unaware"></span> Weet van niets
+            </div>
+            <div class="legend-item">
+                <span class="tag-dot talk-craving"></span> Praat over trek
             </div>
         </div>
 
@@ -135,6 +162,12 @@
                             <label><input type="checkbox" name="editTag" value="uncareful"> Onzorgvuldig</label>
                             <label><input type="checkbox" name="editTag" value="craving"> Craving-trigger</label>
                             <label><input type="checkbox" name="editTag" value="safe"> Veilig</label>
+                            <label><input type="checkbox" name="editTag" value="support"> Steunnetwerk</label>
+                            <label><input type="checkbox" name="editTag" value="craving-user"> Trek door gebruiker</label>
+                            <label><input type="checkbox" name="editTag" value="craving-non-user"> Trek door niet-gebruiker</label>
+                            <label><input type="checkbox" name="editTag" value="co-user"> Medegebruiker</label>
+                            <label><input type="checkbox" name="editTag" value="unaware"> Weet van niets</label>
+                            <label><input type="checkbox" name="editTag" value="talk-craving"> Kan over trek praten</label>
                         </div>
                     </div>
 

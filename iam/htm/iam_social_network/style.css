@@ -120,6 +120,38 @@ h1 {
     width: 100%;
 }
 
+.controls-row-filters {
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.filter-chip {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(15, 23, 42, 0.72);
+    color: rgba(248, 250, 252, 0.86);
+    border-radius: 999px;
+    padding: 0.38rem 0.72rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.filter-chip:hover,
+.filter-chip:focus-visible {
+    border-color: rgba(191, 219, 254, 0.72);
+    color: #fff;
+    outline: none;
+}
+
+.filter-chip.active {
+    background: rgba(59, 130, 246, 0.22);
+    border-color: rgba(96, 165, 250, 0.9);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
 .divider-vertical {
     width: 1px;
     height: 24px;
@@ -280,6 +312,36 @@ h1 {
 .tag-dot.safe {
     background: #22c55e;
     box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+}
+
+.tag-dot.support {
+    background: #38bdf8;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+}
+
+.tag-dot.craving-user {
+    background: #fb7185;
+    box-shadow: 0 0 8px rgba(251, 113, 133, 0.8);
+}
+
+.tag-dot.craving-non-user {
+    background: #f97316;
+    box-shadow: 0 0 8px rgba(249, 115, 22, 0.8);
+}
+
+.tag-dot.co-user {
+    background: #a78bfa;
+    box-shadow: 0 0 8px rgba(167, 139, 250, 0.8);
+}
+
+.tag-dot.unaware {
+    background: #94a3b8;
+    box-shadow: 0 0 8px rgba(148, 163, 184, 0.8);
+}
+
+.tag-dot.talk-craving {
+    background: #facc15;
+    box-shadow: 0 0 8px rgba(250, 204, 21, 0.8);
 }
 
 /* Modal */
@@ -455,6 +517,15 @@ input[type="color"] {
 
     .controls-row {
         justify-content: flex-start;
+    }
+
+    .controls-row-filters {
+        gap: 0.35rem;
+    }
+
+    .filter-chip {
+        font-size: 0.76rem;
+        padding: 0.34rem 0.65rem;
     }
 
     h1,

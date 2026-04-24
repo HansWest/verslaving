@@ -109,6 +109,7 @@ class SocialNetworkApp {
         this.isDragging = false;
         this.draggedPerson = null;
         this.hoveredPerson = null;
+        this.activeFilter = 'all';
 
         this.bindEvents();
         this.resize();
@@ -191,6 +192,10 @@ class SocialNetworkApp {
         const exportIamBtn = document.getElementById('exportIamBtn');
         if (importIamBtn) importIamBtn.onclick = () => this.importFromIam();
         if (exportIamBtn) exportIamBtn.onclick = () => this.exportToIam();
+
+        document.querySelectorAll('[data-filter]').forEach((button) => {
+            button.addEventListener('click', () => this.setActiveFilter(button.dataset.filter || 'all'));
+        });
 
         document.getElementById('resetBtn').onclick = async () => {
             if (confirm("Factory reset? This will delete everyone.")) {
@@ -498,6 +503,8 @@ class SocialNetworkApp {
 
     drawNode(p) {
         const { x, y, radius = 7, color = '#fff', field, energy } = p;
+        const isFilteredOut = this.activeFilter !== 'all' && p.type !== 'me' && !this.personMatchesFilter(p, this.activeFilter);
+        const isHighlighted = this.activeFilter !== 'all' && p.type !== 'me' && this.personMatchesFilter(p, this.activeFilter);
 
         // Halo for selection
         if (p === this.hoveredPerson || p === this.draggedPerson) {
@@ -512,23 +519,32 @@ class SocialNetworkApp {
         let ringColor = 'rgba(255,255,255,0.1)';
         if (energy === 'gives') ringColor = '#4ade80'; // green
         if (energy === 'costs') ringColor = '#f87171'; // red
+        if (isFilteredOut) ringColor = 'rgba(148, 163, 184, 0.18)';
 
         this.ctx.beginPath();
         this.ctx.strokeStyle = ringColor;
-        this.ctx.lineWidth = 2;
+        this.ctx.lineWidth = isHighlighted ? 3 : 2;
         this.ctx.arc(x, y, radius + 3, 0, Math.PI * 2);
         this.ctx.stroke();
 
+        if (isHighlighted) {
+            this.ctx.beginPath();
+            this.ctx.strokeStyle = this.getFilterColor(this.activeFilter);
+            this.ctx.lineWidth = 3;
+            this.ctx.arc(x, y, radius + 8, 0, Math.PI * 2);
+            this.ctx.stroke();
+        }
+
         // Main Body
         this.ctx.beginPath();
-        this.ctx.fillStyle = color;
+        this.ctx.fillStyle = isFilteredOut ? 'rgba(71, 85, 105, 0.48)' : color;
         this.ctx.arc(x, y, radius, 0, Math.PI * 2);
         this.ctx.fill();
 
         this.drawIamTagMarkers(p);
 
         // Name Label
-        this.ctx.fillStyle = '#fff';
+        this.ctx.fillStyle = isFilteredOut ? 'rgba(226, 232, 240, 0.42)' : '#fff';
         this.ctx.font = '500 11px Outfit';
         this.ctx.textAlign = 'center';
         this.ctx.fillText(p.name, x, y + radius + 15);
@@ -543,14 +559,22 @@ class SocialNetworkApp {
             careful: { color: '#14b8a6', xOffset: -8, yOffset: -10 },
             uncareful: { color: '#f59e0b', xOffset: 8, yOffset: -10 },
             craving: { color: '#ef4444', xOffset: -8, yOffset: 10 },
-            safe: { color: '#22c55e', xOffset: 8, yOffset: 10 }
+            safe: { color: '#22c55e', xOffset: 8, yOffset: 10 },
+            support: { color: '#38bdf8', xOffset: 0, yOffset: -14 },
+            'craving-user': { color: '#fb7185', xOffset: -14, yOffset: 0 },
+            'craving-non-user': { color: '#f97316', xOffset: 14, yOffset: 0 },
+            'co-user': { color: '#a78bfa', xOffset: 0, yOffset: 14 },
+            unaware: { color: '#94a3b8', xOffset: -14, yOffset: -14 },
+            'talk-craving': { color: '#facc15', xOffset: 14, yOffset: 14 }
         };
+
+        const isFilteredOut = this.activeFilter !== 'all' && !this.personMatchesFilter(person, this.activeFilter);
 
         tags.forEach((tag) => {
             const marker = markerMap[tag];
             if (!marker) return;
             this.ctx.beginPath();
-            this.ctx.fillStyle = marker.color;
+            this.ctx.fillStyle = isFilteredOut ? 'rgba(148, 163, 184, 0.35)' : marker.color;
             this.ctx.arc(person.x + marker.xOffset, person.y + marker.yOffset, 3.3, 0, Math.PI * 2);
             this.ctx.fill();
 
@@ -560,6 +584,36 @@ class SocialNetworkApp {
             this.ctx.arc(person.x + marker.xOffset, person.y + marker.yOffset, 3.3, 0, Math.PI * 2);
             this.ctx.stroke();
         });
+    }
+
+    setActiveFilter(filter) {
+        this.activeFilter = filter || 'all';
+        document.querySelectorAll('[data-filter]').forEach((button) => {
+            button.classList.toggle('active', button.dataset.filter === this.activeFilter);
+        });
+    }
+
+    personMatchesFilter(person, filter) {
+        if (!person || person.type === 'me' || filter === 'all') return true;
+        const tags = Array.isArray(person.iamTags) ? person.iamTags : [];
+        return tags.includes(filter);
+    }
+
+    getFilterColor(filter) {
+        const filterColors = {
+            support: '#38bdf8',
+            'craving-user': '#fb7185',
+            'craving-non-user': '#f97316',
+            'co-user': '#a78bfa',
+            unaware: '#94a3b8',
+            'talk-craving': '#facc15',
+            careful: '#14b8a6',
+            uncareful: '#f59e0b',
+            craving: '#ef4444',
+            safe: '#22c55e'
+        };
+
+        return filterColors[filter] || '#93c5fd';
     }
 
     // Input Handling
@@ -857,7 +911,7 @@ class SocialNetworkApp {
         const isNew = !person;
 
         if (!person) {
-            const near = (tag === 'safe' || tag === 'careful');
+            const near = (tag === 'safe' || tag === 'careful' || tag === 'support' || tag === 'talk-craving');
             const importance = near ? 'close' : 'far';
             person = {
                 id: crypto.randomUUID(),
@@ -871,7 +925,7 @@ class SocialNetworkApp {
                 relationships: {},
                 importance,
                 field: 'other',
-                energy: (tag === 'craving' || tag === 'uncareful') ? 'costs' : 'balance',
+                energy: (tag === 'craving' || tag === 'uncareful' || tag === 'craving-user' || tag === 'craving-non-user' || tag === 'co-user') ? 'costs' : 'balance',
                 color: '#ffffff',
                 iamTags: []
             };
@@ -880,7 +934,13 @@ class SocialNetworkApp {
         if (!Array.isArray(person.iamTags)) person.iamTags = [];
         if (tag && !person.iamTags.includes(tag)) person.iamTags.push(tag);
 
-        if (person.iamTags.includes('craving') || person.iamTags.includes('uncareful')) {
+        if (
+            person.iamTags.includes('craving')
+            || person.iamTags.includes('uncareful')
+            || person.iamTags.includes('craving-user')
+            || person.iamTags.includes('craving-non-user')
+            || person.iamTags.includes('co-user')
+        ) {
             person.energy = 'costs';
         }
 
@@ -914,7 +974,13 @@ class SocialNetworkApp {
             careful: this.normalizeList(sociaal.carefulPeople),
             uncareful: this.normalizeList(sociaal.uncarefulPeople),
             craving: this.normalizeList(sociaal.cravingPeople),
-            safe: this.normalizeList(sociaal.safePeople)
+            safe: this.normalizeList(sociaal.safePeople),
+            support: this.normalizeList(sociaal.supportNetworkPeople),
+            'craving-user': this.normalizeList(sociaal.cravingUserPeople),
+            'craving-non-user': this.normalizeList(sociaal.cravingNonUserPeople),
+            'co-user': this.normalizeList(sociaal.coUserPeople),
+            unaware: this.normalizeList(sociaal.unawarePeople),
+            'talk-craving': this.normalizeList(sociaal.talkCravingPeople)
         };
 
         const extras = this.uniquePreserveOrder([
@@ -934,7 +1000,7 @@ class SocialNetworkApp {
         }
 
         for (const name of extras) {
-            const person = await this.ensurePersonFromIam(name, 'careful');
+            const person = await this.ensurePersonFromIam(name, 'support');
             if (person) importedCount += 1;
         }
 
@@ -951,8 +1017,14 @@ class SocialNetworkApp {
         const uncareful = this.uniquePreserveOrder(this.getTaggedPeople('uncareful'));
         const craving = this.uniquePreserveOrder(this.getTaggedPeople('craving'));
         const safe = this.uniquePreserveOrder(this.getTaggedPeople('safe'));
+        const support = this.uniquePreserveOrder(this.getTaggedPeople('support'));
+        const cravingUsers = this.uniquePreserveOrder(this.getTaggedPeople('craving-user'));
+        const cravingNonUsers = this.uniquePreserveOrder(this.getTaggedPeople('craving-non-user'));
+        const coUsers = this.uniquePreserveOrder(this.getTaggedPeople('co-user'));
+        const unaware = this.uniquePreserveOrder(this.getTaggedPeople('unaware'));
+        const talkCraving = this.uniquePreserveOrder(this.getTaggedPeople('talk-craving'));
 
-        const combinedSupport = this.uniquePreserveOrder([...safe, ...careful]);
+        const combinedSupport = this.uniquePreserveOrder([...support, ...safe, ...careful, ...talkCraving]);
         const existing = window.iamData.getFormData('sociaal-netwerk') || {};
         const overlapHint = safe.length && careful.length
             ? `Overlap veilig/zorgvuldig: ${this.uniquePreserveOrder(safe.filter((name) => careful.map((c) => c.toLowerCase()).includes(name.toLowerCase()))).join(', ') || 'beperkt'}`
@@ -961,8 +1033,14 @@ class SocialNetworkApp {
         const payload = {
             carefulPeople: this.mergeListText(existing.carefulPeople, careful),
             uncarefulPeople: this.mergeListText(existing.uncarefulPeople, uncareful),
-            cravingPeople: this.mergeListText(existing.cravingPeople, craving),
+            cravingPeople: this.mergeListText(existing.cravingPeople, [...craving, ...cravingUsers, ...cravingNonUsers]),
             safePeople: this.mergeListText(existing.safePeople, safe),
+            supportNetworkPeople: this.mergeListText(existing.supportNetworkPeople, support),
+            cravingUserPeople: this.mergeListText(existing.cravingUserPeople, cravingUsers),
+            cravingNonUserPeople: this.mergeListText(existing.cravingNonUserPeople, cravingNonUsers),
+            coUserPeople: this.mergeListText(existing.coUserPeople, coUsers),
+            unawarePeople: this.mergeListText(existing.unawarePeople, unaware),
+            talkCravingPeople: this.mergeListText(existing.talkCravingPeople, talkCraving),
             reachableSupport: this.mergeListText(existing.reachableSupport, combinedSupport[0] ? [combinedSupport[0]] : []),
             firstReachOut: this.mergeListText(existing.firstReachOut, combinedSupport.slice(0, 2)),
             anchor1Name: existing.anchor1Name || combinedSupport[0] || '',

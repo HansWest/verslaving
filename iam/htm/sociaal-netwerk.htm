@@ -311,6 +311,41 @@
         </section>
 
         <section class="question-card">
+          <h2>4b. Netwerkfilters om over steun na te denken</h2>
+          <p class="subtle-help">Gebruik deze lijsten om je netwerk scherper te bekijken. Deze categorieen worden ook gebruikt in de netwerkvisualisatie, zodat je ze apart kunt highlighten.</p>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="supportNetworkPeople">Steunnetwerk (ja)</label>
+              <textarea id="supportNetworkPeople" rows="4" placeholder="Wie hoort voor jou duidelijk bij je steunnetwerk?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="talkCravingPeople">Mensen waarmee ik over mijn trek kan praten</label>
+              <textarea id="talkCravingPeople" rows="4" placeholder="Bij wie kun je open praten over trek, druk of risico?"></textarea>
+            </div>
+          </div>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="cravingUserPeople">Mensen waar ik trek van krijg (gebruikers)</label>
+              <textarea id="cravingUserPeople" rows="4" placeholder="Welke gebruikers of medegebruikers roepen trek op?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="cravingNonUserPeople">Mensen waar ik trek van krijg (niet-gebruikers)</label>
+              <textarea id="cravingNonUserPeople" rows="4" placeholder="Wie geeft spanning, conflict of druk zonder zelf gebruiker te zijn?"></textarea>
+            </div>
+          </div>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="coUserPeople">Medegebruikers</label>
+              <textarea id="coUserPeople" rows="4" placeholder="Met wie gebruikte je samen of is dat risico er nog?"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="unawarePeople">Mensen die van niets weten</label>
+              <textarea id="unawarePeople" rows="4" placeholder="Wie weet nog niets van je gebruik, trek of veranderwens?"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="question-card">
           <h2>5. Eerste concrete stap</h2>
           <div class="grid-two">
             <div class="form-group">
@@ -426,6 +461,12 @@
       'cravingPeople',
       'safePeople',
       'safetyCareOverlap',
+      'supportNetworkPeople',
+      'talkCravingPeople',
+      'cravingUserPeople',
+      'cravingNonUserPeople',
+      'coUserPeople',
+      'unawarePeople',
       'firstReachOut',
       'nextContactDate',
       'trustLevel',
@@ -515,6 +556,8 @@
       if (data.trustLevel) items.push(`Betrouwbaarheid: ${data.trustLevel}`);
       if (data.safePeople) items.push(`Veilig: ${previewText(data.safePeople, 34)}`);
       if (data.cravingPeople) items.push(`Craving-trigger: ${previewText(data.cravingPeople, 34)}`);
+      if (data.supportNetworkPeople) items.push(`Steunnetwerk: ${previewText(data.supportNetworkPeople, 34)}`);
+      if (data.talkCravingPeople) items.push(`Praat over trek: ${previewText(data.talkCravingPeople, 34)}`);
 
       if (!items.length) {
         const chip = document.createElement('span');
@@ -574,6 +617,22 @@
 
       if (formData.cravingPeople && !formData.safetyCareOverlap) {
         addNudge(nudges, 'Je cravings rondom mensen zijn in beeld. Leg kort vast hoe "veilig" en "zorgvuldig" voor jou verschillen.');
+      }
+
+      if (formData.supportNetworkPeople && !formData.firstReachOut) {
+        addNudge(nudges, 'Je steunnetwerk staat al deels op papier. Kies nu 1 iemand die je als eerste echt benadert.');
+      }
+
+      if (formData.talkCravingPeople && !formData.safePeople) {
+        addNudge(nudges, 'Je weet al met wie je over trek kunt praten. Zijn dat ook de mensen bij wie je je veilig genoeg voelt?');
+      }
+
+      if (formData.cravingUserPeople && !formData.coUserPeople) {
+        addNudge(nudges, 'Je noemt gebruikers die trek oproepen. Welke daarvan zijn ook echte medegebruikers of horen bij je oude gebruikspatroon?');
+      }
+
+      if (formData.unawarePeople && !formData.networkReflection) {
+        addNudge(nudges, 'Er zijn mensen die nog van niets weten. Wat doet dat met hoe open of gesteund je je netwerk nu ervaart?');
       }
 
       const summary = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
@@ -662,6 +721,8 @@
       appendUniqueLine(document.getElementById('firstReachOut'), Array.isArray(summary?.supportNetwork) ? summary.supportNetwork[1] || summary.supportNetwork[0] || '' : '');
       appendUniqueLine(document.getElementById('safePeople'), plan.supportPeople || '');
       appendUniqueLine(document.getElementById('carefulPeople'), Array.isArray(summary?.supportNetwork) ? summary.supportNetwork[0] || '' : '');
+      appendUniqueLine(document.getElementById('supportNetworkPeople'), plan.supportPeople || '');
+      appendUniqueLine(document.getElementById('talkCravingPeople'), gevoelens.talkPeople || '');
       appendUniqueLine(document.getElementById('uncarefulPeople'), risicoMensen.personName || '');
       appendUniqueLine(document.getElementById('cravingPeople'), risicoMensen.riskySituationWithPerson || '');
 
