@@ -81,6 +81,17 @@ class SocialNetworkDB {
 // --- 2. Physics & Logic ---
 class SocialNetworkApp {
     constructor() {
+        this.settingsStorageKey = 'kac_social_network_settings_v1';
+        this.defaultSettings = {
+            appTitle: 'Social Network',
+            addPersonLabel: 'Add Person',
+            supportFilterLabel: 'Steunnetwerk',
+            exportFilePrefix: 'West-coaching_social-network-data',
+            rememberFilter: true,
+            defaultFilter: 'all',
+            legendExpandedByDefault: false
+        };
+
         this.db = new SocialNetworkDB();
         this.canvas = document.getElementById('networkCanvas');
         this.ctx = this.canvas.getContext('2d');
@@ -110,6 +121,7 @@ class SocialNetworkApp {
         this.draggedPerson = null;
         this.hoveredPerson = null;
         this.activeFilter = 'all';
+        this.settings = this.loadSettings();
 
         this.bindEvents();
         this.resize();
@@ -183,6 +195,10 @@ class SocialNetworkApp {
 
         document.getElementById('slowerBtn').onclick = () => this.changeSpeed(-0.1);
         document.getElementById('fasterBtn').onclick = () => this.changeSpeed(0.1);
+        document.getElementById('helpBtn').onclick = () => this.openHelpModal();
+
+        const settingsBtn = document.getElementById('settingsBtn');
+        if (settingsBtn) settingsBtn.onclick = () => this.openSettingsModal();
 
         // Export/Import Events
         document.getElementById('exportBtn').onclick = () => this.exportData();
@@ -206,6 +222,31 @@ class SocialNetworkApp {
             legendToggleBtn.onclick = () => this.toggleLegendPanel();
         }
 
+        const settingsForm = document.getElementById('settingsForm');
+        if (settingsForm) {
+            settingsForm.addEventListener('submit', (event) => this.handleSettingsSave(event));
+        }
+
+        const closeSettingsX = document.getElementById('closeSettingsX');
+        const settingsModal = document.getElementById('settingsModal');
+        if (closeSettingsX) closeSettingsX.onclick = () => this.closeSettingsModal();
+        if (settingsModal) {
+            settingsModal.addEventListener('click', (event) => {
+                if (event.target.id === 'settingsModal') this.closeSettingsModal();
+            });
+        }
+
+        const closeHelpX = document.getElementById('closeHelpX');
+        const closeHelpButton = document.getElementById('closeHelpButton');
+        const helpModal = document.getElementById('helpModal');
+        if (closeHelpX) closeHelpX.onclick = () => this.closeHelpModal();
+        if (closeHelpButton) closeHelpButton.onclick = () => this.closeHelpModal();
+        if (helpModal) {
+            helpModal.addEventListener('click', (event) => {
+                if (event.target.id === 'helpModal') this.closeHelpModal();
+            });
+        }
+
         document.getElementById('resetBtn').onclick = async () => {
             if (confirm("Factory reset? This will delete everyone.")) {
                 await this.db.reset();
@@ -221,6 +262,9 @@ class SocialNetworkApp {
 
         document.getElementById('deletePersonBtn').onclick = () => this.handleDeletePerson();
         document.querySelector('.close-btn').onclick = () => this.closeModal();
+
+        this.hydrateSettingsForm();
+        this.applySettings();
     }
 
     async exportData() {
@@ -232,7 +276,8 @@ class SocialNetworkApp {
         const dataStr = JSON.stringify(this.people, null, 2);
         const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
 
-        const exportFileDefaultName = 'West-coaching_social-network-data.json';
+        const prefix = String(this.settings.exportFilePrefix || this.defaultSettings.exportFilePrefix).trim() || this.defaultSettings.exportFilePrefix;
+        const exportFileDefaultName = `${prefix}.json`;
 
         const linkElement = document.createElement('a');
         linkElement.setAttribute('href', dataUri);
@@ -600,6 +645,10 @@ class SocialNetworkApp {
         document.querySelectorAll('[data-filter]').forEach((button) => {
             button.classList.toggle('active', button.dataset.filter === this.activeFilter);
         });
+        if (this.settings.rememberFilter) {
+            this.settings.defaultFilter = this.activeFilter;
+            this.persistSettings();
+        }
     }
 
     toggleMobileMenu() {
@@ -620,6 +669,115 @@ class SocialNetworkApp {
         const isExpanded = legend.classList.toggle('expanded');
         button.setAttribute('aria-expanded', String(isExpanded));
         button.textContent = isExpanded ? 'Legenda sluiten' : 'Legenda';
+        this.settings.legendExpandedByDefault = isExpanded;
+        this.persistSettings();
+    }
+
+    loadSettings() {
+        try {
+            const raw = localStorage.getItem(this.settingsStorageKey);
+            if (!raw) return { ...this.defaultSettings };
+            const parsed = JSON.parse(raw);
+            return { ...this.defaultSettings, ...(parsed || {}) };
+        } catch (error) {
+            console.warn('Instellingen laden mislukt, defaults gebruikt.', error);
+            return { ...this.defaultSettings };
+        }
+    }
+
+    persistSettings() {
+        localStorage.setItem(this.settingsStorageKey, JSON.stringify(this.settings));
+    }
+
+    hydrateSettingsForm() {
+        const form = document.getElementById('settingsForm');
+        if (!form) return;
+
+        form.querySelector('#settingsAppTitle').value = this.settings.appTitle || '';
+        form.querySelector('#settingsAddPersonLabel').value = this.settings.addPersonLabel || '';
+        form.querySelector('#settingsSupportFilterLabel').value = this.settings.supportFilterLabel || '';
+        form.querySelector('#settingsExportFilePrefix').value = this.settings.exportFilePrefix || '';
+        form.querySelector('#settingsRememberFilter').checked = Boolean(this.settings.rememberFilter);
+        form.querySelector('#settingsDefaultFilter').value = this.settings.defaultFilter || 'all';
+        form.querySelector('#settingsLegendExpandedByDefault').checked = Boolean(this.settings.legendExpandedByDefault);
+    }
+
+    applySettings() {
+        const titleEl = document.querySelector('.header-main h1');
+        if (titleEl) {
+            const mainTitle = String(this.settings.appTitle || this.defaultSettings.appTitle).trim() || this.defaultSettings.appTitle;
+            titleEl.innerHTML = `KinkAwareCoach<br/>${mainTitle}`;
+        }
+
+        const addPersonBtn = document.getElementById('addPersonBtn');
+        if (addPersonBtn) {
+            addPersonBtn.textContent = String(this.settings.addPersonLabel || this.defaultSettings.addPersonLabel).trim() || this.defaultSettings.addPersonLabel;
+        }
+
+        const supportFilterBtn = document.querySelector('[data-filter="support"]');
+        if (supportFilterBtn) {
+            supportFilterBtn.textContent = String(this.settings.supportFilterLabel || this.defaultSettings.supportFilterLabel).trim() || this.defaultSettings.supportFilterLabel;
+        }
+
+        const legend = document.getElementById('legendPanel');
+        const legendButton = document.getElementById('legendToggleBtn');
+        if (legend && legendButton) {
+            legend.classList.toggle('expanded', Boolean(this.settings.legendExpandedByDefault));
+            legendButton.setAttribute('aria-expanded', String(Boolean(this.settings.legendExpandedByDefault)));
+            legendButton.textContent = this.settings.legendExpandedByDefault ? 'Legenda sluiten' : 'Legenda';
+        }
+
+        this.setActiveFilter(this.settings.defaultFilter || 'all');
+    }
+
+    openSettingsModal() {
+        this.hydrateSettingsForm();
+        const modal = document.getElementById('settingsModal');
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+
+    closeSettingsModal() {
+        const modal = document.getElementById('settingsModal');
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
+    openHelpModal() {
+        const modal = document.getElementById('helpModal');
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+
+    closeHelpModal() {
+        const modal = document.getElementById('helpModal');
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
+    handleSettingsSave(event) {
+        event.preventDefault();
+        const form = event.target;
+        if (!form) return;
+
+        this.settings = {
+            ...this.settings,
+            appTitle: form.querySelector('#settingsAppTitle').value.trim() || this.defaultSettings.appTitle,
+            addPersonLabel: form.querySelector('#settingsAddPersonLabel').value.trim() || this.defaultSettings.addPersonLabel,
+            supportFilterLabel: form.querySelector('#settingsSupportFilterLabel').value.trim() || this.defaultSettings.supportFilterLabel,
+            exportFilePrefix: form.querySelector('#settingsExportFilePrefix').value.trim() || this.defaultSettings.exportFilePrefix,
+            rememberFilter: form.querySelector('#settingsRememberFilter').checked,
+            defaultFilter: form.querySelector('#settingsDefaultFilter').value || 'all',
+            legendExpandedByDefault: form.querySelector('#settingsLegendExpandedByDefault').checked
+        };
+
+        this.persistSettings();
+        this.applySettings();
+        this.closeSettingsModal();
     }
 
     personMatchesFilter(person, filter) {

@@ -455,6 +455,37 @@ input[type="color"] {
     margin-top: 2rem;
 }
 
+.form-actions-center {
+    justify-content: center;
+}
+
+.modal-body {
+    color: var(--text-color);
+    line-height: 1.55;
+}
+
+.close-modal-btn {
+    min-width: 120px;
+}
+
+.settings-panel {
+    max-width: 560px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.settings-section-title {
+    margin: 1.1rem 0 0.65rem;
+    font-size: 0.92rem;
+    color: #c7d9ef;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.settings-section-title:first-child {
+    margin-top: 0;
+}
+
 .relationship-list {
     max-height: 150px;
     overflow-y: auto;
@@ -657,6 +688,11 @@ input[type="color"] {
 
     .legend-item {
         font-size: 0.78rem;
+    }
+
+    .settings-panel {
+        width: 94%;
+        padding: 1.25rem;
     }
 }
 /* Global accessible link contrast */

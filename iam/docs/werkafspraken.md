@@ -133,3 +133,44 @@ Deze sectie bevat alles wat nodig is om consistent en goed aan IAM te werken.
 - Bij onverwachte grote afwijkingen: eerst expliciet vastleggen wat leidend is, daarna opschonen.
 - Bij twijfel over inhoudelijke richting: documentatie en kernflow zijn beslissend.
 - Niet gokken: liever eerst nakijken in code, documentatie of gitgeschiedenis. Als iets daarna nog onduidelijk is, gericht navragen.
+
+## Gedeelde UI-Regels (Tool-overstijgend)
+
+Deze regels zijn overgenomen als bruikbare standaard voor IAM-tools met vergelijkbare interactiepatronen.
+
+### Shared controls
+
+- Gebruik waar mogelijk gedeelde CSS-patronen voor herbruikbare controls (helpknop, modalcontrols, disclosureknop).
+- Beperk module-specifieke overrides tot gevallen waar een gedeeld patroon aantoonbaar niet past.
+- Hergebruik het bestaande footerpatroon met Value for Value + privacyregel wanneer de lay-out dat toelaat.
+
+### Disclosure en collapse
+
+- Grote secties zijn standaard inklapbaar, behalve bij veiligheidskritische acties of vaste lineaire kernflow.
+- Disclosure gebruikt een echte knop met consistente visuele vorm: ronde outline, duidelijk centrumicoon, focus-state zichtbaar.
+- Icoonbetekenis is vast: + = dicht, - = open.
+- Toegankelijkheid is verplicht: button + aria-expanded + aria-controls naar het doelgebied.
+- Inklapstatus wordt lokaal bewaard als de tool al lokale voorkeuren/profieldata opslaat.
+- Icoonknoppen blijven semantisch consistent: help = ?, disclosure = + / -.
+
+### Help-modal patroon
+
+- Help gebruikt rechtsboven een sluitknop X in de modalheader.
+- Helptekst staat in de modalbody, niet in de header.
+- Onderin staat bij voorkeur een gecentreerde bevestigingsknop met label Got it!.
+- In tools met het dark modal-systeem: .modal-header voor titel + X, .modal-body voor uitleg, .close-modal-btn voor de onderknop.
+
+### App settings modal patroon
+
+- Tools met gebruikersvoorkeuren tonen in de header-actierij een App Settings ⚙️ knop.
+- Settingsmodal gebruikt gedeelde .modal backdrop en .glass-panel met modifier .settings-panel.
+- Settingspanel is altijd scrollbaar: max-height: 90vh; overflow-y: auto; zodat Save bereikbaar blijft op kleine schermen.
+- Instellingen worden gegroepeerd in sectietitels (settings-section-title), minimaal: Field Names, Data, Cross-tool Behaviour.
+- Onderaan in het scrollgebied staat altijd een duidelijk Save-actie.
+- Lokale opslag gebruikt een toolspecifieke sleutel, voorbeeld: kac_<toolname>_settings_v1.
+- Bij openen: hydrateSettingsForm(); bij opslaan: applySettings() en direct live doorvoeren in labels/knoppen.
+
+### Consistentieprincipe
+
+- Versterk bij voorkeur gedeelde regels in plaats van losse per-tool fixes.
+- Als een tool bewust afwijkt om structurele redenen, documenteer die reden expliciet bij die tool.
