@@ -55,6 +55,29 @@
     .message { display: none; border-left: 4px solid var(--accent); }
     .message.show { display: block; }
     .message.error { border-left-color: #b23a48; }
+    .inspiration-panel {
+      margin-top: 1rem;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+      padding: 0.75rem;
+    }
+    .inspiration-panel img {
+      display: block;
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.55);
+      background: #fff;
+    }
+    .inspiration-panel figcaption {
+      margin-top: 0.45rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.92);
+    }
   </style>
 </head>
 <body>
@@ -68,6 +91,10 @@
         </div>
         <h1>Mijn chemsex-patroon</h1>
         <p>Werkblad om zonder oordeel te zien wat er gebeurt: wanneer, met wie, welke middelen, en hoe de comedown uitpakt.</p>
+        <figure class="inspiration-panel">
+          <img src="../../IntegrativeAddictionManagement/pics/AutooDoodBAC0-01.jpg" alt="Grafiek als reminder dat gevolgen niet lineair oplopen">
+          <figcaption>Snel patroonchecken helpt om eerder bij te sturen.</figcaption>
+        </figure>
       </header>
 
       <div id="message" class="message"></div>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chemsex — Quality of Life</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #1a3040;
+      --main: #1a7a5e;
+      --accent: #2daa84;
+      --soft: #f0faf6;
+    }
+    body {
+      background:
+        radial-gradient(circle at top right, rgba(26, 122, 94, 0.14), transparent 34%),
+        linear-gradient(180deg, #fff 0%, #edfaf5 100%);
+      color: var(--ink);
+    }
+    .page-shell { max-width: 920px; margin: 0 auto; }
+    .page-header {
+      background: linear-gradient(140deg, var(--main) 0%, #2daa84 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(26, 48, 64, 0.16);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+    .question-card, .message {
+      background: rgba(255,255,255,0.97);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(26, 48, 64, 0.09);
+    }
+    .question-card { border-top: 4px solid var(--main); }
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+    .message { display: none; border-left: 4px solid var(--accent); }
+    .message.show { display: block; }
+    .message.error { border-left-color: #8a2f2f; }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--main);
+      margin: 1.4rem 0 0.5rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid rgba(26,122,94,0.15);
+    }
+
+    /* QoL level rows */
+    .qol-level {
+      background: rgba(255,255,255,0.97);
+      border-radius: 14px;
+      margin-bottom: 0.9rem;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(26, 48, 64, 0.07);
+    }
+    .qol-level-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      font-weight: 700;
+      font-size: 0.97rem;
+      background: var(--soft);
+      border-left: 5px solid var(--accent);
+    }
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.05rem;
+      color: #fff;
+      flex-shrink: 0;
+      background: var(--main);
+    }
+    .qol-rows { padding: 0.75rem 1rem 1rem; }
+    .qol-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+    .qol-row:last-child { margin-bottom: 0; }
+    .qol-row input[type="text"] {
+      border: none;
+      border-bottom: 2px solid #ddd;
+      border-radius: 0;
+      padding: 0.35rem 0.25rem;
+      font-size: 0.92rem;
+      background: transparent;
+      width: 100%;
+    }
+    .qol-row input[type="text"]:focus {
+      outline: none;
+      border-bottom-color: var(--accent);
+    }
+    .col-mini {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      white-space: nowrap;
+    }
+    .col-mini-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #888;
+    }
+    .mini-input {
+      width: 5rem;
+      border: none;
+      border-bottom: 2px solid #ddd;
+      border-radius: 0;
+      padding: 0.3rem 0.25rem;
+      font-size: 0.88rem;
+      background: transparent;
+    }
+    .mini-input:focus {
+      outline: none;
+      border-bottom-color: var(--accent);
+    }
+    .col-headers {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 0.5rem;
+      padding: 0 1rem 0.3rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .col-ww { display: flex; gap: 1rem; }
+
+    /* SMART goal rows */
+    .smart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 600px) { .smart-grid { grid-template-columns: 1fr; } }
+    .smart-card {
+      background: rgba(255,255,255,0.97);
+      border-radius: 14px;
+      padding: 1.1rem;
+      box-shadow: 0 4px 16px rgba(26, 48, 64, 0.07);
+      border-top: 4px solid var(--main);
+    }
+    .smart-card h3 {
+      margin: 0 0 0.6rem;
+      font-size: 0.95rem;
+      color: var(--main);
+    }
+    .smart-card label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #777;
+      margin-bottom: 0.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .smart-card input[type="text"],
+    .smart-card textarea {
+      margin-bottom: 0.6rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .smart-pill {
+      display: inline-block;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      background: var(--soft);
+      color: var(--main);
+      border: 1px solid rgba(26,122,94,0.3);
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./chemsex.htm">← Chemsex overview</a>
+          <a href="./chemsex-patroon.htm">My pattern</a>
+          <a href="./chemsex-risk-analysis.htm">Risk analysis</a>
+          <a href="./chemsex-identity-choices.htm">Identity &amp; choices</a>
+          <a href="./chemsex-quality-of-life.htm" aria-current="page" style="background:rgba(255,255,255,0.28);">Quality of life</a>
+        </div>
+        <h1>Quality of Life — Choices</h1>
+        <p style="margin:0.6rem 0 0; font-size:0.95rem; color:rgba(255,255,255,0.88); line-height:1.6;">
+          What does a good life look like for you? For each life domain, describe what you want and 
+          set a SMART goal with a who and a when.
+        </p>
+        <p style="margin:0.55rem 0 0; font-size:0.83rem; color:rgba(255,255,255,0.72); line-height:1.5;">
+          SMART = Positive &amp; Specific &bull; Measurable &bull; Achievable &bull; Realistic &bull; Time-bound
+        </p>
+      </header>
+
+      <div id="message" class="message"></div>
+
+      <form id="qualityOfLifeForm">
+
+        <!-- QoL levels 5–0 -->
+        <p class="section-title">Life domains by level of quality</p>
+        <p style="font-size:0.88rem; color:#666; margin:-0.3rem 0 0.8rem;">
+          Level 5 = richest quality of life &nbsp;→&nbsp; Level 0 = baseline / daily life
+        </p>
+
+        <!-- Level 5 -->
+        <div class="qol-level">
+          <div class="qol-level-header" style="border-left-color:#1a7a5e;">
+            <span class="level-badge" style="background:#1a7a5e;">5</span>
+            <span>Level 5 — <em>Thriving</em></span>
+          </div>
+          <div class="col-headers">
+            <div>What I want in this area of life</div>
+            <div class="col-ww"><span>Who</span><span>When</span></div>
+          </div>
+          <div class="qol-rows">
+            <div class="qol-row">
+              <input type="text" id="qol5r1" placeholder="e.g. Deep intimacy without substances…" autocomplete="off">
+              <div class="col-mini"><span class="col-mini-label">Who</span><input class="mini-input" type="text" id="qol5r1who" placeholder="name…"></div>
+              <div class="col-mini"><span class="col-mini-label">When</span><input class="mini-input" type="text" id="qol5r1when" placeholder="date…"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Level 4 -->
+        <div class="qol-level">
+          <div class="qol-level-header" style="border-left-color:#2daa84;">
+            <span class="level-badge" style="background:#2daa84;">4</span>
+            <span>Level 4</span>
+          </div>
+          <div class="col-headers">
+            <div>What I want in this area of life</div>
+            <div class="col-ww"><span>Who</span><span>When</span></div>
+          </div>
+          <div class="qol-rows">
+            <div class="qol-row">
+              <input type="text" id="qol4r1" placeholder="" autocomplete="off">
+              <div class="col-mini"><span class="col-mini-label">Who</span><input class="mini-input" type="text" id="qol4r1who" placeholder="name…"></div>
+              <div class="col-mini"><span class="col-mini-label">When</span><input class="mini-input" type="text" id="qol4r1when" placeholder="date…"></div>
+            </div>
+            <div class="qol-row">
+              <input type="text" id="qol4r2" placeholder="" autocomplete="off">
+              <div class="col-mini"><span class="col-mini-label">Who</span><input class="mini-input" type="text" id="qol4r2who" placeholder="name…"></div>
+              <div class="col-mini"><span class="col-mini-label">When</span><input class="mini-input" type="text" id="qol4r2when" placeholder="date…"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Level 3 -->
+        <div class="qol-level">
+          <div class="qol-level-header" style="border-left-color:#54c49e;">
+            <span class="level-badge" style="background:#54c49e;">3</span>
+            <span>Level 3</span>
+          </div>
+          <div class="col-headers">
+            <div>What I want in this area of life</div>
+            <div class="col-ww"><span>Who</span><span>When</span></div>
+          </div>
+          <div class="qol-rows">
+            <div class="qol-row">
+              <input type="text" id="qol3r1" placeholder="" autocomplete="off">
+              <div class="col-mini"><span class="col-mini-label">Who</span><input class="mini-input" type="text" id="qol3r1who" placeholder="name…"></div>
+              <div class="col-mini"><span class="col-mini-label">When</span><input class="mini-input" type="text" id="qol3r1when" placeholder="date…"></div>
+            </div>
+            <div class="qol-row">
+              <input type="text" id="qol3r2" placeholder="" autocomplete="off">
+              <div class="col-mini"><span class="col-mini-label">Who</span><input class="mini-input" type="text" id="qol3r2who" placeholder="name…"></div>
+              <div class="col-mini"><span class="col-mini-label">When</span><input class="mini-input" type="text" id="qol3r2when" placeholder="date…"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Level 2 -->
+        <div class="qol-level">
+          <div class="qol-level-header" style="border-left-color:#8adec5;">
+            <span class="level-badge" style="background:#8adec5; color:#1a4030;">2</span>
+            <span>Level 2</span>
+          </div>
+          <div class="col-headers">
+            <div>What I want in this area of life</div>
+            <div class="col-ww"><span>Who</span><span>When</span></div>
+          </div>
+          <div class="qol-rows">
+            <div class="qol-row">
+              <input type="text" id="qol2r1" placeholder="" autocomplete="off">
+              <div class="col-mini"><span class="col-mini-label">Who</span><input class="mini-input" type="text" id="qol2r1who" placeholder="name…"></div>
+              <div class="col-mini"><span class="col-mini-label">When</span><input class="mini-input" type="text" id="qol2r1when" placeholder="date…"></div>
+            </div>
+            <div class="qol-row">
+              <input type="text" id="qol2r2" placeholder="" autocomplete="off">
+              <div class="col-mini"><span class="col-mini-label">Who</span><input class="mini-input" type="text" id="qol2r2who" placeholder="name…"></div>
+              <div class="col-mini"><span class="col-mini-label">When</span><input class="mini-input" type="text" id="qol2r2when" placeholder="date…"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Level 1 -->
+        <div class="qol-level">
+          <div class="qol-level-header" style="border-left-color:#b0e8d8;">
+            <span class="level-badge" style="background:#b0e8d8; color:#1a4030;">1</span>
+            <span>Level 1</span>
+          </div>
+          <div class="col-headers">
+            <div>What I want in this area of life</div>
+            <div class="col-ww"><span>Who</span><span>When</span></div>
+          </div>
+          <div class="qol-rows">
+            <div class="qol-row">
+              <input type="text" id="qol1r1" placeholder="" autocomplete="off">
+              <div class="col-mini"><span class="col-mini-label">Who</span><input class="mini-input" type="text" id="qol1r1who" placeholder="name…"></div>
+              <div class="col-mini"><span class="col-mini-label">When</span><input class="mini-input" type="text" id="qol1r1when" placeholder="date…"></div>
+            </div>
+            <div class="qol-row">
+              <input type="text" id="qol1r2" placeholder="" autocomplete="off">
+              <div class="col-mini"><span class="col-mini-label">Who</span><input class="mini-input" type="text" id="qol1r2who" placeholder="name…"></div>
+              <div class="col-mini"><span class="col-mini-label">When</span><input class="mini-input" type="text" id="qol1r2when" placeholder="date…"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Level 0 -->
+        <div class="qol-level">
+          <div class="qol-level-header" style="border-left-color:#aaa;">
+            <span class="level-badge" style="background:#888;">0</span>
+            <span>Level 0 — <em>Baseline / daily life</em></span>
+          </div>
+          <div class="qol-rows">
+            <div class="qol-row" style="grid-template-columns: 1fr;">
+              <input type="text" id="qol0desc" placeholder="Describe what a basic ordinary day looks like…" autocomplete="off">
+            </div>
+          </div>
+        </div>
+
+        <!-- SMART goals -->
+        <p class="section-title">My SMART goals</p>
+        <div class="smart-grid">
+
+          <div class="smart-card">
+            <span class="smart-pill">GOAL 1</span>
+            <h3>Goal description</h3>
+            <label for="smart1goal">Specific &amp; Positive goal</label>
+            <textarea id="smart1goal" rows="3" placeholder="e.g. I will go to the gym 3 times a week…"></textarea>
+            <label for="smart1measure">How will I measure this?</label>
+            <input type="text" id="smart1measure" placeholder="e.g. log in my journal each session">
+            <label for="smart1who">Who supports me?</label>
+            <input type="text" id="smart1who" placeholder="name…">
+            <label for="smart1when">By when?</label>
+            <input type="text" id="smart1when" placeholder="date…">
+          </div>
+
+          <div class="smart-card">
+            <span class="smart-pill">GOAL 2</span>
+            <h3>Goal description</h3>
+            <label for="smart2goal">Specific &amp; Positive goal</label>
+            <textarea id="smart2goal" rows="3" placeholder=""></textarea>
+            <label for="smart2measure">How will I measure this?</label>
+            <input type="text" id="smart2measure" placeholder="">
+            <label for="smart2who">Who supports me?</label>
+            <input type="text" id="smart2who" placeholder="name…">
+            <label for="smart2when">By when?</label>
+            <input type="text" id="smart2when" placeholder="date…">
+          </div>
+
+          <div class="smart-card">
+            <span class="smart-pill">GOAL 3</span>
+            <h3>Goal description</h3>
+            <label for="smart3goal">Specific &amp; Positive goal</label>
+            <textarea id="smart3goal" rows="3" placeholder=""></textarea>
+            <label for="smart3measure">How will I measure this?</label>
+            <input type="text" id="smart3measure" placeholder="">
+            <label for="smart3who">Who supports me?</label>
+            <input type="text" id="smart3who" placeholder="name…">
+            <label for="smart3when">By when?</label>
+            <input type="text" id="smart3when" placeholder="date…">
+          </div>
+
+          <div class="smart-card">
+            <span class="smart-pill">GOAL 4</span>
+            <h3>Goal description</h3>
+            <label for="smart4goal">Specific &amp; Positive goal</label>
+            <textarea id="smart4goal" rows="3" placeholder=""></textarea>
+            <label for="smart4measure">How will I measure this?</label>
+            <input type="text" id="smart4measure" placeholder="">
+            <label for="smart4who">Who supports me?</label>
+            <input type="text" id="smart4who" placeholder="name…">
+            <label for="smart4when">By when?</label>
+            <input type="text" id="smart4when" placeholder="date…">
+          </div>
+
+        </div>
+
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Save on this device</button>
+          <button type="button" class="button-secondary" id="exportButton">Export all as JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print or save as PDF</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'chemsex-quality-of-life';
+    const fields = [
+      'qol5r1','qol5r1who','qol5r1when',
+      'qol4r1','qol4r1who','qol4r1when',
+      'qol4r2','qol4r2who','qol4r2when',
+      'qol3r1','qol3r1who','qol3r1when',
+      'qol3r2','qol3r2who','qol3r2when',
+      'qol2r1','qol2r1who','qol2r1when',
+      'qol2r2','qol2r2who','qol2r2when',
+      'qol1r1','qol1r1who','qol1r1when',
+      'qol1r2','qol1r2who','qol1r2when',
+      'qol0desc',
+      'smart1goal','smart1measure','smart1who','smart1when',
+      'smart2goal','smart2measure','smart2who','smart2when',
+      'smart3goal','smart3measure','smart3who','smart3when',
+      'smart4goal','smart4measure','smart4who','smart4when'
+    ];
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
+
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectFormData());
+        if (feedback) showMessage('Quality of life saved on this device.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Could not save.', true);
+      }
+    }
+
+    function exportAll() {
+      const exportData = iamData.exportJSON();
+      const url = URL.createObjectURL(exportData.blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = exportData.filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage('Full IAM data exported as JSON.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fillForm(iamData.getFormData(formKey) || {});
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('qualityOfLifeForm').addEventListener('input', () => saveForm(false));
+    });
+  </script>
+</body>
+</html>

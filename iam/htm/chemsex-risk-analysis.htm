@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chemsex — Risk Analysis</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #1f3040;
+      --main: #6b2f8a;
+      --accent: #9b3fcc;
+      --soft: #f8f2ff;
+    }
+    body {
+      background:
+        radial-gradient(circle at top right, rgba(107, 47, 138, 0.14), transparent 34%),
+        linear-gradient(180deg, #fff 0%, #f6eeff 100%);
+      color: var(--ink);
+    }
+    .page-shell { max-width: 960px; margin: 0 auto; }
+    .page-header {
+      background: linear-gradient(140deg, var(--main) 0%, #9b3fcc 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 48, 64, 0.16);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+    .message {
+      background: rgba(255,255,255,0.95);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 48, 64, 0.09);
+      display: none;
+      border-left: 4px solid var(--accent);
+    }
+    .message.show { display: block; }
+    .message.error { border-left-color: #8a2f2f; }
+
+    /* ── risk matrix ─────────────────────────────── */
+    .matrix-intro {
+      margin: 1.2rem 0 0.6rem;
+      font-size: 0.93rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.55;
+    }
+    .matrix-wrap {
+      margin-top: 1.2rem;
+    }
+    .risk-level {
+      background: rgba(255,255,255,0.97);
+      border-radius: 14px;
+      margin-bottom: 0.9rem;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(31, 48, 64, 0.08);
+    }
+    .risk-level-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      font-weight: 700;
+      font-size: 0.97rem;
+    }
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 1.05rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .level-5 .level-badge { background: #b71c1c; }
+    .level-4 .level-badge { background: #e53935; }
+    .level-3 .level-badge { background: #ef6c00; }
+    .level-2 .level-badge { background: #f9a825; color: #333; }
+    .level-1 .level-badge { background: #43a047; }
+    .level-0 .level-badge { background: #757575; }
+
+    .level-5 .risk-level-header { background: #fff5f5; border-left: 5px solid #b71c1c; }
+    .level-4 .risk-level-header { background: #fff5f5; border-left: 5px solid #e53935; }
+    .level-3 .risk-level-header { background: #fff8f0; border-left: 5px solid #ef6c00; }
+    .level-2 .risk-level-header { background: #fffde7; border-left: 5px solid #f9a825; }
+    .level-1 .risk-level-header { background: #f1fff3; border-left: 5px solid #43a047; }
+    .level-0 .risk-level-header { background: #f5f5f5; border-left: 5px solid #757575; }
+
+    .risk-rows { padding: 0.75rem 1rem 1rem; }
+    .risk-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+    .risk-row:last-child { margin-bottom: 0; }
+    .risk-row input[type="text"] {
+      border: none;
+      border-bottom: 2px solid #ddd;
+      border-radius: 0;
+      padding: 0.35rem 0.25rem;
+      font-size: 0.92rem;
+      background: transparent;
+      width: 100%;
+    }
+    .risk-row input[type="text"]:focus {
+      outline: none;
+      border-bottom-color: var(--accent);
+    }
+    .score-group {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      white-space: nowrap;
+    }
+    .score-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #888;
+      min-width: 1rem;
+    }
+    .score-input {
+      width: 3rem;
+      border: none;
+      border-bottom: 2px solid #ddd;
+      border-radius: 0;
+      padding: 0.3rem 0.2rem;
+      font-size: 0.88rem;
+      background: transparent;
+      text-align: center;
+    }
+    .score-input:focus {
+      outline: none;
+      border-bottom-color: var(--accent);
+    }
+    .score-unit {
+      font-size: 0.78rem;
+      color: #888;
+    }
+    .col-headers {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 0.5rem;
+      padding: 0 1rem 0.3rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .col-fs { display: flex; gap: 2.4rem; }
+
+    /* ── axis labels ─────────────────────────────── */
+    .axis-note {
+      margin-top: 0.5rem;
+      padding: 0.7rem 1rem;
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.8);
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .axis-note span { font-weight: 700; color: #fff; }
+
+    /* ── action bar ──────────────────────────────── */
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.4rem; }
+    .action-bar button { flex: 1 1 180px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./chemsex.htm">← Chemsex overview</a>
+          <a href="./chemsex-patroon.htm">My pattern</a>
+          <a href="./chemsex-risk-analysis.htm" aria-current="page" style="background:rgba(255,255,255,0.28);">Risk analysis</a>
+          <a href="./chemsex-identity-choices.htm">Identity &amp; choices</a>
+          <a href="./chemsex-quality-of-life.htm">Quality of life</a>
+        </div>
+        <h1>Chemsex — Risk Analysis</h1>
+        <p class="matrix-intro">
+          For each risk level, describe the risky behaviours you engage in. Record how often the behaviour occurs
+          (F = frequency, e.g. 2×/week) and how high the perceived harm is (S = severity, e.g. 70%).
+        </p>
+        <div class="axis-note">
+          <div><span>F</span> = Frequency (e.g. 3×/month)</div>
+          <div><span>S</span> = Severity / harm (0–100%)</div>
+        </div>
+      </header>
+
+      <div id="message" class="message"></div>
+
+      <form id="risicoAnalyseForm">
+        <div class="matrix-wrap">
+
+          <!-- Level 5 -->
+          <div class="risk-level level-5">
+            <div class="risk-level-header">
+              <span class="level-badge">5</span>
+              <span>Level 5 — <em>Highest risk</em></span>
+            </div>
+            <div class="col-headers">
+              <div>Behaviour / situation</div>
+              <div class="col-fs"><span>F</span><span>S</span></div>
+            </div>
+            <div class="risk-rows">
+              <div class="risk-row">
+                <input type="text" id="l5r1" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l5r1f" placeholder="x/…"><span class="score-unit"></span></div>
+                <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l5r1s" placeholder="…%"><span class="score-unit"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Level 4 -->
+          <div class="risk-level level-4">
+            <div class="risk-level-header">
+              <span class="level-badge">4</span>
+              <span>Level 4 — <em>High risk</em></span>
+            </div>
+            <div class="col-headers">
+              <div>Behaviour / situation</div>
+              <div class="col-fs"><span>F</span><span>S</span></div>
+            </div>
+            <div class="risk-rows">
+              <div class="risk-row">
+                <input type="text" id="l4r1" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l4r1f" placeholder="x/…"></div>
+                <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l4r1s" placeholder="…%"></div>
+              </div>
+              <div class="risk-row">
+                <input type="text" id="l4r2" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l4r2f" placeholder="x/…"></div>
+                <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l4r2s" placeholder="…%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Level 3 -->
+          <div class="risk-level level-3">
+            <div class="risk-level-header">
+              <span class="level-badge">3</span>
+              <span>Level 3 — <em>Medium risk</em></span>
+            </div>
+            <div class="col-headers">
+              <div>Behaviour / situation</div>
+              <div class="col-fs"><span>F</span><span>S</span></div>
+            </div>
+            <div class="risk-rows">
+              <div class="risk-row">
+                <input type="text" id="l3r1" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l3r1f" placeholder="x/…"></div>
+                <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l3r1s" placeholder="…%"></div>
+              </div>
+              <div class="risk-row">
+                <input type="text" id="l3r2" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l3r2f" placeholder="x/…"></div>
+                <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l3r2s" placeholder="…%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Level 2 -->
+          <div class="risk-level level-2">
+            <div class="risk-level-header">
+              <span class="level-badge">2</span>
+              <span>Level 2 — <em>Low-medium risk</em></span>
+            </div>
+            <div class="col-headers">
+              <div>Behaviour / situation</div>
+              <div class="col-fs"><span>F</span><span>S</span></div>
+            </div>
+            <div class="risk-rows">
+              <div class="risk-row">
+                <input type="text" id="l2r1" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l2r1f" placeholder="x/…"></div>
+                <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l2r1s" placeholder="…%"></div>
+              </div>
+              <div class="risk-row">
+                <input type="text" id="l2r2" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l2r2f" placeholder="x/…"></div>
+                <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l2r2s" placeholder="…%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Level 1 -->
+          <div class="risk-level level-1">
+            <div class="risk-level-header">
+              <span class="level-badge">1</span>
+              <span>Level 1 — <em>Low risk</em></span>
+            </div>
+            <div class="col-headers">
+              <div>Behaviour / situation</div>
+              <div class="col-fs"><span>F</span><span>S</span></div>
+            </div>
+            <div class="risk-rows">
+              <div class="risk-row">
+                <input type="text" id="l1r1" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l1r1f" placeholder="x/…"></div>
+                <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l1r1s" placeholder="…%"></div>
+              </div>
+              <div class="risk-row">
+                <input type="text" id="l1r2" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l1r2f" placeholder="x/…"></div>
+                <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l1r2s" placeholder="…%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Level 0 -->
+          <div class="risk-level level-0">
+            <div class="risk-level-header">
+              <span class="level-badge">0</span>
+              <span>Level 0 — <em>General daily life</em></span>
+            </div>
+            <div class="risk-rows">
+              <div class="risk-row" style="grid-template-columns: 1fr;">
+                <input type="text" id="l0desc" placeholder="Describe your normal daily life without risky behaviour…" autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Save on this device</button>
+          <button type="button" class="button-secondary" id="exportButton">Export all as JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print or save as PDF</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'chemsex-risico-analyse';
+    const fields = [
+      'l5r1','l5r1f','l5r1s',
+      'l4r1','l4r1f','l4r1s',
+      'l4r2','l4r2f','l4r2s',
+      'l3r1','l3r1f','l3r1s',
+      'l3r2','l3r2f','l3r2s',
+      'l2r1','l2r1f','l2r1s',
+      'l2r2','l2r2f','l2r2s',
+      'l1r1','l1r1f','l1r1s',
+      'l1r2','l1r2f','l1r2s',
+      'l0desc'
+    ];
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
+
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectFormData());
+        if (feedback) showMessage('Risk analysis saved on this device.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Could not save.', true);
+      }
+    }
+
+    function exportAll() {
+      const exportData = iamData.exportJSON();
+      const url = URL.createObjectURL(exportData.blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = exportData.filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage('Full IAM data exported as JSON.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fillForm(iamData.getFormData(formKey) || {});
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('risicoAnalyseForm').addEventListener('input', () => saveForm(false));
+    });
+  </script>
+</body>
+</html>
