@@ -1,6 +1,442 @@
-<html>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meerdere Wegen — Jouw Eigen Route</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3540;
+      --page-main: #2f5f8f;
+      --page-accent: #c9684a;
+      --page-ok: #4e7b43;
+    }
 
-deze code is van controleerjeverslaving.nl 
+    body {
+      background:
+        radial-gradient(circle at top right, rgba(79, 95, 139, 0.12), transparent 40%),
+        linear-gradient(180deg, #f9f7f2 0%, #eff5f8 100%);
+      color: var(--page-ink);
+    }
+
+    .page-shell { max-width: 960px; margin: 0 auto; }
+
+    .page-header {
+      background: linear-gradient(140deg, #2f5f8f 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+      margin: 1.5rem 1rem;
+    }
+
+    .page-header h1 { margin: 0; font-size: 2rem; }
+    .page-header p { margin: 0.75rem 0 0; font-size: 1rem; opacity: 0.95; line-height: 1.5; }
+
+    .intro-card {
+      max-width: 880px;
+      margin: 1.5rem auto;
+      padding: 1.3rem 1.25rem;
+      background: linear-gradient(135deg, #f0f8ff 0%, #f9f6ff 100%);
+      border-left: 5px solid var(--page-main);
+      border-radius: 10px;
+    }
+
+    .intro-card h2 { margin: 0 0 0.5rem; font-size: 1.15rem; color: var(--page-main); }
+    .intro-card p { margin: 0.5rem 0; line-height: 1.7; font-size: 0.95rem; }
+
+    .content-zone { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+
+    .route-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    @media (min-width: 760px) { 
+      .route-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    }
+
+    .route-card {
+      background: #fff;
+      border: 2px solid transparent;
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .route-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .route-card.control {
+      border-color: #e67e22;
+      background: linear-gradient(135deg, #fff8f0 0%, #fffbf7 100%);
+    }
+
+    .route-card.analyse {
+      border-color: #3498db;
+      background: linear-gradient(135deg, #f0f8ff 0%, #f8fbff 100%);
+    }
+
+    .route-card.spiritual {
+      border-color: #9b59b6;
+      background: linear-gradient(135deg, #faf6ff 0%, #f9f6ff 100%);
+    }
+
+    .route-icon {
+      font-size: 2.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .route-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .route-card.control h3 { color: #e67e22; }
+    .route-card.analyse h3 { color: #3498db; }
+    .route-card.spiritual h3 { color: #9b59b6; }
+
+    .route-card p {
+      margin: 0.75rem 0;
+      font-size: 0.93rem;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .route-examples {
+      margin-top: 1rem;
+      padding: 0.9rem;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .route-examples strong {
+      display: block;
+      color: var(--page-ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .route-examples ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    .route-examples li {
+      margin: 0.3rem 0;
+      line-height: 1.4;
+    }
+
+    .framework-section {
+      background: #f9f6ff;
+      border: 1px solid #e8d9f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .framework-section h2 {
+      margin: 0 0 1rem;
+      font-size: 1.2rem;
+      color: var(--page-main);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .framework-section h2::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: var(--page-accent);
+      border-radius: 2px;
+    }
+
+    .framework-points {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .framework-item {
+      padding: 1rem;
+      background: #fff;
+      border-left: 4px solid var(--page-accent);
+      border-radius: 6px;
+    }
+
+    .framework-item h4 {
+      margin: 0 0 0.4rem;
+      color: var(--page-accent);
+      font-weight: 700;
+    }
+
+    .framework-item p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .key-insight {
+      background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
+      border: 2px solid #f9a825;
+      border-radius: 10px;
+      padding: 1.2rem;
+      margin: 2rem 0;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .key-insight strong { color: #c77200; }
+
+    .cta-box {
+      background: linear-gradient(135deg, #e8f5e9 0%, #f0f8f2 100%);
+      border: 2px solid #4caf50;
+      border-radius: 10px;
+      padding: 1.3rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .cta-box h3 {
+      margin: 0 0 0.5rem;
+      color: #2e7d32;
+      font-size: 1.1rem;
+    }
+
+    .cta-box p {
+      margin: 0 0 1rem;
+      color: #555;
+      font-size: 0.93rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: #4caf50;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background: #388e3c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(76, 175, 80, 0.3);
+    }
+
+    .footer-nav {
+      max-width: 880px;
+      margin: 3rem auto 2rem;
+      padding: 0 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .footer-nav a {
+      color: var(--page-main);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-nav a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+
+  <!-- ── HEADER ─────────────────────────────────── -->
+  <div class="page-header">
+    <h1>Meerdere Wegen Naar Rome</h1>
+    <p>Er is niet één juiste weg uit verslaving. Elke mens is anders, en elke route werkt anders. 
+       Leer hier de drie benaderingen kennen zodat je kunt kiezen welke voor jou het beste werkt.</p>
+  </div>
+
+  <!-- ── INTRO ──────────────────────────────────── -->
+  <div class="intro-card">
+    <h2>Waarom dit uitmaakt</h2>
+    <p>
+      Sommige behandelaars zeggen: "Dit is de enige manier." Dat klopt niet.
+      <strong>Er zijn minstens drie fundamenteel verschillende benaderingen</strong> om uit verslaving te geraken.
+      Welke het beste voor jou werkt, hangt af van wie jij bent, wat je nodig hebt, en hoe je denkt.
+    </p>
+  </div>
+
+  <!-- ── CONTENT ────────────────────────────────── -->
+  <div class="content-zone">
+
+    <h2 style="text-align: center; margin: 2rem 0 0; color: var(--page-main); font-size: 1.5rem;">
+      De Drie Routes
+    </h2>
+
+    <div class="route-grid">
+
+      <!-- Route 1: Control -->
+      <div class="route-card control">
+        <div class="route-icon">🎯</div>
+        <h3>Controle-aanpak</h3>
+        <p>
+          <strong>"Ik neem de leiding terug over mijn gedrag."</strong>
+        </p>
+        <p>
+          Deze benadering focust op praktische vaardigheden en willskracht. 
+          Je bouwt noodplannen, oefent vaardigheden, stelt grenzen in en leert omgaan met trek.
+        </p>
+        <div class="route-examples">
+          <strong>Kernactiviteiten:</strong>
+          <ul>
+            <li>Trek opvangen (coping techniques)</li>
+            <li>Noodplannen maken</li>
+            <li>Triggerpatronen herkennen</li>
+            <li>Grenzen stellen</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Route 2: Analyse -->
+      <div class="route-card analyse">
+        <div class="route-icon">🔍</div>
+        <h3>Analyse-aanpak</h3>
+        <p>
+          <strong>"Ik begrijp waarom ik gebruik."</strong>
+        </p>
+        <p>
+          Deze benadering focust op inzicht en begrip. 
+          Je ontleedt je gedrag, analyseert je triggers, en begrijpt de functie van je gebruik.
+        </p>
+        <div class="route-examples">
+          <strong>Kernactiviteiten:</strong>
+          <ul>
+            <li>Functieanalyse (waarom wel gebruiken)</li>
+            <li>Terugblik op uitglijders</li>
+            <li>Trigger-mapping</li>
+            <li>Patroonherkenning</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Route 3: Spiritual -->
+      <div class="route-card spiritual">
+        <div class="route-icon">✨</div>
+        <h3>Spirituele aanpak</h3>
+        <p>
+          <strong>"Ik herverbind met wat echt belangrijk is."</strong>
+        </p>
+        <p>
+          Deze benadering focust op betekenis, waarden en verbinding. 
+          Je herontdekt wie je bent, wat je wilt, en met wie je dat wilt bereiken.
+        </p>
+        <div class="route-examples">
+          <strong>Kernactiviteiten:</strong>
+          <ul>
+            <li>Identiteit verkennen</li>
+            <li>Persoonlijke waarden</li>
+            <li>Steunnetwerk opbouwen</li>
+            <li>Betekenis vinden</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Framework section -->
+    <div class="framework-section">
+      <h2>Het Biologische Tegenwicht</h2>
+      <p style="margin: 0.5rem 0 1rem; font-size: 0.95rem; color: #555;">
+        Tegenover de "biologische honger" van verslaving heb je drie krachten nodig:
+      </p>
+      <div class="framework-points">
+        <div class="framework-item">
+          <h4>🧠 De Wil (Cognitief)</h4>
+          <p>
+            Duidelijke keuzes, doelen en plannen. Je "controle-route" helpt hier.
+            De biologie roept, maar jij bepaalt wat je doet.
+          </p>
+        </div>
+        <div class="framework-item">
+          <h4>❤️ Het Hart (Emotioneel)</h4>
+          <p>
+            Gevoelens uitstaan en begrijpen. Je "analyse-route" helpt hier.
+            Niet alles bedwelmen, maar leren voelen wat werkelijk belangrijk is.
+          </p>
+        </div>
+        <div class="framework-item">
+          <h4>🤝 Andere Mensen (Sociaal)</h4>
+          <p>
+            Steun, verbinding en betekenis. Je "spirituele-route" helpt hier.
+            Je bent niet alleen; je hoort ergens bij.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key insight -->
+    <div class="key-insight">
+      <strong>Belangrijk inzicht:</strong> Je hoeft niet voor één route te kiezen. 
+      De mensen die echt groeien, combineren elementen uit alle drie. 
+      Ze trainen controlevaardigheden (wil), begrijpen zichzelf beter (hart), 
+      en herstellen hun verbindingen (anderen). De kunst is: in welke volgorde, 
+      en in welke mix?
+    </div>
+
+    <!-- Routes in practice -->
+    <div class="framework-section" style="background: #f3f3ff;">
+      <h2>Hoe Deze Routes in de Praktijk Werken</h2>
+      <div class="framework-points">
+        <div class="framework-item">
+          <h4>🚶 Iemand Die Vooral Controle Nodig Heeft</h4>
+          <p>
+            "Trek gaat mij overrompelen." → Focus: Trek-opvangen, noodplannen, 
+            dagritmiek. Pas later: analyseren waarom en zoeken naar betekenis.
+          </p>
+        </div>
+        <div class="framework-item">
+          <h4>🚶 Iemand Die Vooral Begrip Nodig Heeft</h4>
+          <p>
+            "Ik snap niet waarom ik dit doe." → Focus: Functieanalyse, trigger-mapping, 
+            naanalyse van uitglijders. Pas later: plannen en steun.
+          </p>
+        </div>
+        <div class="framework-item">
+          <h4>🚶 Iemand Die Vooral Betekenis Nodig Heeft</h4>
+          <p>
+            "Ik voel me leeg." → Focus: Waarden, identiteit, steunnetwerk, 
+            motivering. Pas later: concrete vaardigheden.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <h3>Begin Met Jezelf</h3>
+      <p>
+        Welke route spreekt jou het meest aan? 
+        Start daar en voeg later andere elementen toe als je eraan toe bent.
+      </p>
+      <a href="index.htm" class="cta-button">← Terug naar routekaart</a>
+    </div>
+
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────── -->
+  <div class="footer-nav">
+    <p>← <a href="index.htm">Terug naar overzicht</a></p>
+    <p style="margin-top: 1rem; color: #aaa; font-size: 0.82rem;">© IAM Project &nbsp;|&nbsp; HansRJWest@Gmail.com</p>
+  </div>
+
+</div><!-- /page-shell --> 
 wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
 HansRJWest@Gmail.com
 U kunt ook direct de code veranderen, graag met respect voor de bestaande code.

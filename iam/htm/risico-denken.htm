@@ -1,262 +1,279 @@
-<html>
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-)(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
-
-
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Risico-inventarisatie (gevoelens)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risico-denken — IAM</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/forms.css">
+    <style>
+        :root {
+            --page-main: #5e35b1;
+            --page-accent: #4527a0;
+            --soft: #ede7f6;
+            --border: #b39ddb;
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="controleerjeverslaving(.nl) is een product van PraatmetHans(.nl) om mensen te helpen om zelfstandig aan de slag te laten gaan met hun verslaving of afhankelijkheid middels verantwoorde formulieren." />
-<meta name="keywords" content="huisarts, poh, verslaving, addiction, zelfstandig, persoonlijk, formulieren, gesprek, keuze, controleerjeverslaving, PraatmetHans.nl" />
+        .page-header {
+            background: linear-gradient(135deg, #5e35b1 0%, #4527a0 100%);
+            color: #fff;
+            text-align: center;
+            padding: 2rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
 
+        .page-header h1 {
+            margin: 0 0 0.4rem;
+            font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+        }
 
+        .page-wrap {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 1.25rem 2rem;
+        }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+        .intro-card,
+        .hint-box {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: #333;
+        }
 
-function gevoelaanvullen()
-{
-document.risicogevoelens.voorbeeldgevoel.value=document.risicogevoelens.gevoelvoorbeelden.value+" "+document.risicogevoelens.voorbeeldgevoel.value;
-}
-function gedachteaanvullen()
-{
-document.risicogevoelens.voorbeeldgedachten.value=document.risicogevoelens.gedachtevoorbeeld.value+" "+document.risicogevoelens.voorbeeldgedachten.value;
-}
-function gevoelcat01()
-{
-//alert("lastige categorie-01 gevoelens: "+document.risicogevoelens.gevoelcat101.value+" / "+document.risicogevoelens.gevoelcat102.value+" / "+document.risicogevoelens.gevoelcat103.value);
-document.risicogevoelens.nummer0101.value=document.risicogevoelens.gevoelcat101.value;
-document.risicogevoelens.nummer0102.value=document.risicogevoelens.gevoelcat102.value;
-document.risicogevoelens.nummer0103.value=document.risicogevoelens.gevoelcat103.value;
-}
-function gevoelcat02()
-{
-//alert("lastige categorie-01 gevoelens: "+document.risicogevoelens.gevoelcat101.value+" / "+document.risicogevoelens.gevoelcat102.value+" / "+document.risicogevoelens.gevoelcat103.value);
-document.risicogevoelens.nummer0201.value=document.risicogevoelens.gevoelcat201.value;
-document.risicogevoelens.nummer0202.value=document.risicogevoelens.gevoelcat202.value;
-document.risicogevoelens.nummer0203.value=document.risicogevoelens.gevoelcat203.value;
-}
+        .section-title {
+            margin: 1.5rem 0 0.75rem;
+            color: var(--page-accent);
+            font-size: 1.2rem;
+            border-bottom: 3px solid var(--page-main);
+            padding-bottom: 0.4rem;
+        }
 
+        .field {
+            margin-bottom: 1rem;
+        }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+        .field label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #222;
+        }
 
-function hulpscherm()
-{
-hulp_scherm(300,'Risicovolle gevoelens','gevoelens die meestal alleen maar de ruimte kregen met hulp van een (beetje) gebruik, dat zijn tricky gevoelens geworden. Gewoon omdat je niet zo goed geleerd hebt om die gevoelens <b>nuchter</b> te <i>uiten</i>, uit te houden of er nuchter iets <i>mee te doen</i>. Dat zijn dus de <b>risico-gevoelens</b> in een periode waarin je de controle wilt terugwinnen op gebruik, dat zijn de gevoelens die je nuchter zult moeten leren tackelen.<br/>Dan is het vaak handig om alvast te bedenken wat die gevoelens zijn en wat jij er <b>nuchter</b> mee wilt leren doen om ze niet zo hoog op te laten lopen dat het lastiger wordt om het gebruik te laten staan...')
-}
+        .field .sub {
+            display: block;
+            margin-bottom: 0.45rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
 
-</script>
+        textarea,
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.7rem;
+            font: inherit;
+            background: #fff;
+        }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+            line-height: 1.5;
+        }
+
+        .checklist {
+            margin: 0;
+            padding-left: 1.2rem;
+            line-height: 1.7;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+            margin-top: 1.6rem;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .btn-primary {
+            background: var(--page-main);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .footer-nav {
+            text-align: center;
+            margin-top: 2rem;
+            color: #666;
+            font-size: 0.86rem;
+        }
+
+        .footer-nav a {
+            color: var(--page-accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <header class="page-header">
+        <h1>Risico-denken</h1>
+        <p>Welke gedachten trekken je richting gebruik, en wat helpt je om te keren?</p>
+    </header>
 
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
+    <main class="page-wrap">
+        <section class="intro-card">
+            Sommige gedachten maken trek groter, praten gebruik goed of halen je keuze weg.
+            Als je ze herkent, kun je rustiger en vrijer kiezen.
+        </section>
 
-</script>
-</head>
-<body>
-<div class="shadow"><div class="content">
-<script language="javascript">
- 
-writelogo();
--->
-</script>
-<div class="praatmethansheader">
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">risico-inventarisatie (gevoelens)</h1>
-</div>
-<div class="rechtsitalic">20 - 50 minuten</div>
+        <h2 class="section-title">1) Gedachten verzamelen</h2>
+        <div class="field">
+            <label for="gedachteVoorbeeldSelect">Voorbeeldgedachte toevoegen</label>
+            <span class="sub">Kies een voorbeeld en voeg het toe.</span>
+            <select id="gedachteVoorbeeldSelect">
+                <option value="">Kies een voorbeeld...</option>
+                <option value="Nu moet ik wel gebruiken">Nu moet ik wel gebruiken</option>
+                <option value="Een keertje kan geen kwaad">Een keertje kan geen kwaad</option>
+                <option value="Ik kan hier niet tegen">Ik kan hier niet tegen</option>
+                <option value="Het heeft toch geen zin">Het heeft toch geen zin</option>
+                <option value="Anderen vallen terug, maar mij gebeurt dat niet">Anderen vallen terug, maar mij gebeurt dat niet</option>
+                <option value="Als ik nu niet gebruik, gaat alles mis">Als ik nu niet gebruik, gaat alles mis</option>
+            </select>
+        </div>
 
-<p>&nbsp;</p>
-<h1>Risicovolle  gedachten </h1>
-<div class="printhide">
-<p>Laten we helder zijn, mensen die dingen hebben meegemaakt die heftige gevoelens
-  geven, die hebben volgens onderzoek meer kans om tegen een verslaving op te
-  botsen dan het landelijk gemiddelde. Daar zie je al dat verslavende middelen
-  soms juist verslavend uitpakken als ze worden gebruikt om grip te houden op
-  lastige gevoelens.<br />
-  Mensen, situaties, gebeurtenissen
-  (&ograve;f
-  juist het uitblijven van bepaalde dingen die zouden moeten gebeuren) kunnen
-  jou gevoelens geven die jij op dit moment lastig vind om (nuchter) mee om te
-  gaan. Gevoelens van teleurstelling, gevoelens van eenzaamheid. Misschien gevoelens
-  als boosheid of verdriet, die je weg zou willen werken. Gevoelens als eenzaamheid
-  of zin in seks of verveling of behoefte aan actie, dat zijn gevoelens die misschien
-  al wel honderd keer een aanleiding kunnen zijn geweest voor een 'kleinigheid',
-  met het doel om even wat moed te krijgen, om gevoel even niet meer te hoeven
-  voelen of om er wel even wat mee te gaan doen.<br />
-  Die geveoelns hoeven lang niet altijd alleen maar negatief te zijn.
-  Veel mensen met een beginnend verslavingspatroon merken dat zij eigenlijk
-  niet eens meer weten hoe zij juist plezier kunnen hebben of een leuke dag kunnen
-  beleven zonder gebruik, en vallen dus juist ook terug op leuke dagen. Als je
-  bij bepaalde gevoelens bijna moet gebruiken omdat je niet zo goed meer weer
-  weet hoe je zonder gebruik om zou moeten gaan met dar gevoel, dan ben je niet
-  zozeer <i>biologisch</i> maar
-  in ieder geval <i>emotioneel</i> afhankelijk geworden van dat middel.</p>
-<h1>EMOTIONELE AFHANKELIJKHEID en risico-gevoelens</h1>
-<p>Emotionele afhankelijkheid aan middelen valt uiteen in twee groepen:</p>
-<ul>
-  <li>Gebruik helpt me om bepaalde gevoelens niet te hoeven voelen (of om bepaalde
-    heftige herinneringen niet te hoeven herleven).</li>
-  <ul>
-  <li>Gebruik dat helpt om je om bepaalde situaties uit te houden (die bepaalde
-    gevoelens geven)     </li>
-  </ul>
-  <li>Gebruik dat helpt omdat bepaalde gevoelens alleen maar naar buiten mogen
-    als er (een beetje) is gebruikt, </li>
-  <ul>
-  <li>of  behoeften die alleen  met behulp van een (beetje)
-    gebruik kunnen worden uitgeleefd.<br/>
-  </li></ul></ul>
-   &nbsp; ...en mogelijk heb jij hier nog persoonlijke &aacute;&aacute;nvullingen?
-   
+        <div class="field">
+            <label for="voorbeeldGedachten">Mijn risico-gedachten</label>
+            <textarea id="voorbeeldGedachten" name="voorbeeldGedachten" placeholder="Welke gedachten duwen jou richting gebruik?"></textarea>
+        </div>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <h2 class="section-title">2) Denkpatronen die risico vergroten</h2>
+        <div class="hint-box">
+            <ul class="checklist">
+                <li>Gedachten die gebruik goedpraten of bagatelliseren.</li>
+                <li>Gedachten die gevoelens opblazen: "dit is niet te doen".</li>
+                <li>Gedachten die keuzevrijheid wegnemen: "ik moet".</li>
+                <li>Gedachten die waarschuwingssignalen ontkennen.</li>
+            </ul>
+        </div>
 
+        <div class="field">
+            <label for="hoogRisicoDenken">Welke gedachten komen bij jou het vaakst terug?</label>
+            <textarea id="hoogRisicoDenken" name="hoogRisicoDenken" placeholder="Noem je top 3 en wanneer ze meestal opduiken."></textarea>
+        </div>
 
-<form name="risicogevoelens">
-<p>&nbsp;</p>
-<h1>Risico brengende GEDACHTEN</h1>
-We begrijpen allemaal inmiddels wel dat bepaalde manieren van denken natuurlijk
-ook bepaalde gevoelens in de hand werken. Daarom is het verstandig om speciefieke
-risicobrengende gedachten of algemener: risicobrengende manieren van denken
-ook te herkennen bij jezelf. Ook daarvan heb je verschillende soorten.
-<ul>
-  <li>de gedachten die het ongecontroleerde <b>gebruik 'gedogen'</b>, die het
-    'goed' praten (zie daarvoor speciaal: <a href="smoezenboek.htm" target="formulieren">het
-      'smoezenboek'</a>)</li>
-  <li>de gedachten die niet zo handig zijn voor het <b>ontstaan</b> of het <b>omgaan
-      met</b>    bepaalde <b>lastige gevoelens</b> (zie boven) zoals &quot;laat ik mijn mond maar
-    houden voor de lieve vrede&quot;
-  of juist &quot;het is h&eacute;&eacute;l belangrijk dat ik ze precies de waarheid
-  vertel!&quot; ('t
-  is maar net wat <i>jij</i> moet leren)</li>
-  <li>gedachten die het <b>trek-gevoel versterken</b> &quot;Het is <i>verschrikkelijk</i> om
-    trek te hebben&quot; is een alarmerende gedachte die schreeuwt om aandacht
-    en actie. &quot;Als
-    je niet gebruikt bij een verslaving dan is trek te verwachten en dat is een
-    gevoel dat vervelend is maar het uittrekken van al mijn nagels is zeer waarschijnlijk
-    een stuk vervelender vervelender (of zoiets).&quot;
-    Dat is een manier van denken die het gebruik wat meer in relatie zet en v&eacute;&eacute;l
-    minder alarmerend is.</li>
-  <li>gedachten die maken dat <b>terechte angst niet</b> zou <i>hoeven</i> of niet zou <i>mogen</i>    <b>bestaan</b>. &quot;Andere mensen vallen terug maar ik snap het nou z&oacute; goed, dat kan
-    mij niet meer gebeuren!&quot; bijvoorbeeld, is een gedachte waar een hoop mensen
-    door zijn teruggevallen. </li>
-  <li>gedachten die de keuze wegnemen. &quot;Maar ik moet nou wel ...&quot; is een gedachte
-    waardoor h&eacute;&eacute;l veel mensen dingen zijn gaan doen waarvan ze eigenlijk wel
-    wisten dat het heel lastig zou worden om de controle te bewaren. </li>
-</ul>
-<p>Risicobrengende gedachten  zijn voor mij bijvoorbeeld:
-  <select name="gedachtevoorbeeld" onChange="gedachteaanvullen()">
-    <option selected="selected">selecteer een optie en kopieer deze naar het verzamelveld</option>
-          <option value="Als ik me gelukkig of lekker wil voelen.">Als ik me gelukkig of lekker wil voelen.</option>
-    <option value="Als ik denk dat alles misgaat.">Als ik denk dat alles misgaat.</option>
-          <option value="Als ik bang ben dat ik niet kan slapen.">Als ik bang ben dat ik niet kan slapen.</option>
-    <option value="Als ik me bedenk dat het me allemaal niets meer kan schelen.">Als ik me bedenk dat het me allemaal niets meer kan schelen.</option>
-    <option value="Als ik wat langer zit te piekeren.">Als ik wat langer zit te piekeren.</option>
-    <option value="Als ik fantaseer dat ik EEN keertje zou kunnen gebruiken om te zien hoe het inmiddels met mijn verslaving is.">Als ik fantaseer dat ik EEN keertje zou kunnen gebruiken om te
-      zien hoe het inmiddels met mijn verslaving is.</option>
-    <option value="Als ik langer ga zitten bedenken dat ik nooit meer zal kunnen gebruiken.">Als ik langer ga zitten bedenken dat ik nooit meer zal kunnen gebruiken.</option>
-    <option value="Als ik kwaad ben omdat ik vind dat er vervelende dingen gebeuren.">Als ik kwaad ben omdat ik vind dat er vervelende dingen gebeuren.</option>
-  </select>  
-  <br />
-  <textarea name="voorbeeldgedachten" cols="55" rows="4" class="praatmethansformtextarea" title="Wat zouden nou bijvoorbeeld voor jou lastige gevoelens kunnen zijn?"></textarea>
-  
-</p>
-<p>Het is vaak verstandig om even goed naar deze gedachtes te kijken en jezelf de vragen te stellen die Albert Ellis (de grondlegger van de CGT) voorstelt:</p><ol>
-  <li>is het <b>waar</b>?.. &egrave;cht waar?</li>
-  <li><b>helpt</b> deze gedachte of deze manier van denken mij (of de mensen waar ik van hou) om een gelukkiger mens te worden?</li>
-</ol>
-Indien namelijk &eacute;&eacute;n
-van deze twee vragen niet volmondig met &quot;ja!&quot; kan worden beantwoord,
-dan is het waarschijnlijk een goed idee om deze gedachte eens te gaan onderzoeken
-of deze gedachte met iets meer korreltjes zout te gaan nemen. Dat kan samen met
-een coach of therapeut, met een partner of een vriend, je kunt ook proberen om
-zelf nog eens wat extra vragen te stellen aan jezelf: <div class="rechtsitalic">eventueel kan je met dergelijke gedachten in bepaalde situaties nog verder mee aan de slag in een <a href="g-schema.htm" target="formulieren">G-schema</a> </div>
-<ul>
-<li>Geldt deze gedachte <i>altijd</i>, <i>overal</i> en <i>voor
-    iedereen</i> of zijn er ook uitzonderingen?
-  (en misschien is dit een goed moment voor uitzonderingen)</li>
-<li>Zijn er andere mensen die in een zelfde situatie als dat ik zitten, die deze
-  gedachte niet hebben. Sterker nog: die dan een gedachte hebben waar zij gelukkiger
-  door worden? (en waarom zou ik niet van ze willen leren?) </li>
-<li>Waar en wanneer heb ik zo <i>leren</i> denken (of van wie heb ik dat geleerd...
-  en is die dan gelukkig met de mensen waar hij/zij van houdt?)</li>
-<li>Zou het zo kunnen zijn dat die gedachte vroeger ooit een hele goeie gedachte
-  was maar dat ik inmiddels verder ben in mijn leven en andere dingen bij mag
-  leren die deze gedachte onbelangrijk maken?</li>
-<li>en misschien kan je nog wel andere vragen bedenken die een beetje aan het
-  &quot;zekerheidsgevoel&quot; bij deze gedachte knabbelen. </li>
-</ul>
+        <h2 class="section-title">3) Onderzoeksvragen (Ellis-stijl)</h2>
+        <div class="field">
+            <label for="onderzoekAntwoorden">Twee vragen per gedachte</label>
+            <span class="sub">1) Klopt dit echt? 2) Helpt dit mij richting herstel en mijn waarden?</span>
+            <textarea id="onderzoekAntwoorden" name="onderzoekAntwoorden" placeholder="Schrijf kort op waarom het wel of niet klopt, en wel of niet helpt."></textarea>
+        </div>
 
-<p>&nbsp;</p>
-<h1>INTERNE RISICO's  (gevoelens en of gedachten) </h1>
-<p>Naar aanleiding hiervan zal je begrepen hebben dat een gedeelte van de risico's
-  die je loopt, te maken hebben met de dingen die er van binnen gebeuren en die
-  eigenlijk niet eens primair te maken hebben met de dingen die er buiten jou
-  gebeuren maar met jouw interne reactie: met de dingen die je <i>voelt</i> als
-  er iets gebeurt, met de dingen die je <i>denkt</i> bij gebeurtenissen.  <br />
-  Als we dat serieus nemen dan zal de laatste vraag duidelijk zijn die ik je
-    aanraad om aan jezelf te stellen:  </p>
-<p>Wat zijn <b>mijn</b>  belangrijkste <b>interne risico's</b> (de risico's die
-  ontstaan doordat de dingen
-  <b>die ik <i>denk &amp; voel</i></b>) en met wie ga ik daar eens over praten? <br />
-  <textarea name="tern" cols="55" rows="4" class="praatmethansformtextarea" title="Van binnenuit komende risico's zijn bijv. de gedachte dat ik er bij moet horen, verslaafd zijn is schaamtevol, ik zou dit aan moeten kunnen, ik moet het alleen kunnen zonder hulp  etc.)"></textarea>
-</p>
-<p></p>
-<div class="praatmethansheader2">&quot;interne risico's zijn in voor mij...&quot;</div>
-<div class="rechtsitalic">sommige risico's zijn misschien h&eacute;&eacute;l erg begrijpelijk,
-  gezien jouw verleden. maar dat betekent niet dat het geen risico is </div>
- <p>&nbsp;</p>
-</form><hr class="formhr" />
-<p>&nbsp;</p>
-<p><i>Onze binnenwereld is net zo groot als de buitenwereld. Toch komen de meeste mensen met een verslaving of een afhankelijkheid er niet omheen om daar eens wat in rond te reizen om 'm beter te leren kennen :-) </i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+        <div class="field">
+            <label for="alternatiefDenken">Welke helpende gedachte kies je ervoor in de plaats?</label>
+            <textarea id="alternatiefDenken" name="alternatiefDenken" placeholder="Bijv. 'Trek is vervelend en gaat voorbij', 'ik heb een keuze', 'ik bel eerst iemand'."></textarea>
+        </div>
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div></div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+        <h2 class="section-title">4) Interne risico's en steun</h2>
+        <div class="field">
+            <label for="interneRisicosDenken">Mijn interne risico's en met wie ik dit bespreek</label>
+            <textarea id="interneRisicosDenken" name="interneRisicosDenken" placeholder="Wat zijn nu je grootste interne risico's, en wie kan met je meedenken?"></textarea>
+        </div>
+
+        <div class="action-bar">
+            <button type="button" class="btn btn-primary" onclick="saveData()">Opslaan</button>
+            <button type="button" class="btn btn-secondary" onclick="exportData()">Exporteren</button>
+            <button type="button" class="btn btn-secondary" onclick="window.print()">Afdrukken</button>
+        </div>
+
+        <div class="footer-nav">
+            <p>
+                <a href="index.htm">Terug naar overzicht</a> |
+                <a href="risico-gevoelens.htm">Risico-gevoelens</a> |
+                <a href="smoezenboek.htm">Smoezenboek</a>
+            </p>
+        </div>
+    </main>
+
+    <script src="../js/dataStore.js"></script>
+    <script>
+        const fields = [
+            'voorbeeldGedachten',
+            'hoogRisicoDenken',
+            'onderzoekAntwoorden',
+            'alternatiefDenken',
+            'interneRisicosDenken'
+        ];
+
+        function appendExample() {
+            const select = document.getElementById('gedachteVoorbeeldSelect');
+            if (!select.value) return;
+            const target = document.getElementById('voorbeeldGedachten');
+            target.value = target.value ? `${target.value}\n${select.value}` : select.value;
+            select.value = '';
+            saveData(false);
+        }
+
+        function loadData() {
+            if (typeof iamData === 'undefined') return;
+            const data = iamData.getFormData('risico-denken');
+            if (!data) return;
+            fields.forEach((field) => {
+                const el = document.getElementById(field);
+                if (el && typeof data[field] !== 'undefined') {
+                    el.value = data[field];
+                }
+            });
+        }
+
+        function saveData(showFeedback = true) {
+            if (typeof iamData === 'undefined') return;
+            const data = {};
+            fields.forEach((field) => {
+                const el = document.getElementById(field);
+                if (el) data[field] = el.value;
+            });
+            iamData.updateFormData('risico-denken', data);
+            if (showFeedback) alert('Opgeslagen');
+        }
+
+        function exportData() {
+            if (typeof iamData === 'undefined') return;
+            saveData(false);
+            iamData.exportJSON();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            document.getElementById('gedachteVoorbeeldSelect').addEventListener('change', appendExample);
+            fields.forEach((field) => {
+                const el = document.getElementById(field);
+                if (el) el.addEventListener('blur', () => saveData(false));
+            });
+        });
+    </script>
 </body>
 </html>

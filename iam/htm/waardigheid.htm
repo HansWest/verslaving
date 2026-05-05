@@ -1,118 +1,381 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waardigheid — Jouw Waarde Herstellen</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3540;
+      --page-main: #2f5f8f;
+      --page-accent: #c9684a;
+      --page-ok: #4e7b43;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="controleerjeverslaving(.nl) is een product van PraatmetHans(.nl) om mensen te helpen om zelfstandig aan de slag te laten gaan met hun verslaving of afhankelijkheid middels verantwoorde formulieren." />
-<meta name="keywords" content="huisarts, poh, verslaving, addiction, zelfstandig, persoonlijk, formulieren, gesprek, keuze, controleerjeverslaving, PraatmetHans.nl" />
-<title>Waardigheid</title>
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 95, 143, 0.14), transparent 32%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
+
+    .page-shell { max-width: 960px; margin: 0 auto; }
+
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+      margin: 1.5rem 1rem;
+    }
+
+    .page-header h1 { margin: 0; font-size: 1.8rem; }
+    .page-header p { margin: 0.5rem 0 0; font-size: 0.95rem; opacity: 0.95; }
+
+    .intro-card {
+      max-width: 880px;
+      margin: 1.5rem auto;
+      padding: 1.2rem 1.25rem;
+      background: #f1f7ff;
+      border-left: 4px solid var(--page-main);
+      border-radius: 8px;
+    }
+
+    .intro-card h2 { margin: 0 0 0.5rem; font-size: 1.1rem; color: var(--page-main); }
+    .intro-card p { margin: 0; line-height: 1.65; font-size: 0.95rem; }
+
+    .content-zone { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+
+    .reflection-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    @media (min-width: 760px) { .reflection-grid { grid-template-columns: 1fr 1fr; } }
+
+    .reflection-card {
+      background: #fff;
+      border: 1px solid #e0d4f0;
+      border-radius: 12px;
+      padding: 1.3rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .reflection-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.05rem;
+      color: var(--page-accent);
+      font-weight: 700;
+    }
+
+    .reflection-card .label {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .reflection-card textarea {
+      width: 100%;
+      margin-top: 0.5rem;
+      min-height: 100px;
+      padding: 0.7rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      resize: vertical;
+    }
+
+    .hint-text {
+      margin-top: 0.5rem;
+      font-size: 0.82rem;
+      color: #666;
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 2.5rem 0 1.5rem;
+      font-size: 1.2rem;
+      color: var(--page-main);
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: var(--page-accent);
+      border-radius: 2px;
+    }
+
+    .insight-box {
+      background: #f9f6ff;
+      border-left: 4px solid var(--page-accent);
+      border-radius: 8px;
+      padding: 1rem 1.1rem;
+      margin: 1.5rem 0;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary {
+      background: var(--page-main);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1f4a6a;
+      box-shadow: 0 4px 12px rgba(47, 95, 143, 0.3);
+    }
+
+    .message {
+      margin: 1rem 0;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .message.success {
+      background: #e8f5e9;
+      color: #2e7d32;
+      display: block;
+    }
+
+    .footer-nav {
+      max-width: 880px;
+      margin: 2.5rem auto 2rem;
+      padding: 0 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .footer-nav a {
+      color: var(--page-main);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-nav a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-<div class="container">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<div class="page-shell">
 
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
+  <!-- ── HEADER ─────────────────────────────────── -->
+  <div class="page-header">
+    <h1>Waardigheid — Je Waarde Herstellen</h1>
+    <p>Zelfwaarde begint niet met wat je doet, maar met wie je bent.</p>
+  </div>
 
-</script>
-</head>
-<body>
-<p>&nbsp;</p>
-<p>Als ik een gevoel van zelfwaarde wil hebben (over mijzelf) dan doe ik er verstandig
-  aan om ook even na te denken over het &quot;prijskaartje&quot; dat een dergelijk
-  gevoel hoort te hebben. </p>
-<p>Want wanneer ik het gevoel zou willen hebben &quot;de moeite waard te zijn&quot; zonder
-  dat <i>iemand</i> de moeite doet (en ook <i>ik </i>niet)... dan is dat gevoel
-gewoon niet <i>terecht!</i> </p>
-<p>Wanneer ik dus het gevoel wil hebben &quot;de moeite waard te zijn&quot;...
-  Wat ga ik dan doen op het gebied van waardigheid? Wat ga ik er aan doen om
-dat ook uit te stralen aan mijn omgeving?</p>
-<p>&nbsp;</p>
-<p></p>
-<p>Als ik in een brandend huis een gevoel van 'veiligheid' wil hebben, doe
-  ik er dan 'verstandig' aan om een fles drank achterover te slaan (alcohol
-  is namelijk een hele goede angst-oplosser) waardoor ik mij niet-bang voel in
-  een situatie die eigenlijk wel wat angst verdient)</p>
-<p>Wat zijn voorbeelden van mensen die &quot;waarde hebben&quot;, &quot;waardig zijn&quot; of &quot;de
-  moeite waard zijn&quot; </p>
-<p>Wat zouden die mensen geoefend hebben in hun leven? Wat zouden ze geloven
-  over zichzelf en over de wereld?</p>
-<p>En vergelijk deze dingen eens met de dingen die jij wilt oefenen (en zet die
-  bijvoorbeeld eens in een <a href="g-schema.htm" target="formulieren">g-schema</a>) </p>
-<p>&nbsp;</p>
-<p>Sorry als ik je een lullig gevoel geef maar even serieus: als ik met iedereen
-  mee praat omdat ik leuk gevonden wil worden, als ik met jan-en-alleman het
-  bed in duik omdat ik bang ben niet aardig gevonden te worden. als ik met alle
-  winden mee waai die toevallig ergens waaiden waar ik stond... waar kan ik dan
-  mijn gevoel van zelf<i>waarde</i> vandaan
-  halen?</p>
-<blockquote>Als ik mijzelf niet als waardig presenteer...</blockquote>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>Zelfwaarde is nogal eens iets dat op de klippen loopt naarmate een verslaving
-  verder uit de hand loopt.</p>
-<p>Daarom mijn vraag (enlees gerust even de toegevoegde tekst)</p>
-<p>&nbsp;</p>
-<p>Wat ga jij doen om jouw waarde te herstellen?</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>Waarde is natuurlijk altijd ook: &quot;wat iemand er voor geeft.&quot; Wie wil jou waarderen? </p>
-<p>&nbsp;</p>
-<p>Menselijke waarde is latijd een heel ingewikkeld punt. Daarom is het soms
-  handig om maar even iets 'economischer'/ te kijken. Economie is een vertaling
-  van de werkelijkheid in centen. En daardoor wordt het soms wat makkelijker
-  om te snappen hoe de werkelijkheid in elkaar zit. </p>
-<p>Waarde heeft altijd met twee dingen te maken: de intrinsieke waarde &egrave;n de
-  toegevoegdc waarde. Voor mensen is dat dus allereerst de waarde die een mens
-  heeft als mens, zonder dat ie er ook maar iets voor hoeft te doen. En daarbij
-  opgeteld de waarde die iemand krijgt omdat ie waarde aan z'n omgeving toevoegt.<br />
-  Deze optelsoms  k&agrave;n
-  natuurlijk versterkt &ograve;f verzwakt worden door de verkoopwaarde van het geheel.
-  Dat zien we in de commercie waar een hoop slappe spullen worden verkocht met
-  veel gebakken lucht. Met een mooi verhaal kunnen dingen soms duurder worden
-  verkocht dan hun eigenlijke waarde. Of soms kan de opkoper een hoop van de
-  eigenlijke waarde af praten.</p>
-<p>Sommige mensen hebben als toegevoegde waarde <i>alleen</i>  maar verkoopwaarde. Anderen hebben <i>toegevoegde</i> waarde. Dat hoeft namelijk niet hetzelfde
-  te zijn. </p>
-<blockquote>De &quot;waarde&quot; van iets heeft te maken met de intrinsieke
-  waarde die er gewoon in zit en de waarde die er aan toegevoegd wordt door de
-  presentatie. Met name dat laatste wordt dan ook nog eens soms slecht, soms
-  ook wel erg goed verkocht.</blockquote>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>Stel dat er nou iets gedaan moet worden v oor het gevoel van waardigheid (de
-  gevoel de moeite waard te zijn in de ogen van anderen)</p>
-<p>Wat zou jij dan moeten laten zien (binnen haalbare mogelijkheden) in de ogen
-  van anderen, om te laten zien dat jij de moeite waard bent?</p>
-<p>&nbsp;</p>
-<p>Waar ligt jouw intrinsieke waarde eigenlijk?</p>
-<p>&nbsp;</p>
-<p>En wat voeg jij toe aan het leven
-  van jouw medemens?</p>
-<p>&nbsp;</p>
-<p>Hoe kunnen andere mensen ook <i>zien</i> dat jij die waarde toevoegt? Rembrandt
-  bijvoorbeeld, is behoorlijk arm gestorven en we kunnen toch bepaald niet zeggen
-  dat hij geen waarde heeft toegevoegd. </p>
-<p>&nbsp;</p>
-<p>Wat is de prijs die betaald moet worden voor jouw waarde (en onthoudt: als
-  je alles gratis weg geeft wordt het al snel &quot;waardeloos&quot; in de ogen van anderen)</p>
-<p>&nbsp;</p>
-<p>Wat ga jij doen en duidelijk maken aan jouw omgeving om jouw waarde helder
-  te laten zien? </p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-</div>
+  <!-- ── MESSAGE ────────────────────────────────── -->
+  <div id="message" class="message success" style="display:none;">
+    Jouw antwoorden zijn opgeslagen.
+  </div>
+
+  <!-- ── INTRO ──────────────────────────────────── -->
+  <div class="intro-card">
+    <h2>Waarom deze pagina?</h2>
+    <p>
+      Zelfwaarde erosie gaat langzaam met verslaving. Als je jezelf niet meer als waardig presenteert,
+      hoe kan je dan waarde voelen? Deze pagina helpt je om weer in contact te komen met drie soorten waarde:
+      wie je <b>bent</b>, wat je <b>toevoegt</b>, en hoe je dat <b>laat zien</b> aan je omgeving.
+    </p>
+  </div>
+
+  <!-- ── CONTENT ────────────────────────────────── -->
+  <div class="content-zone">
+
+    <h2 class="section-title">De Drie Soorten Waarde</h2>
+
+    <div class="reflection-grid">
+
+      <!-- Card 1: Intrinsieke Waarde -->
+      <div class="reflection-card">
+        <h3>🔷 Intrinsieke Waarde</h3>
+        <p>Jouw waarde als menselijk wezen, zonder dat je er iets voor hoeft te doen.</p>
+        
+        <label class="label">Wat geeft jou het gevoel waardevol te zijn?</label>
+        <textarea
+          id="intrinsiekWaarde"
+          placeholder="Bijvoorbeeld: zijn, bestaan, menselijk zijn, aan anderen denken kunnen..."
+        ></textarea>
+        <p class="hint-text">
+          Dit is onafhankelijk van prestaties, verdiensten of uiterlijke succes.
+        </p>
+      </div>
+
+      <!-- Card 2: Toegevoegde Waarde -->
+      <div class="reflection-card">
+        <h3>🔶 Toegevoegde Waarde</h3>
+        <p>Wat voeg je toe aan het leven van je medemensen?</p>
+        
+        <label class="label">Wat voeg je toe aan je omgeving?</label>
+        <textarea
+          id="toegevoegdeWaarde"
+          placeholder="Bijvoorbeeld: luisteren, humor, kennis, zorg, creativiteit, steun geven..."
+        ></textarea>
+        <p class="hint-text">
+          Denk aan concrete bijdrages, hoe klein ook. Rembrandt stierf arm maar voegde enorme waarde toe.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Insight -->
+    <div class="insight-box">
+      <strong>Belangrijke herkenning:</strong> Zelfwaarde is niet hetzelfde als "populier zijn" of "druk bezig".
+      Je kunt alles gratis weggeven en dan wordt het waardeloos in de ogen van anderen.
+      Jouw grens, jouw waardigheid, is onderdeel van jouw waarde.
+    </div>
+
+    <!-- Card 3: Presentatie -->
+    <div class="reflection-grid" style="margin-top: 1.5rem;">
+      <div class="reflection-card" style="grid-column: 1 / -1;">
+        <h3>📢 Hoe Laat Je Dat Zien?</h3>
+        <p>Hoe kunnen anderen in jouw waarde erkennen?</p>
+        
+        <label class="label">Wat ga je doen of laten zien om je waarde duidelijk te maken?</label>
+        <textarea
+          id="presentatieWaarde"
+          placeholder="Bijvoorbeeld: grenzen stellen, voor jezelf opkomen, je tijd kostbaar behandelen, voorkomen dat je jezelf weggeeft..."
+        ></textarea>
+        <p class="hint-text">
+          Dit gaat niet om verkooping jezelf, maar om jezelf respecteren en anderen helpen dat ook te doen.
+        </p>
+      </div>
+    </div>
+
+    <!-- Reflection -->
+    <h2 class="section-title">Een Serieuze Vraag</h2>
+    <div class="insight-box">
+      <p><strong>Als je met iedereen meewaat omdat je aardig gevonden wilt worden...</strong></p>
+      <p><strong>...als je jezelf weggeeft omdat je bang bent niet geaccepteerd te worden...</strong></p>
+      <p><strong>...waar haal je dan je gevoel van zelfwaarde vandaan?</strong></p>
+      <p style="margin-top: 1rem; font-style: italic;">
+        Zelfwaarde begin met jezelf als waardig presenteren. Aan jezelf eerst. Dan aan anderen.
+      </p>
+    </div>
+
+    <!-- Action -->
+    <div class="action-bar">
+      <button class="btn btn-primary" onclick="saveData()">💾 Opslaan</button>
+      <button class="btn btn-primary" onclick="exportData()" style="background: transparent; color: var(--page-main); border: 2px solid var(--page-main);">
+        📥 Exporteren
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────── -->
+  <div class="footer-nav">
+    <p>← <a href="index.htm">Terug naar overzicht</a> &nbsp;|&nbsp; <a href="wat-is-mijn-ik.htm">Volgende: Identiteit</a></p>
+    <p style="margin-top: 1rem; color: #aaa; font-size: 0.82rem;">© IAM Project &nbsp;|&nbsp; HansRJWest@Gmail.com</p>
+  </div>
+
+</div><!-- /page-shell -->
+
 <script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+<script>
+  const fields = [
+    'intrinsiekWaarde',
+    'toegevoegdeWaarde',
+    'presentatieWaarde'
+  ];
+
+  function getDefaultData() {
+    const data = {};
+    fields.forEach((key) => { data[key] = ''; });
+    return data;
+  }
+
+  function loadData() {
+    if (!window.iamData) return;
+    const saved = window.iamData.getFormData('waardigheid') || getDefaultData();
+    fields.forEach((key) => {
+      const el = document.getElementById(key);
+      if (el) el.value = saved[key] || '';
+    });
+  }
+
+  function saveData() {
+    if (!window.iamData) {
+      alert('DataStore niet geladen.');
+      return;
+    }
+    const data = getDefaultData();
+    fields.forEach((key) => {
+      const el = document.getElementById(key);
+      if (el) data[key] = el.value;
+    });
+    window.iamData.updateFormData('waardigheid', data);
+    showMessage('Opgeslagen!');
+  }
+
+  function exportData() {
+    saveData();
+    const json = window.iamData?.exportJSON();
+    if (json) {
+      const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'iam-data.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  }
+
+  function showMessage(text) {
+    const msg = document.getElementById('message');
+    msg.textContent = text;
+    msg.style.display = 'block';
+    setTimeout(() => { msg.style.display = 'none'; }, 3000);
+  }
+
+  // Auto-save on input
+  fields.forEach((key) => {
+    const el = document.getElementById(key);
+    if (el) {
+      el.addEventListener('blur', saveData);
+    }
+  });
+
+  // Load on init
+  document.addEventListener('DOMContentLoaded', loadData);
+</script>
 </body>
 </html>

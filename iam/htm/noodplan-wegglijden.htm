@@ -1,6 +1,418 @@
-<html>
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Noodplan wegglijden</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noodplan — Wegglijden — IAM</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/forms.css">
+    <style>
+        :root {
+            --page-main:   #d32f2f;
+            --page-accent: #b71c1c;
+            --page-ok:     #4caf50;
+            --soft:        #ffebee;
+            --border:      #ef9a9a;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+            color: #fff;
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            margin: 0 0 0.5rem;
+            font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+            font-weight: 700;
+        }
+
+        .page-header .subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            margin: 0;
+        }
+
+        .intro-card {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 0 1.25rem 2rem;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .intro-card h2 {
+            margin: 0 0 0.75rem;
+            color: var(--page-accent);
+            font-size: 1.1rem;
+        }
+
+        .intro-card p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .section-header {
+            max-width: 680px;
+            margin: 1.75rem auto 1rem;
+            padding: 0 1.25rem;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            color: var(--page-main);
+            font-size: 1.25rem;
+            border-bottom: 3px solid var(--page-main);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            padding: 0 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group .hint {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            resize: vertical;
+            min-height: 80px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--page-main);
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-top: 0.25rem;
+            width: 1.1rem;
+            height: 1.1rem;
+            accent-color: var(--page-main);
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #ff9800;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 0 1.25rem 2rem;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .insight-box strong {
+            color: #e65100;
+        }
+
+        .action-bar {
+            max-width: 680px;
+            margin: 2.5rem auto 1.5rem;
+            padding: 0 1.25rem;
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:active { transform: scale(0.98); }
+
+        .btn-primary {
+            background: var(--page-main);
+            color: #fff;
+        }
+
+        .btn-primary:hover { background: var(--page-accent); }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover { background: #d0d0d0; }
+
+        .footer-nav {
+            max-width: 680px;
+            margin: 3rem auto 1.5rem;
+            padding: 0 1.25rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .footer-nav a {
+            color: var(--page-main);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-nav a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .page-header { padding: 1.5rem 1rem; }
+            .action-bar { flex-direction: column; }
+            .btn { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+<div class="page-header">
+    <h1>🆘 Wegglijden (Permanente Terugval)</h1>
+    <p class="subtitle">Als het mis dreigt te gaan: houvast, hulp en herstel</p>
+</div>
+
+<div class="intro-card">
+    <h2>Wat is "wegglijden"?</h2>
+    <p>Een <strong>uitglijder</strong> is één keer gebruik en weer oppakken. <strong>Wegglijden</strong> is langer de controle kwijt zijn. Dit plan helpt jou en je steun om snel in te grijpen.</p>
+    <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">Het plan bevat drie delen: <strong>Schadebeperkingsplan</strong> (wat stop je direct?), <strong>Allianties</strong> (wie helpt?) en <strong>Oppakken</strong> (hoe kom je eruit?).</p>
+</div>
+
+<!-- ── SCHADEBEPERKINGSPLAN ──────────────────────────── -->
+<div class="section-header">
+    <h2>🚨 Schadebeperkingsplan</h2>
+</div>
+
+<div class="form-group">
+    <label for="mensenopdehoogte">Wie moet het nu weten, en wat zeg je af?</label>
+    <div class="hint">Denk aan werk, partner, huisgenoot. Welke afspraken moeten meteen worden geannuleerd?</div>
+    <textarea id="mensenopdehoogte" name="mensenopdehoogte" placeholder="Bijv. Mijn werkgever (ziekmelding), mijn moeder, tandarts afzeggen..."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="geldmiddelen">Geld en middelen: hoe maak je doorgebruiken moeilijker?</label>
+    <div class="hint">Wie beheert je geld? Wat zet je stop? Welke contacten verbreek je tijdelijk?</div>
+    <textarea id="geldmiddelen" name="geldmiddelen" placeholder="Bijv. Ik geef mijn pinpas aan mijn moeder, ik verwijder dealers uit mijn telefoon..."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="welGaanDoen">Wat helpt jou (en je steun) wél op zo'n moment?</label>
+    <div class="hint">Activiteiten, genot, beweging, rust. Wat houdt je bezig en gegrond?</div>
+    <textarea id="welGaanDoen" name="welGaanDoen" placeholder="Bijv. Naar buiten (hardlopen, wandelen), series kijken, vrienden opbellen..."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="nietGaanDoen">Wat doe je juist niet? (jouw grenzen)</label>
+    <div class="hint">Plekken vermijden, mensen, digitale triggers, bepaalde routines?</div>
+    <textarea id="nietGaanDoen" name="nietGaanDoen" placeholder="Bijv. Niet naar het centrum, geen solo thuis-tijd, telefoon in kluisje..."></textarea>
+</div>
+
+<!-- ── ALLIANTIES ────────────────────────────────────── -->
+<div class="section-header">
+    <h2>🤝 Allianties (wie helpt?)</h2>
+</div>
+
+<div class="insight-box">
+    <strong>⚠️ Belangrijk:</strong> Zorg dat je steun dit plan kent. Hulp werkt alleen als mensen bereikbaar zijn wanneer het telt.
+</div>
+
+<div class="form-group">
+    <label for="privepersonen">Privé-personen + contactgegevens</label>
+    <div class="hint">Mensen die je echt willen helpen. Noteer naam, nummer en wanneer ze bereikbaar zijn.</div>
+    <textarea id="privepersonen" name="privepersonen" placeholder="Ma: 06-12345678, iedere dag bereikbaar. Pa: 06-87654321, werkdagen na 18u."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="professional">Professionals (huisarts, hulpverlener, Jellinek)</label>
+    <div class="hint">Schrijf nummers op en vraag vooraf: "mag ik bellen als het mis dreigt te gaan?"</div>
+    <textarea id="professional" name="professional" placeholder="Huisarts Dr. X: telefoonnummer, centrale maandag 08u-17u. Verslavingsconsulent..."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="instantie">Hulpinstanties in jouw regio</label>
+    <div class="hint">Jellinek, crisis-opvang, psychiatrische spoedpost. Hoe bereik je ze?</div>
+    <textarea id="instantie" name="instantie" placeholder="Jellinek regio Utrecht: 030-XXXX, Spoedpost Psych: 112. Opvang bed: bel centralisten."></textarea>
+</div>
+
+<div class="form-group">
+    <label style="margin-bottom: 1rem;">Bereidheid van je steun</label>
+    <div class="checkbox-item">
+        <input type="checkbox" id="steunerinopdehoogte" name="steunerinopdehoogte">
+        <label for="steunerinopdehoogte">Mijn steunnetwerk kent dit plan en weet dat ik kan bellen — JA ✓</label>
+    </div>
+    <div class="checkbox-item">
+        <input type="checkbox" id="steunerHeeftHandleiding" name="steunerHeeftHandleiding">
+        <label for="steunerHeeftHandleiding">Ik heb ze uitgelegd hoe ze me moeten benaderen (niet verwijtend, wel duidelijk en stevig) — JA ✓</label>
+    </div>
+</div>
+
+<!-- ── OPPAKKEN ───────────────────────────────────── -->
+<div class="section-header">
+    <h2>⬆️ Opstaan en Oppakken</h2>
+</div>
+
+<div class="form-group">
+    <label for="weeropstaan">Hoe ga jij jezelf weer oppakken? (Wie helpt daarbij?)</label>
+    <div class="hint">Doe je dit zelf, of heb je hulp van naasten/professionals nodig? Wat is je eerste stap?</div>
+    <textarea id="weeropstaan" name="weeropstaan" placeholder="Bijv. Ik bel mijn moeder, ik ga naar de huisarts, ik schrijf me in bij Jellinek..."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="schaamte">Hoe laat je schaamte je niet tegenhouden?</label>
+    <div class="hint">Welke zin of stap helpt jou om tóch te bellen en hulp te vragen?</div>
+    <textarea id="schaamte" name="schaamte" placeholder="Bijv. Ik herinner mezelf: schaamte liegt. Ik stuur een tekstje naar mijn steun ('Ik ben weg gaan glijden'). Ik lees dit plan opnieuw."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="minimaleStappen">Eerste herstelstappen na wegglijden</label>
+    <div class="hint">Slapen, eten, medicatie, PrEP-schema, doktersbezoek. Wat moet je echt minimaal doen?</div>
+    <textarea id="minimaleStappen" name="minimaleStappen" placeholder="Bijv. 8 uur slapen, goed eten, mijn antidepressiva hervatten, PrEP op schema, huisarts bellen..."></textarea>
+</div>
+
+<div class="insight-box">
+    <strong>💪 Sleutelboodschap:</strong> Dit plan is geen zwakte. Het is zelfzorg en vooruitdenken.
+</div>
+
+<!-- ── ACTION BAR ──────────────────────────────────── -->
+<div class="action-bar">
+    <button class="btn btn-primary" onclick="saveData()">💾 Opslaan</button>
+    <button class="btn btn-secondary" onclick="exportData()">📄 Exporteren</button>
+    <button class="btn btn-secondary" onclick="printData()">🖨️ Afdrukken</button>
+</div>
+
+<!-- ── FOOTER NAV ──────────────────────────────────── -->
+<div class="footer-nav">
+    <p>← <a href="index.htm">Terug naar overzicht</a> &nbsp;|&nbsp; <a href="trek-opvangen-2.htm">Trek opvangen</a> &nbsp;|&nbsp; <a href="plan-bij-uitglijden.htm">Plan bij uitglijder</a></p>
+    <p style="margin-top: 1rem; color: #999; font-size: 0.8rem;">© IAM Project &nbsp;|&nbsp; HansRJWest@Gmail.com</p>
+</div>
+
+<script src="../js/dataStore.js"></script>
+<script>
+    const fields = [
+        'mensenopdehoogte',
+        'geldmiddelen',
+        'welGaanDoen',
+        'nietGaanDoen',
+        'privepersonen',
+        'professional',
+        'instantie',
+        'steunerinopdehoogte',
+        'steunerHeeftHandleiding',
+        'weeropstaan',
+        'schaamte',
+        'minimaleStappen'
+    ];
+
+    function loadData() {
+        if (typeof iamData === 'undefined') return;
+        const formData = iamData.getFormData('noodplan-wegglijden');
+        if (!formData) return;
+        
+        fields.forEach(field => {
+            const elem = document.getElementById(field);
+            if (!elem || !Object.prototype.hasOwnProperty.call(formData, field)) return;
+            if (elem.type === 'checkbox') {
+                elem.checked = Boolean(formData[field]);
+            } else {
+                elem.value = formData[field];
+            }
+        });
+    }
+
+    function saveData() {
+        if (typeof iamData === 'undefined') return;
+        const data = {};
+        fields.forEach(field => {
+            const elem = document.getElementById(field);
+            if (!elem) return;
+            data[field] = elem.type === 'checkbox' ? elem.checked : elem.value;
+        });
+        iamData.updateFormData('noodplan-wegglijden', data);
+        alert('✓ Plan opgeslagen!');
+    }
+
+    function exportData() {
+        if (typeof iamData === 'undefined') return;
+        const data = {};
+        fields.forEach(field => {
+            const elem = document.getElementById(field);
+            if (elem) data[field] = elem.value || '';
+        });
+        iamData.exportJSON();
+    }
+
+    function printData() {
+        window.print();
+    }
+
+    // Auto-save on blur
+    fields.forEach(field => {
+        const elem = document.getElementById(field);
+        if (elem) {
+            elem.addEventListener('blur', saveData);
+        }
+    });
+
+    // Load on page load
+    document.addEventListener('DOMContentLoaded', loadData);
+</script>
+</body>
+</html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />

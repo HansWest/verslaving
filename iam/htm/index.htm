@@ -1008,11 +1008,35 @@
             <span class="featured-progress-bar"><span class="featured-progress-fill" id="featuredProgressFill" style="width:0%"></span></span>
         </div>
 
+        <!-- ══  ORIËNTATIE: MEERDERE WEGEN ══ -->
+        <div style="background: linear-gradient(135deg, #f0f8ff 0%, #f9f6ff 100%); border: 1px solid #e8d9f0; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+            <h3 style="margin-top: 0; color: #2f5f8f;">🗺️ Meerdere Wegen Naar Rome</h3>
+            <p style="color: #555;">
+                Er is niet één juiste weg uit verslaving. <strong>Sommigen focussen op controle, anderen op begrip, en weer anderen op betekenis.</strong>
+                Welke route spreekt jou het meest aan? Leer de drie benaderingen kennen zodat je kunt kiezen welke voor jou het beste werkt.
+            </p>
+            <a href="meerderewegen.htm" style="display: inline-block; padding: 0.7rem 1.2rem; background: #2f5f8f; color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">Bekijk de drie routes →</a>
+        </div>
+
         <!-- FASE 1: ORIGINE & WAAROM -->
         <h2 class="section-title">① Fase: Waar ben ik mee begonnen?</h2>
         <p class="phase-intro">Terug naar het begin - wat was de positieve reden om te starten?</p>
         
         <div class="card-grid">
+            <div class="card phase-1">
+                <span class="phase-label">ZELFWAARDE</span>
+                <div class="card-icon">✨</div>
+                <h3>Waardigheid — Je Waarde Herstellen</h3>
+                <p>
+                    Zelfwaarde erosie gaat langzaam met verslaving. Deze pagina helpt je weer in contact te komen met drie soorten waarde:
+                    wie je bent, wat je toevoegt, en hoe je dat laat zien aan je omgeving.
+                </p>
+                <div class="card-links">
+                    <a href="waardigheid.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
             <div class="card phase-1">
                 <span class="phase-label">ORIGINE</span>
                 <div class="card-icon">🎯</div>
@@ -1139,10 +1163,12 @@
                 <div class="card-icon">⚠️</div>
                 <h3>Mijn risicomomenten</h3>
                 <p>
-                    In welke situaties, gevoelens, of met welke mensen ben je het meest kwetsbaar? Ken je vijand.
+                    In welke situaties, gevoelens, gedachten of met welke mensen ben je het meest kwetsbaar? Ken je risicoprofiel.
                 </p>
                 <div class="card-links">
                     <a href="risico-situaties.htm" class="card-link">Situaties →</a>
+                    <a href="risico-gevoelens.htm" class="card-link">Gevoelens →</a>
+                    <a href="risico-denken.htm" class="card-link">Denken →</a>
                     <a href="risico-mensen.htm" class="card-link">Mensen →</a>
                     <a href="risico-activiteiten.htm" class="card-link">Activiteiten →</a>
                 </div>
@@ -1168,6 +1194,32 @@
         <p class="phase-intro">Strategieën om de spiraal te doorbreken...</p>
         
         <div class="card-grid">
+            <div class="card phase-4">
+                <span class="phase-label">BACKUP-PLANNEN</span>
+                <div class="card-icon">📋</div>
+                <h3>Plan A, B & C</h3>
+                <p>
+                    Meerdere routes naar jouw doel: Plan A (je eerste poging), Plan B (wat als Plan A niet werkt?), Doel B (realistischer alternatief).
+                </p>
+                <div class="card-links">
+                    <a href="plan-backupplan.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
+            <div class="card phase-4">
+                <span class="phase-label">CRISIS</span>
+                <div class="card-icon">🆘</div>
+                <h3>Wegglijden (Permanente terugval)</h3>
+                <p>
+                    Noodplan voor als je controle kwijtraakt: schadebeperkingsplan, allianties activeren, en herstellen.
+                </p>
+                <div class="card-links">
+                    <a href="noodplan-wegglijden.htm" class="card-link">Start →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
+
             <div class="card phase-4">
                 <span class="phase-label">PLAN</span>
                 <div class="card-icon">📋</div>
@@ -1330,6 +1382,8 @@
             'voor-nadelen-balansen.htm': 'voor-nadelen-balansen',
             'stimulus-respons.htm': 'stimulus-respons',
             'risico-situaties.htm': 'risico-situaties',
+            'risico-gevoelens.htm': 'risico-gevoelens',
+            'risico-denken.htm': 'risico-denken',
             'risico-mensen.htm': 'risico-mensen',
             'risico-activiteiten.htm': 'risico-activiteiten',
             'soorten-trek.htm': 'soorten-trek',
@@ -1352,14 +1406,16 @@
             'steunnetwerk.htm': 'steunnetwerk',
             'motiverende-mensen.htm': 'motiverende-mensen',
             'genieten-belonen.htm': 'genieten-belonen',
-            'agenda.htm': 'agenda'
+            'agenda.htm': 'agenda',
+            'waardigheid.htm': 'waardigheid',
+            'plan-backupplan.htm': 'plan-backupplan'
         };
 
         const PHASE_FORMS = {
-            'Fase 1': ['waarom-wel-gebruiken', 'wat-is-mijn-ik', 'persoonlijke-waarden', 'dagelijks-gevolg'],
+            'Fase 1': ['waardigheid', 'waarom-wel-gebruiken', 'wat-is-mijn-ik', 'persoonlijke-waarden', 'dagelijks-gevolg'],
             'Fase 2': ['lastige-gevoelens', 'craving-1-10', 'craving-gevoel', 'voor-nadelen-balansen'],
-            'Fase 3': ['stimulus-respons', 'risico-situaties', 'risico-mensen', 'risico-activiteiten', 'soorten-trek'],
-            'Fase 4': ['noodplan-forse-trek', 'trek-opvangen', 'trek-opvangen-2', 'plan-van-aanpak', 'plan-bij-uitglijden', 'noodplan-wegglijden', 'chemsex-patroon', 'chemsex-noodplan', 'chemsex-wat-wil-ik'],
+            'Fase 3': ['stimulus-respons', 'risico-situaties', 'risico-gevoelens', 'risico-denken', 'risico-mensen', 'risico-activiteiten', 'soorten-trek'],
+            'Fase 4': ['plan-backupplan', 'noodplan-wegglijden', 'noodplan-forse-trek', 'trek-opvangen', 'trek-opvangen-2', 'plan-van-aanpak', 'plan-bij-uitglijden', 'chemsex-patroon', 'chemsex-noodplan', 'chemsex-wat-wil-ik'],
             'Fase 5': ['sociaal-netwerk', 'steunnetwerk', 'motiverende-mensen', 'genieten-belonen', 'agenda']
         };
 
@@ -1370,6 +1426,8 @@
             'voor-nadelen-balansen',
             'stimulus-respons',
             'risico-situaties',
+            'risico-gevoelens',
+            'risico-denken',
             'risico-mensen',
             'risico-activiteiten',
             'soorten-trek',
@@ -1383,6 +1441,8 @@
             'dagelijks-gevolg',
             'plan-bij-uitglijden',
             'noodplan-wegglijden',
+            'plan-backupplan',
+            'waardigheid',
             'waarom-wel-gebruiken',
             'wat-is-mijn-ik',
             'persoonlijke-waarden',

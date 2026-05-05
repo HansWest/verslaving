@@ -53,6 +53,52 @@
         @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
         .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
         .action-bar button { flex: 1 1 180px; }
+        .weight-grid {
+            display: grid;
+            gap: 0.8rem;
+            margin-top: 0.75rem;
+        }
+        @media (min-width: 760px) {
+            .weight-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .weight-card {
+            border: 1px solid #d8e4ea;
+            border-radius: 12px;
+            padding: 0.8rem;
+            background: #fff;
+        }
+        .weight-card h3 {
+            margin: 0 0 0.55rem;
+            font-size: 0.98rem;
+            color: var(--page-main);
+        }
+        .weight-row {
+            display: grid;
+            grid-template-columns: 1fr 90px;
+            gap: 0.65rem;
+            align-items: center;
+            margin-bottom: 0.55rem;
+        }
+        .weight-row:last-child { margin-bottom: 0; }
+        .weight-row input {
+            margin: 0;
+            text-align: center;
+        }
+        .weight-help {
+            margin: 0.55rem 0 0;
+            font-size: 0.84rem;
+            color: #526777;
+        }
+        .balance-score {
+            margin-top: 0.9rem;
+            border-radius: 10px;
+            padding: 0.85rem;
+            background: #f4f9fb;
+            border: 1px solid #d7e6ee;
+        }
+        .balance-score p {
+            margin: 0.25rem 0;
+        }
         .message { display: none; border-left: 4px solid #5a8840; }
         .message.show { display: block; }
         .message.error { border-left-color: var(--page-accent); }
@@ -78,36 +124,36 @@
                     <a href="./stimulus-respons.htm">Volgende stap</a>
                 </div>
                 <h1>Voor- en nadelen balans</h1>
-                <p>Je hoeft nu geen eindbeslissing te nemen. Deze balans helpt om eerlijk te zien wat aantrekkelijk is en wat het kost, op korte en langere termijn.</p>
+                <p>Aan elk gedrag kleven voor- en nadelen. Dit geldt ook voor verandering van gedrag. In deze balans zetten we de voor- en nadelen van gebruik en van verandering op een rijtje. Daarbij is het belangrijk om naar de korte en lange termijn te kijken. De balans opmaken kan helpen bij het nemen van een beslissing.</p>
             </header>
 
             <div id="message" class="message"></div>
 
             <section class="intro-card">
-                <h2>Werk met concrete zinnen</h2>
-                <p>Probeer per vak meerdere punten op te schrijven. Hoe concreter je schrijft, hoe bruikbaarder deze pagina wordt op moeilijke momenten.</p>
+                <h2>Aan de slag: concrete punten per vak</h2>
+                <p>In het bijgevoegde schema kunt u uw eigen balans opmaken. Noem zelf per kolom tenminste twee redenen. Hoe concreter je schrijft (bijv. "Wanneer ik gebruikt heb kan ik de wereld aan" of "Door gebruik kom ik niet meer toe aan andere dingen"), hoe bruikbaarder deze pagina wordt op moeilijke momenten.</p>
             </section>
 
             <section class="note-card">
-                <h2>Legacy-aanvulling: verdiepende vragen</h2>
+                <h2>Handige vragen bij deze balans</h2>
                 <ul class="helper-list">
-                    <li>Waar kijk je naar uit wanneer je trek voelt, waar verlang je dan naar?</li>
-                    <li>Wat verwacht je van gebruik, en klopt die verwachting achteraf meestal?</li>
+                    <li>Waar kijk je naar uit wanneer je trek hebt, waar verlang je dan naar?</li>
+                    <li>Wat verwacht je van gebruik, en kloppen deze verwachtingen achteraf?</li>
                     <li>Wat mis je wanneer je niet gebruikt?</li>
-                    <li>Welke nadelen merk je meteen, en welke pas later?</li>
+                    <li>Welke nadelen of problemen merk je meteen, en welke pas later?</li>
                 </ul>
                 <div class="form-group mt-2">
                     <label for="reflectionDate">Datum van deze balans (optioneel)</label>
                     <input id="reflectionDate" type="date" />
                 </div>
-                <p>Tip uit de oude versie: noteer per kolom minstens twee punten. Deze balans groeit vaak over tijd.</p>
+                <p>Tip: deze balans groeit vaak over tijd. Je zult haar waarschijnlijk nog aanvullen in de toekomst.</p>
             </section>
 
             <section class="note-card">
-                <h2>Koppeling met functieanalyse en behoefte B</h2>
-                <p id="bridgeMeta">Hier verschijnen verbindingen met waarom-wel-gebruiken en ABCDaaah (behoefte B), zodat je voordelen-kolom concreter wordt.</p>
+                <h2>Koppeling met je waarom-wel-gebruiken en behoefte</h2>
+                <p id="bridgeMeta">Hier verschijnen verbindingen met je vorige antwoorden, zodat je balans concreter en persoonlijker wordt.</p>
                 <ul class="helper-list" id="balanceNudges">
-                    <li>Vul een paar velden in; dan verschijnen hier persoonlijke koppelingen.</li>
+                    <li>Vul een paar velden in op deze of vorige pagina's; dan verschijnen hier persoonlijke koppelingen.</li>
                 </ul>
             </section>
 
@@ -147,6 +193,66 @@
                 </div>
 
                 <section class="note-card">
+                    <h2>Weging naar korte en lange termijn</h2>
+                    <p>Geef per vak een score van 0-10 voor het effect op korte termijn en op lange termijn. Let op: wat nu aanlokkelijk lijkt, kan op langere termijn juist zwaar wegen — en omgekeerd.</p>
+                    <div class="weight-grid">
+                        <div class="weight-card">
+                            <h3>Voordelen van gebruik</h3>
+                            <div class="weight-row">
+                                <label for="usageAdvShort">Korte termijn</label>
+                                <input id="usageAdvShort" type="number" min="0" max="10" step="1" placeholder="0-10" />
+                            </div>
+                            <div class="weight-row">
+                                <label for="usageAdvLong">Lange termijn</label>
+                                <input id="usageAdvLong" type="number" min="0" max="10" step="1" placeholder="0-10" />
+                            </div>
+                        </div>
+
+                        <div class="weight-card">
+                            <h3>Nadelen van gebruik</h3>
+                            <div class="weight-row">
+                                <label for="usageDisShort">Korte termijn</label>
+                                <input id="usageDisShort" type="number" min="0" max="10" step="1" placeholder="0-10" />
+                            </div>
+                            <div class="weight-row">
+                                <label for="usageDisLong">Lange termijn</label>
+                                <input id="usageDisLong" type="number" min="0" max="10" step="1" placeholder="0-10" />
+                            </div>
+                        </div>
+
+                        <div class="weight-card">
+                            <h3>Voordelen van veranderen</h3>
+                            <div class="weight-row">
+                                <label for="changeAdvShort">Korte termijn</label>
+                                <input id="changeAdvShort" type="number" min="0" max="10" step="1" placeholder="0-10" />
+                            </div>
+                            <div class="weight-row">
+                                <label for="changeAdvLong">Lange termijn</label>
+                                <input id="changeAdvLong" type="number" min="0" max="10" step="1" placeholder="0-10" />
+                            </div>
+                        </div>
+
+                        <div class="weight-card">
+                            <h3>Nadelen van veranderen</h3>
+                            <div class="weight-row">
+                                <label for="changeDisShort">Korte termijn</label>
+                                <input id="changeDisShort" type="number" min="0" max="10" step="1" placeholder="0-10" />
+                            </div>
+                            <div class="weight-row">
+                                <label for="changeDisLong">Lange termijn</label>
+                                <input id="changeDisLong" type="number" min="0" max="10" step="1" placeholder="0-10" />
+                            </div>
+                        </div>
+                    </div>
+                    <p class="weight-help">0 = speelt bijna geen rol, 10 = weegt heel zwaar voor jou.</p>
+                    <div class="balance-score" id="balanceScoreCard">
+                        <p id="balanceUsageScore">Gebruikssaldo: 0</p>
+                        <p id="balanceChangeScore">Verandersaldo: 0</p>
+                        <p id="balanceOutcome">Vul de weging in om je balansbeeld te zien.</p>
+                    </div>
+                </section>
+
+                <section class="note-card">
                     <h2>Tussenconclusie voor nu</h2>
                     <div class="form-group">
                         <label for="decisionNote">Wat neem je mee uit deze balans voor de komende periode?</label>
@@ -172,6 +278,14 @@
             'usageDisadvantagesText',
             'changeAdvantagesText',
             'changeDisadvantagesText',
+            'usageAdvShort',
+            'usageAdvLong',
+            'usageDisShort',
+            'usageDisLong',
+            'changeAdvShort',
+            'changeAdvLong',
+            'changeDisShort',
+            'changeDisLong',
             'decisionNote',
             'reflectionDate'
         ];
@@ -196,11 +310,56 @@
                 usageDisadvantagesText: '',
                 changeAdvantagesText: '',
                 changeDisadvantagesText: '',
+                usageAdvShort: '',
+                usageAdvLong: '',
+                usageDisShort: '',
+                usageDisLong: '',
+                changeAdvShort: '',
+                changeAdvLong: '',
+                changeDisShort: '',
+                changeDisLong: '',
                 reflectionDate: '',
                 decisionNote: '',
                 usage: { advantages: [], disadvantages: [] },
                 change: { advantages: [], disadvantages: [] }
             };
+        }
+
+        function scoreValue(id) {
+            const el = document.getElementById(id);
+            if (!el) return 0;
+            const raw = Number(el.value);
+            if (!Number.isFinite(raw)) return 0;
+            return Math.max(0, Math.min(10, raw));
+        }
+
+        function updateWeightedBalanceView() {
+            const usageScore = (scoreValue('usageAdvShort') + scoreValue('usageAdvLong'))
+                - (scoreValue('usageDisShort') + scoreValue('usageDisLong'));
+            const changeScore = (scoreValue('changeAdvShort') + scoreValue('changeAdvLong'))
+                - (scoreValue('changeDisShort') + scoreValue('changeDisLong'));
+
+            const usageEl = document.getElementById('balanceUsageScore');
+            const changeEl = document.getElementById('balanceChangeScore');
+            const outcomeEl = document.getElementById('balanceOutcome');
+
+            if (usageEl) usageEl.textContent = `Gebruikssaldo: ${usageScore}`;
+            if (changeEl) changeEl.textContent = `Verandersaldo: ${changeScore}`;
+
+            if (!outcomeEl) return;
+            if (usageScore === 0 && changeScore === 0) {
+                outcomeEl.textContent = 'Vul de weging in om je balansbeeld te zien.';
+                return;
+            }
+
+            const diff = changeScore - usageScore;
+            if (diff >= 3) {
+                outcomeEl.textContent = 'Je weging wijst nu duidelijk richting veranderen (vooral op langere termijn).';
+            } else if (diff <= -3) {
+                outcomeEl.textContent = 'Gebruik trekt nu nog relatief sterk; bekijk vooral welke lange-termijn-nadelen zwaarder mogen wegen.';
+            } else {
+                outcomeEl.textContent = 'Je balans is nu gemengd. Kijk welke 1-2 punten jij de komende week extra gewicht wilt geven.';
+            }
         }
 
         function normalizeSavedData(saved) {
@@ -417,6 +576,7 @@
             const initial = normalizeSavedData(saved);
             fillForm(initial);
             renderBalanceNudges(initial);
+            updateWeightedBalanceView();
 
             document.getElementById('suggestButton').addEventListener('click', applySuggestionFromWhyUse);
             document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
@@ -425,6 +585,7 @@
             document.getElementById('balansForm').addEventListener('input', () => {
                 saveForm(false);
                 renderBalanceNudges(collectFormData());
+                updateWeightedBalanceView();
             });
 
             window.addEventListener('focus', () => {

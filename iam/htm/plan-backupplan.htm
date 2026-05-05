@@ -1,8 +1,467 @@
-<html>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Backupplan — IAM</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/forms.css">
+    <style>
+        :root {
+            --page-main:   #2196f3;
+            --page-accent: #1565c0;
+            --page-ok:     #4caf50;
+            --soft:        #e3f2fd;
+            --border:      #90caf9;
+        }
 
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
+        .page-header {
+            background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%);
+            color: #fff;
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            margin: 0 0 0.5rem;
+            font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+            font-weight: 700;
+        }
+
+        .page-header .subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            margin: 0;
+        }
+
+        .intro-card {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 0 1.25rem 2rem;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .intro-card h2 {
+            margin: 0 0 0.75rem;
+            color: var(--page-accent);
+            font-size: 1.1rem;
+        }
+
+        .intro-card p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .section-header {
+            max-width: 680px;
+            margin: 1.75rem auto 1rem;
+            padding: 0 1.25rem;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            color: var(--page-main);
+            font-size: 1.25rem;
+            border-bottom: 3px solid var(--page-main);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            padding: 0 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group .hint {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            resize: vertical;
+            min-height: 100px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--page-main);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        .form-group input[type="date"],
+        .form-group input[type="text"] {
+            width: 100%;
+            max-width: 300px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="date"]:focus,
+        .form-group input[type="text"]:focus {
+            outline: none;
+            border-color: var(--page-main);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e1f0ff 100%);
+            border-left: 4px solid var(--page-main);
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 0 1.25rem 2rem;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .insight-box strong {
+            color: var(--page-accent);
+        }
+
+        .plan-comparison {
+            max-width: 680px;
+            margin: 1rem auto;
+            padding: 0 1.25rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .plan-box {
+            background: var(--soft);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .plan-box h3 {
+            margin: 0 0 0.5rem;
+            color: var(--page-main);
+            font-size: 1rem;
+        }
+
+        .plan-box p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .page-header { padding: 1.5rem 1rem; }
+            .plan-comparison { grid-template-columns: 1fr; }
+        }
+
+        .action-bar {
+            max-width: 680px;
+            margin: 2.5rem auto 1.5rem;
+            padding: 0 1.25rem;
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:active { transform: scale(0.98); }
+
+        .btn-primary {
+            background: var(--page-main);
+            color: #fff;
+        }
+
+        .btn-primary:hover { background: var(--page-accent); }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover { background: #d0d0d0; }
+
+        .footer-nav {
+            max-width: 680px;
+            margin: 3rem auto 1.5rem;
+            padding: 0 1.25rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .footer-nav a {
+            color: var(--page-main);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-nav a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .action-bar { flex-direction: column; }
+            .btn { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+<div class="page-header">
+    <h1>📋 Plan A, B & C</h1>
+    <p class="subtitle">Meerdere routes naar jouw doel, ook als het even tegenzit</p>
+</div>
+
+<div class="intro-card">
+    <h2>Waarom backup-plannen?</h2>
+    <p>Herstellen gaat meestal niet in één rechte lijn. Daarom is het fijn om <strong>vooraf</strong> te weten: wat doe ik als Plan A niet werkt?</p>
+    <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">Dit is je vangnet: rustig bijsturen in plaats van opgeven.</p>
+</div>
+
+<!-- ── STARTPUNT & DOEL ──────────────────────────── -->
+<div class="section-header">
+    <h2>🎯 Jouw Startpunt, Doel & Route</h2>
+</div>
+
+<div class="form-group">
+    <label for="startpunt">Wat is je situatie nu? (Startpunt)</label>
+    <div class="hint">Hoe ziet je gebruik er nu uit? Kort en eerlijk is genoeg.</div>
+    <textarea id="startpunt" name="startpunt" placeholder="Bijv. Ik gebruik X keer per week, meestal 's avonds, en wil dit veranderen."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="doel">Wat is je doel? (Waar wil je naartoe?)</label>
+    <div class="hint">Maak het concreet. Niet alleen "minder", maar bijvoorbeeld "maximaal X keer per week".</div>
+    <textarea id="doel" name="doel" placeholder="Bijv. Ik wil helemaal stoppen met gebruiken. / Ik wil minderen naar 1x per week ter gelegenheid."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="gebruiksdoel">Wat betekent dit doel voor je gebruik?</label>
+    <div class="hint">Concreet gedrag: hoe zien anderen dat je jouw doel bereikt hebt?</div>
+    <textarea id="gebruiksdoel" name="gebruiksdoel" placeholder="Bijv. Ik ben 6 maanden abstinent. / Ik gebruik maximaal op speciale gelegenheden."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="houdbaarheid">Hoe lang wil je dit volhouden voor je opnieuw kijkt?</label>
+    <div class="hint">Tot welke datum wil je dit doel vasthouden? (Bijv. 6 maanden, 1 jaar, voortaan)</div>
+    <textarea id="houdbaarheid" name="houdbaarheid" placeholder="Bijv. Ik houd dit vol tot 1 januari 2026, dan evalueer ik opnieuw."></textarea>
+</div>
+
+<!-- ── PLAN A ──────────────────────────────────── -->
+<div class="section-header">
+    <h2>🎯 Plan A — Jouw Eerste Strategie</h2>
+</div>
+
+<div class="insight-box">
+    <strong>💡 Wat ga je doen, en wie helpt je daarbij?</strong><br>
+    Houd het concreet en haalbaar.
+</div>
+
+<div class="form-group">
+    <label for="strategie">Welke acties en steun horen bij Plan A?</label>
+    <div class="hint">Bijv. &quot;Ik ga naar groepstherapie (ma/woe), ik bel mijn sponsor dagelijks, ik vermijd triggers door...&quot;</div>
+    <textarea id="strategie" name="strategie" placeholder="Acties: [concrete stappen], Steun: [wie, waar, wanneer], Startdatum: "></textarea>
+</div>
+
+<!-- ── PLAN B ──────────────────────────────────── -->
+<div class="section-header">
+    <h2>🔄 Plan B — Als Plan A Niet Werkt</h2>
+</div>
+
+<div class="insight-box">
+    <strong>✋ Als Plan A niet genoeg helpt:</strong><br>
+    Wat ga je dan anders doen?
+</div>
+
+<div class="form-group">
+    <label for="andersdoen">Welke andere aanpak kies je?</label>
+    <div class="hint">Bijv. &quot;Ik schrijf me in voor residentiële opvang&quot; of &quot;Ik vraag medicatie&quot;</div>
+    <textarea id="andersdoen" name="andersdoen" placeholder="Bijv. Ik ga naar [instantie/behandeling], ik vraag om [hulp], ik verander [wat]."></textarea>
+</div>
+
+<!-- ── ALTERNATIEF DOEL ──────────────────────────────────── -->
+<div class="section-header">
+    <h2>⚖️ Doel B — Als je eerste doel te hoog blijkt</h2>
+</div>
+
+<div class="insight-box">
+    <strong>🤔 "Wat als volledig stoppen nu nog niet lukt?"</strong><br>
+    Dan heb je alvast een plan dat beter past bij waar je nu staat.
+</div>
+
+<div class="form-group">
+    <label for="anderdoel">Wat is je Plan B-doel (realistisch en haalbaar)?</label>
+    <div class="hint">Bijv. minder schade, gecontroleerd gebruik, en in contact blijven met steun.</div>
+    <textarea id="anderdoel" name="anderdoel" placeholder="Bijv. Dan kies ik voor minimale schade: X per week, altijd veilig, en in contact blijven met hulp."></textarea>
+</div>
+
+<!-- ── STARTDATUM ──────────────────────────────────── -->
+<div class="section-header">
+    <h2>📅 Start</h2>
+</div>
+
+<div class="form-group">
+    <label for="startdatum">Wanneer start je met Plan A?</label>
+    <div class="hint">Kies een concrete datum. "Volgende maandag", "1 januari", etc.</div>
+    <input type="date" id="startdatum" name="startdatum">
+</div>
+
+<!-- ── RECAP ──────────────────────────────────── -->
+<div class="section-header">
+    <h2>✅ Samenvatting</h2>
+</div>
+
+<div class="plan-comparison">
+    <div class="plan-box">
+        <h3>STARTPUNT</h3>
+        <p>Waar je nu staat en wat je wilt veranderen</p>
+    </div>
+    <div class="plan-box">
+        <h3>DOEL A</h3>
+        <p>Je ideale uitkomst (eindpunt)</p>
+    </div>
+    <div class="plan-box">
+        <h3>PLAN A</h3>
+        <p>Hoe je het bereikt (acties + steun)</p>
+    </div>
+    <div class="plan-box">
+        <h3>PLAN B</h3>
+        <p>Wat je doet als Plan A niet werkt</p>
+    </div>
+    <div class="plan-box">
+        <h3>DOEL B</h3>
+        <p>Je alternatief doel (realistischer)</p>
+    </div>
+    <div class="plan-box">
+        <h3>STARTDATUM</h3>
+        <p>Wanneer je van start gaat</p>
+    </div>
+</div>
+
+<div class="insight-box" style="margin-top: 2rem;">
+    <strong>💪 Dit is SMART planning:</strong> Specifiek (wat), Meetbaar (hoe zien anderen het?), Aanvaardbaar (realistisch?), Relevant (past bij jou), Tijdgebonden (tot wanneer?).
+</div>
+
+<!-- ── ACTION BAR ──────────────────────────────────– -->
+<div class="action-bar">
+    <button class="btn btn-primary" onclick="saveData()">💾 Opslaan</button>
+    <button class="btn btn-secondary" onclick="exportData()">📄 Exporteren</button>
+    <button class="btn btn-secondary" onclick="printData()">🖨️ Afdrukken</button>
+</div>
+
+<!-- ── FOOTER NAV ──────────────────────────────────– -->
+<div class="footer-nav">
+    <p>← <a href="index.htm">Terug naar overzicht</a> &nbsp;|&nbsp; <a href="plan-van-aanpak.htm">Plan van Aanpak</a> &nbsp;|&nbsp; <a href="noodplan-wegglijden.htm">Noodplan Wegglijden</a></p>
+    <p style="margin-top: 1rem; color: #999; font-size: 0.8rem;">© IAM Project &nbsp;|&nbsp; HansRJWest@Gmail.com</p>
+</div>
+
+<script src="../js/dataStore.js"></script>
+<script>
+    const fields = [
+        'startpunt',
+        'doel',
+        'gebruiksdoel',
+        'houdbaarheid',
+        'strategie',
+        'andersdoen',
+        'anderdoel',
+        'startdatum'
+    ];
+
+    function loadData() {
+        if (typeof iamData === 'undefined') return;
+        const formData = iamData.getFormData('plan-backupplan');
+        if (!formData) return;
+        
+        fields.forEach(field => {
+            const elem = document.getElementById(field);
+            if (elem && formData[field]) {
+                elem.value = formData[field];
+            }
+        });
+    }
+
+    function saveData() {
+        if (typeof iamData === 'undefined') return;
+        const data = {};
+        fields.forEach(field => {
+            const elem = document.getElementById(field);
+            if (elem) {
+                data[field] = elem.value;
+            }
+        });
+        iamData.updateFormData('plan-backupplan', data);
+        alert('✓ Plan opgeslagen!');
+    }
+
+    function exportData() {
+        if (typeof iamData === 'undefined') return;
+        const data = {};
+        fields.forEach(field => {
+            const elem = document.getElementById(field);
+            if (elem) data[field] = elem.value || '';
+        });
+        iamData.exportJSON();
+    }
+
+    function printData() {
+        window.print();
+    }
+
+    // Auto-save on blur
+    fields.forEach(field => {
+        const elem = document.getElementById(field);
+        if (elem) {
+            elem.addEventListener('blur', saveData);
+        }
+    });
+
+    // Load on page load
+    document.addEventListener('DOMContentLoaded', loadData);
+</script>
+</body>
+</html>
 U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
 Voor de context zie:
 http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
