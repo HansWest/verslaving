@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chemsex — Risk Analysis</title>
+  <title>Chemsex - risico-analyse</title>
   <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
   <link rel="stylesheet" href="../css/forms.css" type="text/css" />
   <style>
@@ -182,6 +182,29 @@
       flex-wrap: wrap;
     }
     .axis-note span { font-weight: 700; color: #fff; }
+    .inspiration-panel {
+      margin-top: 1rem;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+      padding: 0.75rem;
+    }
+    .inspiration-panel img {
+      display: block;
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.55);
+      background: #fff;
+    }
+    .inspiration-panel figcaption {
+      margin-top: 0.45rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.92);
+    }
 
     /* ── action bar ──────────────────────────────── */
     .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.4rem; }
@@ -193,21 +216,25 @@
     <div class="page-shell">
       <header class="page-header">
         <div class="top-links">
-          <a href="./chemsex.htm">← Chemsex overview</a>
-          <a href="./chemsex-patroon.htm">My pattern</a>
-          <a href="./chemsex-risk-analysis.htm" aria-current="page" style="background:rgba(255,255,255,0.28);">Risk analysis</a>
-          <a href="./chemsex-identity-choices.htm">Identity &amp; choices</a>
-          <a href="./chemsex-quality-of-life.htm">Quality of life</a>
+          <a href="./chemsex.htm">← Chemsex overzicht</a>
+          <a href="./chemsex-patroon.htm">Mijn patroon</a>
+          <a href="./chemsex-risk-analysis.htm" aria-current="page" style="background:rgba(255,255,255,0.28);">Risico-analyse</a>
+          <a href="./chemsex-identity-choices.htm">Identiteit &amp; keuzes</a>
+          <a href="./chemsex-quality-of-life.htm">Kwaliteit van leven</a>
         </div>
-        <h1>Chemsex — Risk Analysis</h1>
+        <h1>Chemsex - risico-analyse</h1>
         <p class="matrix-intro">
-          For each risk level, describe the risky behaviours you engage in. Record how often the behaviour occurs
-          (F = frequency, e.g. 2×/week) and how high the perceived harm is (S = severity, e.g. 70%).
+          Beschrijf per risiconiveau het gedrag of de situaties die voor jou risicovol zijn. Noteer hoe vaak dit
+          gebeurt (F = frequentie, bijvoorbeeld 2x/week) en hoe groot de ervaren schade is (S = ernst, bijvoorbeeld 70%).
         </p>
         <div class="axis-note">
-          <div><span>F</span> = Frequency (e.g. 3×/month)</div>
-          <div><span>S</span> = Severity / harm (0–100%)</div>
+          <div><span>F</span> = Frequentie (bijvoorbeeld 3x/maand)</div>
+          <div><span>S</span> = Ernst / schade (0-100%)</div>
         </div>
+        <figure class="inspiration-panel">
+          <img src="../../IntegrativeAddictionManagement/pics/AutooDoodBAC0-01.jpg" alt="Grafiek als reminder dat impact snel kan oplopen">
+          <figcaption>Kleine keuzes nu kunnen later een groot effect op je lijn hebben.</figcaption>
+        </figure>
       </header>
 
       <div id="message" class="message"></div>
@@ -219,15 +246,15 @@
           <div class="risk-level level-5">
             <div class="risk-level-header">
               <span class="level-badge">5</span>
-              <span>Level 5 — <em>Highest risk</em></span>
+              <span>Niveau 5 - <em>Hoogste risico</em></span>
             </div>
             <div class="col-headers">
-              <div>Behaviour / situation</div>
+              <div>Gedrag / situatie</div>
               <div class="col-fs"><span>F</span><span>S</span></div>
             </div>
             <div class="risk-rows">
               <div class="risk-row">
-                <input type="text" id="l5r1" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <input type="text" id="l5r1" placeholder="Beschrijf het risicovolle gedrag..." autocomplete="off">
                 <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l5r1f" placeholder="x/…"><span class="score-unit"></span></div>
                 <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l5r1s" placeholder="…%"><span class="score-unit"></span></div>
               </div>
@@ -238,20 +265,20 @@
           <div class="risk-level level-4">
             <div class="risk-level-header">
               <span class="level-badge">4</span>
-              <span>Level 4 — <em>High risk</em></span>
+              <span>Niveau 4 - <em>Hoog risico</em></span>
             </div>
             <div class="col-headers">
-              <div>Behaviour / situation</div>
+              <div>Gedrag / situatie</div>
               <div class="col-fs"><span>F</span><span>S</span></div>
             </div>
             <div class="risk-rows">
               <div class="risk-row">
-                <input type="text" id="l4r1" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <input type="text" id="l4r1" placeholder="Beschrijf het risicovolle gedrag..." autocomplete="off">
                 <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l4r1f" placeholder="x/…"></div>
                 <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l4r1s" placeholder="…%"></div>
               </div>
               <div class="risk-row">
-                <input type="text" id="l4r2" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <input type="text" id="l4r2" placeholder="Beschrijf het risicovolle gedrag..." autocomplete="off">
                 <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l4r2f" placeholder="x/…"></div>
                 <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l4r2s" placeholder="…%"></div>
               </div>
@@ -262,20 +289,20 @@
           <div class="risk-level level-3">
             <div class="risk-level-header">
               <span class="level-badge">3</span>
-              <span>Level 3 — <em>Medium risk</em></span>
+              <span>Niveau 3 - <em>Middelmatig risico</em></span>
             </div>
             <div class="col-headers">
-              <div>Behaviour / situation</div>
+              <div>Gedrag / situatie</div>
               <div class="col-fs"><span>F</span><span>S</span></div>
             </div>
             <div class="risk-rows">
               <div class="risk-row">
-                <input type="text" id="l3r1" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <input type="text" id="l3r1" placeholder="Beschrijf het risicovolle gedrag..." autocomplete="off">
                 <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l3r1f" placeholder="x/…"></div>
                 <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l3r1s" placeholder="…%"></div>
               </div>
               <div class="risk-row">
-                <input type="text" id="l3r2" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <input type="text" id="l3r2" placeholder="Beschrijf het risicovolle gedrag..." autocomplete="off">
                 <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l3r2f" placeholder="x/…"></div>
                 <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l3r2s" placeholder="…%"></div>
               </div>
@@ -286,20 +313,20 @@
           <div class="risk-level level-2">
             <div class="risk-level-header">
               <span class="level-badge">2</span>
-              <span>Level 2 — <em>Low-medium risk</em></span>
+              <span>Niveau 2 - <em>Laag-middelmatig risico</em></span>
             </div>
             <div class="col-headers">
-              <div>Behaviour / situation</div>
+              <div>Gedrag / situatie</div>
               <div class="col-fs"><span>F</span><span>S</span></div>
             </div>
             <div class="risk-rows">
               <div class="risk-row">
-                <input type="text" id="l2r1" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <input type="text" id="l2r1" placeholder="Beschrijf het risicovolle gedrag..." autocomplete="off">
                 <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l2r1f" placeholder="x/…"></div>
                 <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l2r1s" placeholder="…%"></div>
               </div>
               <div class="risk-row">
-                <input type="text" id="l2r2" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <input type="text" id="l2r2" placeholder="Beschrijf het risicovolle gedrag..." autocomplete="off">
                 <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l2r2f" placeholder="x/…"></div>
                 <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l2r2s" placeholder="…%"></div>
               </div>
@@ -310,20 +337,20 @@
           <div class="risk-level level-1">
             <div class="risk-level-header">
               <span class="level-badge">1</span>
-              <span>Level 1 — <em>Low risk</em></span>
+              <span>Niveau 1 - <em>Laag risico</em></span>
             </div>
             <div class="col-headers">
-              <div>Behaviour / situation</div>
+              <div>Gedrag / situatie</div>
               <div class="col-fs"><span>F</span><span>S</span></div>
             </div>
             <div class="risk-rows">
               <div class="risk-row">
-                <input type="text" id="l1r1" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <input type="text" id="l1r1" placeholder="Beschrijf het risicovolle gedrag..." autocomplete="off">
                 <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l1r1f" placeholder="x/…"></div>
                 <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l1r1s" placeholder="…%"></div>
               </div>
               <div class="risk-row">
-                <input type="text" id="l1r2" placeholder="Describe the risky behaviour…" autocomplete="off">
+                <input type="text" id="l1r2" placeholder="Beschrijf het risicovolle gedrag..." autocomplete="off">
                 <div class="score-group"><span class="score-label">F</span><input class="score-input" type="text" id="l1r2f" placeholder="x/…"></div>
                 <div class="score-group"><span class="score-label">S</span><input class="score-input" type="text" id="l1r2s" placeholder="…%"></div>
               </div>
@@ -334,11 +361,11 @@
           <div class="risk-level level-0">
             <div class="risk-level-header">
               <span class="level-badge">0</span>
-              <span>Level 0 — <em>General daily life</em></span>
+              <span>Niveau 0 - <em>Algemeen dagelijks leven</em></span>
             </div>
             <div class="risk-rows">
               <div class="risk-row" style="grid-template-columns: 1fr;">
-                <input type="text" id="l0desc" placeholder="Describe your normal daily life without risky behaviour…" autocomplete="off">
+                <input type="text" id="l0desc" placeholder="Beschrijf je normale dagelijks leven zonder risicovol gedrag..." autocomplete="off">
               </div>
             </div>
           </div>
@@ -346,9 +373,9 @@
         </div>
 
         <div class="action-bar">
-          <button type="button" class="button-primary" id="saveButton">Save on this device</button>
-          <button type="button" class="button-secondary" id="exportButton">Export all as JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print or save as PDF</button>
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
         </div>
       </form>
     </div>
@@ -398,10 +425,10 @@
     function saveForm(feedback = true) {
       try {
         iamData.updateFormData(formKey, collectFormData());
-        if (feedback) showMessage('Risk analysis saved on this device.');
+        if (feedback) showMessage('Risico-analyse opgeslagen op dit toestel.');
       } catch (error) {
         console.error(error);
-        showMessage('Could not save.', true);
+        showMessage('Opslaan is niet gelukt.', true);
       }
     }
 
@@ -415,7 +442,7 @@
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
-      showMessage('Full IAM data exported as JSON.');
+      showMessage('Alle IAM-gegevens zijn als JSON geexporteerd.');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
