@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discipline en gunnen</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    .page-header {
+      background: linear-gradient(135deg, #3d6b5e 0%, #4a7c6f 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(22, 50, 40, 0.14);
+      margin-bottom: 1.5rem;
+    }
+    .page-header h1 { margin-bottom: 0.5rem; font-size: 2rem; }
+    .page-header p { margin-bottom: 0; max-width: 42rem; }
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .top-links a {
+      color: white;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .top-links a:hover { background: rgba(255,255,255,0.22); }
+    .intro-card, .form-card, .note-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 18px rgba(22,50,79,0.07);
+    }
+    .eyebrow {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #3d6b5e;
+      margin-bottom: 0.4rem;
+    }
+    .quote-block {
+      background: #f0f7f4;
+      border-left: 4px solid #3d6b5e;
+      padding: 1rem 1.25rem;
+      border-radius: 0 10px 10px 0;
+      margin: 1rem 0;
+      font-style: italic;
+      color: #2a4a3e;
+    }
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+    .action-bar button { flex: 1 1 160px; }
+    .message {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border-left: 5px solid #3d6b5e;
+      background: #f0f7f4;
+      margin-bottom: 1rem;
+    }
+    .message.show { display: block; }
+    .message.error { border-left-color: #c0392b; background: #fdf0ee; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell" style="max-width:920px;margin:0 auto;">
+
+      <div class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./persoonlijke-waarden.htm">Persoonlijke waarden</a>
+          <a href="./agenda.htm">Agenda</a>
+        </div>
+        <h1>Discipline en gunnen</h1>
+        <p>Zonder een vorm van dagelijkse aandacht lukt het nauwelijks om een verslaving te controleren. Maar de verkeerde discipline — te streng, te veel moeten — werkt averechts. Dit formulier helpt je de juiste balans te vinden.</p>
+      </div>
+
+      <div id="message" class="message"></div>
+
+      <section class="intro-card">
+        <span class="eyebrow">Uitgangspunt</span>
+        <h2>Moeten, willen of gunnen?</h2>
+        <p>Zonder een vorm van dagelijkse aandacht, dagelijkse discipline als je wilt, zal het lastig worden om een verslaving te controleren. Aan de andere kant, bij de verkeerde vorm van discipline — een discipline van 'moeten' en van te veel inperkende strengheid — valt niet te verwachten dat het lang goed gaat, omdat het uiteindelijk ten koste gaat van de persoon die gedisciplineerd wordt.</p>
+        <div class="quote-block">De dingen die we <strong>moeten</strong>, die <strong>willen we niet meer</strong>, <em>zèlfs als we ze eigenlijk willen.</em></div>
+        <p>"Moeten" is dus niet genoeg. Er ligt een oplossing in "gunnen", méér nog dan in het "willen": Hoe ga ik mij gunnen dat ik doe wat mij goed doet? Hoe ga ik mijzelf het resultaat zo stevig <strong>GUNNEN</strong> dat ik bereid ben om de prijs te betalen die er nou eenmaal voor betaald hoort te worden?</p>
+        <div class="quote-block">Hoe stop ik om mijzelf dingen op te leggen die ik eigenlijk toch niet ga doen? Hoe oefen ik mezelf om de dingen te gaan kunnen die ik eigenlijk zou kunnen bereiken? En hoe begin ik om de hulp te vragen die ik nodig heb om echt gelukkig, effectief en efficiënt te zijn?</div>
+      </section>
+
+      <form id="disciplineForm">
+
+        <div class="form-card">
+          <span class="eyebrow">Moeten</span>
+          <h2>Wat leg ik mezelf op?</h2>
+          <p>Welke dingen staan er op jouw lijst van "moeten" die je eigenlijk steeds voor je uitschuift of die energie kosten in plaats van geven?</p>
+          <label for="moeten">Dingen die ik mezelf opleg maar waar ik moeite mee heb:</label>
+          <textarea id="moeten" name="moeten" rows="4" placeholder="Ik moet elke dag sporten. Ik moet stoppen. Ik moet..."></textarea>
+          <label for="moetenKosten" style="margin-top:1rem;">Wat kost het mij om dit vol te houden?</label>
+          <textarea id="moetenKosten" name="moetenKosten" rows="3" placeholder="Het kost me energie, levert schuldgevoel op als het niet lukt..."></textarea>
+        </div>
+
+        <div class="form-card">
+          <span class="eyebrow">Willen</span>
+          <h2>Wat wil ik eigenlijk?</h2>
+          <p>Achter elk "moeten" zit vaak iets wat je eigenlijk wél wilt. Wat is het resultaat dat je echt wilt bereiken?</p>
+          <label for="willen">Wat ik eigenlijk wil (los van de dwang):</label>
+          <textarea id="willen" name="willen" rows="4" placeholder="Ik wil me fitter voelen. Ik wil mijn relaties niet meer beschadigen. Ik wil..."></textarea>
+          <label for="willenVoorWie" style="margin-top:1rem;">Voor wie of wat wil ik dit?</label>
+          <textarea id="willenVoorWie" name="willenVoorWie" rows="3" placeholder="Voor mijn gezin, voor mezelf, voor mijn toekomst..."></textarea>
+        </div>
+
+        <div class="form-card">
+          <span class="eyebrow">Gunnen</span>
+          <h2>Wat mag ik mezelf gunnen?</h2>
+          <p>Discipline werkt op de lange termijn alleen als er ook ruimte is voor wat jij jezelf gunt — niet als beloning na goed gedrag, maar als onderdeel van een gezond leven.</p>
+          <label for="gunnen">Wat gun ik mezelf, zonder gebruiksgebonden beloning?</label>
+          <textarea id="gunnen" name="gunnen" rows="4" placeholder="Rust, een wandeling, contact met mensen die mij goed doen..."></textarea>
+          <label for="gunnenHoe" style="margin-top:1rem;">Hoe ga ik dit in mijn dagelijkse leven inbouwen?</label>
+          <textarea id="gunnenHoe" name="gunnenHoe" rows="3" placeholder="Elke dag om 15:00 even buiten zijn. Wekelijks contact met..."></textarea>
+        </div>
+
+        <div class="form-card">
+          <span class="eyebrow">Balans</span>
+          <h2>De juiste discipline voor mij</h2>
+          <p>Welke vorm van discipline past bij jou? Wie of wat houdt jou op een gezonde manier bij de les — zonder te verstikken?</p>
+          <label for="disciplineVorm">Hoe ziet gezonde discipline voor mij eruit?</label>
+          <textarea id="disciplineVorm" name="disciplineVorm" rows="4" placeholder="Kleine stappen, vaste momenten, een vriend die eerlijk is..."></textarea>
+          <label for="disciplineHulp" style="margin-top:1rem;">Wie of wat helpt mij daarin?</label>
+          <textarea id="disciplineHulp" name="disciplineHulp" rows="3" placeholder="Mijn partner, een groep, een dagboek, een behandelaar..."></textarea>
+        </div>
+
+        <div class="action-bar">
+          <button type="button" onclick="saveForm()">Opslaan</button>
+          <button type="button" onclick="window.print()">Afdrukken</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+    const formType = 'discipline-verslaving';
+    const fieldNames = ['moeten','moetenKosten','willen','willenVoorWie','gunnen','gunnenHoe','disciplineVorm','disciplineHulp'];
+
+    function fillForm(data) {
+      fieldNames.forEach(n => {
+        const el = document.getElementById(n);
+        if (el && data[n] !== undefined) el.value = data[n];
+      });
+    }
+
+    function collectForm() {
+      const data = {};
+      fieldNames.forEach(n => {
+        const el = document.getElementById(n);
+        if (el) data[n] = el.value;
+      });
+      return data;
+    }
+
+    function saveForm() {
+      if (typeof iamData !== 'undefined') {
+        iamData.setFormData(formType, collectForm());
+      }
+      showMessage('Opgeslagen.', false);
+    }
+
+    function showMessage(text, isError) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.className = 'message show' + (isError ? ' error' : '');
+      clearTimeout(showMessage._t);
+      showMessage._t = setTimeout(() => { el.className = 'message'; }, 2600);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof iamData !== 'undefined') {
+        fillForm(iamData.getFormData(formType) || {});
+      }
+      document.getElementById('disciplineForm').addEventListener('input', () => saveForm());
+    });
+  </script>
+  <script src="../js/dataStore.js"></script>
+  <script src="../js/legacyFormSync.js"></script>
+</body>
+</html>

@@ -1092,6 +1092,20 @@
                 </div>
                 <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
             </div>
+
+            <div class="card phase-1">
+                <span class="phase-label">VOORWERK</span>
+                <div class="card-icon">📝</div>
+                <h3>Twee weken gebruik bijhouden</h3>
+                <p>
+                    Schrijf twee weken lang vlak voor gebruik op wat je wilt gebruiken, waarom juist nu, en wat je voelt of denkt.
+                    Eerst waarnemen, dan pas sturen.
+                </p>
+                <div class="card-links">
+                    <a href="gebruik-bijhouden.htm" class="card-link">14 dagen →</a>
+                </div>
+                <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
+            </div>
         </div>
 
         <!-- FASE 2: BEWUSTZIJN & GEVOELENS -->
@@ -1330,10 +1344,13 @@
                 <div class="card-icon">🎉</div>
                 <h3>Genieten & Belonen</h3>
                 <p>
-                    Wat geeft je echt plezier? Zonder middel? Wat viert je voortgang? Creëer gezonde beloningen.
+                    Wat geeft je echt plezier zonder middel? En welke kleine of grote beloningen helpen om goed gedrag te versterken?
                 </p>
                 <div class="card-links">
                     <a href="genieten-belonen.htm" class="card-link">Start →</a>
+                    <a href="evenwicht.htm" class="card-link">Balans →</a>
+                    <a href="levenskwaliteit.htm" class="card-link">Levenskwaliteit →</a>
+                    <a href="levensdoelen-stellen.htm" class="card-link">Levensdoelen →</a>
                 </div>
                 <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
             </div>
@@ -1393,6 +1410,7 @@
             'wat-is-mijn-ik.htm': 'wat-is-mijn-ik',
             'persoonlijke-waarden.htm': 'persoonlijke-waarden',
             'dagelijks-gevolg.htm': 'dagelijks-gevolg',
+            'gebruik-bijhouden.htm': 'gebruik-bijhouden',
             'craving-1-10.htm': 'craving-1-10',
             'noodplan-forse-trek.htm': 'noodplan-forse-trek',
             'plan-bij-uitglijden.htm': 'plan-bij-uitglijden',
@@ -1406,17 +1424,20 @@
             'steunnetwerk.htm': 'steunnetwerk',
             'motiverende-mensen.htm': 'motiverende-mensen',
             'genieten-belonen.htm': 'genieten-belonen',
+            'evenwicht.htm': 'evenwicht',
+            'levenskwaliteit.htm': 'levenskwaliteit',
+            'levensdoelen-stellen.htm': 'levensdoelen-stellen',
             'agenda.htm': 'agenda',
             'waardigheid.htm': 'waardigheid',
             'plan-backupplan.htm': 'plan-backupplan'
         };
 
         const PHASE_FORMS = {
-            'Fase 1': ['waardigheid', 'waarom-wel-gebruiken', 'wat-is-mijn-ik', 'persoonlijke-waarden', 'dagelijks-gevolg'],
+            'Fase 1': ['waardigheid', 'waarom-wel-gebruiken', 'wat-is-mijn-ik', 'persoonlijke-waarden', 'dagelijks-gevolg', 'gebruik-bijhouden'],
             'Fase 2': ['lastige-gevoelens', 'craving-1-10', 'craving-gevoel', 'voor-nadelen-balansen'],
             'Fase 3': ['stimulus-respons', 'risico-situaties', 'risico-gevoelens', 'risico-denken', 'risico-mensen', 'risico-activiteiten', 'soorten-trek'],
             'Fase 4': ['plan-backupplan', 'noodplan-wegglijden', 'noodplan-forse-trek', 'trek-opvangen', 'trek-opvangen-2', 'plan-van-aanpak', 'plan-bij-uitglijden', 'chemsex-patroon', 'chemsex-noodplan', 'chemsex-wat-wil-ik'],
-            'Fase 5': ['sociaal-netwerk', 'steunnetwerk', 'motiverende-mensen', 'genieten-belonen', 'agenda']
+            'Fase 5': ['sociaal-netwerk', 'steunnetwerk', 'motiverende-mensen', 'genieten-belonen', 'evenwicht', 'levenskwaliteit', 'levensdoelen-stellen', 'agenda']
         };
 
         const MODERN_STRUCTURED_FORMS = new Set([
@@ -1439,6 +1460,7 @@
             'chemsex-wat-wil-ik',
             'plan-van-aanpak',
             'dagelijks-gevolg',
+            'gebruik-bijhouden',
             'plan-bij-uitglijden',
             'noodplan-wegglijden',
             'plan-backupplan',
@@ -1450,6 +1472,9 @@
             'steunnetwerk',
             'motiverende-mensen',
             'genieten-belonen',
+            'evenwicht',
+            'levenskwaliteit',
+            'levensdoelen-stellen',
             'agenda'
         ]);
 

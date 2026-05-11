@@ -1,8 +1,8 @@
 <html>
-
+<!--
 analyseachteraf.htm
 
-deze code is van controleerjeverslaving.nl 
+deze code is van controleerjeverslaving.nl
 wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
 HansRJWest@Gmail.com
 U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
@@ -13,14 +13,158 @@ http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-dem
 <head>
 <title>Analyse achteraf</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+<link rel="stylesheet" href="../css/forms.css" type="text/css" />
 
-
-
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
 <script language="javascript">
+<!--
+function getFormKey() {
+  return 'analyseachteraf';
+}
 
+function getFieldId(field, index) {
+  return field.name || field.id || ('field_' + index);
+}
+
+function collectFormData(form) {
+  var data = {};
+  var radioSeen = {};
+  var fields = form.querySelectorAll('input, textarea, select');
+
+  for (var i = 0; i < fields.length; i++) {
+    var field = fields[i];
+    var key = getFieldId(field, i);
+    if (!key || field.disabled) {
+      continue;
+    }
+
+    if (field.type === 'radio') {
+      if (radioSeen[key]) {
+        continue;
+      }
+      radioSeen[key] = true;
+      var selected = form.querySelector("input[type='radio'][name='" + field.name + "']:checked");
+      data[key] = selected ? selected.value : '';
+      continue;
+    }
+
+    if (field.type === 'checkbox') {
+      data[key] = field.checked;
+      continue;
+    }
+
+    data[key] = field.value || '';
+  }
+
+  return data;
+}
+
+function applyFormData(form, savedData) {
+  if (!savedData) {
+    return;
+  }
+
+  var fields = form.querySelectorAll('input, textarea, select');
+  for (var i = 0; i < fields.length; i++) {
+    var field = fields[i];
+    var key = getFieldId(field, i);
+
+    if (!(key in savedData)) {
+      continue;
+    }
+
+    if (field.type === 'radio') {
+      field.checked = (field.value === savedData[key]);
+      continue;
+    }
+
+    if (field.type === 'checkbox') {
+      field.checked = !!savedData[key];
+      continue;
+    }
+
+    field.value = savedData[key];
+  }
+}
+
+function saveSelections(frm)
+{
+var form = frm || document.forms[0];
+if (!form) { return; }
+
+var payload = collectFormData(form);
+if (window.iamData && typeof window.iamData.updateFormData === 'function') {
+  window.iamData.updateFormData(getFormKey(), payload);
+  return;
+}
+
+localStorage.setItem(getFormKey() + '_fallback', JSON.stringify(payload));
+}
+
+function loadSelections(frm)
+{
+var form = frm || document.forms[0];
+if (!form) { return; }
+
+if (window.iamData && typeof window.iamData.getFormData === 'function') {
+  applyFormData(form, window.iamData.getFormData(getFormKey()));
+  return;
+}
+
+var raw = localStorage.getItem(getFormKey() + '_fallback');
+if (!raw) { return; }
+
+try {
+  applyFormData(form, JSON.parse(raw));
+} catch (e) {
+}
+}
+
+function selectdatum()
+{
+document.write("<select name='dd'>");
+
+var vandaag = new Date();
+var slctd = 1 + vandaag.getDate();
+for (var teller = 1; teller < 32; teller++)
+{
+var dag = teller;
+if (dag < 10) { dag = "0" + dag; }
+document.write("<option value='" + dag + "'");
+if (slctd == teller) { document.write(" selected='selected'"); }
+document.write(">" + dag + "</option>");
+}
+
+document.write("</select>/<select name='mm'>");
+
+vandaag = new Date();
+slctd = 1 + vandaag.getMonth();
+for (var teller2 = 1; teller2 < 13; teller2++)
+{
+var mnd = teller2;
+if (mnd < 10) { mnd = "0" + mnd; }
+document.write("<option value='" + mnd + "'");
+if (slctd == teller2) { document.write(" selected='selected'"); }
+document.write(">" + mnd + "</option>");
+}
+
+document.write("</select>/<select name='yyyy'>");
+
+var jaar = 1900 + vandaag.getYear();
+for (var teller3 = 0; teller3 < 5; teller3++)
+{
+document.write("<option value='" + (jaar + teller3) + "'>" + (jaar + teller3) + "</option>");
+}
+
+document.write("</select> <b>(dd/mm/yyyy)</b>");
+}
+
+function googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
+{
+var hetwindow = "http://www.google.com/calendar/event?action=TEMPLATE&text="+detekst+"&dates="+dedatum+"&details="+deopmerking+"&location="+delokatie+"&sprop="+desprop;
+window.open(hetwindow,"Google");
+}
 
 function achteraf()
 {
@@ -30,14 +174,26 @@ if (!document.analyseachteraf.plan.value)
 window.alert("Als ik niets wil leren van een uitglijder dan zit het er niet in dat ik een volgende keer iets geleerd heb... :-)");
 return;
 }
-detekst = "les geleerd?";
-dedatum=document.analyseachteraf.yyyy.value+document.analyseachteraf.mm.value+document.analyseachteraf.dd.value+"T220000Z/"+document.analyseachteraf.yyyy.value+document.analyseachteraf.mm.value+document.analyseachteraf.dd.value+"T222000Z";
-delokatie = document.analyseachteraf.waar.value;
-deopmerking = "Op controleerjeverslaving.nl zei ik dat ik wilde leren: ["+document.analyseachteraf.plan.value.trim()+"]";
-desprop="n.a.v.website:PraatmetHans.nl";
+detekst = encodeURIComponent("les geleerd?");
+dedatum = document.analyseachteraf.yyyy.value + document.analyseachteraf.mm.value + document.analyseachteraf.dd.value + "T220000Z/" + document.analyseachteraf.yyyy.value + document.analyseachteraf.mm.value + document.analyseachteraf.dd.value + "T222000Z";
+delokatie = encodeURIComponent(document.analyseachteraf.waar.value);
+deopmerking = encodeURIComponent("Op controleerjeverslaving.nl zei ik dat ik wilde leren: [" + document.analyseachteraf.plan.value.trim() + "]");
+desprop = encodeURIComponent("n.a.v.website:PraatmetHans.nl");
 googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
 }
 
+function hulp_scherm(hoogte,label,msg)
+{
+var vt0 = "<link rel='stylesheet' href='../css/forms.css' type='text/css' />";
+var vt1 = "<link rel='stylesheet' href='../css/mobile.css' type='text/css' />";
+var v1 = "<title>" + label + "</title>";
+var v2 = "<b>toelichting: " + label + "</b><p>";
+var v3 = "</p><form><p style='float:right'><input type=button value='sluit venster' onClick='self.close()'></p></form></body>";
+var speks = "height=" + hoogte + ",width=300,scrollbars=no";
+var popup = window.open("", "toelichting", speks);
+popup.document.write(vt0 + vt1 + v1 + v2 + msg + v3);
+popup.document.close();
+}
 
 function hulppagina()
 {
@@ -46,22 +202,22 @@ window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat
 
 function hulpscherm()
 {
-hulp_scherm(290,'analyse achteraf', 'Noem het uitglijer, noem het terugval... dat zijn maar woorden.<br/>Waar het om gaat is dat je op een gegeven moment blijkbaar gedacht hebt dat het een goed/lekker/leuk idee was om te gebruiken... en dat je daar dus achteraf weer echt <i>anders</i> over denkt. Waarschijnlijk is dat al vaker gebeurd -bij verslaving gebeurt dat namelijk vaker-<BR>Maar als je van <i>iedere</i> terugval iets leert voor de toekomst, dan is dat een belangrijke bron voor controle.')
+hulp_scherm(290,'analyse achteraf', 'Noem het uitglijer, noem het terugval... dat zijn maar woorden.<br/>Waar het om gaat is dat je op een gegeven moment blijkbaar gedacht hebt dat het een goed/lekker/leuk idee was om te gebruiken... en dat je daar dus achteraf weer echt <i>anders</i> over denkt. Waarschijnlijk is dat al vaker gebeurd -bij verslaving gebeurt dat namelijk vaker-<br/>Maar als je van <i>iedere</i> terugval iets leert voor de toekomst, dan is dat een belangrijke bron voor controle.');
 }
 
+window.addEventListener('load', function () {
+  loadSelections(document.forms[0]);
+});
+//-->
 </script>
-
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
 </head>
 <body>
 <div class="container">
-
 <div class="shadow"><div class="content">
 <div class="praatmethansheader">
 <p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
+<!--OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
 <h1 class="praatmethansheader"> analyse achteraf </h1>
 </div><div class="rechtsitalic">18 vragen: 25 - 50 minuten</div>
 <h1>Achteraf analyse van gebruik </h1>
@@ -76,7 +232,6 @@ OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmeth
     ervan leert dan is de kans beter dat je het niet zo vaak hoeft te herhalen.
     EN dan heeft het in ieder geval een nut gehad. <br />
   In de verslavingszorg wordt dit ook wel een "terugvalanalyse" genoemd</p>
-  
 
 <p style="text-align:right">
 <a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
@@ -92,20 +247,16 @@ OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmeth
 <a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
 <noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
 </div>
-<form name="analyseachteraf">
 
+<form name="analyseachteraf">
 <p>&nbsp;</p>
 <h1>De aanloop naar de uitglijer/terugval</h1>
 
 <b>Wanneer</b> is het gebeurd?<br/>
 <span style="text-align:center;">
-<script language="javascript">
- 
-selectdatum("");
--->
-</script>
+<script language="javascript">selectdatum("");</script>
 </span> <br />
-en hoe lang heeft het geduurd? <br /> 
+en hoe lang heeft het geduurd? <br />
 <textarea name="wanneer" cols="35" rows="2" class="praatmethansformtextarea" title="Wanneer is de terugval gebeurd? ( datum, tijdstip van-tot)"></textarea><br />
 <div class="praatmethansheader2">&quot;wanneer ?&quot;</div>
 <p>Met <b>wie</b> was je?<br/>
@@ -132,9 +283,8 @@ en hoe lang heeft het geduurd? <br />
  <textarea name="doendoorgebruik" cols="55" rows="4" class="praatmethansformtextarea" title="was het reustig of kon er juist gevoel uit, was je alleen of juist onder de mensen"></textarea>
  <br />
 </p>
-  
-  
- <div class="praatmethansheader2">&quot;gedrag door gebruik?&quot;</div><p></p>
+
+<div class="praatmethansheader2">&quot;gedrag door gebruik?&quot;</div><p></p>
 <p>&nbsp;</p>
 <hr class="formhr" />
 <h1>Na het gebruik</h1>
@@ -174,7 +324,7 @@ en hoe lang heeft het geduurd? <br />
 </tr>
 <tr><td class="praatmethanstd"><textarea name="voordelenanderen" cols="22" rows="3"></textarea></td><td class="praatmethanstd"><textarea name="nadelenanderen" cols="22" rows="3"></textarea></td></tr>
 </table>
-  <p>Achteraf gezien: had je eerder kunnen merken dat je trek aan het krijgen was? (en waar aan dan)    </p>
+  <p>Achteraf gezien: had je eerder kunnen merken dat je trek aan het krijgen was? (en waar aan dan)</p>
   <p>Wat heb je (achteraf gezien) <b>niet of onvoldoende gedaan</b> in de paar
     dagen voor de terugval?<br/><textarea name="onvoldoendevooraf" cols="55" rows="4" class="praatmethansformtextarea" title="te weinig mensen gezien waardoor de eenzaamheid te groot was, onvoldoende over gevoel gesproken waardoor het te hoog was opgelopen -ik noem maar voorbeelden-"></textarea></p><div class="praatmethansheader2">&quot;onvoldoende gedaan vooraf?&quot;</div>
 <p>&nbsp;</p>
@@ -186,7 +336,7 @@ en hoe lang heeft het geduurd? <br />
     <p>Wanneer je opnieuw in zo'n situatie komt, hoe zou je er dan anders mee
     om willen en kunnen gaan?<br/>
     <textarea name="plan" cols="55" rows="4" class="praatmethansformtextarea" title="als je van dit gebruik wilt leren dan is het handig om je te bedenken wat de les is voor de toekomst zodat je ongewenste situaties niet hoeft te herhalen"></textarea> &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="achteraf();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p><div class="praatmethansheader2">&quot;de les ervan?&quot;</div>
-</FORM>
+</form>
 <hr class="formhr" />
 <p>&nbsp;</p>
 <p></p><i>mogelijk wil je naar aanleiding van deze analyse ook nog even kijken naar de plannen rond gebruik:
@@ -194,13 +344,13 @@ en hoe lang heeft het geduurd? <br />
 	<li><a href="noodplan-forse-trek.htm" target="formulieren">noodplan bij forse trek</a></li>
 	<li><a href="plan-bij-uitglijden.htm" target="formulieren">plan bij uitglijden</a></li>
 	<li><a href="noodplan-wegglijden.htm" target="formulieren">noodplan bij wegglijden</a></li>
-	</ul></i>
+</ul></i>
 <p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
-
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
+Copyright 2012 Hans RJ West</i></p>
+<script language="javascript">
+document.write("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location + "'></p>");
+</script>
+<!-- /inhoud -->
 </div>
 </div>
 </div>

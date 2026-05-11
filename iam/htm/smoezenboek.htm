@@ -1,143 +1,263 @@
-<html>
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-)(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
-
-
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Smoezenboek</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smoezenboek</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    .page-shell {
+      max-width: 920px;
+      margin: 0 auto;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="controleerjeverslaving(.nl) is een product van PraatmetHans(.nl) om mensen te helpen om zelfstandig aan de slag te laten gaan met hun verslaving of afhankelijkheid middels verantwoorde formulieren." />
-<meta name="keywords" content="huisarts, poh, verslaving, addiction, zelfstandig, persoonlijk, formulieren, gesprek, keuze, controleerjeverslaving, PraatmetHans.nl" />
+    .page-header {
+      background: linear-gradient(135deg, #b45a3c 0%, #8d4ea1 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(78, 36, 26, 0.16);
+      margin-bottom: 1.5rem;
+    }
 
+    .page-header h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
 
+    .page-header p {
+      margin-bottom: 0;
+      max-width: 44rem;
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .top-links a {
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
 
-function hulpscherm()
-{
-hulp_scherm(320,'smoesjes voor jezelf','De laatste fase van trek kenmerkt zich meestal doordat het denken wordt meegevoerd door de trek.<br/>'+'Dan ontstaan meestal de smoesjes die je op de &eacute;&eacute;n-of-andere manier achteraf altijd beter herkent als smoes dan op dat moment. '+'Maar omdat je op dergelijke momenten meestal niet zo slim meer bent kan je ze mogelijk wel van te voren bedenken. De meeste mensen kennen de smoezen wel die zij tegen zichzelf zullen gaan vertellen.')
-}
+    .top-links a:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
 
-</script>
+    .intro-card,
+    .form-card,
+    .note-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 18px rgba(22, 50, 79, 0.07);
+    }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .eyebrow {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8d4ea1;
+      margin-bottom: 0.4rem;
+    }
+
+    .quote-note {
+      background: #fff8ef;
+      border-left: 4px solid #b45a3c;
+      padding: 0.9rem 1rem;
+      border-radius: 0 10px 10px 0;
+      color: #6f4c34;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .note-card {
+      background: #f9f4ff;
+      border-left: 4px solid #8d4ea1;
+    }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+
+    .action-bar button {
+      flex: 1 1 160px;
+    }
+
+    .follow-up-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+    }
+
+    .follow-up-links a {
+      display: inline-block;
+      background: #f1ecfb;
+      border: 1px solid #dbcdf2;
+      color: #5b3f80;
+      border-radius: 8px;
+      padding: 0.35rem 0.75rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .follow-up-links a:hover {
+      background: #e8ddf8;
+    }
+
+    .message {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border-left: 5px solid #8d4ea1;
+      background: #f9f4ff;
+      margin-bottom: 1rem;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      border-left-color: #c0392b;
+      background: #fdf0ee;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <div class="container">
+    <div class="page-shell">
+      <div class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./soorten-trek.htm">Soorten trek</a>
+          <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
+        </div>
+        <h1>Smoezenboek</h1>
+        <p>Welke smoesjes ga je jezelf vertellen als trek jouw denken begint mee te trekken? Als je die vooraf herkent, hoef je ze op het moment zelf minder serieus te nemen.</p>
+      </div>
 
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
+      <div id="message" class="message"></div>
 
-</script>
-</head>
-<body>
-<div class="shadow"><div class="content">
-<script language="javascript">
- 
-writelogo();
--->
-</script>
-<div class="praatmethansheader">
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">smoezenboek</h1>
-</div><div class="rechtsitalic">3 vragen: 15 - 30 minuten</div>
+      <section class="intro-card">
+        <span class="eyebrow">Uitgangspunt</span>
+        <h2>Herken de gedachte voordat je erin meegaat</h2>
+        <p>Een smoes is een gedachte die uitnodigt tot gedrag waar je achteraf spijt van krijgt. In de laatste fase van trek wordt denken vaak meegevoerd door die trek. Juist dan helpt het als je jouw favoriete smoezen al kent.</p>
+        <div class="quote-note">Voorbeeld: "Daar heb ik toch schijt aan" zonder te kijken op wiens bordje de gevolgen terechtkomen. Is dat op dat moment echt waar?</div>
+      </section>
 
-<h1>welke smoesjes ga je (jezelf)vertellen?</h1>
-<div class="printhide">
-<p> Een smoes is een 'meme', een gedachte. maar het is wel een gedachte die uitnodigt
-  tot gedrag waar je achteraf spijt van krijgt. Als je de smoesjes gaat herkennen
-  die je jezelf zult gaan vertellen, dan scheelt dat enorm op een dergelijk moment.
-  Dan hoef je jouw gedachten niet meer zo serieus te nemen. Sommige smoezen zijn
-  echt favoriet in bepaalde situaties.<br />
-  </p><div class="rechtsitalic">ik denk bijvoorbeeld aan &quot;daar heb ik toch schijt an&quot; (zonder dat je invult
-  waaraan of op wiens bordje dat geserveerd gaat worden, bijvoorbeeld) <b>is dat werkelijk zo?</b></div>
+      <form id="smoezenboekForm">
+        <section class="form-card">
+          <span class="eyebrow">Smoes 1</span>
+          <h2>Wat is mijn eerste favoriete smoes?</h2>
+          <label for="smoes01">Wat denk ik dat waar is als de trek groot genoeg is?</label>
+          <textarea id="smoes01" name="smoes01" rows="3" placeholder="Mijn typische gedachte op zo'n moment is..."></textarea>
+          <label for="ontkrachting01" style="margin-top: 1rem;">Waarom is dit een smoes en wat is er echt aan de hand?</label>
+          <textarea id="ontkrachting01" name="ontkrachting01" rows="3" placeholder="Nuchter bekeken klopt dit niet omdat..."></textarea>
+        </section>
 
+        <section class="form-card">
+          <span class="eyebrow">Smoes 2</span>
+          <h2>Wat is mijn tweede favoriete smoes?</h2>
+          <label for="smoes02">Welke gedachte stuurt mijn gedrag dan?</label>
+          <textarea id="smoes02" name="smoes02" rows="3" placeholder="Nog een typische gedachte is..."></textarea>
+          <label for="ontkrachting02" style="margin-top: 1rem;">Waarom is dit een smoes en wat is er echt aan de hand?</label>
+          <textarea id="ontkrachting02" name="ontkrachting02" rows="3" placeholder="Wat klopt hier niet aan als ik helder nadenk?"></textarea>
+        </section>
 
+        <section class="form-card">
+          <span class="eyebrow">Smoes 3</span>
+          <h2>Wat is mijn derde favoriete smoes?</h2>
+          <label for="smoes03">Wat denk ik dat "heus waar" is bij stevige trek?</label>
+          <textarea id="smoes03" name="smoes03" rows="3" placeholder="Een derde gedachte die vaak terugkomt is..."></textarea>
+          <label for="ontkrachting03" style="margin-top: 1rem;">Waarom is dit een smoes en wat is er echt aan de hand?</label>
+          <textarea id="ontkrachting03" name="ontkrachting03" rows="3" placeholder="Hoe ontkracht ik dit nuchter?"></textarea>
+        </section>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <section class="note-card">
+          <p>Handig: neem deze smoezen ook mee in je plannen en noodplannen, zodat je op moeilijke momenten niet hoeft te improviseren.</p>
+          <div class="follow-up-links">
+            <a href="./noodplan-forse-trek.htm">Noodplan forse trek</a>
+            <a href="./plan-bij-uitglijden.htm">Plan bij uitglijden</a>
+            <a href="./noodplan-wegglijden.htm">Noodplan wegglijden</a>
+          </div>
+        </section>
 
+        <div class="action-bar">
+          <button type="button" onclick="saveForm()">Opslaan</button>
+          <button type="button" onclick="window.print()">Afdrukken</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-</div>
-<form name="smoezen">
-<h1>smoezen (uit eigen werk) ;-)</h1>
-<p>Wat zijn uiteindelijk de drie smoezen die ik het meest gebruik, wat zijn mijn
-  meest favoriete smoezen (op d&agrave;t moment!).</p>
-<p>Smoes 01<br />
-<textarea name="smoes01" class="praatmethansformtextarea" cols="55" rows="3" title="Wat denk ik dat waar is als de trek groot genoeg is geworden om de inhoud van mijn denken te bepalen?"></textarea>
-</p>
-<p>Waarom is dit een smoes en wat is er eigenlijk &egrave;cht aan de hand dan? (01)<br />
-<textarea name="ontkrachting01" class="praatmethansformtextarea" cols="55" rows="3" title="Wat klopt er niet aan deze gedachte, als ik daar nuchter over nadenk?"></textarea></p><div class="praatmethansheader2">&quot;DE number 01 smoes :-)&quot;</div>
-<p>&nbsp;</p>
-<p>Smoes 02<br />
-    <textarea name="smoes02" class="praatmethansformtextarea" cols="55" rows="3" title="Wat denk ik dat waarheid is als de trek groot genoeg is geworden om mijn denken te gaan sturen?"></textarea>
-</p>
-<p>Waarom is dit een smoes en wat is er eigenlijk &egrave;cht aan de hand dan? (02)<br />
-<textarea name="ontkrachting02" class="praatmethansformtextarea" cols="55" rows="3" title="Wat klopt er niet aan deze gedachte, als ik daar nuchter over nadenk?"></textarea></p><div class="praatmethansheader2">&quot;de number 02 smoes ;-) &quot;</div>
-<p>&nbsp;</p>
-<p>Smoes 03<br />
-    <textarea name="smoes03" class="praatmethansformtextarea" cols="55" rows="3" title="Wat denk ik dat heus waar is als de trek groot genoeg is geworden om mijn denken verder te bepalen?"></textarea>
-</p>
-<p>Waarom is dit een smoes en wat is er eigenlijk &egrave;cht aan de hand dan?
-  (03)<br />
-<textarea name="ontkrachting03" class="praatmethansformtextarea" cols="55" rows="3" title="Wat klopt er niet aan deze gedachte, als ik daar nuchter over nadenk?"></textarea></p><div class="praatmethansheader2">&quot; en de No 03 favoriete smoes ;-)&quot;</div>
-<p>&nbsp;</p>
-</form><hr class="formhr" />
-<p><i>Het is handig om deze smoezen ook nog even terug te laten komen in de manier
-    waarop je over jouw plannen en zelfs noodplannen denkt.:</i></p>
+  <script>
+    const formType = 'smoezenboek';
+    const fieldNames = ['smoes01', 'ontkrachting01', 'smoes02', 'ontkrachting02', 'smoes03', 'ontkrachting03'];
 
-<i><ul>
-	<li><a href="noodplan-forse-trek.htm" target="formulieren">noodplan bij forse trek</a></li>
-	<li><a href="plan-bij-uitglijden.htm" target="formulieren">plan bij uitglijden</a></li>
-	<li><a href="noodplan-wegglijden.htm" target="formulieren">noodplan bij wegglijden</a></li>
-	</ul></i>
-<p></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    function fillForm(data) {
+      fieldNames.forEach((name) => {
+        const element = document.getElementById(name);
+        if (element && data[name] !== undefined) {
+          element.value = data[name];
+        }
+      });
+    }
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div>
-</div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function collectForm() {
+      const data = {};
+      fieldNames.forEach((name) => {
+        const element = document.getElementById(name);
+        if (element) {
+          data[name] = element.value;
+        }
+      });
+      return data;
+    }
+
+    function saveForm() {
+      if (typeof iamData !== 'undefined') {
+        iamData.setFormData(formType, collectForm());
+      }
+      showMessage('Opgeslagen.', false);
+    }
+
+    function showMessage(text, isError) {
+      const element = document.getElementById('message');
+      element.textContent = text;
+      element.className = 'message show' + (isError ? ' error' : '');
+      clearTimeout(showMessage.timeoutId);
+      showMessage.timeoutId = setTimeout(() => {
+        element.className = 'message';
+      }, 2600);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof iamData !== 'undefined') {
+        fillForm(iamData.getFormData(formType) || {});
+      }
+
+      document.getElementById('smoezenboekForm').addEventListener('input', () => {
+        saveForm();
+      });
+    });
+  </script>
+  <script src="../js/dataStore.js"></script>
+  <script src="../js/legacyFormSync.js"></script>
 </body>
 </html>

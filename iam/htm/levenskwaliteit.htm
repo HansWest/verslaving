@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wat is verslaving voor jou?</title>
+  <title>Levenskwaliteit</title>
   <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
   <link rel="stylesheet" href="../css/forms.css" type="text/css" />
   <style>
@@ -11,33 +11,28 @@
       max-width: 920px;
       margin: 0 auto;
     }
-
     .page-header {
-      background: linear-gradient(135deg, #3e6a87 0%, #6f86b8 100%);
+      background: linear-gradient(135deg, #3a7a71 0%, #4b6ba8 100%);
       color: white;
       padding: 1.5rem;
       border-radius: 20px;
-      box-shadow: 0 18px 40px rgba(30, 53, 86, 0.16);
+      box-shadow: 0 18px 40px rgba(22, 50, 79, 0.16);
       margin-bottom: 1.5rem;
     }
-
     .page-header h1 {
       margin-bottom: 0.5rem;
       font-size: 2rem;
     }
-
     .page-header p {
       margin-bottom: 0;
       max-width: 44rem;
     }
-
     .top-links {
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
       margin-bottom: 1rem;
     }
-
     .top-links a {
       color: white;
       border: 1px solid rgba(255, 255, 255, 0.35);
@@ -47,11 +42,9 @@
       text-decoration: none;
       font-size: 0.9rem;
     }
-
     .top-links a:hover {
       background: rgba(255, 255, 255, 0.22);
     }
-
     .intro-card,
     .form-card,
     .note-card {
@@ -61,46 +54,46 @@
       margin-bottom: 1.25rem;
       box-shadow: 0 4px 18px rgba(22, 50, 79, 0.07);
     }
-
     .eyebrow {
       display: block;
       font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #3e6a87;
+      color: #3a7a71;
       margin-bottom: 0.4rem;
     }
-
     .note-card {
-      background: #f3f8fe;
-      border-left: 4px solid #6f86b8;
+      background: #f3faf7;
+      border-left: 4px solid #3a7a71;
     }
-
+    .inline-link {
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .inline-link:hover {
+      text-decoration: underline;
+    }
     .action-bar {
       display: flex;
       gap: 0.75rem;
       flex-wrap: wrap;
       margin-top: 1.25rem;
     }
-
     .action-bar button {
       flex: 1 1 160px;
     }
-
     .message {
       display: none;
       padding: 0.75rem 1rem;
       border-radius: 10px;
-      border-left: 5px solid #3e6a87;
-      background: #eef6ff;
+      border-left: 5px solid #3a7a71;
+      background: #edf8f5;
       margin-bottom: 1rem;
     }
-
     .message.show {
       display: block;
     }
-
     .message.error {
       border-left-color: #c0392b;
       background: #fdf0ee;
@@ -113,46 +106,56 @@
       <div class="page-header">
         <div class="top-links">
           <a href="./index.htm">Terug naar overzicht</a>
-          <a href="./wat-is-mijn-ik.htm">Wie ben ik?</a>
-          <a href="./persoonlijke-waarden.htm">Mijn waarden</a>
+          <a href="./evenwicht.htm">Evenwicht</a>
+          <a href="./levensdoelen-stellen.htm">Levensdoelen</a>
         </div>
-        <h1>Wat is verslaving voor jou?</h1>
-        <p>In een paar zinnen: wat betekent verslaving in jouw ogen? Gebruik het bio-psycho-sociale raamwerk als denkhulp.</p>
+        <h1>Levenskwaliteit</h1>
+        <p>Deze oefening helpt je het tegenovergestelde van verslaving concreet te maken: wat is kwaliteit van leven voor jou, welke waarden horen daarbij, en welk gedrag laat dat zien?</p>
       </div>
 
       <div id="message" class="message"></div>
 
       <section class="intro-card">
         <span class="eyebrow">Uitgangspunt</span>
-        <h2>Complex probleem, meerdere lagen</h2>
-        <p>De moderne wetenschap ziet verslaving als een chronische bio-psycho-sociale aandoening. Dat is niet bedoeld als etiket, maar als raamwerk om gerichter na te denken over wat er precies speelt in jouw leven.</p>
-        <p>Probeer daarom deze drie gebieden aandacht te geven in je antwoord op de vraag: <strong>wat is verslaving in jouw ogen?</strong></p>
+        <h2>Onderzoek van het tegenovergestelde</h2>
+        <p>Soms zie je scherper waar je vanaf wilt, door te onderzoeken waar je naartoe wilt. Als verslaving jouw levenskwaliteit verkleint, dan is levenskwaliteit bouwen een richting die je elke dag kunt oefenen.</p>
       </section>
 
-      <form id="jouwVerslavingForm">
+      <form id="levenskwaliteitForm">
         <section class="form-card">
-          <span class="eyebrow">Biologie</span>
-          <h2>Wat is verslaving biologisch gezien?</h2>
-          <label for="bio">Lichamelijke kant: gezondheid, energie, honger, kater, lust, vermogen om te genieten</label>
-          <textarea id="bio" name="bio" rows="5" placeholder="Wat merk ik in mijn lichaam? Wat doet gebruik biologisch met mij?"></textarea>
+          <span class="eyebrow">Kernvraag</span>
+          <h2>Wat is kwaliteit van leven voor mij?</h2>
+          <label for="kwaliteitDefinitie">Beschrijf in je eigen woorden wat levenskwaliteit voor jou betekent.</label>
+          <textarea id="kwaliteitDefinitie" name="kwaliteitDefinitie" rows="4" placeholder="Wanneer voelt mijn leven waardevol, kloppend en vrij?"></textarea>
         </section>
 
         <section class="form-card">
-          <span class="eyebrow">Psychologie</span>
-          <h2>Wat is verslaving psychologisch gezien?</h2>
-          <label for="Psycho">Gedachten, overtuigingen en gevoelens</label>
-          <textarea id="Psycho" name="Psycho" rows="5" placeholder="Wat geloof ik hierover? Welke gedachten en gevoelens spelen mee?"></textarea>
+          <span class="eyebrow">Beeld Naar Woorden</span>
+          <h2>Welk beeld past bij mijn levenskwaliteit?</h2>
+          <label for="beeldUrl">URL van een beeld dat voor jou levenskwaliteit uitdrukt (optioneel)</label>
+          <input id="beeldUrl" name="beeldUrl" type="url" maxlength="300" placeholder="https://..." />
+
+          <label for="beeldWoorden" style="margin-top: 1rem;">Welke woorden passen bij dat beeld?</label>
+          <textarea id="beeldWoorden" name="beeldWoorden" rows="3" placeholder="Bijvoorbeeld: rust, kracht, verbinding, lichtheid, helderheid..."></textarea>
+
+          <label for="beeldWaarden" style="margin-top: 1rem;">Welke persoonlijke waarden herken je hierin?</label>
+          <textarea id="beeldWaarden" name="beeldWaarden" rows="3" placeholder="Bijvoorbeeld: eerlijkheid, zorg, vrijheid, trouw, verantwoordelijkheid..."></textarea>
+
+          <p style="margin-top: 0.9rem;">Tip: gebruik dit samen met <a class="inline-link" href="./persoonlijke-waarden.htm">persoonlijke waarden</a> als je jouw woorden verder wilt aanscherpen.</p>
         </section>
 
         <section class="form-card">
-          <span class="eyebrow">Sociaal</span>
-          <h2>Wat is verslaving sociaal gezien?</h2>
-          <label for="Sociaal">Vriendschap, werk, studie, relaties, omgeving</label>
-          <textarea id="Sociaal" name="Sociaal" rows="5" placeholder="Wat betekent dit voor mijn omgeving en mijn relatie met anderen?"></textarea>
+          <span class="eyebrow">Van Inzicht Naar Gedrag</span>
+          <h2>Wat ga ik doen om mezelf levenskwaliteit te geven?</h2>
+          <label for="kwaliteitActies">Welke acties maken levenskwaliteit zichtbaar in jouw dagelijkse leven?</label>
+          <textarea id="kwaliteitActies" name="kwaliteitActies" rows="4" placeholder="Wat ga ik vaker doen, anders doen, of laten om mijn levenskwaliteit te versterken?"></textarea>
+
+          <label for="eersteStap" style="margin-top: 1rem;">Wat is de eerste kleine stap binnen 24 uur?</label>
+          <textarea id="eersteStap" name="eersteStap" rows="2" placeholder="Een haalbare stap die ik vandaag of morgen echt ga zetten."></textarea>
         </section>
 
         <section class="note-card">
-          <p>Als verslaving inderdaad ook een neurologische en chronische aandoening is, helpt het om te leren kennen wat die aandoening concreet betekent voor jouw denken, voelen en handelen.</p>
+          <p>Je hoeft niet meteen groots te veranderen. Levenskwaliteit groeit vaak via kleine, herhaalbare keuzes. Koppel dit formulier eventueel aan <a class="inline-link" href="./genieten-belonen.htm">genieten &amp; belonen</a> en <a class="inline-link" href="./plan-van-aanpak.htm">plan van aanpak</a>.</p>
         </section>
 
         <div class="action-bar">
@@ -164,8 +167,8 @@
   </div>
 
   <script>
-    const formType = 'jouw-verslaving';
-    const fieldNames = ['bio', 'Psycho', 'Sociaal'];
+    const formType = 'levenskwaliteit';
+    const fieldNames = ['kwaliteitDefinitie', 'beeldUrl', 'beeldWoorden', 'beeldWaarden', 'kwaliteitActies', 'eersteStap'];
 
     function fillForm(data) {
       fieldNames.forEach((name) => {
@@ -209,7 +212,7 @@
         fillForm(iamData.getFormData(formType) || {});
       }
 
-      document.getElementById('jouwVerslavingForm').addEventListener('input', () => {
+      document.getElementById('levenskwaliteitForm').addEventListener('input', () => {
         saveForm();
       });
     });
