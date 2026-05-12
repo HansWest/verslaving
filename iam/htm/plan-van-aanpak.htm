@@ -470,6 +470,31 @@
         </div>
 
         <section class="question-card">
+          <h2>6b. Triggers uit mijn risico-inventaris</h2>
+          <p style="margin: 0 0 1rem; color: #4d6270; font-size: 0.95rem;">Koppel je plan aan de risico's die je hebt geïdentificeerd. Dit helpt je herkennen wanneer het plan nodig is.</p>
+          
+          <div class="form-group">
+            <label style="font-weight: 700; display: block; margin-bottom: 0.6rem;">Risico-situaties:</label>
+            <div id="triggerSituations" style="display: grid; gap: 0.35rem; margin-bottom: 1rem;"></div>
+          </div>
+
+          <div class="form-group">
+            <label style="font-weight: 700; display: block; margin-bottom: 0.6rem;">Risico-activiteiten:</label>
+            <div id="triggerActivities" style="display: grid; gap: 0.35rem; margin-bottom: 1rem;"></div>
+          </div>
+
+          <div class="form-group">
+            <label style="font-weight: 700; display: block; margin-bottom: 0.6rem;">Risico-mensen:</label>
+            <div id="triggerPeople" style="display: grid; gap: 0.35rem; margin-bottom: 1rem;"></div>
+          </div>
+
+          <div class="action-bar">
+            <button type="button" class="button-secondary" id="loadTriggersButton">Laad triggers uit mijn risico-pagina's</button>
+            <button type="button" class="button-secondary" id="saveTriggerSelectionButton" disabled>Opslaan geselecteerde triggers</button>
+          </div>
+        </section>
+
+        <section class="question-card">
           <h2>7. Plan A</h2>
           <div class="form-group">
             <label for="planA">Welke acties ga je doen, en met wie?</label>
@@ -532,6 +557,7 @@
   </div>
 
   <script src="../js/dataStore.js"></script>
+  <script src="../js/triggerLoader.js"></script>
   <script>
     const formKey = 'plan-van-aanpak';
     const REGULATION_FORM_KEY = 'craving-1-10';
@@ -1156,6 +1182,29 @@
       document.getElementById('weeklyReviewOpen').addEventListener('click', () => {
         window.location.href = 'index.htm#weeklyReviewCard';
       });
+
+      // Trigger loader
+      document.getElementById('loadTriggersButton').addEventListener('click', () => {
+        const triggers = iamTriggerLoader.getTriggers(iamData);
+        iamTriggerLoader.renderMultiSelect('triggerSituations', triggers.situations, 'situation');
+        iamTriggerLoader.renderMultiSelect('triggerActivities', triggers.activities, 'activity');
+        iamTriggerLoader.renderMultiSelect('triggerPeople', triggers.people, 'person');
+        document.getElementById('saveTriggerSelectionButton').disabled = false;
+        showMessage('Triggers geladen. Kies welke voor jou relevant zijn.');
+      });
+
+      document.getElementById('saveTriggerSelectionButton').addEventListener('click', () => {
+        const selected = iamTriggerLoader.getSelectedTriggers({
+          situations: 'triggerSituations',
+          activities: 'triggerActivities',
+          people: 'triggerPeople'
+        });
+        const formData = collectFormData();
+        formData.selectedTriggers = selected;
+        iamData.updateFormData(formKey, formData);
+        showMessage('Geselecteerde triggers opgeslagen bij je plan van aanpak.');
+      });
+
       window.addEventListener('focus', () => {
         loadRegulationFields();
         renderWeeklyReviewPrompt();

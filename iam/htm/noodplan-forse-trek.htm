@@ -410,11 +410,16 @@
               <div class="form-group">
                 <label for="doen">Wat doe je direct als trek hard stijgt?</label>
                 <textarea id="doen" placeholder="Bijv. douchen, water drinken, schoenen aan en lopen, ademprotocol..."></textarea>
+                <div class="cue">Focus op wat je WEL gaat doen. In piek-trek werkt concreet doen vaak beter dan alleen verbieden.</div>
               </div>
               <div class="form-group">
                 <label for="steunnetwerk">Wie bel/app je direct uit je steunnetwerk?</label>
                 <textarea id="steunnetwerk" placeholder="Naam + nummer + wat je vraagt (bijv. 15 min aan de lijn blijven)"></textarea>
                 <div class="cue">Hoe specifieker je hulpvraag, hoe groter de kans dat je die hulp ook krijgt.</div>
+              </div>
+              <div class="form-group">
+                <label for="anderenDoen">Wat kunnen anderen concreet voor jou doen op zo'n moment?</label>
+                <textarea id="anderenDoen" placeholder="Bijv. bij je blijven, met je meelopen, sleutels bewaren, mee naar veilige plek."></textarea>
               </div>
             </div>
           </section>
@@ -444,6 +449,11 @@
                 <label for="piekeren">Welke piekergedachten stel je uit?</label>
                 <textarea id="piekeren" placeholder="Wat parkeer je tijdelijk omdat je in piek toch geen goed besluit neemt?"></textarea>
                 <div class="cue">Uitstellen van piekeren is ook een vorm van actief doen.</div>
+              </div>
+              <div class="form-group">
+                <label for="smoezenSignalen">Welke smoezen wil je op tijd herkennen?</label>
+                <textarea id="smoezenSignalen" placeholder="Bijv. 'eentje kan wel', 'morgen begin ik echt', 'ik heb dit nu verdiend'."></textarea>
+                <div class="cue">Zie ook <a href="./smoezenboek.htm">smoezenboek</a>: herkenning verkleint impuls-keuzes.</div>
               </div>
             </div>
           </section>
@@ -517,10 +527,12 @@
     const fields = [
       'doen',
       'steunnetwerk',
+      'anderenDoen',
       'schrappen',
       'omgeving',
       'ratio',
       'piekeren',
+      'smoezenSignalen',
       'sosSignaal',
       'herstelstap'
     ];
@@ -657,12 +669,20 @@
         addNudge(nudges, 'Je hebt al een doe-plan. Wie schakel je concreet in als extra anker tijdens piek-trek?');
       }
 
+      if (formData.steunnetwerk && !formData.anderenDoen) {
+        addNudge(nudges, 'Je hebt steunpersonen gekozen. Zet ook concreet wat zij precies voor je doen tijdens piek-trek.');
+      }
+
       if (formData.schrappen && !formData.omgeving) {
         addNudge(nudges, 'Je weet wat je wilt schrappen. Welke directe omgevingsmaatregel maakt dat nu makkelijker?');
       }
 
       if (formData.ratio && !formData.piekeren) {
         addNudge(nudges, 'Sterk: je hebt rationele zinnen. Welke piekergedachten parkeer je bewust tot later?');
+      }
+
+      if ((formData.ratio || formData.piekeren) && !formData.smoezenSignalen) {
+        addNudge(nudges, 'Welke typische smoezen trekken jou richting gebruik? Schrijf 2-3 signalen op zodat je ze sneller herkent.');
       }
 
       if (!formData.sosSignaal && calculateProgress(formData) >= 50) {

@@ -91,15 +91,6 @@
             <label for="presetSituation">Kies een voorbeeldsituatie (optioneel)</label>
             <select id="presetSituation">
               <option value="">Kies een situatie</option>
-              <option>Als ik langer in cafees zit.</option>
-              <option>Als ik klaar ben met werk en wil ontladen.</option>
-              <option>Als ik ruzie heb met partner, familie of vrienden.</option>
-              <option>Als anderen gebruiken in mijn omgeving.</option>
-              <option>Als ik me ontevreden of leeg voel.</option>
-              <option>Als ik iets te vieren heb.</option>
-              <option>Als ik langs een plek loop waar ik eerder haalde of gebruikte.</option>
-              <option>Als ik moe ben en stress oploopt.</option>
-              <option>Als er feestdagen of vakanties zijn.</option>
             </select>
           </div>
           <div class="form-group mt-2">
@@ -171,9 +162,11 @@
     </div>
   </div>
 
+  <script src="../js/optionsLoader.js"></script>
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'risico-situaties';
+    const presetOptionsUrl = '../assets/options/risico-situaties.json';
     const fields = [
       'situationDraft',
       'riskySituations',
@@ -184,6 +177,57 @@
       'nextRiskLabel',
       'responsePlan'
     ];
+
+    const presetFallback = {
+      groups: [
+        {
+          label: 'Sociaal en omgeving',
+          items: [
+            'Als anderen gebruiken in mijn omgeving.',
+            'Als mensen aandringen dat ik iets drink of gebruik.',
+            'Als iemand mij middelen aanbiedt.',
+            'Als ik op bruiloften of recepties ben.',
+            'Als ik net heb gesport en in de kantine ben.',
+            'Als ik kijk naar anderen die hun gebruik wel in de hand lijken te hebben.'
+          ]
+        },
+        {
+          label: 'Plekken en context',
+          items: [
+            'Als ik langer in cafees zit.',
+            'Als ik langs een plek loop waar ik eerder haalde of gebruikte.',
+            'Als er feestdagen of vakanties zijn.',
+            'Als ik op vakantie ben.',
+            'Als ik gebruik zie op tv, online of in films.',
+            'Als het mooi weer is en iedereen buiten zit.'
+          ]
+        },
+        {
+          label: 'Gevoelens en gedachten',
+          items: [
+            'Als ik me gelukkig of lekker wil voelen.',
+            'Als ik me ontevreden of leeg voel.',
+            'Als ik het gevoel heb dat alles misgaat.',
+            'Als alles weer goed gaat.',
+            'Als ik iets te vieren heb.',
+            'Als het regent en ik me somber of opgesloten voel.'
+          ]
+        },
+        {
+          label: 'Stress en belasting',
+          items: [
+            'Als ik klaar ben met werk en wil ontladen.',
+            'Als ik ruzie heb met partner, familie of vrienden.',
+            'Als ik moe ben en stress oploopt.',
+            'Als ik iets moet doen waar ik erg tegenop zie.',
+            'Als ik financiele problemen heb.',
+            'Als ik lichamelijke pijn heb.',
+            'Als er iemand overlijdt die belangrijk voor me is.',
+            'Als ik alcohol of drugs ruik.'
+          ]
+        }
+      ]
+    };
 
     function getDefaultData() {
       const data = {};
@@ -248,6 +292,15 @@
       saveForm(false);
     }
 
+    async function loadSituationOptions() {
+      await iamOptionsLoader.loadSelectOptions({
+        selectId: 'presetSituation',
+        url: presetOptionsUrl,
+        placeholder: 'Kies een situatie',
+        fallback: presetFallback
+      });
+    }
+
     function firstNonEmpty(items) {
       return items.find((item) => typeof item === 'string' && item.trim()) || '';
     }
@@ -304,6 +357,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
+      loadSituationOptions();
 
       const preset = document.getElementById('presetSituation');
       const draft = document.getElementById('situationDraft');

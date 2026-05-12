@@ -230,7 +230,42 @@
 <div class="intro-card">
     <h2>Wat is "wegglijden"?</h2>
     <p>Een <strong>uitglijder</strong> is één keer gebruik en weer oppakken. <strong>Wegglijden</strong> is langer de controle kwijt zijn. Dit plan helpt jou en je steun om snel in te grijpen.</p>
+    <p style="margin-top: 1rem; padding-top: 0.75rem; font-size: 0.9rem; color: #555; line-height: 1.5;"><em>Waarom is wegglijden zo anders?</em> Bij verslaving wordt je brein zo gekaapt dat dingen "belangrijk" voelen die je eigenlijk niet wilt. Daardoor voelt de volgende eenheid niet als keuze, maar als <em>noodzaak</em>. Dan is gewoon zeggen "ik ga niet gebruikt" niet realistisch. Ongewone maatregelen kunnen nodig zijn.</p>
     <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">Het plan bevat drie delen: <strong>Schadebeperkingsplan</strong> (wat stop je direct?), <strong>Allianties</strong> (wie helpt?) en <strong>Oppakken</strong> (hoe kom je eruit?).</p>
+</div>
+
+<div class="section-header">
+    <h2>🧭 Jouw definities en signalen</h2>
+</div>
+
+<div class="form-group">
+    <label for="definitieUitglijder">Wat is voor jou persoonlijk een uitglijder?</label>
+    <div class="hint">Maak dit concreet: wanneer noem jij het nog een uitglijder en geen wegglijder?</div>
+    <textarea id="definitieUitglijder" name="definitieUitglijder" placeholder="Bijv. Eenmalig gebruik, direct eerlijk melden, plan binnen 24 uur hervatten."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="definitieWegglijden">Wat is voor jou persoonlijk wegglijden?</label>
+    <div class="hint">Beschrijf hoe dit er voor jou of je omgeving uitziet als controle echt wegvalt.</div>
+    <textarea id="definitieWegglijden" name="definitieWegglijden" placeholder="Bijv. Meerdere dagen gebruik, afspraken ontwijken, plan loslaten, geheimhouding."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="herkennenAchteraf">Hoe herken je achteraf het verschil?</label>
+    <div class="hint">Wat zie je achteraf dat aangeeft: dit was niet alleen een moment, dit ging verder?</div>
+    <textarea id="herkennenAchteraf" name="herkennenAchteraf" placeholder="Bijv. Keten van smoezen, oplopende schade, minder contact met steun, meer isolatie."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="herkennenVooraf">Hoe herken je vooraf dat je richting wegglijden gaat?</label>
+    <div class="hint">Welke vroege signalen wil jij en je steun serieus nemen?</div>
+    <textarea id="herkennenVooraf" name="herkennenVooraf" placeholder="Bijv. Slecht slapen + afspraken afzeggen + niet meer delen wat er speelt."></textarea>
+</div>
+
+<div class="form-group">
+    <label for="definitieTerugval">Wat betekent terugval voor jou?</label>
+    <div class="hint">Jouw werkdefinitie helpt discussies voorkomen en maakt sneller ingrijpen mogelijk.</div>
+    <textarea id="definitieTerugval" name="definitieTerugval" placeholder="Bijv. Terugvallen is voor mij: opnieuw vastlopen in oud patroon zonder tijdige correctie."></textarea>
 </div>
 
 <!-- ── SCHADEBEPERKINGSPLAN ──────────────────────────── -->
@@ -320,12 +355,12 @@
 
 <div class="form-group">
     <label for="minimaleStappen">Eerste herstelstappen na wegglijden</label>
-    <div class="hint">Slapen, eten, medicatie, PrEP-schema, doktersbezoek. Wat moet je echt minimaal doen?</div>
-    <textarea id="minimaleStappen" name="minimaleStappen" placeholder="Bijv. 8 uur slapen, goed eten, mijn antidepressiva hervatten, PrEP op schema, huisarts bellen..."></textarea>
+    <div class="hint">Focus op biologisch herstel: slaap, voeding, medicatie, energie, vermogen tot genot. Ook doktersbezoek. Wat moet je echt minimaal doen?</div>
+    <textarea id="minimaleStappen" name="minimaleStappen" placeholder="Bijv.\nVergiftiging/medicijn: antidepressiva, antiretroviralen hervatten.\nHonger/energie: eerst 3x goed eten, dan bewegen.\nVermogen genot: favoriete muziek, warme douche, iets lekkers.\nEventueel: huisarts bellen, bloedwerk, check PrEP-schema."></textarea>
 </div>
 
 <div class="insight-box">
-    <strong>💪 Sleutelboodschap:</strong> Dit plan is geen zwakte. Het is zelfzorg en vooruitdenken.
+    <strong>💪 Sleutelboodschap:</strong> Dit plan is geen zwakte. Het is zelfzorg en vooruitdenken. Ongewone maatregelen (geld afgeven, bepaalde plekken of mensen vermijden, hulp vragen) zijn soms niet te vermijden — zíj helpen jou.
 </div>
 
 <!-- ── ACTION BAR ──────────────────────────────────── -->
@@ -344,6 +379,11 @@
 <script src="../js/dataStore.js"></script>
 <script>
     const fields = [
+        'definitieUitglijder',
+        'definitieWegglijden',
+        'herkennenAchteraf',
+        'herkennenVooraf',
+        'definitieTerugval',
         'mensenopdehoogte',
         'geldmiddelen',
         'welGaanDoen',

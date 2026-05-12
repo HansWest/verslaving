@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Risico-inventarisatie Mensen</title>
+  <title>Risico-inventarisatie: Mensen</title>
   <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
   <link rel="stylesheet" href="../css/forms.css" type="text/css" />
   <style>
@@ -58,6 +58,36 @@
     .message { display: none; border-left: 4px solid #5a8840; }
     .message.show { display: block; }
     .message.error { border-left-color: var(--page-accent); }
+    .person-card {
+      background: rgba(255,255,255,0.94);
+      border-left: 4px solid var(--page-main);
+      border-radius: 8px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+    }
+    .person-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .person-info h3 { margin: 0 0 0.3rem; color: var(--page-main); font-weight: 600; }
+    .person-meta { font-size: 0.9rem; color: #666; margin-bottom: 0.3rem; }
+    .risico-badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+    .risico-badge { 
+      display: inline-block;
+      background: var(--page-accent);
+      color: #fff;
+      padding: 0.25rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+    .person-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .person-actions button { padding: 0.4rem 0.8rem; font-size: 0.85rem; }
+    .person-details { margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(0,0,0,0.1); display: grid; gap: 0.6rem; }
+    .detail-item label { display: block; font-weight: 600; font-size: 0.9rem; color: #333; margin-bottom: 0.2rem; }
+    .detail-item p { margin: 0; font-size: 0.9rem; color: #555; white-space: pre-wrap; }
+    #risicoMensenList { margin-top: 1rem; }
+    #risicoForm { display: none; }
+    #risicoForm.visible { display: block; }
+    .checkbox-group { display: grid; gap: 0.5rem; }
+    .checkbox-group label { display: flex; gap: 0.5rem; align-items: center; font-weight: normal; }
+    .checkbox-group input { cursor: pointer; }
   </style>
 </head>
 <body>
@@ -76,166 +106,312 @@
       <div id="message" class="message"></div>
 
       <section class="intro-card">
-        <h2>Mogelijke risicotypes</h2>
-        <ul class="helper-list">
-          <li>Mensen die onbedoeld gebruik mogelijk maken of normaliseren.</li>
-          <li>Mensen die je overbelasten of in oude rollen trekken.</li>
-          <li>Mensen die sterke risicogevoelens oproepen.</li>
-        </ul>
+        <h2>Jouw risicomensen</h2>
+        <p>Voeg personen toe, bewerk ze later, en koppel ze aan plannen.</p>
       </section>
 
-      <form id="risicoMensenForm">
-        <div class="grid-two">
-          <section class="question-card">
-            <h2>Over wie gaat het?</h2>
-            <div class="form-group">
-              <label for="personName">Naam, bijnaam of rol</label>
-              <input id="personName" type="text" placeholder="Bijvoorbeeld: collega X, broer, oude vriendengroep" />
-            </div>
-            <div class="form-group mt-2">
-              <label for="closenessScore">Hoe dichtbij staat deze persoon (0-10)?</label>
-              <input id="closenessScore" type="number" min="0" max="10" step="1" />
-            </div>
-          </section>
-          <section class="question-card">
-            <h2>In welke situatie wordt het risicovol?</h2>
-            <div class="form-group">
-              <label for="riskySituationWithPerson">Wanneer of waar merk je risico met deze persoon?</label>
-              <textarea id="riskySituationWithPerson" rows="5"></textarea>
-            </div>
-          </section>
-        </div>
+      <div class="action-bar">
+        <button type="button" class="button-primary" id="addPersonButton">+ Voeg persoon toe</button>
+        <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+        <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+      </div>
 
-        <div class="grid-two">
-          <section class="question-card">
-            <h2>Welk soort risico?</h2>
-            <div class="form-group">
-              <label for="riskType">Wat is het belangrijkste risico dat aan deze persoon kleeft?</label>
-              <textarea id="riskType" rows="5" placeholder="Bijvoorbeeld: enabler, overbelasting, samen gebruiken, emotionele trigger."></textarea>
-            </div>
-            <div class="form-group mt-2">
-              <label for="hopeFromPerson">Wat hoop je eigenlijk van deze persoon te krijgen?</label>
-              <textarea id="hopeFromPerson" rows="4"></textarea>
-            </div>
-          </section>
+      <div id="risicoMensenList"></div>
 
-          <section class="question-card">
-            <h2>Heldere instructie gegeven?</h2>
-            <div class="inline-options">
-              <label><input type="radio" name="instructionReceived" value="ja"> Ja</label>
-              <label><input type="radio" name="instructionReceived" value="nee"> Nee</label>
-            </div>
-            <div class="form-group mt-2">
-              <label for="noInstructionReason">Als nee: waarom nog niet?</label>
-              <textarea id="noInstructionReason" rows="4"></textarea>
-            </div>
-          </section>
-        </div>
-
+      <form id="risicoForm">
         <section class="question-card">
-          <h2>Wat is wijs om te zeggen?</h2>
+          <h2 id="formTitle">Persoon toevoegen</h2>
+
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="formName">Naam, bijnaam of rol</label>
+              <input id="formName" type="text" placeholder="bijv. collega X, mijn broer, oude vrienden" />
+            </div>
+            <div class="form-group">
+              <label for="formCloseness">Hoe dichtbij (0-10)?</label>
+              <input id="formCloseness" type="number" min="0" max="10" step="1" />
+            </div>
+          </div>
+
           <div class="form-group">
-            <label for="wiseWords">Welke grens, vraag of afspraak wil je uitspreken?</label>
-            <textarea id="wiseWords" rows="4"></textarea>
+            <label>Welk soort risico? (meerdere kiezen mogelijk)</label>
+            <div id="formRiskoTypes" class="checkbox-group"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="formSituation">In welke situatie wordt het risicovol?</label>
+            <textarea id="formSituation" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="formRiskDesc">Beschrijf het risico kort</label>
+            <textarea id="formRiskDesc" rows="3" placeholder="bijv: enabler, overbelasting, samen gebruiken, emotionaal getriggerd."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="formWiseWords">Welke grens/afspraak wil je stellen?</label>
+            <textarea id="formWiseWords" rows="3"></textarea>
+          </div>
+
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="formPlanA">Plan A — Wat is je eerste stap?</label>
+              <textarea id="formPlanA" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="formPlanB">Plan B — Wat als Plan A niet werkt?</label>
+              <textarea id="formPlanB" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="formSummary">Kernzin voor jezelf (1-2 zinnen)</label>
+            <textarea id="formSummary" rows="2"></textarea>
+          </div>
+
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="savePersonButton">Opslaan</button>
+            <button type="button" class="button-secondary" id="cancelPersonButton">Annuleren</button>
           </div>
         </section>
-
-        <div class="grid-two">
-          <section class="question-card">
-            <h2>Plan A</h2>
-            <div class="form-group">
-              <label for="planA">Wat doe je als eerste met deze persoon?</label>
-              <textarea id="planA" rows="4"></textarea>
-            </div>
-          </section>
-          <section class="question-card">
-            <h2>Plan B</h2>
-            <div class="form-group">
-              <label for="planB">Wat doe je als plan A niet werkt?</label>
-              <textarea id="planB" rows="4"></textarea>
-            </div>
-          </section>
-        </div>
-
-        <section class="note-card">
-          <h2>Kernzin voor jezelf</h2>
-          <div class="form-group">
-            <label for="boundarySummary">Vat je keuze in 1-2 zinnen samen.</label>
-            <textarea id="boundarySummary" rows="3" placeholder="Bijvoorbeeld: met persoon X alleen afspreken op neutrale plek, niet in avonden met gebruik in de groep."></textarea>
-          </div>
-        </section>
-
-        <div class="action-bar">
-          <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
-          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
-          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
-        </div>
       </form>
     </div>
   </div>
 
+  <script src="../js/optionsLoader.js"></script>
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'risico-mensen';
-    const fields = [
-      'personName',
-      'closenessScore',
-      'riskType',
-      'riskySituationWithPerson',
-      'hopeFromPerson',
-      'noInstructionReason',
-      'wiseWords',
-      'planA',
-      'planB',
-      'boundarySummary'
-    ];
+    const riskoTypeUrl = '../assets/options/risico-mensen-typen.json';
+    const riskTypesFallback = {
+      risicotypen: {
+        groups: [
+          {
+            label: 'Relatietype',
+            items: [
+              { value: 'enabler', label: 'Enabler — maakt gebruik mogelijk/gemakkelijk' },
+              { value: 'overbelasting', label: 'Overbelasting — zorgt voor stress of oude rollen' },
+              { value: 'gebruiker', label: 'Medgebruiker — gebruikt zelf, voorbeeld/normalisering' },
+              { value: 'emotioneel', label: 'Emotioneel risico — roept sterke gevoelens op' },
+              { value: 'grensvag', label: 'Grensvag — duwt grenzen, minder duidelijkheid' }
+            ]
+          }
+        ]
+      }
+    };
 
-    function getDefaultData() {
-      const data = { instructionReceived: 'nee' };
-      fields.forEach((key) => { data[key] = ''; });
-      return data;
-    }
-
-    function fillForm(data) {
-      fields.forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.value = data[id] || '';
-      });
-      const radios = document.querySelectorAll('input[name="instructionReceived"]');
-      radios.forEach((radio) => {
-        radio.checked = radio.value === (data.instructionReceived || 'nee');
-      });
-    }
-
-    function collectFormData() {
-      const result = {};
-      fields.forEach((id) => {
-        const el = document.getElementById(id);
-        result[id] = el ? el.value.trim() : '';
-      });
-      const selected = document.querySelector('input[name="instructionReceived"]:checked');
-      result.instructionReceived = selected ? selected.value : 'nee';
-      return result;
-    }
+    let people = [];
+    let currentPersonId = null;
+    let riskTypesLoaded = [];
 
     function showMessage(text, isError = false) {
-      const message = document.getElementById('message');
-      message.textContent = text;
-      message.classList.add('show');
-      message.classList.toggle('error', isError);
+      const msg = document.getElementById('message');
+      msg.textContent = text;
+      msg.classList.add('show');
+      msg.classList.toggle('error', isError);
       clearTimeout(showMessage.timer);
-      showMessage.timer = setTimeout(() => message.classList.remove('show'), 3000);
+      showMessage.timer = setTimeout(() => msg.classList.remove('show'), 3000);
     }
 
-    function saveForm(feedback = true) {
+    async function loadRiskTypes() {
       try {
-        iamData.updateFormData(formKey, collectFormData());
-        if (feedback) showMessage('Risico-profiel opgeslagen op dit toestel.');
-      } catch (error) {
-        console.error(error);
-        showMessage('Opslaan lukte niet.', true);
+        const result = await iamOptionsLoader.loadSelectOptions({
+          selectId: 'formRiskoTypes_hidden',
+          url: riskoTypeUrl,
+          dataPath: 'risicotypen',
+          fallback: riskTypesFallback
+        });
+        const data = result.data || riskTypesFallback.risicotypen;
+        riskTypesLoaded = [];
+        if (data.groups && Array.isArray(data.groups)) {
+          data.groups.forEach((group) => {
+            if (Array.isArray(group.items)) {
+              group.items.forEach((item) => {
+                riskTypesLoaded.push({
+                  value: typeof item === 'string' ? item : (item.value || item.label),
+                  label: typeof item === 'string' ? item : (item.label || item.value)
+                });
+              });
+            }
+          });
+        }
+        renderCheckboxes();
+      } catch (e) {
+        console.warn('Kon risicotypen niet laden', e);
+        riskTypesLoaded = riskTypesFallback.risicotypen.groups[0].items.map((item) => ({
+          value: item.value,
+          label: item.label
+        }));
+        renderCheckboxes();
       }
+    }
+
+    function renderCheckboxes() {
+      const container = document.getElementById('formRiskoTypes');
+      container.innerHTML = '';
+      riskTypesLoaded.forEach((type) => {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.value = type.value;
+        input.className = 'risktype-checkbox';
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(type.label));
+        container.appendChild(label);
+      });
+    }
+
+    function loadPeople() {
+      const saved = iamData.getFormData(formKey);
+      people = (saved && saved.people) ? JSON.parse(JSON.stringify(saved.people)) : [];
+      renderPeople();
+    }
+
+    function savePeople() {
+      try {
+        iamData.updateFormData(formKey, { people: people });
+        showMessage('Risico-mensen opgeslagen.');
+      } catch (e) {
+        console.error(e);
+        showMessage('Opslaan mislukt.', true);
+      }
+    }
+
+    function renderPeople() {
+      const list = document.getElementById('risicoMensenList');
+      list.innerHTML = '';
+      if (people.length === 0) {
+        list.innerHTML = '<p style="color:#999; text-align:center; margin-top:2rem;">Nog geen personen toegevoegd.</p>';
+        return;
+      }
+      people.forEach((person, idx) => {
+        const card = document.createElement('div');
+        card.className = 'person-card';
+        const riskoLabels = (person.riskoTypes || []).map((type) => {
+          const found = riskTypesLoaded.find((t) => t.value === type);
+          return found ? found.label : type;
+        }).join(', ');
+        
+        let detailsHtml = '';
+        if (person.situation) detailsHtml += `<div class="detail-item"><label>Situatie:</label><p>${escapeHtml(person.situation)}</p></div>`;
+        if (person.riskDesc) detailsHtml += `<div class="detail-item"><label>Risico:</label><p>${escapeHtml(person.riskDesc)}</p></div>`;
+        if (person.wiseWords) detailsHtml += `<div class="detail-item"><label>Grens/Afspraak:</label><p>${escapeHtml(person.wiseWords)}</p></div>`;
+        if (person.planA) detailsHtml += `<div class="detail-item"><label>Plan A:</label><p>${escapeHtml(person.planA)}</p></div>`;
+        if (person.planB) detailsHtml += `<div class="detail-item"><label>Plan B:</label><p>${escapeHtml(person.planB)}</p></div>`;
+        if (person.summary) detailsHtml += `<div class="detail-item"><label>Kernzin:</label><p>${escapeHtml(person.summary)}</p></div>`;
+        
+        card.innerHTML = `
+          <div class="person-header">
+            <div class="person-info">
+              <h3>${escapeHtml(person.name || '(naamloos)')}</h3>
+              <div class="person-meta">Dichtbij: ${person.closeness || '?'}/10</div>
+              ${riskoLabels ? `<div class="risk ko-badges">${riskoLabels.split(', ').map((label) => `<span class="risico-badge">${escapeHtml(label)}</span>`).join('')}</div>` : ''}
+            </div>
+            <div class="person-actions">
+              <button type="button" class="button-secondary edit-person" data-id="${idx}">Bewerk</button>
+              <button type="button" class="button-secondary delete-person" data-id="${idx}" style="background:#cc6d4f;">Verwijder</button>
+            </div>
+          </div>
+          ${detailsHtml ? `<div class="person-details">${detailsHtml}</div>` : ''}
+        `;
+        list.appendChild(card);
+      });
+
+      document.querySelectorAll('.edit-person').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(e.target.dataset.id, 10);
+          editPerson(idx);
+        });
+      });
+
+      document.querySelectorAll('.delete-person').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(e.target.dataset.id, 10);
+          if (confirm('Weet je zeker dat je deze persoon wilt verwijderen?')) {
+            people.splice(idx, 1);
+            savePeople();
+            renderPeople();
+          }
+        });
+      });
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    }
+
+    function showForm() {
+      document.getElementById('risicoForm').classList.add('visible');
+    }
+
+    function hideForm() {
+      document.getElementById('risicoForm').classList.remove('visible');
+      currentPersonId = null;
+    }
+
+    function clearForm() {
+      document.getElementById('formName').value = '';
+      document.getElementById('formCloseness').value = '';
+      document.getElementById('formSituation').value = '';
+      document.getElementById('formRiskDesc').value = '';
+      document.getElementById('formWiseWords').value = '';
+      document.getElementById('formPlanA').value = '';
+      document.getElementById('formPlanB').value = '';
+      document.getElementById('formSummary').value = '';
+      document.querySelectorAll('.risktype-checkbox').forEach((cb) => cb.checked = false);
+    }
+
+    function editPerson(idx) {
+      currentPersonId = idx;
+      const person = people[idx];
+      document.getElementById('formTitle').textContent = `Bewerk: ${person.name}`;
+      document.getElementById('formName').value = person.name || '';
+      document.getElementById('formCloseness').value = person.closeness || '';
+      document.getElementById('formSituation').value = person.situation || '';
+      document.getElementById('formRiskDesc').value = person.riskDesc || '';
+      document.getElementById('formWiseWords').value = person.wiseWords || '';
+      document.getElementById('formPlanA').value = person.planA || '';
+      document.getElementById('formPlanB').value = person.planB || '';
+      document.getElementById('formSummary').value = person.summary || '';
+      document.querySelectorAll('.risktype-checkbox').forEach((cb) => {
+        cb.checked = (person.riskoTypes || []).includes(cb.value);
+      });
+      showForm();
+      window.scrollTo(0, 0);
+    }
+
+    function savePerson() {
+      const name = document.getElementById('formName').value.trim();
+      if (!name) {
+        showMessage('Voer alstublieft een naam in.', true);
+        return;
+      }
+      const selectedTypes = Array.from(document.querySelectorAll('.risktype-checkbox:checked')).map((cb) => cb.value);
+      const person = {
+        name,
+        closeness: document.getElementById('formCloseness').value || 0,
+        riskoTypes: selectedTypes,
+        situation: document.getElementById('formSituation').value.trim(),
+        riskDesc: document.getElementById('formRiskDesc').value.trim(),
+        wiseWords: document.getElementById('formWiseWords').value.trim(),
+        planA: document.getElementById('formPlanA').value.trim(),
+        planB: document.getElementById('formPlanB').value.trim(),
+        summary: document.getElementById('formSummary').value.trim()
+      };
+
+      if (currentPersonId !== null) {
+        people[currentPersonId] = person;
+        showMessage('Persoon bijgewerkt.');
+      } else {
+        people.push(person);
+        showMessage('Persoon toegevoegd.');
+      }
+
+      savePeople();
+      renderPeople();
+      hideForm();
+      clearForm();
     }
 
     function exportAll() {
@@ -248,77 +424,27 @@
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
-      showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
-    }
-
-    function firstNonEmpty(items) {
-      return items.find((item) => typeof item === 'string' && item.trim()) || '';
-    }
-
-    function appendUniqueLine(textarea, line) {
-      if (!line || !textarea) return;
-      const clean = line.trim();
-      if (!clean) return;
-      const existingLines = textarea.value
-        .split('\n')
-        .map((part) => part.trim())
-        .filter(Boolean);
-      if (!existingLines.includes(clean)) {
-        textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
-      }
-    }
-
-    function applySuggestionFromIntegration() {
-      const integration = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
-      const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
-
-      const riskySituationWithPerson = document.getElementById('riskySituationWithPerson');
-      const wiseWords = document.getElementById('wiseWords');
-      const planA = document.getElementById('planA');
-      const planB = document.getElementById('planB');
-      const boundarySummary = document.getElementById('boundarySummary');
-
-      appendUniqueLine(riskySituationWithPerson, firstNonEmpty([
-        integration?.topTriggers?.[0],
-        integration?.topTriggers?.[1]
-      ]));
-
-      appendUniqueLine(wiseWords, firstNonEmpty([
-        integration?.motivationAnchors?.[0],
-        gevoelens.reframing
-      ]));
-
-      appendUniqueLine(planA, firstNonEmpty([
-        integration?.bestInterventions?.[0],
-        integration?.supportNetwork?.[0]
-      ]));
-
-      appendUniqueLine(planB, firstNonEmpty([
-        integration?.fallbackMoves?.[0],
-        gevoelens.nextTimeAvoid
-      ]));
-
-      appendUniqueLine(boundarySummary, firstNonEmpty([
-        integration?.earlyWarnings?.[0],
-        integration?.motivationAnchors?.[0]
-      ]));
-
-      saveForm(true);
-      showMessage('Voorstel ingevuld vanuit integratie-overzicht. Controleer en pas aan waar nodig.');
+      showMessage('IAM-gegevens geëxporteerd als JSON.');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      const saved = iamData.getFormData(formKey);
-      fillForm({ ...getDefaultData(), ...(saved || {}) });
+      loadRiskTypes();
+      loadPeople();
 
-      document.getElementById('suggestButton').addEventListener('click', applySuggestionFromIntegration);
-      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('addPersonButton').addEventListener('click', () => {
+        currentPersonId = null;
+        document.getElementById('formTitle').textContent = 'Persoon toevoegen';
+        clearForm();
+        showForm();
+      });
+
+      document.getElementById('savePersonButton').addEventListener('click', savePerson);
+      document.getElementById('cancelPersonButton').addEventListener('click', () => {
+        hideForm();
+        clearForm();
+      });
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
-      document.getElementById('risicoMensenForm').addEventListener('input', () => saveForm(false));
-      document.querySelectorAll('input[name="instructionReceived"]').forEach((radio) => {
-        radio.addEventListener('change', () => saveForm(false));
-      });
     });
   </script>
 </body>

@@ -183,6 +183,16 @@
       color: #4a6273;
       font-size: 0.95rem;
     }
+
+    .route-card {
+      border-top: 5px solid #5b7b4d;
+    }
+
+    .route-hint {
+      margin-top: 0.7rem;
+      color: #4a6273;
+      font-size: 0.92rem;
+    }
   </style>
 </head>
 <body>
@@ -192,6 +202,7 @@
         <div class="top-links">
           <a href="./index.htm">Terug naar overzicht</a>
           <a href="./persoonlijke-waarden.htm">Vorige stap</a>
+          <a href="./risico-gevoelens.htm">Risico-gevoelens</a>
           <a href="./craving-1-10.htm">Volgende stap</a>
         </div>
         <h1>Omgaan met lastige gevoelens</h1>
@@ -203,11 +214,13 @@
       <section class="intro-card">
         <span class="eyebrow">Werkidee</span>
         <h2>Maak meer dan één antwoord per gevoel</h2>
+        <p><strong>Niet hetzelfde als risico-gevoelens:</strong> deze pagina gaat over <strong>omgaan en oefenen</strong> (coping). De pagina <a href="./risico-gevoelens.htm">risico-gevoelens</a> gaat over <strong>inventariseren</strong> welke gevoelens en gedachten gebruik triggeren.</p>
         <p>Sommige gevoelens vragen om afstand, andere om ontlading, troost, gesprek, acceptatie of tijd. Hoe meer bruikbare antwoorden jij verzamelt, hoe kleiner de kans dat gebruik de enige uitweg lijkt.</p>
         <ul class="helper-list">
           <li>Denk klein en concreet: wat kun jij echt doen op een moeilijke dag?</li>
           <li>Je hoeft niet alles nu in te vullen. Een paar bruikbare antwoorden is al winst.</li>
           <li>Probeer verschillende soorten antwoorden te verzamelen, niet alleen afleiding.</li>
+          <li>Werkvolgorde tip: eerst risico-gevoelens invullen, daarna hier je concrete aanpak oefenen.</li>
         </ul>
       </section>
 
@@ -343,6 +356,33 @@
           </section>
         </div>
 
+        <section class="question-card route-card">
+          <span class="eyebrow">Nu doen</span>
+          <h2>Kies je route naar actie</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="routeIntensity">Hoe intens is het gevoel nu?</label>
+              <select id="routeIntensity">
+                <option value="laag">Laag, ik kan nog nadenken</option>
+                <option value="middel" selected>Middel, ik heb direct hulp nodig</option>
+                <option value="hoog">Hoog, ik dreig door te schieten</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="routeNeed">Wat heb je nu vooral nodig?</label>
+              <select id="routeNeed">
+                <option value="coping" selected>Coping (afleiding, adem, regulatie)</option>
+                <option value="analyse">Analyse van triggers en context</option>
+                <option value="nood">Noodingrijpen direct</option>
+              </select>
+            </div>
+          </div>
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="openRecommendedRouteButton">Open aanbevolen actiepagina</button>
+          </div>
+          <p class="route-hint" id="routeHint">Huidig adviespad: Trek opvangen.</p>
+        </section>
+
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
@@ -357,6 +397,7 @@
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'lastige-gevoelens';
+    let currentRoutePath = './trek-opvangen.htm';
     const fieldIds = [
       'avoidTriggers',
       'distractionIdeas',
@@ -454,13 +495,56 @@
       }, 3200);
     }
 
+    function getRecommendedRoute() {
+      const intensity = document.getElementById('routeIntensity').value;
+      const need = document.getElementById('routeNeed').value;
+
+      if (intensity === 'hoog' || need === 'nood') {
+        return {
+          path: './noodplan-forse-trek.htm',
+          hint: 'Huidig adviespad: Noodplan forse trek.'
+        };
+      }
+      if (need === 'analyse') {
+        return {
+          path: './risico-gevoelens.htm',
+          hint: 'Huidig adviespad: Risico-gevoelens (analyse + triggerherkenning).'
+        };
+      }
+      if (intensity === 'middel') {
+        return {
+          path: './stimulus-respons.htm',
+          hint: 'Huidig adviespad: Stimulus-respons plan.'
+        };
+      }
+      return {
+        path: './trek-opvangen.htm',
+        hint: 'Huidig adviespad: Trek opvangen.'
+      };
+    }
+
+    function updateRouteHint() {
+      const recommendation = getRecommendedRoute();
+      currentRoutePath = recommendation.path;
+      const hintEl = document.getElementById('routeHint');
+      if (hintEl) hintEl.textContent = recommendation.hint;
+    }
+
+    function openRecommendedRoute() {
+      window.location.href = currentRoutePath;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const savedData = iamData.getFormData(formKey);
       fillForm(mergeData(savedData));
+      updateRouteHint();
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAllData);
       document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('openRecommendedRouteButton').addEventListener('click', openRecommendedRoute);
+      document.getElementById('routeIntensity').addEventListener('change', updateRouteHint);
+      document.getElementById('routeNeed').addEventListener('change', updateRouteHint);
 
       const form = document.getElementById('lastigeGevoelensForm');
       form.addEventListener('input', () => saveForm(false));

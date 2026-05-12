@@ -185,6 +185,16 @@
       color: #4a6273;
       font-size: 0.95rem;
     }
+
+    .route-card {
+      border-top: 5px solid #5f5bb8;
+    }
+
+    .route-hint {
+      margin-top: 0.7rem;
+      color: #4a6273;
+      font-size: 0.92rem;
+    }
   </style>
 </head>
 <body>
@@ -300,6 +310,33 @@
           <p class="footer-note">Je gegevens blijven lokaal op jouw apparaat. Opslaan gebeurt in de centrale IAM-datastore.</p>
         </section>
 
+        <section class="question-card route-card">
+          <span class="eyebrow">Praktische route</span>
+          <h2>Welke stap past nu het best?</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="routeUrgency">Wat is nu het meest dominant?</label>
+              <select id="routeUrgency" name="routeUrgency">
+                <option value="laag">Milde spanning, ik kan nog reflecteren</option>
+                <option value="middel" selected>Duidelijke trek, ik moet nu reguleren</option>
+                <option value="hoog">Hoge drang, ik dreig regie te verliezen</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="routeFocus">Waar wil je nu op inzetten?</label>
+              <select id="routeFocus" name="routeFocus">
+                <option value="onderscheiden" selected>Gevoel onderscheiden en helder maken</option>
+                <option value="coping">Directe coping en regulatie</option>
+                <option value="nood">Noodmaatregelen nu</option>
+              </select>
+            </div>
+          </div>
+          <div class="action-bar">
+            <button type="button" class="btn-primary" id="openRecommendedRouteButton">Open aanbevolen vervolgstap</button>
+          </div>
+          <p class="route-hint" id="routeHint">Huidig adviespad: Stimulus-respons plan.</p>
+        </section>
+
         <div class="action-bar">
           <button type="button" class="btn-primary" onclick="saveForm(true)">Opslaan</button>
           <button type="button" class="btn-secondary" onclick="exportAllData()">Exporteer alles</button>
@@ -312,6 +349,7 @@
   <script src="../js/dataStore.js"></script>
   <script>
     const formType = 'craving-gevoel';
+    let currentRoutePath = './stimulus-respons.htm';
 
     function getDefaultData() {
       return {
@@ -387,6 +425,45 @@
       }
     }
 
+    function getRecommendedRoute() {
+      const urgency = document.getElementById('routeUrgency').value;
+      const focus = document.getElementById('routeFocus').value;
+
+      if (urgency === 'hoog' || focus === 'nood') {
+        return {
+          path: './noodplan-forse-trek.htm',
+          hint: 'Huidig adviespad: Noodplan forse trek.'
+        };
+      }
+      if (focus === 'onderscheiden' && urgency === 'laag') {
+        return {
+          path: './risico-gevoelens.htm',
+          hint: 'Huidig adviespad: Risico-gevoelens (onderscheiden + herkennen).'
+        };
+      }
+      if (focus === 'coping') {
+        return {
+          path: './lastige-gevoelens.htm',
+          hint: 'Huidig adviespad: Lastige gevoelens (copingroutes).'
+        };
+      }
+      return {
+        path: './stimulus-respons.htm',
+        hint: 'Huidig adviespad: Stimulus-respons plan.'
+      };
+    }
+
+    function updateRouteHint() {
+      const recommendation = getRecommendedRoute();
+      currentRoutePath = recommendation.path;
+      const hintEl = document.getElementById('routeHint');
+      if (hintEl) hintEl.textContent = recommendation.hint;
+    }
+
+    function openRecommendedRoute() {
+      window.location.href = currentRoutePath;
+    }
+
     function exportAllData() {
       const jsonExport = iamData.exportJSON();
       const url = window.URL.createObjectURL(jsonExport.blob);
@@ -412,10 +489,13 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       fillForm(mergeData(iamData.getFormData(formType) || {}));
+      updateRouteHint();
       document.getElementById('cravingGevoelForm').addEventListener('input', () => {
         updateMirrors();
+        updateRouteHint();
         saveForm(false);
       });
+      document.getElementById('openRecommendedRouteButton').addEventListener('click', openRecommendedRoute);
     });
   </script>
 <script src="../js/dataStore.js"></script>

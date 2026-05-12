@@ -75,11 +75,14 @@
       <div id="message" class="message"></div>
 
       <section class="intro-card">
-        <h2>Typische risicomomenten</h2>
+        <h2>Hoe werkt dit?</h2>
+        <p><strong>Het kernidee:</strong> Veel risicofoto's activiteiten zijn prima doenbaar — *als je je ervoorbereidt*. Maar zonder plan zijn ze echt risicovol.</p>
+        <p>Dit werkblad helpt je om voor ieder risicovol moment te bedenken:</p>
         <ul class="helper-list">
-          <li>Late activiteiten met weinig energie of slaaptekort.</li>
-          <li>Sociale activiteiten met groepsdruk of beschikbaarheid.</li>
-          <li>Activiteiten die vroeger sterk met gebruik verbonden waren.</li>
+          <li>Hoe je je <strong>voorbereidt</strong> (zodat het waarschijnlijk goed gaat)</li>
+          <li>Hoe je <strong>veilig uitstapt</strong> (als risico oploopt)</li>
+          <li>Welke <strong>narisico's</strong> je verwacht (wat gebeurt pas daarna?)</li>
+          <li>Welke <strong>vaardigheden</strong> je inzet (afleiding, steun, anders denken, etc.)</li>
         </ul>
       </section>
 
@@ -90,14 +93,6 @@
             <label for="presetActivity">Kies een voorbeeldactiviteit (optioneel)</label>
             <select id="presetActivity">
               <option value="">Kies een activiteit</option>
-              <option>Als ik uitga.</option>
-              <option>Als ik me verveel.</option>
-              <option>Als ik iets wil vieren.</option>
-              <option>Als ik ga dansen of naar een afterparty ga.</option>
-              <option>Als ik over emoties ga praten.</option>
-              <option>Als ik seks heb en spanning oploopt.</option>
-              <option>Als ik na sport in de kantine blijf hangen.</option>
-              <option>Als ik op feestdagen in drukte zit.</option>
             </select>
           </div>
           <div class="form-group mt-2">
@@ -166,9 +161,22 @@
 
         <section class="note-card">
           <h2>Bijpassende vaardigheden</h2>
+          <p style="margin-bottom: 0.6rem; color: #555; font-size: 0.95rem;">Welke vaardigheden zet je in om deze activiteit vol te houden? Hier zijn vijf concrete mogelijkheden:</p>
           <div class="form-group">
-            <label for="matchingSkills">Welke vaardigheden zet je hierbij in?</label>
-            <textarea id="matchingSkills" rows="4" placeholder="Bijvoorbeeld: afleiding, steun vragen, anders denken, treksurfen, zelfbeloning."></textarea>
+            <label style="font-weight: 700;">1) Afleidingen</label>
+            <textarea id="skillAfleiding" placeholder="Welke activiteiten houden je echt bezig? (muziek, sport, spel, vrienden)" rows="2" style="margin-bottom: 0.8rem;"></textarea>
+            
+            <label style="font-weight: 700;">2) Praten</label>
+            <textarea id="skillPraten" placeholder="Met wie kun je bellen of afspreken als het lastig wordt? Met wie over dit moment?" rows="2" style="margin-bottom: 0.8rem;"></textarea>
+            
+            <label style="font-weight: 700;">3) Anders denken</label>
+            <textarea id="skillDenken" placeholder="Hoe denk je nuchter over deze activiteit en haar risico's? Wat zeg je tegen jezelf?" rows="2" style="margin-bottom: 0.8rem;"></textarea>
+            
+            <label style="font-weight: 700;">4) Treksurfen</label>
+            <textarea id="skillTreksurfen" placeholder="Waar in de buurt van deze activiteit is een veilige plek om even weg te zijn? Toilet, buitenlucht?" rows="2" style="margin-bottom: 0.8rem;"></textarea>
+            
+            <label style="font-weight: 700;">5) Zelfbeloning</label>
+            <textarea id="skillBeloning" placeholder="Wat verdien je voor jezelf als je je zelfbeheersing vol houdt? Wat reken je jezelf toe?" rows="2"></textarea>
           </div>
         </section>
 
@@ -181,9 +189,11 @@
     </div>
   </div>
 
+  <script src="../js/optionsLoader.js"></script>
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'risico-activiteiten';
+    const presetOptionsUrl = '../assets/options/risico-activiteiten.json';
     const fields = [
       'activityDraft',
       'riskyActivities',
@@ -193,8 +203,42 @@
       'exitStrategy',
       'afterRisks',
       'rationalizationRisks',
-      'matchingSkills'
+      'skillAfleiding',
+      'skillPraten',
+      'skillDenken',
+      'skillTreksurfen',
+      'skillBeloning'
     ];
+
+    const presetFallback = {
+      groups: [
+        {
+          label: 'Sociaal en uitgaan',
+          items: [
+            'Als ik uitga.',
+            'Als ik ga dansen of naar een afterparty ga.',
+            'Als ik iets wil vieren.',
+            'Als ik op feestdagen in drukte zit.'
+          ]
+        },
+        {
+          label: 'Emotie en spanning',
+          items: [
+            'Als ik me verveel.',
+            'Als ik over emoties ga praten.',
+            'Als ik seks heb en spanning oploopt.'
+          ]
+        },
+        {
+          label: 'Routine en context',
+          items: [
+            'Als ik na sport in de kantine blijf hangen.',
+            'Als ik laat thuiskom en nog veel onrust voel.',
+            'Als ik onverwacht vrije tijd over heb.'
+          ]
+        }
+      ]
+    };
 
     function getDefaultData() {
       const data = {};
@@ -259,9 +303,19 @@
       saveForm(false);
     }
 
+    async function loadActivityOptions() {
+      await iamOptionsLoader.loadSelectOptions({
+        selectId: 'presetActivity',
+        url: presetOptionsUrl,
+        placeholder: 'Kies een activiteit',
+        fallback: presetFallback
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
+      loadActivityOptions();
 
       const preset = document.getElementById('presetActivity');
       const draft = document.getElementById('activityDraft');
@@ -282,6 +336,5 @@
       document.getElementById('risicoActiviteitenForm').addEventListener('input', () => saveForm(false));
     });
   </script>
-<script src="../js/dataStore.js"></script>
 </body>
 </html>

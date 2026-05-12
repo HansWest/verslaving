@@ -156,12 +156,6 @@
             <span class="sub">Kies een voorbeeld en voeg het toe.</span>
             <select id="gedachteVoorbeeldSelect">
                 <option value="">Kies een voorbeeld...</option>
-                <option value="Nu moet ik wel gebruiken">Nu moet ik wel gebruiken</option>
-                <option value="Een keertje kan geen kwaad">Een keertje kan geen kwaad</option>
-                <option value="Ik kan hier niet tegen">Ik kan hier niet tegen</option>
-                <option value="Het heeft toch geen zin">Het heeft toch geen zin</option>
-                <option value="Anderen vallen terug, maar mij gebeurt dat niet">Anderen vallen terug, maar mij gebeurt dat niet</option>
-                <option value="Als ik nu niet gebruik, gaat alles mis">Als ik nu niet gebruik, gaat alles mis</option>
             </select>
         </div>
 
@@ -218,8 +212,10 @@
         </div>
     </main>
 
+    <script src="../js/optionsLoader.js"></script>
     <script src="../js/dataStore.js"></script>
     <script>
+        const gedachteOptionsUrl = '../assets/options/risico-emoties-gedachten.json';
         const fields = [
             'voorbeeldGedachten',
             'hoogRisicoDenken',
@@ -228,11 +224,50 @@
             'interneRisicosDenken'
         ];
 
+        const gedachteFallback = {
+            groups: [
+                {
+                    label: 'Risico-gedachten',
+                    items: [
+                        'Nu moet ik wel gebruiken',
+                        'Een keertje kan geen kwaad',
+                        'Ik kan hier niet tegen',
+                        'Het heeft toch geen zin',
+                        'Anderen vallen terug, maar mij gebeurt dat niet',
+                        'Als ik nu niet gebruik, gaat alles mis'
+                    ]
+                }
+            ]
+        };
+
+        function appendUniqueLine(target, line) {
+            if (!target || !line) return;
+            const clean = line.trim();
+            if (!clean) return;
+
+            const lines = target.value
+                .split('\n')
+                .map((part) => part.trim())
+                .filter(Boolean);
+
+            if (!lines.includes(clean)) {
+                target.value = target.value ? `${target.value}\n${clean}` : clean;
+            }
+        }
+
         function appendExample() {
             const select = document.getElementById('gedachteVoorbeeldSelect');
             if (!select.value) return;
+
+            const selectedMeta = iamOptionsLoader.getSelectedOptionMeta(select);
             const target = document.getElementById('voorbeeldGedachten');
             target.value = target.value ? `${target.value}\n${select.value}` : select.value;
+
+            if (selectedMeta.reaction) {
+                const alternatief = document.getElementById('alternatiefDenken');
+                appendUniqueLine(alternatief, selectedMeta.reaction);
+            }
+
             select.value = '';
             saveData(false);
         }
@@ -266,8 +301,19 @@
             iamData.exportJSON();
         }
 
+        async function loadGedachteExamples() {
+            await iamOptionsLoader.loadSelectOptions({
+                selectId: 'gedachteVoorbeeldSelect',
+                url: gedachteOptionsUrl,
+                dataPath: 'gedachten',
+                placeholder: 'Kies een voorbeeld...',
+                fallback: gedachteFallback
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
+            loadGedachteExamples();
             document.getElementById('gedachteVoorbeeldSelect').addEventListener('change', appendExample);
             fields.forEach((field) => {
                 const el = document.getElementById(field);

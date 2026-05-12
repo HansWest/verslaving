@@ -99,6 +99,63 @@
         .balance-score p {
             margin: 0.25rem 0;
         }
+        .balance-matrix {
+            margin-top: 1rem;
+            border-radius: 12px;
+            border: 1px solid #d7e6ee;
+            background: #f8fcfe;
+            overflow: hidden;
+        }
+        .balance-matrix h3 {
+            margin: 0;
+            padding: 0.75rem 0.85rem;
+            font-size: 0.98rem;
+            color: var(--page-main);
+            background: #eef6fa;
+            border-bottom: 1px solid #d7e6ee;
+        }
+        .balance-matrix-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .balance-cell {
+            padding: 0.75rem 0.85rem;
+            border-right: 1px solid #e3eef4;
+            border-bottom: 1px solid #e3eef4;
+        }
+        .balance-cell:nth-child(2n) { border-right: none; }
+        .balance-cell:nth-last-child(-n+2) { border-bottom: none; }
+        .balance-cell h4 {
+            margin: 0 0 0.2rem;
+            font-size: 0.92rem;
+            color: #36566b;
+        }
+        .balance-cell p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #536979;
+        }
+        .decision-visual {
+            margin-top: 0.8rem;
+            display: grid;
+            gap: 0.45rem;
+        }
+        .decision-track {
+            height: 10px;
+            border-radius: 999px;
+            background: #e6eff4;
+            overflow: hidden;
+        }
+        .decision-bar {
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(90deg, #c96a4b 0%, #2f6b8f 100%);
+            transition: width 0.2s ease;
+        }
+        .decision-label {
+            font-size: 0.85rem;
+            color: #4f6574;
+        }
         .message { display: none; border-left: 4px solid #5a8840; }
         .message.show { display: block; }
         .message.error { border-left-color: var(--page-accent); }
@@ -250,6 +307,31 @@
                         <p id="balanceChangeScore">Verandersaldo: 0</p>
                         <p id="balanceOutcome">Vul de weging in om je balansbeeld te zien.</p>
                     </div>
+                    <div class="balance-matrix">
+                        <h3>Visuele 2x2 balans (momentopname)</h3>
+                        <div class="balance-matrix-grid">
+                            <div class="balance-cell">
+                                <h4>Voordelen gebruik</h4>
+                                <p id="matrixUsageAdv">0 punten</p>
+                            </div>
+                            <div class="balance-cell">
+                                <h4>Nadelen gebruik</h4>
+                                <p id="matrixUsageDis">0 punten</p>
+                            </div>
+                            <div class="balance-cell">
+                                <h4>Voordelen veranderen</h4>
+                                <p id="matrixChangeAdv">0 punten</p>
+                            </div>
+                            <div class="balance-cell">
+                                <h4>Nadelen veranderen</h4>
+                                <p id="matrixChangeDis">0 punten</p>
+                            </div>
+                        </div>
+                        <div class="decision-visual">
+                            <div class="decision-label" id="decisionLabel">Besliskompas: neutraal (nog weinig input)</div>
+                            <div class="decision-track"><div id="decisionBar" class="decision-bar"></div></div>
+                        </div>
+                    </div>
                 </section>
 
                 <section class="note-card">
@@ -359,6 +441,53 @@
                 outcomeEl.textContent = 'Gebruik trekt nu nog relatief sterk; bekijk vooral welke lange-termijn-nadelen zwaarder mogen wegen.';
             } else {
                 outcomeEl.textContent = 'Je balans is nu gemengd. Kijk welke 1-2 punten jij de komende week extra gewicht wilt geven.';
+            }
+
+            updateBalanceMatrixView(usageScore, changeScore);
+        }
+
+        function countLinesFromId(id) {
+            const el = document.getElementById(id);
+            if (!el) return 0;
+            return toLines(el.value).length;
+        }
+
+        function updateBalanceMatrixView(usageScore, changeScore) {
+            const usageAdvCount = countLinesFromId('usageAdvantagesText');
+            const usageDisCount = countLinesFromId('usageDisadvantagesText');
+            const changeAdvCount = countLinesFromId('changeAdvantagesText');
+            const changeDisCount = countLinesFromId('changeDisadvantagesText');
+
+            const usageAdvEl = document.getElementById('matrixUsageAdv');
+            const usageDisEl = document.getElementById('matrixUsageDis');
+            const changeAdvEl = document.getElementById('matrixChangeAdv');
+            const changeDisEl = document.getElementById('matrixChangeDis');
+
+            if (usageAdvEl) usageAdvEl.textContent = `${usageAdvCount} punt(en)`;
+            if (usageDisEl) usageDisEl.textContent = `${usageDisCount} punt(en)`;
+            if (changeAdvEl) changeAdvEl.textContent = `${changeAdvCount} punt(en)`;
+            if (changeDisEl) changeDisEl.textContent = `${changeDisCount} punt(en)`;
+
+            const label = document.getElementById('decisionLabel');
+            const bar = document.getElementById('decisionBar');
+            const diff = changeScore - usageScore;
+            const clamped = Math.max(-12, Math.min(12, diff));
+            const percentage = 50 + (clamped / 24) * 50;
+
+            if (bar) bar.style.width = `${Math.max(6, Math.min(100, percentage))}%`;
+
+            if (!label) return;
+            if (usageAdvCount + usageDisCount + changeAdvCount + changeDisCount === 0) {
+                label.textContent = 'Besliskompas: neutraal (nog weinig input)';
+                return;
+            }
+
+            if (diff >= 3) {
+                label.textContent = 'Besliskompas: weging helt richting veranderen';
+            } else if (diff <= -3) {
+                label.textContent = 'Besliskompas: gebruik trekt nog relatief sterk';
+            } else {
+                label.textContent = 'Besliskompas: gemengd beeld, verfijn je kernpunten';
             }
         }
 

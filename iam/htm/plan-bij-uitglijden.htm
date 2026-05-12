@@ -1,163 +1,441 @@
-<html>
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-)(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
-
-
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Noodplan uitglijer</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan bij Uitglijden</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #8a5200;
+      --page-accent: #c9684a;
+      --page-soft: #ebf2f5;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(138, 82, 0, 0.12), transparent 32%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
+    .page-shell { max-width: 920px; margin: 0 auto; }
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #a36b1a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
+    .question-card, .message {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
+    .question-card { border-top: 4px solid var(--page-main); }
+    .legacy-note {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+      border-left: 4px solid var(--page-accent);
+    }
+    .legacy-note h2 { margin-top: 0; }
+    .legacy-note ul { margin: 0.5rem 0 0; padding-left: 1.2rem; }
+    .legacy-note li { margin-bottom: 0.35rem; }
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+    .message { display: none; border-left: 4px solid #5a8840; }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="controleerjeverslaving(.nl) is een product van PraatmetHans(.nl) om mensen te helpen om zelfstandig aan de slag te laten gaan met hun verslaving of afhankelijkheid middels verantwoorde formulieren." />
-<meta name="keywords" content="huisarts, poh, verslaving, addiction, zelfstandig, persoonlijk, formulieren, gesprek, keuze, controleerjeverslaving, PraatmetHans.nl" />
+    .route-card {
+      border-top: 4px solid #5b744a;
+    }
 
-
-
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
-
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
-
-function hulpscherm()
-{
-hulp_scherm(290,'plan bij uitglijden','Laten we heel helder zijn: een verslaving leidt erg vaak toe dat er momenten zijn waarop je achteraf gezien moet toegeven dat het gebruik toch niet zo gecontroleerd bleek als je op dat moment inschatte. Dat er even een moment van gebruik was: niet niet eens zo zeer omdat je dat <i>wilde</i> maar gewoon omdat het <i><b>kon</b></i> bijvoorbeeld.<br>Om te voorkomen dat je door het uitglijden ook gaat wegglijden is het verstanbdig om plannen van aanpak te hebben als je een uitglijer meemaakt.')
-}
-
-</script>
-
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .route-hint {
+      margin-top: 0.7rem;
+      color: #4d6270;
+      font-size: 0.92rem;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./plan-van-aanpak.htm">Vorige stap</a>
+          <a href="./noodplan-forse-trek.htm">Volgende stap</a>
+        </div>
+        <h1>Plan bij Uitglijden</h1>
+        <p>Een eerlijk plan voor als het even fout gaat: hoe herken je het, wat stop je ermee, hoe help je jezelf weer overeind?</p>
+      </header>
 
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
+      <div id="message" class="message"></div>
 
-</script>
-</head>
-<body>
-<div class="shadow"><div class="content">
-<script language="javascript">
- 
-writelogo();
--->
-</script>
-<div class="praatmethansheader">
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader"><b>plan bij uitglijden</b></h1>
-</div><div class="rechtsitalic">7 vragen: 20 - 40 minuten</div>
+      <section class="legacy-note" aria-labelledby="backupStrategyTitle">
+        <h2 id="backupStrategyTitle">Wat is een uitglijder?</h2>
+        <ul>
+          <li>Een <strong>uitglijder</strong> is één keer gebruik dat niet in je plan paste.</li>
+          <li>Het verschil met <strong>wegglijden</strong> is dat je bij een uitglijder snel inziet dat je van plan afweken en je weer oppakt.</li>
+          <li>Dit plan helpt je om die moment van "oh nee, ik glijd uit" snel om te zetten in "oké, nu doe ik X".</li>
+          <li>Het gaat niet om schuldgevoelens, maar om <strong>schade beperken</strong> en <strong>snel terug naar plan</strong>.</li>
+        </ul>
+      </section>
 
-<div class="printhide">
-<p>&nbsp;</p>
-<h1>Een plan als ik &quot;uit zou glijden&quot;</h1>
-<p>Het kan natuurlijk altijd gebeuren dat je verder uitglijdt dan je van plan
-  was als je blijkbaar nog niet weet waar je wanneer en hoe op moet reageren.
-  Als je dat gebeurd dan gaat het er in eerste instantie nog niet om waarom je
-  uitglijdt, dan draait het erom dat je de schade controleert en opstaat zodat
-  je niet blijft liggen.</p>
+      <form id="backupForm">
+        <section class="question-card">
+          <h2>1. Herkennen: hoe weet ik dat het gebeurt?</h2>
+          <div class="form-group">
+            <label for="slippageSignals">Wat zijn de signalen dat ik een uitglijder heb gemaakt of op het punt sta?</label>
+            <textarea id="slippageSignals" rows="4"></textarea>
+          </div>
+        </section>
 
+        <section class="question-card">
+          <h2>2. Triggers voor deze uitglijder</h2>
+          <p style="margin: 0 0 1rem; color: #4d6270; font-size: 0.95rem;">Welke situaties, activiteiten of personen brengen je in de buurt van een uitglijder? Koppel dit aan je risico-inventaris.</p>
+          
+          <div class="form-group">
+            <label style="font-weight: 700; display: block; margin-bottom: 0.6rem;">Risico-situaties:</label>
+            <div id="triggerSituations" style="display: grid; gap: 0.35rem; margin-bottom: 1rem;"></div>
+          </div>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+          <div class="form-group">
+            <label style="font-weight: 700; display: block; margin-bottom: 0.6rem;">Risico-activiteiten:</label>
+            <div id="triggerActivities" style="display: grid; gap: 0.35rem; margin-bottom: 1rem;"></div>
+          </div>
 
-<p></p><form name="uirglijplan">
-<h1>PLAN BIJ UITGLIJDEN</h1>
-<p>Maak voor jezelf eens een plan voor het opvangen van een uitglijer (of een beginnende terugval): </p>
-<p>&nbsp;</p>
+          <div class="form-group">
+            <label style="font-weight: 700; display: block; margin-bottom: 0.6rem;">Risico-mensen:</label>
+            <div id="triggerPeople" style="display: grid; gap: 0.35rem; margin-bottom: 1rem;"></div>
+          </div>
 
-<h1>schade-controle</h1>
+          <div class="action-bar">
+            <button type="button" class="button-secondary" id="loadTriggersButton">Laad triggers uit mijn risico-pagina's</button>
+            <button type="button" class="button-secondary" id="saveTriggerSelectionButton" disabled>Opslaan geselecteerde triggers</button>
+          </div>
+        </section>
 
-<p>Wat zijn dingen die ik kan DENKEN die mij kunnen helpen om rationeel tegen een uitglijder en/of terugval aan te kijken:<br />&nbsp;(en welke smoezen kan ik eventueel herkennen)<br />
-<textarea name="RationeelKijken" class="praatmethansformtextarea" cols="55" rows="3"></textarea></p>
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>3. Wat STOP ik meteen</h2>
+            <div class="form-group">
+              <label for="immediateStop">Wat is het eerste wat ik doe om het gebruik meteen te stoppen?</label>
+              <textarea id="immediateStop" rows="4"></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>4. Rationeel Denken</h2>
+            <div class="form-group">
+              <label for="rationalThoughts">Wat denk ik om dit rationeel te zien (zonder schaamte)?</label>
+              <textarea id="rationalThoughts" rows="4"></textarea>
+            </div>
+          </section>
+        </div>
 
-<p>Wat zijn de pieker-gedachten die ik UIT moet STELLEN omdat het alleen zin heeft om daar nuchter over na te denken.<br />
-  <textarea name="PiekerUitstellen" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
-<p> Wat zijn dingen die ik kan DOEN die mij kunnen helpen om mezelf af te leiden,
-  me tegen te houden en te gaan wegglijden:<br />
-&nbsp;(en wat moet ik vooral <i>NIET</i> gaan doen)<br />
-<textarea name="NietGaanDoen" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>5. Afleiding & Tegenhouden</h2>
+            <div class="form-group">
+              <label for="distractionStrategy">Wat doe ik om mezelf af te leiden of tegen te houden van doorgaan?</label>
+              <textarea id="distractionStrategy" rows="4"></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>6. Steun</h2>
+            <div class="form-group">
+              <label for="slippageSupport">Wie leeft ik of bel ik meteen, en wat zeg ik tegen hen?</label>
+              <textarea id="slippageSupport" rows="4"></textarea>
+            </div>
+          </section>
+        </div>
 
-<p>&nbsp;</p>
+        <section class="question-card">
+          <h2>7. Weer Opstaan</h2>
+          <div class="form-group">
+            <label for="recoverySteps">Hoe pak ik de draad weer op? (regelmatig, niet zwaartillend)</label>
+            <textarea id="recoverySteps" rows="4"></textarea>
+          </div>
+          <div class="form-group mt-2">
+            <label for="preventFall">Hoe voorkom ik dat ik door schaamte in een echte terugval bezeming?</label>
+            <textarea id="preventFall" rows="4"></textarea>
+          </div>
+        </section>
 
-<p>WIE kan mij tegenhouden als ik -tegen de afspraken met mijzelf in- wil gaan
-  gebruiken (niet fysiek tegenhouden maar iemand  wiens mening belangrijk
-  genoeg is voor mij om op zo'n moment te reageren)<br />
-<input name="TerugvalSteuner" type="text" class="praatmethansformtexfield" maxlength="35" />
-<br />
-<input name="Steuneropdehoogte" type="checkbox" value="Deze steun bij terugval is op de hoogte." />
-&nbsp;
-Is deze persoon / instantie ervan op de hoogte dat ik kan bellen ?<br />
-<input name="SteunerHeeftHandleiding" type="checkbox" value="Deze steun bij terugval heeft een handleiding gekregen." />
-&nbsp; en heb ik een handleiding gegeven wat zij moeten doen met/voor mij?<br />
-<input name="Steuneringestemd" type="checkbox" value="Deze steun bij terugval heeft met handleiding ingestenmd." />
-&nbsp; en hebben ze daar &quot;ja&quot; tegen gezegd?</p>
-<p align="right">zie ook: <a href="steunnetwerk.htm">steunend netwerk</a></p>
+        <section class="question-card route-card">
+          <h2>Nu doen-router</h2>
+          <p style="margin: 0 0 1rem; color: #4d6270; font-size: 0.95rem;">Kies snel je route op basis van hoe spannend het nu is en of steun direct bereikbaar is.</p>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="routeUrgency">Urgentie nu</label>
+              <select id="routeUrgency">
+                <option value="laag">Laag: ik ben geschrokken maar nog stabiel</option>
+                <option value="middel" selected>Middel: ik kan nog kiezen, maar trek is voelbaar</option>
+                <option value="hoog">Hoog: ik dreig door te glijden</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="routeSupport">Is steun direct bereikbaar?</label>
+              <select id="routeSupport">
+                <option value="ja" selected>Ja, ik kan nu bellen/appen</option>
+                <option value="nee">Nee, nu even niet</option>
+              </select>
+            </div>
+          </div>
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="openRecommendedRouteButton">Open aanbevolen actiepagina</button>
+          </div>
+          <p class="route-hint" id="routeHint">Huidig adviespad: Trek opvangen.</p>
+        </section>
 
-<p>&nbsp;</p>
+        <div class="action-bar">
+          <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-<hr class="formhr" />
-<h1>Opstaan en oppakken </h1>
-<p>Hoe ga ik weer opstaan? (en wie gaan me daarbij helpen?)<br />
-  <textarea name="weeropstaan" class="praatmethansformtextarea" cols="55" rows="3"></textarea></p>
+  <script src="../js/dataStore.js"></script>
+  <script src="../js/triggerLoader.js"></script>
+  <script>
+    const formKey = 'plan-bij-uitglijden';
+    let currentRoutePath = './trek-opvangen.htm';
+    const fields = [
+      'slippageSignals',
+      'immediateStop',
+      'rationalThoughts',
+      'distractionStrategy',
+      'slippageSupport',
+      'recoverySteps',
+      'preventFall'
+    ];
 
-<p>Hoe voorkom ik dat ik door mijn gevoel van schaamte niet ga ingrijpen/oppakken<br />
-  <textarea name="schaamte" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
+    function getDefaultData() {
+      const data = {};
+      fields.forEach((key) => { data[key] = ''; });
+      data.selectedTriggers = { situations: [], activities: [], people: [] };
+      return data;
+    }
 
-<p>De m aatregelen die ik onderneem na een uitglijder of terugval, om de draad
-  weer op te pakken, dat zijn:<br />
-<textarea name="Maatregelen" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
-</form><hr class="formhr" />
-<p><i>zie ook: </i></p>
-<i><ul>
-	<li><a href="noodplan-forse-trek.htm" target="formulieren">noodplan bij forse trek</a></li>
-	<li><a href="plan-bij-uitglijden.htm" target="formulieren">plan bij uitglijden</a></li>
-	<li><a href="noodplan-wegglijden.htm" target="formulieren">noodplan bij wegglijden</a></li>
-	</ul></i>
-<p></p>
-<p align='right'><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><p></p><script language="javascript">
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div></div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function appendUniqueLine(textarea, line) {
+      if (!line || !textarea) return;
+      const clean = line.trim();
+      if (!clean) return;
+      const existingLines = textarea.value
+        .split('\n')
+        .map((part) => part.trim())
+        .filter(Boolean);
+      if (!existingLines.includes(clean)) {
+        textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
+      }
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        const formData = collectFormData();
+        iamData.updateFormData(formKey, formData);
+        if (feedback) showMessage('Plan bij uitglijden opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportAll() {
+      const exportData = iamData.exportJSON();
+      const url = URL.createObjectURL(exportData.blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = exportData.filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
+    }
+
+    function firstNonEmpty(items) {
+      return items.find((item) => typeof item === 'string' && item.trim()) || '';
+    }
+
+    function applySuggestionFromPreviousSteps() {
+      const risicoSituaties = iamData.getFormData('risico-situaties') || {};
+      const risicoActiviteiten = iamData.getFormData('risico-activiteiten') || {};
+      const risicoMensen = iamData.getFormData('risico-mensen') || {};
+      const planVanAanpak = iamData.getFormData('plan-van-aanpak') || {};
+      const noodplanTrek = iamData.getFormData('soorten-trek') || {};
+
+      const slippageSignals = document.getElementById('slippageSignals');
+      const immediateStop = document.getElementById('immediateStop');
+      const distractionStrategy = document.getElementById('distractionStrategy');
+      const slippageSupport = document.getElementById('slippageSupport');
+      const recoverySteps = document.getElementById('recoverySteps');
+      const rationalThoughts = document.getElementById('rationalThoughts');
+
+      appendUniqueLine(slippageSignals, firstNonEmpty([
+        risicoSituaties.externalRisks,
+        risicoSituaties.internalRisks,
+        noodplanTrek.urgentSignals
+      ]));
+
+      appendUniqueLine(immediateStop, firstNonEmpty([
+        risicoActiviteiten.exitStrategy,
+        planVanAanpak.planB,
+        risicoActiviteiten.afterRisks
+      ]));
+
+      appendUniqueLine(distractionStrategy, firstNonEmpty([
+        risicoActiviteiten.preparationPlan,
+        planVanAanpak.sustainabilityTerm
+      ]));
+
+      appendUniqueLine(slippageSupport, firstNonEmpty([
+        planVanAanpak.supportPeople,
+        risicoMensen.steunnetwork
+      ]));
+
+      appendUniqueLine(recoverySteps, firstNonEmpty([
+        planVanAanpak.planA,
+        risicoActiviteiten.riskyActivities
+      ]));
+
+      appendUniqueLine(rationalThoughts, firstNonEmpty([
+        planVanAanpak.usageGoal,
+        risicoSituaties.responsePlan
+      ]));
+
+      saveForm(true);
+      showMessage('Voorstel ingevuld op basis van eerdere stappen. Check en pas aan waar nodig.');
+    }
+
+    function getRecommendedRoute() {
+      const urgency = document.getElementById('routeUrgency').value;
+      const support = document.getElementById('routeSupport').value;
+
+      if (urgency === 'hoog' && support === 'nee') {
+        return {
+          path: './noodplan-wegglijden.htm',
+          hint: 'Huidig adviespad: Noodplan wegglijden (hoge urgentie zonder directe steun).'
+        };
+      }
+      if (urgency === 'hoog') {
+        return {
+          path: './noodplan-forse-trek.htm',
+          hint: 'Huidig adviespad: Noodplan forse trek.'
+        };
+      }
+      if (urgency === 'middel') {
+        return {
+          path: './stimulus-respons.htm',
+          hint: 'Huidig adviespad: Stimulus-respons plan.'
+        };
+      }
+      return {
+        path: './trek-opvangen.htm',
+        hint: 'Huidig adviespad: Trek opvangen.'
+      };
+    }
+
+    function updateRouteHint() {
+      const recommendation = getRecommendedRoute();
+      currentRoutePath = recommendation.path;
+      const hintEl = document.getElementById('routeHint');
+      if (hintEl) hintEl.textContent = recommendation.hint;
+    }
+
+    function openRecommendedRoute() {
+      window.location.href = currentRoutePath;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = iamData.getFormData(formKey);
+      fillForm({ ...getDefaultData(), ...(saved || {}) });
+      updateRouteHint();
+
+      document.getElementById('suggestButton').addEventListener('click', applySuggestionFromPreviousSteps);
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('openRecommendedRouteButton').addEventListener('click', openRecommendedRoute);
+      document.getElementById('routeUrgency').addEventListener('change', updateRouteHint);
+      document.getElementById('routeSupport').addEventListener('change', updateRouteHint);
+      document.getElementById('backupForm').addEventListener('input', () => saveForm(false));
+
+      // Trigger loader
+      document.getElementById('loadTriggersButton').addEventListener('click', () => {
+        const triggers = iamTriggerLoader.getTriggers(iamData);
+        iamTriggerLoader.renderMultiSelect('triggerSituations', triggers.situations, 'situation');
+        iamTriggerLoader.renderMultiSelect('triggerActivities', triggers.activities, 'activity');
+        iamTriggerLoader.renderMultiSelect('triggerPeople', triggers.people, 'person');
+        document.getElementById('saveTriggerSelectionButton').disabled = false;
+        showMessage('Triggers geladen. Kies welke voor jou relevant zijn.');
+      });
+
+      document.getElementById('saveTriggerSelectionButton').addEventListener('click', () => {
+        const selected = iamTriggerLoader.getSelectedTriggers({
+          situations: 'triggerSituations',
+          activities: 'triggerActivities',
+          people: 'triggerPeople'
+        });
+        const formData = collectFormData();
+        formData.selectedTriggers = selected;
+        iamData.updateFormData(formKey, formData);
+        showMessage('Geselecteerde triggers opgeslagen bij je plan bij uitglijden.');
+      });
+
+      window.addEventListener('focus', () => {
+        // Reload on focus for any external updates
+      });
+    });
+  </script>
 </body>
 </html>

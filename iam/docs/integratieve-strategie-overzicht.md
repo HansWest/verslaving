@@ -79,6 +79,14 @@ Strategische functie:
 - vermindert afhankelijkheid van puur wilskrachtgedrag
 - bouwt sociale en gedragsmatige buffers in
 
+#### Rolverdeling steunpagina's (expliciet)
+
+- `sociaal-netwerk.htm`: breed netwerkoverzicht (wie hoort bij mijn omgeving).
+- `steunnetwerk.htm`: operationele steun (wie helpt concreet bij moeilijke momenten en hoe).
+- `motiverende-mensen.htm`: richting en betekenis (voor wie/waarvoor doe ik dit, inclusief toekomstgerichte rollen).
+
+Ontwerpprincipe: deze drie vullen elkaar aan en zijn niet inwisselbaar.
+
 ### 6. Borging en ritme
 
 - `plan-van-aanpak.htm`
