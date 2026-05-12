@@ -157,6 +157,13 @@ De volgende inhoudelijke inzichten uit legacy-formulieren zijn bewust behouden i
 	- **Houdbaarheid:** Bewust kiezen hoelang je het doel volhoudt (evt. halfjaar, jaar), dan her-evalueren. Dit voorkomt doelafdrift.
 	- **Doelslippage-preventie:** Regelmatige check: "Ben ik nog op koers met wat ik wilde bereiken?" Schriftelijke plans helpen hier.
 
+- **Stoppen versus gestopt blijven (kernboodschap in gebruikersflow)**:
+	- Stoppen voelt vooraf vaak enger/moeilijker dan het achteraf blijkt.
+	- Gestopt blijven blijkt in de praktijk vaak moeilijker dan vooraf gedacht.
+	- Bij duidelijke keuze zonder voortdurende twijfel kan de biologische onrust afnemen.
+	- Daarna wordt vaak zichtbaarder wat onder gebruik lag: emotionele/psychologische afhankelijkheid in dagelijks leven.
+	- UI/flow-afspraak: combineer crisisroute (drukregulatie) altijd met langetermijnroute (gevoelens, relaties, waarden, ritme), zodat "gestopt blijven" expliciet begeleid wordt.
+
 - **Sociale Vaardigheden (SOVA): Grenzen stellen**:
 	- **Videocamera-principe:** Beschrijf observeerbaar gedrag (wat je ziet/hoort), niet je interpretatie ervan. Helpt communicatie scherp.
 	- Context: Regelmatig gebruik maakt mensen kwetsbaar voor lastige sociale situaties; niet reageren put wilskracht uit.
@@ -188,6 +195,7 @@ Doel van deze overname: pedagogische scherpte uit legacy behouden zonder terug t
 De onderstaande pagina's vormen de actieve kernflow van IAM in `iam/htm`.
 
 - `index.htm`
+- `start-nu.htm`
 - `waarom-wel-gebruiken.htm`
 - `wat-is-mijn-ik.htm`
 - `persoonlijke-waarden.htm`

@@ -28,10 +28,18 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Build Pages artifact structure
+        run: |
+          set -e
+          rm -rf dist
+          mkdir -p dist
+          cp -R iam dist/iam
+          cp index.html dist/index.html
+
       - name: Upload IAM artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./iam
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
