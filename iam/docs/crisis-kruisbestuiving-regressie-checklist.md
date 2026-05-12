@@ -2,7 +2,7 @@
 
 **Deployment:** v1.0.0-fase-b-ready (commit df42a45, live 12 mei 2026)  
 **Automation:** Automated test suite passed 133/134 (99.3%)  
-**Manual Protocol:** Comprehensive klikscripten + E2E test below
+**Handmatig protocol:** Uitgebreide klikscripts + E2E-test hieronder
 
 ---
 
@@ -134,7 +134,7 @@ Pass criteria:
 **Tester Information:**
 - [ ] Naam: ___________________________________
 - [ ] Datum: ___________________________________
-- [ ] Startijd: _____________ Eindtijd: _____________
+- [ ] Starttijd: _____________ Eindtijd: _____________
 - [ ] Browser(s): Chrome / Firefox / Safari / Edge (circle one)
 - [ ] Viewport: Desktop / Tablet 768px / Mobile 375px (circle one)
 
@@ -204,15 +204,19 @@ Snelle go/no-go:
 
 **Doel:** Valideren dat kruisbestuiving en nu-doen routing buiten de crisis-trio blijven werken.
 
-**Scope (10 Fase B pages):**
+**Scope (10 Fase B-pagina's):**
 - iam/htm/risico-denken.htm
 - iam/htm/risico-gevoelens.htm
 - iam/htm/voor-nadelen-balansen.htm
 - iam/htm/plan-van-aanpak.htm
 - iam/htm/stimulus-respons.htm
 - iam/htm/lastige-gevoelens.htm
+- iam/htm/risico-situaties.htm
+- iam/htm/soorten-trek.htm
+- iam/htm/risico-mensen.htm
+- iam/htm/risico-activiteiten.htm
 
-1. Open de 6 pagina's in dezelfde sessie en vul op minstens 3 pagina's elk 1 veld in.
+1. Open de 10 pagina's in dezelfde sessie en vul op minstens 3 pagina's elk 1 veld in.
 2. Controleer op elke pagina met suggestiekaart:
 - max 5 suggesties zichtbaar
 - bronlabel zichtbaar
@@ -231,7 +235,7 @@ Pass criteria:
 - Hints en routeknop reageren direct op selectie.
 - Toegevoegde regels blijven bewaard na reload.
 
-## Handmatige klikscript per pagina (15-20 minuten)
+## Handmatige klikscripts per pagina (15-20 minuten)
 
 Doel: per pagina exact dezelfde klikvolgorde uitvoeren, met expliciete expected outcomes.
 
@@ -343,7 +347,9 @@ Pass criteria:
 
 ---
 
-## Handmatige Klikscript Per Pagina (15-20 minuten)
+## Afvinksamenvatting Handmatige Klikscripts (15-20 minuten)
+
+Doel: snelle afvinklijst als samenvatting van de uitgebreide klikscripts hierboven.
 
 **Doel:** Per pagina exact dezelfde kliks uitvoeren, met expliciete expected outcomes.
 
@@ -354,7 +360,7 @@ Pass criteria:
 - [ ] Expected outcomes verified
 - [ ] **Result: PASS / FAIL**
 
-### Fase B Pages (6 pagina's)
+### Fase B-pagina's (10 pagina's)
 
 **1) risico-denken.htm**
 - [ ] Vul "hoogRisicoDenken" in
@@ -394,7 +400,7 @@ Pass criteria:
 **Manual Testing Complete:**
 - Snelle Smoke Test (crisis trio): [ ] GO / [ ] NO-GO
 - Fase B Smoke Test (10 pagina's): [ ] GO / [ ] NO-GO
-- Handmatige Klikscripten (16 pagina's): [ ] GO / [ ] NO-GO
+- Handmatige Klikscripten (10 pagina's): [ ] GO / [ ] NO-GO
 - E2E Integration Test: [ ] GO / [ ] NO-GO
 
 **Overall Result:**
@@ -405,6 +411,38 @@ Pass criteria:
 - Approver: ___________________________________
 - Date: ___________________________________
 - Decision: **DEPLOY / HOLD**
+
+---
+
+## Actiepad Bij FAIL of NO-GO
+
+Doel: een snelle, eenduidige route van bevinding naar herstelpagina.
+
+1. Bepaal impactklasse:
+- **P0 Kritiek:** data verlies, runtime error, routeknop faalt op meerdere pagina's.
+- **P1 Hoog:** kernflow werkt deels niet, maar tijdelijke workaround bestaat.
+- **P2 Middel:** UX/tekst/feedback issue zonder functionele blokkade.
+2. Koppel issue direct aan hersteldoel:
+- Suggestiekaart faalt -> herstel op bronpagina + `plan-van-aanpak.htm` als centrale verificatie.
+- Routekaart/hint faalt -> herstel op pagina met route + hercontrole op `risico-denken.htm` en `plan-van-aanpak.htm`.
+- Agenda-overdracht faalt -> herstel op bronpagina + hercontrole op `agenda.htm`.
+- Soft warning faalt -> herstel op betreffende crisispagina + regressiecheck op andere 2 crisispagina's.
+3. Her-test direct na fix:
+- Draai minimaal: Kernflow van het issue + Snelle Smoke Test stap 1-5.
+- Bij P0/P1 altijd ook E2E GO/NO-GO integratietest opnieuw uitvoeren.
+4. Besluit:
+- **GO:** issue opgelost, geen nieuwe console errors, persistentie bevestigd.
+- **HOLD:** issue blijft bestaan of regressie op andere pagina's gevonden.
+
+## Korte Triage Notatie (voor Issues Found)
+
+Gebruik onder "Issues Found" dit format per regel:
+
+`[P0|P1|P2] Pagina - Stap - Verwacht vs. Gezien - Repro (ja/nee) - Status (open/fixed)`
+
+Voorbeeld:
+
+`[P1] risico-activiteiten.htm - Routeklik - Verwacht: actiepagina opent, Gezien: geen navigatie - Repro: ja - Status: open`
 
 ---
 

@@ -43,6 +43,8 @@
             --featured-progress-bg: #c8e6c9;
             --summary-chip-bg: #f0f7ff;
             --summary-chip-text: #244c70;
+            --info-btn-bg: #667eea;
+            --info-btn-text: #ffffff;
             --chemsex-bg: #fdf4ff;
             --chemsex-border: #e0d4f0;
             --chemsex-title: #9b3fcc;
@@ -51,6 +53,68 @@
             --footer-text: #666666;
             --footer-meta: #999999;
         }
+
+        /* Info-knop [!] */
+        .info-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.1em;
+            height: 1.1em;
+            font-size: 0.72em;
+            font-weight: 700;
+            line-height: 1;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: var(--info-btn-bg, #667eea);
+            color: var(--info-btn-text, #fff);
+            cursor: pointer;
+            vertical-align: super;
+            margin-left: 0.15em;
+            flex-shrink: 0;
+            transition: opacity 0.15s;
+        }
+        .info-trigger:hover { opacity: 0.8; }
+
+        /* Info-modal */
+        .info-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 9000;
+            align-items: center;
+            justify-content: center;
+        }
+        .info-modal-backdrop.open { display: flex; }
+        .info-modal {
+            background: var(--surface, #fff);
+            border-radius: 12px;
+            padding: 1.5rem 1.75rem;
+            max-width: 480px;
+            width: calc(100% - 2rem);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+            position: relative;
+        }
+        .info-modal p {
+            margin: 0;
+            color: var(--text-main, #22313d);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        .info-modal-close {
+            position: absolute;
+            top: 0.6rem;
+            right: 0.8rem;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--text-muted, #526473);
+            line-height: 1;
+        }
+        .info-modal-close:hover { color: var(--danger, #f44336); }
 
         @media (prefers-color-scheme: dark) {
             :root {
@@ -1130,7 +1194,7 @@
                     <li><strong>&nbsp;h - herhalen:</strong> herhalen, herhalen, en <em>herhalen</em>.</li>
                     </ul>
                 <p class="model-note">
-                    {Het is misschien interressant om te weten dat het gevoel(!) van verslaving en het gevoel(!) vsn craving/trek voortkomt uit de oude delen van het brein die niet zo veel te maken hebben met denken of vinden of wilskracht.[!]}...herhalen is essentieel: juist oude, automatische breinreacties veranderen door vaak te <em>oefenen</em> op rustige momenten.
+                    ...herhalen is essentieel! Juist oude, automatische breinreacties veranderen door vaak te <em>oefenen</em> op rustige momenten<button class="info-trigger" onclick="openInfoModal('Het is misschien interressant om te weten dat het gevoel(!) van verslaving (craving/trek) voortkomt uit de oude delen van het brein die niet zo veel te maken hebben met denken of vinden of wilskracht: De Archicortex (hersenstam) waar de biologische verslaving-in-engere-zin huist. En ook de Paleo-cortex, waar het gevoel van onze emoties huist. En vaak zijn we afhankelijk van een middel omdat we zo proberen met onze emoties en gevoelens om te gaan.')" aria-label="Meer uitleg">!</button>.
                 </p>
             </div>
         </div>
@@ -2544,6 +2608,28 @@
                 });
             });
             refreshDashboard();
+        });
+    </script>
+
+    <!-- Info-modal -->
+    <div class="info-modal-backdrop" id="infoModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="infoModalText" onclick="closeInfoModal(event)">
+        <div class="info-modal">
+            <button class="info-modal-close" onclick="closeInfoModal()" aria-label="Sluiten">&times;</button>
+            <p id="infoModalText"></p>
+        </div>
+    </div>
+    <script>
+        function openInfoModal(tekst) {
+            document.getElementById('infoModalText').textContent = tekst;
+            document.getElementById('infoModalBackdrop').classList.add('open');
+        }
+        function closeInfoModal(evt) {
+            if (!evt || evt.target === document.getElementById('infoModalBackdrop')) {
+                document.getElementById('infoModalBackdrop').classList.remove('open');
+            }
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeInfoModal();
         });
     </script>
 </body>
