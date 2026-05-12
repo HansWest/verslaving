@@ -12,19 +12,38 @@
             --page-accent: #4527a0;
             --soft: #ede7f6;
             --border: #b39ddb;
+            --ink: #1f3849;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(94, 53, 177, 0.1), transparent 34%),
+                linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+            color: var(--ink);
         }
 
         .page-header {
             background: linear-gradient(135deg, #5e35b1 0%, #4527a0 100%);
             color: #fff;
-            text-align: center;
-            padding: 2rem 1.25rem;
-            margin-bottom: 1.5rem;
+            text-align: left;
+            padding: 1.35rem 1.25rem;
+            margin: 1rem auto 1.2rem;
+            max-width: 760px;
+            border-radius: 16px;
+            box-shadow: 0 12px 28px rgba(31, 56, 73, 0.14);
         }
 
         .page-header h1 {
-            margin: 0 0 0.4rem;
-            font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+            margin: 0 0 0.3rem;
+            font-size: clamp(1.4rem, 4vw, 1.95rem);
+            line-height: 1.2;
+        }
+
+        .page-header p {
+            margin: 0;
+            opacity: 0.95;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
         .page-wrap {

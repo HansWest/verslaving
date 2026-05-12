@@ -320,6 +320,20 @@ Deze regels zijn overgenomen als bruikbare standaard voor IAM-tools met vergelij
 - Beperk module-specifieke overrides tot gevallen waar een gedeeld patroon aantoonbaar niet past.
 - Hergebruik het bestaande footerpatroon met Value for Value + privacyregel wanneer de lay-out dat toelaat.
 
+### Paginaheader patroon
+
+- Gebruik op formulierpagina's bij voorkeur een **header als kaart** in plaats van een harde full-width balk.
+- Basispatroon:
+	- afgeronde hoeken (`border-radius`),
+	- compacte padding (niet te hoog),
+	- zachte schaduw,
+	- subtiele gradient die past bij de pagina-kleur.
+- Uitlijning: headertekst standaard links, tenzij de pagina-inhoud expliciet een gecentreerde hero vraagt.
+- Breedte: header volgt dezelfde contentbreedte als de pagina (`max-width` + centrering) voor rust in de lay-out.
+- Typografie: titel compact (`clamp`), subtitel kort en leesbaar (regelhoogte rond 1.4-1.6).
+- Vermijd "grove" blokken: geen overmatige verticale ruimte, geen harde randen zonder afronding.
+- Als een pagina bewust afwijkt van dit patroon, leg de reden kort vast in de pagina-annotatie of documentatie.
+
 ### Disclosure en collapse
 
 - Grote secties zijn standaard inklapbaar, behalve bij veiligheidskritische acties of vaste lineaire kernflow.

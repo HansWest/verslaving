@@ -12,19 +12,38 @@
             --page-accent: #e65100;
             --soft: #fff3e0;
             --border: #ffcc80;
+            --ink: #1f3849;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(239, 108, 0, 0.1), transparent 34%),
+                linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+            color: var(--ink);
         }
 
         .page-header {
             background: linear-gradient(135deg, #ef6c00 0%, #e65100 100%);
             color: #fff;
-            text-align: center;
-            padding: 2rem 1.25rem;
-            margin-bottom: 1.5rem;
+            text-align: left;
+            padding: 1.35rem 1.25rem;
+            margin: 1rem auto 1.2rem;
+            max-width: 760px;
+            border-radius: 16px;
+            box-shadow: 0 12px 28px rgba(31, 56, 73, 0.14);
         }
 
         .page-header h1 {
-            margin: 0 0 0.4rem;
-            font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+            margin: 0 0 0.3rem;
+            font-size: clamp(1.4rem, 4vw, 1.95rem);
+            line-height: 1.2;
+        }
+
+        .page-header p {
+            margin: 0;
+            opacity: 0.95;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
         .page-wrap {
@@ -189,7 +208,7 @@
             Met dit werkblad breng je in kaart wat voor jou lastig is en wat jou helpt om op koers te blijven.
         </section>
 
-        <h2 class="section-title">0) Reframing: Hoe zet je risicogevoelens in perspectief?</h2>
+        <h2 class="section-title">1) Reframing: Hoe zet je risicogevoelens in perspectief?</h2>
         <section class="hint-box">
             <strong>Albert Ellis' twee kernvragen:</strong> Stel jezelf deze vragen om gedachten die je voelt aan te scherpen:
             <ol style="margin: 0.6rem 0; padding-left: 1.8rem;">
@@ -206,7 +225,7 @@
             </div>
         </section>
 
-        <h2 class="section-title">1) Voorbeelden verzamelen</h2>
+        <h2 class="section-title">2) Voorbeelden verzamelen</h2>
         <div class="field">
             <label for="gevoelVoorbeeldSelect">Voorbeeldgevoel toevoegen</label>
             <span class="sub">Kies een voorbeeld en voeg het toe.</span>
@@ -220,7 +239,7 @@
             <textarea id="voorbeeldGevoel" name="voorbeeldGevoel" placeholder="Welke gevoelens trekken jou vaak richting gebruik?"></textarea>
         </div>
 
-        <h2 class="section-title">2) Categorie 1: Moeilijk uit te houden</h2>
+        <h2 class="section-title">3) Categorie 1: Moeilijk uit te houden</h2>
         <div class="field">
             <span class="sub">Noem drie gevoelens die je zonder gebruik lastig kunt verdragen.</span>
             <div class="triad">
@@ -235,7 +254,7 @@
             <textarea id="cat1Plan" name="cat1Plan" placeholder="Wie helpt je? Wat werkt voor jou? Wat spreek je met jezelf af?"></textarea>
         </div>
 
-        <h2 class="section-title">3) Categorie 2: Moeilijk te uiten</h2>
+        <h2 class="section-title">4) Categorie 2: Moeilijk te uiten</h2>
         <div class="field">
             <span class="sub">Noem drie gevoelens of behoeften die je lastig kunt uiten zonder gebruik.</span>
             <div class="triad">
@@ -250,7 +269,7 @@
             <textarea id="cat2Plan" name="cat2Plan" placeholder="Met wie kun je dit oefenen? Waar begin je klein?"></textarea>
         </div>
 
-        <h2 class="section-title">4) Lastige gedachten bij gevoelens</h2>
+        <h2 class="section-title">5) Lastige gedachten bij gevoelens</h2>
         <div class="field">
             <label for="psGedachten">Welke gedachten maken het zwaarder?</label>
             <textarea id="psGedachten" name="psGedachten" placeholder="Bijv. 'Ik kan dit niet aan', 'het heeft geen zin', 'nu moet ik gebruiken'..."></textarea>
@@ -260,7 +279,7 @@
             Stel jezelf twee vragen: klopt dit echt, en helpt deze gedachte mij vooruit?
         </div>
 
-        <h2 class="section-title">5) Interne risico's: wat gebeurt er van binnen in jou?</h2>
+        <h2 class="section-title">6) Interne risico's: wat gebeurt er van binnen in jou?</h2>
         <div class="field">
             <span class="sub">Veelal komt het risico niet van buiten, maar van hoe jij voelt en denkt. Dit zijn jouw interne risico's.</span>
             <label for="interneRisicos">Mijn belangrijkste interne risico's</label>
@@ -272,7 +291,7 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
             Interne risico's zijn bijvoorbeeld: veronderstelling dat alleen gebruik je gelukkig maakt; schaamte; zelfkritiek; het idee dat je 'zwak' bent; perfectionisme; teveel alleen willen doen.
         </div>
 
-        <h2 class="section-title">6) Van inzicht naar actie (nu doen)</h2>
+        <h2 class="section-title">7) Van inzicht naar actie (nu doen)</h2>
         <section class="intro-card route-card">
             <div class="field">
                 <label for="routeUrgency">Hoe urgent is het nu?</label>

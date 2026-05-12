@@ -932,10 +932,6 @@
                     <textarea id="weeklyNextStep" placeholder="Bijvoorbeeld: noodplan aanscherpen, plan B invullen, 3 keer oefenen, steun eerder inschakelen..."></textarea>
                 </div>
             </div>
-            <div class="action-buttons" style="margin-top: 1rem;">
-                <button class="btn-action export" type="button" onclick="saveWeeklyReview()">💾 Weekreflectie bewaren</button>
-                <button class="btn-action" type="button" onclick="prefillWeeklyReview()">✨ Vul suggesties in</button>
-            </div>
             <div class="weekly-review-links" id="weeklyReviewLinks"></div>
             <p class="weekly-review-meta" id="weeklyReviewMeta">Nog geen weekreflectie opgeslagen.</p>
             <div class="weekly-attempt-tools">
@@ -952,6 +948,10 @@
                     <button type="button" class="weekly-filter-btn" data-attempt-filter="nuttig">Nuttig</button>
                     <button type="button" class="weekly-filter-btn" data-attempt-filter="niet-nuttig">Niet nuttig</button>
                     <button type="button" class="weekly-filter-btn" data-attempt-filter="later">Later</button>
+                </div>
+                <div class="action-buttons" style="margin-top: 0.75rem;">
+                    <button class="btn-action export" type="button" onclick="saveWeeklyReview()">💾 Weekreflectie bewaren</button>
+                    <button class="btn-action" type="button" onclick="prefillWeeklyReview()">✨ Vul suggesties in</button>
                 </div>
                 <p class="weekly-attempt-stats" id="weeklyAttemptStats">Nog geen pogingen in historielijst.</p>
                 <ul class="weekly-history-list" id="weeklyHistoryList"></ul>
@@ -1485,7 +1485,7 @@
             'niet-nuttig': 'Niet nuttig',
             'later': 'Later opnieuw proberen'
         };
-        const CHAPTER_COLLAPSE_STORAGE_KEY = 'iam.index.chapterCollapse';
+        const CHAPTER_COLLAPSE_STORAGE_KEY = 'iam.index.chapterCollapse.v2';
         let weeklyHistoryFilter = 'all';
 
         function loadChapterCollapseState() {
@@ -1516,8 +1516,11 @@
 
         function getDefaultChapterCollapsed(chapterKey) {
             if (chapterKey === 'intro') return false;
+            if (chapterKey === 'quick-actions') return false;
             if (chapterKey === 'weekly-review') return false;
-            return true;
+            if (chapterKey === 'featured') return false;
+            if (chapterKey.startsWith('phase-')) return false;
+            return false;
         }
 
         function makeChapterCollapsible(chapterKey, headingEl, contentEls, collapseState, hostEl) {
