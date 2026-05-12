@@ -20,6 +20,13 @@
                 radial-gradient(circle at top left, rgba(239, 108, 0, 0.1), transparent 34%),
                 linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
             color: var(--ink);
+            overflow-x: hidden;
+        }
+
+        html {
+            background:
+                radial-gradient(circle at top left, rgba(239, 108, 0, 0.1), transparent 34%),
+                linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
         }
 
         .page-header {
@@ -114,6 +121,12 @@
             background: #fff;
         }
 
+        select {
+            appearance: auto;
+            background-image: none !important;
+            padding-right: 0.7rem;
+        }
+
         textarea {
             resize: vertical;
             min-height: 84px;
@@ -182,6 +195,61 @@
             margin-top: 0.7rem;
             color: #5f6a70;
             font-size: 0.92rem;
+        }
+
+        .cross-suggest-box {
+            background: #fdf5ec;
+            border: 1px solid #f0d0a8;
+            border-radius: 12px;
+            padding: 0.9rem;
+            margin: 0.75rem 0 1rem;
+        }
+
+        .cross-suggest-box p {
+            margin: 0 0 0.55rem;
+            color: #6b553f;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .cross-suggest-list {
+            display: grid;
+            gap: 0.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cross-suggest-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            background: #fff;
+            border: 1px solid #f0dcbf;
+            border-radius: 10px;
+            padding: 0.6rem 0.7rem;
+        }
+
+        .cross-suggest-item span {
+            flex: 1 1 240px;
+            font-size: 0.88rem;
+            color: #5a4938;
+            line-height: 1.45;
+        }
+
+        .cross-suggest-item button {
+            border: 1px solid #e8cfab;
+            background: #fff3e3;
+            color: #6a4b2f;
+            border-radius: 999px;
+            min-height: 34px;
+            padding: 0.38rem 0.74rem;
+            font: inherit;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
         }
 
         @media (min-width: 700px) {
@@ -298,6 +366,13 @@
 En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textarea>
         </div>
 
+        <section class="cross-suggest-box">
+            <p>Ideeën uit andere pagina's (max 5): kies wat je nu helpt en voeg het direct toe.</p>
+            <ul class="cross-suggest-list" id="crossSuggestListGevoelens">
+                <li class="cross-suggest-item"><span>Nog geen suggesties uit gekoppelde pagina's gevonden.</span></li>
+            </ul>
+        </section>
+
         <div class="hint-box">
             Interne risico's zijn bijvoorbeeld: veronderstelling dat alleen gebruik je gelukkig maakt; schaamte; zelfkritiek; het idee dat je 'zwak' bent; perfectionisme; teveel alleen willen doen.
         </div>
@@ -408,6 +483,69 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
             saveData(false);
         }
 
+        function buildCrossSuggestions() {
+            if (typeof iamData === 'undefined') return [];
+
+            const denken = iamData.getFormData('risico-denken') || {};
+            const gevoelensLang = iamData.getFormData('lastige-gevoelens') || {};
+            const sociaal = iamData.getFormData('sociaal-netwerk') || {};
+
+            const pool = [
+                { text: denken.hoogRisicoDenken, source: 'risico-denken', target: 'psGedachten' },
+                { text: denken.alternatiefDenken, source: 'risico-denken', target: 'cat1Plan' },
+                { text: denken.interneRisicosDenken, source: 'risico-denken', target: 'interneRisicos' },
+                { text: gevoelensLang.acceptancePractice, source: 'lastige-gevoelens', target: 'cat1Plan' },
+                { text: sociaal.reachableSupport, source: 'sociaal-netwerk', target: 'cat2Plan' }
+            ];
+
+            const unique = [];
+            pool.forEach((item) => {
+                const clean = String(item.text || '').trim();
+                if (!clean) return;
+                if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+                unique.push({ ...item, text: clean });
+            });
+
+            return unique.slice(0, 5);
+        }
+
+        function renderCrossSuggestions() {
+            const list = document.getElementById('crossSuggestListGevoelens');
+            if (!list) return;
+
+            const suggestions = buildCrossSuggestions();
+            list.innerHTML = '';
+
+            if (!suggestions.length) {
+                const empty = document.createElement('li');
+                empty.className = 'cross-suggest-item';
+                empty.innerHTML = '<span>Nog geen suggesties uit gekoppelde pagina\'s gevonden.</span>';
+                list.appendChild(empty);
+                return;
+            }
+
+            suggestions.forEach((item) => {
+                const row = document.createElement('li');
+                row.className = 'cross-suggest-item';
+
+                const text = document.createElement('span');
+                text.textContent = `${item.source}: ${item.text}`;
+
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = 'Voeg toe';
+                button.addEventListener('click', () => {
+                    const target = document.getElementById(item.target);
+                    appendUniqueLine(target, item.text);
+                    saveData(false);
+                });
+
+                row.appendChild(text);
+                row.appendChild(button);
+                list.appendChild(row);
+            });
+        }
+
         function loadData() {
             if (typeof iamData === 'undefined') return;
             const data = iamData.getFormData('risico-gevoelens');
@@ -490,6 +628,7 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
             loadData();
             loadGevoelExamples();
             updateRouteHint();
+            renderCrossSuggestions();
             document.getElementById('gevoelVoorbeeldSelect').addEventListener('change', appendExample);
             document.getElementById('routeUrgency').addEventListener('change', updateRouteHint);
             document.getElementById('routeFocus').addEventListener('change', updateRouteHint);
@@ -498,6 +637,7 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
                 const el = document.getElementById(field);
                 if (el) el.addEventListener('blur', () => saveData(false));
             });
+            window.addEventListener('focus', renderCrossSuggestions);
         });
     </script>
 </body>

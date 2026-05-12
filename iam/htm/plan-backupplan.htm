@@ -15,12 +15,26 @@
             --border:      #90caf9;
         }
 
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --page-main:   #2196f3;
+                --page-accent: #1565c0;
+                --soft:        #0d47a1;
+                --border:      #1565c0;
+            }
+        }
+
         .page-header {
             background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%);
             color: #fff;
             padding: 2rem 1.5rem;
             margin-bottom: 2rem;
             text-align: center;
+            max-width: 860px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 18px;
+            box-shadow: 0 14px 30px rgba(33, 150, 243, 0.22);
         }
 
         .page-header h1 {
@@ -309,7 +323,7 @@
 </head>
 <body>
 <div class="page-header">
-    <h1>📋 Plan A, B & C</h1>
+    <h1>Plan A, B en C</h1>
     <p class="subtitle">Meerdere routes naar jouw doel, ook als het even tegenzit</p>
 </div>
 

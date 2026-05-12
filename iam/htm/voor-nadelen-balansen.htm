@@ -156,9 +156,117 @@
             font-size: 0.85rem;
             color: #4f6574;
         }
+
+        .cross-suggest-box {
+            margin-top: 1rem;
+            padding: 0.95rem;
+            border-radius: 12px;
+            background: #f6fafc;
+            border: 1px solid #d7e6ee;
+        }
+
+        .cross-suggest-box p {
+            margin: 0 0 0.6rem;
+            color: #526777;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .cross-suggest-list {
+            display: grid;
+            gap: 0.55rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cross-suggest-item {
+            display: flex;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: #fff;
+            border: 1px solid #d7e6ee;
+            border-radius: 10px;
+            padding: 0.65rem 0.75rem;
+        }
+
+        .cross-suggest-item span {
+            flex: 1 1 260px;
+            color: #334c5d;
+            font-size: 0.88rem;
+            line-height: 1.45;
+        }
+
+        .cross-suggest-item button {
+            border: 1px solid #c8dce8;
+            background: #eef6fb;
+            color: #2b556e;
+            border-radius: 999px;
+            min-height: 36px;
+            padding: 0.4rem 0.78rem;
+            font: inherit;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .scale-visual {
+            margin-top: 0.65rem;
+            padding: 0.75rem 0.6rem 0.35rem;
+            background: #fff;
+            border: 1px solid #d7e6ee;
+            border-radius: 10px;
+        }
+        .scale-base {
+            width: 8px;
+            height: 44px;
+            margin: 0 auto;
+            background: #7f95a4;
+            border-radius: 999px;
+        }
+        .scale-beam {
+            width: 190px;
+            height: 4px;
+            margin: -36px auto 0;
+            background: #5d7484;
+            border-radius: 999px;
+            transform-origin: 50% 50%;
+            transition: transform 0.22s ease;
+            position: relative;
+        }
+        .scale-pan {
+            position: absolute;
+            top: 8px;
+            width: 62px;
+            text-align: center;
+            font-size: 1.2rem;
+            transition: transform 0.22s ease;
+        }
+        .scale-pan.left {
+            left: -22px;
+        }
+        .scale-pan.right {
+            right: -22px;
+        }
+        .scale-pan-labels {
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: #556b7a;
+        }
         .message { display: none; border-left: 4px solid #5a8840; }
         .message.show { display: block; }
         .message.error { border-left-color: var(--page-accent); }
+        .route-card {
+            border-top: 4px solid #5b744a;
+        }
+        .route-hint {
+            margin-top: 0.7rem;
+            color: #4f6574;
+            font-size: 0.92rem;
+        }
         .autofill-flash {
             animation: autofillPulse 1.7s ease-out 1;
             outline: 2px solid rgba(47, 107, 143, 0.45);
@@ -331,7 +439,24 @@
                         <div class="decision-visual">
                             <div class="decision-label" id="decisionLabel">Besliskompas: neutraal (nog weinig input)</div>
                             <div class="decision-track"><div id="decisionBar" class="decision-bar"></div></div>
+                            <div class="scale-visual" aria-hidden="true">
+                                <div class="scale-base"></div>
+                                <div class="scale-beam" id="scaleBeam">
+                                    <div class="scale-pan left" id="scalePanLeft">⚖</div>
+                                    <div class="scale-pan right" id="scalePanRight">⚖</div>
+                                </div>
+                                <div class="scale-pan-labels">
+                                    <span>Gebruik trekt</span>
+                                    <span>Veranderen trekt</span>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="cross-suggest-box">
+                        <p>Ideeën uit verwante pagina's (max 5): voeg alleen toe wat dit balansveld beter maakt.</p>
+                        <ul class="cross-suggest-list" id="balanceCrossSuggestList">
+                            <li class="cross-suggest-item"><span>Nog geen suggesties uit gekoppelde pagina's gevonden.</span></li>
+                        </ul>
                     </div>
                 </section>
 
@@ -343,11 +468,38 @@
                     </div>
                 </section>
 
+                <section class="note-card route-card">
+                    <h2>Van balans naar actie (nu doen)</h2>
+                    <div class="grid-two">
+                        <div class="form-group">
+                            <label for="routeUrgencyBalans">Hoe urgent is het nu?</label>
+                            <select id="routeUrgencyBalans">
+                                <option value="laag" selected>Laag, ik kan plannen</option>
+                                <option value="middel">Middel, ik wil snel doorpakken</option>
+                                <option value="hoog">Hoog, ik voel trek of druk</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="routeFocusBalans">Waar wil je dit in omzetten?</label>
+                            <select id="routeFocusBalans">
+                                <option value="plan" selected>Concreet plan voor deze week</option>
+                                <option value="oefenen">Oefenen met alternatief gedrag</option>
+                                <option value="analyse">Nog 1 reflectieslag</option>
+                                <option value="nood">Directe noodroute</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="action-bar" style="margin-top: 0.5rem;">
+                        <button type="button" class="button-primary" id="openRecommendedRouteBalanceButton">Open aanbevolen actiepagina</button>
+                    </div>
+                    <p class="route-hint" id="routeHintBalance">Huidig adviespad: Plan van aanpak.</p>
+                </section>
+
                 <div class="action-bar">
-                    <button type="button" class="button-secondary" id="suggestButton">Vul vanuit waarom-wel-gebruiken</button>
                     <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+                    <button type="button" class="button-secondary" id="suggestButton">Vul vanuit waarom-wel-gebruiken</button>
                     <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-                    <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+                    <button type="button" class="button-secondary" id="printButton">Print of bewaar als PDF</button>
                 </div>
             </form>
         </div>
@@ -372,6 +524,7 @@
             'decisionNote',
             'reflectionDate'
         ];
+        let currentRoutePath = './plan-van-aanpak.htm';
 
         function toLines(text) {
             return (text || '')
@@ -471,11 +624,18 @@
 
             const label = document.getElementById('decisionLabel');
             const bar = document.getElementById('decisionBar');
+            const beam = document.getElementById('scaleBeam');
+            const panLeft = document.getElementById('scalePanLeft');
+            const panRight = document.getElementById('scalePanRight');
             const diff = changeScore - usageScore;
             const clamped = Math.max(-12, Math.min(12, diff));
             const percentage = 50 + (clamped / 24) * 50;
+            const tilt = (clamped / 12) * 14;
 
             if (bar) bar.style.width = `${Math.max(6, Math.min(100, percentage))}%`;
+            if (beam) beam.style.transform = `rotate(${tilt}deg)`;
+            if (panLeft) panLeft.style.transform = `translateY(${Math.max(-8, Math.min(8, tilt * 0.45))}px)`;
+            if (panRight) panRight.style.transform = `translateY(${Math.max(-8, Math.min(8, -tilt * 0.45))}px)`;
 
             if (!label) return;
             if (usageAdvCount + usageDisCount + changeAdvCount + changeDisCount === 0) {
@@ -688,6 +848,73 @@
             }
         }
 
+        function buildBalanceCrossSuggestions() {
+            if (typeof iamData === 'undefined') return [];
+
+            const whyUse = iamData.getFormData('waarom-wel-gebruiken') || {};
+            const trek = iamData.getFormData('trek-opvangen') || {};
+            const riskDenken = iamData.getFormData('risico-denken') || {};
+
+            const pool = [
+                { text: whyUse.functionSummary || whyUse.notFeeling, source: 'waarom-wel-gebruiken', target: 'usageAdvantagesText' },
+                { text: whyUse.notThinking, source: 'waarom-wel-gebruiken', target: 'usageAdvantagesText' },
+                { text: whyUse.spaceGiven, source: 'waarom-wel-gebruiken', target: 'usageAdvantagesText' },
+                { text: trek.behoefte, source: 'trek-opvangen', target: 'changeAdvantagesText' },
+                { text: trek.alternatief, source: 'trek-opvangen', target: 'changeAdvantagesText' },
+                { text: riskDenken.alternatiefDenken, source: 'risico-denken', target: 'decisionNote' }
+            ];
+
+            const unique = [];
+            pool.forEach((item) => {
+                const clean = String(item.text || '').trim();
+                if (!clean) return;
+                if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+                unique.push({ ...item, text: clean });
+            });
+
+            return unique.slice(0, 5);
+        }
+
+        function renderBalanceCrossSuggestions() {
+            const list = document.getElementById('balanceCrossSuggestList');
+            if (!list) return;
+
+            const suggestions = buildBalanceCrossSuggestions();
+            list.innerHTML = '';
+
+            if (!suggestions.length) {
+                const empty = document.createElement('li');
+                empty.className = 'cross-suggest-item';
+                empty.innerHTML = '<span>Nog geen suggesties uit gekoppelde pagina\'s gevonden.</span>';
+                list.appendChild(empty);
+                return;
+            }
+
+            suggestions.forEach((item) => {
+                const row = document.createElement('li');
+                row.className = 'cross-suggest-item';
+
+                const text = document.createElement('span');
+                text.textContent = `${item.source}: ${item.text}`;
+
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = 'Voeg toe';
+                button.addEventListener('click', () => {
+                    const target = document.getElementById(item.target);
+                    appendUniqueLine(target, item.text);
+                    saveForm(true);
+                    renderBalanceNudges(collectFormData());
+                    updateWeightedBalanceView();
+                    renderBalanceCrossSuggestions();
+                });
+
+                row.appendChild(text);
+                row.appendChild(button);
+                list.appendChild(row);
+            });
+        }
+
         function exportAll() {
             const exportData = iamData.exportJSON();
             const url = URL.createObjectURL(exportData.blob);
@@ -701,25 +928,73 @@
             showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
         }
 
+        function getRecommendedRoute() {
+            const urgency = document.getElementById('routeUrgencyBalans').value;
+            const focus = document.getElementById('routeFocusBalans').value;
+
+            if (urgency === 'hoog' || focus === 'nood') {
+                return {
+                    path: './noodplan-forse-trek.htm',
+                    hint: 'Huidig adviespad: Noodplan forse trek.'
+                };
+            }
+            if (focus === 'analyse') {
+                return {
+                    path: './risico-denken.htm',
+                    hint: 'Huidig adviespad: Risico-denken (extra analyse).'
+                };
+            }
+            if (focus === 'oefenen' || urgency === 'middel') {
+                return {
+                    path: './stimulus-respons.htm',
+                    hint: 'Huidig adviespad: Stimulus-respons plan.'
+                };
+            }
+
+            return {
+                path: './plan-van-aanpak.htm',
+                hint: 'Huidig adviespad: Plan van aanpak.'
+            };
+        }
+
+        function updateRouteHint() {
+            const recommendation = getRecommendedRoute();
+            currentRoutePath = recommendation.path;
+            const hintEl = document.getElementById('routeHintBalance');
+            if (hintEl) hintEl.textContent = recommendation.hint;
+        }
+
+        function openRecommendedRoute() {
+            window.location.href = currentRoutePath;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const saved = iamData.getFormData(formKey);
             const initial = normalizeSavedData(saved);
             fillForm(initial);
             renderBalanceNudges(initial);
             updateWeightedBalanceView();
+            renderBalanceCrossSuggestions();
+            updateRouteHint();
 
             document.getElementById('suggestButton').addEventListener('click', applySuggestionFromWhyUse);
             document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
             document.getElementById('exportButton').addEventListener('click', exportAll);
             document.getElementById('printButton').addEventListener('click', () => window.print());
+            document.getElementById('openRecommendedRouteBalanceButton').addEventListener('click', openRecommendedRoute);
+            document.getElementById('routeUrgencyBalans').addEventListener('change', updateRouteHint);
+            document.getElementById('routeFocusBalans').addEventListener('change', updateRouteHint);
             document.getElementById('balansForm').addEventListener('input', () => {
                 saveForm(false);
                 renderBalanceNudges(collectFormData());
                 updateWeightedBalanceView();
+                renderBalanceCrossSuggestions();
             });
 
             window.addEventListener('focus', () => {
                 renderBalanceNudges(collectFormData());
+                renderBalanceCrossSuggestions();
+                updateRouteHint();
             });
 
             showAutofillHighlightIfNeeded();

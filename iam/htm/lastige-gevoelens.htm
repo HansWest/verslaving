@@ -193,6 +193,61 @@
       color: #4a6273;
       font-size: 0.92rem;
     }
+
+    .cross-suggest-box {
+      background: #f4f8fb;
+      border: 1px solid #d4e4ef;
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin: 1rem 0 0;
+    }
+
+    .cross-suggest-box p {
+      margin: 0 0 0.55rem;
+      color: #445d6d;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .cross-suggest-list {
+      display: grid;
+      gap: 0.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cross-suggest-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #d8e7f1;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+    }
+
+    .cross-suggest-item span {
+      flex: 1 1 240px;
+      font-size: 0.88rem;
+      color: #324c5d;
+      line-height: 1.45;
+    }
+
+    .cross-suggest-item button {
+      border: 1px solid #c7dbe8;
+      background: #eef6fb;
+      color: #2b556e;
+      border-radius: 999px;
+      min-height: 34px;
+      padding: 0.38rem 0.74rem;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
   </style>
     <script src="../js/themeMode.js"></script>
 </head>
@@ -223,6 +278,11 @@
           <li>Probeer verschillende soorten antwoorden te verzamelen, niet alleen afleiding.</li>
           <li>Werkvolgorde tip: eerst risico-gevoelens invullen, daarna hier je concrete aanpak oefenen.</li>
         </ul>
+      </section>
+
+      <section class="cross-suggest-box">
+        <p>Ideeën uit andere pagina's (max 5): kies wat nu helpt en voeg het direct toe.</p>
+        <ul class="cross-suggest-list" id="crossSuggestListLastige"></ul>
       </section>
 
       <form id="lastigeGevoelensForm">
@@ -496,6 +556,91 @@
       }, 3200);
     }
 
+    function appendUniqueLine(target, line) {
+      if (!target || !line) return;
+      const clean = line.trim();
+      if (!clean) return;
+
+      const lines = target.value
+        .split('\n')
+        .map((part) => part.trim())
+        .filter(Boolean);
+
+      if (!lines.includes(clean)) {
+        target.value = target.value ? `${target.value}\n${clean}` : clean;
+      }
+    }
+
+    function buildCrossSuggestions() {
+      if (typeof iamData === 'undefined') return [];
+
+      const risicoGevoelens = iamData.getFormData('risico-gevoelens') || {};
+      const risicoDenken = iamData.getFormData('risico-denken') || {};
+      const stimulusRespons = iamData.getFormData('stimulus-respons') || {};
+      const sociaalNetwerk = iamData.getFormData('sociaal-netwerk') || {};
+      const plan = iamData.getFormData('plan-van-aanpak') || {};
+
+      const pool = [
+        { text: risicoGevoelens.cat1Plan, source: 'Risico-gevoelens', target: 'enduranceSupport' },
+        { text: risicoGevoelens.acceptancePractice, source: 'Risico-gevoelens', target: 'acceptancePractice' },
+        { text: risicoGevoelens.reframing, source: 'Risico-gevoelens', target: 'reframing' },
+        { text: risicoDenken.alternatiefDenken, source: 'Risico-denken', target: 'reframing' },
+        { text: risicoDenken.interneRisicosDenken, source: 'Risico-denken', target: 'talkPeople' },
+        { text: stimulusRespons.functionalAlternative, source: 'Stimulus-respons', target: 'distractionIdeas' },
+        { text: stimulusRespons.socialSupport, source: 'Stimulus-respons', target: 'talkPeople' },
+        { text: stimulusRespons.attention, source: 'Stimulus-respons', target: 'feelingSurfing' },
+        { text: sociaalNetwerk.reachableSupport, source: 'Sociaal netwerk', target: 'talkPeople' },
+        { text: plan.weeklyReview, source: 'Plan van aanpak', target: 'learningPeriod' }
+      ];
+
+      const unique = [];
+      pool.forEach((item) => {
+        const clean = String(item.text || '').trim();
+        if (!clean) return;
+        if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+        unique.push({ ...item, text: clean });
+      });
+
+      return unique.slice(0, 5);
+    }
+
+    function renderCrossSuggestions() {
+      const list = document.getElementById('crossSuggestListLastige');
+      if (!list) return;
+
+      const suggestions = buildCrossSuggestions();
+      list.innerHTML = '';
+
+      if (!suggestions.length) {
+        const empty = document.createElement('li');
+        empty.className = 'cross-suggest-item';
+        empty.innerHTML = '<span>Nog geen suggesties uit gekoppelde pagina\'s gevonden.</span>';
+        list.appendChild(empty);
+        return;
+      }
+
+      suggestions.forEach((item) => {
+        const row = document.createElement('li');
+        row.className = 'cross-suggest-item';
+
+        const text = document.createElement('span');
+        text.textContent = `${item.source}: ${item.text}`;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = 'Voeg toe';
+        button.addEventListener('click', () => {
+          const target = document.getElementById(item.target);
+          appendUniqueLine(target, item.text);
+          saveForm(false);
+        });
+
+        row.appendChild(text);
+        row.appendChild(button);
+        list.appendChild(row);
+      });
+    }
+
     function getRecommendedRoute() {
       const intensity = document.getElementById('routeIntensity').value;
       const need = document.getElementById('routeNeed').value;
@@ -539,6 +684,7 @@
       const savedData = iamData.getFormData(formKey);
       fillForm(mergeData(savedData));
       updateRouteHint();
+      renderCrossSuggestions();
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAllData);
@@ -549,6 +695,7 @@
 
       const form = document.getElementById('lastigeGevoelensForm');
       form.addEventListener('input', () => saveForm(false));
+      window.addEventListener('focus', renderCrossSuggestions);
     });
   </script>
 <script src="../js/dataStore.js"></script>

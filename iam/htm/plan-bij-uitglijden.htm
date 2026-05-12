@@ -199,6 +199,44 @@
       line-height: 1.45;
     }
 
+    .crossflow-help-list {
+      display: grid;
+      gap: 0.55rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .crossflow-help-item {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid rgba(138, 82, 0, 0.12);
+      border-radius: 10px;
+      padding: 0.7rem 0.8rem;
+    }
+
+    .crossflow-help-item span {
+      flex: 1 1 260px;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .soft-warning {
+      margin-top: 0.7rem;
+      padding: 0.7rem 0.8rem;
+      border-radius: 8px;
+      background: #fff4e5;
+      border: 1px solid #f0c892;
+      color: #7a4b13;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
     .support-script-list {
       display: grid;
       gap: 0.55rem;
@@ -255,6 +293,18 @@
       display: flex;
       gap: 0.65rem;
       flex-wrap: wrap;
+    }
+
+    @media (max-width: 600px) {
+      .support-suggestion {
+        width: 100%;
+        justify-content: center;
+      }
+      .mini-button,
+      .mini-link {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
     <script src="../js/themeMode.js"></script>
@@ -356,7 +406,7 @@
           <section class="question-card">
             <h2>6. Steun</h2>
             <div class="form-group">
-              <label for="slippageSupport">Wie leeft ik of bel ik meteen, en wat zeg ik tegen hen?</label>
+              <label for="slippageSupport">Wie bel of app ik meteen, en wat zeg ik tegen hen?</label>
               <textarea id="slippageSupport" rows="4"></textarea>
               <div class="support-sync-box">
                 <p>Steun uit eerdere formulieren. Klik op een naam om die meteen in je bel/app-plan te zetten.</p>
@@ -364,6 +414,7 @@
                   <span class="support-fallback">Nog geen steun uit andere formulieren gevonden.</span>
                 </div>
               </div>
+              <div class="soft-warning" id="supportDependencyWarning" style="display: none;"></div>
             </div>
           </section>
         </div>
@@ -381,6 +432,19 @@
           </div>
         </section>
 
+        <section class="support-script-box" id="crossflowHelpBox">
+          <div class="support-script-box--header" id="crossflowHelpBoxToggle">
+            <span class="support-script-box--toggle">▼</span>
+            <h2 style="margin: 0; flex: 1;">Ideeën en hulpjes uit andere crisispagina's</h2>
+          </div>
+          <div class="support-script-box--content">
+            <p>1+1=3: neem bruikbare acties uit je andere noodplannen over zodat je sneller in beweging komt.</p>
+            <ul class="crossflow-help-list" id="crossflowHelpList">
+              <li class="crossflow-help-item"><span>Nog geen suggesties uit de andere crisispagina's gevonden.</span></li>
+            </ul>
+          </div>
+        </section>
+
         <section class="question-card">
           <h2>7. Weer Opstaan</h2>
           <div class="form-group">
@@ -388,7 +452,7 @@
             <textarea id="recoverySteps" rows="4"></textarea>
           </div>
           <div class="form-group mt-2">
-            <label for="preventFall">Hoe voorkom ik dat ik door schaamte in een echte terugval bezeming?</label>
+            <label for="preventFall">Hoe voorkom ik dat ik door schaamte in een echte terugval beland?</label>
             <textarea id="preventFall" rows="4"></textarea>
           </div>
         </section>
@@ -429,10 +493,10 @@
         </section>
 
         <div class="action-bar">
-          <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
+          <button type="button" class="button-secondary" id="printButton">Print of bewaar als PDF</button>
         </div>
       </form>
     </div>
@@ -441,6 +505,7 @@
   <script src="../js/dataStore.js"></script>
   <script src="../js/supportNetwork.js"></script>
   <script src="../js/crisisActions.js"></script>
+  <script src="../js/crisisCrossflow.js"></script>
   <script src="../js/triggerLoader.js"></script>
   <script>
     const formKey = 'plan-bij-uitglijden';
@@ -513,17 +578,83 @@
     }
 
     function initCollapseState() {
-      const box = document.getElementById('supportScriptBox');
-      const toggle = document.getElementById('supportScriptBoxToggle');
-      const storageKey = 'plan-bij-uitglijden_supportScriptsCollapsed';
-      
-      const isCollapsed = localStorage.getItem(storageKey) === 'true';
-      if (isCollapsed) box.classList.add('support-script-box--collapsed');
-      
-      toggle.addEventListener('click', () => {
-        box.classList.toggle('support-script-box--collapsed');
-        const newState = box.classList.contains('support-script-box--collapsed');
-        localStorage.setItem(storageKey, newState);
+      if (window.iamCrisisCrossflow && window.iamCrisisCrossflow.setupCollapsible) {
+        window.iamCrisisCrossflow.setupCollapsible({
+          boxId: 'supportScriptBox',
+          toggleId: 'supportScriptBoxToggle',
+          storageKey: 'plan-bij-uitglijden_supportScriptsCollapsed'
+        });
+        window.iamCrisisCrossflow.setupCollapsible({
+          boxId: 'crossflowHelpBox',
+          toggleId: 'crossflowHelpBoxToggle',
+          storageKey: 'plan-bij-uitglijden_crossflowCollapsed'
+        });
+      }
+    }
+
+    function renderSupportDependencyWarning() {
+      const warning = document.getElementById('supportDependencyWarning');
+      const supportRoute = document.getElementById('routeSupport')?.value;
+      const supportText = document.getElementById('slippageSupport')?.value.trim();
+      if (!warning) return;
+
+      if (supportRoute === 'ja' && !supportText) {
+        warning.textContent = 'Je koos dat steun bereikbaar is, maar je steunveld is nog leeg. Voeg een naam + contactactie toe voor snelle uitvoering.';
+        warning.style.display = 'block';
+        return;
+      }
+      warning.style.display = 'none';
+    }
+
+    function renderCrossflowSuggestions() {
+      const list = document.getElementById('crossflowHelpList');
+      const target = document.getElementById('immediateStop');
+      if (!list || !target) return;
+
+      const ideas = window.iamCrisisCrossflow
+        ? window.iamCrisisCrossflow.buildCrossflowSuggestions(iamData, formKey, 6)
+        : [];
+
+      list.innerHTML = '';
+      if (!ideas.length) {
+        const empty = document.createElement('li');
+        empty.className = 'crossflow-help-item';
+        empty.innerHTML = '<span>Nog geen suggesties uit de andere crisispagina\'s gevonden.</span>';
+        list.appendChild(empty);
+        return;
+      }
+
+      ideas.forEach((idea) => {
+        const item = document.createElement('li');
+        item.className = 'crossflow-help-item';
+        const text = document.createElement('span');
+        text.textContent = `${idea.source}: ${idea.text}`;
+
+        const actions = document.createElement('div');
+        actions.className = 'recovery-sync-actions';
+
+        const addButton = document.createElement('button');
+        addButton.type = 'button';
+        addButton.className = 'mini-button';
+        addButton.textContent = 'Voeg toe bij stop-stap';
+        addButton.addEventListener('click', () => {
+          appendUniqueLine(target, idea.text);
+          saveForm(false);
+          showMessage('Kruisbestuivingsidee toegevoegd aan je stop-stap.');
+        });
+        actions.appendChild(addButton);
+
+        if (idea.href) {
+          const sourceLink = document.createElement('a');
+          sourceLink.className = 'mini-link';
+          sourceLink.href = idea.href;
+          sourceLink.textContent = 'Open bron';
+          actions.appendChild(sourceLink);
+        }
+
+        item.appendChild(text);
+        item.appendChild(actions);
+        list.appendChild(item);
       });
     }
 
@@ -621,6 +752,7 @@
       try {
         const formData = collectFormData();
         iamData.updateFormData(formKey, formData);
+        renderSupportDependencyWarning();
         if (feedback) showMessage('Plan bij uitglijden opgeslagen op dit toestel.');
       } catch (error) {
         console.error(error);
@@ -739,7 +871,9 @@
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
       renderSupportSuggestions();
+      renderCrossflowSuggestions();
       updateRouteHint();
+      renderSupportDependencyWarning();
       initCollapseState();
 
       document.getElementById('suggestButton').addEventListener('click', applySuggestionFromPreviousSteps);
@@ -747,10 +881,16 @@
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('agendaRecoveryButton').addEventListener('click', pushRecoveryToAgenda);
-      document.getElementById('slippageSupport').addEventListener('input', renderSupportScripts);
+      document.getElementById('slippageSupport').addEventListener('input', () => {
+        renderSupportScripts();
+        renderSupportDependencyWarning();
+      });
       document.getElementById('openRecommendedRouteButton').addEventListener('click', openRecommendedRoute);
       document.getElementById('routeUrgency').addEventListener('change', updateRouteHint);
-      document.getElementById('routeSupport').addEventListener('change', updateRouteHint);
+      document.getElementById('routeSupport').addEventListener('change', () => {
+        updateRouteHint();
+        renderSupportDependencyWarning();
+      });
       document.getElementById('backupForm').addEventListener('input', () => saveForm(false));
 
       // Trigger loader
@@ -777,6 +917,8 @@
 
       window.addEventListener('focus', () => {
         renderSupportSuggestions();
+        renderCrossflowSuggestions();
+        renderSupportDependencyWarning();
       });
     });
   </script>

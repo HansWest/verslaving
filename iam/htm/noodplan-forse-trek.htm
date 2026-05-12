@@ -427,6 +427,44 @@
       line-height: 1.45;
     }
 
+    .crossflow-help-list {
+      display: grid;
+      gap: 0.55rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .crossflow-help-item {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #ecd8c4;
+      border-radius: 10px;
+      padding: 0.7rem 0.8rem;
+    }
+
+    .crossflow-help-item span {
+      flex: 1 1 260px;
+      color: #5b4637;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .soft-warning {
+      margin-top: 0.7rem;
+      padding: 0.7rem 0.8rem;
+      border-radius: 8px;
+      background: #fff4e5;
+      border: 1px solid #f0c892;
+      color: #7a4b13;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
     .support-script-list {
       display: grid;
       gap: 0.55rem;
@@ -503,7 +541,12 @@
       cursor: pointer;
       color: #fff;
       background: var(--primary);
+      box-shadow: 0 8px 20px rgba(31, 39, 48, 0.15);
+      transition: transform 0.08s ease, filter 0.18s ease;
     }
+
+    .action-bar button:hover { filter: brightness(0.97); }
+    .action-bar button:active { transform: scale(0.985); }
 
     .action-bar button.secondary { background: #4f6172; }
     .action-bar button.warn {
@@ -512,7 +555,10 @@
     }
 
     .message {
-      margin-top: 0.95rem;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 40;
       display: none;
       border-radius: 10px;
       padding: 0.74rem 0.9rem;
@@ -520,6 +566,8 @@
       border-left: 4px solid var(--ok);
       color: #214b24;
       font-size: 0.92rem;
+      max-width: 360px;
+      box-shadow: 0 12px 26px rgba(31, 39, 48, 0.22);
     }
 
     .message.show { display: block; }
@@ -543,6 +591,18 @@
     }
 
     .footer-nav a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .support-suggestion {
+        width: 100%;
+        justify-content: center;
+      }
+      .mini-button,
+      .mini-link {
+        width: 100%;
+        justify-content: center;
+      }
+    }
 
     @media print {
       .hero-top,
@@ -615,6 +675,7 @@
                     <span class="support-fallback">Nog geen steun uit andere formulieren gevonden.</span>
                   </div>
                 </div>
+                <div class="soft-warning" id="supportDependencyWarning" style="display: none;"></div>
               </div>
               <div class="form-group">
                 <label for="anderenDoen">Wat kunnen anderen concreet voor jou doen op zo'n moment?</label>
@@ -629,6 +690,19 @@
                   <p>Gebruik deze korte zinnen als je in piek-trek niet veel woorden over hebt. Kopieer en stuur ze direct door.</p>
                   <ul class="support-script-list" id="supportScriptList">
                     <li class="support-script-item"><span>Nog geen voorbeeldbericht beschikbaar.</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="support-script-box" id="crossflowHelpBox">
+                <div class="support-script-box--header" id="crossflowHelpBoxToggle">
+                  <span class="support-script-box--toggle">▼</span>
+                  <h3 style="margin: 0; flex: 1;">Ideeën en hulpjes uit andere crisispagina's</h3>
+                </div>
+                <div class="support-script-box--content">
+                  <p>1+1=3: neem bruikbare acties uit uitglijden en wegglijden over om sneller grip te krijgen op deze piek.</p>
+                  <ul class="crossflow-help-list" id="crossflowHelpList">
+                    <li class="crossflow-help-item"><span>Nog geen suggesties uit de andere crisispagina's gevonden.</span></li>
                   </ul>
                 </div>
               </div>
@@ -743,6 +817,7 @@
   <script src="../js/dataStore.js"></script>
   <script src="../js/supportNetwork.js"></script>
   <script src="../js/crisisActions.js"></script>
+  <script src="../js/crisisCrossflow.js"></script>
   <script src="../js/weeklyReview.js"></script>
   <script>
     const formKey = 'noodplan-forse-trek';
@@ -897,17 +972,83 @@
     }
 
     function initCollapseState() {
-      const box = document.getElementById('supportScriptBox');
-      const toggle = document.getElementById('supportScriptBoxToggle');
-      const storageKey = 'noodplan-forse-trek_supportScriptsCollapsed';
-      
-      const isCollapsed = localStorage.getItem(storageKey) === 'true';
-      if (isCollapsed) box.classList.add('support-script-box--collapsed');
-      
-      toggle.addEventListener('click', () => {
-        box.classList.toggle('support-script-box--collapsed');
-        const newState = box.classList.contains('support-script-box--collapsed');
-        localStorage.setItem(storageKey, newState);
+      if (window.iamCrisisCrossflow && window.iamCrisisCrossflow.setupCollapsible) {
+        window.iamCrisisCrossflow.setupCollapsible({
+          boxId: 'supportScriptBox',
+          toggleId: 'supportScriptBoxToggle',
+          storageKey: 'noodplan-forse-trek_supportScriptsCollapsed'
+        });
+        window.iamCrisisCrossflow.setupCollapsible({
+          boxId: 'crossflowHelpBox',
+          toggleId: 'crossflowHelpBoxToggle',
+          storageKey: 'noodplan-forse-trek_crossflowCollapsed'
+        });
+      }
+    }
+
+    function renderSupportDependencyWarning() {
+      const warning = document.getElementById('supportDependencyWarning');
+      const supportText = document.getElementById('steunnetwerk')?.value.trim();
+      const actionsText = document.getElementById('doen')?.value.trim();
+      if (!warning) return;
+
+      if (actionsText && !supportText) {
+        warning.textContent = 'Je hebt al een directe doe-stap ingevuld, maar nog geen steuncontact. Voeg een naam + contactactie toe als extra vangrail.';
+        warning.style.display = 'block';
+        return;
+      }
+      warning.style.display = 'none';
+    }
+
+    function renderCrossflowSuggestions() {
+      const list = document.getElementById('crossflowHelpList');
+      const target = document.getElementById('doen');
+      if (!list || !target) return;
+
+      const ideas = window.iamCrisisCrossflow
+        ? window.iamCrisisCrossflow.buildCrossflowSuggestions(iamData, formKey, 6)
+        : [];
+
+      list.innerHTML = '';
+      if (!ideas.length) {
+        const empty = document.createElement('li');
+        empty.className = 'crossflow-help-item';
+        empty.innerHTML = '<span>Nog geen suggesties uit de andere crisispagina\'s gevonden.</span>';
+        list.appendChild(empty);
+        return;
+      }
+
+      ideas.forEach((idea) => {
+        const item = document.createElement('li');
+        item.className = 'crossflow-help-item';
+        const text = document.createElement('span');
+        text.textContent = `${idea.source}: ${idea.text}`;
+
+        const actions = document.createElement('div');
+        actions.className = 'recovery-sync-actions';
+
+        const addButton = document.createElement('button');
+        addButton.type = 'button';
+        addButton.className = 'mini-button';
+        addButton.textContent = 'Voeg toe bij direct doen';
+        addButton.addEventListener('click', () => {
+          appendLine(target, idea.text);
+          saveForm(false);
+          showMessage('Kruisbestuivingsidee toegevoegd aan direct doen.');
+        });
+        actions.appendChild(addButton);
+
+        if (idea.href) {
+          const sourceLink = document.createElement('a');
+          sourceLink.className = 'mini-link';
+          sourceLink.href = idea.href;
+          sourceLink.textContent = 'Open bron';
+          actions.appendChild(sourceLink);
+        }
+
+        item.appendChild(text);
+        item.appendChild(actions);
+        list.appendChild(item);
       });
     }
 
@@ -1073,6 +1214,7 @@
         const saved = iamData.updateFormData(formKey, collectFormData());
         updateMetaChips(saved || {});
         renderCognitiveNudges(saved || {});
+        renderSupportDependencyWarning();
         if (feedback) showMessage('Noodplan opgeslagen op dit toestel.');
       } catch (error) {
         console.error(error);
@@ -1104,6 +1246,8 @@
       updateMetaChips(existingData);
       renderCognitiveNudges(existingData);
       renderSupportSuggestions();
+      renderCrossflowSuggestions();
+      renderSupportDependencyWarning();
       renderWeeklyReviewPrompt();
       initCollapseState();
 
@@ -1111,13 +1255,18 @@
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('agendaRecoveryButton').addEventListener('click', pushRecoveryToAgenda);
-      document.getElementById('steunnetwerk').addEventListener('input', renderSupportScripts);
+      document.getElementById('steunnetwerk').addEventListener('input', () => {
+        renderSupportScripts();
+        renderSupportDependencyWarning();
+      });
       document.getElementById('noodplanForm').addEventListener('input', () => saveForm(false));
       document.getElementById('weeklyReviewApply').addEventListener('click', applyWeeklyReviewToForm);
       window.addEventListener('focus', () => {
         const current = collectFormData();
         renderCognitiveNudges(current);
         renderSupportSuggestions();
+        renderCrossflowSuggestions();
+        renderSupportDependencyWarning();
         renderWeeklyReviewPrompt();
       });
     });

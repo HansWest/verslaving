@@ -105,6 +105,71 @@
     }
 
     .weekly-review-list li { margin-bottom: 0.3rem; }
+
+    .cross-suggest-box {
+      background: #f4f8fb;
+      border: 1px solid #d4e4ef;
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin: 1rem 0 0;
+    }
+
+    .cross-suggest-box p {
+      margin: 0 0 0.55rem;
+      color: #445d6d;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .cross-suggest-list {
+      display: grid;
+      gap: 0.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cross-suggest-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #d8e7f1;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+    }
+
+    .cross-suggest-item span {
+      flex: 1 1 240px;
+      font-size: 0.88rem;
+      color: #324c5d;
+      line-height: 1.45;
+    }
+
+    .cross-suggest-item button {
+      border: 1px solid #c7dbe8;
+      background: #eef6fb;
+      color: #2b556e;
+      border-radius: 999px;
+      min-height: 34px;
+      padding: 0.38rem 0.74rem;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .route-card {
+      border-top: 4px solid #5b744a;
+    }
+
+    .route-hint {
+      margin-top: 0.7rem;
+      color: #4f6574;
+      font-size: 0.92rem;
+    }
   </style>
     <script src="../js/themeMode.js"></script>
 </head>
@@ -263,6 +328,38 @@
           </div>
         </section>
 
+        <section class="cross-suggest-box">
+          <p>Ideeën uit andere pagina's (max 5): voeg alleen toe wat je trektypes en no-go signalen scherper maakt.</p>
+          <ul class="cross-suggest-list" id="crossSuggestListSoortenTrek"></ul>
+        </section>
+
+        <section class="note-card route-card">
+          <h2>Van trekprofiel naar vervolgstap (nu doen)</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="routeUrgencyTrek">Hoe urgent is het nu?</label>
+              <select id="routeUrgencyTrek">
+                <option value="laag" selected>Laag, ik kan oefenen</option>
+                <option value="middel">Middel, ik wil direct reguleren</option>
+                <option value="hoog">Hoog, ik dreig te handelen op impuls</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="routeFocusTrek">Wat heb je nu vooral nodig?</label>
+              <select id="routeFocusTrek">
+                <option value="regulatie" selected>Regulatie en opvangen</option>
+                <option value="analyse">Analyse van triggerpatronen</option>
+                <option value="plan">Plan aanscherpen</option>
+                <option value="nood">Directe noodroute</option>
+              </select>
+            </div>
+          </div>
+          <div class="action-bar" style="margin-top: 0.5rem;">
+            <button type="button" class="button-primary" id="openRecommendedRouteTrekButton">Open aanbevolen actiepagina</button>
+          </div>
+          <p class="route-hint" id="routeHintTrek">Huidig adviespad: Trek opvangen.</p>
+        </section>
+
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
@@ -297,6 +394,7 @@
       'noGoSignals',
       'reflection'
     ];
+    let currentTrekRoutePath = './trek-opvangen.htm';
 
     function getDefaultData() {
       const data = {};
@@ -384,6 +482,120 @@
       showMessage('Volgende stap toegevoegd aan reflectie.');
     }
 
+    function buildCrossSuggestions() {
+      if (typeof iamData === 'undefined') return [];
+
+      const situaties = iamData.getFormData('risico-situaties') || {};
+      const activiteiten = iamData.getFormData('risico-activiteiten') || {};
+      const gevoelens = iamData.getFormData('risico-gevoelens') || {};
+      const stimulus = iamData.getFormData('stimulus-respons') || {};
+      const plan = iamData.getFormData('plan-van-aanpak') || {};
+
+      const pool = [
+        { text: situaties.internalRisks, source: 'Risico-situaties', target: 'cravingType1Context' },
+        { text: situaties.afterRisks, source: 'Risico-situaties', target: 'cravingType2Context' },
+        { text: activiteiten.rationalizationRisks, source: 'Risico-activiteiten', target: 'cravingType3Context' },
+        { text: gevoelens.voorbeeldGevoel || gevoelens.cat1A, source: 'Risico-gevoelens', target: 'cravingType1BodySignals' },
+        { text: stimulus.attention, source: 'Stimulus-respons', target: 'cravingType1HelpfulResponse' },
+        { text: plan.fallbackGoal, source: 'Plan van aanpak', target: 'noGoSignals' },
+        { text: plan.mainGoal, source: 'Plan van aanpak', target: 'reflection' }
+      ];
+
+      const unique = [];
+      pool.forEach((item) => {
+        const clean = String(item.text || '').trim();
+        if (!clean) return;
+        if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+        unique.push({ ...item, text: clean });
+      });
+
+      return unique.slice(0, 5);
+    }
+
+    function renderCrossSuggestions() {
+      const list = document.getElementById('crossSuggestListSoortenTrek');
+      if (!list) return;
+
+      const suggestions = buildCrossSuggestions();
+      list.innerHTML = '';
+
+      if (!suggestions.length) {
+        const empty = document.createElement('li');
+        empty.className = 'cross-suggest-item';
+        empty.innerHTML = '<span>Nog geen suggesties uit gekoppelde pagina\'s gevonden.</span>';
+        list.appendChild(empty);
+        return;
+      }
+
+      suggestions.forEach((item) => {
+        const row = document.createElement('li');
+        row.className = 'cross-suggest-item';
+
+        const text = document.createElement('span');
+        text.textContent = `${item.source}: ${item.text}`;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = 'Voeg toe';
+        button.addEventListener('click', () => {
+          const target = document.getElementById(item.target);
+          appendUniqueLine(target, item.text);
+          saveForm(false);
+          showMessage(`Bron ${item.source} toegevoegd aan ${item.target}.`);
+        });
+
+        row.appendChild(text);
+        row.appendChild(button);
+        list.appendChild(row);
+      });
+    }
+
+    function getRecommendedRoute() {
+      const urgency = document.getElementById('routeUrgencyTrek').value;
+      const focus = document.getElementById('routeFocusTrek').value;
+
+      if (urgency === 'hoog' || focus === 'nood') {
+        return {
+          path: './noodplan-forse-trek.htm',
+          hint: 'Huidig adviespad: Noodplan forse trek.'
+        };
+      }
+      if (focus === 'analyse') {
+        return {
+          path: './risico-gevoelens.htm',
+          hint: 'Huidig adviespad: Risico-gevoelens (analyse).'
+        };
+      }
+      if (focus === 'plan') {
+        return {
+          path: './plan-van-aanpak.htm',
+          hint: 'Huidig adviespad: Plan van aanpak.'
+        };
+      }
+      if (urgency === 'middel') {
+        return {
+          path: './stimulus-respons.htm',
+          hint: 'Huidig adviespad: Stimulus-respons plan.'
+        };
+      }
+
+      return {
+        path: './trek-opvangen.htm',
+        hint: 'Huidig adviespad: Trek opvangen.'
+      };
+    }
+
+    function updateRouteHint() {
+      const recommendation = getRecommendedRoute();
+      currentTrekRoutePath = recommendation.path;
+      const hintEl = document.getElementById('routeHintTrek');
+      if (hintEl) hintEl.textContent = recommendation.hint;
+    }
+
+    function openRecommendedRoute() {
+      window.location.href = currentTrekRoutePath;
+    }
+
     function saveForm(feedback = true) {
       try {
         iamData.updateFormData(formKey, collectFormData());
@@ -411,6 +623,8 @@
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
       renderWeeklyReviewPrompt();
+      renderCrossSuggestions();
+      updateRouteHint();
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
@@ -420,6 +634,11 @@
       document.getElementById('weeklyReviewOpen').addEventListener('click', () => {
         window.location.href = 'index.htm#weeklyReviewCard';
       });
+      document.getElementById('openRecommendedRouteTrekButton').addEventListener('click', openRecommendedRoute);
+      document.getElementById('routeUrgencyTrek').addEventListener('change', updateRouteHint);
+      document.getElementById('routeFocusTrek').addEventListener('change', updateRouteHint);
+      window.addEventListener('focus', renderCrossSuggestions);
+      window.addEventListener('focus', updateRouteHint);
     });
   </script>
 <script src="../js/dataStore.js"></script>

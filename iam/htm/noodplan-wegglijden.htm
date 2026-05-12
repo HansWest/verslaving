@@ -15,12 +15,26 @@
             --border:      #ef9a9a;
         }
 
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --page-main:   #d32f2f;
+                --page-accent: #b71c1c;
+                --soft:        #5f0202;
+                --border:      #b71c1c;
+            }
+        }
+
         .page-header {
             background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
             color: #fff;
             padding: 2rem 1.5rem;
             margin-bottom: 2rem;
             text-align: center;
+            max-width: 860px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 18px;
+            box-shadow: 0 14px 30px rgba(211, 47, 47, 0.22);
         }
 
         .page-header h1 {
@@ -238,6 +252,53 @@
             line-height: 1.45;
         }
 
+        .crossflow-help-box {
+            max-width: 680px;
+            margin: 1rem auto 1.5rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            background: rgba(211, 47, 47, 0.06);
+            border: 1px solid rgba(211, 47, 47, 0.14);
+        }
+
+        .crossflow-help-list {
+            display: grid;
+            gap: 0.55rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .crossflow-help-item {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: #fff;
+            border: 1px solid rgba(211, 47, 47, 0.12);
+            border-radius: 10px;
+            padding: 0.7rem 0.8rem;
+        }
+
+        .crossflow-help-item span {
+            flex: 1 1 260px;
+            color: #5f3c3c;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .soft-warning {
+            margin-top: 0.7rem;
+            padding: 0.7rem 0.8rem;
+            border-radius: 8px;
+            background: #fff4e5;
+            border: 1px solid #f0c892;
+            color: #7a4b13;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
         .support-script-list {
             display: grid;
             gap: 0.55rem;
@@ -379,6 +440,26 @@
 
         .btn-secondary:hover { background: #d0d0d0; }
 
+        .message {
+            max-width: 680px;
+            margin: 1rem auto 0;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--page-ok);
+            background: #edf8ef;
+            color: #1f5f2d;
+            display: none;
+            font-size: 0.92rem;
+        }
+
+        .message.show { display: block; }
+
+        .message.error {
+            border-left-color: var(--page-main);
+            background: #fff1f1;
+            color: #7a2f2f;
+        }
+
         .footer-nav {
             max-width: 680px;
             margin: 3rem auto 1.5rem;
@@ -400,15 +481,20 @@
             .page-header { padding: 1.5rem 1rem; }
             .action-bar { flex-direction: column; }
             .btn { min-width: auto; }
+            .support-suggestion { width: 100%; justify-content: center; }
+            .mini-button,
+            .mini-link { width: 100%; justify-content: center; }
         }
     </style>
     <script src="../js/themeMode.js"></script>
 </head>
 <body>
 <div class="page-header">
-    <h1>🆘 Wegglijden (Permanente Terugval)</h1>
+    <h1>Noodplan bij wegglijden</h1>
     <p class="subtitle">Als het mis dreigt te gaan: houvast, hulp en herstel</p>
 </div>
+
+<div id="message" class="message"></div>
 
 <div class="intro-card">
     <h2>Wat is "wegglijden"?</h2>
@@ -514,6 +600,19 @@
     </div>
 </div>
 
+<div class="crossflow-help-box support-script-box" id="crossflowHelpBox">
+    <div class="support-script-box--header" id="crossflowHelpBoxToggle">
+        <span class="support-script-box--toggle">▼</span>
+        <h3 style="margin: 0; flex: 1;">Ideeën en hulpjes uit andere crisispagina's</h3>
+    </div>
+    <div class="support-script-box--content">
+        <p>1+1=3: gebruik bruikbare stukjes uit je andere noodplannen, zodat je sneller van inzicht naar actie gaat.</p>
+        <ul class="crossflow-help-list" id="crossflowHelpList">
+            <li class="crossflow-help-item"><span>Nog geen suggesties uit de andere crisispagina's gevonden.</span></li>
+        </ul>
+    </div>
+</div>
+
 <div class="form-group">
     <label for="professional">Professionals (huisarts, hulpverlener, online coach)</label>
     <div class="hint">Schrijf nummers op en vraag vooraf: "mag ik bellen als het mis dreigt te gaan?"</div>
@@ -536,6 +635,7 @@
         <input type="checkbox" id="steunerHeeftHandleiding" name="steunerHeeftHandleiding">
         <label for="steunerHeeftHandleiding">Ik heb ze uitgelegd hoe ze me moeten benaderen (niet verwijtend, wel duidelijk en stevig) — JA ✓</label>
     </div>
+    <div class="soft-warning" id="supportDependencyWarning" style="display: none;"></div>
 </div>
 
 <!-- ── OPPAKKEN ───────────────────────────────────── -->
@@ -567,7 +667,7 @@
 
 <div class="recovery-sync-box">
     <h3>Herstelbasis klaarzetten</h3>
-    <p>Zet met een klik een eenvoudige herstelset in je agenda voor vandaag: eten, hulpcontact, regulatie, beloning en wat je nu beter niet doet.</p>
+    <p>Zet met één klik een eenvoudige herstelset in je agenda voor vandaag: eten, hulpcontact, regulatie, beloning en wat je nu beter niet doet.</p>
     <div class="recovery-sync-actions">
         <button class="mini-button" type="button" id="agendaRecoveryButton">Zet herstelbasis klaar in agenda</button>
         <a class="mini-link" href="./agenda.htm">Open agenda</a>
@@ -590,6 +690,7 @@
 <script src="../js/dataStore.js"></script>
 <script src="../js/supportNetwork.js"></script>
 <script src="../js/crisisActions.js"></script>
+<script src="../js/crisisCrossflow.js"></script>
 <script>
     const fields = [
         'definitieUitglijder',
@@ -638,6 +739,18 @@
         if (lines.includes(clean)) return false;
         element.value = element.value.trim() ? `${element.value.trim()}\n${clean}` : clean;
         return true;
+    }
+
+    function showMessage(text, isError = false) {
+        const message = document.getElementById('message');
+        if (!message) return;
+        message.textContent = text;
+        message.classList.add('show');
+        message.classList.toggle('error', isError);
+        clearTimeout(showMessage.timer);
+        showMessage.timer = setTimeout(() => {
+            message.classList.remove('show');
+        }, 2800);
     }
 
     function renderSupportSuggestions() {
@@ -694,11 +807,11 @@
         if (!value) return;
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(value)
-                .then(() => alert('Voorbeeldbericht gekopieerd.'))
-                .catch(() => alert('Kopieren lukte niet.'));
+                .then(() => showMessage('Voorbeeldbericht gekopieerd.'))
+                .catch(() => showMessage('Kopieren lukte niet.', true));
             return;
         }
-        alert('Kopieren naar klembord wordt hier niet ondersteund.');
+        showMessage('Kopieren naar klembord wordt hier niet ondersteund.', true);
     }
 
     function collectFormData() {
@@ -712,17 +825,87 @@
     }
 
     function initCollapseState() {
-        const box = document.getElementById('supportScriptBox');
-        const toggle = document.getElementById('supportScriptBoxToggle');
-        const storageKey = 'noodplan-wegglijden_supportScriptsCollapsed';
-        
-        const isCollapsed = localStorage.getItem(storageKey) === 'true';
-        if (isCollapsed) box.classList.add('support-script-box--collapsed');
-        
-        toggle.addEventListener('click', () => {
-            box.classList.toggle('support-script-box--collapsed');
-            const newState = box.classList.contains('support-script-box--collapsed');
-            localStorage.setItem(storageKey, newState);
+        if (window.iamCrisisCrossflow && window.iamCrisisCrossflow.setupCollapsible) {
+            window.iamCrisisCrossflow.setupCollapsible({
+                boxId: 'supportScriptBox',
+                toggleId: 'supportScriptBoxToggle',
+                storageKey: 'noodplan-wegglijden_supportScriptsCollapsed'
+            });
+            window.iamCrisisCrossflow.setupCollapsible({
+                boxId: 'crossflowHelpBox',
+                toggleId: 'crossflowHelpBoxToggle',
+                storageKey: 'noodplan-wegglijden_crossflowCollapsed'
+            });
+        }
+    }
+
+    function renderSupportDependencyWarning() {
+        const warning = document.getElementById('supportDependencyWarning');
+        const supportConfirmed = document.getElementById('steunerinopdehoogte')?.checked;
+        const contacts = [
+            document.getElementById('privepersonen')?.value || '',
+            document.getElementById('professional')?.value || '',
+            document.getElementById('instantie')?.value || ''
+        ].join(' ').trim();
+        if (!warning) return;
+
+        if (supportConfirmed && !contacts) {
+            warning.textContent = 'Je hebt steun bevestigd, maar nog geen contactpersonen ingevuld. Voeg minstens een naam/nummer toe voor snelle actie.';
+            warning.style.display = 'block';
+            return;
+        }
+        warning.style.display = 'none';
+    }
+
+    function renderCrossflowSuggestions() {
+        const list = document.getElementById('crossflowHelpList');
+        const target = document.getElementById('welGaanDoen');
+        if (!list || !target) return;
+
+        const ideas = window.iamCrisisCrossflow
+            ? window.iamCrisisCrossflow.buildCrossflowSuggestions(iamData, 'noodplan-wegglijden', 6)
+            : [];
+
+        list.innerHTML = '';
+        if (!ideas.length) {
+            const empty = document.createElement('li');
+            empty.className = 'crossflow-help-item';
+            empty.innerHTML = '<span>Nog geen suggesties uit de andere crisispagina\'s gevonden.</span>';
+            list.appendChild(empty);
+            return;
+        }
+
+        ideas.forEach((idea) => {
+            const item = document.createElement('li');
+            item.className = 'crossflow-help-item';
+            const text = document.createElement('span');
+            text.textContent = `${idea.source}: ${idea.text}`;
+
+            const actions = document.createElement('div');
+            actions.className = 'recovery-sync-actions';
+
+            const addButton = document.createElement('button');
+            addButton.type = 'button';
+            addButton.className = 'mini-button';
+            addButton.textContent = 'Voeg toe bij wel doen';
+            addButton.addEventListener('click', () => {
+                if (appendUniqueLine(target, idea.text)) {
+                    saveData(true);
+                }
+            });
+            actions.appendChild(addButton);
+
+            if (idea.href) {
+                const sourceLink = document.createElement('a');
+                sourceLink.className = 'mini-link';
+                sourceLink.href = idea.href;
+                sourceLink.textContent = 'Open bron';
+                actions.appendChild(sourceLink);
+            }
+
+            item.appendChild(text);
+            item.appendChild(actions);
+            list.appendChild(item);
         });
     }
 
@@ -761,9 +944,9 @@
             supportNamesText: document.getElementById('privepersonen')?.value || ''
         });
         if (result.ok) {
-            alert('Herstelbasis klaargezet in je agenda.');
+            showMessage('Herstelbasis klaargezet in je agenda.');
         } else {
-            alert('Agenda bijwerken lukte niet.');
+            showMessage('Agenda bijwerken lukte niet.', true);
         }
     }
 
@@ -776,41 +959,62 @@
             data[field] = elem.type === 'checkbox' ? elem.checked : elem.value;
         });
         iamData.updateFormData('noodplan-wegglijden', data);
+        renderSupportDependencyWarning();
         if (!silent) {
-            alert('✓ Plan opgeslagen!');
+            showMessage('Plan opgeslagen op dit toestel.');
         }
     }
 
     function exportData() {
         if (typeof iamData === 'undefined') return;
-        const data = {};
-        fields.forEach(field => {
-            const elem = document.getElementById(field);
-            if (elem) data[field] = elem.value || '';
-        });
-        iamData.exportJSON();
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
     }
 
     function printData() {
         window.print();
     }
 
-    // Auto-save on blur
-    fields.forEach(field => {
-        const elem = document.getElementById(field);
-        if (elem) {
-            elem.addEventListener('blur', () => saveData(true));
-        }
-    });
-
     // Load on page load
     document.addEventListener('DOMContentLoaded', () => {
         loadData();
         renderSupportSuggestions();
+        renderCrossflowSuggestions();
+        renderSupportDependencyWarning();
         initCollapseState();
+        const formInputs = fields
+            .map((field) => document.getElementById(field))
+            .filter(Boolean);
+        formInputs.forEach((elem) => {
+            elem.addEventListener('input', () => saveData(true));
+            elem.addEventListener('change', () => saveData(true));
+        });
         const privatePeople = document.getElementById('privepersonen');
         if (privatePeople) {
-            privatePeople.addEventListener('input', renderSupportScripts);
+            privatePeople.addEventListener('input', () => {
+                renderSupportScripts();
+                renderSupportDependencyWarning();
+            });
+        }
+        const professional = document.getElementById('professional');
+        if (professional) {
+            professional.addEventListener('input', renderSupportDependencyWarning);
+        }
+        const instantie = document.getElementById('instantie');
+        if (instantie) {
+            instantie.addEventListener('input', renderSupportDependencyWarning);
+        }
+        const supportReady = document.getElementById('steunerinopdehoogte');
+        if (supportReady) {
+            supportReady.addEventListener('change', renderSupportDependencyWarning);
         }
         const agendaButton = document.getElementById('agendaRecoveryButton');
         if (agendaButton) {
@@ -818,7 +1022,11 @@
         }
     });
 
-    window.addEventListener('focus', renderSupportSuggestions);
+    window.addEventListener('focus', () => {
+        renderSupportSuggestions();
+        renderCrossflowSuggestions();
+        renderSupportDependencyWarning();
+    });
 </script>
 </body>
 </html>

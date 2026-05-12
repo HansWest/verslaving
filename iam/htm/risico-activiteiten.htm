@@ -57,6 +57,71 @@
     .message { display: none; border-left: 4px solid #5a8840; }
     .message.show { display: block; }
     .message.error { border-left-color: var(--page-accent); }
+
+    .cross-suggest-box {
+      background: #f4f8fb;
+      border: 1px solid #d4e4ef;
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin: 1rem 0 0;
+    }
+
+    .cross-suggest-box p {
+      margin: 0 0 0.55rem;
+      color: #445d6d;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .cross-suggest-list {
+      display: grid;
+      gap: 0.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cross-suggest-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #d8e7f1;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+    }
+
+    .cross-suggest-item span {
+      flex: 1 1 240px;
+      font-size: 0.88rem;
+      color: #324c5d;
+      line-height: 1.45;
+    }
+
+    .cross-suggest-item button {
+      border: 1px solid #c7dbe8;
+      background: #eef6fb;
+      color: #2b556e;
+      border-radius: 999px;
+      min-height: 34px;
+      padding: 0.38rem 0.74rem;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .route-card {
+      border-top: 4px solid #5b744a;
+    }
+
+    .route-hint {
+      margin-top: 0.7rem;
+      color: #4f6574;
+      font-size: 0.92rem;
+    }
   </style>
     <script src="../js/themeMode.js"></script>
 </head>
@@ -181,6 +246,38 @@
           </div>
         </section>
 
+        <section class="cross-suggest-box">
+          <p>Ideeën uit andere pagina's (max 5): voeg alleen toe wat je voorbereiding en exit concreter maakt.</p>
+          <ul class="cross-suggest-list" id="crossSuggestListActiviteiten"></ul>
+        </section>
+
+        <section class="note-card route-card">
+          <h2>Van activiteit naar actie (nu doen)</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="routeUrgencyActiviteiten">Hoe urgent is het nu?</label>
+              <select id="routeUrgencyActiviteiten">
+                <option value="laag" selected>Laag, ik kan voorbereiden</option>
+                <option value="middel">Middel, ik wil direct bijsturen</option>
+                <option value="hoog">Hoog, ik heb meteen noodhouvast nodig</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="routeFocusActiviteiten">Waar wil je nu op focussen?</label>
+              <select id="routeFocusActiviteiten">
+                <option value="trek" selected>Trekregulatie en opvangen</option>
+                <option value="situatie">Situatiescherpte</option>
+                <option value="plan">Plan aanscherpen</option>
+                <option value="nood">Directe noodroute</option>
+              </select>
+            </div>
+          </div>
+          <div class="action-bar" style="margin-top: 0.5rem;">
+            <button type="button" class="button-primary" id="openRecommendedRouteActiviteitenButton">Open aanbevolen actiepagina</button>
+          </div>
+          <p class="route-hint" id="routeHintActiviteiten">Huidig adviespad: Soorten trek.</p>
+        </section>
+
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
@@ -210,6 +307,7 @@
       'skillTreksurfen',
       'skillBeloning'
     ];
+    let currentActiviteitenRoutePath = './soorten-trek.htm';
 
     const presetFallback = {
       groups: [
@@ -272,6 +370,21 @@
       showMessage.timer = setTimeout(() => message.classList.remove('show'), 3000);
     }
 
+    function appendUniqueLine(target, line) {
+      if (!target || !line) return;
+      const clean = String(line).trim();
+      if (!clean) return;
+
+      const lines = target.value
+        .split('\n')
+        .map((part) => part.trim())
+        .filter(Boolean);
+
+      if (!lines.includes(clean)) {
+        target.value = target.value ? `${target.value}\n${clean}` : clean;
+      }
+    }
+
     function saveForm(feedback = true) {
       try {
         iamData.updateFormData(formKey, collectFormData());
@@ -304,6 +417,120 @@
       saveForm(false);
     }
 
+    function buildCrossSuggestions() {
+      if (typeof iamData === 'undefined') return [];
+
+      const risicoSituaties = iamData.getFormData('risico-situaties') || {};
+      const plan = iamData.getFormData('plan-van-aanpak') || {};
+      const stimulus = iamData.getFormData('stimulus-respons') || {};
+      const denken = iamData.getFormData('risico-denken') || {};
+      const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
+
+      const pool = [
+        { text: risicoSituaties.riskySituations, source: 'Risico-situaties', target: 'riskyActivities' },
+        { text: risicoSituaties.responsePlan, source: 'Risico-situaties', target: 'preparationPlan' },
+        { text: stimulus.functionalAlternative, source: 'Stimulus-respons', target: 'preparationPlan' },
+        { text: plan.planB, source: 'Plan van aanpak', target: 'exitStrategy' },
+        { text: denken.alternatiefDenken, source: 'Risico-denken', target: 'skillDenken' },
+        { text: gevoelens.distractionIdeas, source: 'Lastige gevoelens', target: 'skillAfleiding' },
+        { text: gevoelens.talkPeople, source: 'Lastige gevoelens', target: 'skillPraten' }
+      ];
+
+      const unique = [];
+      pool.forEach((item) => {
+        const clean = String(item.text || '').trim();
+        if (!clean) return;
+        if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+        unique.push({ ...item, text: clean });
+      });
+
+      return unique.slice(0, 5);
+    }
+
+    function renderCrossSuggestions() {
+      const list = document.getElementById('crossSuggestListActiviteiten');
+      if (!list) return;
+
+      const suggestions = buildCrossSuggestions();
+      list.innerHTML = '';
+
+      if (!suggestions.length) {
+        const empty = document.createElement('li');
+        empty.className = 'cross-suggest-item';
+        empty.innerHTML = '<span>Nog geen suggesties uit gekoppelde pagina\'s gevonden.</span>';
+        list.appendChild(empty);
+        return;
+      }
+
+      suggestions.forEach((item) => {
+        const row = document.createElement('li');
+        row.className = 'cross-suggest-item';
+
+        const text = document.createElement('span');
+        text.textContent = `${item.source}: ${item.text}`;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = 'Voeg toe';
+        button.addEventListener('click', () => {
+          const target = document.getElementById(item.target);
+          appendUniqueLine(target, item.text);
+          saveForm(false);
+          showMessage(`Bron ${item.source} toegevoegd aan ${item.target}.`);
+        });
+
+        row.appendChild(text);
+        row.appendChild(button);
+        list.appendChild(row);
+      });
+    }
+
+    function getRecommendedRoute() {
+      const urgency = document.getElementById('routeUrgencyActiviteiten').value;
+      const focus = document.getElementById('routeFocusActiviteiten').value;
+
+      if (urgency === 'hoog' || focus === 'nood') {
+        return {
+          path: './noodplan-forse-trek.htm',
+          hint: 'Huidig adviespad: Noodplan forse trek.'
+        };
+      }
+      if (focus === 'situatie') {
+        return {
+          path: './risico-situaties.htm',
+          hint: 'Huidig adviespad: Risico-situaties.'
+        };
+      }
+      if (focus === 'plan') {
+        return {
+          path: './plan-van-aanpak.htm',
+          hint: 'Huidig adviespad: Plan van aanpak.'
+        };
+      }
+      if (urgency === 'middel') {
+        return {
+          path: './stimulus-respons.htm',
+          hint: 'Huidig adviespad: Stimulus-respons plan.'
+        };
+      }
+
+      return {
+        path: './soorten-trek.htm',
+        hint: 'Huidig adviespad: Soorten trek.'
+      };
+    }
+
+    function updateRouteHint() {
+      const recommendation = getRecommendedRoute();
+      currentActiviteitenRoutePath = recommendation.path;
+      const hintEl = document.getElementById('routeHintActiviteiten');
+      if (hintEl) hintEl.textContent = recommendation.hint;
+    }
+
+    function openRecommendedRoute() {
+      window.location.href = currentActiviteitenRoutePath;
+    }
+
     async function loadActivityOptions() {
       await iamOptionsLoader.loadSelectOptions({
         selectId: 'presetActivity',
@@ -317,6 +544,8 @@
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
       loadActivityOptions();
+      renderCrossSuggestions();
+      updateRouteHint();
 
       const preset = document.getElementById('presetActivity');
       const draft = document.getElementById('activityDraft');
@@ -334,7 +563,12 @@
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('openRecommendedRouteActiviteitenButton').addEventListener('click', openRecommendedRoute);
+      document.getElementById('routeUrgencyActiviteiten').addEventListener('change', updateRouteHint);
+      document.getElementById('routeFocusActiviteiten').addEventListener('change', updateRouteHint);
       document.getElementById('risicoActiviteitenForm').addEventListener('input', () => saveForm(false));
+      window.addEventListener('focus', renderCrossSuggestions);
+      window.addEventListener('focus', updateRouteHint);
     });
   </script>
 </body>
