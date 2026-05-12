@@ -82,6 +82,12 @@ body {
     font-size: 16px;
 }
 
+@media (max-width: 600px) {
+    html {
+        font-size: 18px;
+    }
+}
+
 /* Ensure inputs are not zoomed on focus on iOS */
 input, textarea, select {
     font-size: 16px;
