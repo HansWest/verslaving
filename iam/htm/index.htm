@@ -2,7 +2,27 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function enforceMobileViewport() {
+            const ua = navigator.userAgent || '';
+            const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (navigator.maxTouchPoints > 1 && Math.min(screen.width, screen.height) < 900);
+            if (!isMobile) return;
+
+            const vv = window.visualViewport;
+            const likelyLockedDesktopViewport = vv && window.innerWidth >= 960 && vv.width <= 500;
+            if (!likelyLockedDesktopViewport) return;
+
+            let viewportMeta = document.querySelector('meta[name="viewport"]');
+            if (!viewportMeta) {
+                viewportMeta = document.createElement('meta');
+                viewportMeta.name = 'viewport';
+                document.head.appendChild(viewportMeta);
+            }
+            viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
+            document.documentElement.setAttribute('data-viewport-heal', 'attempted');
+        })();
+    </script>
     <title>IAM - Integrative Addiction Management</title>
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/forms.css">
@@ -1213,6 +1233,11 @@
         .layout-debug-overlay.has-overflow {
             border-color: rgba(255, 120, 120, 0.75);
             color: #ffd4d4;
+        }
+
+        .layout-debug-overlay.viewport-locked {
+            border-color: rgba(255, 186, 88, 0.8);
+            color: #ffe7be;
         }
 
         @media print {
@@ -2715,9 +2740,12 @@
             const vvWidth = vv ? Math.round(vv.width) : '-';
             const vvScale = vv ? vv.scale.toFixed(2) : '-';
             const dpr = window.devicePixelRatio ? window.devicePixelRatio.toFixed(2) : '1.00';
+            const lockedViewport = vv && innerWidth >= 960 && vv.width <= 500;
+            const healAttempted = document.documentElement.getAttribute('data-viewport-heal') === 'attempted';
 
-            overlay.textContent = `vw:${innerWidth}px doc:${clientWidth}px scroll:${scrollWidth}px ovf:${overflow}px vv:${vvWidth}px scale:${vvScale} dpr:${dpr}`;
+            overlay.textContent = `vw:${innerWidth}px doc:${clientWidth}px scroll:${scrollWidth}px ovf:${overflow}px vv:${vvWidth}px scale:${vvScale} dpr:${dpr} lock:${lockedViewport ? 'yes' : 'no'} heal:${healAttempted ? 'try' : 'no'}`;
             overlay.classList.toggle('has-overflow', overflow > 0);
+            overlay.classList.toggle('viewport-locked', !!lockedViewport);
         }
 
         window.addEventListener('resize', updateLayoutDebugOverlay, { passive: true });
