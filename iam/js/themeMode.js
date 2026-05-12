@@ -59,14 +59,20 @@
         if (document.getElementById('themeSettingsCard')) return;
         if (document.querySelector('.theme-settings-shortcut')) return;
 
+        const wrap = document.createElement('div');
+        wrap.className = 'theme-settings-shortcut-wrap';
+
         const shortcut = document.createElement('a');
         shortcut.className = 'theme-settings-shortcut';
         shortcut.href = 'index.htm#themeSettingsCard';
         shortcut.textContent = 'Weergave';
         shortcut.setAttribute('aria-label', 'Ga naar weergave-instellingen');
+        wrap.appendChild(shortcut);
 
-        const target = document.body || document.documentElement;
-        target.appendChild(shortcut);
+        const contentRoot = document.querySelector('.container, main, .page-wrap, .page-shell, body');
+        if (!contentRoot) return;
+
+        contentRoot.insertBefore(wrap, contentRoot.firstChild);
     }
 
     if (typeof darkQuery.addEventListener === 'function') {

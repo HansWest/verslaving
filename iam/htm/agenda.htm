@@ -15,6 +15,120 @@ http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-dem
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
 <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+<style>
+    :root {
+        --primary: #667eea;
+        --primary-dark: #5568d3;
+        --success: #4caf50;
+        --warning: #ff9800;
+        --danger: #f44336;
+        --text-main: #22313d;
+        --text-muted: #526473;
+        --text-soft: #687988;
+        --bg-surface: #ffffff;
+        --bg-soft: #f7fafc;
+        --border-soft: #d7e3ec;
+        --shadow-soft: 0 6px 18px rgba(26, 46, 64, 0.1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg-surface: #172431;
+            --bg-soft: #1d2e3d;
+            --text-main: #eaf1f8;
+            --text-muted: #b6c5d4;
+            --border-soft: #2e4559;
+            --shadow-soft: 0 8px 22px rgba(0, 0, 0, 0.35);
+        }
+    }
+
+    html[data-theme="light"] {
+        --bg-surface: #ffffff;
+        --bg-soft: #f7fafc;
+        --text-main: #22313d;
+        --text-muted: #526473;
+        --border-soft: #d7e3ec;
+        --shadow-soft: 0 6px 18px rgba(26, 46, 64, 0.1);
+    }
+
+    html[data-theme="dark"] {
+        --bg-surface: #172431;
+        --bg-soft: #1d2e3d;
+        --text-main: #eaf1f8;
+        --text-muted: #b6c5d4;
+        --border-soft: #2e4559;
+        --shadow-soft: 0 8px 22px rgba(0, 0, 0, 0.35);
+    }
+
+    body {
+        background-color: var(--bg-primary, #eef3f7);
+        color: var(--text-main);
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem 1rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        border-radius: 12px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .page-header h1 {
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    .page-content {
+        background: var(--bg-surface);
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid var(--border-soft);
+    }
+
+    .agenda-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+    }
+
+    .agenda-table th {
+        background: var(--bg-soft);
+        color: var(--text-main);
+        padding: 0.75rem;
+        border: 1px solid var(--border-soft);
+        text-align: left;
+    }
+
+    .agenda-table td {
+        padding: 0.75rem;
+        border: 1px solid var(--border-soft);
+    }
+
+    .agenda-controls {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin: 1rem 0;
+    }
+
+    .agenda-btn {
+        padding: 0.5rem 1rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .agenda-btn:hover {
+        background: var(--primary-dark);
+    }
+</style>
 
 <script language="javascript">
 <!--
@@ -160,39 +274,22 @@ hulp_scherm(300,'Dagelijkse agenda', 'Het is soms lastig om de dagen op een goed
     <script src="../js/themeMode.js"></script>
 </head><body>
 <div class="container">
-<div id="calendarTitle"></div><div id="events"></div>
-<div class="shadow"><div class="content">
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+    <div class="page-header">
+        <h1>📅 Dagelijkse Agenda</h1>
+        <p style="margin: 0.5rem 0 0; font-size: 0.95rem; opacity: 0.9;">Dagelijks: 5-10 minuten</p>
+    </div>
 
-<!--OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">dagelijkse agenda tips </h1>
-</div>
-<div class="rechtsitalic">dagelijks: 5-10 minuten</div>
-<div class="printhide">
-	<!--
-  <p>Deze pagina exporteert de velden naar jouw google-agenda, om te gebruiken
-    om jezelf aan de gang te krijgen als je er bijvoorbeeld een periode even
-    doorheen zit.</p>
-	-->
-	 <p>Deze pagina is bedoeld om jezelf aan de gang te krijgen als je er bijvoorbeeld een periode even doorheen zit.</p>
+    <div class="page-content">
+        <p>Deze pagina is bedoeld om jezelf aan de gang te krijgen als je er bijvoorbeeld een periode even doorheen zit.</p>
+        
+        <div class="action-buttons" style="margin: 1.5rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <a href="./index.htm" class="btn-action" style="text-decoration: none; display: inline-block;">← Terug naar formulieren</a>
+            <button class="btn-action" onclick="window.print()">🖨️ Afdrukken</button>
+            <button class="btn-action" onclick="saveSelections(document.forms[0])">💾 Opslaan</button>
+            <button class="btn-action" onclick="loadSelections(document.forms[0])">📂 Herstellen</button>
+        </div>
 
-	
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)" onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
-
-<form name="agenda" >
+        <form name="agenda">
 
 <table><!-- border=1 cellspacing=0 cellpadding=0 align=left style='border-collapse:
  collapse;border:none;'-->
@@ -370,16 +467,9 @@ wat ik beter <b>niet</b> kan doen op deze dag<br />
 
 
  </form>
-<p>&nbsp;</p>
-<hr class="formhr" />
-<p><i>Wanneer je dit dagelijks invult en mogelijk ook de gegevens naar jouw agenda
-    verhuist om de gegevens vast te houden helpt dit vaak om dagen productiever
-    en leuker in te vullen. </i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><!-- /inhoud --><a href="aaaaaa.htm">i</a>
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+        </div>
+    </div>
+
+    <script src="../js/dataStore.js"></script>
 </body>
 </html>

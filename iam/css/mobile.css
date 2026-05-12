@@ -164,29 +164,33 @@ a:hover, a:focus {
     text-decoration: underline;
 }
 
+.theme-settings-shortcut-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 0 0.6rem;
+}
+
 .theme-settings-shortcut {
-    position: fixed;
-    right: 0.85rem;
-    bottom: 0.85rem;
-    z-index: 999;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 0.45rem 0.75rem;
-    border-radius: 999px;
+    padding: 0.25rem 0.55rem;
+    border-radius: 8px;
     border: 1px solid var(--border-color);
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    background: transparent;
+    color: var(--text-secondary);
     text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 700;
-    box-shadow: var(--shadow);
+    font-size: 0.82rem;
+    font-weight: 600;
 }
 
 .theme-settings-shortcut:hover,
 .theme-settings-shortcut:focus {
     text-decoration: none;
     border-color: var(--primary-color);
+    color: var(--text-primary);
+    background: var(--bg-primary);
 }
 
 /* Buttons */

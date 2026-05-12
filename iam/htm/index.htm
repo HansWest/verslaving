@@ -402,20 +402,59 @@
 
         .theme-settings {
             margin-top: 1rem;
-            padding: 0.95rem 1rem;
             border: 1px solid var(--border-soft);
             border-radius: 10px;
             background: var(--surface-soft);
+            overflow: hidden;
         }
 
-        .theme-settings h4 {
+        .theme-settings-summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .theme-settings-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .theme-settings-summary h4 {
             margin: 0;
             color: var(--text-main);
             font-size: 1rem;
         }
 
+        .theme-settings-summary::after {
+            content: '+';
+            width: 1.6rem;
+            height: 1.6rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-soft);
+            color: var(--text-main);
+            background: var(--surface);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .theme-settings[open] .theme-settings-summary::after {
+            content: '-';
+        }
+
+        .theme-settings-body {
+            padding: 0 1rem 0.95rem;
+        }
+
         .theme-settings-help {
-            margin: 0.45rem 0 0.75rem;
+            margin: 0.1rem 0 0.75rem;
             color: var(--text-muted);
             font-size: 0.9rem;
         }
@@ -578,6 +617,14 @@
             color: var(--text-main);
             padding: 0.55rem 0.7rem;
             font: inherit;
+        }
+
+        #weeklyAttemptTag {
+            appearance: auto;
+            -webkit-appearance: menulist;
+            -moz-appearance: menulist;
+            background-image: none;
+            padding-right: 0.7rem;
         }
 
         .weekly-attempt-filters {
@@ -1055,16 +1102,20 @@
                 <button class="btn-action" onclick="exportAllData()">📥 Mijn gegevens exporteren</button>
                 <button class="btn-action export" onclick="viewProgress()">📊 Mijn voortgang</button>
             </div>
-            <div class="theme-settings" id="themeSettingsCard">
-                <h4>Weergave</h4>
-                <p class="theme-settings-help">Kies hoe IAM eruitziet op dit apparaat.</p>
-                <div class="theme-settings-controls" id="themeSettingsControls">
-                    <button type="button" class="theme-option" data-theme-preference="auto">Automatisch</button>
-                    <button type="button" class="theme-option" data-theme-preference="light">Licht</button>
-                    <button type="button" class="theme-option" data-theme-preference="dark">Donker</button>
+            <details class="theme-settings" id="themeSettingsCard">
+                <summary class="theme-settings-summary">
+                    <h4>Weergave</h4>
+                </summary>
+                <div class="theme-settings-body">
+                    <p class="theme-settings-help">Kies hoe IAM eruitziet op dit apparaat.</p>
+                    <div class="theme-settings-controls" id="themeSettingsControls">
+                        <button type="button" class="theme-option" data-theme-preference="auto">Automatisch</button>
+                        <button type="button" class="theme-option" data-theme-preference="light">Licht</button>
+                        <button type="button" class="theme-option" data-theme-preference="dark">Donker</button>
+                    </div>
+                    <p class="theme-settings-status" id="themeSettingsStatus">Actief thema: laden...</p>
                 </div>
-                <p class="theme-settings-status" id="themeSettingsStatus">Actief thema: laden...</p>
-            </div>
+            </details>
             <p class="priority-note">Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.</p>
         </div>
 
@@ -1236,7 +1287,6 @@
                 </div>
                 <span class="progress-indicator"><span class="progress-fill" style="width: 0%"></span></span>
             </div>
-        </div>
 
             <div class="card phase-1">
                 <span class="phase-label">BIJHOUDEN</span>
@@ -1368,8 +1418,8 @@
         
         <div class="card-grid">
             <div class="card phase-4">
-                <span class="phase-label">BACKUP-PLANNEN</span>
-                <div class="card-icon">📋</div>
+                <span class="phase-label">AANPAK & BACKUP</span>
+                <div class="card-icon">🎯</div>
                 <h3>Plan A, B & C</h3>
                 <p>
                     Meerdere routes naar jouw doel: Plan A (je eerste poging), Plan B (wat als Plan A niet werkt?), Doel B (realistischer alternatief).
@@ -2391,6 +2441,11 @@
         function initializeThemeSettings() {
             const controls = document.querySelectorAll('[data-theme-preference]');
             if (!controls.length) return;
+
+            const themeSettingsCard = document.getElementById('themeSettingsCard');
+            if (window.location.hash === '#themeSettingsCard' && themeSettingsCard && 'open' in themeSettingsCard) {
+                themeSettingsCard.open = true;
+            }
 
             const syncUi = () => updateThemeSettingsUi(getThemeRuntimeState());
 
