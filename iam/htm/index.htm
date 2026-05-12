@@ -1148,6 +1148,16 @@
             background: #388e3c;
         }
 
+        @media (max-width: 600px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+            .btn-action {
+                min-width: unset;
+                width: 100%;
+            }
+        }
+
         @media print {
             .hero, .quick-actions, .btn-action {
                 display: none;
