@@ -59,23 +59,24 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 1.1em;
-            height: 1.1em;
-            font-size: 0.72em;
-            font-weight: 700;
+            width: 0.85em;
+            height: 0.85em;
+            font-size: 0.6em;
+            font-weight: 600;
             line-height: 1;
             padding: 0;
-            border: none;
+            border: 1px solid currentColor;
             border-radius: 50%;
-            background: var(--info-btn-bg, #667eea);
-            color: var(--info-btn-text, #fff);
+            background: transparent;
+            color: var(--text-muted, #526473);
             cursor: pointer;
             vertical-align: super;
             margin-left: 0.15em;
             flex-shrink: 0;
+            opacity: 0.55;
             transition: opacity 0.15s;
         }
-        .info-trigger:hover { opacity: 0.8; }
+        .info-trigger:hover { opacity: 1; }
 
         /* Info-modal */
         .info-modal-backdrop {
