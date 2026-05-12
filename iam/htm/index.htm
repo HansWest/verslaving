@@ -52,6 +52,122 @@
             --footer-meta: #999999;
         }
 
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --page-bg: #101820;
+                --surface: #172431;
+                --surface-soft: #1d2e3d;
+                --surface-tint: #21384b;
+                --text-main: #eaf1f8;
+                --text-muted: #b6c5d4;
+                --text-soft: #9fb1c2;
+                --border-soft: #2e4559;
+                --hero-start: #3f569b;
+                --hero-end: #5e3f84;
+                --shadow-soft: 0 8px 22px rgba(0, 0, 0, 0.35);
+                --info-bg: #1a3247;
+                --info-text: #d4e6f6;
+                --warm-bg: #3a2f1e;
+                --warm-border: #806438;
+                --warm-text: #f4ddb1;
+                --weekly-bg: linear-gradient(135deg, #2a2f36 0%, #1a3040 100%);
+                --weekly-border: #355068;
+                --weekly-title: #d8e9f8;
+                --weekly-help: #b8c7d6;
+                --weekly-chip-bg: #284964;
+                --weekly-chip-text: #d9efff;
+                --weekly-chip-due-bg: #4d3c1f;
+                --weekly-chip-due-text: #ffd88a;
+                --featured-shadow: 0 8px 22px rgba(33, 82, 42, 0.45);
+                --featured-progress-bg: #3e6842;
+                --summary-chip-bg: #273f53;
+                --summary-chip-text: #d9ebfb;
+                --chemsex-bg: #2f2537;
+                --chemsex-border: #544169;
+                --chemsex-title: #db9bff;
+                --chemsex-text: #e8d9f2;
+                --footer-bg: #13202b;
+                --footer-text: #c0cfde;
+                --footer-meta: #8fa3b6;
+            }
+        }
+
+        html[data-theme="light"] {
+            --page-bg: #eef3f7;
+            --surface: #ffffff;
+            --surface-soft: #f7fafc;
+            --surface-tint: #f0f7ff;
+            --text-main: #22313d;
+            --text-muted: #526473;
+            --text-soft: #687988;
+            --border-soft: #d7e3ec;
+            --hero-start: #5f75d8;
+            --hero-end: #6e4d96;
+            --shadow-soft: 0 6px 18px rgba(26, 46, 64, 0.1);
+            --info-bg: #eef5ff;
+            --info-text: #2c4a63;
+            --warm-bg: #fff7e8;
+            --warm-border: #f1d39a;
+            --warm-text: #7a5415;
+            --weekly-bg: linear-gradient(135deg, #fffaf0 0%, #f6fbff 100%);
+            --weekly-border: #d7e6f3;
+            --weekly-title: #244c70;
+            --weekly-help: #5a6f7f;
+            --weekly-chip-bg: #e9f5ff;
+            --weekly-chip-text: #245377;
+            --weekly-chip-due-bg: #fff1cf;
+            --weekly-chip-due-text: #8a5a00;
+            --featured-shadow: 0 6px 18px rgba(76, 175, 80, 0.16);
+            --featured-progress-bg: #c8e6c9;
+            --summary-chip-bg: #f0f7ff;
+            --summary-chip-text: #244c70;
+            --chemsex-bg: #fdf4ff;
+            --chemsex-border: #e0d4f0;
+            --chemsex-title: #9b3fcc;
+            --chemsex-text: #555555;
+            --footer-bg: #f5f5f5;
+            --footer-text: #666666;
+            --footer-meta: #999999;
+        }
+
+        html[data-theme="dark"] {
+            --page-bg: #101820;
+            --surface: #172431;
+            --surface-soft: #1d2e3d;
+            --surface-tint: #21384b;
+            --text-main: #eaf1f8;
+            --text-muted: #b6c5d4;
+            --text-soft: #9fb1c2;
+            --border-soft: #2e4559;
+            --hero-start: #3f569b;
+            --hero-end: #5e3f84;
+            --shadow-soft: 0 8px 22px rgba(0, 0, 0, 0.35);
+            --info-bg: #1a3247;
+            --info-text: #d4e6f6;
+            --warm-bg: #3a2f1e;
+            --warm-border: #806438;
+            --warm-text: #f4ddb1;
+            --weekly-bg: linear-gradient(135deg, #2a2f36 0%, #1a3040 100%);
+            --weekly-border: #355068;
+            --weekly-title: #d8e9f8;
+            --weekly-help: #b8c7d6;
+            --weekly-chip-bg: #284964;
+            --weekly-chip-text: #d9efff;
+            --weekly-chip-due-bg: #4d3c1f;
+            --weekly-chip-due-text: #ffd88a;
+            --featured-shadow: 0 8px 22px rgba(33, 82, 42, 0.45);
+            --featured-progress-bg: #3e6842;
+            --summary-chip-bg: #273f53;
+            --summary-chip-text: #d9ebfb;
+            --chemsex-bg: #2f2537;
+            --chemsex-border: #544169;
+            --chemsex-title: #db9bff;
+            --chemsex-text: #e8d9f2;
+            --footer-bg: #13202b;
+            --footer-text: #c0cfde;
+            --footer-meta: #8fa3b6;
+        }
+
         body {
             background: var(--page-bg);
             color: var(--text-main);
@@ -121,25 +237,6 @@
         .model-note {
             margin: 0.7rem 0 0;
             color: var(--info-text);
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .card-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .card-grid {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
         }
 
         .card {
@@ -301,6 +398,56 @@
             border: 1px solid var(--warm-border);
             color: var(--warm-text);
             font-weight: 600;
+        }
+
+        .theme-settings {
+            margin-top: 1rem;
+            padding: 0.95rem 1rem;
+            border: 1px solid var(--border-soft);
+            border-radius: 10px;
+            background: var(--surface-soft);
+        }
+
+        .theme-settings h4 {
+            margin: 0;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .theme-settings-help {
+            margin: 0.45rem 0 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .theme-settings-controls {
+            display: flex;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+        }
+
+        .theme-option {
+            border: 1px solid var(--border-soft);
+            background: var(--surface);
+            color: var(--text-main);
+            border-radius: 999px;
+            padding: 0.45rem 0.8rem;
+            font-size: 0.86rem;
+            font-weight: 700;
+            cursor: pointer;
+            min-height: 38px;
+        }
+
+        .theme-option.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .theme-settings-status {
+            margin: 0.65rem 0 0;
+            color: var(--text-soft);
+            font-size: 0.85rem;
         }
 
         .weekly-review {
@@ -853,6 +1000,7 @@
             }
         }
     </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
     <div class="container">
@@ -906,6 +1054,16 @@
                 <button class="btn-action export" onclick="window.location.href='trek-opvangen.htm'">🧠 Eerst trek opvangen</button>
                 <button class="btn-action" onclick="exportAllData()">📥 Mijn gegevens exporteren</button>
                 <button class="btn-action export" onclick="viewProgress()">📊 Mijn voortgang</button>
+            </div>
+            <div class="theme-settings" id="themeSettingsCard">
+                <h4>Weergave</h4>
+                <p class="theme-settings-help">Kies hoe IAM eruitziet op dit apparaat.</p>
+                <div class="theme-settings-controls" id="themeSettingsControls">
+                    <button type="button" class="theme-option" data-theme-preference="auto">Automatisch</button>
+                    <button type="button" class="theme-option" data-theme-preference="light">Licht</button>
+                    <button type="button" class="theme-option" data-theme-preference="dark">Donker</button>
+                </div>
+                <p class="theme-settings-status" id="themeSettingsStatus">Actief thema: laden...</p>
             </div>
             <p class="priority-note">Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.</p>
         </div>
@@ -1486,6 +1644,7 @@
             'later': 'Later opnieuw proberen'
         };
         const CHAPTER_COLLAPSE_STORAGE_KEY = 'iam.index.chapterCollapse.v2';
+        const THEME_PREFERENCE_KEY = 'iam.theme.preference';
         let weeklyHistoryFilter = 'all';
 
         function loadChapterCollapseState() {
@@ -2192,7 +2351,83 @@
             document.body.removeChild(a);
         }
 
+        function normalizeThemePreference(value) {
+            if (value === 'light' || value === 'dark') return value;
+            return 'auto';
+        }
+
+        function getThemeRuntimeState() {
+            if (window.IAMTheme && typeof window.IAMTheme.getPreference === 'function') {
+                const pref = normalizeThemePreference(window.IAMTheme.getPreference());
+                const theme = window.IAMTheme.resolveTheme(pref);
+                return { preference: pref, theme };
+            }
+
+            const pref = normalizeThemePreference(localStorage.getItem(THEME_PREFERENCE_KEY));
+            const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            return { preference: pref, theme: pref === 'auto' ? theme : pref };
+        }
+
+        function updateThemeSettingsUi(state) {
+            const controls = document.querySelectorAll('[data-theme-preference]');
+            controls.forEach((button) => {
+                const active = button.dataset.themePreference === state.preference;
+                button.classList.toggle('active', active);
+                button.setAttribute('aria-pressed', active ? 'true' : 'false');
+            });
+
+            const status = document.getElementById('themeSettingsStatus');
+            if (!status) return;
+
+            const prefLabel = state.preference === 'auto'
+                ? 'Automatisch'
+                : state.preference === 'light'
+                    ? 'Licht'
+                    : 'Donker';
+            const themeLabel = state.theme === 'dark' ? 'Donker' : 'Licht';
+            status.textContent = `Instelling: ${prefLabel} | Actief thema: ${themeLabel}`;
+        }
+
+        function initializeThemeSettings() {
+            const controls = document.querySelectorAll('[data-theme-preference]');
+            if (!controls.length) return;
+
+            const syncUi = () => updateThemeSettingsUi(getThemeRuntimeState());
+
+            controls.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const pref = normalizeThemePreference(button.dataset.themePreference);
+                    if (window.IAMTheme && typeof window.IAMTheme.setPreference === 'function') {
+                        window.IAMTheme.setPreference(pref);
+                    } else {
+                        localStorage.setItem(THEME_PREFERENCE_KEY, pref);
+                    }
+                    syncUi();
+                });
+            });
+
+            const media = window.matchMedia('(prefers-color-scheme: dark)');
+            const onMediaChange = () => {
+                const state = getThemeRuntimeState();
+                if (state.preference === 'auto') {
+                    if (window.IAMTheme && typeof window.IAMTheme.applyTheme === 'function') {
+                        window.IAMTheme.applyTheme('auto');
+                    }
+                    syncUi();
+                }
+            };
+
+            if (typeof media.addEventListener === 'function') {
+                media.addEventListener('change', onMediaChange);
+            } else if (typeof media.addListener === 'function') {
+                media.addListener(onMediaChange);
+            }
+
+            syncUi();
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            initializeThemeSettings();
             initializeCollapsibleChapters();
             document.querySelectorAll('[data-attempt-filter]').forEach((button) => {
                 button.addEventListener('click', () => {
