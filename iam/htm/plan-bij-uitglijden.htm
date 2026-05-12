@@ -76,6 +76,186 @@
       color: #4d6270;
       font-size: 0.92rem;
     }
+
+    .support-sync-box {
+      margin-top: 0.85rem;
+      padding: 0.9rem;
+      border-radius: 12px;
+      background: rgba(138, 82, 0, 0.08);
+      border: 1px solid rgba(138, 82, 0, 0.16);
+    }
+
+    .support-sync-box p {
+      margin: 0 0 0.65rem;
+      color: #5a4639;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .support-suggestion-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .support-suggestion-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .support-suggestion {
+      border: 1px solid rgba(138, 82, 0, 0.2);
+      background: #fff;
+      color: var(--page-main);
+      border-radius: 999px;
+      padding: 0.42rem 0.78rem;
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .support-source-link {
+      color: #5a4639;
+      font-size: 0.8rem;
+      text-decoration: none;
+    }
+
+    .support-source-link:hover {
+      text-decoration: underline;
+    }
+
+    .support-fallback {
+      color: #5a4639;
+      font-size: 0.88rem;
+    }
+
+    .support-script-box,
+    .recovery-sync-box {
+      margin-top: 1rem;
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+      border-top: 4px solid var(--page-main);
+    }
+
+    .support-script-box--header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      user-select: none;
+      padding: 0.4rem 0;
+      margin-bottom: 0.55rem;
+    }
+
+    .support-script-box--header:hover {
+      opacity: 0.85;
+    }
+
+    .support-script-box--toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.2rem;
+      height: 1.2rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--page-main);
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .support-script-box--collapsed .support-script-box--toggle {
+      transform: rotate(-90deg);
+    }
+
+    .support-script-box--content {
+      display: block;
+      transition: all 0.2s ease;
+      max-height: 1000px;
+      opacity: 1;
+    }
+
+    .support-script-box--collapsed .support-script-box--content {
+      display: none;
+      max-height: 0;
+      opacity: 0;
+    }
+
+    .support-script-box h2,
+    .recovery-sync-box h2 {
+      margin-top: 0;
+    }
+
+    .support-script-box p,
+    .recovery-sync-box p {
+      margin: 0 0 0.7rem;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .support-script-list {
+      display: grid;
+      gap: 0.55rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .support-script-item {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid rgba(138, 82, 0, 0.12);
+      border-radius: 10px;
+      padding: 0.7rem 0.8rem;
+    }
+
+    .support-script-item span {
+      flex: 1 1 260px;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .mini-button,
+    .mini-link {
+      min-height: 38px;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .mini-button {
+      border: none;
+      cursor: pointer;
+      background: rgba(138, 82, 0, 0.12);
+      color: var(--page-main);
+    }
+
+    .mini-link {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      background: rgba(138, 82, 0, 0.12);
+      color: var(--page-main);
+    }
+
+    .recovery-sync-actions {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
   </style>
     <script src="../js/themeMode.js"></script>
 </head>
@@ -101,6 +281,16 @@
           <li>Het verschil met <strong>wegglijden</strong> is dat je bij een uitglijder snel inziet dat je van plan afweken en je weer oppakt.</li>
           <li>Dit plan helpt je om die moment van "oh nee, ik glijd uit" snel om te zetten in "oké, nu doe ik X".</li>
           <li>Het gaat niet om schuldgevoelens, maar om <strong>schade beperken</strong> en <strong>snel terug naar plan</strong>.</li>
+        </ul>
+      </section>
+
+      <section class="legacy-note">
+        <h2>Na het stoppen: koers terugpakken</h2>
+        <ul>
+          <li>Na een uitglijder helpt het om niet alleen te remmen, maar ook weer richting te kiezen.</li>
+          <li>Vraag jezelf: welk gevoel speelde vooral op, en welke waarde wil ik nu weer leidend maken?</li>
+          <li>Maak de volgende stap klein en zichtbaar binnen 24 uur.</li>
+          <li>Koppel dit plan aan <a href="./levenskwaliteit.htm">levenskwaliteit</a> en <a href="./persoonlijke-waarden.htm">persoonlijke waarden</a>.</li>
         </ul>
       </section>
 
@@ -168,9 +358,28 @@
             <div class="form-group">
               <label for="slippageSupport">Wie leeft ik of bel ik meteen, en wat zeg ik tegen hen?</label>
               <textarea id="slippageSupport" rows="4"></textarea>
+              <div class="support-sync-box">
+                <p>Steun uit eerdere formulieren. Klik op een naam om die meteen in je bel/app-plan te zetten.</p>
+                <div class="support-suggestion-list" id="supportSuggestionList">
+                  <span class="support-fallback">Nog geen steun uit andere formulieren gevonden.</span>
+                </div>
+              </div>
             </div>
           </section>
         </div>
+
+        <section class="support-script-box" id="supportScriptBox">
+          <div class="support-script-box--header" id="supportScriptBoxToggle">
+            <span class="support-script-box--toggle">▼</span>
+            <h2 style="margin: 0; flex: 1;">Voorbeeldbericht aan steun</h2>
+          </div>
+          <div class="support-script-box--content">
+            <p>Gebruik een korte tekst die het moment benoemt en meteen om iets concreets vraagt. Kopieer en stuur hem direct.</p>
+            <ul class="support-script-list" id="supportScriptList">
+              <li class="support-script-item"><span>Nog geen voorbeeldbericht beschikbaar.</span></li>
+            </ul>
+          </div>
+        </section>
 
         <section class="question-card">
           <h2>7. Weer Opstaan</h2>
@@ -210,6 +419,15 @@
           <p class="route-hint" id="routeHint">Huidig adviespad: Trek opvangen.</p>
         </section>
 
+        <section class="recovery-sync-box">
+          <h2>Herstelbasis klaarzetten</h2>
+          <p>Zet met een klik een eenvoudige herstelset in je agenda voor vandaag: eten, hulpcontact, regulatie, beloning en wat je beter niet doet.</p>
+          <div class="recovery-sync-actions">
+            <button type="button" class="mini-button" id="agendaRecoveryButton">Zet herstelbasis klaar in agenda</button>
+            <a class="mini-link" href="./agenda.htm">Open agenda</a>
+          </div>
+        </section>
+
         <div class="action-bar">
           <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
@@ -221,6 +439,8 @@
   </div>
 
   <script src="../js/dataStore.js"></script>
+  <script src="../js/supportNetwork.js"></script>
+  <script src="../js/crisisActions.js"></script>
   <script src="../js/triggerLoader.js"></script>
   <script>
     const formKey = 'plan-bij-uitglijden';
@@ -278,6 +498,123 @@
       if (!existingLines.includes(clean)) {
         textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
       }
+    }
+
+    function copySupportScript(text) {
+      const value = String(text || '').trim();
+      if (!value) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(value)
+          .then(() => showMessage('Voorbeeldbericht gekopieerd.'))
+          .catch(() => showMessage('Kopieren lukte niet.', true));
+        return;
+      }
+      showMessage('Kopieren naar klembord wordt hier niet ondersteund.', true);
+    }
+
+    function initCollapseState() {
+      const box = document.getElementById('supportScriptBox');
+      const toggle = document.getElementById('supportScriptBoxToggle');
+      const storageKey = 'plan-bij-uitglijden_supportScriptsCollapsed';
+      
+      const isCollapsed = localStorage.getItem(storageKey) === 'true';
+      if (isCollapsed) box.classList.add('support-script-box--collapsed');
+      
+      toggle.addEventListener('click', () => {
+        box.classList.toggle('support-script-box--collapsed');
+        const newState = box.classList.contains('support-script-box--collapsed');
+        localStorage.setItem(storageKey, newState);
+      });
+    }
+
+    function renderSupportScripts() {
+      const list = document.getElementById('supportScriptList');
+      if (!list || !window.iamCrisisActions) return;
+
+      const scripts = window.iamCrisisActions.buildSupportScripts({
+        supportNames: [document.getElementById('slippageSupport')?.value || ''],
+        crisisLabel: 'een uitglijder of dreigende uitglijder',
+        ask: 'wil je me helpen om nu te stoppen en even met me te checken wat mijn eerstvolgende stap is?',
+        action: 'ik wil dit klein houden en vandaag terug naar mijn plan bewegen'
+      });
+
+      list.innerHTML = '';
+      scripts.forEach((line) => {
+        const item = document.createElement('li');
+        item.className = 'support-script-item';
+        const text = document.createElement('span');
+        text.textContent = line;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'mini-button';
+        button.textContent = 'Kopieer';
+        button.addEventListener('click', () => copySupportScript(line));
+        item.appendChild(text);
+        item.appendChild(button);
+        list.appendChild(item);
+      });
+    }
+
+    function pushRecoveryToAgenda() {
+      if (!window.iamCrisisActions) return;
+      const result = window.iamCrisisActions.applyRecoveryAgenda(iamData, {
+        formData: collectFormData(),
+        supportNamesText: document.getElementById('slippageSupport')?.value || ''
+      });
+      if (result.ok) {
+        showMessage('Herstelbasis klaargezet in je agenda.');
+      } else {
+        showMessage('Agenda bijwerken lukte niet.', true);
+      }
+    }
+
+    function renderSupportSuggestions() {
+      const container = document.getElementById('supportSuggestionList');
+      const target = document.getElementById('slippageSupport');
+      if (!container || !target) return;
+
+      const suggestions = window.iamSupportNetwork ? window.iamSupportNetwork.getSupportSuggestions(iamData) : [];
+      container.innerHTML = '';
+
+      if (!suggestions.length) {
+        const fallback = document.createElement('span');
+        fallback.className = 'support-fallback';
+        fallback.textContent = 'Nog geen steun uit andere formulieren gevonden.';
+        container.appendChild(fallback);
+        renderSupportScripts();
+        return;
+      }
+
+      suggestions.forEach((item) => {
+        const wrapper = document.createElement('span');
+        wrapper.className = 'support-suggestion-item';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'support-suggestion';
+        button.textContent = item.name;
+        if (item.source) {
+          button.title = `Bron: ${item.source}`;
+        }
+        button.addEventListener('click', () => {
+          appendUniqueLine(target, item.name);
+          saveForm(false);
+          renderSupportScripts();
+          showMessage(`Steunpersoon "${item.name}" toegevoegd aan dit uitglijder-plan.`);
+        });
+        wrapper.appendChild(button);
+        if (item.href) {
+          const link = document.createElement('a');
+          link.className = 'support-source-link';
+          link.href = item.href;
+          link.textContent = item.source || 'bron';
+          if (item.sourceLabel) {
+            link.title = item.sourceLabel;
+          }
+          wrapper.appendChild(link);
+        }
+        container.appendChild(wrapper);
+      });
+      renderSupportScripts();
     }
 
     function saveForm(feedback = true) {
@@ -355,6 +692,7 @@
       ]));
 
       saveForm(true);
+      renderSupportScripts();
       showMessage('Voorstel ingevuld op basis van eerdere stappen. Check en pas aan waar nodig.');
     }
 
@@ -400,12 +738,16 @@
     document.addEventListener('DOMContentLoaded', () => {
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
+      renderSupportSuggestions();
       updateRouteHint();
+      initCollapseState();
 
       document.getElementById('suggestButton').addEventListener('click', applySuggestionFromPreviousSteps);
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('agendaRecoveryButton').addEventListener('click', pushRecoveryToAgenda);
+      document.getElementById('slippageSupport').addEventListener('input', renderSupportScripts);
       document.getElementById('openRecommendedRouteButton').addEventListener('click', openRecommendedRoute);
       document.getElementById('routeUrgency').addEventListener('change', updateRouteHint);
       document.getElementById('routeSupport').addEventListener('change', updateRouteHint);
@@ -434,7 +776,7 @@
       });
 
       window.addEventListener('focus', () => {
-        // Reload on focus for any external updates
+        renderSupportSuggestions();
       });
     });
   </script>

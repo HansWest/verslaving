@@ -114,6 +114,188 @@
             box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
         }
 
+        .support-sync-box {
+            margin-top: 0.85rem;
+            padding: 0.9rem;
+            border-radius: 12px;
+            background: rgba(211, 47, 47, 0.06);
+            border: 1px solid rgba(211, 47, 47, 0.14);
+        }
+
+        .support-sync-box p {
+            margin: 0 0 0.65rem;
+            color: #7b4b4b;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .support-suggestion-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .support-suggestion-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+        }
+
+        .support-suggestion {
+            border: 1px solid rgba(211, 47, 47, 0.18);
+            background: #fff;
+            color: var(--page-accent);
+            border-radius: 999px;
+            padding: 0.42rem 0.78rem;
+            font: inherit;
+            font-size: 0.86rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .support-source-link {
+            color: #7b4b4b;
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+
+        .support-source-link:hover {
+            text-decoration: underline;
+        }
+
+        .support-fallback {
+            color: #7b4b4b;
+            font-size: 0.88rem;
+        }
+
+        .support-script-box,
+        .recovery-sync-box {
+            max-width: 680px;
+            margin: 1rem auto 1.5rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            background: rgba(211, 47, 47, 0.06);
+            border: 1px solid rgba(211, 47, 47, 0.14);
+        }
+
+        .support-script-box--header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            user-select: none;
+            padding: 0.4rem 0;
+            margin-bottom: 0.55rem;
+        }
+
+        .support-script-box--header:hover {
+            opacity: 0.85;
+        }
+
+        .support-script-box--toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.2rem;
+            height: 1.2rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--page-accent);
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        .support-script-box--collapsed .support-script-box--toggle {
+            transform: rotate(-90deg);
+        }
+
+        .support-script-box--content {
+            display: block;
+            transition: all 0.2s ease;
+            max-height: 1000px;
+            opacity: 1;
+        }
+
+        .support-script-box--collapsed .support-script-box--content {
+            display: none;
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .support-script-box h3,
+        .recovery-sync-box h3 {
+            margin: 0 0 0.55rem;
+            color: var(--page-accent);
+            font-size: 1rem;
+        }
+
+        .support-script-box p,
+        .recovery-sync-box p {
+            margin: 0 0 0.7rem;
+            color: #7b4b4b;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .support-script-list {
+            display: grid;
+            gap: 0.55rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .support-script-item {
+            display: flex;
+            gap: 0.65rem;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            background: #fff;
+            border: 1px solid rgba(211, 47, 47, 0.12);
+            border-radius: 10px;
+            padding: 0.7rem 0.8rem;
+        }
+
+        .support-script-item span {
+            flex: 1 1 260px;
+            color: #5f3c3c;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .mini-button,
+        .mini-link {
+            min-height: 38px;
+            padding: 0.45rem 0.8rem;
+            border-radius: 999px;
+            font: inherit;
+            font-size: 0.84rem;
+            font-weight: 700;
+        }
+
+        .mini-button {
+            border: none;
+            cursor: pointer;
+            background: #f9e1e1;
+            color: var(--page-accent);
+        }
+
+        .mini-link {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            background: #f9e1e1;
+            color: var(--page-accent);
+        }
+
+        .recovery-sync-actions {
+            display: flex;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+        }
+
         .checkbox-item {
             display: flex;
             align-items: flex-start;
@@ -231,7 +413,7 @@
 <div class="intro-card">
     <h2>Wat is "wegglijden"?</h2>
     <p>Een <strong>uitglijder</strong> is één keer gebruik en weer oppakken. <strong>Wegglijden</strong> is langer de controle kwijt zijn. Dit plan helpt jou en je steun om snel in te grijpen.</p>
-    <p style="margin-top: 1rem; padding-top: 0.75rem; font-size: 0.9rem; color: #555; line-height: 1.5;"><em>Waarom is wegglijden zo anders?</em> Bij verslaving wordt je brein zo gekaapt dat dingen "belangrijk" voelen die je eigenlijk niet wilt. Daardoor voelt de volgende eenheid niet als keuze, maar als <em>noodzaak</em>. Dan is gewoon zeggen "ik ga niet gebruikt" niet realistisch. Ongewone maatregelen kunnen nodig zijn.</p>
+    <p style="margin-top: 1rem; padding-top: 0.75rem; font-size: 0.9rem; color: #555; line-height: 1.5;"><em>Waarom is wegglijden zo anders?</em> Bij verslaving wordt je brein zo gekaapt dat dingen "belangrijk" voelen die je eigenlijk niet wilt. Daardoor voelt de volgende eenheid niet als keuze, maar als <em>noodzaak</em>. Dan is gewoon zeggen "ik wil niet gebruiken" niet realistisch. Ongewone maatregelen kunnen nodig zijn.</p>
     <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">Het plan bevat drie delen: <strong>Schadebeperkingsplan</strong> (wat stop je direct?), <strong>Allianties</strong> (wie helpt?) en <strong>Oppakken</strong> (hoe kom je eruit?).</p>
 </div>
 
@@ -252,19 +434,19 @@
 </div>
 
 <div class="form-group">
-    <label for="herkennenAchteraf">Hoe herken je achteraf het verschil?</label>
+    <label for="herkennenAchteraf">Hoe herken je <em>achteraf</em> het verschil?</label>
     <div class="hint">Wat zie je achteraf dat aangeeft: dit was niet alleen een moment, dit ging verder?</div>
     <textarea id="herkennenAchteraf" name="herkennenAchteraf" placeholder="Bijv. Keten van smoezen, oplopende schade, minder contact met steun, meer isolatie."></textarea>
 </div>
 
 <div class="form-group">
-    <label for="herkennenVooraf">Hoe herken je vooraf dat je richting wegglijden gaat?</label>
+    <label for="herkennenVooraf">Hoe herken je <em>vooraf</em> dat je richting wegglijden gaat?</label>
     <div class="hint">Welke vroege signalen wil jij en je steun serieus nemen?</div>
     <textarea id="herkennenVooraf" name="herkennenVooraf" placeholder="Bijv. Slecht slapen + afspraken afzeggen + niet meer delen wat er speelt."></textarea>
 </div>
 
 <div class="form-group">
-    <label for="definitieTerugval">Wat betekent terugval voor jou?</label>
+    <label for="definitieTerugval">Wat <em>betekent</em> terugval voor jou?</label>
     <div class="hint">Jouw werkdefinitie helpt discussies voorkomen en maakt sneller ingrijpen mogelijk.</div>
     <textarea id="definitieTerugval" name="definitieTerugval" placeholder="Bijv. Terugvallen is voor mij: opnieuw vastlopen in oud patroon zonder tijdige correctie."></textarea>
 </div>
@@ -287,13 +469,13 @@
 </div>
 
 <div class="form-group">
-    <label for="welGaanDoen">Wat helpt jou (en je steun) wél op zo'n moment?</label>
+    <label for="welGaanDoen">Wat helpt jou (en je steun) <em>wél</em> op zo'n moment?</label>
     <div class="hint">Activiteiten, genot, beweging, rust. Wat houdt je bezig en gegrond?</div>
     <textarea id="welGaanDoen" name="welGaanDoen" placeholder="Bijv. Naar buiten (hardlopen, wandelen), series kijken, vrienden opbellen..."></textarea>
 </div>
 
 <div class="form-group">
-    <label for="nietGaanDoen">Wat doe je juist niet? (jouw grenzen)</label>
+    <label for="nietGaanDoen">Wat doe je juist <em>niet</em>? (jouw grenzen)</label>
     <div class="hint">Plekken vermijden, mensen, digitale triggers, bepaalde routines?</div>
     <textarea id="nietGaanDoen" name="nietGaanDoen" placeholder="Bijv. Niet naar het centrum, geen solo thuis-tijd, telefoon in kluisje..."></textarea>
 </div>
@@ -311,25 +493,44 @@
     <label for="privepersonen">Privé-personen + contactgegevens</label>
     <div class="hint">Mensen die je echt willen helpen. Noteer naam, nummer en wanneer ze bereikbaar zijn.</div>
     <textarea id="privepersonen" name="privepersonen" placeholder="Ma: 06-12345678, iedere dag bereikbaar. Pa: 06-87654321, werkdagen na 18u."></textarea>
+    <div class="support-sync-box">
+        <p>Steun uit eerdere formulieren. Klik op een naam om die direct aan je privé-lijst toe te voegen en vul daarna bereikbaarheid aan.</p>
+        <div class="support-suggestion-list" id="supportSuggestionList">
+            <span class="support-fallback">Nog geen steun uit andere formulieren gevonden.</span>
+        </div>
+    </div>
+</div>
+
+<div class="support-script-box" id="supportScriptBox">
+    <div class="support-script-box--header" id="supportScriptBoxToggle">
+        <span class="support-script-box--toggle">▼</span>
+        <h3 style="margin: 0; flex: 1;">Voorbeeldbericht aan steun</h3>
+    </div>
+    <div class="support-script-box--content">
+        <p>Als je weinig woorden over hebt, gebruik dan een korte zin die direct duidelijk maakt wat er nodig is. Kopieer en stuur hem meteen.</p>
+        <ul class="support-script-list" id="supportScriptList">
+            <li class="support-script-item"><span>Nog geen voorbeeldbericht beschikbaar.</span></li>
+        </ul>
+    </div>
 </div>
 
 <div class="form-group">
-    <label for="professional">Professionals (huisarts, hulpverlener, Jellinek)</label>
+    <label for="professional">Professionals (huisarts, hulpverlener, online coach)</label>
     <div class="hint">Schrijf nummers op en vraag vooraf: "mag ik bellen als het mis dreigt te gaan?"</div>
-    <textarea id="professional" name="professional" placeholder="Huisarts Dr. X: telefoonnummer, centrale maandag 08u-17u. Verslavingsconsulent..."></textarea>
+    <textarea id="professional" name="professional" placeholder="Huisarts Dr. X: telefoonnummer, centrale maandag 08u-17u. URL Verslavingsconsulent..."></textarea>
 </div>
 
 <div class="form-group">
     <label for="instantie">Hulpinstanties in jouw regio</label>
     <div class="hint">Jellinek, crisis-opvang, psychiatrische spoedpost. Hoe bereik je ze?</div>
-    <textarea id="instantie" name="instantie" placeholder="Jellinek regio Utrecht: 030-XXXX, Spoedpost Psych: 112. Opvang bed: bel centralisten."></textarea>
+    <textarea id="instantie" name="instantie" placeholder="Spoedpost Psych: 112. Opvang bed: bel centralisten."></textarea>
 </div>
 
 <div class="form-group">
     <label style="margin-bottom: 1rem;">Bereidheid van je steun</label>
     <div class="checkbox-item">
         <input type="checkbox" id="steunerinopdehoogte" name="steunerinopdehoogte">
-        <label for="steunerinopdehoogte">Mijn steunnetwerk kent dit plan en weet dat ik kan bellen — JA ✓</label>
+        <label for="steunerinopdehoogte">Mijn steunnetwerk kent dit plan en weet dat ik hen kan bellen — JA ✓</label>
     </div>
     <div class="checkbox-item">
         <input type="checkbox" id="steunerHeeftHandleiding" name="steunerHeeftHandleiding">
@@ -343,25 +544,34 @@
 </div>
 
 <div class="form-group">
-    <label for="weeropstaan">Hoe ga jij jezelf weer oppakken? (Wie helpt daarbij?)</label>
+    <label for="weeropstaan">Hoe ga jij <em>jezelf</em> weer oppakken? (Wie helpt daarbij?)</label>
     <div class="hint">Doe je dit zelf, of heb je hulp van naasten/professionals nodig? Wat is je eerste stap?</div>
     <textarea id="weeropstaan" name="weeropstaan" placeholder="Bijv. Ik bel mijn moeder, ik ga naar de huisarts, ik schrijf me in bij Jellinek..."></textarea>
 </div>
 
 <div class="form-group">
-    <label for="schaamte">Hoe laat je schaamte je niet tegenhouden?</label>
+    <label for="schaamte">Hoe laat je <em>jouw</em> schaamte je niet tegenhouden?</label>
     <div class="hint">Welke zin of stap helpt jou om tóch te bellen en hulp te vragen?</div>
     <textarea id="schaamte" name="schaamte" placeholder="Bijv. Ik herinner mezelf: schaamte liegt. Ik stuur een tekstje naar mijn steun ('Ik ben weg gaan glijden'). Ik lees dit plan opnieuw."></textarea>
 </div>
 
 <div class="form-group">
-    <label for="minimaleStappen">Eerste herstelstappen na wegglijden</label>
+    <label for="minimaleStappen"><em>Eerste</em> herstelstappen na wegglijden</label>
     <div class="hint">Focus op biologisch herstel: slaap, voeding, medicatie, energie, vermogen tot genot. Ook doktersbezoek. Wat moet je echt minimaal doen?</div>
     <textarea id="minimaleStappen" name="minimaleStappen" placeholder="Bijv.\nVergiftiging/medicijn: antidepressiva, antiretroviralen hervatten.\nHonger/energie: eerst 3x goed eten, dan bewegen.\nVermogen genot: favoriete muziek, warme douche, iets lekkers.\nEventueel: huisarts bellen, bloedwerk, check PrEP-schema."></textarea>
 </div>
 
 <div class="insight-box">
-    <strong>💪 Sleutelboodschap:</strong> Dit plan is geen zwakte. Het is zelfzorg en vooruitdenken. Ongewone maatregelen (geld afgeven, bepaalde plekken of mensen vermijden, hulp vragen) zijn soms niet te vermijden — zíj helpen jou.
+    <strong>💪 Sleutelboodschap:</strong> Dit plan is géén zwakte. Het is <em>zelfzorg</em> en vooruitdenken. Ongewone maatregelen (geld afgeven, bepaalde plekken of mensen vermijden, hulp vragen) zijn soms niet te vermijden — zíj helpen jou.
+</div>
+
+<div class="recovery-sync-box">
+    <h3>Herstelbasis klaarzetten</h3>
+    <p>Zet met een klik een eenvoudige herstelset in je agenda voor vandaag: eten, hulpcontact, regulatie, beloning en wat je nu beter niet doet.</p>
+    <div class="recovery-sync-actions">
+        <button class="mini-button" type="button" id="agendaRecoveryButton">Zet herstelbasis klaar in agenda</button>
+        <a class="mini-link" href="./agenda.htm">Open agenda</a>
+    </div>
 </div>
 
 <!-- ── ACTION BAR ──────────────────────────────────── -->
@@ -378,6 +588,8 @@
 </div>
 
 <script src="../js/dataStore.js"></script>
+<script src="../js/supportNetwork.js"></script>
+<script src="../js/crisisActions.js"></script>
 <script>
     const fields = [
         'definitieUitglijder',
@@ -415,7 +627,147 @@
         });
     }
 
-    function saveData() {
+    function appendUniqueLine(element, text) {
+        if (!element || !text) return false;
+        const clean = String(text).trim();
+        if (!clean) return false;
+        const lines = (element.value || '')
+            .split('\n')
+            .map(line => line.trim())
+            .filter(Boolean);
+        if (lines.includes(clean)) return false;
+        element.value = element.value.trim() ? `${element.value.trim()}\n${clean}` : clean;
+        return true;
+    }
+
+    function renderSupportSuggestions() {
+        const container = document.getElementById('supportSuggestionList');
+        const target = document.getElementById('privepersonen');
+        if (!container || !target) return;
+
+        const suggestions = window.iamSupportNetwork ? window.iamSupportNetwork.getSupportSuggestions(iamData) : [];
+        container.innerHTML = '';
+
+        if (!suggestions.length) {
+            const fallback = document.createElement('span');
+            fallback.className = 'support-fallback';
+            fallback.textContent = 'Nog geen steun uit andere formulieren gevonden.';
+            container.appendChild(fallback);
+            renderSupportScripts();
+            return;
+        }
+
+        suggestions.forEach((item) => {
+            const wrapper = document.createElement('span');
+            wrapper.className = 'support-suggestion-item';
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'support-suggestion';
+            button.textContent = item.name;
+            if (item.source) {
+                button.title = `Bron: ${item.source}`;
+            }
+            button.addEventListener('click', () => {
+                if (appendUniqueLine(target, item.name)) {
+                    saveData(true);
+                    renderSupportScripts();
+                }
+            });
+            wrapper.appendChild(button);
+            if (item.href) {
+                const link = document.createElement('a');
+                link.className = 'support-source-link';
+                link.href = item.href;
+                link.textContent = item.source || 'bron';
+                if (item.sourceLabel) {
+                    link.title = item.sourceLabel;
+                }
+                wrapper.appendChild(link);
+            }
+            container.appendChild(wrapper);
+        });
+        renderSupportScripts();
+    }
+
+    function copySupportScript(text) {
+        const value = String(text || '').trim();
+        if (!value) return;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(value)
+                .then(() => alert('Voorbeeldbericht gekopieerd.'))
+                .catch(() => alert('Kopieren lukte niet.'));
+            return;
+        }
+        alert('Kopieren naar klembord wordt hier niet ondersteund.');
+    }
+
+    function collectFormData() {
+        const data = {};
+        fields.forEach(field => {
+            const elem = document.getElementById(field);
+            if (!elem) return;
+            data[field] = elem.type === 'checkbox' ? elem.checked : elem.value;
+        });
+        return data;
+    }
+
+    function initCollapseState() {
+        const box = document.getElementById('supportScriptBox');
+        const toggle = document.getElementById('supportScriptBoxToggle');
+        const storageKey = 'noodplan-wegglijden_supportScriptsCollapsed';
+        
+        const isCollapsed = localStorage.getItem(storageKey) === 'true';
+        if (isCollapsed) box.classList.add('support-script-box--collapsed');
+        
+        toggle.addEventListener('click', () => {
+            box.classList.toggle('support-script-box--collapsed');
+            const newState = box.classList.contains('support-script-box--collapsed');
+            localStorage.setItem(storageKey, newState);
+        });
+    }
+
+    function renderSupportScripts() {
+        const list = document.getElementById('supportScriptList');
+        if (!list || !window.iamCrisisActions) return;
+
+        const scripts = window.iamCrisisActions.buildSupportScripts({
+            supportNames: [document.getElementById('privepersonen')?.value || ''],
+            crisisLabel: 'signalen van wegglijden',
+            ask: 'wil je me helpen om nu direct in te grijpen en bereikbaar te blijven?',
+            action: 'ik wil dit niet verder laten oplopen en vandaag weer richting herstel bewegen'
+        });
+
+        list.innerHTML = '';
+        scripts.forEach((line) => {
+            const item = document.createElement('li');
+            item.className = 'support-script-item';
+            const text = document.createElement('span');
+            text.textContent = line;
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'mini-button';
+            button.textContent = 'Kopieer';
+            button.addEventListener('click', () => copySupportScript(line));
+            item.appendChild(text);
+            item.appendChild(button);
+            list.appendChild(item);
+        });
+    }
+
+    function pushRecoveryToAgenda() {
+        if (!window.iamCrisisActions) return;
+        const result = window.iamCrisisActions.applyRecoveryAgenda(iamData, {
+            formData: collectFormData(),
+            supportNamesText: document.getElementById('privepersonen')?.value || ''
+        });
+        if (result.ok) {
+            alert('Herstelbasis klaargezet in je agenda.');
+        } else {
+            alert('Agenda bijwerken lukte niet.');
+        }
+    }
+
+    function saveData(silent = false) {
         if (typeof iamData === 'undefined') return;
         const data = {};
         fields.forEach(field => {
@@ -424,7 +776,9 @@
             data[field] = elem.type === 'checkbox' ? elem.checked : elem.value;
         });
         iamData.updateFormData('noodplan-wegglijden', data);
-        alert('✓ Plan opgeslagen!');
+        if (!silent) {
+            alert('✓ Plan opgeslagen!');
+        }
     }
 
     function exportData() {
@@ -445,131 +799,26 @@
     fields.forEach(field => {
         const elem = document.getElementById(field);
         if (elem) {
-            elem.addEventListener('blur', saveData);
+            elem.addEventListener('blur', () => saveData(true));
         }
     });
 
     // Load on page load
-    document.addEventListener('DOMContentLoaded', loadData);
+    document.addEventListener('DOMContentLoaded', () => {
+        loadData();
+        renderSupportSuggestions();
+        initCollapseState();
+        const privatePeople = document.getElementById('privepersonen');
+        if (privatePeople) {
+            privatePeople.addEventListener('input', renderSupportScripts);
+        }
+        const agendaButton = document.getElementById('agendaRecoveryButton');
+        if (agendaButton) {
+            agendaButton.addEventListener('click', pushRecoveryToAgenda);
+        }
+    });
+
+    window.addEventListener('focus', renderSupportSuggestions);
 </script>
-</body>
-</html>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
-
-function hulpscherm()
-{
-hulp_scherm(350,'plan bij wegglijden','Ellendig genoeg (en best lastig om te kunnen herkennen, is een verslaving een ziekte die maakt dat het erg belangrijk voelt om te gebruiken waardoor we de controle verliezen op dat gebruik. Daardoor is soms de enige reden voor het gebruik van de volgende eenheid het feit dat je de vorige gebruikt hebt. Het k&agrave;n, de mogelijkheid bestaat, de volgende <i>is</i> er dus de keuze om het te laten is er eigenlijk niet meer. Daarom wordt een uitglijder tot een wegglijder waarin eigenlijk weinig controle meer bestaat. Misschien van buitenaf maar de zelfcontrole is gekaapt... Daarom is het goed om een plan te hebben als jij, of iemand anders, in de gaten heeft dat de controle begint zoek te raken... <i>en dat er dan een plan ligt! (dat jij vooraf hebt bedacht)</i>')
-}
-
-</script>
-
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
-</head>
-<body>
-<div class="container">
-<p>&nbsp; </p>
-<div class="shadow"><div class="content">
-<div class="praatmethansheader"><a href="www.praatmehans.nl" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader"><b>plan bij wegglijden</b></h1>
-</div>
-
-<p>&nbsp;</p>
-
-<h1>Noodplan bij  &quot;wegglijden&quot;</h1>
-<div class="printhide">
-<p>Wanneer mensen beginnen weg te glijden dan zie je vaak (doordat het stukje
-  in het brein gekaapt is dat &quot;belang&quot; toekent aan dingen) dat mensen
-  eigenlijk zelf maar moeilijk in staat zijn om van zichzelf te zien wat er allemaal
-  aan het gebeuren is met hun leven. Maar ondertussen is het risico op wegglijden
-  na uitglijder natuurlijkl w&egrave;l re&euml;el. Wie kijken er mee? Wie gaan
-  jou bijstaan? .. en vooral: wat moet er gebeuren?. </p>
-
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton" title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het scherm met toelichting zien">&nbsp;&nbsp;&nbsp;?!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&nbsp;&forall;&nbsp;&nbsp;&nbsp;</a>
-</p>
-</div>
-<form name="noodwegglijden">
-<p>Maak voor jezelf eens een noodplan voor het opvangen van een wegglijden of
-   terugval: </p>
-<p>&nbsp;</p>
-
-<h1>schade-controle</h1>
-
-<p><b>Wie</b> zijn de mensen die ik ASAP op de hoogte moet (laten) stellen en <b>wat</b> moet ik ASAP afzeggen omdat het even niet goed  met mij gaat (ziekmeldingen etc) om te voorkomen dat zij onterecht op mij rekenen:<br />
-  <textarea name="mensenopdehoogte" class="praatmethansformtextarea" cols="55" rows="3"></textarea></p>
-
-<p>Wat doe ik met geld en middelen (de mogelijkheid tot gebruik), hoe zorg ik
-  dat ik handig met mijn geld om ga? (wie helpt daarbij?) <br />
-  <textarea name="geldmiddelen" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
-<p> Wat zijn dingen die ik of andere mensen kunnen DOEN die mij kunnen helpen
-  om mezelf af te leiden, me tegen te houden en niet verder weg te glijden:<br />
-<textarea name="WelGaanDoen" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
-<p>en wat moet ik vooral <i>NIET</i> gaan doen?<br />
-<textarea name="NietGaanDoen" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
-
-<h1>Allianties</h1>
-<p>WIE kunnen jou helpen (welke personen, welke professional en welke
-  instantie als je tegen de afspraken met jezelf in wilt gaan gebruiken (niet
-  fysiek maar wiens mening is belangrijk genoeg om op zo'n moment te reageren)<br />
-</p>
-<p>Welke priv&eacute;-personen kunnen mij helpen en wat zijn hun nummers/emails <br />
-<textarea name="privepersonen" class="praatmethansformtextarea" cols="55" rows="3" title="welke mensen willen jouw helpen en zorg ervoor dat je hun contactgegevens klaar hebt. Het moet makkelijk zijn op zo'n moment om ze te bereiken als je maar een beetje twijfelt."></textarea>
-</p>
-<p>Welke professionals kunnen mij helpen<br />
-<textarea name="professional" class="praatmethansformtextarea" cols="55" rows="3" title="wwlke professionals hebben kennis van verslaving en kunnen helpen om jezelf te helpen.">www.PraatmetHans.nl</textarea>
-</p>
-<p>Welke instantie in mijn regio kan mij helpen<br />
-<textarea name="instantie" class="praatmethansformtextarea" cols="55" rows="3" title="Als jij een opname nodig hebt welke Jellineks zijn er in jouw regio, of als je de keuze hebt: maak die keuze dan vooraf!">www.Jellinek.nl</textarea>
-<br />
- <input name="Steuneropdehoogte" type="checkbox" value="Deze steun bij terugval is op de hoogte." />&nbsp; zijn al deze personen / instanties ervan op de hoogte dat je kunt bellen ?<br />
- <input name="SteunerHeeftHandleiding" type="checkbox" value="Deze steun bij terugval heeft een handleiding gekregen." />&nbsp; en heb je ze een handleiding gegeven  waar zij &quot;ja&quot; tegen
-  konden zeggen?</p>
-<p>&nbsp;</p>
-
-<hr class="formhr"/>
-<h1>Opstaan en oppakken </h1>
-<p>Hoe ga jij weer opstaan? (en wie gaan jou daarbij helpen?)<br />
-  <textarea name="weeropstaan" class="praatmethansformtextarea" cols="55" rows="3"></textarea></p>
-
-<p>Hoe voorkom ik dat ik door schaamte niet ga melden/ingrijpen/oppakken<br />
-  <textarea name="schaamte" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
-
-<p>Maatregelen die ik <i>echt minimaal </i> moet ondernemen na een uitglijder
-  of terugval om de draad weer op te pakken zijn:<br />
-<textarea name="Maatregelen" cols="55" rows="3" class="praatmethansformtextarea" title="De biologische kant ervan: de vergifitiging of het medicijn, de honger en de kater, de lust en de energie, het vermogen te genieten."></textarea>
-</p><div class="praatmethansheader2">&quot;de draad oppakken&quot;</div>
-</form>
-<p>&nbsp;</p>
-
-<hr class="formhr" />
-<p></p><i>zie ook:<ul>
-	<li><a href="noodplan-forse-trek.htm" target="_self">noodplan bij forse trek</a></li>
-	<li><a href="plan-bij-uitglijden.htm" target="_self">plan bij uitglijden</a></li>
-	<li><a href="noodplan-wegglijden.htm" target="_self">noodplan bij wegglijden</a></li>
-	</ul></i><p></p>
-<p align='right' ><i>Copyright 2011 Hans RJ West</i></p>
-
-
- /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
 </body>
 </html>

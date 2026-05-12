@@ -158,6 +158,16 @@
         <p class="subtle-help" style="margin-top:0.7rem;">Koppel elk trektype aan 1-2 vaste reacties die juist bij dat profiel passen. Dat maakt je noodreactie sneller en betrouwbaarder.</p>
       </section>
 
+      <section class="note-card">
+        <h2>Gevoelsniveaus helpen onderscheiden</h2>
+        <ul class="helper-list">
+          <li><strong>Trek</strong> voelt vaak als directe druk of honger naar korte verlichting.</li>
+          <li><strong>Angst en stress</strong> gaan vaker over verlies, controle of afwijzing.</li>
+          <li><strong>Hoop, liefde en verbondenheid</strong> wijzen meestal naar jouw langere koers.</li>
+        </ul>
+        <p class="subtle-help" style="margin-top:0.7rem;">Door dit onderscheid te maken, kies je minder impulsief en meer koersvast. Koppel dit met <a href="./levenskwaliteit.htm">levenskwaliteit</a> en <a href="./persoonlijke-waarden.htm">persoonlijke waarden</a>.</p>
+      </section>
+
       <form id="soortenTrekForm">
         <section class="question-card">
           <h2>Type 1: meest voorkomend</h2>
@@ -263,6 +273,7 @@
   </div>
 
   <script src="../js/dataStore.js"></script>
+  <script src="../js/weeklyReview.js"></script>
   <script>
     const formKey = 'soorten-trek';
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
@@ -319,14 +330,11 @@
     }
 
     function getWeeklyReview() {
-      return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
+      return window.iamWeeklyReview ? window.iamWeeklyReview.get(iamData) : (iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {});
     }
 
     function isWeeklyReviewDue(lastCompletedAt) {
-      if (!lastCompletedAt) return true;
-      const last = new Date(lastCompletedAt);
-      if (Number.isNaN(last.getTime())) return true;
-      return (Date.now() - last.getTime()) >= 7 * 24 * 60 * 60 * 1000;
+      return window.iamWeeklyReview ? window.iamWeeklyReview.isDue(lastCompletedAt) : true;
     }
 
     function appendUniqueLine(textarea, line) {
@@ -343,37 +351,24 @@
     }
 
     function renderWeeklyReviewPrompt() {
-      const weekly = getWeeklyReview();
-      const status = document.getElementById('weeklyReviewStatus');
-      const list = document.getElementById('weeklyReviewList');
-      const applyButton = document.getElementById('weeklyReviewApply');
-      if (!status || !list || !applyButton) return;
-
-      const due = isWeeklyReviewDue(weekly.lastCompletedAt);
-      status.textContent = weekly.lastCompletedAt
-        ? (due ? 'Tijd voor nieuwe terugblik' : 'Deze week bijgewerkt')
-        : 'Nog geen terugblik';
-      status.classList.toggle('due', due);
-
-      const lines = [];
-      if (weekly.reflection) lines.push(`Terugblik: ${weekly.reflection}`);
-      if (weekly.learning) lines.push(`Leerpunt: ${weekly.learning}`);
-      if (weekly.nextStep) lines.push(`Volgende stap: ${weekly.nextStep}`);
-      if (!lines.length) lines.push('Nog geen weekreflectie opgeslagen op de homepage.');
-
       const warning = document.getElementById('earlyWarningPattern')?.value.trim();
-      if (weekly.nextStep && warning) {
-        lines.push(`Check of die volgende stap past bij je vroege signalen: ${warning}.`);
+      if (window.iamWeeklyReview) {
+        window.iamWeeklyReview.renderPrompt({
+          iamData: iamData,
+          statusId: 'weeklyReviewStatus',
+          listId: 'weeklyReviewList',
+          applyButtonId: 'weeklyReviewApply',
+          sourceHref: './index.htm#weeklyReviewCard',
+          sourceLabel: 'Open terugblik op homepage',
+          emptyText: 'Nog geen weekreflectie opgeslagen op de homepage.',
+          extraLines: function (weekly) {
+            if (weekly.nextStep && warning) {
+              return [`Check of die volgende stap past bij je vroege signalen: ${warning}.`];
+            }
+            return [];
+          }
+        });
       }
-
-      list.innerHTML = '';
-      lines.slice(0, 4).forEach((line) => {
-        const item = document.createElement('li');
-        item.textContent = line;
-        list.appendChild(item);
-      });
-
-      applyButton.disabled = !weekly.nextStep;
     }
 
     function applyWeeklyReviewToForm() {

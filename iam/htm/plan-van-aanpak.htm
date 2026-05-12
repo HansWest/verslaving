@@ -67,6 +67,59 @@
     .message.show { display: block; }
     .message.error { border-left-color: var(--page-accent); }
 
+    .support-sync-box {
+      margin-top: 0.85rem;
+      padding: 0.9rem;
+      border-radius: 12px;
+      background: rgba(53, 111, 143, 0.08);
+      border: 1px solid rgba(53, 111, 143, 0.18);
+    }
+
+    .support-sync-box p {
+      margin: 0 0 0.65rem;
+      color: #4d6270;
+      font-size: 0.92rem;
+    }
+
+    .support-suggestion-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .support-suggestion-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .support-suggestion {
+      border: 1px solid rgba(53, 111, 143, 0.24);
+      background: #fff;
+      color: #28506a;
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .support-suggestion:hover {
+      background: #eef6fb;
+    }
+
+    .support-source-link {
+      color: #4d6270;
+      font-size: 0.8rem;
+      text-decoration: none;
+    }
+
+    .support-source-link:hover {
+      text-decoration: underline;
+    }
+
     .weekly-review-box {
       background: rgba(255,255,255,0.94);
       border-radius: 16px;
@@ -526,6 +579,12 @@
             <div class="form-group">
               <label for="supportPeople">Wie helpt je actief dit plan vol te houden?</label>
               <textarea id="supportPeople" rows="4"></textarea>
+              <div class="support-sync-box">
+                <p>Steun uit eerdere formulieren. Klik op een naam om die direct over te nemen in dit plan.</p>
+                <div class="support-suggestion-list" id="supportSuggestionList">
+                  <span class="value-preview">Nog geen steun uit andere formulieren gevonden.</span>
+                </div>
+              </div>
             </div>
           </section>
           <section class="question-card">
@@ -559,6 +618,8 @@
 
   <script src="../js/dataStore.js"></script>
   <script src="../js/triggerLoader.js"></script>
+  <script src="../js/weeklyReview.js"></script>
+  <script src="../js/supportNetwork.js"></script>
   <script>
     const formKey = 'plan-van-aanpak';
     const REGULATION_FORM_KEY = 'craving-1-10';
@@ -800,7 +861,7 @@
     }
 
     function getWeeklyReview() {
-      return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
+      return window.iamWeeklyReview ? window.iamWeeklyReview.get(iamData) : (iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {});
     }
 
     function normalizeAttemptMeta(weekly) {
@@ -828,10 +889,7 @@
     }
 
     function isWeeklyReviewDue(lastCompletedAt) {
-      if (!lastCompletedAt) return true;
-      const last = new Date(lastCompletedAt);
-      if (Number.isNaN(last.getTime())) return true;
-      return (Date.now() - last.getTime()) >= 7 * 24 * 60 * 60 * 1000;
+      return window.iamWeeklyReview ? window.iamWeeklyReview.isDue(lastCompletedAt) : true;
     }
 
     function saveForm(feedback = true) {
@@ -958,37 +1016,69 @@
     }
 
     function renderWeeklyReviewPrompt() {
-      const weekly = getWeeklyReview();
-      const status = document.getElementById('weeklyReviewStatus');
-      const list = document.getElementById('weeklyReviewList');
-      const applyButton = document.getElementById('weeklyReviewApply');
-      if (!status || !list || !applyButton) return;
-
-      const due = isWeeklyReviewDue(weekly.lastCompletedAt);
-      status.textContent = weekly.lastCompletedAt
-        ? (due ? 'Tijd voor nieuwe terugblik' : 'Deze week bijgewerkt')
-        : 'Nog geen terugblik';
-      status.classList.toggle('due', due);
-
-      const lines = [];
-      if (weekly.reflection) lines.push(`Terugblik: ${weekly.reflection}`);
-      if (weekly.learning) lines.push(`Leerpunt: ${weekly.learning}`);
-      if (weekly.nextStep) lines.push(`Volgende stap: ${weekly.nextStep}`);
-      if (!lines.length) lines.push('Nog geen weekreflectie opgeslagen op de homepage.');
-
       const currentGoal = document.getElementById('mainGoal')?.value.trim();
-      if (weekly.nextStep && currentGoal) {
-        lines.push(`Check of die volgende stap je echt dichter bij je hoofddoel brengt: ${currentGoal}.`);
+      if (window.iamWeeklyReview) {
+        window.iamWeeklyReview.renderPrompt({
+          iamData: iamData,
+          statusId: 'weeklyReviewStatus',
+          listId: 'weeklyReviewList',
+          applyButtonId: 'weeklyReviewApply',
+          sourceHref: './index.htm#weeklyReviewCard',
+          sourceLabel: 'Open terugblik op homepage',
+          emptyText: 'Nog geen weekreflectie opgeslagen op de homepage.',
+          extraLines: function (weekly) {
+            if (weekly.nextStep && currentGoal) {
+              return [`Check of die volgende stap je echt dichter bij je hoofddoel brengt: ${currentGoal}.`];
+            }
+            return [];
+          }
+        });
+      }
+    }
+
+    function renderSupportSuggestions() {
+      const container = document.getElementById('supportSuggestionList');
+      if (!container) return;
+
+      const suggestions = window.iamSupportNetwork ? window.iamSupportNetwork.getSupportSuggestions(iamData) : [];
+      container.innerHTML = '';
+
+      if (!suggestions.length) {
+        const fallback = document.createElement('span');
+        fallback.className = 'value-preview';
+        fallback.textContent = 'Nog geen steun uit andere formulieren gevonden.';
+        container.appendChild(fallback);
+        return;
       }
 
-      list.innerHTML = '';
-      lines.slice(0, 4).forEach((line) => {
-        const item = document.createElement('li');
-        item.textContent = line;
-        list.appendChild(item);
+      suggestions.forEach((item) => {
+        const wrapper = document.createElement('span');
+        wrapper.className = 'support-suggestion-item';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'support-suggestion';
+        button.textContent = item.name;
+        if (item.source) {
+          button.title = `Bron: ${item.source}`;
+        }
+        button.addEventListener('click', () => {
+          appendUniqueLine(document.getElementById('supportPeople'), item.name);
+          saveForm(true);
+          showMessage(`Steunpersoon "${item.name}" toegevoegd aan je plan.`);
+        });
+        wrapper.appendChild(button);
+        if (item.href) {
+          const link = document.createElement('a');
+          link.className = 'support-source-link';
+          link.href = item.href;
+          link.textContent = item.source || 'bron';
+          if (item.sourceLabel) {
+            link.title = item.sourceLabel;
+          }
+          wrapper.appendChild(link);
+        }
+        container.appendChild(wrapper);
       });
-
-      applyButton.disabled = !weekly.nextStep;
     }
 
     function applyWeeklyReviewToForm() {
@@ -1146,6 +1236,7 @@
       renderAttemptSummary();
       renderSelfRegulationRules();
       renderContradictionCheck(saved || getDefaultData());
+      renderSupportSuggestions();
 
       const template = document.getElementById('usageGoalTemplate');
       const usageGoal = document.getElementById('usageGoal');
@@ -1212,6 +1303,7 @@
         renderAttemptSummary();
         renderSelfRegulationRules();
         renderContradictionCheck();
+        renderSupportSuggestions();
       });
     });
   </script>

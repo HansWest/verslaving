@@ -1,475 +1,635 @@
-<html>
-<!--
-agenda.htm
-
-deze code is van controleerjeverslavingszorg.nl
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Dagelijkse agenda</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
-<style>
-    :root {
-        --primary: #667eea;
-        --primary-dark: #5568d3;
-        --success: #4caf50;
-        --warning: #ff9800;
-        --danger: #f44336;
-        --text-main: #22313d;
-        --text-muted: #526473;
-        --text-soft: #687988;
-        --bg-surface: #ffffff;
-        --bg-soft: #f7fafc;
-        --border-soft: #d7e3ec;
-        --shadow-soft: 0 6px 18px rgba(26, 46, 64, 0.1);
-    }
-
-    @media (prefers-color-scheme: dark) {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dagelijkse Agenda — IAM</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/forms.css">
+    <style>
         :root {
-            --bg-surface: #172431;
-            --bg-soft: #1d2e3d;
-            --text-main: #eaf1f8;
-            --text-muted: #b6c5d4;
-            --border-soft: #2e4559;
-            --shadow-soft: 0 8px 22px rgba(0, 0, 0, 0.35);
+            --page-main:   #667eea;
+            --page-accent: #5568d3;
+            --page-ok:     #4caf50;
+            --soft:        #e8eaf6;
+            --border:      #9fa8da;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --page-main:   #7c3aed;
+                --page-accent: #6d28d9;
+                --soft:        #2d1b69;
+                --border:      #5b21b6;
+            }
+        }
+
+        html[data-theme="light"] {
+            --page-main:   #667eea;
+            --page-accent: #5568d3;
+            --soft:        #e8eaf6;
+            --border:      #9fa8da;
+        }
+
+        html[data-theme="dark"] {
+            --page-main:   #7c3aed;
+            --page-accent: #6d28d9;
+            --soft:        #2d1b69;
+            --border:      #5b21b6;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            margin: 0 0 0.5rem;
+            font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+            font-weight: 700;
+        }
+
+        .page-header .subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            margin: 0;
+        }
+
+        .intro-card {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 0 1.25rem 2rem;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .intro-card h2 {
+            margin: 0 0 0.75rem;
+            color: var(--page-accent);
+            font-size: 1.1rem;
+        }
+
+        .intro-card p {
+            margin: 0.5rem 0;
+            line-height: 1.6;
+            color: inherit;
+            font-size: 0.95rem;
+        }
+
+        .section-header {
+            max-width: 680px;
+            margin: 1.75rem auto 1rem;
+            padding: 0 1.25rem;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            color: var(--page-main);
+            font-size: 1.25rem;
+            border-bottom: 3px solid var(--page-main);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            padding: 0 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: inherit;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group .hint {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted, #666);
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: inherit;
+            background-color: inherit;
+        }
+
+        .form-group select {
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: inherit;
+            background-color: inherit;
+        }
+
+        .date-group {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 380px;
+            margin: 1rem auto;
+        }
+
+        .date-group select {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: inherit;
+            background-color: inherit;
+        }
+
+        .date-separator {
+            align-self: center;
+            font-weight: 700;
+        }
+
+        .track-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            padding: 0 1.25rem;
+        }
+
+        @media (max-width: 600px) {
+            .track-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .track-item label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .track-item textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: inherit;
+            background-color: inherit;
+        }
+
+        .craving-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            padding: 0 1.25rem;
+        }
+
+        @media (max-width: 600px) {
+            .craving-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .craving-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .craving-item label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .craving-item select {
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: inherit;
+            background-color: inherit;
+        }
+
+        .google-btn {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            background-color: var(--page-main);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .google-btn:hover {
+            background-color: var(--page-accent);
+        }
+
+        .action-bar {
+            max-width: 680px;
+            margin: 2rem auto 1.5rem;
+            padding: 0 1.25rem;
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--page-main);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--page-accent);
+        }
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid var(--border);
+        }
+
+        html[data-theme="dark"] .btn-secondary {
+            background-color: #444;
+            color: #eaf1f8;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        html[data-theme="dark"] .btn-secondary:hover {
+            background-color: #555;
+        }
+
+        .footer-nav {
+            max-width: 680px;
+            margin: 3rem auto 1.5rem;
+            padding: 0 1.25rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted, #666);
+        }
+
+        .footer-nav a {
+            color: var(--page-main);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-nav a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .action-bar {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <script src="../js/themeMode.js"></script>
+</head>
+<body>
+<div class="page-header">
+    <h1>📅 Dagelijkse Agenda</h1>
+    <p class="subtitle">Dagelijks: 5-10 minuten</p>
+</div>
+
+<div class="intro-card">
+    <h2>Hoe werkt deze agenda?</h2>
+    <p>Deze dagelijkse agenda helpt je om je dag goed in te delen: wat <strong>wil</strong> je doen, wat <strong>moet</strong> je doen, wat gun je jezelf, en waar moet je <strong>niet</strong> aan beginnen.</p>
+    <p style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border);"><em>Tip:</em> Een goede dag heeft een balans tussen willen, moeten en jezelf iets gunnen. Dat helpt je om vol te houden.</p>
+</div>
+
+<!-- ── DATUM ──────────────────────────────────── -->
+<div class="section-header">
+    <h2>📆 Datum</h2>
+</div>
+
+<div class="form-group" style="text-align: center;">
+    <label style="margin-bottom: 1rem; text-align: center;">Welke dag plannen we in?</label>
+    <div class="date-group">
+        <select id="dd" name="dd">
+            <!-- Generated by JavaScript -->
+        </select>
+        <span class="date-separator">/</span>
+        <select id="mm" name="mm">
+            <!-- Generated by JavaScript -->
+        </select>
+        <span class="date-separator">/</span>
+        <select id="yyyy" name="yyyy">
+            <!-- Generated by JavaScript -->
+        </select>
+    </div>
+</div>
+
+<!-- ── WILLEN, MOETEN, GUNNEN, NIET DOEN ──────────────────────────────────── -->
+<div class="section-header">
+    <h2>🎯 Jouw Dag Inrichtingen</h2>
+</div>
+
+<div class="track-row">
+    <div class="track-item">
+        <label for="willen01">Wat wil je vandaag doen?</label>
+        <textarea id="willen01" name="willen01" placeholder="Bijv. Een wandeling maken, muziek luisteren, vrienden zien..."></textarea>
+        <textarea id="willen02" name="willen02" placeholder="Tweede ding dat je wilt..."></textarea>
+        <button class="google-btn" onclick="addToGoogleCalendar('willen')">📅 Google agenda</button>
+    </div>
+    <div class="track-item">
+        <label for="moeten01">Wat moet je vandaag echt doen?</label>
+        <textarea id="moeten01" name="moeten01" placeholder="Bijv. Huishouden, werk, afspraken nakomen..."></textarea>
+        <textarea id="moeten02" name="moeten02" placeholder="Tweede ding dat je moet..."></textarea>
+        <button class="google-btn" onclick="addToGoogleCalendar('moeten')">📅 Google agenda</button>
+    </div>
+</div>
+
+<div class="track-row">
+    <div class="track-item">
+        <label for="gunnen01">Wat gun je jezelf vandaag?</label>
+        <textarea id="gunnen01" name="gunnen01" placeholder="Bijv. Goed eten, een warm bad, uitslapen..."></textarea>
+        <textarea id="gunnen02" name="gunnen02" placeholder="Tweede ding voor jezelf..."></textarea>
+        <button class="google-btn" onclick="addToGoogleCalendar('gunnen')">📅 Google agenda</button>
+    </div>
+    <div class="track-item">
+        <label for="nietdoen01">Wat doe je beter niet vandaag?</label>
+        <div class="hint">Plekken vermijden, triggers, risico's?</div>
+        <textarea id="nietdoen01" name="nietdoen01" placeholder="Bijv. Bepaalde plekken vermijden, vrienden die triggeren..."></textarea>
+    </div>
+</div>
+
+<!-- ── BELONING ──────────────────────────────────── -->
+<div class="section-header">
+    <h2>🎉 Beloningsmoment</h2>
+</div>
+
+<div class="track-row">
+    <div class="track-item">
+        <label for="beloning">Hoe beloon je jezelf vandaag?</label>
+        <textarea id="beloning" name="beloning" placeholder="Bijv. Lekker eten, favoriete serie kijken, ontspannen..."></textarea>
+        <button class="google-btn" onclick="addToGoogleCalendar('belonen')">📅 Google agenda</button>
+    </div>
+    <div class="track-item">
+        <label for="reden">Waarvoor verdien je deze beloning?</label>
+        <div class="hint">Wat ben je trots op jezelf?</div>
+        <textarea id="reden" name="reden" placeholder="Bijv. Voor het volhouden van mijn plan, voor controle..."></textarea>
+    </div>
+</div>
+
+<!-- ── TREK/CRAVING ──────────────────────────────────– -->
+<div class="section-header">
+    <h2>🔥 Trek / Craving</h2>
+</div>
+
+<div class="craving-row">
+    <div class="craving-item">
+        <label for="trekverwacht">Hoeveel trek verwacht je vandaag? (0-10)</label>
+        <div class="hint">Zie ook: <a href="craving-1-10.htm" target="formulieren">craving 1-10</a></div>
+        <select id="trekverwacht" name="trekverwacht">
+            <option value="0">00</option>
+            <option value="1">01</option>
+            <option value="2">02</option>
+            <option value="3">03</option>
+            <option value="4">04</option>
+            <option value="5" selected="selected">05</option>
+            <option value="6">06</option>
+            <option value="7">07</option>
+            <option value="8">08</option>
+            <option value="9">09</option>
+            <option value="10">10</option>
+        </select>
+    </div>
+    <div class="craving-item">
+        <label for="trekgehad">Hoeveel trek had je werkelijk? (0-10)</label>
+        <div class="hint">Vul dit in op het einde van de dag</div>
+        <select id="trekgehad" name="trekgehad">
+            <option value="0">00</option>
+            <option value="1">01</option>
+            <option value="2">02</option>
+            <option value="3">03</option>
+            <option value="4">04</option>
+            <option value="5" selected="selected">05</option>
+            <option value="6">06</option>
+            <option value="7">07</option>
+            <option value="8">08</option>
+            <option value="9">09</option>
+            <option value="10">10</option>
+        </select>
+        <button class="google-btn" onclick="addToGoogleCalendar('schatten')">📅 Google agenda</button>
+    </div>
+</div>
+
+<!-- ── ACTION BAR ──────────────────────────────────– -->
+<div class="action-bar">
+    <button class="btn btn-primary" onclick="saveData()">💾 Opslaan</button>
+    <button class="btn btn-secondary" onclick="exportData()">📄 Exporteren</button>
+    <button class="btn btn-secondary" onclick="printData()">🖨️ Afdrukken</button>
+</div>
+
+<!-- ── FOOTER NAV ──────────────────────────────────– -->
+<div class="footer-nav">
+    <p>← <a href="index.htm">Terug naar overzicht</a></p>
+    <p style="margin-top: 1rem; color: var(--text-muted, #999); font-size: 0.8rem;">© IAM Project &nbsp;|&nbsp; HansRJWest@Gmail.com</p>
+</div>
+
+<script src="../js/dataStore.js"></script>
+<script>
+    const fields = [
+        'dd', 'mm', 'yyyy',
+        'willen01', 'willen02',
+        'moeten01', 'moeten02',
+        'gunnen01', 'gunnen02',
+        'nietdoen01',
+        'beloning', 'reden',
+        'trekverwacht', 'trekgehad'
+    ];
+
+    // Initialize date dropdowns
+    function initializeDateSelects() {
+        const today = new Date();
+        
+        // Days
+        const ddSelect = document.getElementById('dd');
+        for (let i = 1; i <= 31; i++) {
+            const val = String(i).padStart(2, '0');
+            const opt = document.createElement('option');
+            opt.value = val;
+            opt.textContent = val;
+            if (i === today.getDate()) opt.selected = true;
+            ddSelect.appendChild(opt);
+        }
+        
+        // Months
+        const mmSelect = document.getElementById('mm');
+        for (let i = 1; i <= 12; i++) {
+            const val = String(i).padStart(2, '0');
+            const opt = document.createElement('option');
+            opt.value = val;
+            opt.textContent = val;
+            if (i === today.getMonth() + 1) opt.selected = true;
+            mmSelect.appendChild(opt);
+        }
+        
+        // Years
+        const yyyySelect = document.getElementById('yyyy');
+        for (let i = 0; i < 5; i++) {
+            const year = today.getFullYear() + i;
+            const opt = document.createElement('option');
+            opt.value = year;
+            opt.textContent = year;
+            if (i === 0) opt.selected = true;
+            yyyySelect.appendChild(opt);
         }
     }
 
-    html[data-theme="light"] {
-        --bg-surface: #ffffff;
-        --bg-soft: #f7fafc;
-        --text-main: #22313d;
-        --text-muted: #526473;
-        --border-soft: #d7e3ec;
-        --shadow-soft: 0 6px 18px rgba(26, 46, 64, 0.1);
-    }
-
-    html[data-theme="dark"] {
-        --bg-surface: #172431;
-        --bg-soft: #1d2e3d;
-        --text-main: #eaf1f8;
-        --text-muted: #b6c5d4;
-        --border-soft: #2e4559;
-        --shadow-soft: 0 8px 22px rgba(0, 0, 0, 0.35);
-    }
-
-    body {
-        background-color: var(--bg-primary, #eef3f7);
-        color: var(--text-main);
-    }
-
-    .page-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 2rem 1rem;
-        text-align: center;
-        margin-bottom: 1.5rem;
-        border-radius: 12px;
-        box-shadow: var(--shadow-soft);
-    }
-
-    .page-header h1 {
-        margin: 0;
-        font-size: 2rem;
-    }
-
-    .page-content {
-        background: var(--bg-surface);
-        padding: 1.5rem;
-        border-radius: 8px;
-        box-shadow: var(--shadow-soft);
-        border: 1px solid var(--border-soft);
-    }
-
-    .agenda-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 1rem 0;
-    }
-
-    .agenda-table th {
-        background: var(--bg-soft);
-        color: var(--text-main);
-        padding: 0.75rem;
-        border: 1px solid var(--border-soft);
-        text-align: left;
-    }
-
-    .agenda-table td {
-        padding: 0.75rem;
-        border: 1px solid var(--border-soft);
-    }
-
-    .agenda-controls {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-        margin: 1rem 0;
-    }
-
-    .agenda-btn {
-        padding: 0.5rem 1rem;
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 0.85rem;
-        font-weight: 600;
-    }
-
-    .agenda-btn:hover {
-        background: var(--primary-dark);
-    }
-</style>
-
-<script language="javascript">
-<!--
-
-function willen()
-{
-var detekst,dedatum,delokatie,deopmerking,desprop;
-var variab1 = document.agenda.willen01.value.trim();
-var variab2 = document.agenda.willen02.value.trim();
-if (variab1==""){alert("Het is wel heel Zen van mij om NIETS te willen en dat dan WEL in mijn agenda willen zetten... ;-)"); return;}
-
-detekst = "Ik wil vandaag: ["+ variab1 + "]";
-if (!variab2==""){detekst = detekst + " & [" +  variab2 + "]";}
-detekst = encodeURIComponent(detekst);
-dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T090000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T094500Z";
-delokatie = "Waar ga ik dit doen?";
-delokatie = encodeURIComponent(delokatie);
-deopmerking="willen vandaag...";
-deopmerking = encodeURIComponent(deopmerking);
-desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
-googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
-}
-
-function moeten()
-{
-var detekst,dedatum,delokatie,deopmerking,desprop;
-var variab1 = document.agenda.moeten01.value.trim();
-var variab2 = document.agenda.moeten02.value.trim();
-if (variab1==""){alert("Als ik NIKS moet dan wordt het lastig om iets in mijn agenda zetten dat ik iets moet vandaag... ;-)"); return;}
-if (!document.agenda.gunnen01.value){alert("ik hoop niet dat je alleen maar de dingen in je agenda zet die MOETEN, toch? :-S (vergeet niet jezelf ook wat te gunnen) :-)");}
-detekst = "Ik moet vandaag toch echt: ["+ variab1 + "]";
-if (!variab2==""){detekst = detekst + " & [" +  variab2 + "]";}
-detekst = encodeURIComponent(detekst);
-dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T090000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T094500Z";
-delokatie = "Waar moet ik dit doen?";
-delokatie = encodeURIComponent(delokatie);
-deopmerking="moeten vandaag...";
-deopmerking = encodeURIComponent(deopmerking);
-desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
-googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
-}
-
-function gunnen()
-{
-var detekst,dedatum,delokatie,deopmerking,desprop;
-var variab1 = document.agenda.gunnen01.value.trim();
-var variab2 = document.agenda.gunnen02.value.trim();
-if (variab1==""){alert("Als ik mijzelf NIKS gun, hoe moet mijn agenda mij dan iets gunnen... ;-)"); return;}
-alert("controleerjeverslaving / PraatmetHans hoopt dat dit gunnen(!) niett iets met het gebruik van middelen te maken heeft? :-)");
-detekst = "Ik gun mijzelf vandaag: ["+ variab1 + "]";
-if (!variab2==""){detekst = detekst + " & [" +  variab2 + "]";}
-detekst = encodeURIComponent(detekst);
-dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T190000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T194500Z";
-delokatie = "Waar ga ik mijzelf dit gunnen?";
-delokatie = encodeURIComponent(delokatie);
-deopmerking="gunnen vandaag (importasnt stuff)...";
-deopmerking = encodeURIComponent(deopmerking);
-desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
-googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
-}
-
-function belonen()
-{
-if (!document.agenda.beloning.value)
-{
-window.alert("Als ik niet weet hoe ik mij kan belonen dan wordt het lastig om iets in mijn agenda zetten war ik naar uit kan kijken... :-)");
-return;
-}
-var detekst,dedatum,delokatie,deopmerking,desprop;
-detekst = "Beloningsmoment van vandaag...";
-detekst = encodeURIComponent(detekst);
-alert(detekst);
-dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T210000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T214500Z";
-delokatie = "Waar ga ik mijzelf dit gunnen?";
-delokatie = encodeURIComponent(delokatie);
-deopmerking= "voor: ";
-if (document.agenda.reden.value)
-{
-deopmerking = deopmerking + document.agenda.reden.value.trim();
-}
-if (document.agenda.trekverwacht.value > 5 || document.agenda.trekgehad.value > 5)
-{
-deopmerking = deopmerking + " en uithouden van de trek-intensiteit: [verwacht:"+document.agenda.trekverwacht.value.trim() + " gehad:"+document.agenda.trekgehad.value.trim() + "]";
-}
-if (document.agenda.willen01.value)
-{
-deopmerking = deopmerking + " & willen [" +  document.agenda.willen01.value.trim()+ "] & ["+ document.agenda.willen02.value.trim()+"]";
-}
-if (document.agenda.moeten01.value)
-{
-deopmerking = deopmerking + " & moeten [" +  document.agenda.moeten01.value.trim()+ "] - ["+ document.agenda.moeten02.value.trim()+ "]";
-}
-if(deopmerking == "voor: ")
-{
-alert("Als er niks is waarvoor ik mij mag belonen dan gaat zo'n beloning in mijn agenda ook wat goedkoop voelen toch? :-)");
-return;
-}
-deopmerking = encodeURIComponent(deopmerking);
-desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
-googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
-}
-
-function schatten()
-{
-var detekst,dedatum,delokatie,deopmerking,desprop;
-detekst = "schatting vandaag";
-detekst = encodeURIComponent(detekst);
-dedatum=document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T050000Z/"+document.agenda.yyyy.value+document.agenda.mm.value+document.agenda.dd.value+"T051500Z";
-delokatie = "n.v.t.";
-delokatie = encodeURIComponent(delokatie);
-deopmerking = "De verwachte intensiteit van vandaag: ["+document.agenda.trekverwacht.value.trim()+"]";
-if (document.agenda.trekgehad.value)
-{
-deopmerking = deopmerking + " .. en het bleek te zijn: ["+document.agenda.trekgehad.value.trim() + "]";
-}
-deopmerking = encodeURIComponent(deopmerking);
-desprop="n.a.v.website:PraatmetHans.nl";
-desprop = encodeURIComponent(desprop);
-googleagenda(detekst,dedatum,delokatie,deopmerking,desprop);
-}
-
-function googleagenda(detekst,dedatum,delokatie,deopmerking,desprop)
-{
-var hetwindow = "http://www.google.com/calendar/event?action=TEMPLATE&text="+detekst+"&dates="+dedatum+"&details="+deopmerking+"&location="+delokatie+"&sprop="+desprop;
-window.open(hetwindow,"Google");
-}
-
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
-
-function hulpscherm()
-{
-hulp_scherm(300,'Dagelijkse agenda', 'Het is soms lastig om de dagen op een goede manier te gebruiken. Zeker in een periode dat er veel is waardoor je kop omloopt, dan helpt het om te dingen zo te doen dat je voorwaarden, wat moet, wat je jezelf moet gunnen om het te kunnen <i>blijven</i> doen en de dingen die je (even) maar beter kunt laten uit elkaar te houden. En als je die dingen gedaan hebt zoals verstandig was: dan heb je een beloning verdiend... Voor de google intergratie is het wel handig ;-) als je een google account hebt (gratis en eventueel anonmiem)')
-}
-//-->
-</script>
-    <script src="../js/themeMode.js"></script>
-</head><body>
-<div class="container">
-    <div class="page-header">
-        <h1>📅 Dagelijkse Agenda</h1>
-        <p style="margin: 0.5rem 0 0; font-size: 0.95rem; opacity: 0.9;">Dagelijks: 5-10 minuten</p>
-    </div>
-
-    <div class="page-content">
-        <p>Deze pagina is bedoeld om jezelf aan de gang te krijgen als je er bijvoorbeeld een periode even doorheen zit.</p>
+    function addToGoogleCalendar(type) {
+        const dd = document.getElementById('dd').value;
+        const mm = document.getElementById('mm').value;
+        const yyyy = document.getElementById('yyyy').value;
         
-        <div class="action-buttons" style="margin: 1.5rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-            <a href="./index.htm" class="btn-action" style="text-decoration: none; display: inline-block;">← Terug naar formulieren</a>
-            <button class="btn-action" onclick="window.print()">🖨️ Afdrukken</button>
-            <button class="btn-action" onclick="saveSelections(document.forms[0])">💾 Opslaan</button>
-            <button class="btn-action" onclick="loadSelections(document.forms[0])">📂 Herstellen</button>
-        </div>
+        let text, time, location, description;
+        
+        switch(type) {
+            case 'willen':
+                const willen01 = document.getElementById('willen01').value.trim();
+                const willen02 = document.getElementById('willen02').value.trim();
+                if (!willen01) { alert('Vul in wat je wilt doen'); return; }
+                text = 'Ik wil vandaag: [' + willen01 + (willen02 ? '] & [' + willen02 : '') + ']';
+                time = '090000Z/094500Z';
+                location = 'Waar ga ik dit doen?';
+                description = 'willen vandaag...';
+                break;
+            case 'moeten':
+                const moeten01 = document.getElementById('moeten01').value.trim();
+                const moeten02 = document.getElementById('moeten02').value.trim();
+                if (!moeten01) { alert('Vul in wat je moet doen'); return; }
+                text = 'Ik moet vandaag: [' + moeten01 + (moeten02 ? '] & [' + moeten02 : '') + ']';
+                time = '090000Z/094500Z';
+                location = 'Waar moet ik dit doen?';
+                description = 'moeten vandaag...';
+                break;
+            case 'gunnen':
+                const gunnen01 = document.getElementById('gunnen01').value.trim();
+                const gunnen02 = document.getElementById('gunnen02').value.trim();
+                if (!gunnen01) { alert('Vul in wat je jezelf gunt'); return; }
+                text = 'Ik gun mijzelf vandaag: [' + gunnen01 + (gunnen02 ? '] & [' + gunnen02 : '') + ']';
+                time = '190000Z/194500Z';
+                location = 'Waar ga ik mijzelf dit gunnen?';
+                description = 'jezelf gunnen (belangrijk)...';
+                break;
+            case 'belonen':
+                const beloning = document.getElementById('beloning').value.trim();
+                if (!beloning) { alert('Vul in hoe je jezelf beloont'); return; }
+                text = 'Beloningsmoment van vandaag';
+                time = '210000Z/214500Z';
+                location = 'Beloningsmoment';
+                description = 'Beloning voor: ' + beloning;
+                break;
+            case 'schatten':
+                text = 'Schatting trek/craving vandaag';
+                time = '050000Z/051500Z';
+                location = 'n.v.t.';
+                description = 'Verwacht: ' + document.getElementById('trekverwacht').value + ', Werkelijk: ' + document.getElementById('trekgehad').value;
+                break;
+        }
+        
+        const url = 'http://www.google.com/calendar/event?action=TEMPLATE&text=' + encodeURIComponent(text) + 
+                    '&dates=' + yyyy + mm + dd + 'T' + time + 
+                    '&details=' + encodeURIComponent(description) +
+                    '&location=' + encodeURIComponent(location) +
+                    '&sprop=name:IAM&sprop=website:praatmethans.nl';
+        
+        window.open(url, 'Google');
+    }
 
-        <form name="agenda">
+    function loadData() {
+        if (typeof iamData === 'undefined') return;
+        const formData = iamData.getFormData('agenda');
+        if (!formData) {
+            initializeDateSelects();
+            return;
+        }
+        
+        fields.forEach(field => {
+            const elem = document.getElementById(field);
+            if (!elem) return;
+            if (formData[field]) {
+                elem.value = formData[field];
+            }
+        });
+    }
 
-<table><!-- border=1 cellspacing=0 cellpadding=0 align=left style='border-collapse:
- collapse;border:none;'-->
- <tr>
-  <th width="100%" colspan="3" valign="top">
-  <p align=center style='text-align:center;'><b>Agenda</b></p>
-  </th>
- </tr>
-<tr>
-  <td width=100% colspan=3 valign=top>
-  <p align=center style='text-align:center;'><b>de DATUM:</b>
-  <script language="javascript">
-  <!--
-		document.write("<select name='dd'>");
+    function saveData() {
+        if (typeof iamData === 'undefined') return;
+        const data = {};
+        fields.forEach(field => {
+            const elem = document.getElementById(field);
+            if (elem) data[field] = elem.value;
+        });
+        iamData.updateFormData('agenda', data);
+        alert('✓ Agenda opgeslagen!');
+    }
 
-	var vandaag = new Date();
-	var slctd = 1+vandaag.getDate();
-	var dag = 1;
-	for(var teller=1;teller<32;teller++)
-	{
-	dag = teller;
-	if(dag<10){dag="0"+dag;}
-	document.write("<option value='"+(dag)+"'");
-	if (slctd==teller){document.write(" selected='selected'");}
-	document.write(">"+(dag)+"</option>");
-	}
+    function exportData() {
+        if (typeof iamData === 'undefined') return;
+        const data = {};
+        fields.forEach(field => {
+            const elem = document.getElementById(field);
+            if (elem) data[field] = elem.value || '';
+        });
+        iamData.exportJSON();
+    }
 
-	document.write("</select>/<select name='mm'>");
+    function printData() {
+        window.print();
+    }
 
-	vandaag = new Date();
-	slctd = 1+vandaag.getMonth();
-	var mnd = 1;
-	for(var teller=1;teller<13;teller++)
-	{
-	mnd=teller;
-	if(mnd<10){mnd="0"+mnd;}
-	document.write("<option value='"+(mnd)+"'");
-	if (slctd==teller){document.write(" selected='selected'");}
-	document.write(">"+(mnd)+"</option>");
-	}
+    // Auto-save on blur
+    fields.forEach(field => {
+        const elem = document.getElementById(field);
+        if (elem) {
+            elem.addEventListener('blur', saveData);
+        }
+    });
 
-	document.write("</select>/<select name='yyyy'>");
-
-	var jaar = 1900+vandaag.getYear();
-	for(var teller=0;teller<5;teller++)
-	{
-	document.write("<option value='"+(jaar+teller)+"'>"+(jaar+teller)+"</option>");
-	}
-
-	document.write("</select> <b>(dd/mm/yyyy)</b>");
-  //-->
-  </script>
-	</p>
-  </td>
- </tr>
-<tr>
-  <td width=50% colspan=2 valign=top >
-  <p align="center"><b>WEL WILLEN</b></p>
-  </td>
-  <td width=50% valign=top>
-  <p class=MsoNormal align=center style='text-align:center;'><b>WEL MOETEN</b></p>
-  </td>
- </tr>
- <tr>
-  <td width=50% colspan=2>
-<p>1 &aacute;  2 dingen die ik w&egrave;l <b>wil</b> doen op deze dag<br />
-<textarea name="willen01" cols="40" rows="2" class="praatmethansformtextarea" title="Wat wil je voor deze dag -01-"></textarea><br />
-<textarea name="willen02" cols="40" rows="2" class="praatmethansformtextarea" title="Wat wil je voor deze dag -02-"></textarea> &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="willen();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a>
-</p>
-</td>
-  <td width=50% valign=top>
-  <p>1 &aacute;  2 dingen die ik echt <b>moet</b> doen op deze dag<br />
-      <textarea name="moeten01" cols="40" rows="2" class="praatmethansformtextarea" title="Wat moet je voor deze dag -01-"></textarea>
-      <br />
-      <textarea name="moeten02" cols="40" rows="2" class="praatmethansformtextarea" title="Wat moet je voor deze dag -02-"></textarea>
-&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="moeten();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p>
-  </td>
- </tr>
- <tr>
-  <td width=50% colspan=2 valign=top>
-  <p align="center"><b>WEL GUNNEN</b></p>
-  </td>
-  <td width=50% valign=top><p align="center"><b>NIET DOEN (risico's)</b></p>
-  </td>
- </tr>
- <tr>
-  <td width=50% colspan=2 valign=top>
-<p>1 &aacute;  2 dingen die ik mijzelf <b>gun</b> op deze dag<br />
-<textarea name="gunnen01" cols="40" rows="2" class="praatmethansformtextarea" title="Wat gun jij jezelf deze dag -01-"></textarea><br />
-<textarea name="gunnen02" cols="40" rows="2" class="praatmethansformtextarea" title="Wat gun jij jezelf deze dag -02-"></textarea>
- &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="gunnen();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p>
-<p><i>NB aandacht voor voeding &amp; conditie</i></p>  </td>
-  <td width=50% valign=top>
-wat ik beter <b>niet</b> kan doen op deze dag<br />
-<textarea name="nietdoen01" cols="40" rows="2" class="praatmethansformtextarea" title="Wat doe je maar beter niet op deze dag -01-"></textarea>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p><i>NB welk noodplan? (zie evt. <a href="noodplan-forse-trek.htm" target="formulieren">trek</a>, <a href="plan-bij-uitglijden.htm" target="formulieren">uitglijder</a>,
-      <a href="noodplan-wegglijden.htm" target="formulieren">wegglijder</a></i></p>
-  </td>
- </tr>
- <tr>
-  <td width=100% colspan=3 style='border:solid windowtext .5pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;background:#888888;
-  padding:0in 5.4pt 0in 5.4pt;height:13.45pt'>
-  <p><b>beloningsmoment van de dag</b> </p>
-  </td>
- </tr>
-   <tr><td width=50% colspan=2 valign=top><p>Hoe beloon ik mij vandaag:<br />
-  <textarea name="beloning" cols="40" rows="2" class="praatmethansformtextarea" title="hoe beloon ik mij op deze dag?"></textarea> &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="belonen();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p></td>
-  <td width=50% valign=top> <p>Waarvoor:<br />
-<textarea name="reden" cols="40" rows="2" class="praatmethansformtextarea" title="Waar heb je deze beloning mee verdiend?"></textarea></p>
-  </td>
-  </tr>
- <tr style='height:8.7pt'>
-  <td width=374 colspan=3 valign=top style='width:374.35pt;border:solid windowtext .5pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;background:#888888;
-  padding:0in 5.4pt 0in 5.4pt;height:8.7pt'>
-  <p><b>TREK/CRAVING</b></p>  </td>
- </tr>
- <tr>
-  <td width=20% valign=top style='border:solid windowtext .5pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
-  <p>vooraf bedacht </p>
-  </td>
-  <td colspan=2 style='border-top:none;
-  border-left:none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
-  mso-border-top-alt:solid windowtext .5pt;
-  padding:0in 5.4pt 0in 5.4pt;height:15.35pt'>
-  <p>
-   <!-- <input type="text" class="praatmethansformtexfield" name="trekverwacht" size="3" maxlength="2" title="hoeveel trek verwacht je te gaan krijgen op deze dag?" /> -->
-    <select name="trekverwacht" title="hoeveel trek verwacht je te gaan krijgen op deze dag?">
-	<option value="0">00</option>
-	<option value="1">01</option>
-	<option value="2">02</option>
-	<option value="3">03</option>
-	<option value="4">04</option>
-	<option value="5" selected="selected">05</option>
-	<option value="6">06</option>
-	<option value="7">07</option>
-	<option value="8">08</option>
-	<option value="9">09</option>
-	<option value="10">10</option>
-	</select>&nbsp;&nbsp;&nbsp;&nbsp; hoeveel trek verwacht ik?
-    <i>(zie: <a href="craving-1-10.htm" target="formulieren">craving 1-10</a>) </i></p>
-  </td>
- </tr>
- <tr style='height:13.0pt'>
-  <td width=70 valign=top style='width:70.1pt;border:solid windowtext .5pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;
-  height:13.0pt'>
-  <p>achteraf bleek </p>
-  </td>
-  <td colspan=2 valign=top style='width:304.25pt;border-top:none;
-  border-left:none;border-bottom:solid windowtext .5pt;border-right:solid windowtext .5pt;
-  mso-border-top-alt:solid windowtext .5pt;
-  padding:0in 5.4pt 0in 5.4pt;height:13.0pt'>
-  <p> <!--input type="text" class="praatmethansformtexfield" name="trekgehad" size="3" maxlength="2" title="hoeveel trek verwacht je te gaan krijgen op deze dag?" /-->
-  <select name="trekgehad" title="hoeveel trek verwacht je te gaan krijgen op deze dag?" >
-	<option value="0">00</option>
-	<option value="1">01</option>
-	<option value="2">02</option>
-	<option value="3">03</option>
-	<option value="4">04</option>
-	<option value="5" selected="selected">05</option>
-	<option value="6">06</option>
-	<option value="7">07</option>
-	<option value="8">08</option>
-	<option value="9">09</option>
-	<option value="10">10</option>
-	</select>&nbsp;&nbsp;&nbsp;&nbsp; hoeveel trek had ik werkelijk?  &nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="schatten();" class="praatmethansbutton" title="Aan mijn Google agenda toevoegen">&nbsp;&nbsp;g&nbsp;&nbsp;</a></p>
-  </td>
- </tr>
-</table>
-
-
- </form>
-        </div>
-    </div>
-
-    <script src="../js/dataStore.js"></script>
+    // Load on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeDateSelects();
+        loadData();
+    });
+</script>
 </body>
 </html>

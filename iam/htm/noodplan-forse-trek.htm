@@ -304,6 +304,188 @@
       color: #fff;
     }
 
+    .support-sync-box {
+      margin-top: 0.8rem;
+      padding: 0.9rem;
+      border-radius: 12px;
+      background: #fff5eb;
+      border: 1px solid #ecd8c4;
+    }
+
+    .support-sync-box p {
+      margin: 0 0 0.65rem;
+      color: #6b503d;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .support-suggestion-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .support-suggestion-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .support-suggestion {
+      border: 1px solid #d9b898;
+      background: #fff;
+      color: #8a4c1f;
+      border-radius: 999px;
+      padding: 0.42rem 0.78rem;
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .support-source-link {
+      color: #6b503d;
+      font-size: 0.8rem;
+      text-decoration: none;
+    }
+
+    .support-source-link:hover {
+      text-decoration: underline;
+    }
+
+    .support-fallback {
+      color: #6b503d;
+      font-size: 0.88rem;
+    }
+
+    .support-script-box,
+    .recovery-sync-box {
+      margin-top: 1rem;
+      background: #fff7ef;
+      border: 1px solid #ecd8c4;
+      border-radius: 14px;
+      padding: 0.95rem;
+    }
+
+    .support-script-box--header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      user-select: none;
+      padding: 0.4rem 0;
+      margin-bottom: 0.55rem;
+    }
+
+    .support-script-box--header:hover {
+      opacity: 0.85;
+    }
+
+    .support-script-box--toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.2rem;
+      height: 1.2rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #7a3200;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .support-script-box--collapsed .support-script-box--toggle {
+      transform: rotate(-90deg);
+    }
+
+    .support-script-box--content {
+      display: block;
+      transition: all 0.2s ease;
+      max-height: 1000px;
+      opacity: 1;
+    }
+
+    .support-script-box--collapsed .support-script-box--content {
+      display: none;
+      max-height: 0;
+      opacity: 0;
+    }
+
+    .support-script-box h3,
+    .recovery-sync-box h3 {
+      margin: 0 0 0.55rem;
+      color: #7a3200;
+      font-size: 0.98rem;
+    }
+
+    .support-script-box p,
+    .recovery-sync-box p {
+      margin: 0 0 0.7rem;
+      color: #6b503d;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .support-script-list {
+      display: grid;
+      gap: 0.55rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .support-script-item {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #ecd8c4;
+      border-radius: 10px;
+      padding: 0.7rem 0.8rem;
+    }
+
+    .support-script-item span {
+      flex: 1 1 260px;
+      color: #5b4637;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .mini-button {
+      border: none;
+      border-radius: 999px;
+      min-height: 38px;
+      padding: 0.45rem 0.8rem;
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: #f2e2d3;
+      color: #7a3200;
+    }
+
+    .mini-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      background: #f2e2d3;
+      color: #7a3200;
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .recovery-sync-actions {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
     .action-bar {
       display: flex;
       flex-wrap: wrap;
@@ -401,6 +583,16 @@
         steun inschakelen en jezelf veilig houden tot de piek zakt.
       </div>
 
+      <div class="legacy-note" style="margin-top: 0.9rem;">
+        <h3>Extra houvast: onderscheid gevoelsniveaus</h3>
+        <ul>
+          <li>In piek-trek voelt alles urgent, maar niet alles is even belangrijk.</li>
+          <li>Vraag kort: is dit <strong>trekdruk</strong>, <strong>angst</strong> of een signaal van mijn <strong>waarden</strong>?</li>
+          <li>Gebruik trekdruk voor directe noodactie, en pak waarden weer op zodra de piek daalt.</li>
+          <li>Zie voor koers na de piek: <a href="./levenskwaliteit.htm">levenskwaliteit</a> en <a href="./persoonlijke-waarden.htm">persoonlijke waarden</a>.</li>
+        </ul>
+      </div>
+
       <div id="message" class="message"></div>
 
       <form id="noodplanForm">
@@ -417,10 +609,28 @@
                 <label for="steunnetwerk">Wie bel/app je direct uit je steunnetwerk?</label>
                 <textarea id="steunnetwerk" placeholder="Naam + nummer + wat je vraagt (bijv. 15 min aan de lijn blijven)"></textarea>
                 <div class="cue">Hoe specifieker je hulpvraag, hoe groter de kans dat je die hulp ook krijgt.</div>
+                <div class="support-sync-box">
+                  <p>Steun uit eerdere formulieren. Klik op een naam om die direct aan je noodbel-lijst toe te voegen.</p>
+                  <div class="support-suggestion-list" id="supportSuggestionList">
+                    <span class="support-fallback">Nog geen steun uit andere formulieren gevonden.</span>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="anderenDoen">Wat kunnen anderen concreet voor jou doen op zo'n moment?</label>
                 <textarea id="anderenDoen" placeholder="Bijv. bij je blijven, met je meelopen, sleutels bewaren, mee naar veilige plek."></textarea>
+              </div>
+              <div class="support-script-box" id="supportScriptBox">
+                <div class="support-script-box--header" id="supportScriptBoxToggle">
+                  <span class="support-script-box--toggle">▼</span>
+                  <h3 style="margin: 0; flex: 1;">Voorbeeldbericht aan steun</h3>
+                </div>
+                <div class="support-script-box--content">
+                  <p>Gebruik deze korte zinnen als je in piek-trek niet veel woorden over hebt. Kopieer en stuur ze direct door.</p>
+                  <ul class="support-script-list" id="supportScriptList">
+                    <li class="support-script-item"><span>Nog geen voorbeeldbericht beschikbaar.</span></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </section>
@@ -505,6 +715,15 @@
           </ul>
         </div>
 
+        <div class="recovery-sync-box">
+          <h3>Herstelbasis klaarzetten</h3>
+          <p>Zet met een klik een eenvoudige herstelset in je agenda voor vandaag: eten, contact, regulatie, beloning en wat je beter niet doet.</p>
+          <div class="recovery-sync-actions">
+            <button type="button" class="mini-button" id="agendaRecoveryButton">Zet herstelbasis klaar in agenda</button>
+            <a class="mini-link" href="./agenda.htm">Open agenda</a>
+          </div>
+        </div>
+
         <div class="action-bar">
           <button type="button" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="secondary" id="exportButton">Exporteer alle IAM-data</button>
@@ -522,6 +741,9 @@
   </div>
 
   <script src="../js/dataStore.js"></script>
+  <script src="../js/supportNetwork.js"></script>
+  <script src="../js/crisisActions.js"></script>
+  <script src="../js/weeklyReview.js"></script>
   <script>
     const formKey = 'noodplan-forse-trek';
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
@@ -596,14 +818,11 @@
     }
 
     function getWeeklyReview() {
-      return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
+      return window.iamWeeklyReview ? window.iamWeeklyReview.get(iamData) : (iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {});
     }
 
     function isWeeklyReviewDue(lastCompletedAt) {
-      if (!lastCompletedAt) return true;
-      const last = new Date(lastCompletedAt);
-      if (Number.isNaN(last.getTime())) return true;
-      return (Date.now() - last.getTime()) >= 7 * 24 * 60 * 60 * 1000;
+      return window.iamWeeklyReview ? window.iamWeeklyReview.isDue(lastCompletedAt) : true;
     }
 
     function appendLine(textarea, line) {
@@ -616,38 +835,142 @@
       }
     }
 
-    function renderWeeklyReviewPrompt() {
-      const weekly = getWeeklyReview();
-      const status = document.getElementById('weeklyReviewStatus');
-      const list = document.getElementById('weeklyReviewList');
-      const applyButton = document.getElementById('weeklyReviewApply');
-      if (!status || !list || !applyButton) return;
+    function renderSupportSuggestions() {
+      const container = document.getElementById('supportSuggestionList');
+      const target = document.getElementById('steunnetwerk');
+      if (!container || !target) return;
 
-      const due = isWeeklyReviewDue(weekly.lastCompletedAt);
-      status.textContent = weekly.lastCompletedAt
-        ? (due ? 'Tijd voor nieuwe terugblik' : 'Deze week bijgewerkt')
-        : 'Nog geen terugblik';
-      status.classList.toggle('due', due);
+      const suggestions = window.iamSupportNetwork ? window.iamSupportNetwork.getSupportSuggestions(iamData) : [];
+      container.innerHTML = '';
 
-      const lines = [];
-      if (weekly.reflection) lines.push(`Terugblik: ${previewText(weekly.reflection, 120)}`);
-      if (weekly.learning) lines.push(`Leerpunt: ${previewText(weekly.learning, 120)}`);
-      if (weekly.nextStep) lines.push(`Volgende stap: ${previewText(weekly.nextStep, 120)}`);
-      if (!lines.length) lines.push('Nog geen weekreflectie opgeslagen op de homepage.');
-
-      const sos = document.getElementById('sosSignaal')?.value.trim();
-      if (weekly.nextStep && !sos) {
-        lines.push('Check of die volgende stap ook uitvoerbaar blijft als trek ineens escaleert.');
+      if (!suggestions.length) {
+        const fallback = document.createElement('span');
+        fallback.className = 'support-fallback';
+        fallback.textContent = 'Nog geen steun uit andere formulieren gevonden.';
+        container.appendChild(fallback);
+        renderSupportScripts();
+        return;
       }
 
-      list.innerHTML = '';
-      lines.slice(0, 4).forEach((line) => {
-        const item = document.createElement('li');
-        item.textContent = line;
-        list.appendChild(item);
+      suggestions.forEach((item) => {
+        const wrapper = document.createElement('span');
+        wrapper.className = 'support-suggestion-item';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'support-suggestion';
+        button.textContent = item.name;
+        if (item.source) {
+          button.title = `Bron: ${item.source}`;
+        }
+        button.addEventListener('click', () => {
+          appendLine(target, item.name);
+          saveForm(false);
+          renderSupportScripts();
+          showMessage(`Steunpersoon "${item.name}" toegevoegd aan je noodplan.`);
+        });
+        wrapper.appendChild(button);
+        if (item.href) {
+          const link = document.createElement('a');
+          link.className = 'support-source-link';
+          link.href = item.href;
+          link.textContent = item.source || 'bron';
+          if (item.sourceLabel) {
+            link.title = item.sourceLabel;
+          }
+          wrapper.appendChild(link);
+        }
+        container.appendChild(wrapper);
+      });
+      renderSupportScripts();
+    }
+
+    function copySupportScript(text) {
+      const value = String(text || '').trim();
+      if (!value) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(value)
+          .then(() => showMessage('Voorbeeldbericht gekopieerd.'))
+          .catch(() => showMessage('Kopieren lukte niet.', true));
+        return;
+      }
+      showMessage('Kopieren naar klembord wordt hier niet ondersteund.', true);
+    }
+
+    function initCollapseState() {
+      const box = document.getElementById('supportScriptBox');
+      const toggle = document.getElementById('supportScriptBoxToggle');
+      const storageKey = 'noodplan-forse-trek_supportScriptsCollapsed';
+      
+      const isCollapsed = localStorage.getItem(storageKey) === 'true';
+      if (isCollapsed) box.classList.add('support-script-box--collapsed');
+      
+      toggle.addEventListener('click', () => {
+        box.classList.toggle('support-script-box--collapsed');
+        const newState = box.classList.contains('support-script-box--collapsed');
+        localStorage.setItem(storageKey, newState);
+      });
+    }
+
+    function renderSupportScripts() {
+      const list = document.getElementById('supportScriptList');
+      if (!list || !window.iamCrisisActions) return;
+
+      const scripts = window.iamCrisisActions.buildSupportScripts({
+        supportNames: [document.getElementById('steunnetwerk')?.value || ''],
+        crisisLabel: 'forse trek',
+        ask: 'wil je 15 minuten bij me blijven of me helpen naar een veilige plek?',
+        action: 'ik wil nu mijn noodplan volgen en geen ruimte geven aan gebruik'
       });
 
-      applyButton.disabled = !weekly.nextStep;
+      list.innerHTML = '';
+      scripts.forEach((line) => {
+        const item = document.createElement('li');
+        item.className = 'support-script-item';
+        const text = document.createElement('span');
+        text.textContent = line;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'mini-button';
+        button.textContent = 'Kopieer';
+        button.addEventListener('click', () => copySupportScript(line));
+        item.appendChild(text);
+        item.appendChild(button);
+        list.appendChild(item);
+      });
+    }
+
+    function pushRecoveryToAgenda() {
+      if (!window.iamCrisisActions) return;
+      const result = window.iamCrisisActions.applyRecoveryAgenda(iamData, {
+        formData: collectFormData(),
+        supportNamesText: document.getElementById('steunnetwerk')?.value || ''
+      });
+      if (result.ok) {
+        showMessage('Herstelbasis klaargezet in je agenda.');
+      } else {
+        showMessage('Agenda bijwerken lukte niet.', true);
+      }
+    }
+
+    function renderWeeklyReviewPrompt() {
+      const sos = document.getElementById('sosSignaal')?.value.trim();
+      if (window.iamWeeklyReview) {
+        window.iamWeeklyReview.renderPrompt({
+          iamData: iamData,
+          statusId: 'weeklyReviewStatus',
+          listId: 'weeklyReviewList',
+          applyButtonId: 'weeklyReviewApply',
+          sourceHref: './index.htm#weeklyReviewCard',
+          sourceLabel: 'Open terugblik op homepage',
+          emptyText: 'Nog geen weekreflectie opgeslagen op de homepage.',
+          extraLines: function (weekly) {
+            if (weekly.nextStep && !sos) {
+              return ['Check of die volgende stap ook uitvoerbaar blijft als trek ineens escaleert.'];
+            }
+            return [];
+          }
+        });
+      }
     }
 
     function applyWeeklyReviewToForm() {
@@ -780,16 +1103,21 @@
       fillForm(existingData);
       updateMetaChips(existingData);
       renderCognitiveNudges(existingData);
+      renderSupportSuggestions();
       renderWeeklyReviewPrompt();
+      initCollapseState();
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('agendaRecoveryButton').addEventListener('click', pushRecoveryToAgenda);
+      document.getElementById('steunnetwerk').addEventListener('input', renderSupportScripts);
       document.getElementById('noodplanForm').addEventListener('input', () => saveForm(false));
       document.getElementById('weeklyReviewApply').addEventListener('click', applyWeeklyReviewToForm);
       window.addEventListener('focus', () => {
         const current = collectFormData();
         renderCognitiveNudges(current);
+        renderSupportSuggestions();
         renderWeeklyReviewPrompt();
       });
     });
