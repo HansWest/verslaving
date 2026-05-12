@@ -101,6 +101,16 @@ OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmeth
   Voor direct actiegericht werken kun je ook terug naar het <a href="./index.htm">overzicht</a> of naar <a href="./plan-van-aanpak.htm">plan van aanpak</a>.
 </div>
 
+<!-- FASE C: Context Card -->
+<div class="legacy-context-card">
+  <strong>⚡ Wanneer wel/niet gebruiken?</strong>
+  <p style="margin-top: 0.5rem; margin-bottom: 0;">
+    <strong>Wel:</strong> Je bent relatief stabiel en wilt jezelf beter <em>begrijpen</em>. Je wilt weten welke delen van jezelf sterker zijn geworden, en welke juist zwakker. Dit helpt om doel-gericht te werken.<br/>
+    <strong>Niet:</strong> Je bent in crisis, trek voelt onoverkomelijk, of je bent net onder invloed geweest. Kies dan eerder voor <a href="./noodplan-forse-trek.htm">noodplan</a> of <a href="./plan-bij-uitglijden.htm">uitglijden-plan</a>.<br/>
+    <strong>Alternatief:</strong> Wil je meteen starten met verandering? Ga naar <a href="./plan-van-aanpak.htm">plan van aanpak</a>.
+  </p>
+</div>
+
 <h1>Wat is mijn ik?</h1>
 <div class="printhide">
 
@@ -198,6 +208,34 @@ Heb ik normen en waarden waar ik iets aan heb?</td></tr>
 wat kan ik DOEN om dit gebied in mijn leven te versterken?</td></tr>
 </table>
 
+<!-- FASE C: Doorverwijzing Section -->
+<div style="margin-top: 2rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
+  <h2 style="margin-top: 0; color: #2f6b8f;">▼ Klaar om toe te passen?</h2>
+  <p>Nu je beter begrijpt welke delen van je "ik" sterker geworden zijn en welke juist zwakker, hoe ga je dat gebruiken?</p>
+  
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+    <div style="background: #fff; padding: 0.8rem; border-radius: 6px; border-left: 3px solid #57744a;">
+      <strong>Verder verdiepen?</strong>
+      <ul style="margin: 0.5rem 0; padding-left: 1.2rem; font-size: 0.9rem;">
+        <li><a href="./levensdoelen-stellen.htm">Levensdoelen stellen</a> — Wat wil je bereiken?</li>
+        <li><a href="./waardigheid.htm">Waardigheid</a> — Wat kun je jezelf geven?</li>
+      </ul>
+    </div>
+    
+    <div style="background: #fff; padding: 0.8rem; border-radius: 6px; border-left: 3px solid #cc6600;">
+      <strong>Meteen in actie?</strong>
+      <ul style="margin: 0.5rem 0; padding-left: 1.2rem; font-size: 0.9rem;">
+        <li><a href="./plan-van-aanpak.htm">Plan van aanpak</a> — Hoe start je concreet?</li>
+        <li><a href="./voor-nadelen-balansen.htm">Voor- en nadelen</a> — Welke keuze maak je?</li>
+      </ul>
+    </div>
+  </div>
+  
+  <button id="faseC_nuDoen_btn" style="display: none; margin-top: 1rem; padding: 0.6rem 1rem; background: #57744a; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; font-size: 0.95rem;">
+    💡 Aanbevolen: <span id="faseC_recommendation">Starten</span>
+  </button>
+  <noscript><p style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;"><em>JavaScript nodig voor slimme routering</em></p></noscript>
+</div>
 
 </form><hr class="formhr" />
 <p>&nbsp;</p>
@@ -213,5 +251,50 @@ document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<b
 </div>
 <script src="../js/dataStore.js"></script>
 <script src="../js/formCompat.js"></script>
+
+<!-- FASE C: Nu-Doen Routing Logic -->
+<script>
+(function() {
+  const btn = document.getElementById('faseC_nuDoen_btn');
+  const rec = document.getElementById('faseC_recommendation');
+  
+  if (!btn) return;
+  
+  // Detect context from recent navigation
+  const lastPage = sessionStorage.getItem('lastPage') || '';
+  const userContext = sessionStorage.getItem('userContext') || 'reflection';
+  
+  let recommendation = {
+    page: './levensdoelen-stellen.htm',
+    text: 'Levensdoelen stellen'
+  };
+  
+  // Crisis detection
+  if (lastPage.includes('noodplan') || lastPage.includes('trek') || userContext === 'crisis') {
+    recommendation = {
+      page: './plan-bij-uitglijden.htm',
+      text: 'Plan bij uitglijden'
+    };
+  }
+  // Planning detection
+  else if (lastPage.includes('plan') || userContext === 'planning') {
+    recommendation = {
+      page: './voor-nadelen-balansen.htm',
+      text: 'Voor- en nadelen'
+    };
+  }
+  
+  // Update button
+  rec.textContent = recommendation.text;
+  btn.style.display = 'block';
+  btn.onclick = function() {
+    sessionStorage.setItem('lastPage', 'wat-is-mijn-ik.htm');
+    window.location.href = recommendation.page;
+  };
+  
+  // Track navigation
+  sessionStorage.setItem('lastPage', 'wat-is-mijn-ik.htm');
+})();
+</script>
 </body>
 </html>
