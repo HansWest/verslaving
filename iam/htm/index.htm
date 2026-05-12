@@ -3,76 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        (function enforceMobileViewport() {
-            const MAX_HEAL_ATTEMPTS = 6;
-
-            function isLikelyViewportLocked() {
-                const vv = window.visualViewport;
-                const vvWidth = vv ? vv.width : window.innerWidth;
-                const shortestScreen = Math.min(screen.width || 0, screen.height || 0);
-                return window.innerWidth >= 960 && (vvWidth <= 520 || (shortestScreen > 0 && shortestScreen <= 520));
-            }
-
-            function applyViewportCompensation() {
-                const locked = isLikelyViewportLocked();
-                const vv = window.visualViewport;
-                const vvWidth = vv ? vv.width : window.innerWidth;
-                if (locked && vvWidth > 0) {
-                    const ratio = Math.max(1, Math.min(3, window.innerWidth / vvWidth));
-                    const basePx = 16;
-                    const compensated = Math.round(basePx * ratio * 100) / 100;
-                    document.documentElement.style.fontSize = `${compensated}px`;
-                    document.documentElement.setAttribute('data-viewport-comp', ratio.toFixed(2));
-                } else {
-                    document.documentElement.style.removeProperty('font-size');
-                    document.documentElement.removeAttribute('data-viewport-comp');
-                }
-            }
-
-            function forceViewportMeta() {
-                const metas = document.querySelectorAll('meta[name="viewport"]');
-                let viewportMeta = metas[0];
-                if (!viewportMeta) {
-                    viewportMeta = document.createElement('meta');
-                    viewportMeta.name = 'viewport';
-                    document.head.appendChild(viewportMeta);
-                }
-
-                for (let i = 1; i < metas.length; i += 1) {
-                    metas[i].remove();
-                }
-
-                viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes');
-            }
-
-            function attemptHeal() {
-                if (!isLikelyViewportLocked()) return;
-                const prev = Number(document.documentElement.getAttribute('data-viewport-heal-count') || '0');
-                if (prev >= MAX_HEAL_ATTEMPTS) {
-                    applyViewportCompensation();
-                    return;
-                }
-                forceViewportMeta();
-                document.documentElement.setAttribute('data-viewport-heal', 'attempted');
-                document.documentElement.setAttribute('data-viewport-heal-count', String(prev + 1));
-                applyViewportCompensation();
-            }
-
-            attemptHeal();
-            document.addEventListener('DOMContentLoaded', attemptHeal);
-            window.addEventListener('load', attemptHeal);
-            window.addEventListener('resize', attemptHeal, { passive: true });
-            window.addEventListener('orientationchange', attemptHeal, { passive: true });
-            if (window.visualViewport) {
-                window.visualViewport.addEventListener('resize', attemptHeal, { passive: true });
-            }
-            setTimeout(attemptHeal, 120);
-            setTimeout(attemptHeal, 450);
-            setTimeout(attemptHeal, 1200);
-            setTimeout(applyViewportCompensation, 1450);
-        })();
-    </script>
     <title>IAM - Integrative Addiction Management</title>
     <link rel="stylesheet" href="../css/mobile.css">
     <link rel="stylesheet" href="../css/forms.css">
@@ -2791,11 +2721,8 @@
             const vvScale = vv ? vv.scale.toFixed(2) : '-';
             const dpr = window.devicePixelRatio ? window.devicePixelRatio.toFixed(2) : '1.00';
             const lockedViewport = vv && innerWidth >= 960 && vv.width <= 500;
-            const healState = document.documentElement.getAttribute('data-viewport-heal') || 'no';
-            const healCount = document.documentElement.getAttribute('data-viewport-heal-count') || '0';
-            const compRatio = document.documentElement.getAttribute('data-viewport-comp') || '1.00';
 
-            overlay.textContent = `vw:${innerWidth}px doc:${clientWidth}px scroll:${scrollWidth}px ovf:${overflow}px vv:${vvWidth}px scale:${vvScale} dpr:${dpr} lock:${lockedViewport ? 'yes' : 'no'} heal:${healState}/${healCount} comp:${compRatio}`;
+            overlay.textContent = `vw:${innerWidth}px doc:${clientWidth}px scroll:${scrollWidth}px ovf:${overflow}px vv:${vvWidth}px scale:${vvScale} dpr:${dpr} lock:${lockedViewport ? 'yes' : 'no'}`;
             overlay.classList.toggle('has-overflow', overflow > 0);
             overlay.classList.toggle('viewport-locked', !!lockedViewport);
         }
