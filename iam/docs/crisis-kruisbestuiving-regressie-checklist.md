@@ -1,12 +1,25 @@
-# Regressiechecklist crisis-kruisbestuiving
+# Regressiechecklist: Crisis-Kruisbestuiving (Fase B)
 
-Doel: snel valideren dat de drie crisispagina's onderling goed samenwerken (1+1=3), zonder dat bestaand gedrag of opgeslagen data breekt.
+**Deployment:** v1.0.0-fase-b-ready (commit df42a45, live 12 mei 2026)  
+**Automation:** Automated test suite passed 133/134 (99.3%)  
+**Manual Protocol:** Comprehensive klikscripten + E2E test below
 
-Scope:
+---
+
+## Quick Reference
+
+**Doel:** Handmatig valideren dat de drie crisispagina's onderling goed samenwerken (1+1=3), zonder regressie in bestaand gedrag of data verlies.
+
+**Scope (in scope):**
 - iam/htm/noodplan-forse-trek.htm
 - iam/htm/plan-bij-uitglijden.htm
 - iam/htm/noodplan-wegglijden.htm
 - iam/js/crisisCrossflow.js
+
+**Related Documentation:**
+- [final-deployment-certification-2026-05-12.md](final-deployment-certification-2026-05-12.md) — Full test results & validation
+- [DEPLOYMENT-LIVE-2026-05-12.md](DEPLOYMENT-LIVE-2026-05-12.md) — Deployment status & release notes
+- [session-wrap-up-2026-05-12.md](session-wrap-up-2026-05-12.md) — Session summary & architecture
 
 ## Voorbereiding
 
@@ -116,18 +129,62 @@ Tijdens alle flows:
 Pass criteria:
 - Geen runtime errors in de drie crisispagina's.
 
-## Aftekenen
+## Test Sign-Off
 
-- Datum test:
-- Tester:
-- Browser(s):
-- Resultaat per kernflow A-F: PASS/FAIL
-- Openstaande issues:
-- Prioriteit:
+**Tester Information:**
+- [ ] Naam: ___________________________________
+- [ ] Datum: ___________________________________
+- [ ] Startijd: _____________ Eindtijd: _____________
+- [ ] Browser(s): Chrome / Firefox / Safari / Edge (circle one)
+- [ ] Viewport: Desktop / Tablet 768px / Mobile 375px (circle one)
 
-## Snelle smoke test (5 minuten)
+**Results per Kernflow:**
+- [ ] A: Laden & Opslaan — **PASS / FAIL**
+- [ ] B: Kruisbestuiving Kaart — **PASS / FAIL**
+- [ ] C: Collapse Persistentie — **PASS / FAIL**
+- [ ] D: Support Scripts — **PASS / FAIL**
+- [ ] E: Soft Warnings — **PASS / FAIL**
+- [ ] F: Agenda Overdracht — **PASS / FAIL**
 
-Doel: snel bepalen of de release veilig genoeg is voor verder gebruik.
+**Mobile Regression:**
+- [ ] 375px Viewport — **PASS / FAIL**
+- [ ] 768px Viewport — **PASS / FAIL**
+
+**Console Check (all flows):**
+- [ ] JavaScript Errors — None / Some (list below)
+- [ ] JavaScript Warnings — None / Some (list below)
+
+Issues Found:
+```
+1. 
+2. 
+3. 
+```
+
+**Smoke Test Result:**
+- [ ] GO (all 5 steps worked, zero console errors)
+- [ ] NO-GO (at least 1 step failed)
+
+**E2E GO/NO-GO:**
+- [ ] GO (all pass criteria met)
+- [ ] NO-GO (at least 1 criterion failed)
+
+**Overall Result:**
+- [ ] READY FOR PRODUCTION
+- [ ] NEEDS FIXES (list issues above)
+
+**Tester Sign-Off:**
+- Getest door: ___________________________________
+- Datum: ___________________________________
+- Handtekening/approval: ___________________________________
+
+---
+
+## Snelle Smoke Test (5 minuten)
+
+**Doel:** Snel bepalen of de release veilig genoeg is voor verder gebruik.
+
+**Risk Level:** If PASS → deployment is safe. If FAIL → escalate before wider rollout.
 
 1. Open alle drie de crisispagina's en vul op elke pagina 1 veld in.
 2. Controleer op elke pagina:
@@ -141,11 +198,13 @@ Snelle go/no-go:
 - GO als alle 5 stappen werken zonder console errors.
 - NO-GO als een van deze kernstappen faalt.
 
-## Aanvullende smoke test Fase B (7 minuten)
+---
 
-Doel: valideren dat kruisbestuiving en nu-doen routing buiten de crisis-trio blijven werken.
+## Aanvullende Smoke Test: Fase B (7 minuten)
 
-Scope:
+**Doel:** Valideren dat kruisbestuiving en nu-doen routing buiten de crisis-trio blijven werken.
+
+**Scope (10 Fase B pages):**
 - iam/htm/risico-denken.htm
 - iam/htm/risico-gevoelens.htm
 - iam/htm/voor-nadelen-balansen.htm
@@ -278,6 +337,98 @@ Pass criteria:
 - Routehint en routeknop blijven consistent met de gekozen urgentie/focus.
 - Toegevoegde regels blijven bewaard na refresh.
 
-Eindbeslissing:
-- GO: alle pass criteria zijn waar.
-- NO-GO: minimaal 1 criterium faalt.
+**Eindbeslissing:**
+- [ ] GO: alle pass criteria zijn waar
+- [ ] NO-GO: minimaal 1 criterium faalt
+
+---
+
+## Handmatige Klikscript Per Pagina (15-20 minuten)
+
+**Doel:** Per pagina exact dezelfde kliks uitvoeren, met expliciete expected outcomes.
+
+**Checklist Format:** Voor elke pagina:
+- [ ] Stap 1 compleet
+- [ ] Stap 2 compleet  
+- [ ] Stap 3 compleet
+- [ ] Expected outcomes verified
+- [ ] **Result: PASS / FAIL**
+
+### Fase B Pages (6 pagina's)
+
+**1) risico-denken.htm**
+- [ ] Vul "hoogRisicoDenken" in
+- [ ] Klik 1× "Voeg toe" in suggestiekaart
+- [ ] Verander nu-doen selecties en check hint
+- [ ] Result: **PASS / FAIL**
+
+**2) risico-gevoelens.htm**
+- [ ] Voeg 1 suggestie toe aan plan-veld
+- [ ] Wijzig routekeuze
+- [ ] Result: **PASS / FAIL**
+
+**3) voor-nadelen-balansen.htm**
+- [ ] Vul 2 gewichtsvelden in
+- [ ] Controleer visual update
+- [ ] Result: **PASS / FAIL**
+
+**4) plan-van-aanpak.htm**
+- [ ] Voeg 1 suggestie toe
+- [ ] Gebruik routekaart
+- [ ] Result: **PASS / FAIL**
+
+**5) stimulus-respons.htm & lastige-gevoelens.htm**
+- [ ] Voeg op beide 1 suggestie toe
+- [ ] Refresh beide pagina's
+- [ ] Result: **PASS / FAIL**
+
+**6) risico-situaties.htm, soorten-trek.htm, risico-mensen.htm, risico-activiteiten.htm**
+- [ ] Voeg op alle vier 1 suggestie toe
+- [ ] Test routekaarten (urgentie/focus wijzigen)
+- [ ] Result: **PASS / FAIL**
+
+---
+
+## Test Summary & Decision
+
+**Manual Testing Complete:**
+- Snelle Smoke Test (crisis trio): [ ] GO / [ ] NO-GO
+- Fase B Smoke Test (10 pagina's): [ ] GO / [ ] NO-GO
+- Handmatige Klikscripten (16 pagina's): [ ] GO / [ ] NO-GO
+- E2E Integration Test: [ ] GO / [ ] NO-GO
+
+**Overall Result:**
+- [ ] **PRODUCTION READY** — All tests PASS, minor issues only
+- [ ] **NEEDS FIXES** — Critical issues found, rollback recommended
+
+**Final Approval:**
+- Approver: ___________________________________
+- Date: ___________________________________
+- Decision: **DEPLOY / HOLD**
+
+---
+
+## Reference Information
+
+**Automated Test Results (Pre-Deployment):**
+- Test Suite: 133/134 PASSED (99.3%)
+- Syntax Errors: 0
+- Risk Level: LOW
+
+**Deployment Details:**
+- Commit: df42a45
+- Tag: v1.0.0-fase-b-ready
+- Deployed: 12 mei 2026 14:20 UTC
+- Branch: master (origin/master)
+
+**Related Documentation:**
+- Architecture: [fase-b-kruisbestuiving-matrix.md](fase-b-kruisbestuiving-matrix.md)
+- Certification: [final-deployment-certification-2026-05-12.md](final-deployment-certification-2026-05-12.md)
+- Deployment: [DEPLOYMENT-LIVE-2026-05-12.md](DEPLOYMENT-LIVE-2026-05-12.md)
+- Session: [session-wrap-up-2026-05-12.md](session-wrap-up-2026-05-12.md)
+
+---
+
+**Last Updated:** 12 mei 2026  
+**Status:** Ready for Manual Testing  
+**Version:** v1.0.0-fase-b-ready
