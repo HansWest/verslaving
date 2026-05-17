@@ -1193,33 +1193,6 @@
             }
         }
 
-        .layout-debug-overlay {
-            position: fixed;
-            top: 0.5rem;
-            right: 0.5rem;
-            z-index: 9999;
-            background: rgba(19, 27, 36, 0.88);
-            color: #d8f0ff;
-            border: 1px solid rgba(154, 186, 210, 0.45);
-            border-radius: 8px;
-            padding: 0.35rem 0.45rem;
-            font: 600 0.7rem/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            pointer-events: none;
-            max-width: min(95vw, 420px);
-            word-break: break-word;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
-        }
-
-        .layout-debug-overlay.has-overflow {
-            border-color: rgba(255, 120, 120, 0.75);
-            color: #ffd4d4;
-        }
-
-        .layout-debug-overlay.viewport-locked {
-            border-color: rgba(255, 186, 88, 0.8);
-            color: #ffe7be;
-        }
-
         @media print {
             .hero, .quick-actions, .btn-action {
                 display: none;
@@ -1229,7 +1202,6 @@
     <script src="../js/themeMode.js"></script>
 </head>
 <body>
-    <div class="layout-debug-overlay" id="layoutDebugOverlay" aria-live="polite"></div>
     <div class="container">
         <!-- Hero -->
         <div class="hero">
@@ -2705,36 +2677,6 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeInfoModal();
         });
-
-        function updateLayoutDebugOverlay() {
-            const overlay = document.getElementById('layoutDebugOverlay');
-            if (!overlay) return;
-
-            const docEl = document.documentElement;
-            const body = document.body;
-            const innerWidth = Math.round(window.innerWidth || 0);
-            const clientWidth = Math.round(docEl.clientWidth || 0);
-            const scrollWidth = Math.round(Math.max(docEl.scrollWidth || 0, body ? body.scrollWidth || 0 : 0));
-            const overflow = Math.max(0, scrollWidth - clientWidth);
-            const vv = window.visualViewport;
-            const vvWidth = vv ? Math.round(vv.width) : '-';
-            const vvScale = vv ? vv.scale.toFixed(2) : '-';
-            const dpr = window.devicePixelRatio ? window.devicePixelRatio.toFixed(2) : '1.00';
-            const lockedViewport = vv && innerWidth >= 960 && vv.width <= 500;
-
-            overlay.textContent = `vw:${innerWidth}px doc:${clientWidth}px scroll:${scrollWidth}px ovf:${overflow}px vv:${vvWidth}px scale:${vvScale} dpr:${dpr} lock:${lockedViewport ? 'yes' : 'no'}`;
-            overlay.classList.toggle('has-overflow', overflow > 0);
-            overlay.classList.toggle('viewport-locked', !!lockedViewport);
-        }
-
-        window.addEventListener('resize', updateLayoutDebugOverlay, { passive: true });
-        window.addEventListener('orientationchange', updateLayoutDebugOverlay, { passive: true });
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', updateLayoutDebugOverlay, { passive: true });
-            window.visualViewport.addEventListener('scroll', updateLayoutDebugOverlay, { passive: true });
-        }
-        document.addEventListener('DOMContentLoaded', updateLayoutDebugOverlay);
-        setTimeout(updateLayoutDebugOverlay, 300);
     </script>
 </body>
 </html>
