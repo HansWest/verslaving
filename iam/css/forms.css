@@ -301,6 +301,61 @@ button[aria-busy="true"] {
     color: #c62828;
 }
 
+/* Toggle switch styles */
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.toggle-switch label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggle-switch input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 50px;
+    height: 28px;
+    background-color: #ccc;
+    border-radius: 14px;
+    cursor: pointer;
+    position: relative;
+    margin: 0;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-switch input[type="checkbox"]:checked {
+    background-color: #7256b8;
+}
+
+.toggle-switch input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: white;
+    top: 2px;
+    left: 2px;
+    transition: left 0.3s ease;
+}
+
+.toggle-switch input[type="checkbox"]:checked::before {
+    left: 24px;
+}
+
+.toggle-switch .toggle-label {
+    margin-bottom: 0;
+    font-weight: normal;
+    font-size: 0.95rem;
+}
+
 /* Print styles for forms */
 @media print {
     input[type="text"],

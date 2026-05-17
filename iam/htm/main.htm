@@ -326,6 +326,87 @@ function showSection(sectionId) {
                 
                 <p>&nbsp;</p>
                 
+                <h3>Trackinginstellingen</h3>
+                
+                <div class="toggle-switch" style="margin-bottom: 1rem;">
+                    <label for="sleep_tracking_toggle">
+                        <input type="checkbox" id="sleep_tracking_toggle" 
+                               onchange="toggleTracking('sleep', this)">
+                        <span class="toggle-label">Slaap 😴</span>
+                    </label>
+                </div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">
+                    Inslaptijd, wakker-word-tijd, en berekende slaapuren
+                </p>
+                
+                <div class="toggle-switch" style="margin-bottom: 1rem;">
+                    <label for="food_tracking_toggle">
+                        <input type="checkbox" id="food_tracking_toggle" 
+                               onchange="toggleTracking('food', this)">
+                        <span class="toggle-label">Voeding 🍽️</span>
+                    </label>
+                </div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">
+                    Voedingskwaliteit (1-100%), aantal eetmomenten
+                </p>
+                
+                <div class="toggle-switch" style="margin-bottom: 1rem;">
+                    <label for="training_tracking_toggle">
+                        <input type="checkbox" id="training_tracking_toggle" 
+                               onchange="toggleTracking('training', this)">
+                        <span class="toggle-label">Training 💪</span>
+                    </label>
+                </div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">
+                    Trainingsintensiteit (0-100%)
+                </p>
+                
+                <div class="toggle-switch" style="margin-bottom: 1rem;">
+                    <label for="meditation_tracking_toggle">
+                        <input type="checkbox" id="meditation_tracking_toggle" 
+                               onchange="toggleTracking('meditation', this)">
+                        <span class="toggle-label">Meditatie 🧘</span>
+                    </label>
+                </div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">
+                    Meditatieduur in minuten
+                </p>
+                
+                <div class="toggle-switch" style="margin-bottom: 1rem;">
+                    <label for="social_tracking_toggle">
+                        <input type="checkbox" id="social_tracking_toggle" 
+                               onchange="toggleTracking('social', this)">
+                        <span class="toggle-label">Sociale contacten 👥</span>
+                    </label>
+                </div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">
+                    Gevoeld niveau van eenzaamheid (0-100%)
+                </p>
+                
+                <div class="toggle-switch" style="margin-bottom: 1rem;">
+                    <label for="emotion_tracking_toggle">
+                        <input type="checkbox" id="emotion_tracking_toggle" 
+                               onchange="toggleTracking('emotion', this)">
+                        <span class="toggle-label">Emoties ❤️</span>
+                    </label>
+                </div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">
+                    Emotionele expressie (0-100%)
+                </p>
+                
+                <div class="toggle-switch" style="margin-bottom: 1rem;">
+                    <label for="frustration_tracking_toggle">
+                        <input type="checkbox" id="frustration_tracking_toggle" 
+                               onchange="toggleTracking('frustration', this)">
+                        <span class="toggle-label">Frustratie 😤</span>
+                    </label>
+                </div>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 1.5rem;">
+                    Frustratie niveau (0-100%)
+                </p>
+                
+                <p>&nbsp;</p>
+                
                 <h3>Data beheer</h3>
                 
                 <p>
@@ -392,6 +473,59 @@ function showSection(sectionId) {
                     
                     alert('Alle data is verwijderd');
                     location.reload();
+                }
+                
+                // Tracking settings initialization and management
+                function initializeTrackingSettings() {
+                    if (typeof iamData !== 'undefined') {
+                        var settings = iamData.getTrackingSettings();
+                        document.getElementById('sleep_tracking_toggle').checked = settings.sleep || false;
+                        document.getElementById('food_tracking_toggle').checked = settings.food || false;
+                        document.getElementById('training_tracking_toggle').checked = settings.training || false;
+                        document.getElementById('meditation_tracking_toggle').checked = settings.meditation || false;
+                        document.getElementById('social_tracking_toggle').checked = settings.social || false;
+                        document.getElementById('emotion_tracking_toggle').checked = settings.emotion || false;
+                        document.getElementById('frustration_tracking_toggle').checked = settings.frustration || false;
+                    }
+                }
+                
+                function toggleTracking(trackingType, checkbox) {
+                    if (typeof iamData !== 'undefined') {
+                        switch(trackingType) {
+                            case 'sleep':
+                                iamData.setSleepTrackingEnabled(checkbox.checked);
+                                break;
+                            case 'food':
+                                iamData.setFoodTrackingEnabled(checkbox.checked);
+                                break;
+                            case 'training':
+                                iamData.setTrainingTrackingEnabled(checkbox.checked);
+                                break;
+                            case 'meditation':
+                                iamData.setMeditationTrackingEnabled(checkbox.checked);
+                                break;
+                            case 'social':
+                                iamData.setSocialTrackingEnabled(checkbox.checked);
+                                break;
+                            case 'emotion':
+                                iamData.setEmotionTrackingEnabled(checkbox.checked);
+                                break;
+                            case 'frustration':
+                                iamData.setFrustrationTrackingEnabled(checkbox.checked);
+                                break;
+                        }
+                        // Trigger update for forms that might be open
+                        if (typeof updateTrackingFields === 'function') {
+                            updateTrackingFields();
+                        }
+                    }
+                }
+                
+                // Initialize when page loads
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initializeTrackingSettings);
+                } else {
+                    initializeTrackingSettings();
                 }
                 </script>
             </div>

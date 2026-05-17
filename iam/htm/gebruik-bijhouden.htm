@@ -99,6 +99,45 @@
       background: #f6f8fb;
     }
 
+    .tracking-section {
+      display: none;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .tracking-section.visible {
+      display: block;
+    }
+
+    .tracking-field {
+      margin-bottom: 0.75rem;
+    }
+
+    .tracking-field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #7256b8;
+      margin-bottom: 0.25rem;
+    }
+
+    .tracking-field input[type="time"],
+    .tracking-field input[type="number"] {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    .sleep-duration {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.25rem;
+      font-weight: 500;
+    }
+
     .note-card {
       background: #f5f8ff;
       border-left: 4px solid #7256b8;
@@ -272,8 +311,30 @@
       'dag8', 'dag9', 'dag10', 'dag11', 'dag12', 'dag13', 'dag14'
     ];
 
+    // Extended field names for tracking
+    const trackingFields = {
+      sleep: (day) => [`sleep_start_${day}`, `sleep_end_${day}`, `sleep_hours_${day}`],
+      food: (day) => [`food_quality_${day}`, `food_moments_${day}`],
+      training: (day) => [`training_intensity_${day}`],
+      meditation: (day) => [`meditation_minutes_${day}`],
+      social: (day) => [`loneliness_${day}`],
+      emotion: (day) => [`emotion_expression_${day}`],
+      frustration: (day) => [`frustration_level_${day}`]
+    };
+
+    // Build full field list
+    const allDays = Array.from({length: 14}, (_, i) => i + 1);
+    const allTrackingFields = [];
+    Object.values(trackingFields).forEach(fieldFn => {
+      allDays.forEach(day => {
+        allTrackingFields.push(...fieldFn(day));
+      });
+    });
+
+    const fullFieldNames = [...fieldNames, ...allTrackingFields];
+
     function fillForm(data) {
-      fieldNames.forEach((name) => {
+      fullFieldNames.forEach((name) => {
         const element = document.getElementById(name);
         if (element && data[name] !== undefined) {
           element.value = data[name];
@@ -283,13 +344,145 @@
 
     function collectForm() {
       const data = {};
-      fieldNames.forEach((name) => {
+      fullFieldNames.forEach((name) => {
         const element = document.getElementById(name);
         if (element) {
           data[name] = element.value;
         }
       });
       return data;
+    }
+
+    function calculateSleepHours(day) {
+      const startEl = document.getElementById(`sleep_start_${day}`);
+      const endEl = document.getElementById(`sleep_end_${day}`);
+      const hoursEl = document.getElementById(`sleep_hours_${day}`);
+      
+      if (startEl && endEl && hoursEl && startEl.value && endEl.value) {
+        const [startH, startM] = startEl.value.split(':').map(Number);
+        const [endH, endM] = endEl.value.split(':').map(Number);
+        
+        let startMinutes = startH * 60 + startM;
+        let endMinutes = endH * 60 + endM;
+        
+        // Handle overnight sleep
+        if (endMinutes < startMinutes) {
+          endMinutes += 24 * 60;
+        }
+        
+        const totalMinutes = endMinutes - startMinutes;
+        const hours = (totalMinutes / 60).toFixed(1);
+        hoursEl.value = hours;
+      }
+    }
+
+    function updateTrackingFields() {
+      if (typeof iamData === 'undefined') return;
+      
+      const settings = iamData.getTrackingSettings();
+      
+      allDays.forEach(day => {
+        // Update sleep tracking visibility and interactivity
+        const sleepFields = ['sleep_start_', 'sleep_end_', 'sleep_hours_'];
+        sleepFields.forEach(field => {
+          const el = document.getElementById(`${field}${day}`);
+          if (el) {
+            if (settings.sleep) {
+              el.parentElement.style.display = 'block';
+              if (field !== 'sleep_hours_') el.addEventListener('change', () => calculateSleepHours(day));
+            } else {
+              el.parentElement.style.display = 'none';
+            }
+          }
+        });
+
+        // Food
+        const foodFields = ['food_quality_', 'food_moments_'];
+        foodFields.forEach(field => {
+          const el = document.getElementById(`${field}${day}`);
+          if (el) el.parentElement.style.display = settings.food ? 'block' : 'none';
+        });
+
+        // Training
+        const trainingEl = document.getElementById(`training_intensity_${day}`);
+        if (trainingEl) trainingEl.parentElement.style.display = settings.training ? 'block' : 'none';
+
+        // Meditation
+        const meditationEl = document.getElementById(`meditation_minutes_${day}`);
+        if (meditationEl) meditationEl.parentElement.style.display = settings.meditation ? 'block' : 'none';
+
+        // Social
+        const socialEl = document.getElementById(`loneliness_${day}`);
+        if (socialEl) socialEl.parentElement.style.display = settings.social ? 'block' : 'none';
+
+        // Emotion
+        const emotionEl = document.getElementById(`emotion_expression_${day}`);
+        if (emotionEl) emotionEl.parentElement.style.display = settings.emotion ? 'block' : 'none';
+
+        // Frustration
+        const frustrationEl = document.getElementById(`frustration_level_${day}`);
+        if (frustrationEl) frustrationEl.parentElement.style.display = settings.frustration ? 'block' : 'none';
+      });
+    }
+
+    function insertTrackingFields() {
+      const dayCards = document.querySelectorAll('.day-card');
+      
+      dayCards.forEach((card, index) => {
+        const dayNum = index + 1;
+        const trackingDiv = document.createElement('div');
+        trackingDiv.className = 'tracking-section';
+        trackingDiv.id = `tracking_${dayNum}`;
+        
+        let html = '';
+        
+        // Sleep
+        html += `
+          <div class="tracking-field">
+            <label for="sleep_start_${dayNum}">😴 Inslaptijd</label>
+            <input type="time" id="sleep_start_${dayNum}" name="sleep_start_${dayNum}" />
+          </div>
+          <div class="tracking-field">
+            <label for="sleep_end_${dayNum}">Wakker-word-tijd</label>
+            <input type="time" id="sleep_end_${dayNum}" name="sleep_end_${dayNum}" />
+          </div>
+          <div class="tracking-field">
+            <label for="sleep_hours_${dayNum}">Slaapuren</label>
+            <input type="number" id="sleep_hours_${dayNum}" name="sleep_hours_${dayNum}" step="0.1" readonly />
+          </div>
+          <div class="tracking-field">
+            <label for="food_quality_${dayNum}">🍽️ Voedingskwaliteit (0-100%)</label>
+            <input type="number" id="food_quality_${dayNum}" name="food_quality_${dayNum}" min="0" max="100" />
+          </div>
+          <div class="tracking-field">
+            <label for="food_moments_${dayNum}">Aantal eetmomenten</label>
+            <input type="number" id="food_moments_${dayNum}" name="food_moments_${dayNum}" min="0" />
+          </div>
+          <div class="tracking-field">
+            <label for="training_intensity_${dayNum}">💪 Trainingsintensiteit (0-100%)</label>
+            <input type="number" id="training_intensity_${dayNum}" name="training_intensity_${dayNum}" min="0" max="100" />
+          </div>
+          <div class="tracking-field">
+            <label for="meditation_minutes_${dayNum}">🧘 Meditatieduur (minuten)</label>
+            <input type="number" id="meditation_minutes_${dayNum}" name="meditation_minutes_${dayNum}" min="0" />
+          </div>
+          <div class="tracking-field">
+            <label for="loneliness_${dayNum}">👥 Eenzaamheid (0-100%)</label>
+            <input type="number" id="loneliness_${dayNum}" name="loneliness_${dayNum}" min="0" max="100" />
+          </div>
+          <div class="tracking-field">
+            <label for="emotion_expression_${dayNum}">❤️ Emotionele expressie (0-100%)</label>
+            <input type="number" id="emotion_expression_${dayNum}" name="emotion_expression_${dayNum}" min="0" max="100" />
+          </div>
+          <div class="tracking-field">
+            <label for="frustration_level_${dayNum}">😤 Frustratie (0-100%)</label>
+            <input type="number" id="frustration_level_${dayNum}" name="frustration_level_${dayNum}" min="0" max="100" />
+          </div>
+        `;
+        
+        trackingDiv.innerHTML = html;
+        card.appendChild(trackingDiv);
+      });
     }
 
     function saveForm() {
@@ -310,10 +503,22 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Insert tracking fields into day cards
+      insertTrackingFields();
+      
+      // Load saved data
       if (typeof iamData !== 'undefined') {
         fillForm(iamData.getFormData(formType) || {});
+        updateTrackingFields();
       }
-      document.getElementById('gebruikBijhoudenForm').addEventListener('input', () => {
+      
+      // Add input event listeners
+      document.getElementById('gebruikBijhoudenForm').addEventListener('input', (e) => {
+        // Calculate sleep hours if a sleep field changed
+        if (e.target.id.includes('sleep_start_') || e.target.id.includes('sleep_end_')) {
+          const dayNum = e.target.id.split('_').pop();
+          calculateSleepHours(dayNum);
+        }
         saveForm();
       });
     });

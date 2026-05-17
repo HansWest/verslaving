@@ -111,6 +111,19 @@ class IamDataStore {
           learning: '',
           nextStep: '',
           history: []
+        },
+        sleepTracking: {
+          enabled: false,
+          lastModified: null
+        },
+        trackingSettings: {
+          sleep: false,
+          food: false,
+          training: false,
+          meditation: false,
+          social: false,
+          emotion: false,
+          frustration: false
         }
       },
       forms: {
@@ -405,6 +418,13 @@ class IamDataStore {
     data.integrationSummary = this.buildIntegrationSummary(data.forms || {});
     this.saveData(data);
     return data.forms[formType];
+  }
+
+  /**
+   * Alias for updateFormData for backward compatibility
+   */
+  setFormData(formType, formData) {
+    return this.updateFormData(formType, formData);
   }
 
   /**
@@ -729,6 +749,91 @@ class IamDataStore {
       const v = c === 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
+  }
+
+  /**
+   * Tracking settings management
+   */
+  getTrackingSettings() {
+    const data = this.getData();
+    return data?.appMeta?.trackingSettings || {
+      sleep: false,
+      food: false,
+      training: false,
+      meditation: false,
+      social: false,
+      emotion: false
+    };
+  }
+
+  setSleepTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.sleep = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  setFoodTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.food = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  setTrainingTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.training = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  setMeditationTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.meditation = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  setSocialTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.social = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  setEmotionTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.emotion = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  getSleepTrackingEnabled() {
+    return this.getTrackingSettings().sleep;
+  }
+
+  getFoodTrackingEnabled() {
+    return this.getTrackingSettings().food;
+  }
+
+  getTrainingTrackingEnabled() {
+    return this.getTrackingSettings().training;
+  }
+
+  getMeditationTrackingEnabled() {
+    return this.getTrackingSettings().meditation;
+  }
+
+  getSocialTrackingEnabled() {
+    return this.getTrackingSettings().social;
+  }
+
+  getEmotionTrackingEnabled() {
+    return this.getTrackingSettings().emotion;
+  }
+
+  setFrustrationTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.frustration = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  getFrustrationTrackingEnabled() {
+    return this.getTrackingSettings().frustration;
   }
 }
 
