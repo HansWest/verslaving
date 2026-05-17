@@ -497,6 +497,45 @@
             color: var(--text-main);
         }
 
+        .recently-visited {
+            background: linear-gradient(135deg, #fffdf6 0%, #f9f3e8 100%);
+            border: 1px solid #eadbc6;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .recently-visited h3 {
+            margin: 0 0 0.45rem;
+            color: #7b4c1f;
+        }
+
+        .recently-visited p {
+            margin: 0 0 0.6rem;
+            color: #6a533a;
+            font-size: 0.94rem;
+        }
+
+        .recently-visited-list {
+            margin: 0;
+            padding-left: 1.15rem;
+            color: #5a4633;
+        }
+
+        .recently-visited-list li {
+            margin: 0.25rem 0;
+        }
+
+        .recently-visited-list a {
+            color: #8b4f0f;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .recently-visited-list a:hover {
+            text-decoration: underline;
+        }
+
         .priority-note {
             margin: 1rem 0 0;
             padding: 0.85rem 1rem;
@@ -1271,6 +1310,14 @@
             <p class="priority-note">Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.</p>
         </div>
 
+        <section class="recently-visited" aria-label="Recent bezochte pagina's">
+            <h3>🕘 Recent bezocht</h3>
+            <p>Ga snel terug naar pagina's die je net hebt gebruikt.</p>
+            <ul class="recently-visited-list" id="recentVisitedList">
+                <li>Nog geen recente pagina's.</li>
+            </ul>
+        </section>
+
         <section class="route-map" aria-label="Na trek of uitglijder routekaart">
             <h3>🧭 Na Trek of Uitglijder: Waar Ga Ik Nu Heen?</h3>
             <p>Eerst stabiliseren, daarna begrijpen, dan koers terugpakken.</p>
@@ -1858,6 +1905,8 @@
         };
         const CHAPTER_COLLAPSE_STORAGE_KEY = 'iam.index.chapterCollapse.v2';
         const THEME_PREFERENCE_KEY = 'iam.theme.preference';
+        const RECENT_VISITS_KEY = 'iam.index.recentVisits.v1';
+        const RECENT_VISITS_LIMIT = 5;
         let weeklyHistoryFilter = 'all';
 
         function loadChapterCollapseState() {
@@ -2644,8 +2693,96 @@
             syncUi();
         }
 
+        function sanitizeRecentVisits(rawVisits) {
+            if (!Array.isArray(rawVisits)) return [];
+            return rawVisits
+                .filter((entry) => entry && typeof entry.href === 'string' && entry.href.endsWith('.htm'))
+                .map((entry) => ({
+                    href: entry.href,
+                    label: typeof entry.label === 'string' && entry.label.trim() ? entry.label.trim() : entry.href,
+                    timestamp: Number(entry.timestamp) || Date.now()
+                }));
+        }
+
+        function getRecentVisits() {
+            try {
+                const raw = JSON.parse(localStorage.getItem(RECENT_VISITS_KEY) || '[]');
+                return sanitizeRecentVisits(raw);
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function saveRecentVisits(visits) {
+            localStorage.setItem(RECENT_VISITS_KEY, JSON.stringify(visits));
+        }
+
+        function rememberVisitedPage(href, label) {
+            if (!href || !href.endsWith('.htm')) return;
+
+            const visits = getRecentVisits().filter((entry) => entry.href !== href);
+            visits.unshift({
+                href,
+                label: (label || href).trim(),
+                timestamp: Date.now()
+            });
+
+            saveRecentVisits(visits.slice(0, RECENT_VISITS_LIMIT));
+        }
+
+        function renderRecentVisits() {
+            const list = document.getElementById('recentVisitedList');
+            if (!list) return;
+
+            const visits = getRecentVisits();
+            list.innerHTML = '';
+
+            if (!visits.length) {
+                const emptyItem = document.createElement('li');
+                emptyItem.textContent = "Nog geen recente pagina's.";
+                list.appendChild(emptyItem);
+                return;
+            }
+
+            visits.forEach((entry) => {
+                const item = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = entry.href;
+                link.textContent = entry.label;
+                item.appendChild(link);
+                list.appendChild(item);
+            });
+        }
+
+        function initializeRecentVisitsTracking() {
+            document.addEventListener('click', (event) => {
+                const link = event.target.closest('a[href]');
+                if (link) {
+                    const rawHref = link.getAttribute('href') || '';
+                    if (!rawHref || rawHref.startsWith('#') || /^https?:\/\//i.test(rawHref)) return;
+
+                    const href = rawHref.split('#')[0].split('?')[0];
+                    if (!href.endsWith('.htm')) return;
+
+                    rememberVisitedPage(href, link.textContent || href);
+                    return;
+                }
+
+                const button = event.target.closest('button[onclick]');
+                if (!button) return;
+
+                const onClick = button.getAttribute('onclick') || '';
+                const match = onClick.match(/(?:window\.location\.href|location\.href)\s*=\s*['"]([^'"]+\.htm)['"]/i);
+                if (!match || !match[1]) return;
+
+                rememberVisitedPage(match[1], button.textContent || match[1]);
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             initializeThemeSettings();
+            initializeRecentVisitsTracking();
+            renderRecentVisits();
             initializeCollapsibleChapters();
             document.querySelectorAll('[data-attempt-filter]').forEach((button) => {
                 button.addEventListener('click', () => {
