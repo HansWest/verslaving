@@ -620,7 +620,11 @@ class IamDataStore {
         { text: stimulus.contingencyReward || gevoelens.enduranceSupport, source: 'stimulus-respons / lastige-gevoelens', target: 'rewards' },
         { text: summary?.fallbackMoves?.[0] || trek.noGoSignals || risicoMensen.boundarySummary, source: 'nood/terugvalsignalen', target: 'fallbackGoal' },
         { text: smoezen.ontkrachting01 || smoezen.ontkrachting02, source: 'smoezenboek', target: 'planB' },
-        { text: sovaGrenzen.wensgedrag || sovaMixed.wensgedrag, source: 'sova', target: 'planA' }
+        { text: sovaGrenzen.wensgedrag || sovaMixed.wensgedrag, source: 'sova', target: 'planA' },
+        { text: (this.getFormData('wat-is-mijn-ik') || {}).workStrengthen, source: 'wat-is-mijn-ik', target: 'mainGoal' },
+        { text: (this.getFormData('wat-is-mijn-ik') || {}).valuesStrengthen, source: 'wat-is-mijn-ik', target: 'mainGoal' },
+        { text: (this.getFormData('wat-is-mijn-ik') || {}).socialStrengthen, source: 'wat-is-mijn-ik', target: 'supportPeople' },
+        { text: (this.getFormData('wat-is-mijn-ik') || {}).bodyStrengthen, source: 'wat-is-mijn-ik', target: 'planA' }
       ];
 
       const unique = [];
@@ -665,6 +669,54 @@ class IamDataStore {
         context,
         available: unique.length > 0,
         suggestions: unique.slice(0, tuning.boostCap)
+      };
+    }
+
+    if (context === 'wat-is-mijn-ik') {
+      const forms = (this.getData() || {}).forms || {};
+      const getF = (key) => forms[key] || {};
+      const soortenTrek = getF('soorten-trek');
+      const chemsexPatroon = getF('chemsex-patroon');
+      const chemsexWatWilIk = getF('chemsex-wat-wil-ik');
+      const waarden = getF('persoonlijke-waarden');
+      const motiverendeMensen = getF('motiverende-mensen');
+      const steunnetwerk = getF('steunnetwerk');
+      const risicoSituaties = getF('risico-situaties');
+
+      return {
+        context,
+        available: true,
+        body: this.topInsightItems([
+          soortenTrek.earlyWarningPattern,
+          soortenTrek.noGoSignals,
+          risicoSituaties.internalRisks,
+          chemsexPatroon.comedownBody,
+          chemsexPatroon.earlySignals
+        ], tuning.secondaryCap),
+        sexual: this.topInsightItems([
+          chemsexPatroon.sessionPositives,
+          chemsexPatroon.nextChange,
+          chemsexWatWilIk.coreNeed,
+          chemsexWatWilIk.avoidFeeling
+        ], tuning.secondaryCap),
+        social: this.topInsightItems([
+          ...(summary.supportNetwork || []),
+          motiverendeMensen.personName,
+          steunnetwerk.networkSummary
+        ], tuning.secondaryCap),
+        work: this.topInsightItems([
+          ...(summary.motivationAnchors || []).slice(0, 2),
+          waarden.waarde01,
+          waarden.waardenterugzien
+        ], tuning.secondaryCap),
+        values: this.topInsightItems([
+          waarden.waarde01,
+          waarden.waarde02,
+          waarden.waarde03,
+          chemsexWatWilIk.importantValues,
+          chemsexWatWilIk.futureVision,
+          ...(summary.motivationAnchors || []).slice(0, 2)
+        ], tuning.secondaryCap)
       };
     }
 
@@ -793,6 +845,15 @@ class IamDataStore {
     const sociaalNetwerk = getForm('sociaal-netwerk');
     const steunnetwerk = getForm('steunnetwerk');
     const motiverendeMensen = getForm('motiverende-mensen');
+    const watIsMijnIk = getForm('wat-is-mijn-ik');
+    const sovaGrenzen = getForm('sova-grenzen');
+    const sovaMixed = getForm('sova-mixed-signals');
+    const smoezen = getForm('smoezenboekverhaal');
+    const levensdoelen = getForm('levensdoelen-stellen');
+    const genietBeloon = getForm('genieten-belonen');
+    const waardigheid = getForm('waardigheid');
+    const chemsexPatroon = getForm('chemsex-patroon');
+    const chemsexWatWilIk = getForm('chemsex-wat-wil-ik');
     const combineParts = (...parts) => parts
       .filter((part) => typeof part === 'string' && part.trim())
       .join(' - ');
@@ -836,7 +897,8 @@ class IamDataStore {
       combineParts(steunnetwerk.support3Name, steunnetwerk.support3SupportType),
       steunnetwerk.networkSummary,
       motiverendeMensen.personName,
-      combineParts(motiverendeMensen.personName, motiverendeMensen.personRole)
+      combineParts(motiverendeMensen.personName, motiverendeMensen.personRole),
+      levensdoelen.steunHerinnering
     ], 8);
 
     const bestInterventionsBucket = this.buildInsightBucket([
@@ -849,7 +911,18 @@ class IamDataStore {
       risicoActiviteiten.exitStrategy,
       gevoelens.enduranceSupport,
       gevoelens.acceptancePractice,
-      plan.planA
+      plan.planA,
+      sovaGrenzen.wensgedrag,
+      sovaGrenzen.jouwwensgedrag,
+      sovaMixed.wensgedrag,
+      sovaMixed.wensgedrag02,
+      smoezen.ontkrachting01,
+      smoezen.ontkrachting02,
+      smoezen.ontkrachting03,
+      genietBeloon.genietingenmomenteel,
+      genietBeloon.gedragBelonen,
+      genietBeloon.snelBelonen,
+      levensdoelen.eersteStap
     ], 10);
 
     const fallbackMovesBucket = this.buildInsightBucket([
@@ -864,7 +937,14 @@ class IamDataStore {
       soortenTrek.earlyWarningPattern,
       soortenTrek.noGoSignals,
       risicoSituaties.internalRisks,
-      risicoActiviteiten.internalRisks
+      risicoActiviteiten.internalRisks,
+      sovaGrenzen.lastgedrag,
+      sovaMixed.lastgedrag,
+      smoezen.smoes01,
+      smoezen.smoes02,
+      smoezen.smoes03,
+      levensdoelen.grensSignalen,
+      chemsexPatroon.earlySignals
     ], 8);
 
     const motivationAnchorsBucket = this.buildInsightBucket([
@@ -885,7 +965,18 @@ class IamDataStore {
       waaromWel.functionSummary,
       combineParts(motiverendeMensen.anchor1Name, motiverendeMensen.anchor1Why),
       combineParts(motiverendeMensen.anchor2Name, motiverendeMensen.anchor2Why),
-      combineParts(motiverendeMensen.anchor3Name, motiverendeMensen.anchor3Why)
+      combineParts(motiverendeMensen.anchor3Name, motiverendeMensen.anchor3Why),
+      watIsMijnIk.workStrengthen,
+      watIsMijnIk.valuesStrengthen,
+      watIsMijnIk.socialStrengthen,
+      watIsMijnIk.bodyStrengthen,
+      levensdoelen.levensDoelen,
+      levensdoelen.steunHerinnering,
+      waardigheid.intrinsiekWaarde,
+      waardigheid.toegevoegdeWaarde,
+      chemsexWatWilIk.coreNeed,
+      chemsexWatWilIk.importantValues,
+      chemsexWatWilIk.futureVision
     ], 8);
 
     const insightMeta = {

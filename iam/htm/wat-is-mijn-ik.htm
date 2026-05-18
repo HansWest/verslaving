@@ -97,6 +97,22 @@
       border: 1px solid #d5e5ef;
       color: #2a4a5f;
     }
+
+    .cross-hint-block {
+      margin: 0.65rem 0 0.3rem;
+      padding: 0.45rem 0.7rem;
+      background: #eef5fa;
+      border-radius: 8px;
+      border: 1px solid #cde0ec;
+    }
+    .cross-hint-block summary {
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--page-main);
+      list-style: none;
+    }
+    .cross-hint-block summary::-webkit-details-marker { display: none; }
   </style>
   <script src="../js/themeMode.js"></script>
 </head>
@@ -116,6 +132,23 @@
 
       <div id="message" class="message"></div>
 
+      <details class="context-card" style="margin-top:1rem;">
+        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:0.5rem; font-size:1.1rem; font-weight:700; color:var(--page-main);">
+          <span>⚙ Ik, Zelf en identiteit: de theorie in het kort</span>
+        </summary>
+        <div style="margin-top:0.75rem;">
+          <p><strong>'Ik' en 'zelf' zijn niet hetzelfde.</strong> Het <em>ik</em> is de denkende, redenerende stem — de neo-cortex die plannen maakt en beslissingen neemt. Maar daaronder liggen twee oudere lagen:</p>
+          <ul style="margin:0.5rem 0 0.75rem; padding-left:1.2rem; line-height:1.65;">
+            <li><strong>Emotioneel zelf</strong> (paleo-cortex): het gevoelsleven, verlangens, herinneringen met lading, verbinding met anderen.</li>
+            <li><strong>Automatisch zelf</strong> (archi-cortex): driften, gewoonten, trek, slaap, spanning — het meest oeroude deel.</li>
+          </ul>
+          <p>Bij verslaving neemt het automatische zelf steeds vaker het stuur over, voordat het ik ook maar een gedachte heeft kunnen vormen. <em>Willskracht</em> (ik-kracht) is dan een te zwak instrument — het gevecht is al verloren voor het begint.</p>
+          <p>Wat beter werkt: leren <strong>surfen op het gevoel en de automatische reacties</strong> in plaats van ze te bestrijden. Dat vraagt dat het <em>ik</em> samenwerkt met het <em>zelf</em> in plaats van er tegenin te gaan.</p>
+          <p>Die samenwerking heeft een richting nodig: een <strong>doel</strong> dat groter is dan het moment. Precies dat is wat een <em>identiteit</em> doet.</p>
+          <p class="subtle-help" style="margin-top:0.6rem;">In de theorie van <strong>Hilarion Petzold</strong> is identiteit als het dak van een Griekse tempel: het steunt op een aantal <em>pilaren</em> die samen jouw zelfbeeld overeind houden. Als meerdere pilaren beschadigd raken — door gebruik, isolatie, verlies van werk of betekenis — gaat het dak scheef. Dit formulier helpt je die pilaren te bekijken.</p>
+        </div>
+      </details>
+
       <section class="context-card">
         <h2>Wanneer helpt deze pagina?</h2>
         <p class="subtle-help">Wel: als je stabiel genoeg bent om te reflecteren. Niet: als je in crisis bent of net hebt gebruikt. Kies dan eerst noodroutes.</p>
@@ -127,9 +160,9 @@
 
       <section class="question-card">
         <h2>Kernreflectie</h2>
-        <p>Ben ik alleen nog maar mijn verslaving, of ben ik meer dan dat? Gebruik kan je tijdelijk ontregelen, maar jouw ik kan ook leren sturen.</p>
+        <p>Ben ik alleen nog maar mijn verslaving, of ben ik meer dan dat? Gebruik kan je tijdelijk ontregelen, maar jouw ik kan ook leren om te sturen door te surfen op de golven van jouw 'zelf'.</p>
         <div class="quote-block">
-          Als gebruik de enige deur naar genot is geworden, dan is niet jij mislukt, maar je systeem vernauwd. Deze pagina helpt die vernauwing weer breder te maken.
+          Als gebruik de enige deur naar genot is geworden, dan is niet je 'ik' die is mislukt, maar je systeem vernauwd. Deze pagina helpt die vernauwing weer breder te maken.
         </div>
       </section>
 
@@ -146,6 +179,7 @@
               <textarea id="bodyShown" rows="4" placeholder="Wat zien anderen van jou op dit gebied?"></textarea>
             </div>
           </div>
+          <div id="hints-body"></div>
           <div class="form-group">
             <label for="bodyStrengthen">Hoe is deze pilaar geraakt en wat ga ik concreet doen om te versterken?</label>
             <textarea id="bodyStrengthen" rows="4"></textarea>
@@ -164,6 +198,7 @@
               <textarea id="sexualShown" rows="4"></textarea>
             </div>
           </div>
+          <div id="hints-sexual"></div>
           <div class="form-group">
             <label for="sexualStrengthen">Hoe is deze pilaar geraakt en wat ga ik concreet doen om te versterken?</label>
             <textarea id="sexualStrengthen" rows="4"></textarea>
@@ -182,6 +217,7 @@
               <textarea id="socialShown" rows="4"></textarea>
             </div>
           </div>
+          <div id="hints-social"></div>
           <div class="form-group">
             <label for="socialStrengthen">Hoe is deze pilaar geraakt en wat ga ik concreet doen om te versterken?</label>
             <textarea id="socialStrengthen" rows="4"></textarea>
@@ -200,6 +236,7 @@
               <textarea id="workShown" rows="4"></textarea>
             </div>
           </div>
+          <div id="hints-work"></div>
           <div class="form-group">
             <label for="workStrengthen">Hoe is deze pilaar geraakt en wat ga ik concreet doen om te versterken?</label>
             <textarea id="workStrengthen" rows="4"></textarea>
@@ -218,6 +255,7 @@
               <textarea id="valuesShown" rows="4"></textarea>
             </div>
           </div>
+          <div id="hints-values"></div>
           <div class="form-group">
             <label for="valuesStrengthen">Hoe is deze pilaar geraakt en wat ga ik concreet doen om te versterken?</label>
             <textarea id="valuesStrengthen" rows="4"></textarea>
@@ -262,6 +300,27 @@
       message.classList.toggle('error', isError);
       clearTimeout(showMessage.timer);
       showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function renderPillarHints() {
+      const pack = iamData.getCrossPollinationPack('wat-is-mijn-ik');
+      if (!pack || !pack.available) return;
+
+      const pillars = [
+        { id: 'hints-body',   items: pack.body,   label: '▸ Uit jouw formulieren: lichamelijke signalen' },
+        { id: 'hints-sexual', items: pack.sexual, label: '▸ Uit jouw formulieren: seksualiteit en gebruik' },
+        { id: 'hints-social', items: pack.social, label: '▸ Uit jouw formulieren: steunnetwerk' },
+        { id: 'hints-work',   items: pack.work,   label: '▸ Uit jouw formulieren: doelen en motivaties' },
+        { id: 'hints-values', items: pack.values, label: '▸ Uit jouw formulieren: waarden' }
+      ];
+
+      pillars.forEach(({ id, items, label }) => {
+        if (!items || items.length === 0) return;
+        const el = document.getElementById(id);
+        if (!el) return;
+        const listItems = items.map((t) => `<li>${t}</li>`).join('');
+        el.innerHTML = `<details class="cross-hint-block"><summary>${label}</summary><ul class="iam-cross-list" style="margin-top:0.4rem;">${listItems}</ul></details>`;
+      });
     }
 
     function loadData() {
@@ -347,6 +406,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       loadData();
+      renderPillarHints();
       document.getElementById('saveButton').addEventListener('click', () => saveData(true));
       document.getElementById('exportButton').addEventListener('click', exportData);
       document.getElementById('ikForm').addEventListener('input', () => saveData(false));
