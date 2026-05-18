@@ -258,6 +258,15 @@
           <label for="scoreNote">Korte notitie (context, trigger of gekozen actie)</label>
           <textarea id="scoreNote" placeholder="Bijv. score 6 na stress op werk, direct wandeling + bellen."></textarea>
         </div>
+        <div class="form-group">
+          <label for="todayFocusCraving">Wat me nu vooral bezighoudt vandaag?</label>
+          <textarea id="todayFocusCraving" placeholder="Welke gedachte, zorg of behoefte staat vandaag op de voorgrond?"></textarea>
+          <p class="attempt-summary-link" id="todayFocusYesterdayCraving">Gisteren: nog niet ingevuld.</p>
+          <div class="action-bar">
+            <button type="button" class="button-secondary" id="todayFocusCarryCraving">Neem gisteren over</button>
+            <button type="button" class="button-secondary" id="todayFocusNewCraving">Nieuw vandaag</button>
+          </div>
+        </div>
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="printButton">Print / bewaar als pdf</button>
@@ -328,6 +337,7 @@
   </div>
 
   <script src="../js/dataStore.js"></script>
+  <script src="../js/todayFocus.js"></script>
   <script src="../js/emotionDynamics.js"></script>
   <script>
     const formKey = 'craving-1-10';
@@ -581,6 +591,15 @@
       renderAttemptSummary();
       scoreInput.value = Number.isFinite(Number(existing.currentScore)) ? Number(existing.currentScore) : 0;
       noteInput.value = existing.scoreNote || '';
+      if (window.iamTodayFocus && typeof window.iamTodayFocus.initDailyFocusWidget === 'function') {
+        window.iamTodayFocus.initDailyFocusWidget({
+          textareaId: 'todayFocusCraving',
+          yesterdayTextId: 'todayFocusYesterdayCraving',
+          carryButtonId: 'todayFocusCarryCraving',
+          newButtonId: 'todayFocusNewCraving',
+          source: formKey
+        });
+      }
       renderAdvice(Number(scoreInput.value));
       updateEmotionModel();
 

@@ -285,6 +285,21 @@
         <ul class="cross-suggest-list" id="crossSuggestListLastige"></ul>
       </section>
 
+      <section class="question-card process">
+        <span class="eyebrow">Vandaag in beeld</span>
+        <h2>Wat me nu vooral bezighoudt vandaag?</h2>
+        <p>Eenzelfde dagfocus op meerdere pagina's helpt je om rode draden sneller te zien zonder alles opnieuw te typen.</p>
+        <div class="form-group">
+          <label for="todayFocusLastige">Vandaag bezighoudt</label>
+          <textarea id="todayFocusLastige" rows="4" placeholder="Welke gedachte, spanning of behoefte staat vandaag op de voorgrond?"></textarea>
+          <p class="helper-text" id="todayFocusYesterdayLastige">Gisteren: nog niet ingevuld.</p>
+          <div class="action-bar">
+            <button type="button" class="button-secondary" id="todayFocusCarryLastige">Neem gisteren over</button>
+            <button type="button" class="button-secondary" id="todayFocusNewLastige">Nieuw vandaag</button>
+          </div>
+        </div>
+      </section>
+
       <form id="lastigeGevoelensForm">
         <div class="grid-two">
           <section class="question-card prevent">
@@ -456,6 +471,7 @@
   </div>
 
   <script src="../js/dataStore.js"></script>
+  <script src="../js/todayFocus.js"></script>
   <script>
     const formKey = 'lastige-gevoelens';
     let currentRoutePath = './trek-opvangen.htm';
@@ -683,6 +699,15 @@
     document.addEventListener('DOMContentLoaded', () => {
       const savedData = iamData.getFormData(formKey);
       fillForm(mergeData(savedData));
+      if (window.iamTodayFocus && typeof window.iamTodayFocus.initDailyFocusWidget === 'function') {
+        window.iamTodayFocus.initDailyFocusWidget({
+          textareaId: 'todayFocusLastige',
+          yesterdayTextId: 'todayFocusYesterdayLastige',
+          carryButtonId: 'todayFocusCarryLastige',
+          newButtonId: 'todayFocusNewLastige',
+          source: formKey
+        });
+      }
       updateRouteHint();
       renderCrossSuggestions();
 

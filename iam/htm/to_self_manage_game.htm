@@ -189,11 +189,32 @@
         #moodLevel::-moz-range-thumb {
             background: #4ADE80;
         }
+
+        #desktop-clickout-link {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            #desktop-clickout-link {
+                display: block;
+                position: fixed;
+                inset: 0;
+                z-index: 1;
+            }
+
+            #mobile-frame {
+                position: relative;
+                z-index: 2;
+                height: min(92dvh, 980px);
+            }
+        }
     </style>
     <script src="../js/themeMode.js"></script>
 </head>
 
 <body class="bg-gray-900">
+
+    <a id="desktop-clickout-link" href="./index.htm" aria-label="Terug naar overzicht via klik buiten het speelveld" title="Klik buiten het speelveld om terug te gaan naar overzicht"></a>
 
     <!-- START Mobile Frame Wrapper -->
     <div id="mobile-frame" class="max-w-sm mx-auto w-full flex flex-col mt-8 mb-8 relative">
@@ -486,6 +507,23 @@
                             </div>
 
                             <div>
+                                <label for="todayFocusGame" class="block text-sm font-medium text-teal-300 mb-2">Wat me nu vooral bezighoudt vandaag?</label>
+                                <textarea id="todayFocusGame" name="todayFocusGame" placeholder="Welke gedachte, zorg of behoefte speelt vandaag sterk mee?"
+                                    class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-sm text-gray-100 resize-none h-20 focus:ring-teal-500 focus:border-teal-500"
+                                ></textarea>
+                                <p id="todayFocusYesterdayGame" class="text-xs text-gray-400 mt-2">Gisteren: nog niet ingevuld.</p>
+                                <div class="flex gap-2 mt-2">
+                                    <button type="button" id="todayFocusCarryGame" class="px-3 py-1.5 rounded-lg font-semibold bg-gray-700 hover:bg-gray-600 text-xs text-gray-100 transition duration-200">Neem gisteren over</button>
+                                    <button type="button" id="todayFocusNewGame" class="px-3 py-1.5 rounded-lg font-semibold bg-gray-700 hover:bg-gray-600 text-xs text-gray-100 transition duration-200">Nieuw vandaag</button>
+                                </div>
+                            </div>
+
+                            <div id="balanceHintBox" class="hidden rounded-lg border border-indigo-500/40 bg-indigo-500/10 p-3">
+                                <p class="text-xs text-indigo-200 mb-2" id="balanceHintText"></p>
+                                <button type="button" id="balanceHintToFocus" class="px-3 py-1.5 rounded-lg font-semibold bg-indigo-600 hover:bg-indigo-700 text-xs text-gray-100 transition duration-200">Neem mee in dagfocus</button>
+                            </div>
+
+                            <div>
                                 <label for="note" class="block text-sm font-medium text-gray-300 mb-2">Korte notitie (optioneel)</label>
                                 <textarea id="note" name="note" placeholder="Belangrijke gedachte of gebeurtenis?"
                                     class="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-sm text-gray-100 resize-none h-16 focus:ring-teal-500 focus:border-teal-500"
@@ -501,6 +539,35 @@
                 </div>
             `;
             document.getElementById('form-check-in').onsubmit = handleCheckInSubmit;
+            if (window.iamTodayFocus && typeof window.iamTodayFocus.initDailyFocusWidget === 'function') {
+                window.iamTodayFocus.initDailyFocusWidget({
+                    textareaId: 'todayFocusGame',
+                    yesterdayTextId: 'todayFocusYesterdayGame',
+                    carryButtonId: 'todayFocusCarryGame',
+                    newButtonId: 'todayFocusNewGame',
+                    source: 'to_self_manage_game'
+                });
+            }
+
+            const balanceHint = getBalanceToGameHint();
+            const hintBox = document.getElementById('balanceHintBox');
+            const hintText = document.getElementById('balanceHintText');
+            const hintButton = document.getElementById('balanceHintToFocus');
+            if (balanceHint && hintBox && hintText && hintButton) {
+                hintBox.classList.remove('hidden');
+                hintText.textContent = `Uit voor- en nadelen balans: ${balanceHint}`;
+                hintButton.addEventListener('click', () => {
+                    const focusField = document.getElementById('todayFocusGame');
+                    if (!focusField) return;
+                    const current = String(focusField.value || '').trim();
+                    if (!current) {
+                        focusField.value = balanceHint;
+                    } else if (!current.includes(balanceHint)) {
+                        focusField.value = `${focusField.value}\n${balanceHint}`;
+                    }
+                    focusField.dispatchEvent(new Event('input', { bubbles: true }));
+                });
+            }
         }
 
         function closeModal() {
@@ -684,6 +751,24 @@
         function formatDelta(value) {
             if (value > 0) return `+${value}`;
             return `${value}`;
+        }
+
+        function getBalanceToGameHint() {
+            if (!window.iamData || typeof window.iamData.getFormData !== 'function') return '';
+
+            const balans = window.iamData.getFormData('voor-nadelen-balansen') || {};
+            const firstLine = (text) => String(text || '')
+                .split('\n')
+                .map((line) => line.trim())
+                .find(Boolean) || '';
+
+            const candidates = [
+                balans.decisionNote,
+                firstLine(balans.changeAdvantagesText),
+                firstLine(balans.usageDisadvantagesText)
+            ];
+
+            return candidates.find((item) => typeof item === 'string' && item.trim()) || '';
         }
 
         function getRoundComparisonRows() {
@@ -1093,6 +1178,7 @@
                                             <p class="font-bold text-gray-200">Trek ${data.roundEndCravingLevel} (${formatDelta(data.roundDeltaCraving || 0)}), Stemming ${data.roundEndMoodLevel} (${formatDelta(data.roundDeltaMood || 0)})</p>
                                         </div>
                                     ` : ''}
+                                    ${data.dailyFocus ? `<p class="mt-2 text-xs text-teal-300 border-t border-gray-600 pt-1">Vandaag bezig: ${data.dailyFocus}</p>` : ''}
                                     ${data.note ? `<p class="mt-2 text-xs italic text-gray-500 border-t border-gray-600 pt-1">Notitie: ${data.note}</p>` : ''}
                                 </div>
                             `;
@@ -1179,8 +1265,13 @@
             const data = {
                 cravingLevel: parseInt(form.elements.cravingLevel.value, 10),
                 moodLevel: parseInt(form.elements.moodLevel.value, 10),
+                dailyFocus: form.elements.todayFocusGame ? form.elements.todayFocusGame.value.trim() : '',
                 note: form.elements.note.value.trim(),
             };
+
+            if (window.iamTodayFocus && typeof window.iamTodayFocus.saveTodayText === 'function') {
+                window.iamTodayFocus.saveTodayText(data.dailyFocus, 'to_self_manage_game');
+            }
 
             saveCheckIn(data);
         }
@@ -1306,6 +1397,7 @@
 
     </script>
     <script src="../js/dataStore.js"></script>
+    <script src="../js/todayFocus.js"></script>
 </body>
 
 </html>

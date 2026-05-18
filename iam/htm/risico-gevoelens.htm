@@ -373,6 +373,19 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
             </ul>
         </section>
 
+        <section class="intro-card">
+            <strong>Vandaag in beeld:</strong> als je op meerdere pagina's dezelfde dagfocus ziet, wordt het makkelijker om trend en trigger te herkennen.
+            <div class="field" style="margin-top: 0.8rem;">
+                <label for="todayFocusRisico">Wat me nu vooral bezighoudt vandaag?</label>
+                <textarea id="todayFocusRisico" placeholder="Welke gedachte, spanning of behoefte staat vandaag op de voorgrond?"></textarea>
+            </div>
+            <p class="sub" id="todayFocusYesterdayRisico">Gisteren: nog niet ingevuld.</p>
+            <div class="action-bar" style="margin-top: 0.6rem;">
+                <button type="button" class="btn btn-secondary" id="todayFocusCarryRisico">Neem gisteren over</button>
+                <button type="button" class="btn btn-secondary" id="todayFocusNewRisico">Nieuw vandaag</button>
+            </div>
+        </section>
+
         <div class="hint-box">
             Interne risico's zijn bijvoorbeeld: veronderstelling dat alleen gebruik je gelukkig maakt; schaamte; zelfkritiek; het idee dat je 'zwak' bent; perfectionisme; teveel alleen willen doen.
         </div>
@@ -418,6 +431,7 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
 
     <script src="../js/optionsLoader.js"></script>
     <script src="../js/dataStore.js"></script>
+    <script src="../js/todayFocus.js"></script>
     <script>
         const gevoelOptionsUrl = '../assets/options/risico-emoties-gedachten.json';
         let currentRoutePath = './stimulus-respons.htm';
@@ -629,6 +643,15 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
             loadGevoelExamples();
+            if (window.iamTodayFocus && typeof window.iamTodayFocus.initDailyFocusWidget === 'function') {
+                window.iamTodayFocus.initDailyFocusWidget({
+                    textareaId: 'todayFocusRisico',
+                    yesterdayTextId: 'todayFocusYesterdayRisico',
+                    carryButtonId: 'todayFocusCarryRisico',
+                    newButtonId: 'todayFocusNewRisico',
+                    source: 'risico-gevoelens'
+                });
+            }
             updateRouteHint();
             renderCrossSuggestions();
             document.getElementById('gevoelVoorbeeldSelect').addEventListener('change', appendExample);
