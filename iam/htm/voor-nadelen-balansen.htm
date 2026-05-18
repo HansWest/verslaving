@@ -341,6 +341,36 @@
             color: #526777;
             margin-top: 0.3rem;
         }
+        .term-legend {
+            margin: 0.5rem 0 0;
+            display: flex;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: 0.79rem;
+            color: #4b6475;
+        }
+        .term-legend-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            padding: 0.18rem 0.5rem;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            border: 1px solid transparent;
+            min-width: 2.4rem;
+        }
+        .term-legend-badge.kt {
+            background: #fff2d8;
+            border-color: #e7c68a;
+            color: #7b4d12;
+        }
+        .term-legend-badge.lt {
+            background: #e7f4e5;
+            border-color: #a8c6a1;
+            color: #305a26;
+        }
 
         /* ── Naast-elkaar kolommen: Gebruiken | Veranderen ──────────── */
         .balance-columns {
@@ -396,6 +426,64 @@
             margin-bottom: 0.4rem;
         }
         .inline-weight-box .weight-row:last-of-type { margin-bottom: 0; }
+        .item-weight-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            margin-top: 0.45rem;
+        }
+        .item-weight-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 74px 72px;
+            gap: 0.45rem;
+            align-items: center;
+            padding: 0.35rem 0.45rem;
+            border: 1px solid #d7e6ee;
+            border-radius: 9px;
+            background: #ffffff;
+        }
+        .item-weight-text {
+            font-size: 0.84rem;
+            color: #334c5d;
+            line-height: 1.35;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .item-weight-input {
+            width: 100%;
+            min-width: 0;
+            border: 1px solid #c9dbe7;
+            border-radius: 8px;
+            padding: 0.3rem 0.35rem;
+            font-size: 0.82rem;
+            text-align: center;
+        }
+        .term-switch {
+            border: 1px solid #c9dbe7;
+            border-radius: 999px;
+            background: #edf5f9;
+            color: #315166;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            padding: 0.34rem 0.4rem;
+            cursor: pointer;
+        }
+        .term-switch.term-short {
+            background: #fff2d8;
+            border-color: #e7c68a;
+            color: #7b4d12;
+        }
+        .term-switch.term-long {
+            background: #e7f4e5;
+            border-color: #a8c6a1;
+            color: #305a26;
+        }
+        .item-weight-empty {
+            font-size: 0.82rem;
+            color: #5b7283;
+        }
         .effective-weight-display {
             margin-top: 0.5rem;
             font-size: 0.83rem;
@@ -620,17 +708,23 @@
                 <details id="ltSettingsBlock" open class="lt-settings-block">
                     <summary>Instellingen: verhouding korte en lange termijn</summary>
                     <div class="settings-body">
-                        <p>Hoe zwaar weegt <strong>lange termijn</strong> voor jou ten opzichte van <strong>korte termijn</strong>? Dit vermenigvuldigt lange-termijn-scores in de berekening.</p>
+                        <p>Hoe zwaar weegt <strong>lange termijn</strong> voor jou ten opzichte van <strong>korte termijn</strong>? Dit berekent het LT-gewicht als KT-score × factor.</p>
                         <div class="lt-slider-wrap">
-                            <input type="range" id="ltMultiplier" min="1" max="3" step="1" value="1" />
+                            <input type="range" id="ltMultiplier" min="1" max="10" step="1" value="1" />
                             <span class="lt-value-badge" id="ltValueBadge">1×</span>
                         </div>
                         <div class="lt-labels">
                             <span>Even zwaar (1×)</span>
-                            <span>LT 2× zwaarder</span>
-                            <span>LT 3× zwaarder</span>
+                            <span>Midden (5×)</span>
+                            <span>LT 10× zwaarder</span>
                         </div>
-                        <p class="weight-help" id="ltExplanation">Lange termijn telt nu even zwaar als korte termijn. Een LT-score van 7 blijft effectief 7.</p>
+                        <p class="term-legend">
+                            <span class="term-legend-badge kt">KT</span>
+                            <span>korte termijn: gewicht telt 1×</span>
+                            <span class="term-legend-badge lt">LT</span>
+                            <span>lange termijn: gewicht telt met LT-factor</span>
+                        </p>
+                        <p class="weight-help" id="ltExplanation">Lange termijn telt nu even zwaar als korte termijn. Een KT-score van 7 wordt zo een LT gewicht van: 7.</p>
                     </div>
                 </details>
 
@@ -648,14 +742,8 @@
                                 <textarea id="usageAdvantagesText" rows="6" placeholder="Bijv. snelle rust, minder spanning, me socialer voelen. Elke regel is een punt."></textarea>
                             </div>
                             <div class="inline-weight-box">
-                                <div class="weight-row">
-                                    <label for="usageAdvShort">Korte termijn (0-10)</label>
-                                    <input id="usageAdvShort" type="number" min="0" max="10" step="1" placeholder="0-10" />
-                                </div>
-                                <div class="weight-row">
-                                    <label for="usageAdvLong">Lange termijn (0-10)</label>
-                                    <input id="usageAdvLong" type="number" min="0" max="10" step="1" placeholder="0-10" />
-                                </div>
+                                <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                <div class="item-weight-list" id="usageAdvItemWeights"></div>
                                 <div class="effective-weight-display" id="effUsageAdv">Effectief gewicht: —</div>
                             </div>
                         </div>
@@ -667,14 +755,8 @@
                                 <textarea id="usageDisadvantagesText" rows="6" placeholder="Bijv. onrust, gedoe thuis/werk, herstelkost, schaamte. Elke regel is een punt."></textarea>
                             </div>
                             <div class="inline-weight-box">
-                                <div class="weight-row">
-                                    <label for="usageDisShort">Korte termijn (0-10)</label>
-                                    <input id="usageDisShort" type="number" min="0" max="10" step="1" placeholder="0-10" />
-                                </div>
-                                <div class="weight-row">
-                                    <label for="usageDisLong">Lange termijn (0-10)</label>
-                                    <input id="usageDisLong" type="number" min="0" max="10" step="1" placeholder="0-10" />
-                                </div>
+                                <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                <div class="item-weight-list" id="usageDisItemWeights"></div>
                                 <div class="effective-weight-display" id="effUsageDis">Effectief gewicht: —</div>
                             </div>
                         </div>
@@ -693,14 +775,8 @@
                                 <textarea id="changeAdvantagesText" rows="6" placeholder="Bijv. trots, betrouwbaarheid, rust, betere relaties. Elke regel is een punt."></textarea>
                             </div>
                             <div class="inline-weight-box">
-                                <div class="weight-row">
-                                    <label for="changeAdvShort">Korte termijn (0-10)</label>
-                                    <input id="changeAdvShort" type="number" min="0" max="10" step="1" placeholder="0-10" />
-                                </div>
-                                <div class="weight-row">
-                                    <label for="changeAdvLong">Lange termijn (0-10)</label>
-                                    <input id="changeAdvLong" type="number" min="0" max="10" step="1" placeholder="0-10" />
-                                </div>
+                                <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                <div class="item-weight-list" id="changeAdvItemWeights"></div>
                                 <div class="effective-weight-display" id="effChangeAdv">Effectief gewicht: —</div>
                             </div>
                         </div>
@@ -712,14 +788,8 @@
                                 <textarea id="changeDisadvantagesText" rows="6" placeholder="Bijv. ongemak, oefenen, gemis, sociale spanning. Elke regel is een punt."></textarea>
                             </div>
                             <div class="inline-weight-box">
-                                <div class="weight-row">
-                                    <label for="changeDisShort">Korte termijn (0-10)</label>
-                                    <input id="changeDisShort" type="number" min="0" max="10" step="1" placeholder="0-10" />
-                                </div>
-                                <div class="weight-row">
-                                    <label for="changeDisLong">Lange termijn (0-10)</label>
-                                    <input id="changeDisLong" type="number" min="0" max="10" step="1" placeholder="0-10" />
-                                </div>
+                                <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                <div class="item-weight-list" id="changeDisItemWeights"></div>
                                 <div class="effective-weight-display" id="effChangeDis">Effectief gewicht: —</div>
                             </div>
                         </div>
@@ -846,18 +916,23 @@
             'usageDisadvantagesText',
             'changeAdvantagesText',
             'changeDisadvantagesText',
-            'usageAdvShort',
-            'usageAdvLong',
-            'usageDisShort',
-            'usageDisLong',
-            'changeAdvShort',
-            'changeAdvLong',
-            'changeDisShort',
-            'changeDisLong',
             'decisionNote',
             'reflectionDate',
             'ltMultiplier'
         ];
+        const weightedTextareas = [
+            'usageAdvantagesText',
+            'usageDisadvantagesText',
+            'changeAdvantagesText',
+            'changeDisadvantagesText'
+        ];
+        const weightControlMap = {
+            usageAdvantagesText: { listId: 'usageAdvItemWeights', summaryId: 'effUsageAdv' },
+            usageDisadvantagesText: { listId: 'usageDisItemWeights', summaryId: 'effUsageDis' },
+            changeAdvantagesText: { listId: 'changeAdvItemWeights', summaryId: 'effChangeAdv' },
+            changeDisadvantagesText: { listId: 'changeDisItemWeights', summaryId: 'effChangeDis' },
+        };
+        let itemMetaByField = {};
         let currentRoutePath = './plan-van-aanpak.htm';
 
         function toLines(text) {
@@ -880,14 +955,7 @@
                 usageDisadvantagesText: '',
                 changeAdvantagesText: '',
                 changeDisadvantagesText: '',
-                usageAdvShort: '',
-                usageAdvLong: '',
-                usageDisShort: '',
-                usageDisLong: '',
-                changeAdvShort: '',
-                changeAdvLong: '',
-                changeDisShort: '',
-                changeDisLong: '',
+                itemMetaByField: {},
                 reflectionDate: '',
                 decisionNote: '',
                 usage: { advantages: [], disadvantages: [] },
@@ -895,10 +963,8 @@
             };
         }
 
-        function scoreValue(id) {
-            const el = document.getElementById(id);
-            if (!el) return 0;
-            const raw = Number(el.value);
+        function scoreValue(rawValue) {
+            const raw = Number(rawValue);
             if (!Number.isFinite(raw)) return 0;
             return Math.max(0, Math.min(10, raw));
         }
@@ -907,11 +973,131 @@
             const el = document.getElementById('ltMultiplier');
             if (!el) return 1;
             const val = parseInt(el.value, 10);
-            return (val === 2 || val === 3) ? val : 1;
+            if (Number.isNaN(val)) return 1;
+            return Math.min(10, Math.max(1, val));
         }
 
-        function effectiveWeight(shortId, longId) {
-            return scoreValue(shortId) + scoreValue(longId) * getLtMultiplier();
+        function normalizeTerm(value) {
+            return value === 'long' ? 'long' : 'short';
+        }
+
+        function normalizeItemMetaEntry(line, entry) {
+            const weight = entry && entry.weight !== '' && entry.weight != null ? String(scoreValue(entry.weight)) : '';
+            return {
+                text: String(line || '').trim(),
+                weight,
+                term: normalizeTerm(entry ? entry.term : 'short')
+            };
+        }
+
+        function syncItemMetaForField(fieldId) {
+            const textarea = document.getElementById(fieldId);
+            const lines = toLines(textarea ? textarea.value : '');
+            const previous = Array.isArray(itemMetaByField[fieldId]) ? itemMetaByField[fieldId] : [];
+            const pool = previous.map((entry) => ({ ...entry, _used: false }));
+            const next = [];
+
+            lines.forEach((line, index) => {
+                const normalizedLine = String(line || '').trim().toLowerCase();
+                let match = pool.find((entry) => !entry._used && String(entry.text || '').trim().toLowerCase() === normalizedLine);
+                if (!match && pool[index] && !pool[index]._used) {
+                    match = pool[index];
+                }
+                if (match) match._used = true;
+                next.push(normalizeItemMetaEntry(line, match));
+            });
+
+            itemMetaByField[fieldId] = next;
+            return next;
+        }
+
+        function syncAllItemMetaFromTextareas() {
+            weightedTextareas.forEach((fieldId) => syncItemMetaForField(fieldId));
+        }
+
+        function itemEffectiveWeight(item, multiplier) {
+            const weight = scoreValue(item ? item.weight : 0);
+            const term = normalizeTerm(item ? item.term : 'short');
+            return term === 'long' ? weight * multiplier : weight;
+        }
+
+        function totalEffectiveWeight(fieldId) {
+            const multiplier = getLtMultiplier();
+            const entries = Array.isArray(itemMetaByField[fieldId]) ? itemMetaByField[fieldId] : [];
+            return entries.reduce((sum, item) => sum + itemEffectiveWeight(item, multiplier), 0);
+        }
+
+        function renderItemWeightControls(fieldId) {
+            const config = weightControlMap[fieldId];
+            if (!config) return;
+            const list = document.getElementById(config.listId);
+            if (!list) return;
+
+            const entries = syncItemMetaForField(fieldId);
+            list.innerHTML = '';
+
+            if (!entries.length) {
+                const empty = document.createElement('div');
+                empty.className = 'item-weight-empty';
+                empty.textContent = 'Voeg regels toe in het tekstveld hierboven om KT/LT en gewicht per punt te kiezen.';
+                list.appendChild(empty);
+                return;
+            }
+
+            entries.forEach((entry, index) => {
+                const row = document.createElement('div');
+                row.className = 'item-weight-row';
+
+                const text = document.createElement('span');
+                text.className = 'item-weight-text';
+                text.textContent = `${index + 1}. ${entry.text}`;
+
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.min = '0';
+                input.max = '10';
+                input.step = '1';
+                input.placeholder = '0-10';
+                input.className = 'item-weight-input';
+                input.value = entry.weight;
+                input.setAttribute('aria-label', `Gewicht voor punt ${index + 1}`);
+                input.dataset.metaField = fieldId;
+                input.dataset.metaIndex = String(index);
+
+                const switchBtn = document.createElement('button');
+                switchBtn.type = 'button';
+                switchBtn.className = `term-switch ${entry.term === 'long' ? 'term-long' : 'term-short'}`;
+                switchBtn.textContent = entry.term === 'long' ? 'LT' : 'KT';
+                switchBtn.title = 'Wissel tussen korte termijn en lange termijn';
+                switchBtn.dataset.metaField = fieldId;
+                switchBtn.dataset.metaIndex = String(index);
+                switchBtn.dataset.term = entry.term;
+
+                row.appendChild(text);
+                row.appendChild(input);
+                row.appendChild(switchBtn);
+                list.appendChild(row);
+            });
+        }
+
+        function renderAllItemWeightControls() {
+            weightedTextareas.forEach((fieldId) => renderItemWeightControls(fieldId));
+        }
+
+        function updateItemWeightFromInput(inputEl) {
+            if (!inputEl || !inputEl.dataset) return;
+            const fieldId = inputEl.dataset.metaField;
+            const index = parseInt(inputEl.dataset.metaIndex, 10);
+            if (!fieldId || Number.isNaN(index)) return;
+            const items = Array.isArray(itemMetaByField[fieldId]) ? itemMetaByField[fieldId] : [];
+            if (!items[index]) return;
+            items[index].weight = inputEl.value === '' ? '' : String(scoreValue(inputEl.value));
+        }
+
+        function toggleItemTerm(fieldId, index) {
+            const items = Array.isArray(itemMetaByField[fieldId]) ? itemMetaByField[fieldId] : [];
+            if (!items[index]) return;
+            items[index].term = items[index].term === 'long' ? 'short' : 'long';
         }
 
         function updateLtBadge() {
@@ -921,37 +1107,43 @@
             if (badge) badge.textContent = `${mult}×`;
             if (explanation) {
                 explanation.textContent = mult === 1
-                    ? 'Lange termijn telt nu even zwaar als korte termijn. Een LT-score van 7 blijft effectief 7.'
-                    : `Lange termijn weegt nu ${mult}× zwaarder. Een LT-score van 7 wordt effectief ${7 * mult}.`;
+                    ? 'Lange termijn telt nu even zwaar als korte termijn. Een KT-score van 7 wordt zo een LT gewicht van: 7.'
+                    : `Lange termijn weegt nu ${mult}× zwaarder. Een KT-score van 7 wordt zo een LT gewicht van: ${7 * mult}.`;
             }
         }
 
         function updateEffectiveWeightDisplays() {
             const mult = getLtMultiplier();
             const defs = [
-                { dispId: 'effUsageAdv',  shortId: 'usageAdvShort',  longId: 'usageAdvLong'  },
-                { dispId: 'effUsageDis',  shortId: 'usageDisShort',  longId: 'usageDisLong'  },
-                { dispId: 'effChangeAdv', shortId: 'changeAdvShort', longId: 'changeAdvLong' },
-                { dispId: 'effChangeDis', shortId: 'changeDisShort', longId: 'changeDisLong' },
+                { dispId: 'effUsageAdv', fieldId: 'usageAdvantagesText' },
+                { dispId: 'effUsageDis', fieldId: 'usageDisadvantagesText' },
+                { dispId: 'effChangeAdv', fieldId: 'changeAdvantagesText' },
+                { dispId: 'effChangeDis', fieldId: 'changeDisadvantagesText' },
             ];
-            defs.forEach(({ dispId, shortId, longId }) => {
+            defs.forEach(({ dispId, fieldId }) => {
                 const el = document.getElementById(dispId);
                 if (!el) return;
-                const s = scoreValue(shortId);
-                const l = scoreValue(longId);
-                if (s === 0 && l === 0) { el.textContent = 'Effectief gewicht: —'; return; }
-                const eff = s + l * mult;
-                el.textContent = mult === 1
-                    ? `Effectief gewicht: KT ${s} + LT ${l} = ${eff}`
-                    : `Effectief gewicht: KT ${s} + LT ${l} × ${mult} = ${eff}`;
+
+                const items = Array.isArray(itemMetaByField[fieldId]) ? itemMetaByField[fieldId] : [];
+                if (!items.length) {
+                    el.textContent = 'Effectief gewicht: —';
+                    return;
+                }
+
+                const shortCount = items.filter((item) => normalizeTerm(item.term) === 'short').length;
+                const longCount = items.length - shortCount;
+                const eff = totalEffectiveWeight(fieldId);
+                el.textContent = `Effectief gewicht: ${eff} (KT punten: ${shortCount}, LT punten: ${longCount}, LT-factor: ${mult}×)`;
             });
         }
 
         function updateWeightedBalanceView() {
-            const usageAdvEff  = effectiveWeight('usageAdvShort',  'usageAdvLong');
-            const usageDisEff  = effectiveWeight('usageDisShort',  'usageDisLong');
-            const changeAdvEff = effectiveWeight('changeAdvShort', 'changeAdvLong');
-            const changeDisEff = effectiveWeight('changeDisShort', 'changeDisLong');
+            syncAllItemMetaFromTextareas();
+
+            const usageAdvEff  = totalEffectiveWeight('usageAdvantagesText');
+            const usageDisEff  = totalEffectiveWeight('usageDisadvantagesText');
+            const changeAdvEff = totalEffectiveWeight('changeAdvantagesText');
+            const changeDisEff = totalEffectiveWeight('changeDisadvantagesText');
 
             const usageScore  = usageAdvEff  - usageDisEff;
             const changeScore = changeAdvEff - changeDisEff;
@@ -1053,6 +1245,11 @@
             if (!data.changeDisadvantagesText && data.change?.disadvantages) {
                 data.changeDisadvantagesText = linesToText(data.change.disadvantages);
             }
+            if (data.itemMetaByField && typeof data.itemMetaByField === 'object') {
+                itemMetaByField = { ...data.itemMetaByField };
+            } else {
+                itemMetaByField = {};
+            }
 
             return data;
         }
@@ -1079,6 +1276,8 @@
                 advantages: toLines(collected.changeAdvantagesText),
                 disadvantages: toLines(collected.changeDisadvantagesText)
             };
+            syncAllItemMetaFromTextareas();
+            collected.itemMetaByField = itemMetaByField;
 
             return collected;
         }
@@ -1197,6 +1396,8 @@
                 trek.behoefte ? `ABCDaaah-behoefte expliciet meenemen: ${trek.behoefte}.` : ''
             ]));
 
+            renderAllItemWeightControls();
+            updateWeightedBalanceView();
             saveForm(true);
             showMessage('Voorstel toegevoegd vanuit waarom-wel-gebruiken en ABCDaaah-behoefte.');
         }
@@ -1566,6 +1767,7 @@
             const saved = iamData.getFormData(formKey);
             const initial = normalizeSavedData(saved);
             fillForm(initial);
+            renderAllItemWeightControls();
 
             // LT-multiplier badge en auto-collapse instellingenblok
             updateLtBadge();
@@ -1599,7 +1801,26 @@
                 gameSendPanel.addEventListener('toggle', () => { if (gameSendPanel.open) renderGameSendPanel(); });
             }
 
-            document.getElementById('balansForm').addEventListener('input', () => {
+            document.getElementById('balansForm').addEventListener('click', (event) => {
+                const switchBtn = event.target.closest('.term-switch');
+                if (!switchBtn) return;
+                const fieldId = switchBtn.dataset.metaField;
+                const index = parseInt(switchBtn.dataset.metaIndex || '', 10);
+                if (!fieldId || Number.isNaN(index)) return;
+                toggleItemTerm(fieldId, index);
+                renderAllItemWeightControls();
+                updateWeightedBalanceView();
+                saveForm(false);
+            });
+
+            document.getElementById('balansForm').addEventListener('input', (event) => {
+                const target = event.target;
+                if (target && target.classList && target.classList.contains('item-weight-input')) {
+                    updateItemWeightFromInput(target);
+                }
+                if (target && target.id && weightedTextareas.includes(target.id)) {
+                    renderAllItemWeightControls();
+                }
                 saveForm(false);
                 renderBalanceNudges(collectFormData());
                 updateWeightedBalanceView();
