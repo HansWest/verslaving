@@ -122,6 +122,82 @@
       color: #4f6574;
       font-size: 0.92rem;
     }
+
+    .cross-page-links {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .cross-page-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      border-radius: 999px;
+      border: 1px solid #c9dbe7;
+      background: #f3f8fb;
+      color: #1f4f6d;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0.42rem 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .priority-entry-box {
+      background: #f4f8fb;
+      border: 1px solid #d4e4ef;
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .priority-entry-list {
+      list-style: none;
+      margin: 0.8rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .priority-entry-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #d8e7f1;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+    }
+
+    .priority-entry-main p { margin: 0; line-height: 1.45; }
+    .priority-entry-main .meta { margin-top: 0.28rem; font-size: 0.84rem; color: #496072; }
+
+    .priority-entry-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #e8f1f7;
+      color: #1f4f6d;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.18rem 0.55rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .priority-entry-delete {
+      border: 1px solid #d0dde8;
+      background: #fff;
+      color: #3c5b70;
+      border-radius: 999px;
+      min-height: 34px;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
   </style>
     <script src="../js/themeMode.js"></script>
 </head>
@@ -150,6 +226,17 @@
           <li>Welke <strong>narisico's</strong> je verwacht (wat gebeurt pas daarna?)</li>
           <li>Welke <strong>vaardigheden</strong> je inzet (afleiding, steun, anders denken, etc.)</li>
         </ul>
+      </section>
+
+      <section class="note-card">
+        <h2>Snel naar verwante pagina's</h2>
+        <div class="cross-page-links">
+          <a href="./waarom-wel-gebruiken.htm">Waarom-wel-gebruiken</a>
+          <a href="./risico-activiteiten.htm">Risico-activiteiten</a>
+          <a href="./risico-situaties.htm">Risico-situaties</a>
+          <a href="./risico-mensen.htm">Risico-mensen</a>
+          <a href="./risico-gevoelens.htm">Risico-gevoelens</a>
+        </div>
       </section>
 
       <form id="risicoActiviteitenForm">
@@ -224,6 +311,31 @@
             </div>
           </section>
         </div>
+
+        <section class="question-card">
+          <h2>Items met datum en belangrijkheid</h2>
+          <p style="margin:0 0 0.6rem; color:#4f6574; font-size:0.92rem;">Leg meerdere items vast met datum en belangrijkheid. Hoogste belangrijkheid staat bovenaan.</p>
+          <div class="priority-entry-box">
+            <div class="grid-two">
+              <div class="form-group">
+                <label for="activityRiskItemText">Item</label>
+                <input id="activityRiskItemText" type="text" placeholder="Bijv. Vrijdagavond na werk + moe + drukte." />
+              </div>
+              <div class="form-group">
+                <label for="activityRiskItemDate">Datum</label>
+                <input id="activityRiskItemDate" type="date" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="activityRiskItemPriority">Belangrijkheid: <span id="activityRiskItemPriorityValue">7</span>/10</label>
+              <input id="activityRiskItemPriority" type="range" min="1" max="10" step="1" value="7" />
+            </div>
+            <div class="action-bar" style="margin-top:0.4rem;">
+              <button type="button" class="button-secondary" id="addActivityRiskItemButton">Voeg item toe</button>
+            </div>
+            <ul class="priority-entry-list" id="activityRiskItemList"></ul>
+          </div>
+        </section>
 
         <section class="note-card">
           <h2>Bijpassende vaardigheden</h2>
@@ -341,7 +453,131 @@
     function getDefaultData() {
       const data = {};
       fields.forEach((key) => { data[key] = ''; });
+      data.riskItems = [];
       return data;
+    }
+
+    function todayISODate() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function normalizeRiskItem(entry) {
+      const now = new Date().toISOString();
+      return {
+        id: entry && entry.id ? String(entry.id) : `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+        text: String(entry && entry.text ? entry.text : '').trim(),
+        date: String(entry && entry.date ? entry.date : todayISODate()),
+        priority: Math.max(1, Math.min(10, Number(entry && entry.priority ? entry.priority : 7) || 7)),
+        createdAt: String(entry && entry.createdAt ? entry.createdAt : now)
+      };
+    }
+
+    function normalizeRiskItemList(entries) {
+      const safe = Array.isArray(entries) ? entries : [];
+      return safe
+        .map((entry) => normalizeRiskItem(entry))
+        .filter((entry) => entry.text)
+        .sort((a, b) => {
+          if (b.priority !== a.priority) return b.priority - a.priority;
+          return String(b.date || '').localeCompare(String(a.date || ''));
+        });
+    }
+
+    function formatDateLabel(dateText) {
+      const value = String(dateText || '').trim();
+      if (!value) return 'zonder datum';
+      const parsed = new Date(`${value}T12:00:00`);
+      if (Number.isNaN(parsed.getTime())) return value;
+      return parsed.toLocaleDateString('nl-NL', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function getCurrentRiskItems() {
+      const saved = iamData.getFormData ? (iamData.getFormData(formKey) || getDefaultData()) : getDefaultData();
+      return normalizeRiskItemList(saved.riskItems);
+    }
+
+    function renderRiskItems(entries) {
+      const list = document.getElementById('activityRiskItemList');
+      if (!list) return;
+      list.innerHTML = '';
+
+      if (!entries.length) {
+        const item = document.createElement('li');
+        item.innerHTML = '<div class="priority-entry-main"><p>Nog geen items toegevoegd.</p></div>';
+        list.appendChild(item);
+        return;
+      }
+
+      entries.forEach((entry) => {
+        const row = document.createElement('li');
+
+        const left = document.createElement('div');
+        left.className = 'priority-entry-main';
+        const text = document.createElement('p');
+        text.textContent = entry.text;
+        const meta = document.createElement('p');
+        meta.className = 'meta';
+        meta.textContent = `${formatDateLabel(entry.date)} | belangrijkheid ${entry.priority}/10`;
+        left.appendChild(text);
+        left.appendChild(meta);
+
+        const right = document.createElement('div');
+        const badge = document.createElement('span');
+        badge.className = 'priority-entry-badge';
+        badge.textContent = `Top ${entry.priority}`;
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'priority-entry-delete';
+        del.textContent = 'Verwijder';
+        del.addEventListener('click', () => removeRiskItem(entry.id));
+        right.appendChild(badge);
+        right.appendChild(document.createElement('br'));
+        right.appendChild(del);
+
+        row.appendChild(left);
+        row.appendChild(right);
+        list.appendChild(row);
+      });
+    }
+
+    function addRiskItem() {
+      const textInput = document.getElementById('activityRiskItemText');
+      const dateInput = document.getElementById('activityRiskItemDate');
+      const priorityInput = document.getElementById('activityRiskItemPriority');
+
+      const entry = normalizeRiskItem({
+        text: textInput ? textInput.value : '',
+        date: dateInput ? dateInput.value : todayISODate(),
+        priority: priorityInput ? Number(priorityInput.value) : 7
+      });
+
+      if (!entry.text) {
+        showMessage('Vul eerst een risico-item in.');
+        return;
+      }
+
+      const current = getCurrentRiskItems();
+      current.push(entry);
+      const next = normalizeRiskItemList(current);
+      const payload = collectFormData();
+      payload.riskItems = next;
+      iamData.updateFormData(formKey, payload);
+      renderRiskItems(next);
+
+      textInput.value = '';
+      if (priorityInput) priorityInput.value = '7';
+      const label = document.getElementById('activityRiskItemPriorityValue');
+      if (label) label.textContent = '7';
+      showMessage('Risico-item toegevoegd.');
+    }
+
+    function removeRiskItem(entryId) {
+      const next = getCurrentRiskItems().filter((entry) => entry.id !== entryId);
+      const payload = collectFormData();
+      payload.riskItems = next;
+      iamData.updateFormData(formKey, payload);
+      renderRiskItems(next);
+      showMessage('Risico-item verwijderd.');
     }
 
     function fillForm(data) {
@@ -386,7 +622,10 @@
 
     function saveForm(feedback = true) {
       try {
-        iamData.updateFormData(formKey, collectFormData());
+        const payload = collectFormData();
+        payload.riskItems = getCurrentRiskItems();
+        const saved = iamData.updateFormData(formKey, payload);
+        renderRiskItems(normalizeRiskItemList((saved || payload).riskItems));
         if (feedback) showMessage('Risico-activiteiten opgeslagen op dit toestel.');
       } catch (error) {
         console.error(error);
@@ -542,9 +781,21 @@
     document.addEventListener('DOMContentLoaded', () => {
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
+      renderRiskItems(normalizeRiskItemList((saved || {}).riskItems));
       loadActivityOptions();
       renderCrossSuggestions();
       updateRouteHint();
+
+      const riskItemDate = document.getElementById('activityRiskItemDate');
+      if (riskItemDate && !riskItemDate.value) riskItemDate.value = todayISODate();
+      const riskItemPriority = document.getElementById('activityRiskItemPriority');
+      const riskItemPriorityValue = document.getElementById('activityRiskItemPriorityValue');
+      if (riskItemPriority && riskItemPriorityValue) {
+        riskItemPriority.addEventListener('input', () => {
+          riskItemPriorityValue.textContent = String(riskItemPriority.value || '7');
+        });
+      }
+      document.getElementById('addActivityRiskItemButton').addEventListener('click', addRiskItem);
 
       const preset = document.getElementById('presetActivity');
       const draft = document.getElementById('activityDraft');

@@ -98,8 +98,115 @@
       font-weight: 600;
     }
 
+    .priority-entry-box {
+      background: #f4f8fb;
+      border: 1px solid #d4e4ef;
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin-top: 0.8rem;
+    }
+
+    .priority-entry-list {
+      list-style: none;
+      margin: 0.8rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .priority-entry-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.7rem;
+      background: #fff;
+      border: 1px solid #d8e7f1;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+    }
+
+    .priority-entry-main p {
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .priority-entry-main .meta {
+      margin-top: 0.28rem;
+      font-size: 0.84rem;
+      color: #496072;
+    }
+
+    .priority-entry-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #e8f1f7;
+      color: #1f4f6d;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.18rem 0.55rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .priority-entry-delete {
+      border: 1px solid #d0dde8;
+      background: #fff;
+      color: #3c5b70;
+      border-radius: 999px;
+      min-height: 34px;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
     .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
     .action-bar button { flex: 1 1 180px; }
+
+    .button-primary,
+    .action-bar .button-primary {
+      background: linear-gradient(140deg, var(--page-main) 0%, #235171 100%);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      box-shadow: 0 8px 18px rgba(35, 81, 113, 0.24);
+      font-weight: 700;
+    }
+
+    .button-secondary,
+    .action-bar .button-secondary {
+      background: #ffffff;
+      color: #174461;
+      border: 1px solid #6d8ea4;
+      box-shadow: 0 6px 14px rgba(31, 56, 73, 0.12);
+      font-weight: 700;
+    }
+
+    .button-primary:hover,
+    .button-primary:focus-visible,
+    .action-bar .button-primary:hover,
+    .action-bar .button-primary:focus-visible {
+      background: linear-gradient(140deg, #235171 0%, #163d57 100%);
+      box-shadow: 0 10px 22px rgba(22, 61, 87, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .button-secondary:hover,
+    .button-secondary:focus-visible,
+    .action-bar .button-secondary:hover,
+    .action-bar .button-secondary:focus-visible {
+      background: #eef4f8;
+      color: #0f334a;
+      border-color: #446780;
+      box-shadow: 0 10px 20px rgba(31, 56, 73, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .button-primary:focus-visible,
+    .button-secondary:focus-visible,
+    .action-bar button:focus-visible {
+      outline: 3px solid rgba(201, 104, 74, 0.45);
+      outline-offset: 2px;
+    }
 
     .message { display: none; border-left: 4px solid var(--page-ok); }
     .message.show { display: block; }
@@ -110,6 +217,27 @@
       color: #4d6270;
       font-size: 0.9rem;
       line-height: 1.45;
+    }
+
+    .cross-page-links {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .cross-page-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      border-radius: 999px;
+      border: 1px solid #c9dbe7;
+      background: #f3f8fb;
+      color: #1f4f6d;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0.42rem 0.8rem;
+      font-size: 0.9rem;
     }
 
     .section-inline-head {
@@ -173,6 +301,17 @@
         <h1>Waarom wil ik soms wel gebruiken?</h1>
         <p>Breng de functie van gebruik in kaart: wat levert het op korte termijn op, wat hoef je dan niet te voelen of denken, en wat vraagt dit van je alternatief plan?</p>
       </header>
+
+      <section class="legacy-note">
+        <h2>Snel naar verwante pagina's</h2>
+        <div class="cross-page-links">
+          <a href="./waarom-wel-gebruiken.htm">Waarom-wel-gebruiken</a>
+          <a href="./risico-activiteiten.htm">Risico-activiteiten</a>
+          <a href="./risico-situaties.htm">Risico-situaties</a>
+          <a href="./risico-mensen.htm">Risico-mensen</a>
+          <a href="./risico-gevoelens.htm">Risico-gevoelens</a>
+        </div>
+      </section>
 
       <div id="message" class="message"></div>
 
@@ -254,6 +393,29 @@
             <textarea id="functionSummary" rows="4" placeholder="Bijvoorbeeld: wanneer gebruik rust geeft, wat ik dan vermijd, en wat ik als alternatief moet leren."></textarea>
           </div>
           <div class="summary-chips" id="whyUseSummaryChips"></div>
+
+          <div class="priority-entry-box">
+            <h3 style="margin:0 0 0.6rem; color: var(--page-main);">Items met datum en belangrijkheid</h3>
+            <p class="subtle-help">Leg meerdere items vast met datum en belangrijkheid. Hoogste belangrijkheid staat bovenaan.</p>
+            <div class="grid-two">
+              <div class="form-group">
+                <label for="functionItemText">Item</label>
+                <input id="functionItemText" type="text" placeholder="Bijv. Gebruik dempt mijn sociale spanning." />
+              </div>
+              <div class="form-group">
+                <label for="functionItemDate">Datum</label>
+                <input id="functionItemDate" type="date" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="functionItemPriority">Belangrijkheid: <span id="functionItemPriorityValue">7</span>/10</label>
+              <input id="functionItemPriority" type="range" min="1" max="10" step="1" value="7" />
+            </div>
+            <div class="action-bar" style="margin-top:0.4rem;">
+              <button type="button" class="button-secondary" id="addFunctionItemButton">Voeg item toe</button>
+            </div>
+            <ul class="priority-entry-list" id="functionItemList"></ul>
+          </div>
         </section>
 
         <section class="legacy-note">
@@ -304,7 +466,137 @@
     function getDefaultData() {
       const data = {};
       fields.forEach((key) => { data[key] = ''; });
+      data.functionItems = [];
       return data;
+    }
+
+    function todayISODate() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function normalizeFunctionItem(entry) {
+      const now = new Date().toISOString();
+      return {
+        id: entry && entry.id ? String(entry.id) : `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+        text: String(entry && entry.text ? entry.text : '').trim(),
+        date: String(entry && entry.date ? entry.date : todayISODate()),
+        priority: Math.max(1, Math.min(10, Number(entry && entry.priority ? entry.priority : 7) || 7)),
+        createdAt: String(entry && entry.createdAt ? entry.createdAt : now)
+      };
+    }
+
+    function normalizeFunctionItemList(entries) {
+      const safe = Array.isArray(entries) ? entries : [];
+      return safe
+        .map((entry) => normalizeFunctionItem(entry))
+        .filter((entry) => entry.text)
+        .sort((a, b) => {
+          if (b.priority !== a.priority) return b.priority - a.priority;
+          return String(b.date || '').localeCompare(String(a.date || ''));
+        });
+    }
+
+    function formatDateLabel(dateText) {
+      const value = String(dateText || '').trim();
+      if (!value) return 'zonder datum';
+      const parsed = new Date(`${value}T12:00:00`);
+      if (Number.isNaN(parsed.getTime())) return value;
+      return parsed.toLocaleDateString('nl-NL', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function getCurrentFunctionItems() {
+      const saved = iamData.getFormData ? (iamData.getFormData(formKey) || getDefaultData()) : getDefaultData();
+      return normalizeFunctionItemList(saved.functionItems);
+    }
+
+    function renderFunctionItems(entries) {
+      const list = document.getElementById('functionItemList');
+      if (!list) return;
+      list.innerHTML = '';
+
+      if (!entries.length) {
+        const item = document.createElement('li');
+        item.innerHTML = '<div class="priority-entry-main"><p>Nog geen items toegevoegd.</p></div>';
+        list.appendChild(item);
+        return;
+      }
+
+      entries.forEach((entry) => {
+        const row = document.createElement('li');
+
+        const left = document.createElement('div');
+        left.className = 'priority-entry-main';
+
+        const text = document.createElement('p');
+        text.textContent = entry.text;
+
+        const meta = document.createElement('p');
+        meta.className = 'meta';
+        meta.textContent = `${formatDateLabel(entry.date)} | belangrijkheid ${entry.priority}/10`;
+
+        left.appendChild(text);
+        left.appendChild(meta);
+
+        const right = document.createElement('div');
+        const badge = document.createElement('span');
+        badge.className = 'priority-entry-badge';
+        badge.textContent = `Top ${entry.priority}`;
+
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'priority-entry-delete';
+        del.textContent = 'Verwijder';
+        del.addEventListener('click', () => removeFunctionItem(entry.id));
+
+        right.appendChild(badge);
+        right.appendChild(document.createElement('br'));
+        right.appendChild(del);
+
+        row.appendChild(left);
+        row.appendChild(right);
+        list.appendChild(row);
+      });
+    }
+
+    function addFunctionItem() {
+      const textInput = document.getElementById('functionItemText');
+      const dateInput = document.getElementById('functionItemDate');
+      const priorityInput = document.getElementById('functionItemPriority');
+
+      const entry = normalizeFunctionItem({
+        text: textInput ? textInput.value : '',
+        date: dateInput ? dateInput.value : todayISODate(),
+        priority: priorityInput ? Number(priorityInput.value) : 7
+      });
+
+      if (!entry.text) {
+        showMessage('Vul eerst een functie-item in.');
+        return;
+      }
+
+      const current = getCurrentFunctionItems();
+      current.push(entry);
+      const next = normalizeFunctionItemList(current);
+      const payload = collectFormData();
+      payload.functionItems = next;
+      iamData.updateFormData(formKey, payload);
+      renderFunctionItems(next);
+
+      textInput.value = '';
+      if (dateInput && !dateInput.value) dateInput.value = todayISODate();
+      if (priorityInput) priorityInput.value = '7';
+      const valueLabel = document.getElementById('functionItemPriorityValue');
+      if (valueLabel) valueLabel.textContent = '7';
+      showMessage('Functie-item toegevoegd.');
+    }
+
+    function removeFunctionItem(entryId) {
+      const next = getCurrentFunctionItems().filter((entry) => entry.id !== entryId);
+      const payload = collectFormData();
+      payload.functionItems = next;
+      iamData.updateFormData(formKey, payload);
+      renderFunctionItems(next);
+      showMessage('Functie-item verwijderd.');
     }
 
     function firstNonEmpty(items) {
@@ -559,9 +851,11 @@
     function saveForm(feedback = true) {
       try {
         const formData = collectFormData();
+        formData.functionItems = getCurrentFunctionItems();
         const saved = iamData.updateFormData(formKey, formData);
         renderSummaryChips(saved || formData);
         renderWhyUseNudges(saved || formData);
+        renderFunctionItems(normalizeFunctionItemList((saved || formData).functionItems));
         if (feedback) showMessage('Waarom-wel-gebruiken opgeslagen op dit toestel.');
       } catch (error) {
         console.error(error);
@@ -670,6 +964,18 @@
       fillForm(initial);
       renderSummaryChips(initial);
       renderWhyUseNudges(initial);
+      renderFunctionItems(normalizeFunctionItemList(initial.functionItems));
+
+      const itemDate = document.getElementById('functionItemDate');
+      if (itemDate && !itemDate.value) itemDate.value = todayISODate();
+      const itemPriority = document.getElementById('functionItemPriority');
+      const itemPriorityValue = document.getElementById('functionItemPriorityValue');
+      if (itemPriority && itemPriorityValue) {
+        itemPriority.addEventListener('input', () => {
+          itemPriorityValue.textContent = String(itemPriority.value || '7');
+        });
+      }
+      document.getElementById('addFunctionItemButton').addEventListener('click', addFunctionItem);
 
       document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
         button.addEventListener('click', () => {

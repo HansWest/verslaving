@@ -252,6 +252,82 @@
             cursor: pointer;
         }
 
+        .cross-page-links {
+            margin-top: 0.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+        }
+
+        .cross-page-links a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 40px;
+            border-radius: 999px;
+            border: 1px solid #e8cfab;
+            background: #fff3e3;
+            color: #6a4b2f;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.42rem 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .priority-entry-box {
+            background: #fdf5ec;
+            border: 1px solid #f0d0a8;
+            border-radius: 12px;
+            padding: 0.9rem;
+            margin-top: 0.75rem;
+        }
+
+        .priority-entry-list {
+            list-style: none;
+            margin: 0.8rem 0 0;
+            padding: 0;
+            display: grid;
+            gap: 0.55rem;
+        }
+
+        .priority-entry-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            background: #fff;
+            border: 1px solid #f0dcbf;
+            border-radius: 10px;
+            padding: 0.6rem 0.7rem;
+        }
+
+        .priority-entry-main p { margin: 0; line-height: 1.45; }
+        .priority-entry-main .meta { margin-top: 0.28rem; font-size: 0.84rem; color: #6b553f; }
+
+        .priority-entry-badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            background: #fff1df;
+            color: #6a4b2f;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.18rem 0.55rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .priority-entry-delete {
+            border: 1px solid #e8cfab;
+            background: #fff;
+            color: #6a4b2f;
+            border-radius: 999px;
+            min-height: 34px;
+            padding: 0.3rem 0.65rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
         @media (min-width: 700px) {
             .triad {
                 grid-template-columns: 1fr 1fr 1fr;
@@ -285,6 +361,17 @@
                 <li><strong>Hoop en waarden:</strong> helpen je kiezen wat op lange termijn klopt.</li>
             </ul>
             Koppel deze analyse aan <a href="./levenskwaliteit.htm">levenskwaliteit</a> en <a href="./persoonlijke-waarden.htm">persoonlijke waarden</a> zodat je niet alleen remt, maar ook richting kiest.
+        </section>
+
+        <section class="hint-box">
+            <strong>Snel naar verwante pagina's</strong>
+            <div class="cross-page-links">
+                <a href="./waarom-wel-gebruiken.htm">Waarom-wel-gebruiken</a>
+                <a href="./risico-activiteiten.htm">Risico-activiteiten</a>
+                <a href="./risico-situaties.htm">Risico-situaties</a>
+                <a href="./risico-mensen.htm">Risico-mensen</a>
+                <a href="./risico-gevoelens.htm">Risico-gevoelens</a>
+            </div>
         </section>
 
         <h2 class="section-title">1) Reframing: Hoe zet je risicogevoelens in perspectief?</h2>
@@ -365,6 +452,31 @@
             <textarea id="interneRisicos" name="interneRisicos" placeholder="Bijv: De gedachte dat ik alles alleen moet kunnen, schaamte over mijn verleden, het gevoel dat ik niet goed genoeg ben...
 En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textarea>
         </div>
+
+        <section class="hint-box">
+            <strong>Items met datum en belangrijkheid</strong>
+            <p style="margin:0.45rem 0 0.6rem;">Leg meerdere items vast met datum en belangrijkheid. Hoogste belangrijkheid staat bovenaan.</p>
+            <div class="priority-entry-box">
+                <div class="field">
+                    <label for="gevoelRiskItemText">Item</label>
+                    <input id="gevoelRiskItemText" type="text" placeholder="Bijv. Schaamte na conflict met partner." />
+                </div>
+                <div class="triad" style="grid-template-columns:1fr 1fr;">
+                    <div class="field" style="margin-bottom:0;">
+                        <label for="gevoelRiskItemDate">Datum</label>
+                        <input id="gevoelRiskItemDate" type="date" />
+                    </div>
+                    <div class="field" style="margin-bottom:0;">
+                        <label for="gevoelRiskItemPriority">Belangrijkheid: <span id="gevoelRiskItemPriorityValue">7</span>/10</label>
+                        <input id="gevoelRiskItemPriority" type="range" min="1" max="10" step="1" value="7" />
+                    </div>
+                </div>
+                <div class="action-bar" style="margin-top:0.6rem;">
+                    <button type="button" class="btn btn-secondary" id="addGevoelRiskItemButton">Voeg item toe</button>
+                </div>
+                <ul class="priority-entry-list" id="gevoelRiskItemList"></ul>
+            </div>
+        </section>
 
         <section class="cross-suggest-box">
             <p>Ideeën uit andere pagina's (max 5): kies wat je nu helpt en voeg het direct toe.</p>
@@ -480,6 +592,134 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
             }
         }
 
+        function todayISODate() {
+            return new Date().toISOString().slice(0, 10);
+        }
+
+        function normalizeRiskItem(entry) {
+            const now = new Date().toISOString();
+            return {
+                id: entry && entry.id ? String(entry.id) : `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+                text: String(entry && entry.text ? entry.text : '').trim(),
+                date: String(entry && entry.date ? entry.date : todayISODate()),
+                priority: Math.max(1, Math.min(10, Number(entry && entry.priority ? entry.priority : 7) || 7)),
+                createdAt: String(entry && entry.createdAt ? entry.createdAt : now)
+            };
+        }
+
+        function normalizeRiskItemList(entries) {
+            const safe = Array.isArray(entries) ? entries : [];
+            return safe
+                .map((entry) => normalizeRiskItem(entry))
+                .filter((entry) => entry.text)
+                .sort((a, b) => {
+                    if (b.priority !== a.priority) return b.priority - a.priority;
+                    return String(b.date || '').localeCompare(String(a.date || ''));
+                });
+        }
+
+        function formatDateLabel(dateText) {
+            const value = String(dateText || '').trim();
+            if (!value) return 'zonder datum';
+            const parsed = new Date(`${value}T12:00:00`);
+            if (Number.isNaN(parsed.getTime())) return value;
+            return parsed.toLocaleDateString('nl-NL', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        function getCurrentRiskItems() {
+            const saved = iamData.getFormData('risico-gevoelens') || {};
+            return normalizeRiskItemList(saved.riskItems);
+        }
+
+        function renderRiskItems(entries) {
+            const list = document.getElementById('gevoelRiskItemList');
+            if (!list) return;
+            list.innerHTML = '';
+
+            if (!entries.length) {
+                const item = document.createElement('li');
+                item.innerHTML = '<div class="priority-entry-main"><p>Nog geen items toegevoegd.</p></div>';
+                list.appendChild(item);
+                return;
+            }
+
+            entries.forEach((entry) => {
+                const row = document.createElement('li');
+
+                const left = document.createElement('div');
+                left.className = 'priority-entry-main';
+                const text = document.createElement('p');
+                text.textContent = entry.text;
+                const meta = document.createElement('p');
+                meta.className = 'meta';
+                meta.textContent = `${formatDateLabel(entry.date)} | belangrijkheid ${entry.priority}/10`;
+                left.appendChild(text);
+                left.appendChild(meta);
+
+                const right = document.createElement('div');
+                const badge = document.createElement('span');
+                badge.className = 'priority-entry-badge';
+                badge.textContent = `Top ${entry.priority}`;
+                const del = document.createElement('button');
+                del.type = 'button';
+                del.className = 'priority-entry-delete';
+                del.textContent = 'Verwijder';
+                del.addEventListener('click', () => removeRiskItem(entry.id));
+                right.appendChild(badge);
+                right.appendChild(document.createElement('br'));
+                right.appendChild(del);
+
+                row.appendChild(left);
+                row.appendChild(right);
+                list.appendChild(row);
+            });
+        }
+
+        function collectFieldData() {
+            const data = {};
+            fields.forEach((field) => {
+                const el = document.getElementById(field);
+                if (el) data[field] = el.value;
+            });
+            return data;
+        }
+
+        function addRiskItem() {
+            const textInput = document.getElementById('gevoelRiskItemText');
+            const dateInput = document.getElementById('gevoelRiskItemDate');
+            const priorityInput = document.getElementById('gevoelRiskItemPriority');
+
+            const entry = normalizeRiskItem({
+                text: textInput ? textInput.value : '',
+                date: dateInput ? dateInput.value : todayISODate(),
+                priority: priorityInput ? Number(priorityInput.value) : 7
+            });
+
+            if (!entry.text) {
+                alert('Vul eerst een risico-item in.');
+                return;
+            }
+
+            const next = normalizeRiskItemList([...getCurrentRiskItems(), entry]);
+            const payload = collectFieldData();
+            payload.riskItems = next;
+            iamData.updateFormData('risico-gevoelens', payload);
+            renderRiskItems(next);
+
+            textInput.value = '';
+            if (priorityInput) priorityInput.value = '7';
+            const label = document.getElementById('gevoelRiskItemPriorityValue');
+            if (label) label.textContent = '7';
+        }
+
+        function removeRiskItem(entryId) {
+            const next = getCurrentRiskItems().filter((entry) => entry.id !== entryId);
+            const payload = collectFieldData();
+            payload.riskItems = next;
+            iamData.updateFormData('risico-gevoelens', payload);
+            renderRiskItems(next);
+        }
+
         function appendExample() {
             const select = document.getElementById('gevoelVoorbeeldSelect');
             if (!select.value) return;
@@ -572,15 +812,13 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
                     el.value = data[field];
                 }
             });
+            renderRiskItems(normalizeRiskItemList(data.riskItems));
         }
 
         function saveData(showFeedback = true) {
             if (typeof iamData === 'undefined') return;
-            const data = {};
-            fields.forEach((field) => {
-                const el = document.getElementById(field);
-                if (el) data[field] = el.value;
-            });
+            const data = collectFieldData();
+            data.riskItems = getCurrentRiskItems();
             iamData.updateFormData('risico-gevoelens', data);
             if (showFeedback) alert('Opgeslagen');
         }
@@ -654,6 +892,18 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
             }
             updateRouteHint();
             renderCrossSuggestions();
+            renderRiskItems(getCurrentRiskItems());
+
+            const riskItemDate = document.getElementById('gevoelRiskItemDate');
+            if (riskItemDate && !riskItemDate.value) riskItemDate.value = todayISODate();
+            const riskItemPriority = document.getElementById('gevoelRiskItemPriority');
+            const riskItemPriorityValue = document.getElementById('gevoelRiskItemPriorityValue');
+            if (riskItemPriority && riskItemPriorityValue) {
+                riskItemPriority.addEventListener('input', () => {
+                    riskItemPriorityValue.textContent = String(riskItemPriority.value || '7');
+                });
+            }
+            document.getElementById('addGevoelRiskItemButton').addEventListener('click', addRiskItem);
             document.getElementById('gevoelVoorbeeldSelect').addEventListener('change', appendExample);
             document.getElementById('routeUrgency').addEventListener('change', updateRouteHint);
             document.getElementById('routeFocus').addEventListener('change', updateRouteHint);
