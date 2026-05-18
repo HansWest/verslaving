@@ -433,6 +433,47 @@
     .cog-button[aria-expanded="true"] { background: #eef4f7; }
     .settings-body { margin-top: 0.85rem; }
     .settings-body.is-collapsed { display: none; }
+    .emotion-check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.55rem;
+      margin-top: 0.25rem;
+    }
+    .emotion-check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      border: 1px solid rgba(23, 50, 73, 0.12);
+      border-radius: 10px;
+      padding: 0.45rem 0.55rem;
+      background: #fbfdfe;
+      min-height: 40px;
+      font-weight: 600;
+      color: #2f4a5b;
+    }
+    .motto-card {
+      border-left: 5px solid #6f5d2f;
+      background: linear-gradient(135deg, #fffaf0 0%, #f5f0e4 100%);
+    }
+    .motto-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+    .motto-text {
+      margin: 0.45rem 0 0;
+      font-size: 1.06rem;
+      line-height: 1.5;
+      color: #3f3520;
+      font-weight: 700;
+    }
+    .motto-meta {
+      margin: 0.45rem 0 0;
+      color: #5f5541;
+      font-size: 0.9rem;
+    }
     .fourteen-day-overview { margin-top: 1rem; }
     .overview-empty { opacity: 0.55; }
     @media (max-width: 640px) {
@@ -459,6 +500,15 @@
       <section class="card legacy-note">
         <h2>Waarom deze pagina apart staat</h2>
         <p>Het gebruik van de dag volgen is iets anders dan trek meten. Trek zegt iets over de druk in het moment; deze pagina laat zien wat je uiteindelijk deed, wat je wilde doen en wat dat vraagt in je planning of zelfzorg.</p>
+      </section>
+
+      <section class="card motto-card" aria-labelledby="mottoTitle">
+        <div class="motto-head">
+          <h2 id="mottoTitle" style="margin:0;">Motiverend motto</h2>
+          <a href="./motivating-motto.htm" class="button-secondary" style="text-decoration:none; display:inline-flex; align-items:center;">Motto openen / aanpassen</a>
+        </div>
+        <p id="sharedMottoText" class="motto-text">Nog geen motto ingesteld.</p>
+        <p id="sharedMottoMeta" class="motto-meta">Stel een korte zin in die je op koers houdt op lastige momenten.</p>
       </section>
 
       <section class="card" aria-labelledby="twoWeekObserveTitle">
@@ -648,6 +698,36 @@
             <label for="emotionSwallowedPercent">Heb je emoties als verdriet gevoeld en ingeslikt? (0-100%)</label>
             <input id="emotionSwallowedPercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
           </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="swallowedEmotionMain">Welke emotie wordt vooral ingeslikt?</label>
+            <input id="swallowedEmotionMain" type="text" placeholder="Bijv. ingehouden boosheid, niet-gevoeld verdriet, weggedrukte angst..." />
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label>Ingeslikte basis-emoties van vandaag</label>
+            <div class="emotion-check-grid">
+              <label class="emotion-check-item" for="swallowedCuriosity">
+                <input type="checkbox" id="swallowedCuriosity" />
+                <span>Nieuwsgierigheid</span>
+              </label>
+              <label class="emotion-check-item" for="swallowedAnger">
+                <input type="checkbox" id="swallowedAnger" />
+                <span>Boosheid</span>
+              </label>
+              <label class="emotion-check-item" for="swallowedSadness">
+                <input type="checkbox" id="swallowedSadness" />
+                <span>Verdriet</span>
+              </label>
+              <label class="emotion-check-item" for="swallowedFear">
+                <input type="checkbox" id="swallowedFear" />
+                <span>Angst</span>
+              </label>
+              <label class="emotion-check-item" for="swallowedDesire">
+                <input type="checkbox" id="swallowedDesire" />
+                <span>Begeerte</span>
+              </label>
+            </div>
+            <p class="observation-help" style="margin-top:0.45rem;">Onderzoek dit verder op <a id="swallowedEmotionResearchLink" href="./ingeslikte-emoties.htm">ingeslikte emoties</a>.</p>
+          </div>
         </div>
 
         <div class="tracker-grid" id="reflectionTrackingSection">
@@ -735,6 +815,7 @@
   <script>
     const formKey = 'craving-1-10';
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
+    const MOTIVATING_MOTTO_KEY = 'motivatingMotto';
     const ATTEMPT_TAG_LABELS = {
       nuttig: 'Nuttig',
       'niet-nuttig': 'Niet nuttig',
@@ -742,6 +823,78 @@
     };
     const historyLimit = 14;
     let selectedHistoryRange = 7;
+
+    function getTodayDateKey() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function pickActiveMotto(mottoMeta) {
+      if (!mottoMeta || typeof mottoMeta !== 'object') return null;
+      const items = Array.isArray(mottoMeta.items) ? mottoMeta.items : [];
+      const today = getTodayDateKey();
+
+      const active = items
+        .filter((item) => item && typeof item.text === 'string' && item.text.trim())
+        .filter((item) => {
+          const startOk = !item.startDate || item.startDate <= today;
+          const endOk = !item.endDate || today <= item.endDate;
+          return startOk && endOk;
+        })
+        .sort((a, b) => {
+          const left = (a.startDate || '') + '|' + (a.createdAt || '');
+          const right = (b.startDate || '') + '|' + (b.createdAt || '');
+          return right.localeCompare(left);
+        });
+
+      return active[0] || null;
+    }
+
+    function formatMottoPeriod(item) {
+      if (!item) return '';
+      const startText = item.startDate || 'nu';
+      const endText = item.endDate || 'onbepaald';
+      return `Geldig van ${startText} t/m ${endText}`;
+    }
+
+    function getMotivatingMottoMeta() {
+      if (!iamData || typeof iamData.getAppMeta !== 'function') return null;
+      return iamData.getAppMeta(MOTIVATING_MOTTO_KEY);
+    }
+
+    function renderMotivatingMottoSpot() {
+      const textEl = document.getElementById('sharedMottoText');
+      const metaEl = document.getElementById('sharedMottoMeta');
+      if (!textEl || !metaEl) return;
+
+      const mottoMeta = getMotivatingMottoMeta();
+      const activeItem = pickActiveMotto(mottoMeta);
+      const mottoText = activeItem
+        ? activeItem.text.trim()
+        : (typeof mottoMeta === 'string'
+          ? mottoMeta.trim()
+          : (mottoMeta && typeof mottoMeta.text === 'string' ? mottoMeta.text.trim() : ''));
+
+      if (!mottoText) {
+        textEl.textContent = 'Nog geen motto ingesteld.';
+        metaEl.textContent = 'Stel een korte zin in die je op koers houdt op lastige momenten.';
+        return;
+      }
+
+      textEl.textContent = `"${mottoText}"`;
+      if (activeItem) {
+        metaEl.textContent = `${formatMottoPeriod(activeItem)}. Bekijk of wijzig via de motto-pagina.`;
+        return;
+      }
+
+      const updated = mottoMeta && mottoMeta.updatedAt ? new Date(mottoMeta.updatedAt) : null;
+      metaEl.textContent = updated && !Number.isNaN(updated.getTime())
+        ? `Laatst aangepast: ${updated.toLocaleString('nl-NL')}`
+        : 'Dit motto is zichtbaar vanaf index en dagkaart.';
+    }
 
     function getDailySectionSettings() {
       const state = getFormState();
@@ -791,6 +944,15 @@
         if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
         if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
         if (isNumericUnits(entry.emotionSwallowedPercent)) parts.push(`Emoties ingeslikt: ${formatUnits(entry.emotionSwallowedPercent)}%`);
+        if (entry.swallowedEmotionMain) parts.push(`Ingeslikte emotie: ${entry.swallowedEmotionMain}`);
+        const swallowedBasics = [
+          entry.swallowedCuriosity ? 'Nieuwsgierigheid' : '',
+          entry.swallowedAnger ? 'Boosheid' : '',
+          entry.swallowedSadness ? 'Verdriet' : '',
+          entry.swallowedFear ? 'Angst' : '',
+          entry.swallowedDesire ? 'Begeerte' : ''
+        ].filter(Boolean);
+        if (swallowedBasics.length) parts.push(`Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`);
         if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
         if (entry.tooMuchTodayNote) parts.push(`Te veel: ${entry.tooMuchTodayNote}`);
         return `<div class="observation-day"><h3>${formatDateLabel(dateKey)}</h3>${parts.map((p) => `<p>${p}</p>`).join('')}</div>`;
@@ -1001,6 +1163,7 @@
       baseDate.setDate(baseDate.getDate() + days);
       dateInput.value = toDateKey(baseDate);
       renderSelectedDay();
+      updateSwallowedEmotionResearchLink();
     }
 
     function getFormState() {
@@ -1027,6 +1190,12 @@
       document.getElementById('enjoymentPercent').value = entry && entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined ? entry.enjoymentPercent : '';
       document.getElementById('socialOnlinePercent').value = entry && entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined ? entry.socialOnlinePercent : '';
       document.getElementById('socialIrlPercent').value = entry && entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined ? entry.socialIrlPercent : '';
+      document.getElementById('swallowedEmotionMain').value = entry?.swallowedEmotionMain || '';
+      document.getElementById('swallowedCuriosity').checked = Boolean(entry?.swallowedCuriosity);
+      document.getElementById('swallowedAnger').checked = Boolean(entry?.swallowedAnger);
+      document.getElementById('swallowedSadness').checked = Boolean(entry?.swallowedSadness);
+      document.getElementById('swallowedFear').checked = Boolean(entry?.swallowedFear);
+      document.getElementById('swallowedDesire').checked = Boolean(entry?.swallowedDesire);
       document.getElementById('missedTodayNote').value = entry?.missedTodayNote || '';
       document.getElementById('tooMuchTodayNote').value = entry?.tooMuchTodayNote || '';
       document.getElementById('emotionSwallowedPercent').value = entry && entry.emotionSwallowedPercent !== '' && entry.emotionSwallowedPercent !== null && entry.emotionSwallowedPercent !== undefined ? entry.emotionSwallowedPercent : '';
@@ -1057,6 +1226,9 @@
       if (entry.motivationNote) parts.push('Motivatie ingevuld');
       if (isNumericUnits(entry.naturePercent) || isNumericUnits(entry.enjoymentPercent) || isNumericUnits(entry.socialOnlinePercent) || isNumericUnits(entry.socialIrlPercent) || isNumericUnits(entry.emotionSwallowedPercent)) {
         parts.push('Realiteitsscores ingevuld');
+      }
+      if (entry.swallowedEmotionMain || entry.swallowedCuriosity || entry.swallowedAnger || entry.swallowedSadness || entry.swallowedFear || entry.swallowedDesire) {
+        parts.push('Ingeslikte emoties ingevuld');
       }
       if (entry.missedTodayNote) parts.push('Gemist ingevuld');
       if (entry.tooMuchTodayNote) parts.push('Te veel ingevuld');
@@ -1096,6 +1268,12 @@
         enjoymentPercent: rawEnjoyment === '' ? '' : Number(rawEnjoyment),
         socialOnlinePercent: rawSocialOnline === '' ? '' : Number(rawSocialOnline),
         socialIrlPercent: rawSocialIrl === '' ? '' : Number(rawSocialIrl),
+        swallowedEmotionMain: document.getElementById('swallowedEmotionMain').value.trim(),
+        swallowedCuriosity: document.getElementById('swallowedCuriosity').checked,
+        swallowedAnger: document.getElementById('swallowedAnger').checked,
+        swallowedSadness: document.getElementById('swallowedSadness').checked,
+        swallowedFear: document.getElementById('swallowedFear').checked,
+        swallowedDesire: document.getElementById('swallowedDesire').checked,
         missedTodayNote: document.getElementById('missedTodayNote').value.trim(),
         tooMuchTodayNote: document.getElementById('tooMuchTodayNote').value.trim(),
         emotionSwallowedPercent: (() => { const r = document.getElementById('emotionSwallowedPercent').value.trim().replace(',', '.'); return r === '' ? '' : Number(r); })(),
@@ -1123,6 +1301,12 @@
         (entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined) ||
         (entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined) ||
         (entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined) ||
+        Boolean(entry.swallowedEmotionMain) ||
+        Boolean(entry.swallowedCuriosity) ||
+        Boolean(entry.swallowedAnger) ||
+        Boolean(entry.swallowedSadness) ||
+        Boolean(entry.swallowedFear) ||
+        Boolean(entry.swallowedDesire) ||
         Boolean(entry.missedTodayNote) ||
         Boolean(entry.tooMuchTodayNote) ||
         (entry.emotionSwallowedPercent !== '' && entry.emotionSwallowedPercent !== null && entry.emotionSwallowedPercent !== undefined)
@@ -1420,6 +1604,15 @@
         if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
         if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
         if (isNumericUnits(entry.emotionSwallowedPercent)) parts.push(`Emoties ingeslikt: ${formatUnits(entry.emotionSwallowedPercent)}%`);
+        if (entry.swallowedEmotionMain) parts.push(`Ingeslikte emotie: ${entry.swallowedEmotionMain}`);
+        const swallowedBasics = [
+          entry.swallowedCuriosity ? 'Nieuwsgierigheid' : '',
+          entry.swallowedAnger ? 'Boosheid' : '',
+          entry.swallowedSadness ? 'Verdriet' : '',
+          entry.swallowedFear ? 'Angst' : '',
+          entry.swallowedDesire ? 'Begeerte' : ''
+        ].filter(Boolean);
+        if (swallowedBasics.length) parts.push(`Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`);
         if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
         if (entry.tooMuchTodayNote) parts.push(`Te veel: ${entry.tooMuchTodayNote}`);
 
@@ -1470,7 +1663,7 @@
         filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
         const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
         const rows = [
-          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionSwallowedPercent', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionSwallowedPercent', 'swallowedEmotionMain', 'swallowedCuriosity', 'swallowedAnger', 'swallowedSadness', 'swallowedFear', 'swallowedDesire', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
           ...sortedEntries.map((entry) => {
             const hasBoth = isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units);
             const difference = hasBoth ? Number(entry.units) - Number(entry.plannedUnits) : '';
@@ -1489,6 +1682,12 @@
               entry.socialOnlinePercent ?? '',
               entry.socialIrlPercent ?? '',
               entry.emotionSwallowedPercent ?? '',
+              entry.swallowedEmotionMain || '',
+              entry.swallowedCuriosity ? 'ja' : '',
+              entry.swallowedAnger ? 'ja' : '',
+              entry.swallowedSadness ? 'ja' : '',
+              entry.swallowedFear ? 'ja' : '',
+              entry.swallowedDesire ? 'ja' : '',
               entry.missedTodayNote || '',
               entry.tooMuchTodayNote || '',
               entry.usageNote || '',
@@ -1677,6 +1876,25 @@
           item.appendChild(emotionSwallowed);
         }
 
+        if (entry.swallowedEmotionMain) {
+          const swallowedMain = document.createElement('p');
+          swallowedMain.textContent = `Ingeslikte emotie: ${entry.swallowedEmotionMain}`;
+          item.appendChild(swallowedMain);
+        }
+
+        const swallowedBasics = [
+          entry.swallowedCuriosity ? 'Nieuwsgierigheid' : '',
+          entry.swallowedAnger ? 'Boosheid' : '',
+          entry.swallowedSadness ? 'Verdriet' : '',
+          entry.swallowedFear ? 'Angst' : '',
+          entry.swallowedDesire ? 'Begeerte' : ''
+        ].filter(Boolean);
+        if (swallowedBasics.length) {
+          const swallowedBasicsP = document.createElement('p');
+          swallowedBasicsP.textContent = `Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`;
+          item.appendChild(swallowedBasicsP);
+        }
+
         if (entry.missedTodayNote) {
           const missed = document.createElement('p');
           missed.textContent = `Wat heb je vandaag gemist: ${entry.missedTodayNote}`;
@@ -1733,13 +1951,23 @@
       hoursEl.value = String(Math.round(hours * 10) / 10);
     }
 
+    function updateSwallowedEmotionResearchLink() {
+      const link = document.getElementById('swallowedEmotionResearchLink');
+      const dateInput = document.getElementById('usageDate');
+      if (!link || !dateInput) return;
+      const dateKey = dateInput.value || toDateKey(new Date());
+      link.href = `./ingeslikte-emoties.htm?date=${encodeURIComponent(dateKey)}`;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const existing = iamData.getFormData(formKey) || {};
       const dateInput = document.getElementById('usageDate');
 
       dateInput.value = existing.lastTrackedDate || toDateKey(new Date());
       renderAttemptSummary();
+      renderMotivatingMottoSpot();
       renderSelectedDay();
+      updateSwallowedEmotionResearchLink();
       renderHistory();
       render14DayOverview();
 
@@ -1756,13 +1984,17 @@
       });
       document.getElementById('prevDayButton').addEventListener('click', () => shiftSelectedDate(-1));
       document.getElementById('nextDayButton').addEventListener('click', () => shiftSelectedDate(1));
-      document.getElementById('usageDate').addEventListener('change', renderSelectedDay);
+      document.getElementById('usageDate').addEventListener('change', () => {
+        renderSelectedDay();
+        updateSwallowedEmotionResearchLink();
+      });
       document.getElementById('saveDayButton').addEventListener('click', saveSelectedDay);
       document.getElementById('sleepStart').addEventListener('change', calculateSleepHours);
       document.getElementById('sleepEnd').addEventListener('change', calculateSleepHours);
       document.getElementById('copyTodayButton').addEventListener('click', () => {
         dateInput.value = toDateKey(new Date());
         renderSelectedDay();
+        updateSwallowedEmotionResearchLink();
       });
       document.getElementById('printButton').addEventListener('click', () => window.print());
       document.querySelectorAll('[data-range]').forEach((button) => {
@@ -1861,6 +2093,7 @@
 
       window.addEventListener('focus', () => {
         renderAttemptSummary();
+        renderMotivatingMottoSpot();
       });
     });
   </script>

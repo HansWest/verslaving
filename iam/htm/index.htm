@@ -450,6 +450,43 @@
             box-shadow: var(--shadow-soft);
         }
 
+        .motto-focus {
+            background: linear-gradient(130deg, #fffaf0 0%, #f5f0e4 100%);
+            border: 1px solid #e6d8bd;
+            border-left: 6px solid #7a6630;
+            border-radius: 12px;
+            padding: 1.1rem 1.25rem;
+            margin-bottom: 1.4rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .motto-focus-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.7rem;
+        }
+
+        .motto-focus-head h3 {
+            margin: 0;
+            color: #594824;
+        }
+
+        .motto-focus-text {
+            margin: 0.45rem 0 0;
+            color: #3f3520;
+            font-size: 1.08rem;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .motto-focus-meta {
+            margin: 0.45rem 0 0;
+            color: #6a5d44;
+            font-size: 0.9rem;
+        }
+
         .route-map {
             background: var(--surface);
             border: 1px solid var(--border-soft);
@@ -1292,6 +1329,7 @@
                 <button class="btn-action" onclick="window.location.href='demo-formulier.htm'">🧩 Intake inventarisatie</button>
                 <button class="btn-action" onclick="window.location.href='start-nu.htm'">🧭 Start nu (60 sec triage)</button>
                 <button class="btn-action export" onclick="window.location.href='trek-opvangen.htm'">🧠 Eerst trek opvangen</button>
+                <button class="btn-action" onclick="window.location.href='motivating-motto.htm'">🗝️ Motivating motto</button>
                 <button class="btn-action" onclick="window.location.href='data-beheer.htm'">🗂️ Centraal databeheer</button>
                 <button class="btn-action export" onclick="viewProgress()">📊 Mijn voortgang</button>
             </div>
@@ -1311,6 +1349,15 @@
             </details>
             <p class="priority-note">Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.</p>
         </div>
+
+        <section class="motto-focus" aria-labelledby="sharedMottoTitle">
+            <div class="motto-focus-head">
+                <h3 id="sharedMottoTitle">Motiverend motto</h3>
+                <a href="motivating-motto.htm" class="card-link">Motto openen / aanpassen</a>
+            </div>
+            <p id="sharedMottoText" class="motto-focus-text">Nog geen motto ingesteld.</p>
+            <p id="sharedMottoMeta" class="motto-focus-meta">Kies een korte zin die jou door moeilijke momenten helpt.</p>
+        </section>
 
         <section class="recently-visited" aria-label="Recent bezochte pagina's">
             <h3>🕘 Recent bezocht</h3>
@@ -1905,11 +1952,84 @@
             'niet-nuttig': 'Niet nuttig',
             'later': 'Later opnieuw proberen'
         };
+        const MOTIVATING_MOTTO_KEY = 'motivatingMotto';
         const CHAPTER_COLLAPSE_STORAGE_KEY = 'iam.index.chapterCollapse.v2';
         const THEME_PREFERENCE_KEY = 'iam.theme.preference';
         const RECENT_VISITS_KEY = 'iam.index.recentVisits.v1';
         const RECENT_VISITS_LIMIT = 5;
         let weeklyHistoryFilter = 'all';
+
+        function getTodayDateKey() {
+            const d = new Date();
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
+        }
+
+        function pickActiveMotto(mottoMeta) {
+            if (!mottoMeta || typeof mottoMeta !== 'object') return null;
+            const items = Array.isArray(mottoMeta.items) ? mottoMeta.items : [];
+            const today = getTodayDateKey();
+
+            const active = items
+                .filter((item) => item && typeof item.text === 'string' && item.text.trim())
+                .filter((item) => {
+                    const startOk = !item.startDate || item.startDate <= today;
+                    const endOk = !item.endDate || today <= item.endDate;
+                    return startOk && endOk;
+                })
+                .sort((a, b) => {
+                    const left = (a.startDate || '') + '|' + (a.createdAt || '');
+                    const right = (b.startDate || '') + '|' + (b.createdAt || '');
+                    return right.localeCompare(left);
+                });
+
+            return active[0] || null;
+        }
+
+        function formatMottoPeriod(item) {
+            if (!item) return '';
+            const startText = item.startDate || 'nu';
+            const endText = item.endDate || 'onbepaald';
+            return `Geldig van ${startText} t/m ${endText}`;
+        }
+
+        function getMotivatingMottoMeta() {
+            if (!iamData || typeof iamData.getAppMeta !== 'function') return null;
+            return iamData.getAppMeta(MOTIVATING_MOTTO_KEY);
+        }
+
+        function renderMotivatingMottoSpot() {
+            const textEl = document.getElementById('sharedMottoText');
+            const metaEl = document.getElementById('sharedMottoMeta');
+            if (!textEl || !metaEl) return;
+
+            const mottoMeta = getMotivatingMottoMeta();
+            const activeItem = pickActiveMotto(mottoMeta);
+            const mottoText = activeItem
+                ? activeItem.text.trim()
+                : (typeof mottoMeta === 'string'
+                    ? mottoMeta.trim()
+                    : (mottoMeta && typeof mottoMeta.text === 'string' ? mottoMeta.text.trim() : ''));
+
+            if (!mottoText) {
+                textEl.textContent = 'Nog geen motto ingesteld.';
+                metaEl.textContent = 'Kies een korte zin die jou door moeilijke momenten helpt.';
+                return;
+            }
+
+            textEl.textContent = `"${mottoText}"`;
+            if (activeItem) {
+                metaEl.textContent = `${formatMottoPeriod(activeItem)}. Open de motto-pagina om aan te passen.`;
+                return;
+            }
+
+            const updated = mottoMeta && mottoMeta.updatedAt ? new Date(mottoMeta.updatedAt) : null;
+            metaEl.textContent = updated && !Number.isNaN(updated.getTime())
+                ? `Laatst aangepast: ${updated.toLocaleString('nl-NL')}`
+                : 'Dit motto is ook zichtbaar op de dagkaart.';
+        }
 
         function loadChapterCollapseState() {
             try {
@@ -2786,6 +2906,7 @@
             initializeRecentVisitsTracking();
             renderRecentVisits();
             initializeCollapsibleChapters();
+            renderMotivatingMottoSpot();
             document.querySelectorAll('[data-attempt-filter]').forEach((button) => {
                 button.addEventListener('click', () => {
                     weeklyHistoryFilter = button.dataset.attemptFilter || 'all';
@@ -2793,6 +2914,7 @@
                 });
             });
             refreshDashboard();
+            window.addEventListener('focus', renderMotivatingMottoSpot);
         });
     </script>
 
