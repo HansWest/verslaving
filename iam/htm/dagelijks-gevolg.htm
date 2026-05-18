@@ -474,6 +474,19 @@
       color: #5f5541;
       font-size: 0.9rem;
     }
+    .two-week-setup {
+      margin-top: 0.8rem;
+      display: grid;
+      gap: 0.65rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      align-items: end;
+    }
+    .two-week-status {
+      margin-top: 0.6rem;
+      color: #4d6476;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
     .fourteen-day-overview { margin-top: 1rem; }
     .overview-empty { opacity: 0.55; }
     @media (max-width: 640px) {
@@ -515,6 +528,16 @@
         <h2 id="twoWeekObserveTitle">Twee weken gebruik bijhouden: eerst waarnemen, dan sturen</h2>
         <p class="observation-help">Je hoeft de komende twee weken niet direct minder te gebruiken. Het doel is eerst zicht krijgen op je gebruik: waarom wil je nu gebruiken, wat voel je, wat denk je, en in welke situatie gebeurt het?</p>
         <p class="observation-help">Als je wilt opschrijven: omdat ik daar nou eenmaal zin in heb, probeer dan toch even stil te staan bij de vraag waarom je daar nu zin in hebt.</p>
+        <div class="two-week-setup">
+          <div class="form-group" style="margin:0;">
+            <label for="twoWeekStartDate">Begindatum eerste 14-dagenfase</label>
+            <input id="twoWeekStartDate" type="date" />
+          </div>
+          <div class="action-bar" style="margin:0;">
+            <button type="button" class="button-primary" id="startTwoWeekPhaseButton">Start eerste 14 dagen</button>
+          </div>
+        </div>
+        <p id="twoWeekPhaseStatus" class="two-week-status">Nog geen begindatum ingesteld. Kies een startdatum om je eerste twee weken vast te leggen.</p>
         <div class="zone" style="margin-top:0.9rem;">
           <h3 style="margin:0 0 0.45rem;">Voorbeeld: het hoeft niet perfect</h3>
           <textarea readonly>dag 8.
@@ -672,29 +695,29 @@
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
             <p class="observation-help" style="margin: 0;">
-              Noteer hier de nacht die op deze dag uitkomt. Als je om 20:00 uur op dezelfde dag gaat slapen en pas de volgende ochtend wakker wordt, vul dan de slaap in bij de dag waarop je wakker wordt. Die afgelopen nacht telt meestal het meest mee voor hoe deze dag voelt.
-            </p>
+              Noteer hier de nacht die op deze dag uitkomt. Als je voor 24:00 uur gisteren bent gaan slapen en vanochtend wakker werd, dan hoort die slaap bij de dag waarop je wakker wordt. De afgelopen nacht bepaalt vooral hoe je denkkracht is en hoe deze dag voelt.
+            </p
           </div>
         </div>
 
         <div class="tracker-grid" id="realityTrackingSection">
           <div class="form-group">
-            <label for="naturePercent">Ben je buiten in de natuur geweest? (0-100%)</label>
+            <label for="naturePercent">Ben je buiten in <em>natuur</em> geweest? (0-100%)</label>
             <input id="naturePercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
           </div>
           <div class="form-group">
-            <label for="enjoymentPercent">Heb je genoten (seks bijv.)? (0-100%)</label>
+            <label for="enjoymentPercent">Heb je deze dag <em>genoten</em> (van seks bijv.)? (0-100%)</label>
             <input id="enjoymentPercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
           </div>
-          <div class="form-group">
-            <label for="socialOnlinePercent">Contact met andere mensen online (0-100%)</label>
-            <input id="socialOnlinePercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
-          </div>
-          <div class="form-group">
-            <label for="socialIrlPercent">Contact met andere mensen in het echt (0-100%)</label>
+           <div class="form-group">
+            <label for="socialIrlPercent">Contact met andere mensen <em>in het echt</em> (0-100%)</label>
             <input id="socialIrlPercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
           </div>
           <div class="form-group">
+            <label for="socialOnlinePercent">Contact met andere mensen <em>online</em> (0-100%)</label>
+            <input id="socialOnlinePercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
+          </div>
+         <div class="form-group">
             <label for="emotionSwallowedPercent">Heb je emoties als verdriet gevoeld en ingeslikt? (0-100%)</label>
             <input id="emotionSwallowedPercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
           </div>
@@ -908,23 +931,102 @@
       };
     }
 
-    function render14DayOverview() {
-      const container = document.getElementById('fourteenDayOverview');
-      if (!container) return;
-      const entries = getDailyEntries();
-      const today = new Date();
-      const days = [];
-      for (let i = 0; i < 14; i++) {
-        const d = new Date(today);
-        d.setDate(d.getDate() - i);
-        days.push(toDateKey(d));
+    function getTwoWeekPhase() {
+      const state = getFormState();
+      const phase = state.twoWeekPhase && typeof state.twoWeekPhase === 'object' ? state.twoWeekPhase : {};
+      const startDate = phase.startDate || '';
+      const endDate = phase.endDate || '';
+      return { startDate, endDate };
+    }
+
+    function computeTwoWeekEndDate(startDate) {
+      if (!startDate) return '';
+      const start = fromDateKey(startDate);
+      start.setDate(start.getDate() + 13);
+      return toDateKey(start);
+    }
+
+    function getTwoWeekRangeDates(startDate, endDate) {
+      if (!startDate || !endDate) return [];
+      const dates = [];
+      let cur = fromDateKey(startDate);
+      const end = fromDateKey(endDate);
+      while (toDateKey(cur) <= toDateKey(end)) {
+        dates.push(toDateKey(cur));
+        cur.setDate(cur.getDate() + 1);
       }
-      const filledCount = days.filter((k) => entries[k] && hasEntryContent(entries[k])).length;
-      if (!filledCount) {
-        container.innerHTML = '<p class="observation-help">Nog geen dagkaarten ingevuld in de afgelopen 14 dagen. Gebruik de dagkaart hieronder om hier een overzicht te zien.</p>';
+      return dates;
+    }
+
+    function saveTwoWeekPhaseStart(startDate) {
+      const normalizedStart = (startDate || '').trim();
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(normalizedStart)) {
+        showMessage('Kies een geldige begindatum voor de 14-dagenfase.');
         return;
       }
-      const cards = days.map((dateKey) => {
+      const endDate = computeTwoWeekEndDate(normalizedStart);
+      const state = getFormState();
+      iamData.updateFormData(formKey, {
+        ...state,
+        twoWeekPhase: {
+          startDate: normalizedStart,
+          endDate
+        }
+      });
+      render14DayOverview();
+      showMessage(`Eerste 14-dagenfase gestart: ${normalizedStart} t/m ${endDate}.`);
+    }
+
+    function render14DayOverview() {
+      const container = document.getElementById('fourteenDayOverview');
+      const statusEl = document.getElementById('twoWeekPhaseStatus');
+      const startInput = document.getElementById('twoWeekStartDate');
+      const startButton = document.getElementById('startTwoWeekPhaseButton');
+      if (!container) return;
+
+      const todayKey = toDateKey(new Date());
+      const phase = getTwoWeekPhase();
+      const hasPhase = Boolean(phase.startDate && phase.endDate);
+
+      if (startInput) {
+        startInput.value = phase.startDate || startInput.value || '';
+        startInput.disabled = hasPhase;
+      }
+      if (startButton) {
+        startButton.disabled = hasPhase;
+        startButton.textContent = hasPhase ? 'Eerste 14 dagen vastgelegd' : 'Start eerste 14 dagen';
+      }
+
+      if (!hasPhase) {
+        if (statusEl) {
+          statusEl.textContent = 'Nog geen begindatum ingesteld. Kies een startdatum om je eerste twee weken vast te leggen.';
+        }
+        container.innerHTML = '<p class="observation-help">Na het instellen van je begindatum zie je hier alleen die eerste vaste 14 dagen terug. Daarna blijft dit blok als terugblik-archief bestaan.</p>';
+        return;
+      }
+
+      const entries = getDailyEntries();
+      const days = getTwoWeekRangeDates(phase.startDate, phase.endDate);
+      const isBefore = todayKey < phase.startDate;
+      const isAfter = todayKey > phase.endDate;
+
+      if (statusEl) {
+        if (isBefore) {
+          statusEl.textContent = `Je eerste 14-dagenfase staat gepland van ${phase.startDate} t/m ${phase.endDate}.`;
+        } else if (isAfter) {
+          statusEl.textContent = `Archief van je eerste 14 dagen (${phase.startDate} t/m ${phase.endDate}). Dit komt niet opnieuw terug als nieuwe fase.`;
+        } else {
+          const dayNumber = getDateDiffInDays(todayKey, phase.startDate) + 1;
+          statusEl.textContent = `Je zit in dag ${dayNumber} van je eerste 14-dagenfase (${phase.startDate} t/m ${phase.endDate}).`;
+        }
+      }
+
+      const filledCount = days.filter((k) => entries[k] && hasEntryContent(entries[k])).length;
+      if (!filledCount) {
+        container.innerHTML = '<p class="observation-help">Nog geen dagkaarten ingevuld binnen je vaste eerste 14 dagen. Gebruik de dagkaart hieronder om dit archief op te bouwen.</p>';
+        return;
+      }
+      const cards = days.slice().reverse().map((dateKey) => {
         const entry = entries[dateKey];
         if (!entry || !hasEntryContent(entry)) {
           return `<div class="observation-day overview-empty"><h3>${formatDateLabel(dateKey)}</h3><p class="observation-help">Geen invoer</p></div>`;
@@ -1970,6 +2072,14 @@
       updateSwallowedEmotionResearchLink();
       renderHistory();
       render14DayOverview();
+
+      const twoWeekStartBtn = document.getElementById('startTwoWeekPhaseButton');
+      const twoWeekStartInput = document.getElementById('twoWeekStartDate');
+      if (twoWeekStartBtn && twoWeekStartInput) {
+        twoWeekStartBtn.addEventListener('click', () => {
+          saveTwoWeekPhaseStart(twoWeekStartInput.value || toDateKey(new Date()));
+        });
+      }
 
       document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
         button.addEventListener('click', () => {

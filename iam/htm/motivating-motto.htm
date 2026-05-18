@@ -78,6 +78,18 @@
       font-size: 0.9rem;
       color: #5f5541;
     }
+    .preview-actions {
+      margin-top: 0.7rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .edit-mode-note {
+      margin: 0.6rem 0 0;
+      color: #35556e;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
     .form-grid {
       display: grid;
       gap: 0.8rem;
@@ -281,6 +293,9 @@
         <h2 id="activeMottoTitle">Actief motto nu</h2>
         <p id="activeMottoText" class="motto-big">Nog geen actief motto ingesteld.</p>
         <p id="activeMottoMeta" class="motto-meta">Je actieve motto wordt automatisch getoond op index en dagkaart.</p>
+        <div class="preview-actions">
+          <button type="button" class="button-soft" id="editActiveMottoButton">Bewerk actief motto</button>
+        </div>
       </section>
 
       <section class="card">
@@ -313,6 +328,7 @@
           <button type="button" class="button-soft" id="startTodayButton">Begindatum = vandaag</button>
           <button type="button" class="button-soft" id="clearFormButton">Leegmaken</button>
         </div>
+        <p id="editModeNote" class="edit-mode-note" style="display:none;">Je bewerkt nu het actieve motto. Klik op Leegmaken om bewerken te annuleren.</p>
       </section>
 
       <section class="card">
@@ -343,6 +359,7 @@
   <script src="../js/dataStore.js"></script>
   <script>
     const MOTTO_META_KEY = 'motivatingMotto';
+    let editingMottoId = null;
 
     function todayDateKey() {
       const d = new Date();
@@ -460,6 +477,7 @@
     function renderActiveMotto() {
       const textEl = document.getElementById('activeMottoText');
       const metaEl = document.getElementById('activeMottoMeta');
+      const editButton = document.getElementById('editActiveMottoButton');
       if (!textEl || !metaEl) return;
 
       const meta = getMottoMeta();
@@ -468,11 +486,31 @@
       if (!active) {
         textEl.textContent = 'Nog geen actief motto ingesteld.';
         metaEl.textContent = 'Tip: voeg een motto toe met begindatum en eventueel een verkoopdatum.';
+        if (editButton) editButton.disabled = true;
         return;
       }
 
       textEl.textContent = `"${active.text}"`;
       metaEl.textContent = `${formatRange(active)}.`;
+      if (editButton) editButton.disabled = false;
+    }
+
+    function enterEditMode(item) {
+      if (!item) return;
+      editingMottoId = item.id;
+      document.getElementById('mottoText').value = item.text || '';
+      document.getElementById('mottoStartDate').value = item.startDate || '';
+      document.getElementById('mottoEndDate').value = item.endDate || '';
+      document.getElementById('saveMottoButton').textContent = 'Wijziging opslaan';
+      document.getElementById('clearFormButton').textContent = 'Bewerken annuleren';
+      document.getElementById('editModeNote').style.display = 'block';
+    }
+
+    function exitEditMode() {
+      editingMottoId = null;
+      document.getElementById('saveMottoButton').textContent = 'Motto opslaan';
+      document.getElementById('clearFormButton').textContent = 'Leegmaken';
+      document.getElementById('editModeNote').style.display = 'none';
     }
 
     function renderMottoHistory() {
@@ -534,6 +572,7 @@
       document.getElementById('mottoText').value = '';
       document.getElementById('mottoStartDate').value = '';
       document.getElementById('mottoEndDate').value = '';
+      exitEditMode();
     }
 
     function saveMotto() {
@@ -554,20 +593,43 @@
       const nowIso = new Date().toISOString();
       const meta = getMottoMeta();
       const items = Array.isArray(meta.items) ? meta.items.slice() : [];
-      items.push({
-        id: createMottoId(),
-        text,
-        startDate: startDate || '',
-        endDate: endDate || '',
-        createdAt: nowIso,
-        updatedAt: nowIso
-      });
+      if (editingMottoId) {
+        const idx = items.findIndex((item) => item.id === editingMottoId);
+        if (idx >= 0) {
+          items[idx] = {
+            ...items[idx],
+            text,
+            startDate: startDate || '',
+            endDate: endDate || '',
+            updatedAt: nowIso
+          };
+        } else {
+          items.push({
+            id: createMottoId(),
+            text,
+            startDate: startDate || '',
+            endDate: endDate || '',
+            createdAt: nowIso,
+            updatedAt: nowIso
+          });
+        }
+      } else {
+        items.push({
+          id: createMottoId(),
+          text,
+          startDate: startDate || '',
+          endDate: endDate || '',
+          createdAt: nowIso,
+          updatedAt: nowIso
+        });
+      }
 
       persistMottoMeta({ ...meta, items });
+      const wasEditing = Boolean(editingMottoId);
       clearForm();
       renderActiveMotto();
       renderMottoHistory();
-      showMessage('Motto opgeslagen.');
+      showMessage(wasEditing ? 'Actief motto bijgewerkt.' : 'Motto opgeslagen.');
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -580,6 +642,15 @@
       renderMottoHistory();
 
       document.getElementById('saveMottoButton').addEventListener('click', saveMotto);
+      document.getElementById('editActiveMottoButton').addEventListener('click', () => {
+        const active = pickActiveMotto(getMottoMeta().items || []);
+        if (!active) {
+          showMessage('Er is nog geen actief motto om te bewerken.', true);
+          return;
+        }
+        enterEditMode(active);
+        showMessage('Actief motto in bewerkmodus gezet.');
+      });
       document.getElementById('startTodayButton').addEventListener('click', () => {
         document.getElementById('mottoStartDate').value = todayDateKey();
       });
