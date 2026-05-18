@@ -496,6 +496,34 @@
         <div id="settingsBody" class="settings-body is-collapsed">
           <p>Kies welke extra onderdelen je hier wilt zien. Alleen aangevinkte onderdelen worden getoond.</p>
           <div class="settings-grid">
+            <label class="settings-option" for="settingGlobalSleep">
+              <input type="checkbox" id="settingGlobalSleep" />
+              <span>Globale slaaptracking aan (app-breed)</span>
+            </label>
+            <label class="settings-option" for="settingGlobalFood">
+              <input type="checkbox" id="settingGlobalFood" />
+              <span>Globale voeding-tracking aan (app-breed)</span>
+            </label>
+            <label class="settings-option" for="settingGlobalTraining">
+              <input type="checkbox" id="settingGlobalTraining" />
+              <span>Globale training-tracking aan (app-breed)</span>
+            </label>
+            <label class="settings-option" for="settingGlobalMeditation">
+              <input type="checkbox" id="settingGlobalMeditation" />
+              <span>Globale meditatie-tracking aan (app-breed)</span>
+            </label>
+            <label class="settings-option" for="settingGlobalSocial">
+              <input type="checkbox" id="settingGlobalSocial" />
+              <span>Globale sociale-tracking aan (app-breed)</span>
+            </label>
+            <label class="settings-option" for="settingGlobalEmotion">
+              <input type="checkbox" id="settingGlobalEmotion" />
+              <span>Globale emotie-tracking aan (app-breed)</span>
+            </label>
+            <label class="settings-option" for="settingGlobalFrustration">
+              <input type="checkbox" id="settingGlobalFrustration" />
+              <span>Globale frustratie-tracking aan (app-breed)</span>
+            </label>
             <label class="settings-option" for="settingShowSleep">
               <input type="checkbox" id="settingShowSleep" checked />
               <span>Slaap (inslapen, wakker, uren)</span>
@@ -510,6 +538,10 @@
             </label>
           </div>
           <p id="sleepSettingHint" style="margin:0.7rem 0 0; color:#4d6270; font-size:0.9rem;"></p>
+          <div class="action-bar" style="margin-top:0.75rem;">
+            <button type="button" class="button-secondary" id="exportAllIamButton">Exporteer alle IAM-data (backup)</button>
+            <a href="./data-beheer.htm" class="button-secondary" style="text-decoration:none; display:inline-flex; align-items:center;">Open centraal databeheer</a>
+          </div>
         </div>
       </section>
 
@@ -783,15 +815,32 @@
     function applyDailySectionSettings() {
       const settings = getDailySectionSettings();
       const globalSleepEnabled = isGlobalSleepTrackingEnabled();
+      const globalTracking = (iamData && typeof iamData.getTrackingSettings === 'function')
+        ? (iamData.getTrackingSettings() || {})
+        : {};
       const showSleepSection = settings.showSleep && globalSleepEnabled;
       const sleepSection = document.getElementById('sleepTrackingSection');
       const realitySection = document.getElementById('realityTrackingSection');
       const reflectionSection = document.getElementById('reflectionTrackingSection');
+      const globalSleepToggle = document.getElementById('settingGlobalSleep');
+      const globalFoodToggle = document.getElementById('settingGlobalFood');
+      const globalTrainingToggle = document.getElementById('settingGlobalTraining');
+      const globalMeditationToggle = document.getElementById('settingGlobalMeditation');
+      const globalSocialToggle = document.getElementById('settingGlobalSocial');
+      const globalEmotionToggle = document.getElementById('settingGlobalEmotion');
+      const globalFrustrationToggle = document.getElementById('settingGlobalFrustration');
       const sleepToggle = document.getElementById('settingShowSleep');
       const realityToggle = document.getElementById('settingShowReality');
       const reflectionToggle = document.getElementById('settingShowReflection');
       const sleepHint = document.getElementById('sleepSettingHint');
 
+      if (globalSleepToggle) globalSleepToggle.checked = globalSleepEnabled;
+      if (globalFoodToggle) globalFoodToggle.checked = Boolean(globalTracking.food);
+      if (globalTrainingToggle) globalTrainingToggle.checked = Boolean(globalTracking.training);
+      if (globalMeditationToggle) globalMeditationToggle.checked = Boolean(globalTracking.meditation);
+      if (globalSocialToggle) globalSocialToggle.checked = Boolean(globalTracking.social);
+      if (globalEmotionToggle) globalEmotionToggle.checked = Boolean(globalTracking.emotion);
+      if (globalFrustrationToggle) globalFrustrationToggle.checked = Boolean(globalTracking.frustration);
       if (sleepToggle) sleepToggle.checked = settings.showSleep;
       if (realityToggle) realityToggle.checked = settings.showReality;
       if (reflectionToggle) reflectionToggle.checked = settings.showReflection;
@@ -1441,6 +1490,26 @@
       showMessage(`Dagregistraties geëxporteerd als ${format.toUpperCase()}.`);
     }
 
+    function exportAllIamData() {
+      if (!iamData || typeof iamData.getData !== 'function') {
+        showMessage('Volledige export is nu niet beschikbaar.');
+        return;
+      }
+
+      const allData = iamData.getData() || {};
+      const content = JSON.stringify({ exportedAt: new Date().toISOString(), data: allData }, null, 2);
+      const blob = new Blob([content], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `iam-backup-${toDateKey(new Date())}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage('Volledige IAM-backup geëxporteerd als JSON.');
+    }
+
     function renderHistory() {
       const entries = getDailyEntries();
       const keys = Object.keys(entries).sort((left, right) => right.localeCompare(left));
@@ -1664,9 +1733,59 @@
       });
       document.getElementById('exportDailyJsonButton').addEventListener('click', () => exportDailyEntries('json'));
       document.getElementById('exportDailyCsvButton').addEventListener('click', () => exportDailyEntries('csv'));
+      document.getElementById('exportAllIamButton').addEventListener('click', exportAllIamData);
 
       applyDailySectionSettings();
       document.getElementById('settingsToggleBtn').addEventListener('click', toggleSettingsBody);
+      document.getElementById('settingGlobalSleep').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setSleepTrackingEnabled === 'function') {
+          iamData.setSleepTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale slaaptracking staat nu aan.' : 'Globale slaaptracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalFood').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setFoodTrackingEnabled === 'function') {
+          iamData.setFoodTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale voeding-tracking staat nu aan.' : 'Globale voeding-tracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalTraining').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setTrainingTrackingEnabled === 'function') {
+          iamData.setTrainingTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale training-tracking staat nu aan.' : 'Globale training-tracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalMeditation').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setMeditationTrackingEnabled === 'function') {
+          iamData.setMeditationTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale meditatie-tracking staat nu aan.' : 'Globale meditatie-tracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalSocial').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setSocialTrackingEnabled === 'function') {
+          iamData.setSocialTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale sociale-tracking staat nu aan.' : 'Globale sociale-tracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalEmotion').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setEmotionTrackingEnabled === 'function') {
+          iamData.setEmotionTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale emotie-tracking staat nu aan.' : 'Globale emotie-tracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalFrustration').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setFrustrationTrackingEnabled === 'function') {
+          iamData.setFrustrationTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale frustratie-tracking staat nu aan.' : 'Globale frustratie-tracking staat nu uit.');
+      });
       document.getElementById('settingShowSleep').addEventListener('change', (event) => {
         saveDailySectionSettings({ showSleep: event.target.checked });
         applyDailySectionSettings();

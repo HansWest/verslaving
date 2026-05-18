@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centraal Databeheer - IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #173249;
+      --main: #466d8c;
+      --accent: #cb7a47;
+      --ok: #3b7f45;
+      --warn: #a2472a;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(63, 122, 161, 0.16), transparent 36%),
+        linear-gradient(180deg, #f8f3ec 0%, #edf4f7 100%);
+      color: var(--ink);
+    }
+    .page-shell {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .hero {
+      margin-top: 1rem;
+      background: linear-gradient(145deg, var(--main) 0%, #58704b 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.2rem;
+      box-shadow: 0 14px 30px rgba(23, 50, 73, 0.18);
+    }
+    .top-links {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 0.45rem 0.82rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 1.05rem;
+      margin-top: 1rem;
+      box-shadow: 0 9px 22px rgba(23, 50, 73, 0.09);
+    }
+    .stats-grid {
+      display: grid;
+      gap: 0.8rem;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      margin-top: 0.7rem;
+    }
+    .stat {
+      background: #f3f8fc;
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      border-radius: 12px;
+      padding: 0.8rem;
+    }
+    .stat h3 {
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
+      color: #3a5f78;
+    }
+    .stat p {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+    button,
+    .btn-link {
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.55rem 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--main);
+      border-color: var(--main);
+      color: #fff;
+    }
+    .btn-danger {
+      background: #fff2ee;
+      border-color: #dba287;
+      color: var(--warn);
+    }
+    .field {
+      display: grid;
+      gap: 0.45rem;
+      margin-top: 0.7rem;
+    }
+    input[type="file"] {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      border-radius: 10px;
+      padding: 0.55rem 0.75rem;
+      background: #fff;
+      color: var(--ink);
+    }
+    .message {
+      display: none;
+      margin-top: 0.8rem;
+      border-radius: 10px;
+      padding: 0.72rem 0.9rem;
+      background: #eef8ee;
+      border-left: 4px solid var(--ok);
+      color: #204f22;
+    }
+    .message.show {
+      display: block;
+    }
+    .message.error {
+      background: #fff3f0;
+      border-left-color: var(--warn);
+      color: #7a2b18;
+    }
+    .danger-box {
+      border-top: 4px solid #d07b56;
+      background: #fff8f5;
+    }
+    .form-list {
+      list-style: none;
+      margin: 0.85rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.5rem;
+      max-height: 300px;
+      overflow: auto;
+    }
+    .form-list li {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      background: #fbfdfe;
+      border-radius: 10px;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.92rem;
+    }
+  </style>
+  <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./dagelijks-gevolg.htm">Naar dagkaart</a>
+        </div>
+        <h1>Centraal Databeheer</h1>
+        <p>Hier beheer je alle IAM-data op een plek: overzicht, backup exporteren, backup importeren en indien nodig resetten.</p>
+      </header>
+
+      <section class="card">
+        <h2>Status van je data</h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <h3>Totale formulieren</h3>
+            <p id="statTotalForms">-</p>
+          </div>
+          <div class="stat">
+            <h3>Formulieren met inhoud</h3>
+            <p id="statFilledForms">-</p>
+          </div>
+          <div class="stat">
+            <h3>Laatst aangepast</h3>
+            <p id="statLastModified">-</p>
+          </div>
+          <div class="stat">
+            <h3>Gebruiker-ID</h3>
+            <p id="statUserId">-</p>
+          </div>
+        </div>
+        <ul class="form-list" id="formList"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Backup en herstel</h2>
+        <p>Maak regelmatig een backup, zeker voordat je grote wijzigingen doet.</p>
+        <div class="action-row">
+          <button type="button" class="btn-primary" id="exportAllButton">Exporteer alles als JSON-backup</button>
+          <a href="./dagelijks-gevolg.htm" class="btn-link">Dagkaart export (JSON/CSV)</a>
+        </div>
+        <div class="field">
+          <label for="importFile">Importeer eerder geëxporteerde JSON-backup</label>
+          <input id="importFile" type="file" accept="application/json,.json" />
+        </div>
+      </section>
+
+      <section class="card danger-box">
+        <h2>Reset</h2>
+        <p>Dit verwijdert alle IAM-data op dit apparaat en maakt een lege nieuwe dataset aan.</p>
+        <div class="action-row">
+          <button type="button" class="btn-danger" id="clearAllButton">Verwijder alle IAM-data</button>
+        </div>
+      </section>
+
+      <div id="message" class="message"></div>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    function showMessage(text, isError = false) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.classList.toggle('error', isError);
+      el.classList.add('show');
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => {
+        el.classList.remove('show');
+      }, 3200);
+    }
+
+    function hasContent(value) {
+      if (value === null || value === undefined) return false;
+      if (typeof value === 'string') return value.trim() !== '';
+      if (typeof value === 'number') return true;
+      if (typeof value === 'boolean') return value;
+      if (Array.isArray(value)) return value.some((item) => hasContent(item));
+      if (typeof value === 'object') return Object.values(value).some((item) => hasContent(item));
+      return false;
+    }
+
+    function formatDate(dateText) {
+      if (!dateText) return '-';
+      const d = new Date(dateText);
+      if (Number.isNaN(d.getTime())) return '-';
+      return d.toLocaleString('nl-NL', {
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function renderDataStatus() {
+      if (!iamData || typeof iamData.getData !== 'function') {
+        showMessage('iamData is niet beschikbaar op deze pagina.', true);
+        return;
+      }
+
+      const data = iamData.getData() || {};
+      const forms = data.forms || {};
+      const formEntries = Object.entries(forms);
+      const filledEntries = formEntries.filter(([, formData]) => hasContent(formData));
+
+      document.getElementById('statTotalForms').textContent = String(formEntries.length);
+      document.getElementById('statFilledForms').textContent = String(filledEntries.length);
+      document.getElementById('statLastModified').textContent = formatDate(data.lastModified);
+      document.getElementById('statUserId').textContent = data.userId || '-';
+
+      const list = document.getElementById('formList');
+      if (!formEntries.length) {
+        list.innerHTML = '<li>Geen formulieren gevonden.</li>';
+        return;
+      }
+
+      list.innerHTML = formEntries
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([formKey, formData]) => {
+          const updated = formatDate(formData && formData.lastUpdated);
+          const state = hasContent(formData) ? 'ingevuld' : 'leeg';
+          return `<li><strong>${formKey}</strong> - ${state} - laatste update: ${updated}</li>`;
+        })
+        .join('');
+    }
+
+    function exportAllData() {
+      if (!iamData) {
+        showMessage('iamData is niet beschikbaar.', true);
+        return;
+      }
+
+      if (typeof iamData.exportJSON === 'function') {
+        const result = iamData.exportJSON();
+        downloadBlob(result.blob, result.filename);
+        showMessage('Volledige IAM-backup geëxporteerd.');
+        return;
+      }
+
+      const raw = iamData.getData ? iamData.getData() : null;
+      if (!raw) {
+        showMessage('Er is geen data om te exporteren.', true);
+        return;
+      }
+      const blob = new Blob([JSON.stringify(raw, null, 2)], { type: 'application/json' });
+      const filename = `iam-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      downloadBlob(blob, filename);
+      showMessage('Volledige IAM-backup geëxporteerd.');
+    }
+
+    function importBackupFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const text = String(reader.result || '');
+          if (typeof iamData.importJSON !== 'function') {
+            showMessage('Import is niet beschikbaar in deze versie.', true);
+            return;
+          }
+          const result = iamData.importJSON(text);
+          if (!result || !result.success) {
+            showMessage('Import mislukt. Controleer of dit een IAM-backupbestand is.', true);
+            return;
+          }
+          renderDataStatus();
+          showMessage('Backup succesvol geïmporteerd.');
+        } catch (error) {
+          showMessage(`Importfout: ${error.message}`, true);
+        }
+      };
+      reader.onerror = () => showMessage('Kon bestand niet lezen.', true);
+      reader.readAsText(file, 'utf-8');
+    }
+
+    function clearAllData() {
+      if (!iamData || typeof iamData.clearAllData !== 'function') {
+        showMessage('Resetfunctie is niet beschikbaar.', true);
+        return;
+      }
+
+      const first = window.confirm('Weet je zeker dat je alle IAM-data wilt verwijderen?');
+      if (!first) return;
+      const second = window.confirm('Laatste check: dit kan niet ongedaan worden gemaakt. Doorgaan?');
+      if (!second) return;
+
+      const ok = iamData.clearAllData(true);
+      if (!ok) {
+        showMessage('Reset is niet gelukt.', true);
+        return;
+      }
+      renderDataStatus();
+      showMessage('Alle IAM-data is verwijderd en opnieuw gestart.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderDataStatus();
+      document.getElementById('exportAllButton').addEventListener('click', exportAllData);
+      document.getElementById('importFile').addEventListener('change', (event) => {
+        const file = event.target.files && event.target.files[0];
+        importBackupFile(file);
+        event.target.value = '';
+      });
+      document.getElementById('clearAllButton').addEventListener('click', clearAllData);
+    });
+  </script>
+</body>
+</html>
