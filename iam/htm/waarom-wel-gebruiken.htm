@@ -230,14 +230,14 @@
         </section>
 
         <section class="question-card">
-          <h2>2. Wat helpt gebruik tijdelijk te vermijden?</h2>
+          <h2>2. Wat kan er vermeden worden middels gebruik?</h2>
           <div class="grid-two">
             <div class="form-group">
               <label for="notFeeling">Wat hoef je niet meer te voelen op die momenten?</label>
               <textarea id="notFeeling" rows="4" placeholder="Bijvoorbeeld: vermoeidheid, verdriet, angst, schaamte, eenzaamheid."></textarea>
             </div>
             <div class="form-group">
-              <label for="notThinking">Welke gedachten of herinneringen hoef je dan niet te hebben?</label>
+              <label for="notThinking">Welke gedachten (herinneringen) heb je dan niet?</label>
               <textarea id="notThinking" rows="4" placeholder="Welke gedachten verdwijnen tijdelijk door gebruik?"></textarea>
             </div>
           </div>
@@ -273,7 +273,6 @@
           <button type="button" class="button-secondary" id="toBalanceButton">Stuur naar voor-nadelen balans</button>
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
         </div>
       </form>
 
@@ -333,6 +332,24 @@
         waarden.waardenterugzien02,
         waarden.waardenterugzien03
       ]);
+    }
+
+    function getTopWaardigheidEntries(limit = 3) {
+      const waardigheid = iamData.getFormData ? (iamData.getFormData('waardigheid') || {}) : {};
+      const entries = Array.isArray(waardigheid.valueEntries) ? waardigheid.valueEntries : [];
+
+      return entries
+        .map((entry) => ({
+          text: String(entry && entry.text ? entry.text : '').trim(),
+          date: String(entry && entry.date ? entry.date : ''),
+          priority: Math.max(1, Math.min(10, Number(entry && entry.priority ? entry.priority : 0) || 0))
+        }))
+        .filter((entry) => entry.text)
+        .sort((a, b) => {
+          if (b.priority !== a.priority) return b.priority - a.priority;
+          return String(b.date || '').localeCompare(String(a.date || ''));
+        })
+        .slice(0, limit);
     }
 
     function normalizeLegacyData(saved) {
@@ -510,6 +527,16 @@
         addNudge(nudges, `Je noemde waarden: "${previewText(waardenKort)}". Hoe botst de functie van gebruik met die waarden?`);
       }
 
+      const waardigheidTop = getTopWaardigheidEntries(3);
+      if (waardigheidTop.length && !formData.functionSummary) {
+        addNudge(nudges, `Uit waardigheid (top): "${previewText(waardigheidTop[0].text)}". Hoe helpt deze waarde om je functieanalyse scherper te maken?`);
+      }
+
+      if (waardigheidTop.length > 1 && !formData.spaceGiven) {
+        const picks = waardigheidTop.map((item) => `${item.text} (${item.priority}/10)`).join(' | ');
+        addNudge(nudges, `Belangrijkste waardigheid-items: ${previewText(picks, 140)}. Welke ruimte wil je met niet-gebruiken juist beschermen?`);
+      }
+
       meta.textContent = nudges.length
         ? 'Kleine, concrete duwtjes op basis van wat je al invulde.'
         : 'Nog geen spanning gevonden. Deze pagina kan nu vooral dienen als heldere functieanalyse.';
@@ -660,7 +687,6 @@
       document.getElementById('toBalanceButton').addEventListener('click', sendToBalance);
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('whyUseForm').addEventListener('input', () => saveForm(false));
 
       window.addEventListener('focus', () => {

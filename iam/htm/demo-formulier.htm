@@ -134,7 +134,6 @@
                         <button type="button" class="btn-primary" id="saveButton">Opslaan</button>
                         <button type="button" id="loadButton">Herstellen</button>
                         <button type="button" id="clearButton">Leegmaken</button>
-                        <button type="button" id="printButton">Printen</button>
                     </div>
                 </form>
 
@@ -233,7 +232,6 @@
             document.getElementById('saveButton').addEventListener('click', saveForm);
             document.getElementById('loadButton').addEventListener('click', loadForm);
             document.getElementById('clearButton').addEventListener('click', clearForm);
-            document.getElementById('printButton').addEventListener('click', () => window.print());
             loadForm();
         });
     </script>

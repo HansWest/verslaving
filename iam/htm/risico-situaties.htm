@@ -254,7 +254,6 @@
           <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
         </div>
       </form>
     </div>
@@ -588,7 +587,6 @@
       document.getElementById('suggestButton').addEventListener('click', applySuggestionFromIntegration);
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('openRecommendedRouteSituatiesButton').addEventListener('click', openRecommendedRoute);
       document.getElementById('routeUrgencySituaties').addEventListener('change', updateRouteHint);
       document.getElementById('routeFocusSituaties').addEventListener('change', updateRouteHint);

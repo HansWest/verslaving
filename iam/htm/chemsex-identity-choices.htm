@@ -309,7 +309,6 @@
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveButton">Save on this device</button>
           <button type="button" class="button-secondary" id="exportButton">Export all as JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print or save as PDF</button>
         </div>
       </form>
     </div>
@@ -383,7 +382,6 @@
       fillForm(iamData.getFormData(formKey) || {});
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('identityChoicesForm').addEventListener('input', () => saveForm(false));
     });
   </script>

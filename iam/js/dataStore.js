@@ -371,6 +371,127 @@ class IamDataStore {
     return key ? data?.appMeta?.[key] || null : data?.appMeta || null;
   }
 
+  normalizeTrekDossierState(state = {}) {
+    const entries = Array.isArray(state.entries)
+      ? state.entries.map((entry) => this.normalizeTrekDossierEntry(entry))
+      : [];
+
+    entries.sort((left, right) => {
+      const dateOrder = String(right.date || '').localeCompare(String(left.date || ''));
+      if (dateOrder !== 0) return dateOrder;
+      return String(right.updatedAt || '').localeCompare(String(left.updatedAt || ''));
+    });
+
+    const activeId = typeof state.activeId === 'string' ? state.activeId : '';
+    const resolvedActiveId = entries.some((entry) => entry.id === activeId)
+      ? activeId
+      : (entries[0] ? entries[0].id : '');
+
+    return {
+      activeId: resolvedActiveId,
+      entries: entries
+    };
+  }
+
+  normalizeTrekDossierEntry(entry = {}) {
+    const now = new Date().toISOString();
+    const pages = entry.pages && typeof entry.pages === 'object' ? entry.pages : {};
+
+    return {
+      id: typeof entry.id === 'string' && entry.id ? entry.id : this.generateUUID(),
+      date: typeof entry.date === 'string' && entry.date ? entry.date : now.slice(0, 10),
+      keyword: typeof entry.keyword === 'string' ? entry.keyword : '',
+      createdAt: typeof entry.createdAt === 'string' && entry.createdAt ? entry.createdAt : now,
+      updatedAt: typeof entry.updatedAt === 'string' && entry.updatedAt ? entry.updatedAt : now,
+      pages: pages
+    };
+  }
+
+  getTrekDossierState() {
+    return this.normalizeTrekDossierState(this.getAppMeta('trekDossiers') || {});
+  }
+
+  saveTrekDossierState(state) {
+    const normalized = this.normalizeTrekDossierState(state || {});
+    this.updateAppMeta('trekDossiers', normalized);
+    return normalized;
+  }
+
+  getTrekDossierEntries() {
+    return this.getTrekDossierState().entries || [];
+  }
+
+  getActiveTrekDossier() {
+    const state = this.getTrekDossierState();
+    return state.entries.find((entry) => entry.id === state.activeId) || null;
+  }
+
+  setActiveTrekDossier(entryId) {
+    const state = this.getTrekDossierState();
+    if (state.entries.some((entry) => entry.id === entryId)) {
+      state.activeId = entryId;
+    }
+    return this.saveTrekDossierState(state);
+  }
+
+  createTrekDossier(payload = {}) {
+    const now = new Date().toISOString();
+    const entry = this.normalizeTrekDossierEntry({
+      id: this.generateUUID(),
+      date: payload.date,
+      keyword: payload.keyword,
+      createdAt: now,
+      updatedAt: now,
+      pages: payload.pages || {}
+    });
+    const state = this.getTrekDossierState();
+    state.entries.unshift(entry);
+    state.activeId = entry.id;
+    this.saveTrekDossierState(state);
+    return entry;
+  }
+
+  updateTrekDossierMeta(entryId, patch = {}) {
+    if (!entryId) return null;
+    const state = this.getTrekDossierState();
+    const entry = state.entries.find((item) => item.id === entryId);
+    if (!entry) return null;
+
+    const nextDate = typeof patch.date === 'string' && patch.date ? patch.date : entry.date;
+    const nextKeyword = typeof patch.keyword === 'string' ? patch.keyword : entry.keyword;
+
+    entry.date = nextDate;
+    entry.keyword = nextKeyword;
+    entry.updatedAt = new Date().toISOString();
+    this.saveTrekDossierState(state);
+    return entry;
+  }
+
+  updateTrekDossierPage(entryId, formKey, formData) {
+    if (!entryId || !formKey) return null;
+    const state = this.getTrekDossierState();
+    const entry = state.entries.find((item) => item.id === entryId);
+    if (!entry) return null;
+
+    if (!entry.pages || typeof entry.pages !== 'object') {
+      entry.pages = {};
+    }
+
+    entry.pages[formKey] = {
+      ...formData,
+      lastUpdated: new Date().toISOString()
+    };
+    entry.updatedAt = new Date().toISOString();
+    this.saveTrekDossierState(state);
+    return entry.pages[formKey];
+  }
+
+  getTrekDossierPage(entryId, formKey) {
+    const state = this.getTrekDossierState();
+    const entry = state.entries.find((item) => item.id === entryId);
+    return entry?.pages?.[formKey] || null;
+  }
+
   updateAppMeta(key, value) {
     const data = this.getData();
     if (!data.appMeta) {

@@ -801,7 +801,6 @@
         <div class="action-bar">
           <button type="button" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="secondary" id="exportButton">Exporteer alle IAM-data</button>
-          <button type="button" class="warn" id="printButton">Print / Bewaar als PDF</button>
         </div>
       </form>
 
@@ -1253,7 +1252,6 @@
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('agendaRecoveryButton').addEventListener('click', pushRecoveryToAgenda);
       document.getElementById('steunnetwerk').addEventListener('input', () => {
         renderSupportScripts();

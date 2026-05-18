@@ -269,7 +269,6 @@
         </div>
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
-          <button type="button" class="button-secondary" id="printButton">Print / bewaar als pdf</button>
         </div>
         <div id="message" class="message"></div>
       </section>
@@ -622,7 +621,6 @@
       document.getElementById('decayQuotient').addEventListener('input', updateEmotionModel);
       document.getElementById('openRecommendedActionButton').addEventListener('click', openRecommendedActionPage);
       document.getElementById('saveButton').addEventListener('click', saveData);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       window.addEventListener('focus', () => {
         renderAttemptSummary();
       });

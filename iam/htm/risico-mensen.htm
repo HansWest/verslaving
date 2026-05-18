@@ -208,7 +208,6 @@
       <div class="action-bar">
         <button type="button" class="button-primary" id="addPersonButton">+ Voeg persoon toe</button>
         <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-        <button type="button" class="button-secondary" id="printButton">Print of bewaar als PDF</button>
       </div>
 
       <section class="note-card route-card">
@@ -711,7 +710,6 @@
         clearForm();
       });
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('openRecommendedRouteMensenButton').addEventListener('click', openRecommendedRoute);
       document.getElementById('routeUrgencyMensen').addEventListener('change', updateRouteHint);
       document.getElementById('routeFocusMensen').addEventListener('change', updateRouteHint);

@@ -874,7 +874,6 @@
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveDayButton">Sla deze dag op</button>
           <button type="button" class="button-secondary" id="copyTodayButton">Gebruik vandaag als datum</button>
-          <button type="button" class="button-secondary" id="printButton">Print / bewaar als pdf</button>
         </div>
       </section>
 
@@ -2334,7 +2333,6 @@
         renderSelectedDay();
         updateSwallowedEmotionResearchLink();
       });
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.querySelectorAll('[data-range]').forEach((button) => {
         button.addEventListener('click', () => setHistoryFilter(Number(button.dataset.range)));
       });
