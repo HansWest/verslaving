@@ -365,9 +365,52 @@
     }
     .evaluation-status.warn { background: #fff8eb; color: #7a5411; }
     .evaluation-status.alert { background: #fff3f0; color: #8a2f1c; }
+    .observation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin-top: 1rem;
+    }
+    .observation-day {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      border-radius: 12px;
+      background: #fbfdfe;
+      padding: 0.8rem;
+    }
+    .observation-day h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1rem;
+    }
+    .observation-day textarea {
+      min-height: 120px;
+    }
+    .observation-help {
+      margin: 0;
+      color: #4d6476;
+      line-height: 1.5;
+    }
+    .settings-grid {
+      display: grid;
+      gap: 0.7rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .settings-option {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      border: 1px solid rgba(23, 50, 73, 0.12);
+      background: #fbfdfe;
+      border-radius: 12px;
+      padding: 0.65rem 0.8rem;
+      min-height: 44px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .is-hidden-by-setting { display: none; }
     @media (max-width: 640px) {
       .tracker-toolbar { grid-template-columns: 1fr; }
       .nav-day { width: 100%; }
+      .observation-grid { grid-template-columns: 1fr; }
     }
   </style>
     <script src="../js/themeMode.js"></script>
@@ -390,6 +433,46 @@
         <p>Het gebruik van de dag volgen is iets anders dan trek meten. Trek zegt iets over de druk in het moment; deze pagina laat zien wat je uiteindelijk deed, wat je wilde doen en wat dat vraagt in je planning of zelfzorg.</p>
       </section>
 
+      <section class="card" aria-labelledby="twoWeekObserveTitle">
+        <h2 id="twoWeekObserveTitle">Twee weken gebruik bijhouden: eerst waarnemen, dan sturen</h2>
+        <p class="observation-help">Je hoeft de komende twee weken niet direct minder te gebruiken. Het doel is eerst zicht krijgen op je gebruik: waarom wil je nu gebruiken, wat voel je, wat denk je, en in welke situatie gebeurt het?</p>
+        <p class="observation-help">Als je wilt opschrijven: omdat ik daar nou eenmaal zin in heb, probeer dan toch even stil te staan bij de vraag waarom je daar nu zin in hebt.</p>
+        <div class="zone" style="margin-top:0.9rem;">
+          <h3 style="margin:0 0 0.45rem;">Voorbeeld: het hoeft niet perfect</h3>
+          <textarea readonly>dag 8.
+17:00 op de bank even ontspannen na m'n werk, 19:00 kroeg "ik kan hier toch niet in m'n eentje cola gaan zitten zuipen", *shit toch vergeten op te schrijven: ik denk 5 of 6*, 00:40 eentje om te slapen, 00:50 nog even een goeie om even echt snel in slaap te vallen</textarea>
+          <p class="observation-help" style="margin-top:0.45rem;">Nog mooier is het als je ook tijd, plaats, gevoel of gedachten noteert. Dat helpt om achteraf te analyseren welke risico's er wanneer spelen.</p>
+        </div>
+        <div class="observation-grid">
+          <section class="observation-day">
+            <h3>Dag 1</h3>
+            <label for="observeDay1">Wat gebruikte ik, wanneer, en waarom wilde ik dit op dat moment?</label>
+            <textarea id="observeDay1" placeholder="Tijd, plek, gevoel, gedachte, aanleiding..."></textarea>
+          </section>
+          <section class="observation-day">
+            <h3>Dag 8</h3>
+            <label for="observeDay8">Wat gebruikte ik, wanneer, en waarom wilde ik dit op dat moment?</label>
+            <textarea id="observeDay8" placeholder="Tijd, plek, gevoel, gedachte, aanleiding..."></textarea>
+          </section>
+          <section class="observation-day"><h3>Dag 2</h3><label for="observeDay2">Gebruik en aanleiding</label><textarea id="observeDay2" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 9</h3><label for="observeDay9">Gebruik en aanleiding</label><textarea id="observeDay9" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 3</h3><label for="observeDay3">Gebruik en aanleiding</label><textarea id="observeDay3" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 10</h3><label for="observeDay10">Gebruik en aanleiding</label><textarea id="observeDay10" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 4</h3><label for="observeDay4">Gebruik en aanleiding</label><textarea id="observeDay4" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 11</h3><label for="observeDay11">Gebruik en aanleiding</label><textarea id="observeDay11" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 5</h3><label for="observeDay5">Gebruik en aanleiding</label><textarea id="observeDay5" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 12</h3><label for="observeDay12">Gebruik en aanleiding</label><textarea id="observeDay12" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 6</h3><label for="observeDay6">Gebruik en aanleiding</label><textarea id="observeDay6" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 13</h3><label for="observeDay13">Gebruik en aanleiding</label><textarea id="observeDay13" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 7</h3><label for="observeDay7">Gebruik en aanleiding</label><textarea id="observeDay7" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+          <section class="observation-day"><h3>Dag 14</h3><label for="observeDay14">Gebruik en aanleiding</label><textarea id="observeDay14" placeholder="Wat gebeurde er vandaag?"></textarea></section>
+        </div>
+        <div class="action-bar" style="margin-top:1rem;">
+          <button type="button" class="button-secondary" id="saveObservationButton">Sla 14-dagen observatie op</button>
+        </div>
+        <p class="observation-help" style="margin-top:0.85rem;"><strong>Waarom dit helpt:</strong> door twee weken bij te houden wat er vlak voor gebruik gebeurt, krijg je later veel meer materiaal om risico-situaties, gevoelens, gedachten en gewoontes te analyseren. Dit is sterke voorinformatie voor analyse achteraf en je plan van aanpak.</p>
+      </section>
+
       <div id="message" class="message"></div>
 
       <section class="card attempt-summary-box" aria-labelledby="attemptSummaryTitle">
@@ -399,6 +482,26 @@
           <li>Sla op de homepage een weekcheck-in op om hier een samenvatting te zien.</li>
         </ul>
         <p class="attempt-summary-link"><a href="./index.htm#weeklyReviewCard">Bekijk volledige historielijst op homepage</a></p>
+      </section>
+
+      <section class="card" aria-labelledby="dailySettingsTitle">
+        <h2 id="dailySettingsTitle">Instellingen dagkaart</h2>
+        <p>Kies welke extra onderdelen je hier wilt zien. Alleen aangevinkte onderdelen worden getoond.</p>
+        <div class="settings-grid">
+          <label class="settings-option" for="settingShowSleep">
+            <input type="checkbox" id="settingShowSleep" checked />
+            <span>Slaap (inslapen, wakker, uren)</span>
+          </label>
+          <label class="settings-option" for="settingShowReality">
+            <input type="checkbox" id="settingShowReality" checked />
+            <span>Realiteitsscores (natuur, genieten, contact)</span>
+          </label>
+          <label class="settings-option" for="settingShowReflection">
+            <input type="checkbox" id="settingShowReflection" checked />
+            <span>Reflectie (gemist / te veel)</span>
+          </label>
+        </div>
+        <p id="sleepSettingHint" style="margin:0.7rem 0 0; color:#4d6270; font-size:0.9rem;"></p>
       </section>
 
       <section class="card tracker-shell">
@@ -452,6 +555,51 @@
           <div class="form-group">
             <label for="motivationNote">Motivatie voor deze dag</label>
             <textarea id="motivationNote" placeholder="Wat wil je vandaag onthouden of waar doe je het voor?"></textarea>
+          </div>
+        </div>
+
+        <div class="tracker-grid" id="sleepTrackingSection">
+          <div class="form-group">
+            <label for="sleepStart">Inslaptijd</label>
+            <input id="sleepStart" type="time" />
+          </div>
+          <div class="form-group">
+            <label for="sleepEnd">Wakker-word-tijd</label>
+            <input id="sleepEnd" type="time" />
+          </div>
+          <div class="form-group">
+            <label for="sleepHours">Slaapuren (automatisch)</label>
+            <input id="sleepHours" type="number" step="0.1" readonly />
+          </div>
+        </div>
+
+        <div class="tracker-grid" id="realityTrackingSection">
+          <div class="form-group">
+            <label for="naturePercent">Ben je buiten in de natuur geweest? (0-100%)</label>
+            <input id="naturePercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
+          </div>
+          <div class="form-group">
+            <label for="enjoymentPercent">Heb je genoten (seks bijv.)? (0-100%)</label>
+            <input id="enjoymentPercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
+          </div>
+          <div class="form-group">
+            <label for="socialOnlinePercent">Contact met andere mensen online (0-100%)</label>
+            <input id="socialOnlinePercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
+          </div>
+          <div class="form-group">
+            <label for="socialIrlPercent">Contact met andere mensen in het echt (0-100%)</label>
+            <input id="socialIrlPercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
+          </div>
+        </div>
+
+        <div class="tracker-grid" id="reflectionTrackingSection">
+          <div class="form-group">
+            <label for="missedTodayNote">Wat heb je vandaag gemist?</label>
+            <textarea id="missedTodayNote" placeholder="Wat had je vandaag nodig maar ontbrak?"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="tooMuchTodayNote">Wat was er vandaag te veel?</label>
+            <textarea id="tooMuchTodayNote" placeholder="Wat was te veel qua druk, prikkels, mensen, gebruik of verwachtingen?"></textarea>
           </div>
         </div>
 
@@ -528,6 +676,11 @@
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'craving-1-10';
+    const legacyObserveFormKey = 'gebruik-bijhouden';
+    const legacyObserveFieldNames = [
+      'dag1', 'dag2', 'dag3', 'dag4', 'dag5', 'dag6', 'dag7',
+      'dag8', 'dag9', 'dag10', 'dag11', 'dag12', 'dag13', 'dag14'
+    ];
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
     const ATTEMPT_TAG_LABELS = {
       nuttig: 'Nuttig',
@@ -536,6 +689,85 @@
     };
     const historyLimit = 14;
     let selectedHistoryRange = 7;
+
+    function getDailySectionSettings() {
+      const state = getFormState();
+      const saved = state.dailySectionSettings && typeof state.dailySectionSettings === 'object'
+        ? state.dailySectionSettings
+        : {};
+      return {
+        showSleep: saved.showSleep !== false,
+        showReality: saved.showReality !== false,
+        showReflection: saved.showReflection !== false
+      };
+    }
+
+    function loadObservationFields() {
+      const observeData = iamData.getFormData(legacyObserveFormKey) || {};
+      legacyObserveFieldNames.forEach((name, index) => {
+        const el = document.getElementById(`observeDay${index + 1}`);
+        if (el) {
+          el.value = observeData[name] || '';
+        }
+      });
+    }
+
+    function saveObservationFields() {
+      const current = iamData.getFormData(legacyObserveFormKey) || {};
+      const updated = { ...current };
+      legacyObserveFieldNames.forEach((name, index) => {
+        const el = document.getElementById(`observeDay${index + 1}`);
+        updated[name] = el ? el.value.trim() : '';
+      });
+      iamData.updateFormData(legacyObserveFormKey, updated);
+      showMessage('14-dagen observatie opgeslagen.');
+    }
+
+    function isGlobalSleepTrackingEnabled() {
+      if (!iamData || typeof iamData.getTrackingSettings !== 'function') return true;
+      const tracking = iamData.getTrackingSettings() || {};
+      return tracking.sleep !== false;
+    }
+
+    function saveDailySectionSettings(partial) {
+      const state = getFormState();
+      const current = getDailySectionSettings();
+      iamData.updateFormData(formKey, {
+        ...state,
+        dailySectionSettings: {
+          ...current,
+          ...partial
+        }
+      });
+    }
+
+    function applyDailySectionSettings() {
+      const settings = getDailySectionSettings();
+      const globalSleepEnabled = isGlobalSleepTrackingEnabled();
+      const showSleepSection = settings.showSleep && globalSleepEnabled;
+      const sleepSection = document.getElementById('sleepTrackingSection');
+      const realitySection = document.getElementById('realityTrackingSection');
+      const reflectionSection = document.getElementById('reflectionTrackingSection');
+      const sleepToggle = document.getElementById('settingShowSleep');
+      const realityToggle = document.getElementById('settingShowReality');
+      const reflectionToggle = document.getElementById('settingShowReflection');
+      const sleepHint = document.getElementById('sleepSettingHint');
+
+      if (sleepToggle) sleepToggle.checked = settings.showSleep;
+      if (realityToggle) realityToggle.checked = settings.showReality;
+      if (reflectionToggle) reflectionToggle.checked = settings.showReflection;
+
+      if (sleepToggle) sleepToggle.disabled = !globalSleepEnabled;
+      if (sleepHint) {
+        sleepHint.textContent = globalSleepEnabled
+          ? 'Slaaptracking staat globaal aan.'
+          : 'Slaaptracking staat globaal uit in hoofdinstellingen (main). Zet daar eerst Slaap aan om dit blok te gebruiken.';
+      }
+
+      if (sleepSection) sleepSection.classList.toggle('is-hidden-by-setting', !showSleepSection);
+      if (realitySection) realitySection.classList.toggle('is-hidden-by-setting', !settings.showReality);
+      if (reflectionSection) reflectionSection.classList.toggle('is-hidden-by-setting', !settings.showReflection);
+    }
 
     function getWeeklyReview() {
       return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
@@ -685,6 +917,15 @@
       document.getElementById('usageNote').value = entry?.usageNote || '';
       document.getElementById('riskNote').value = entry?.riskNote || '';
       document.getElementById('motivationNote').value = entry?.motivationNote || '';
+      document.getElementById('sleepStart').value = entry?.sleepStart || '';
+      document.getElementById('sleepEnd').value = entry?.sleepEnd || '';
+      document.getElementById('sleepHours').value = entry && entry.sleepHours !== '' && entry.sleepHours !== null && entry.sleepHours !== undefined ? entry.sleepHours : '';
+      document.getElementById('naturePercent').value = entry && entry.naturePercent !== '' && entry.naturePercent !== null && entry.naturePercent !== undefined ? entry.naturePercent : '';
+      document.getElementById('enjoymentPercent').value = entry && entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined ? entry.enjoymentPercent : '';
+      document.getElementById('socialOnlinePercent').value = entry && entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined ? entry.socialOnlinePercent : '';
+      document.getElementById('socialIrlPercent').value = entry && entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined ? entry.socialIrlPercent : '';
+      document.getElementById('missedTodayNote').value = entry?.missedTodayNote || '';
+      document.getElementById('tooMuchTodayNote').value = entry?.tooMuchTodayNote || '';
     }
 
     function renderSelectedDayMeta(entry, dateKey) {
@@ -705,8 +946,14 @@
       if (entry.units !== '' && entry.units !== null && entry.units !== undefined) {
         parts.push(`Gebruik: ${entry.units} eenheden`);
       }
+      if (isNumericUnits(entry.sleepHours)) parts.push(`Slaap: ${formatUnits(entry.sleepHours)} uur`);
       if (entry.riskNote) parts.push('Risico ingevuld');
       if (entry.motivationNote) parts.push('Motivatie ingevuld');
+      if (isNumericUnits(entry.naturePercent) || isNumericUnits(entry.enjoymentPercent) || isNumericUnits(entry.socialOnlinePercent) || isNumericUnits(entry.socialIrlPercent)) {
+        parts.push('Realiteitsscores ingevuld');
+      }
+      if (entry.missedTodayNote) parts.push('Gemist ingevuld');
+      if (entry.tooMuchTodayNote) parts.push('Te veel ingevuld');
       state.textContent = parts.length ? parts.join(' | ') : 'Dag opgeslagen';
     }
 
@@ -714,20 +961,41 @@
       const dateKey = document.getElementById('usageDate').value || toDateKey(new Date());
       const entry = getDailyEntries()[dateKey] || null;
       setSelectedFields(entry);
+      if (entry && entry.sleepHours === '' && entry.sleepStart && entry.sleepEnd) {
+        calculateSleepHours();
+      }
       renderSelectedDayMeta(entry, dateKey);
     }
 
     function collectSelectedDayData() {
       const rawPlanned = document.getElementById('plannedUnits').value.trim().replace(',', '.');
       const rawUnits = document.getElementById('usageUnits').value.trim().replace(',', '.');
+      const rawSleepHours = document.getElementById('sleepHours').value.trim().replace(',', '.');
+      const rawNature = document.getElementById('naturePercent').value.trim().replace(',', '.');
+      const rawEnjoyment = document.getElementById('enjoymentPercent').value.trim().replace(',', '.');
+      const rawSocialOnline = document.getElementById('socialOnlinePercent').value.trim().replace(',', '.');
+      const rawSocialIrl = document.getElementById('socialIrlPercent').value.trim().replace(',', '.');
       return {
         plannedUnits: rawPlanned === '' ? '' : Number(rawPlanned),
         units: rawUnits === '' ? '' : Number(rawUnits),
         usageNote: document.getElementById('usageNote').value.trim(),
         riskNote: document.getElementById('riskNote').value.trim(),
         motivationNote: document.getElementById('motivationNote').value.trim(),
+        sleepStart: document.getElementById('sleepStart').value,
+        sleepEnd: document.getElementById('sleepEnd').value,
+        sleepHours: rawSleepHours === '' ? '' : Number(rawSleepHours),
+        naturePercent: rawNature === '' ? '' : Number(rawNature),
+        enjoymentPercent: rawEnjoyment === '' ? '' : Number(rawEnjoyment),
+        socialOnlinePercent: rawSocialOnline === '' ? '' : Number(rawSocialOnline),
+        socialIrlPercent: rawSocialIrl === '' ? '' : Number(rawSocialIrl),
+        missedTodayNote: document.getElementById('missedTodayNote').value.trim(),
+        tooMuchTodayNote: document.getElementById('tooMuchTodayNote').value.trim(),
         updatedAt: new Date().toISOString()
       };
+    }
+
+    function isValidPercent(value) {
+      return value >= 0 && value <= 100;
     }
 
     function hasEntryContent(entry) {
@@ -736,7 +1004,16 @@
         (entry.units !== '' && entry.units !== null && entry.units !== undefined) ||
         Boolean(entry.usageNote) ||
         Boolean(entry.riskNote) ||
-        Boolean(entry.motivationNote)
+        Boolean(entry.motivationNote) ||
+        Boolean(entry.sleepStart) ||
+        Boolean(entry.sleepEnd) ||
+        (entry.sleepHours !== '' && entry.sleepHours !== null && entry.sleepHours !== undefined) ||
+        (entry.naturePercent !== '' && entry.naturePercent !== null && entry.naturePercent !== undefined) ||
+        (entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined) ||
+        (entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined) ||
+        (entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined) ||
+        Boolean(entry.missedTodayNote) ||
+        Boolean(entry.tooMuchTodayNote)
       );
     }
 
@@ -757,6 +1034,26 @@
       }
       if (entry.units !== '' && Number.isNaN(entry.units)) {
         showMessage('Gebruik in eenheden moet een geldig getal zijn.');
+        return;
+      }
+      if (entry.sleepHours !== '' && Number.isNaN(entry.sleepHours)) {
+        showMessage('Slaapuren moeten een geldig getal zijn.');
+        return;
+      }
+      if (entry.naturePercent !== '' && (Number.isNaN(entry.naturePercent) || !isValidPercent(entry.naturePercent))) {
+        showMessage('Natuur moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.enjoymentPercent !== '' && (Number.isNaN(entry.enjoymentPercent) || !isValidPercent(entry.enjoymentPercent))) {
+        showMessage('Genoten moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.socialOnlinePercent !== '' && (Number.isNaN(entry.socialOnlinePercent) || !isValidPercent(entry.socialOnlinePercent))) {
+        showMessage('Online contact moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.socialIrlPercent !== '' && (Number.isNaN(entry.socialIrlPercent) || !isValidPercent(entry.socialIrlPercent))) {
+        showMessage('IRL contact moet tussen 0 en 100 liggen.');
         return;
       }
 
@@ -996,6 +1293,15 @@
         if (entry.riskNote) parts.push(`Risico: ${entry.riskNote}`);
         if (entry.motivationNote) parts.push(`Motivatie: ${entry.motivationNote}`);
         if (entry.usageNote) parts.push(`Toelichting: ${entry.usageNote}`);
+        if (entry.sleepStart) parts.push(`Inslapen: ${entry.sleepStart}`);
+        if (entry.sleepEnd) parts.push(`Wakker: ${entry.sleepEnd}`);
+        if (isNumericUnits(entry.sleepHours)) parts.push(`Slaapuren: ${formatUnits(entry.sleepHours)}`);
+        if (isNumericUnits(entry.naturePercent)) parts.push(`Natuur: ${formatUnits(entry.naturePercent)}%`);
+        if (isNumericUnits(entry.enjoymentPercent)) parts.push(`Genoten: ${formatUnits(entry.enjoymentPercent)}%`);
+        if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
+        if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
+        if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
+        if (entry.tooMuchTodayNote) parts.push(`Te veel: ${entry.tooMuchTodayNote}`);
 
         return `
           <li class="history-item">
@@ -1044,7 +1350,7 @@
         filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
         const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
         const rows = [
-          ['date', 'plannedUnits', 'units', 'difference', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ['date', 'plannedUnits', 'units', 'difference', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
           ...sortedEntries.map((entry) => {
             const hasBoth = isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units);
             const difference = hasBoth ? Number(entry.units) - Number(entry.plannedUnits) : '';
@@ -1053,6 +1359,15 @@
               entry.plannedUnits ?? '',
               entry.units ?? '',
               difference,
+              entry.sleepStart || '',
+              entry.sleepEnd || '',
+              entry.sleepHours ?? '',
+              entry.naturePercent ?? '',
+              entry.enjoymentPercent ?? '',
+              entry.socialOnlinePercent ?? '',
+              entry.socialIrlPercent ?? '',
+              entry.missedTodayNote || '',
+              entry.tooMuchTodayNote || '',
               entry.usageNote || '',
               entry.riskNote || '',
               entry.motivationNote || '',
@@ -1159,6 +1474,60 @@
           item.appendChild(motivation);
         }
 
+        if (entry.sleepStart) {
+          const sleepStart = document.createElement('p');
+          sleepStart.textContent = `Inslapen: ${entry.sleepStart}`;
+          item.appendChild(sleepStart);
+        }
+
+        if (entry.sleepEnd) {
+          const sleepEnd = document.createElement('p');
+          sleepEnd.textContent = `Wakker: ${entry.sleepEnd}`;
+          item.appendChild(sleepEnd);
+        }
+
+        if (isNumericUnits(entry.sleepHours)) {
+          const sleepHours = document.createElement('p');
+          sleepHours.textContent = `Slaapuren: ${formatUnits(entry.sleepHours)}`;
+          item.appendChild(sleepHours);
+        }
+
+        if (isNumericUnits(entry.naturePercent)) {
+          const nature = document.createElement('p');
+          nature.textContent = `Natuur: ${formatUnits(entry.naturePercent)}%`;
+          item.appendChild(nature);
+        }
+
+        if (isNumericUnits(entry.enjoymentPercent)) {
+          const enjoyment = document.createElement('p');
+          enjoyment.textContent = `Genoten: ${formatUnits(entry.enjoymentPercent)}%`;
+          item.appendChild(enjoyment);
+        }
+
+        if (isNumericUnits(entry.socialOnlinePercent)) {
+          const socialOnline = document.createElement('p');
+          socialOnline.textContent = `Contact online: ${formatUnits(entry.socialOnlinePercent)}%`;
+          item.appendChild(socialOnline);
+        }
+
+        if (isNumericUnits(entry.socialIrlPercent)) {
+          const socialIrl = document.createElement('p');
+          socialIrl.textContent = `Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`;
+          item.appendChild(socialIrl);
+        }
+
+        if (entry.missedTodayNote) {
+          const missed = document.createElement('p');
+          missed.textContent = `Wat heb je vandaag gemist: ${entry.missedTodayNote}`;
+          item.appendChild(missed);
+        }
+
+        if (entry.tooMuchTodayNote) {
+          const tooMuch = document.createElement('p');
+          tooMuch.textContent = `Wat was er vandaag te veel: ${entry.tooMuchTodayNote}`;
+          item.appendChild(tooMuch);
+        }
+
         list.appendChild(item);
       });
 
@@ -1175,12 +1544,41 @@
       showMessage.timer = setTimeout(() => el.classList.remove('show'), 2500);
     }
 
+    function calculateSleepHours() {
+      const startEl = document.getElementById('sleepStart');
+      const endEl = document.getElementById('sleepEnd');
+      const hoursEl = document.getElementById('sleepHours');
+      if (!startEl || !endEl || !hoursEl) return;
+
+      if (!startEl.value || !endEl.value) {
+        hoursEl.value = '';
+        return;
+      }
+
+      const [startH, startM] = startEl.value.split(':').map(Number);
+      const [endH, endM] = endEl.value.split(':').map(Number);
+      if (Number.isNaN(startH) || Number.isNaN(startM) || Number.isNaN(endH) || Number.isNaN(endM)) {
+        hoursEl.value = '';
+        return;
+      }
+
+      let startMinutes = startH * 60 + startM;
+      let endMinutes = endH * 60 + endM;
+      if (endMinutes <= startMinutes) {
+        endMinutes += 24 * 60;
+      }
+
+      const hours = (endMinutes - startMinutes) / 60;
+      hoursEl.value = String(Math.round(hours * 10) / 10);
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const existing = iamData.getFormData(formKey) || {};
       const dateInput = document.getElementById('usageDate');
 
       dateInput.value = existing.lastTrackedDate || toDateKey(new Date());
       renderAttemptSummary();
+      loadObservationFields();
       renderSelectedDay();
       renderHistory();
 
@@ -1199,6 +1597,9 @@
       document.getElementById('nextDayButton').addEventListener('click', () => shiftSelectedDate(1));
       document.getElementById('usageDate').addEventListener('change', renderSelectedDay);
       document.getElementById('saveDayButton').addEventListener('click', saveSelectedDay);
+      document.getElementById('saveObservationButton').addEventListener('click', saveObservationFields);
+      document.getElementById('sleepStart').addEventListener('change', calculateSleepHours);
+      document.getElementById('sleepEnd').addEventListener('change', calculateSleepHours);
       document.getElementById('copyTodayButton').addEventListener('click', () => {
         dateInput.value = toDateKey(new Date());
         renderSelectedDay();
@@ -1209,6 +1610,20 @@
       });
       document.getElementById('exportDailyJsonButton').addEventListener('click', () => exportDailyEntries('json'));
       document.getElementById('exportDailyCsvButton').addEventListener('click', () => exportDailyEntries('csv'));
+
+      applyDailySectionSettings();
+      document.getElementById('settingShowSleep').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showSleep: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowReality').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showReality: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowReflection').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showReflection: event.target.checked });
+        applyDailySectionSettings();
+      });
 
       loadRegulationFields();
       renderEvaluation();
