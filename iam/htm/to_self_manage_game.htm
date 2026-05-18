@@ -195,10 +195,6 @@
 
 <body class="bg-gray-900">
 
-    <div id="status-log" class="p-2 bg-yellow-900 text-yellow-100 text-xs text-center font-mono sticky top-0 z-50">
-        Status: Initialiseren...
-    </div>
-
     <!-- START Mobile Frame Wrapper -->
     <div id="mobile-frame" class="max-w-sm mx-auto w-full flex flex-col mt-8 mb-8 relative">
         <div id="app-content-wrapper" class="flex flex-col flex-grow bg-gray-900 rounded-2xl overflow-hidden">
@@ -263,11 +259,7 @@
 
         // --- 2. DIAGNOSTICS / STATUS LOGGING ---
         const logStatus = (message) => {
-            const statusLog = document.getElementById('status-log');
-            if (statusLog) {
-                statusLog.textContent = `Status: ${message}`;
-                console.log(message);
-            }
+            console.log(message);
         };
 
         const getTodayDateKey = (date = new Date()) => date.toISOString().split('T')[0];
@@ -288,7 +280,6 @@
             if (storedItems) {
                 appItems = JSON.parse(storedItems);
             } else {
-                logStatus('2a. Geen lokale items gevonden, standaardlijst laden...');
                 appItems = DEFAULT_RECOVERY_ITEMS.map(item => ({
                     ...item,
                     id: 'init_' + Math.random().toString(36).substr(2, 9),

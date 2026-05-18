@@ -248,13 +248,16 @@ Doel van deze overname: pedagogische scherpte uit legacy behouden zonder terug t
 
 - `verbinding-en-bijdrage.htm` is de moderne, accuratere opvolger van het oude creatiespiraal-concept.
 - Doel: van positieve wens naar betekenisvolle verbinding, sociale bijdrage en eerste haalbare stap.
+- Belangrijk subthema: niet alles alleen dragen; delen van emoties en zorgen helpt eenzaamheid en zelfafsluiting verminderen.
+- Extra laag: als emoties die expressie vragen worden afgeleerd, kan gebruik die emotionele lading chemisch proberen te dragen of op te roepen; dan krijgt het middel te veel emotioneel gewicht.
 - **Kernstructuur**:
 	1. Positief formuleren van de wens
 	2. Eindresultaat concreet maken
-	3. Zien wie hier beter van wordt
-	4. Koppelen aan mensen die kunnen helpen
-	5. Omzetten in een kleine planstap
-- **Koppeling**: sluit aan op `levensdoelen-stellen.htm`, `motiverende-mensen.htm`, `sociaal-netwerk.htm`, `steunnetwerk.htm`, `plan-van-aanpak.htm` en `genieten-belonen.htm`
+	3. Niet alles alleen dragen: wat kun je delen?
+	4. Zien wie hier beter van wordt
+	5. Koppelen aan mensen die kunnen helpen
+	6. Omzetten in een kleine planstap
+- **Koppeling**: sluit aan op `levensdoelen-stellen.htm`, `motiverende-mensen.htm`, `sociaal-netwerk.htm`, `steunnetwerk.htm`, `ingeslikte-emoties.htm`, `lastige-gevoelens.htm`, `verwijten-en-empathie.htm`, `de-spiraal.htm`, `plan-van-aanpak.htm` en `genieten-belonen.htm`
 - **Fase-plaatsing**: Fase 5 (Borging en ritme), omdat de pagina wens, bijdrage, planning en volhouden samenbrengt
 - **Data-opslag**: Lokale dataStore per datum, zodat wens en plan later terug te vinden zijn
 
