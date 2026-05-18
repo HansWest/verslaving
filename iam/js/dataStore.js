@@ -371,6 +371,23 @@ class IamDataStore {
     return data?.forms?.[formType] || null;
   }
 
+  getIntakeProfile() {
+    return this.getFormData('intake-inventarisatie') || {};
+  }
+
+  getPreferredDisplayName(fallback = '') {
+    const intake = this.getIntakeProfile();
+    const candidates = [
+      intake.nickname,
+      intake.nickName,
+      intake.naam,
+      intake.name
+    ];
+
+    const selected = candidates.find((value) => typeof value === 'string' && value.trim().length > 0);
+    return selected ? selected.trim() : fallback;
+  }
+
   getAppMeta(key) {
     const data = this.getData();
     return key ? data?.appMeta?.[key] || null : data?.appMeta || null;
@@ -922,7 +939,9 @@ class IamDataStore {
       genietBeloon.genietingenmomenteel,
       genietBeloon.gedragBelonen,
       genietBeloon.snelBelonen,
-      levensdoelen.eersteStap
+      levensdoelen.eersteStap,
+      watIsMijnIk.surfSkills,
+      watIsMijnIk.surfPlan
     ], 10);
 
     const fallbackMovesBucket = this.buildInsightBucket([
@@ -944,7 +963,11 @@ class IamDataStore {
       smoezen.smoes02,
       smoezen.smoes03,
       levensdoelen.grensSignalen,
-      chemsexPatroon.earlySignals
+      chemsexPatroon.earlySignals,
+      watIsMijnIk.waveTriggerMap,
+      watIsMijnIk.boardProfile,
+      watIsMijnIk.upperCost,
+      watIsMijnIk.downerCost
     ], 8);
 
     const motivationAnchorsBucket = this.buildInsightBucket([
@@ -970,6 +993,7 @@ class IamDataStore {
       watIsMijnIk.valuesStrengthen,
       watIsMijnIk.socialStrengthen,
       watIsMijnIk.bodyStrengthen,
+      watIsMijnIk.surfPlan,
       levensdoelen.levensDoelen,
       levensdoelen.steunHerinnering,
       waardigheid.intrinsiekWaarde,
@@ -1277,3 +1301,57 @@ class IamDataStore {
 
 // Initialize global data store
 const iamData = new IamDataStore();
+
+function renderGlobalPersonalGreeting() {
+  if (typeof document === 'undefined') return;
+
+  const hasPageSpecificGreeting =
+    document.getElementById('personalGreeting') ||
+    typeof window.renderPersonalizedGreeting === 'function';
+
+  if (hasPageSpecificGreeting) return;
+
+  const displayName = typeof iamData.getPreferredDisplayName === 'function'
+    ? iamData.getPreferredDisplayName('')
+    : '';
+
+  const existing = document.getElementById('iamAutoPersonalGreeting');
+  if (!displayName) {
+    if (existing && existing.parentNode) {
+      existing.parentNode.removeChild(existing);
+    }
+    return;
+  }
+
+  const titleEl = document.querySelector('h1');
+  if (!titleEl) return;
+
+  const pageName = ((window.location && window.location.pathname) || '').split('/').pop() || '';
+  let greetingText = `${displayName}, welkom terug.`;
+
+  if (/^(noodplan-|start-nu\.htm)/i.test(pageName)) {
+    greetingText = `${displayName}, stap voor stap en blijf veilig.`;
+  } else if (/^(plan-|to-do-lijst\.htm|agenda\.htm)/i.test(pageName)) {
+    greetingText = `${displayName}, klein en concreet werkt het best.`;
+  } else if (/^(dagelijks-gevolg\.htm|analyseachteraf\.htm)/i.test(pageName)) {
+    greetingText = `${displayName}, kijken zonder oordeel geeft richting.`;
+  } else if (/^(trek-opvangen|craving-|soorten-trek\.htm)/i.test(pageName)) {
+    greetingText = `${displayName}, eerst reguleren, daarna kiezen.`;
+  }
+
+  const greetingEl = existing || document.createElement('p');
+  greetingEl.id = 'iamAutoPersonalGreeting';
+  greetingEl.textContent = greetingText;
+  greetingEl.style.margin = '0.55rem 0 0';
+  greetingEl.style.fontWeight = '700';
+
+  if (!existing) {
+    titleEl.insertAdjacentElement('afterend', greetingEl);
+  }
+}
+
+if (typeof window !== 'undefined') {
+  window.iamRenderGlobalPersonalGreeting = renderGlobalPersonalGreeting;
+  document.addEventListener('DOMContentLoaded', renderGlobalPersonalGreeting);
+  window.addEventListener('focus', renderGlobalPersonalGreeting);
+}

@@ -553,6 +553,7 @@
           <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
         </div>
         <h1>Het gebruik van de dag</h1>
+        <p id="personalGreeting" style="display:none; font-weight:700;"></p>
         <p>Hier volg je per dag wat je van plan was, wat er werkelijk gebeurde en wat je daaruit wilt leren. Zo maak je gebruik zichtbaar zonder jezelf vast te zetten in oordeel.</p>
       </header>
 
@@ -961,6 +962,24 @@
     ];
     const historyLimit = 14;
     let selectedHistoryRange = 7;
+
+    function renderPersonalizedGreeting() {
+      const greetingEl = document.getElementById('personalGreeting');
+      if (!greetingEl) return;
+
+      const displayName = iamData && typeof iamData.getPreferredDisplayName === 'function'
+        ? iamData.getPreferredDisplayName('')
+        : '';
+
+      if (!displayName) {
+        greetingEl.textContent = '';
+        greetingEl.style.display = 'none';
+        return;
+      }
+
+      greetingEl.textContent = `Vandaag in beeld, ${displayName}.`;
+      greetingEl.style.display = 'block';
+    }
 
     function getSliderNumber(id, fallback = 50) {
       const el = document.getElementById(id);
@@ -2283,6 +2302,7 @@
       const dateInput = document.getElementById('usageDate');
 
       dateInput.value = existing.lastTrackedDate || toDateKey(new Date());
+      renderPersonalizedGreeting();
       renderAttemptSummary();
       renderMotivatingMottoSpot();
       renderSelectedDay();
@@ -2428,6 +2448,7 @@
       }
 
       window.addEventListener('focus', () => {
+        renderPersonalizedGreeting();
         renderAttemptSummary();
         renderMotivatingMottoSpot();
       });

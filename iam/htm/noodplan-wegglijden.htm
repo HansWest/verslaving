@@ -491,6 +491,7 @@
 <body>
 <div class="page-header">
     <h1>Noodplan bij wegglijden</h1>
+    <p id="personalGreeting" class="subtitle" style="display:none; font-weight:700;"></p>
     <p class="subtitle">Als het mis dreigt te gaan: houvast, hulp en herstel</p>
 </div>
 
@@ -711,6 +712,24 @@
         'schaamte',
         'minimaleStappen'
     ];
+
+    function renderPersonalizedGreeting() {
+        const greetingEl = document.getElementById('personalGreeting');
+        if (!greetingEl) return;
+
+        const displayName = iamData && typeof iamData.getPreferredDisplayName === 'function'
+            ? iamData.getPreferredDisplayName('')
+            : '';
+
+        if (!displayName) {
+            greetingEl.textContent = '';
+            greetingEl.style.display = 'none';
+            return;
+        }
+
+        greetingEl.textContent = `${displayName}, je staat niet alleen.`;
+        greetingEl.style.display = 'block';
+    }
 
     function loadData() {
         if (typeof iamData === 'undefined') return;
@@ -985,6 +1004,7 @@
 
     // Load on page load
     document.addEventListener('DOMContentLoaded', () => {
+        renderPersonalizedGreeting();
         loadData();
         renderSupportSuggestions();
         renderCrossflowSuggestions();
@@ -1023,6 +1043,7 @@
     });
 
     window.addEventListener('focus', () => {
+        renderPersonalizedGreeting();
         renderSupportSuggestions();
         renderCrossflowSuggestions();
         renderSupportDependencyWarning();

@@ -628,6 +628,7 @@
           <a href="./trek-opvangen-2.htm">Trek opvangen 2</a>
         </div>
         <h1>Noodplan voor forse trek</h1>
+        <p id="personalGreeting" style="display:none; font-weight:700;"></p>
         <p>
           Dit plan is voor piekmomenten waarop trek groot voelt en redeneren moeilijker wordt. Daarom maak je hier een
           kort, concreet en uitvoerbaar protocol voor wat jij en anderen meteen kunnen doen.
@@ -833,6 +834,24 @@
       'sosSignaal',
       'herstelstap'
     ];
+
+    function renderPersonalizedGreeting() {
+      const greetingEl = document.getElementById('personalGreeting');
+      if (!greetingEl) return;
+
+      const displayName = iamData && typeof iamData.getPreferredDisplayName === 'function'
+        ? iamData.getPreferredDisplayName('')
+        : '';
+
+      if (!displayName) {
+        greetingEl.textContent = '';
+        greetingEl.style.display = 'none';
+        return;
+      }
+
+      greetingEl.textContent = `${displayName}, eerst veiligheid, dan herstel.`;
+      greetingEl.style.display = 'block';
+    }
 
     function showMessage(text, isError = false) {
       const el = document.getElementById('message');
@@ -1241,6 +1260,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       const existingData = iamData.getFormData(formKey) || {};
+      renderPersonalizedGreeting();
       fillForm(existingData);
       updateMetaChips(existingData);
       renderCognitiveNudges(existingData);
@@ -1260,6 +1280,7 @@
       document.getElementById('noodplanForm').addEventListener('input', () => saveForm(false));
       document.getElementById('weeklyReviewApply').addEventListener('click', applyWeeklyReviewToForm);
       window.addEventListener('focus', () => {
+        renderPersonalizedGreeting();
         const current = collectFormData();
         renderCognitiveNudges(current);
         renderSupportSuggestions();

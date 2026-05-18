@@ -72,12 +72,23 @@
                 <form id="intakeForm">
                     <div class="form-grid">
                         <div>
-                            <label for="naam">Naam (of nickname)</label>
+                            <label for="naam">Naam (optioneel)</label>
                             <input id="naam" name="naam" type="text" />
                         </div>
                         <div>
                             <label for="leeftijd">Leeftijd (optioneel)</label>
                             <input id="leeftijd" name="leeftijd" type="number" min="0" max="120" />
+                        </div>
+                        <div>
+                            <label for="geslacht">Geslacht (optioneel)</label>
+                            <select id="geslacht" name="geslacht">
+                                <option value="">Kies...</option>
+                                <option value="vrouw">Vrouw</option>
+                                <option value="man">Man</option>
+                                <option value="mvx">MVX</option>
+                                <option value="anders">Anders</option>
+                                <option value="zeg-ik-liever-niet">Zeg ik liever niet</option>
+                            </select>
                         </div>
 
                         <div class="full">

@@ -1309,6 +1309,7 @@
             <h1>🧭 IAM</h1>
             <p>Integrative Addiction Management</p>
             <p style="font-size: 0.95rem; opacity: 0.85;">Jouw reis naar zelfbewustzijn en controle</p>
+            <p id="personalGreeting" style="font-size: 0.95rem; margin-top: 0.35rem; display: none;"></p>
         </div>
 
         <!-- Intro -->
@@ -1348,10 +1349,10 @@
 
         <!-- Quick Actions -->
         <div class="quick-actions">
-            <h3>⚡ Snelle acties</h3>
+            <h3 id="quickActionsTitle">⚡ Snelle acties</h3>
             <div class="action-buttons">
                 <button class="btn-action" onclick="window.location.href='dagelijks-gevolg.htm'">📝 Gebruik bijhouden (14 dagen)</button>
-                <button class="btn-action" onclick="window.location.href='demo-formulier.htm'">🧩 Intake inventarisatie</button>
+                <button class="btn-action" onclick="window.location.href='kennismaking.htm'">🧩 Kennismaking</button>
                 <button class="btn-action" onclick="window.location.href='start-nu.htm'">🧭 Start nu (60 sec triage)</button>
                 <button class="btn-action export" onclick="window.location.href='trek-opvangen.htm'">🧠 Eerst trek opvangen</button>
                 <button class="btn-action" onclick="window.location.href='motivating-motto.htm'">🗝️ Motivating motto</button>
@@ -1402,7 +1403,7 @@
                     <p class="cross-settings-status" id="crossSettingsStatus">Instellingen laden...</p>
                 </div>
             </details>
-            <p class="priority-note">Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.</p>
+            <p class="priority-note" id="priorityNote">Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.</p>
         </div>
 
         <div class="distraction-break" style="background: linear-gradient(135deg, #fff8e1 0%, #ffe8b6 100%); border: 2px solid #ffc107; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow-soft);">
@@ -2015,6 +2016,9 @@
         ]);
 
         const WEEKLY_REVIEW_KEY = 'weeklyReview';
+        const KENNISMAKING_FORM_KEY = 'intake-inventarisatie';
+        const KENNISMAKING_PAGE = 'kennismaking.htm';
+        const DEFAULT_PRIORITY_NOTE = 'Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.';
         const ATTEMPT_TAG_LABELS = {
             'nuttig': 'Nuttig',
             'niet-nuttig': 'Niet nuttig',
@@ -2248,6 +2252,65 @@
 
         function getWeeklyReviewData() {
             return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
+        }
+
+        function hasKennismakingName(data) {
+            if (!data || typeof data !== 'object') return false;
+            const rawName = [data.naam, data.nickname, data.nickName]
+                .find((value) => typeof value === 'string' && value.trim().length > 0);
+            return Boolean(rawName);
+        }
+
+        function getPreferredDisplayName() {
+            if (iamData && typeof iamData.getPreferredDisplayName === 'function') {
+                return iamData.getPreferredDisplayName('');
+            }
+
+            const kennismakingData = iamData && typeof iamData.getFormData === 'function'
+                ? (iamData.getFormData(KENNISMAKING_FORM_KEY) || {})
+                : {};
+            const fallbackName = [kennismakingData.naam, kennismakingData.nickname, kennismakingData.nickName]
+                .find((value) => typeof value === 'string' && value.trim().length > 0);
+
+            return fallbackName ? fallbackName.trim() : '';
+        }
+
+        function renderPersonalizedIndexCopy() {
+            const displayName = getPreferredDisplayName();
+
+            const greetingEl = document.getElementById('personalGreeting');
+            if (greetingEl) {
+                if (displayName) {
+                    greetingEl.textContent = `Welkom terug, ${displayName}.`;
+                    greetingEl.style.display = 'block';
+                } else {
+                    greetingEl.textContent = '';
+                    greetingEl.style.display = 'none';
+                }
+            }
+
+            const quickActionsTitle = document.getElementById('quickActionsTitle');
+            if (quickActionsTitle) {
+                quickActionsTitle.textContent = displayName
+                    ? `⚡ Snelle acties voor ${displayName}`
+                    : '⚡ Snelle acties';
+            }
+
+            const priorityNote = document.getElementById('priorityNote');
+            if (priorityNote) {
+                priorityNote.textContent = displayName
+                    ? `${displayName}, ${DEFAULT_PRIORITY_NOTE.toLowerCase()}`
+                    : DEFAULT_PRIORITY_NOTE;
+            }
+        }
+
+        function ensureKennismakingFirst() {
+            if (!iamData || typeof iamData.getFormData !== 'function') return false;
+            const kennismakingData = iamData.getFormData(KENNISMAKING_FORM_KEY) || {};
+            if (hasKennismakingName(kennismakingData)) return false;
+
+            window.location.href = `${KENNISMAKING_PAGE}?from=index&required=naam`;
+            return true;
         }
 
         function normalizeAttemptMeta(weekly) {
@@ -3052,11 +3115,13 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            if (ensureKennismakingFirst()) return;
             initializeThemeSettings();
             initializeCrossPollinationSettings();
             initializeRecentVisitsTracking();
             renderRecentVisits();
             initializeCollapsibleChapters();
+            renderPersonalizedIndexCopy();
             renderMotivatingMottoSpot();
             document.querySelectorAll('[data-attempt-filter]').forEach((button) => {
                 button.addEventListener('click', () => {
@@ -3066,6 +3131,7 @@
             });
             refreshDashboard();
             window.addEventListener('focus', () => {
+                renderPersonalizedIndexCopy();
                 renderMotivatingMottoSpot();
                 renderCrossSettingsStatus();
             });

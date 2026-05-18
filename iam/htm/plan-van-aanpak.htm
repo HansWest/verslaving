@@ -447,6 +447,7 @@
           <a href="./motiverende-mensen.htm">Volgende stap</a>
         </div>
         <h1>Plan van aanpak</h1>
+        <p id="personalGreeting" style="display:none; font-weight:700; margin-top:0.55rem;"></p>
         <p>Een goed plan maakt je koers concreet: waar sta je nu, wat wil je bereiken, hoe begin je, en wat doe je als plan A niet genoeg werkt.</p>
       </header>
 
@@ -762,6 +763,24 @@
       { idx: 6, label: 'Za' },
       { idx: 0, label: 'Zo' }
     ];
+
+    function renderPersonalizedGreeting() {
+      const greetingEl = document.getElementById('personalGreeting');
+      if (!greetingEl) return;
+
+      const displayName = iamData && typeof iamData.getPreferredDisplayName === 'function'
+        ? iamData.getPreferredDisplayName('')
+        : '';
+
+      if (!displayName) {
+        greetingEl.textContent = '';
+        greetingEl.style.display = 'none';
+        return;
+      }
+
+      greetingEl.textContent = `${displayName}, dit is je planpagina.`;
+      greetingEl.style.display = 'block';
+    }
 
     function getDefaultData() {
       const data = {};
@@ -1474,6 +1493,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
+      renderPersonalizedGreeting();
       loadRegulationFields();
       renderWeeklyReviewPrompt();
       renderAttemptSummary();
@@ -1551,6 +1571,7 @@
       });
 
       window.addEventListener('focus', () => {
+        renderPersonalizedGreeting();
         loadRegulationFields();
         renderWeeklyReviewPrompt();
         renderAttemptSummary();

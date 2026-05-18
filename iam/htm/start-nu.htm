@@ -99,6 +99,7 @@
           <a href="./trek-opvangen.htm">Trek opvangen</a>
         </div>
         <h1>Start Nu (60 sec)</h1>
+        <p id="personalGreeting" style="display:none; font-weight:700;"></p>
         <p>Korte triage voor dit moment: kies wat nu speelt en ga direct naar 1 concrete volgende stap.</p>
       </header>
 
@@ -152,6 +153,24 @@
   <script src="../js/dataStore.js"></script>
   <script>
     let currentRoutePath = './trek-opvangen.htm';
+
+    function renderPersonalizedGreeting() {
+      const greetingEl = document.getElementById('personalGreeting');
+      if (!greetingEl) return;
+
+      const displayName = iamData && typeof iamData.getPreferredDisplayName === 'function'
+        ? iamData.getPreferredDisplayName('')
+        : '';
+
+      if (!displayName) {
+        greetingEl.textContent = '';
+        greetingEl.style.display = 'none';
+        return;
+      }
+
+      greetingEl.textContent = `${displayName}, kies nu je eerstvolgende stap.`;
+      greetingEl.style.display = 'block';
+    }
 
     function computeRoute() {
       const pressure = Number(document.getElementById('pressureScore').value || 0);
@@ -227,6 +246,7 @@
       if (saved.riskNow) document.getElementById('riskNow').value = saved.riskNow;
       if (saved.supportNow) document.getElementById('supportNow').value = saved.supportNow;
 
+      renderPersonalizedGreeting();
       renderRoute();
 
       document.getElementById('pressureScore').addEventListener('input', renderRoute);
@@ -236,6 +256,10 @@
         window.location.href = currentRoutePath;
       });
       document.getElementById('saveSnapshotButton').addEventListener('click', saveSnapshot);
+
+      window.addEventListener('focus', () => {
+        renderPersonalizedGreeting();
+      });
     });
   </script>
 </body>

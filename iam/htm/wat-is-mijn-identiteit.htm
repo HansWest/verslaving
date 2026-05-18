@@ -117,6 +117,20 @@
         <p>Identiteit heeft twee kanten: wat jij ziet in jezelf en wat anderen (denken te) zien. Door beide serieus te nemen, maak je keuzes die beter aansluiten bij wie je wilt zijn.</p>
       </section>
 
+      <section class="context-card">
+        <h2>Petzold: identiteit als tempeldak op pilaren</h2>
+        <p class="subtle-help">In het model van Hilarion Petzold rust identiteit op meerdere levenspilaren. Verslaving beschadigt vaak niet een enkele pilaar, maar zorgt voor scheefstand tussen pilaren.</p>
+        <ul style="margin:0.4rem 0 0.2rem; padding-left:1.15rem; line-height:1.6;">
+          <li><strong>Lichamelijkheid:</strong> energie, slaap, gezondheid, lichaamsgevoel.</li>
+          <li><strong>Seksualiteit en intimiteit:</strong> nabijheid, grenzen, verlangen, relationele veiligheid.</li>
+          <li><strong>Sociaal netwerk:</strong> steun, wederkerigheid, erbij horen, aanspreekbaarheid.</li>
+          <li><strong>Arbeid en prestatie:</strong> structuur, bijdrage, competentie, ritme.</li>
+          <li><strong>Materie:</strong> geld, schulden, woonzekerheid, praktische basis.</li>
+          <li><strong>Normen, waarden en spiritualiteit:</strong> richting, betekenis, geweten, levenshouding.</li>
+        </ul>
+        <p class="subtle-help">Werk per pilaar in drie stappen: 1) wat zie ik, 2) wat zien anderen, 3) wat wordt een eerstvolgende kleine herstelactie.</p>
+      </section>
+
       <form id="identiteitForm">
         <section class="question-card">
           <h2>Lichamelijkheid</h2>
@@ -260,7 +274,8 @@
 
   <script src="../js/dataStore.js"></script>
   <script>
-    const formKey = 'wat-is-mijn-identiteit';
+    const canonicalFormKey = 'wat-is-mijn-ik';
+    const legacyFormKey = 'wat-is-mijn-identiteit';
     const fieldNames = [
       'lijfzelf', 'lijfander', 'lijfdoen', 'lichamelijkheidkracht',
       'sekszelf', 'seksander', 'seksdoen', 'seksualiteitkracht',
@@ -301,8 +316,70 @@
       return data;
     }
 
+    function identityToCanonical(identityData) {
+      return {
+        bodySelfView: identityData.lijfzelf || '',
+        bodyShown: identityData.lijfander || '',
+        bodyStrengthen: identityData.lijfdoen || '',
+        bodyStrengthPct: identityData.lichamelijkheidkracht || '50',
+        sexualSelfView: identityData.sekszelf || '',
+        sexualShown: identityData.seksander || '',
+        sexualStrengthen: identityData.seksdoen || '',
+        sexualStrengthPct: identityData.seksualiteitkracht || '50',
+        socialSelfView: identityData.soczelf || '',
+        socialShown: identityData.socander || '',
+        socialStrengthen: identityData.socdoen || '',
+        socialStrengthPct: identityData.sociaalkracht || '50',
+        workSelfView: identityData.werkzelf || '',
+        workShown: identityData.werkander || '',
+        workStrengthen: identityData.arbeiddoen || '',
+        workStrengthPct: identityData.prestatiekracht || '50',
+        matterSelfView: identityData.materiezelf || '',
+        matterShown: identityData.materieander || '',
+        matterStrengthen: identityData.materiedoen || '',
+        matterStrengthPct: identityData.materiekracht || '50',
+        valuesSelfView: identityData.normzelf || '',
+        valuesShown: identityData.normander || '',
+        valuesStrengthen: identityData.normdoen || '',
+        valuesStrengthPct: identityData.normkracht || '50'
+      };
+    }
+
+    function canonicalToIdentity(canonicalData) {
+      return {
+        lijfzelf: canonicalData.bodySelfView || '',
+        lijfander: canonicalData.bodyShown || '',
+        lijfdoen: canonicalData.bodyStrengthen || '',
+        lichamelijkheidkracht: canonicalData.bodyStrengthPct || '50',
+        sekszelf: canonicalData.sexualSelfView || '',
+        seksander: canonicalData.sexualShown || '',
+        seksdoen: canonicalData.sexualStrengthen || '',
+        seksualiteitkracht: canonicalData.sexualStrengthPct || '50',
+        soczelf: canonicalData.socialSelfView || '',
+        socander: canonicalData.socialShown || '',
+        socdoen: canonicalData.socialStrengthen || '',
+        sociaalkracht: canonicalData.socialStrengthPct || '50',
+        werkzelf: canonicalData.workSelfView || '',
+        werkander: canonicalData.workShown || '',
+        arbeiddoen: canonicalData.workStrengthen || '',
+        prestatiekracht: canonicalData.workStrengthPct || '50',
+        materiezelf: canonicalData.matterSelfView || '',
+        materieander: canonicalData.matterShown || '',
+        materiedoen: canonicalData.matterStrengthen || '',
+        materiekracht: canonicalData.matterStrengthPct || '50',
+        normzelf: canonicalData.valuesSelfView || '',
+        normander: canonicalData.valuesShown || '',
+        normdoen: canonicalData.valuesStrengthen || '',
+        normkracht: canonicalData.valuesStrengthPct || '50'
+      };
+    }
+
     function loadData() {
-      const saved = iamData.getFormData(formKey) || {};
+      const canonicalSaved = iamData.getFormData(canonicalFormKey) || {};
+      const legacySaved = iamData.getFormData(legacyFormKey) || {};
+      const saved = Object.keys(canonicalSaved).length
+        ? canonicalToIdentity(canonicalSaved)
+        : legacySaved;
       fieldNames.forEach((name) => {
         const el = document.getElementsByName(name)[0];
         if (el && typeof saved[name] !== 'undefined') {
@@ -313,8 +390,9 @@
 
     function saveData(feedback = true) {
       try {
-        iamData.updateFormData(formKey, collectData());
-        if (feedback) showMessage('Wat-is-mijn-identiteit opgeslagen op dit toestel.');
+        const identityData = collectData();
+        iamData.updateFormData(canonicalFormKey, identityToCanonical(identityData));
+        if (feedback) showMessage('Identiteit opgeslagen in je centrale ik-profiel.');
       } catch (error) {
         console.error(error);
         showMessage('Opslaan lukte niet.', true);

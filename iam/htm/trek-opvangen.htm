@@ -625,6 +625,7 @@
           Trek voelt vaak als "nu of nooit", maar hij piekt en zakt weer. Dit formulier helpt je om op het moment zelf
           van automatische reactie naar bewuste actie te gaan. Kort, praktisch, en bedoeld om vaker te oefenen.
         </p>
+          <p id="personalGreeting" style="display:none; font-weight:700;"></p>
         <ul class="quick-flow">
           <li><strong>1. Stop & adem:</strong> vertraag zodat je de actualiteit kunt zien.</li>
           <li><strong>2. A - Actualiteit:</strong> onder ogen zien wat er nu echt gebeurt.</li>
@@ -836,6 +837,24 @@
       'afleiding',
       'herhaling'
     ];
+
+      function renderPersonalizedGreeting() {
+        const greetingEl = document.getElementById('personalGreeting');
+        if (!greetingEl) return;
+
+        const displayName = iamData && typeof iamData.getPreferredDisplayName === 'function'
+          ? iamData.getPreferredDisplayName('')
+          : '';
+
+        if (!displayName) {
+          greetingEl.textContent = '';
+          greetingEl.style.display = 'none';
+          return;
+        }
+
+        greetingEl.textContent = `${displayName}, eerst opvangen, dan kiezen.`;
+        greetingEl.style.display = 'block';
+      }
 
     function showMessage(text, isError = false) {
       const el = document.getElementById('message');
@@ -1194,6 +1213,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       const existingData = iamData.getFormData(formKey) || {};
+        renderPersonalizedGreeting();
       fillForm(existingData);
       updateMetaChips(existingData);
       renderCognitiveNudges(existingData);
@@ -1210,6 +1230,7 @@
       document.getElementById('dossierKeyword').addEventListener('change', () => saveDossierMeta(false));
       document.getElementById('weeklyReviewApply').addEventListener('click', applyWeeklyReviewToForm);
       window.addEventListener('focus', () => {
+          renderPersonalizedGreeting();
         renderDossierPanel();
       });
     });
