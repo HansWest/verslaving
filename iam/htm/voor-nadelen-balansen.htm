@@ -850,12 +850,52 @@
             }
         }
 
+        function getGameSignals() {
+            const result = {
+                latestDailyFocus: '',
+                latestNote: '',
+                positiveItem: '',
+                negativeItem: ''
+            };
+
+            try {
+                const rawScores = localStorage.getItem('verity_scores');
+                if (rawScores) {
+                    const scores = JSON.parse(rawScores) || {};
+                    const latestKey = Object.keys(scores).sort((a, b) => new Date(b) - new Date(a))[0];
+                    const latest = latestKey ? scores[latestKey] : null;
+                    if (latest) {
+                        result.latestDailyFocus = String(latest.dailyFocus || '').trim();
+                        result.latestNote = String(latest.note || '').trim();
+                    }
+                }
+            } catch (error) {
+                console.warn('Kon verity_scores niet lezen voor balans-koppeling.', error);
+            }
+
+            try {
+                const rawItems = localStorage.getItem('verity_items');
+                if (rawItems) {
+                    const items = JSON.parse(rawItems) || [];
+                    const positive = items.find((item) => item && item.type === 'positive' && String(item.content || '').trim());
+                    const negative = items.find((item) => item && item.type === 'negative' && String(item.content || '').trim());
+                    result.positiveItem = positive ? String(positive.content).trim() : '';
+                    result.negativeItem = negative ? String(negative.content).trim() : '';
+                }
+            } catch (error) {
+                console.warn('Kon verity_items niet lezen voor balans-koppeling.', error);
+            }
+
+            return result;
+        }
+
         function buildBalanceCrossSuggestions() {
             if (typeof iamData === 'undefined') return [];
 
             const whyUse = iamData.getFormData('waarom-wel-gebruiken') || {};
             const trek = iamData.getFormData('trek-opvangen') || {};
             const riskDenken = iamData.getFormData('risico-denken') || {};
+            const gameSignals = getGameSignals();
 
             const pool = [
                 { text: whyUse.functionSummary || whyUse.notFeeling, source: 'waarom-wel-gebruiken', target: 'usageAdvantagesText' },
@@ -864,7 +904,11 @@
                 { text: whyUse.functionSummary, source: 'waarom-wel-gebruiken', target: 'decisionNote' },
                 { text: trek.behoefte, source: 'trek-opvangen', target: 'changeAdvantagesText' },
                 { text: trek.alternatief, source: 'trek-opvangen', target: 'changeAdvantagesText' },
-                { text: riskDenken.alternatiefDenken, source: 'risico-denken', target: 'decisionNote' }
+                { text: riskDenken.alternatiefDenken, source: 'risico-denken', target: 'decisionNote' },
+                { text: gameSignals.latestDailyFocus, source: 'zelfmanagement-spel (dagfocus)', target: 'decisionNote' },
+                { text: gameSignals.latestNote, source: 'zelfmanagement-spel (notitie)', target: 'decisionNote' },
+                { text: gameSignals.positiveItem, source: 'zelfmanagement-spel (positief item)', target: 'changeAdvantagesText' },
+                { text: gameSignals.negativeItem, source: 'zelfmanagement-spel (negatief item)', target: 'usageDisadvantagesText' }
             ];
 
             const unique = [];

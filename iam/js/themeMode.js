@@ -56,6 +56,11 @@
     }
 
     function ensureThemeShortcut() {
+        const path = (window.location.pathname || '').toLowerCase();
+        if (path.endsWith('/to_self_manage_game.htm') || path.endsWith('to_self_manage_game.htm')) {
+            return;
+        }
+
         if (document.getElementById('themeSettingsCard')) return;
         if (document.querySelector('.theme-settings-shortcut')) return;
 
@@ -65,8 +70,8 @@
         const shortcut = document.createElement('a');
         shortcut.className = 'theme-settings-shortcut';
         shortcut.href = 'index.htm#themeSettingsCard';
-        shortcut.textContent = 'Weergave';
-        shortcut.setAttribute('aria-label', 'Ga naar weergave-instellingen');
+        shortcut.textContent = 'Thema';
+        shortcut.setAttribute('aria-label', 'Ga naar thema-instellingen');
         wrap.appendChild(shortcut);
 
         const contentRoot = document.querySelector('.container, main, .page-wrap, .page-shell, body');
