@@ -1,300 +1,356 @@
-<html>
-<!--
-Legacy-notitie (behouden voor onderhoud):
-- Bron: controleerjeverslaving.nl
-- Context: verkenningsmodule rond identiteit en regie
---> 
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>de IK die controle wenst</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wat is mijn ik?</title>
+  <meta name="description" content="Verdiepingsmodule over identiteit, regie en verslaving binnen IAM." />
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6b8f;
+      --page-accent: #c96d4f;
+      --page-ok: #5a8840;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="controleerjeverslaving(.nl) is een product van PraatmetHans(.nl) om mensen te helpen om zelfstandig aan de slag te laten gaan met hun verslaving of afhankelijkheid middels verantwoorde formulieren." />
-<meta name="keywords" content="huisarts, poh, verslaving, addiction, zelfstandig, persoonlijk, formulieren, gesprek, keuze, controleerjeverslaving, PraatmetHans.nl" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 107, 143, 0.14), transparent 30%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
 
-<!-- Legacy mobiele notitie behouden voor context. -->
-<script language="javascript">
+    .page-shell { max-width: 960px; margin: 0 auto; }
 
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 
-function hulpscherm()
-{
-hulp_scherm(290,'Genieten in de toekomst', '@@@@.')
-}
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
 
-</script>
+    .context-card,
+    .question-card,
+    .route-card,
+    .message {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
-<style>
-.legacy-context-card {
-  background: #eef4f7;
-  border: 1px solid #c9dbe7;
-  border-left: 4px solid #2f6b8f;
-  border-radius: 10px;
-  padding: 0.8rem 0.9rem;
-  margin: 0.8rem 0 1rem;
-  color: #1f3849;
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
-.legacy-context-card a {
-  color: #2f6b8f;
-  font-weight: 700;
-  text-decoration: none;
-}
-.legacy-context-card a:hover {
-  text-decoration: underline;
-}
-.praatmethansheader {
-  border-radius: 12px;
-  background: linear-gradient(140deg, #2f6b8f 0%, #57744a 100%);
-  color: #fff;
-  padding: 1rem;
-}
-.praatmethansbutton {
-  border: 1px solid #c9dbe7;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #1f3849;
-  padding: 0.32rem 0.5rem;
-  text-decoration: none;
-  font-weight: 700;
-}
-</style>
-    <script src="../js/themeMode.js"></script>
+    .context-card { border-left: 4px solid var(--page-main); }
+    .question-card { border-top: 4px solid var(--page-main); }
+    .route-card { border-top: 4px solid #5b744a; }
+
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+
+    .subtle-help {
+      margin: 0.35rem 0 0.6rem;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .message { display: none; border-left: 4px solid var(--page-ok); }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+
+    .action-bar button,
+    .action-bar a {
+      flex: 1 1 180px;
+      text-decoration: none;
+    }
+
+    .quote-block {
+      margin-top: 0.9rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 10px;
+      background: #f2f7fa;
+      border: 1px solid #d5e5ef;
+      color: #2a4a5f;
+    }
+  </style>
+  <script src="../js/themeMode.js"></script>
 </head>
 <body>
-<div class="container">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
+          <a href="./waardigheid.htm">Waardigheid</a>
+          <a href="./levensdoelen-stellen.htm">Levensdoelen</a>
+        </div>
+        <h1>Wat is mijn ik?</h1>
+        <p>Onderzoek welke delen van je identiteit steviger of juist kwetsbaarder zijn geworden. Dit helpt je om gerichter koers te kiezen.</p>
+      </header>
 
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
+      <div id="message" class="message"></div>
 
-</script>
-</head>
-<body>
-<div class="shadow"><div class="content">
-<script language="javascript">
- 
-writelogo();
--->
-</script>
-<div class="praatmethansheader">
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader"> Onderzoek van de &quot;ik&quot; die controle wenst </h1>
-</div>
-<div class="rechtsitalic"> Voor een aantal mensen is dit oninteressant, voor anderen is dit wezenlijk voor verandering. 
+      <section class="context-card">
+        <h2>Wanneer helpt deze pagina?</h2>
+        <p class="subtle-help">Wel: als je stabiel genoeg bent om te reflecteren. Niet: als je in crisis bent of net hebt gebruikt. Kies dan eerst noodroutes.</p>
+        <div class="action-bar" style="margin-top:0.5rem;">
+          <a class="button-secondary" href="./noodplan-forse-trek.htm">Noodplan forse trek</a>
+          <a class="button-secondary" href="./plan-bij-uitglijden.htm">Plan bij uitglijden</a>
+        </div>
+      </section>
 
-: 15 - 25 minuten</div>
+      <section class="question-card">
+        <h2>Kernreflectie</h2>
+        <p>Ben ik alleen nog maar mijn verslaving, of ben ik meer dan dat? Gebruik kan je tijdelijk ontregelen, maar jouw ik kan ook leren sturen.</p>
+        <div class="quote-block">
+          Als gebruik de enige deur naar genot is geworden, dan is niet jij mislukt, maar je systeem vernauwd. Deze pagina helpt die vernauwing weer breder te maken.
+        </div>
+      </section>
 
-<div class="legacy-context-card">
-  Deze verdiepingsmodule is optioneel. Gebruik hem vooral als nadenken over je "ik" je helpt om regie terug te pakken.
-  Voor direct actiegericht werken kun je ook terug naar het <a href="./index.htm">overzicht</a> of naar <a href="./plan-van-aanpak.htm">plan van aanpak</a>.
-</div>
+      <form id="ikForm">
+        <section class="question-card">
+          <h2>Lichamelijkheid</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="bodySelfView">Wat zie ik bij mezelf?</label>
+              <textarea id="bodySelfView" rows="4" placeholder="Bijv. energie, herstel, conditie, contact met je lichaam."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="bodyShown">Wat laat ik anderen zien?</label>
+              <textarea id="bodyShown" rows="4" placeholder="Wat zien anderen van jou op dit gebied?"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="bodyStrengthen">Hoe is deze pilaar geraakt en wat ga ik concreet doen om te versterken?</label>
+            <textarea id="bodyStrengthen" rows="4"></textarea>
+          </div>
+        </section>
 
-<!-- FASE C: Context Card -->
-<div class="legacy-context-card">
-  <strong>⚡ Wanneer wel/niet gebruiken?</strong>
-  <p style="margin-top: 0.5rem; margin-bottom: 0;">
-    <strong>Wel:</strong> Je bent relatief stabiel en wilt jezelf beter <em>begrijpen</em>. Je wilt weten welke delen van jezelf sterker zijn geworden, en welke juist zwakker. Dit helpt om doel-gericht te werken.<br/>
-    <strong>Niet:</strong> Je bent in crisis, trek voelt onoverkomelijk, of je bent net onder invloed geweest. Kies dan eerder voor <a href="./noodplan-forse-trek.htm">noodplan</a> of <a href="./plan-bij-uitglijden.htm">uitglijden-plan</a>.<br/>
-    <strong>Alternatief:</strong> Wil je meteen starten met verandering? Ga naar <a href="./plan-van-aanpak.htm">plan van aanpak</a>.
-  </p>
-</div>
+        <section class="question-card">
+          <h2>Seksualiteit en intimiteit</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="sexualSelfView">Wat zie ik bij mezelf?</label>
+              <textarea id="sexualSelfView" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="sexualShown">Wat laat ik anderen zien?</label>
+              <textarea id="sexualShown" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="sexualStrengthen">Hoe is deze pilaar geraakt en wat ga ik concreet doen om te versterken?</label>
+            <textarea id="sexualStrengthen" rows="4"></textarea>
+          </div>
+        </section>
 
-<h1>Wat is mijn ik?</h1>
-<div class="printhide">
+        <section class="question-card">
+          <h2>Sociaal netwerk</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="socialSelfView">Wat zie ik bij mezelf?</label>
+              <textarea id="socialSelfView" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="socialShown">Wat laat ik anderen zien?</label>
+              <textarea id="socialShown" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="socialStrengthen">Hoe is deze pilaar geraakt en wat ga ik concreet doen om te versterken?</label>
+            <textarea id="socialStrengthen" rows="4"></textarea>
+          </div>
+        </section>
 
-<div class="rechtsitalic">Ben ik alleen nog maar mijn verslaving? Of ben ik meer?</div>
+        <section class="question-card">
+          <h2>Arbeid en prestatie</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="workSelfView">Wat zie ik bij mezelf?</label>
+              <textarea id="workSelfView" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="workShown">Wat laat ik anderen zien?</label>
+              <textarea id="workShown" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="workStrengthen">Hoe is deze pilaar geraakt en wat ga ik concreet doen om te versterken?</label>
+            <textarea id="workStrengthen" rows="4"></textarea>
+          </div>
+        </section>
 
-<h1>...en wat is een "ik" dan?</h1> 
-Het is soms lastig om te bedenken en na te voelen wat er nou precies gebeurt. Sommige mensen vinden het prettig om daar over na te denken in termen als "ik", "zelf" en andere mensen denken er liever over na in woorden als "identiteit"@@@, maar daar heb ik het elders over.
+        <section class="question-card">
+          <h2>Normen, waarden en spiritualiteit</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="valuesSelfView">Wat zie ik bij mezelf?</label>
+              <textarea id="valuesSelfView" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="valuesShown">Wat laat ik anderen zien?</label>
+              <textarea id="valuesShown" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="valuesStrengthen">Hoe is deze pilaar geraakt en wat ga ik concreet doen om te versterken?</label>
+            <textarea id="valuesStrengthen" rows="4"></textarea>
+          </div>
+        </section>
 
-Als we zeggen dat jij zelf soms trek heeft on het middel dat zo lastig te controleren is, als het ware wordt jouw zelf door de verslaving soms ontvoerd wordt. Dat maakt dat het dus vervolgens aan jouw "ik" is om "je zelf" te controleren.
+        <section class="route-card">
+          <h2>Klaar om toe te passen?</h2>
+          <p class="subtle-help">Kies je vervolgstap: verder verdiepen of meteen omzetten in concrete actie.</p>
+          <div class="action-bar">
+            <a class="button-secondary" href="./levensdoelen-stellen.htm">Verder verdiepen</a>
+            <a class="button-secondary" href="./voor-nadelen-balansen.htm">Meteen naar keuzebalans</a>
+            <button type="button" class="button-primary" id="faseC_nuDoen_btn" style="display:none;">
+              Aanbevolen: <span id="faseC_recommendation">Starten</span>
+            </button>
+          </div>
+        </section>
 
-Wat is dan jouw "ik"?
-Is jouw "ik" hetzelfde als jouw gevoel? Of is jouw ik meer dan jouw gevoel? Gevoelens kunnen soms behoorlijk veranderen. verandert jouw ik dan mee?
-
-Is jouw "ik" hetzelfde als jouw gedachten? Of is jouw ik meer dan jouw gedachten? Gedachten zijn natuurlijk wel bepalend voor controle, Maar dat je kop jou tot nu toe niet heeft tegengehouden zegt misschien iets?
-
-Is jouw "ik" hetzelfde als jouw lichaam? Of is jouw ik meer dan jouw lijf?
-Welke rimpels oefen jij door jouw dagelijks leven? </div>
-
-    <form name="evenwicht" method="post" action="">
-      <input type="text" name="links" style="text-align:right; font-size:11px; font-weight:bolder; color:#CC0066; background:#DDDDDD; border:none; font-stretch:extra-condensed" disabled="disabled" value="|||||||||||" />
-    |
-    <input type="text" name="rechts" style="text-align:left; font-size:11px; color:#009933; background:#DDDDDD; border:none; font-stretch:extra-expanded" disabled="disabled" value="||||||" />
-    </form>
-    <p>  Maar als gebruik de enige deur is geworden in de richting van genot, dan is
-      er wel een probleem ontstaan in een leven.</p>
-    <p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-</p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
-
-<p></p><form name="identiteit">
-
-hulp voor "dat soort mensen" 09002727
-
-
-
-<blockquote>identiteit: Wat zie ik als ik in de spiegel kijk, wat meen ik dat anderen zien als zij naar mij kijken?</blockquote>
-
-<h1>lichamelijkheid</h1>
-<table>
-<tr><td colspan="2">
-In hoeverre ben ik mijn lichaam? In hoeverre ben ik mijn vermogen om te bewegen, om te genieten, van aanrakingen, van maaltijden, van sport of beweging?</td></tr>
-<tr><td>Wat zie ik als ik naar mijzelf kijk?</td>
-<td>Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat gebruik mijn gezondheid heeft aangetast, of doordat ik afgeleerd heb om op andere manieren te genieten?<br />op dit moment(!) is de draagkracht van deze pilaar nog select name="lichamelijkheidkracht" 100% van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dat te versterken?</td></tr>
-</table>
-
-<h1>seksualiteit</h1>
-<table>
-<tr><td colspan="2">
-Ben ik hetero, homo, bi, kinky? Ben ik überhaupt niet zo seksueel of juist eigenlijk heel erg?</td></tr>
-<tr><td>Wat zie ik als ik naar mijzelf kijk?</td>
-<td>Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik miijn seksualiteit alleen nog maar onder invloed uitleef? Of omdat ik het niet meer uitleef omdat ik onder invloed ben?<br />op dit moment(!) is de draagkracht van deze pilaar nog select name="seksualiteitkracht" 100% van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?</td></tr>
-</table>
-
-<h1>sociaal netwerk</h1>
-<table>
-<tr><td colspan="2">
-Heb ik veel vrienden of weinig? Steunt mijn familie mij of niet?</td></tr>
-<tr><td>Wat zie ik als ik naar mijzelf kijk?</td>
-<td>Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik eigenlijk alleen nog maar mensen met verslaving in mijn netwerk heb? Of omdat ik alleen nog maar met mensen praat als er gebruikt is? Of juist dat mensen niet meer met mij willen praten omdat zij denken dat ik onder invloed ben?<br />op dit moment(!) is de draagkracht van deze pilaar nog select name="sociaalkracht" 100% van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?</td></tr>
-</table>
-
-<h1>arbeid en prestatie</h1>
-<table>
-<tr><td colspan="2">
-Heb ik een aardige carrière? Krijg ik een beetje waardering voor wat ik doe (betaald of niet)? Of ben ik bijvoorbeeld een opleiding/studie aan het doen waar ik iets mee ga kunnen doen?</td></tr>
-<tr><td>Wat zie ik als ik naar mijzelf kijk?</td>
-<td>Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik mijn werk aan het kwijtraken ben door gebruik? Of omdat ik mijn kop niet zo goed meer zo goed bij mijn opleiding kan houden?<br />op dit moment(!) is de draagkracht van deze pilaar nog select name="sociaalkracht" 100% van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?</td></tr>
-</table>
-
-<h1>normen en waarden / spiritualiteit</h1>
-<table>
-<tr><td colspan="2">
-Heb ik normen en waarden waar ik iets aan heb?</td></tr>
-<tr><td>Wat zie ik als ik naar mijzelf kijk?</td>
-<td>Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik eigenlijk alleen nog maar mensen met verslaving in mijn netwerk heb? Of omdat ik alleen nog maar met mensen praat als er gebruikt is? Of juist dat mensen niet meer met mij willen praten omdat zij denken dat ik onder invloed ben?<br />op dit moment(!) is de draagkracht van deze pilaar nog select name="sociaalkracht" 100% van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?</td></tr>
-</table>
-
-<!-- FASE C: Doorverwijzing Section -->
-<div style="margin-top: 2rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
-  <h2 style="margin-top: 0; color: #2f6b8f;">▼ Klaar om toe te passen?</h2>
-  <p>Nu je beter begrijpt welke delen van je "ik" sterker geworden zijn en welke juist zwakker, hoe ga je dat gebruiken?</p>
-  
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
-    <div style="background: #fff; padding: 0.8rem; border-radius: 6px; border-left: 3px solid #57744a;">
-      <strong>Verder verdiepen?</strong>
-      <ul style="margin: 0.5rem 0; padding-left: 1.2rem; font-size: 0.9rem;">
-        <li><a href="./levensdoelen-stellen.htm">Levensdoelen stellen</a> — Wat wil je bereiken?</li>
-        <li><a href="./waardigheid.htm">Waardigheid</a> — Wat kun je jezelf geven?</li>
-      </ul>
-    </div>
-    
-    <div style="background: #fff; padding: 0.8rem; border-radius: 6px; border-left: 3px solid #cc6600;">
-      <strong>Meteen in actie?</strong>
-      <ul style="margin: 0.5rem 0; padding-left: 1.2rem; font-size: 0.9rem;">
-        <li><a href="./plan-van-aanpak.htm">Plan van aanpak</a> — Hoe start je concreet?</li>
-        <li><a href="./voor-nadelen-balansen.htm">Voor- en nadelen</a> — Welke keuze maak je?</li>
-      </ul>
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+        </div>
+      </form>
     </div>
   </div>
-  
-  <button id="faseC_nuDoen_btn" style="display: none; margin-top: 1rem; padding: 0.6rem 1rem; background: #57744a; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; font-size: 0.95rem;">
-    💡 Aanbevolen: <span id="faseC_recommendation">Starten</span>
-  </button>
-  <noscript><p style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;"><em>JavaScript nodig voor slimme routering</em></p></noscript>
-</div>
 
-</form><hr class="formhr" />
-<p>&nbsp;</p>
-<p><i>identiteit heeft altijd twee kanten: waar identificeer ik mijzelf mee, wat is de identificatie van anderen.</i>
-</p><p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'wat-is-mijn-ik';
+    const fields = [
+      'bodySelfView', 'bodyShown', 'bodyStrengthen',
+      'sexualSelfView', 'sexualShown', 'sexualStrengthen',
+      'socialSelfView', 'socialShown', 'socialStrengthen',
+      'workSelfView', 'workShown', 'workStrengthen',
+      'valuesSelfView', 'valuesShown', 'valuesStrengthen'
+    ];
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div>
-</div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/formCompat.js"></script>
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
 
-<!-- FASE C: Nu-Doen Routing Logic -->
-<script>
-(function() {
-  const btn = document.getElementById('faseC_nuDoen_btn');
-  const rec = document.getElementById('faseC_recommendation');
-  
-  if (!btn) return;
-  
-  // Detect context from recent navigation
-  const lastPage = sessionStorage.getItem('lastPage') || '';
-  const userContext = sessionStorage.getItem('userContext') || 'reflection';
-  
-  let recommendation = {
-    page: './levensdoelen-stellen.htm',
-    text: 'Levensdoelen stellen'
-  };
-  
-  // Crisis detection
-  if (lastPage.includes('noodplan') || lastPage.includes('trek') || userContext === 'crisis') {
-    recommendation = {
-      page: './plan-bij-uitglijden.htm',
-      text: 'Plan bij uitglijden'
-    };
-  }
-  // Planning detection
-  else if (lastPage.includes('plan') || userContext === 'planning') {
-    recommendation = {
-      page: './voor-nadelen-balansen.htm',
-      text: 'Voor- en nadelen'
-    };
-  }
-  
-  // Update button
-  rec.textContent = recommendation.text;
-  btn.style.display = 'block';
-  btn.onclick = function() {
-    sessionStorage.setItem('lastPage', 'wat-is-mijn-ik.htm');
-    window.location.href = recommendation.page;
-  };
-  
-  // Track navigation
-  sessionStorage.setItem('lastPage', 'wat-is-mijn-ik.htm');
-})();
-</script>
+    function loadData() {
+      const saved = iamData.getFormData(formKey) || {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = saved[id] || '';
+      });
+    }
+
+    function collectData() {
+      const data = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        data[id] = el ? el.value.trim() : '';
+      });
+      return data;
+    }
+
+    function saveData(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectData());
+        if (feedback) showMessage('Wat-is-mijn-ik opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportData() {
+      try {
+        saveData(false);
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    (function setupRecommendation() {
+      const btn = document.getElementById('faseC_nuDoen_btn');
+      const rec = document.getElementById('faseC_recommendation');
+      if (!btn || !rec) return;
+
+      const lastPage = sessionStorage.getItem('lastPage') || '';
+      const userContext = sessionStorage.getItem('userContext') || 'reflection';
+
+      let recommendation = {
+        page: './levensdoelen-stellen.htm',
+        text: 'Levensdoelen stellen'
+      };
+
+      if (lastPage.includes('noodplan') || lastPage.includes('trek') || userContext === 'crisis') {
+        recommendation = {
+          page: './plan-bij-uitglijden.htm',
+          text: 'Plan bij uitglijden'
+        };
+      } else if (lastPage.includes('plan') || userContext === 'planning') {
+        recommendation = {
+          page: './voor-nadelen-balansen.htm',
+          text: 'Voor- en nadelen'
+        };
+      }
+
+      rec.textContent = recommendation.text;
+      btn.style.display = 'inline-flex';
+      btn.addEventListener('click', () => {
+        sessionStorage.setItem('lastPage', 'wat-is-mijn-ik.htm');
+        window.location.href = recommendation.page;
+      });
+
+      sessionStorage.setItem('lastPage', 'wat-is-mijn-ik.htm');
+    })();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+      document.getElementById('saveButton').addEventListener('click', () => saveData(true));
+      document.getElementById('exportButton').addEventListener('click', exportData);
+      document.getElementById('ikForm').addEventListener('input', () => saveData(false));
+    });
+  </script>
 </body>
 </html>

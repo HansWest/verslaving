@@ -668,6 +668,16 @@
           </ul>
         </section>
 
+        <section class="cross-suggest-box">
+          <p>Kruisbestuiving uit Smoezenboek en communicatie-oefeningen: gebruik dit voor scherper plan A/B.</p>
+          <ul class="cross-suggest-list" id="planCrossBoostList">
+            <li class="cross-suggest-item"><span>Nog geen suggesties uit Smoezenboek of SOVA gevonden.</span></li>
+          </ul>
+          <div class="action-bar" style="margin-top: 0.8rem;">
+            <button type="button" class="button-secondary" id="planCrossBoostApplyButton">Voeg deze kruisbestuiving toe aan plan A/B</button>
+          </div>
+        </section>
+
         <section class="question-card route-card">
           <h2>Nu doen: kies je vervolgstap</h2>
           <div class="grid-two">
@@ -1181,35 +1191,53 @@
     }
 
     function buildPlanCrossSuggestions() {
-      const integration = iamData.getIntegrationSummary ? iamData.getIntegrationSummary() : null;
-      const balans = iamData.getFormData('voor-nadelen-balansen') || {};
-      const trek = iamData.getFormData('soorten-trek') || {};
-      const risicoSituaties = iamData.getFormData('risico-situaties') || {};
-      const risicoMensen = iamData.getFormData('risico-mensen') || {};
-      const sociaalNetwerk = iamData.getFormData('sociaal-netwerk') || {};
-      const risicoActiviteiten = iamData.getFormData('risico-activiteiten') || {};
-      const stimulus = iamData.getFormData('stimulus-respons') || {};
-      const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
+      const pack = iamData.getCrossPollinationPack('plan-van-aanpak-core');
+      return Array.isArray(pack?.suggestions) ? pack.suggestions : [];
+    }
 
-      const pool = [
-        { text: integration?.topTriggers?.[0] || risicoSituaties.riskySituations, source: 'risico-situaties', target: 'startPoint' },
-        { text: integration?.motivationAnchors?.[0] || balans.decisionNote, source: 'voor-nadelen-balansen', target: 'mainGoal' },
-        { text: risicoSituaties.responsePlan || stimulus.functionalAlternative, source: 'risico-situaties / stimulus-respons', target: 'planA' },
-        { text: risicoActiviteiten.exitStrategy || risicoActiviteiten.afterRisks, source: 'risico-activiteiten', target: 'planB' },
-        { text: integration?.supportNetwork?.[0] || risicoMensen.personName || sociaalNetwerk.reachableSupport || sociaalNetwerk.firstReachOut || stimulus.socialSupport, source: 'supportNetwork', target: 'supportPeople' },
-        { text: stimulus.contingencyReward || gevoelens.enduranceSupport, source: 'stimulus-respons / lastige-gevoelens', target: 'rewards' },
-        { text: integration?.fallbackMoves?.[0] || trek.noGoSignals || risicoMensen.boundarySummary, source: 'nood/terugvalsignalen', target: 'fallbackGoal' }
-      ];
+    function buildPlanCrossBoostSuggestions() {
+      const pack = iamData.getCrossPollinationPack('plan-van-aanpak-boost');
+      return Array.isArray(pack?.suggestions) ? pack.suggestions : [];
+    }
 
-      const unique = [];
-      pool.forEach((item) => {
-        const clean = String(item.text || '').trim();
-        if (!clean) return;
-        if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
-        unique.push({ ...item, text: clean });
+    function renderPlanCrossBoostSuggestions() {
+      const list = document.getElementById('planCrossBoostList');
+      if (!list) return;
+
+      const suggestions = buildPlanCrossBoostSuggestions();
+      list.innerHTML = '';
+
+      if (!suggestions.length) {
+        const empty = document.createElement('li');
+        empty.className = 'cross-suggest-item';
+        empty.innerHTML = '<span>Nog geen suggesties uit Smoezenboek of SOVA gevonden.</span>';
+        list.appendChild(empty);
+        return;
+      }
+
+      suggestions.forEach((item) => {
+        const row = document.createElement('li');
+        row.className = 'cross-suggest-item';
+        row.innerHTML = `<span>${item.prefix} (${item.source}): ${item.text}</span>`;
+        list.appendChild(row);
+      });
+    }
+
+    function applyPlanCrossBoostSuggestions() {
+      const suggestions = buildPlanCrossBoostSuggestions();
+      if (!suggestions.length) {
+        showMessage('Nog geen kruisbestuiving uit Smoezenboek/SOVA beschikbaar.', true);
+        return;
+      }
+
+      suggestions.forEach((item) => {
+        appendUniqueLine(document.getElementById(item.target), `${item.prefix}: ${item.text}`);
       });
 
-      return unique.slice(0, 5);
+      saveForm(true);
+      renderContradictionCheck(collectFormData());
+      renderPlanCrossBoostSuggestions();
+      showMessage('Kruisbestuiving uit Smoezenboek/SOVA toegevoegd aan plan A/B.');
     }
 
     function renderPlanCrossSuggestions() {
@@ -1453,6 +1481,7 @@
       renderContradictionCheck(saved || getDefaultData());
       renderSupportSuggestions();
       renderPlanCrossSuggestions();
+      renderPlanCrossBoostSuggestions();
       updatePlanRouteHint();
 
       const template = document.getElementById('usageGoalTemplate');
@@ -1464,6 +1493,7 @@
       });
 
       document.getElementById('suggestButton').addEventListener('click', applySuggestionFromPreviousSteps);
+      document.getElementById('planCrossBoostApplyButton').addEventListener('click', applyPlanCrossBoostSuggestions);
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
       document.getElementById('planForm').addEventListener('input', () => saveForm(false));
@@ -1495,6 +1525,7 @@
       document.getElementById('routeFocusPlan').addEventListener('change', updatePlanRouteHint);
       document.getElementById('planForm').addEventListener('input', () => {
         renderPlanCrossSuggestions();
+        renderPlanCrossBoostSuggestions();
       });
 
       // Trigger loader
@@ -1527,6 +1558,7 @@
         renderContradictionCheck();
         renderSupportSuggestions();
         renderPlanCrossSuggestions();
+        renderPlanCrossBoostSuggestions();
         updatePlanRouteHint();
       });
     });

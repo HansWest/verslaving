@@ -1,235 +1,371 @@
-<html>
-
-sova-mixed-signals.htm
-
-deze code is van controleerjeverslavingszorg.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>reageren op mixed signals</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reageren op mixed signals</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6b8f;
+      --page-accent: #c96d4f;
+      --page-ok: #5a8840;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 107, 143, 0.14), transparent 30%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
 
+    .page-shell { max-width: 980px; margin: 0 auto; }
 
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
 
-function effevullen()
-{
-document.mixedsignals.lastgevoel.value = "lastgevoel";
-document.mixedsignals.lastgedrag.value = "lastgedrag";
-document.mixedsignals.gedrag01.value = "gedrag01";
-document.mixedsignals.gedrag02.value = "gedrag02";
-document.mixedsignals.lastgedrag.value ="lastgedrag";
-document.mixedsignals.gevoel01.value = "gevoel01";
-document.mixedsignals.gevoel02.value = "gevoel02";
-document.mixedsignals.wensgedrag.value = "wensgedrag";
-document.mixedsignals.wensgedrag02.value = "wensgedrag02";
-document.mixedsignals.wensgevoel.value = "wensgevoel";
-document.mixedsignals.jouwwensgedrag.value = "jouwwensgedrag";
-document.mixedsignals.waarderingpunt.value ="waarderingpunt";
-document.mixedsignals.antwoordveld.value="antwoordveld";
-}
+    .intro-card,
+    .question-card,
+    .message {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
 
-function langautoantwoord()
-{
-effevullen();
-msg = "Mag ik je even feedback geven op iets? *alleen verder als het antwoord een JA was (anders een andere afspraak maken)* ... Waar ik last van heb is het gevoel "+ document.mixedsignals.lastgevoel.value + " waardoor ik makkelijk " + document.mixedsignals.lastgedrag.value +" ga doen. En dat wil ik eigenlijk helemaal niet. .Dat gevoel ontstaat bij mij omdat jij aan de ene kant " + document.mixedsignals.gedrag01.value + " doet -wat mij het gevoel van " + document.mixedsignals.gevoel01.value + " geeft, terwijl je aan de andere kant " + document.mixedsignals.gedrag02.value + " doet -wat mij het gevoel van " + document.mixedsignals.gevoel02.value + " geeft, Het zou voor mij prettig zijn als jij meer " + document.mixedsignals.wensgedrag.value + " zou laten zien (en misschien op een ander moment meer " + document.mixedsignals.wensgedrag02.value + ") waardoor ik mij waarschijnlijk meer "+ document.mixedsignals.wensgevoel.value + " zou voelen, waardoor ik hopelijk ook meer " + document.mixedsignals.jouwwensgedrag.value + " zou doen.. Ik denk dat dit mij ook zou helpen om meer waardering te voelen voor "+ document.mixedsignals.waarderingpunt.value +".";
-alert ( msg);
-document.mixedsignals.antwoordveld.value=msg;
-hulp_scherm(425,'mixed signals feedback',msg);
-}
+    .intro-card { border-left: 4px solid var(--page-main); }
+    .question-card { border-top: 4px solid var(--page-main); }
 
-function middelautoantwoord()
-{
-effevullen();
-msg = "Ik zou graag even feedback geven op iets... Waar ik last van heb is het gevoel "+ document.mixedsignals.lastgevoel.value + ". Dat krijg ik doordat jij aan de ene kant " + document.mixedsignals.gedrag01.value + " doet (wat mij het gevoel van " + document.mixedsignals.gevoel01.value + " geeft), terwijl je aan de andere kant " + document.mixedsignals.gedrag02.value + " doet (wat mij het gevoel van " + document.mixedsignals.gevoel02.value + " geeft). Het zou voor mij prettig zijn als jij meer " + document.mixedsignals.wensgedrag.value + " zou laten zien (en misschien op een ander moment meer " + document.mixedsignals.wensgedrag02.value + "). Dat zou me waarschijnlijk meer "+ document.mixedsignals.wensgevoel.value + " laten voelen. Trouwens, ik wou ook nog even zeggen dat ik erg blij ben met "+ document.mixedsignals.waarderingpunt.value +".";
-document.mixedsignals.antwoordveld.value=msg;
-hulp_scherm(350,'mixed signals feedback',msg);
-}
+    .message { display: none; border-left: 4px solid var(--page-ok); }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
 
-function kortautoantwoord()
-{
-effevullen();
-msg = "Even wat feedback over iets dat voor mij als dubbele boodschappen voelt. Aan de ene kant zie ik: " + document.mixedsignals.gedrag01.value + " en ik zie ook: " + document.mixedsignals.gedrag02.value + ". Dat geeft me het gevoel: "+ document.mixedsignals.lastgevoel.value + ". Wat vind jij daarvan?";
-document.mixedsignals.antwoordveld.value=msg;
-hulp_scherm(225,'mixed signals feedback',msg);
-}
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .action-bar button,
+    .action-bar a {
+      flex: 1 1 180px;
+      text-decoration: none;
+    }
 
-function hulpscherm()
-{
-hulp_scherm(300,'mixed signals','Regelmatig zie je dat er trek kan ontstaan door lastige sociale situaties. Aan de ene kant doordat het en vervelend gevoel geeft, aan de andere kant omdat het lastig is om te reageren en, juist er niet gereageerd wordt, wordt de wilskracht opgebruikt zodat er onvoldoende over blijft voor de avond.<br> Dit formuliertje help met het geven van reactie.')
-}
+    .subtle-help {
+      margin: 0.35rem 0 0.6rem;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
 
-</script>
-
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
-    <script src="../js/themeMode.js"></script>
+  </style>
+  <script src="../js/themeMode.js"></script>
 </head>
 <body>
-<div class="container">
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./sova-grenzen.htm">Grenzen stellen</a>
+          <a href="./sociaal-netwerk.htm">Sociaal netwerk</a>
+          <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
+        </div>
+        <h1>Reageren op mixed signals</h1>
+        <p>Als je dubbele signalen krijgt, helpt een heldere reactie. Deze oefening maakt je boodschap rustiger en scherper.</p>
+      </header>
 
-<div class="shadow"><div class="content">
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+      <div id="message" class="message"></div>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">reageren op mixed signals </h1>
-</div>
-<div class="rechtsitalic">11 vragen: 15 - 40 minuten</div>
+      <section class="intro-card">
+        <h2>Waarom dit helpt</h2>
+        <p>Dubbele signalen kosten veel energie. Door concreet te benoemen wat je ziet, voelt en vraagt, voorkom je dat spanning zich opstapelt.</p>
+      </section>
 
-<H1>Een  antwoord in lastige situaties </H1>
+      <section class="question-card">
+        <h2>Kruisbestuiving uit andere formulieren</h2>
+        <p class="subtle-help">Deze punten komen uit je risico-, netwerk- en planformulieren. Gebruik ze om sneller heldere feedback te geven.</p>
+        <ul id="crossInsights" class="iam-cross-list"></ul>
+        <div class="form-group" style="margin-top:0.8rem;">
+          <button type="button" class="button-secondary" id="useCrossBtn">Gebruik deze inzichten in dit formulier</button>
+        </div>
+      </section>
 
+      <form id="mixedsignalsForm">
+        <section class="question-card">
+          <h2>Stap voor stap</h2>
+          <div class="form-group">
+            <label for="gedrag01">Wat doet/zegt de ander aan de ene kant?</label>
+            <textarea id="gedrag01" name="gedrag01" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="gevoel01">Welk gevoel geeft dat in jou?</label>
+            <textarea id="gevoel01" name="gevoel01" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="gedrag02">Wat doet/zegt de ander aan de andere kant?</label>
+            <textarea id="gedrag02" name="gedrag02" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="gevoel02">Welk gevoel geeft dat in jou?</label>
+            <textarea id="gevoel02" name="gevoel02" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="lastgevoel">Welk dubbel gevoel ontstaat hierdoor?</label>
+            <textarea id="lastgevoel" name="lastgevoel" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="lastgedrag">Welk gedrag lokt dit bij jou uit?</label>
+            <textarea id="lastgedrag" name="lastgedrag" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="wensgedrag">Welk gedrag wil je vaker zien?</label>
+            <textarea id="wensgedrag" name="wensgedrag" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="wensgedrag02">En eventueel op een ander moment?</label>
+            <textarea id="wensgedrag02" name="wensgedrag02" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="wensgevoel">Welk gevoel wil je dan meer hebben?</label>
+            <textarea id="wensgevoel" name="wensgevoel" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="jouwwensgedrag">Welk gedrag van jezelf wordt dan makkelijker?</label>
+            <textarea id="jouwwensgedrag" name="jouwwensgedrag" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="waarderingpunt">Waar heb je wel waardering voor bij deze persoon?</label>
+            <textarea id="waarderingpunt" name="waarderingpunt" rows="3"></textarea>
+          </div>
+        </section>
 
-<div class="printhide">
-  <p>Mensen geven nou eenmaal regelmatig dubbele signalen en als je daarop wilt reageren dan is het soms handig om even extra na te denken.<br />
-  eventjes: in het begin lijkt dit een erg overdreven uitgebreid formulier,
-    en in de praktijk zal je inderdaad heel vaak genoeg hebben aan het korte
-    antwoord. Maar als je dit als oefening een aantal keer hebt uitgewerkt, dan
-    wordt het makkelijker om ook lastige dingen te bespreken. </p>
-  <div class="praatmethansheader2">Dit formuliertje dus als oefening of als hulp om een gesprek(je) voor te
-    bereiden.</div><p></p>
-  <p></p>
-  <div class="rechtsitalic">sociale intelligentie.</div>
-  <p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-</p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <section class="question-card">
+          <h2>Auto-antwoorden (oefenversies)</h2>
+          <p class="subtle-help">Kies een toon en pas de tekst aan naar je eigen situatie.</p>
+          <div class="action-bar" style="margin-top:0.5rem;">
+            <button type="button" class="button-secondary" id="langBtn">Lang antwoord</button>
+            <button type="button" class="button-secondary" id="middelBtn">Middel antwoord</button>
+            <button type="button" class="button-secondary" id="kortBtn">Kort antwoord</button>
+          </div>
+          <div class="form-group" style="margin-top:0.9rem;">
+            <label for="antwoordveld">Voorsteltekst</label>
+            <textarea id="antwoordveld" name="antwoordveld" rows="7"></textarea>
+          </div>
+          <div class="form-group">
+            <button type="button" class="button-secondary" id="fillDemoBtn">Vul voorbeeldteksten</button>
+          </div>
+        </section>
 
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-</div>
-<form name="mixedsignals">
-<h1>REACTIE OP MIXED SIGNALS </h1>
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'sova-mixed-signals';
+    const fields = [
+      'gedrag01', 'gevoel01', 'gedrag02', 'gevoel02', 'lastgevoel', 'lastgedrag',
+      'wensgedrag', 'wensgedrag02', 'wensgevoel', 'jouwwensgedrag', 'waarderingpunt', 'antwoordveld'
+    ];
+    let crossSeed = null;
 
-<p>Wat wordt er  aan de <b>ene kant gezegd/gedaan</b> door degene die dubbele signalen
-  geeft (beschrijf gedrag dat je kan observeren met een videocamera, ga niet
-  uit van jouw eigen interpretaties van dat gedrag, dat komt later)<br />
-  <textarea name="gedrag01" class="praatmethansformtextarea" cols="55" rows="2" title="wat zie je dat iemand doet, wat hoor je dat iemand zegt?"></textarea>
-</p>
-<div class="praatmethansheader2">&quot;aan de ene kant zegt iemand/ doet iemand...&quot;</div><p></p>
-<p>Wat is het <b>gevoel</b> dat in jou aan de <b>ene kant</b> ontstaat?<br />
-  <textarea name="gevoel01" class="praatmethansformtextarea" cols="55" rows="2" title="Daardoor voel jij aan de ene kant?"></textarea><br />
-</p><div class="praatmethansheader2">&quot;aan de ene kant geeft dat het gevoel...&quot;</div><p></p>
+    function getValue(id) {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : '';
+    }
 
-<p>Wat wordt er <b>gezegd./gedaan aan de andere kant</b> (beschrijf weer gedrag dat
-  je kan observeren met een videocamera, ga niet uit van jouw eigen interpretaties
-  van dat gedrag, dat komt later)<br />
-  <textarea name="gedrag02" class="praatmethansformtextarea" cols="55" rows="2" title="wat zie jecdat iemand ook doet, wat hoor je dat iemand ook zegt?"></textarea><br />
-</p><div class="praatmethansheader2">&quot;aan de andere kant zegt iemand/ doet iemand...&quot;</div><p></p>
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
 
-<p>Wat is het <b>gevoel</b> dat in jou aan de <b>andere kant</b> ontstaat?<br />
-  <textarea name="gevoel02" class="praatmethansformtextarea" cols="55" rows="2" title="Daardoor voel jij aan de andere kant?"></textarea><br />
-</p><div class="praatmethansheader2">&quot;aan de andere kant geeft dat het gevoel...&quot;</div><p></p>
+    function collectData() {
+      const data = {};
+      fields.forEach((name) => {
+        const el = document.getElementsByName(name)[0];
+        data[name] = el ? el.value.trim() : '';
+      });
+      return data;
+    }
 
-<p>Wat is het <b>gevoel dat bij jou ontstaat</b> door het verschil tussen deze twee
-  gevoelens? (de last die jij hebt van de dubbel heid) <br />
-  <textarea name="lastgevoel" class="praatmethansformtextarea" cols="55" rows="2" title="Wat is het (dubbele) gevoel  dat jij voelt?"></textarea><br />
-</p><div class="praatmethansheader2">&quot;dat geeft jou het (dubbele) gevoel...&quot;</div>
-<p></p>
+    function loadData() {
+      const saved = iamData.getFormData(formKey) || {};
+      fields.forEach((name) => {
+        const el = document.getElementsByName(name)[0];
+        if (el && typeof saved[name] !== 'undefined') {
+          el.value = saved[name];
+        }
+      });
+    }
 
-<p>Het <b>gedrag dat uitgelokt wordt</b> door  dat gevoel, dat is?<br />
-  <textarea name="lastgedrag" class="praatmethansformtextarea" cols="55" rows="2" title="Wat is het gedrag dat jij gaat doen door dit (dubbele) gevoel?"></textarea><br />
-</p><div class="praatmethansheader2">&quot;dat werkt bij jou het gedrag in de hand...&quot;</div>
-<p>Wat is <b>jouw wens</b> voor het gedrag van die ander? (wederom: beschrijf gedrag
-  dat je kan observeren met een videocamera, ga niet uit van jouw eigen gevoel
-  bij dat gewenste gedrag, dat komt later)<br />
-  <textarea name="wensgedrag" class="praatmethansformtextarea" cols="55" rows="2" title="wat zou bje het liefste zien dat iemand WEL doet (met zijn/haar gevoel)?"></textarea><br/>
-</p>
-<div class="praatmethansheader2">&quot;ik zou graag willen dat  iemand/ wel gaat
-  doen...&quot;</div>
-<div class="rechtsitalic">val niet in de valkuil dat je dingen gaat zeggen als:
-  &quot;je moet <b>niet</b> zo dubbel doen&quot; .<br />
-  Beschrijf dingen die mensen WEL kunnen
-  doen.. </div>
-<p>Eventueel (want het is niet de bedoeling dat je de ander dwingt om gevoelens in te slikken (die komen er namelijk toch wel uit op een ander moment) kan je jezefl afvragen:<br />
-Wat zou je willen dat iemand daarnaast &oacute;&oacute;k, op een <i>ander</i> moment,
-doet met zijn/haar gevoel? (wederom:
-beschrijf videocameragedrag)<br />
-  <textarea name="wensgedrag02" class="praatmethansformtextarea" cols="55" rows="2" title="wat zou bje het liefste zien dat iemand WEL doet (met zijn/haar gevoel)?"></textarea><br/>
-</p>
-<div class="praatmethansheader2">&quot;aan de andere kant zou  iemand/
-  kunnen doen met z'n gevoel...&quot;</div>
-<div class="rechtsitalic">val niet in de valkuil dat je iemand &eacute;&eacute;n helft van
-  het gevoel weg laat poetsen<br />
-  Beschrijf dingen die mensen er WEL mee kunnen
-  doen.. </div>
+    function saveData(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectData());
+        if (feedback) showMessage('SOVA-mixed-signals opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
 
-<p>Wat voor <b>gevoel verwacht</b> jij (meer) te gaan krijgen als iemand dit gedrag
-  (deze gedragingen) meer zou laten zien? <br />
-  <textarea name="wensgevoel" class="praatmethansformtextarea" cols="55" rows="2" title="wat verwacht jij vaker te gaan voelen als iemand vaker zou doen wat jij VRAAGT?"></textarea><br />
-</p><div class="praatmethansheader2">&quot;wat zou voor jou de winst zijn ...&quot;</div>
-<p>Wat voor <b>gedrag verwacht</b> jij zelf (meer) te laten zien als de ander
-  vaker zou doen wat jij hiervoor beschreef? <br />
-  <textarea name="jouwwensgedrag" class="praatmethansformtextarea" cols="55" rows="2" title="wat verwacht jij vaker te gaan doen als iemand vaker zou doen wat jij VRAAGT?"></textarea><br />
-</p><div class="praatmethansheader2">&quot;wat zou  de winst zijn voor de ander ...&quot;</div>
-<p>Wat is een eigenschap of een gedrag van deze persoon waar jij <b>w&egrave;l
-    waardering</b>  voor hebt?<br />
-  <textarea name="waarderingpunt" class="praatmethansformtextarea" cols="55" rows="2" title="vind jij een mooie/prettige/goede eigenschap van iemand?"></textarea><br />
-</p>
-<div class="praatmethansheader2">&quot;je waardeert iemand/ omdat...&quot;</div>
-<p></p>&nbsp;<p></p>
-<p align="center">*klik voor het* &nbsp; &nbsp; <a href="javascript:void(0)" onClick="langautoantwoord();" class="praatmethansbutton" title="ik wil de automatische antwoorden even zien">&nbsp;&nbsp;lange
-    auto-antwoord&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp; &nbsp; <a href="javascript:void(0)" onClick="middelautoantwoord();" class="praatmethansbutton" title="ik wil de automatische antwoorden even zien">&nbsp;&nbsp;middel
-    auto-antwoord&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; <a href="javascript:void(0)" onClick="kortautoantwoord();" class="praatmethansbutton" title="ik wil de automatische antwoorden even zien">&nbsp;&nbsp;korte
-    auto-antwoord&nbsp;&nbsp;</a>&nbsp;&nbsp;</p>
-  <textarea name="antwoordveld" class="praatmethansformtextarea" cols="55" rows="5" title="antwoord veld, EVENTUEEL bruikbaar voor emails of brieven"></textarea><br />
-<div class="praatmethansheader2">&quot;feedback geef je liever face-to-face, eerder dan middels een emailtje...&quot;</div>
-<p></p>
-<div class="stickit">
-  <p>OK disclaimer... voor alle duidelijkheid: programmeurs weten: &quot;garbage
-  in: garbage out&quot;.
-  Dit is een computer en een dergelijk formulier geeft maximaal een automatisch
-  antwoord. <br />
-  Bij alle automatische reacties geld altijdt: Je krijgt maximaal
-  terug wat je er in stopt. Als jij er onzin in stopt dan krijg je onzin terug.
-  En ook als jij er jouw meest eerlijke antwoorden in hebt gestopt,
-  dan kan een script nog steeds maximaal een algemene (goeie) tip geven. Het
-  blijft aan jou om er over na te denken wat jij daarmee wilt doen. Het blijft
-  jouw verantwoordleijkheid om de antwoorden van deze formulieren zo naar <i>jouw
-  eigen</i> situatie te vertalen zodat jij er tevreden over gaat zijn. </p>
-</div>
-<p align="right"><a href="javascript:void(0)" onClick="effevullen();" title="antwoorden even snel vullen">&pi;</a></p>
-</FORM>
-<SCRIPT language=JavaScript type="">loadSelections(document.forms[0]);</SCRIPT>
-<hr class="formhr" />
-<p><i>nee, communicatie is <b>niet</b> simpel.., gevoelens zijn niet simpel...
-    en zeker wanneer je (zonder veroordeling!) een langere tijd sommige gevoelens
-    niet nuchter hebt hoeven verwoorden omdat je er middels regelmatig gebruik
-    een 'oplossing' voor had... dat maakt het niet per se makkelijker.<br />
-    Maar ik denk dat het 't waard is om te oefenen.
-</i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    function exportData() {
+      try {
+        saveData(false);
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geexporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/formCompat.js"></script>
+    function writeReply(text) {
+      const output = document.getElementById('antwoordveld');
+      output.value = text;
+      saveData(false);
+    }
+
+    function langAutoAntwoord() {
+      const msg = `Mag ik je feedback geven op iets?\n\nAan de ene kant zie ik: ${getValue('gedrag01')} (dit geeft mij ${getValue('gevoel01')}).\nAan de andere kant zie ik: ${getValue('gedrag02')} (dit geeft mij ${getValue('gevoel02')}).\nSamen geeft dit me ${getValue('lastgevoel')} en dan ga ik sneller ${getValue('lastgedrag')} doen.\n\nIk zou graag willen dat je meer ${getValue('wensgedrag')} laat zien, en eventueel op een ander moment ${getValue('wensgedrag02')}. Dan voel ik me waarschijnlijk meer ${getValue('wensgevoel')} en kan ik zelf meer ${getValue('jouwwensgedrag')} doen.\n\nIk zeg dit ook omdat ik je waardeer om ${getValue('waarderingpunt')}.`;
+      writeReply(msg);
+    }
+
+    function middelAutoAntwoord() {
+      const msg = `Even feedback: ik ervaar mixed signals.\nEne kant: ${getValue('gedrag01')} (${getValue('gevoel01')}).\nAndere kant: ${getValue('gedrag02')} (${getValue('gevoel02')}).\nDat geeft mij ${getValue('lastgevoel')} en dat is lastig.\n\nWil je meer ${getValue('wensgedrag')} laten zien? Dat helpt me om me meer ${getValue('wensgevoel')} te voelen.`;
+      writeReply(msg);
+    }
+
+    function kortAutoAntwoord() {
+      const msg = `Ik krijg dubbele signalen: ${getValue('gedrag01')} en ${getValue('gedrag02')}.\nDat geeft mij ${getValue('lastgevoel')}.\nKunnen we afspreken dat je vaker ${getValue('wensgedrag')} doet?`;
+      writeReply(msg);
+    }
+
+    function fillDemo() {
+      const demo = {
+        gedrag01: 'je zegt dat je me wilt steunen',
+        gevoel01: 'vertrouwen',
+        gedrag02: 'je nodigt tegelijk uit om te gebruiken',
+        gevoel02: 'twijfel',
+        lastgevoel: 'verwarring en spanning',
+        lastgedrag: 'me terugtrekken',
+        wensgedrag: 'duidelijk één lijn trekken',
+        wensgedrag02: 'op rustige momenten eerlijk bespreken wat je bedoelt',
+        wensgevoel: 'rust en duidelijkheid',
+        jouwwensgedrag: 'eerlijk blijven communiceren',
+        waarderingpunt: 'je betrokkenheid'
+      };
+      Object.keys(demo).forEach((key) => {
+        const el = document.getElementById(key);
+        if (el && !el.value.trim()) {
+          el.value = demo[key];
+        }
+      });
+      saveData(false);
+      showMessage('Voorbeeldtekst ingevuld. Pas aan naar je eigen situatie.');
+    }
+
+    function renderCrossInsights() {
+      const host = document.getElementById('crossInsights');
+      const pack = iamData.getCrossPollinationPack(formKey);
+
+      if (!pack.available) {
+        host.innerHTML = '<li>Nog geen gegevens gevonden voor kruisbestuiving.</li>';
+        crossSeed = null;
+        return;
+      }
+
+      const triggers = pack.triggers || [];
+      const supports = pack.supports || [];
+      const fallbacks = pack.fallbacks || [];
+      crossSeed = { triggers, supports, fallbacks };
+
+      const lines = [];
+      if (triggers.length) lines.push(`Mogelijke dubbele druk: ${triggers.join('; ')}`);
+      if (supports.length) lines.push(`Veilige steunpunten: ${supports.join('; ')}`);
+      if (fallbacks.length) lines.push(`Back-upzetten als gesprek stroef loopt: ${fallbacks.join('; ')}`);
+
+      host.innerHTML = lines.length
+        ? lines.map((line) => `<li>${line}</li>`).join('')
+        : '<li>Nog te weinig ingevulde brongegevens voor kruisbestuiving.</li>';
+    }
+
+    function applyCrossInsights() {
+      if (!crossSeed) {
+        showMessage('Nog geen kruisbestuiving beschikbaar.', true);
+        return;
+      }
+
+      const fillIfEmpty = (id, value) => {
+        const el = document.getElementById(id);
+        if (el && !el.value.trim() && value) {
+          el.value = value;
+        }
+      };
+
+      fillIfEmpty('gedrag01', crossSeed.triggers[0] || 'ik krijg een tegenstrijdig signaal');
+      fillIfEmpty('gedrag02', crossSeed.triggers[1] || 'de boodschap verandert per moment');
+      fillIfEmpty('wensgedrag', crossSeed.fallbacks[0] || 'duidelijk en consequent communiceren');
+      fillIfEmpty('wensgedrag02', crossSeed.fallbacks[1] || 'afspraken vooraf benoemen');
+      fillIfEmpty('jouwwensgedrag', crossSeed.supports[0] ? `steun vragen bij ${crossSeed.supports[0]}` : 'rustig en duidelijk reageren');
+
+      saveData(false);
+      showMessage('Kruisbestuiving toegepast op dit formulier.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+      renderCrossInsights();
+      document.getElementById('langBtn').addEventListener('click', langAutoAntwoord);
+      document.getElementById('middelBtn').addEventListener('click', middelAutoAntwoord);
+      document.getElementById('kortBtn').addEventListener('click', kortAutoAntwoord);
+      document.getElementById('fillDemoBtn').addEventListener('click', fillDemo);
+      document.getElementById('useCrossBtn').addEventListener('click', applyCrossInsights);
+      document.getElementById('saveButton').addEventListener('click', () => saveData(true));
+      document.getElementById('exportButton').addEventListener('click', exportData);
+      document.getElementById('mixedsignalsForm').addEventListener('input', () => saveData(false));
+    });
+  </script>
 </body>
 </html>

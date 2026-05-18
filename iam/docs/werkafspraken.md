@@ -33,6 +33,14 @@ Deze notitie bevat praktische afspraken over hoe we IAM ontwikkelen en hoe nieuw
 - Documentatie in gebruik staat in de map `iam/docs` en niet verspreid in meerdere varianten.
 - Per functionaliteit is duidelijk wat de actieve versie is en in welke map die staat.
 
+## Kruisbestuiving: 1 leidende bron
+
+- Kruisbestuiving van formulierinformatie wordt centraal opgebouwd in `iam/js/dataStore.js`.
+- Pagina's lezen kruisbestuiving via centrale helpercontexten (zoals `getCrossPollinationPack`) en bouwen die logica niet opnieuw lokaal op.
+- Suggestieregels, prioritering en deduplicatie voor kruisbestuiving worden op 1 plek onderhouden.
+- UI-bestanden mogen alleen presentatie en toepassing doen (tonen, knopacties, invullen), niet de bronselectie herschrijven.
+- Nieuwe kruisbestuivingsbehoeften worden eerst als nieuwe context in de centrale helper toegevoegd, daarna pas in pagina-UI aangesloten.
+
 ## Opruimen van oude varianten
 
 - Als een nieuwe versie actief in gebruik is, verwijderen we oude of dubbele varianten die niet meer nodig zijn.

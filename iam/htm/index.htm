@@ -117,6 +117,25 @@
         }
         .info-modal-close:hover { color: var(--danger, #f44336); }
 
+        .cross-settings-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            margin-top: 0.65rem;
+        }
+
+        .cross-settings-status {
+            margin-top: 0.7rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 720px) {
+            .cross-settings-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         @media (prefers-color-scheme: dark) {
             :root {
                 --page-bg: #101820;
@@ -1351,6 +1370,36 @@
                         <button type="button" class="theme-option" data-theme-preference="dark">Donker</button>
                     </div>
                     <p class="theme-settings-status" id="themeSettingsStatus">Actief thema: laden...</p>
+                </div>
+            </details>
+            <details class="theme-settings" id="crossPollinationSettingsCard">
+                <summary class="theme-settings-summary">
+                    <h4>Kruisbestuiving</h4>
+                </summary>
+                <div class="theme-settings-body">
+                    <p class="theme-settings-help">Stuur hoe veel en hoe direct kruisbestuiving-suggesties worden aangeboden.</p>
+                    <div class="cross-settings-grid">
+                        <div>
+                            <label for="crossProfile">Profiel</label>
+                            <select id="crossProfile">
+                                <option value="voorzichtig">Voorzichtig</option>
+                                <option value="gebalanceerd">Gebalanceerd</option>
+                                <option value="directief">Directief</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="crossPhase">Fase</label>
+                            <select id="crossPhase">
+                                <option value="crisis">Crisis</option>
+                                <option value="stabilisatie">Stabilisatie</option>
+                                <option value="groei">Groei</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="action-buttons" style="margin-top: 0.75rem;">
+                        <button class="btn-action" type="button" id="crossSettingsSaveButton">Instellingen opslaan</button>
+                    </div>
+                    <p class="cross-settings-status" id="crossSettingsStatus">Instellingen laden...</p>
                 </div>
             </details>
             <p class="priority-note">Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.</p>
@@ -2936,8 +2985,75 @@
             });
         }
 
+        function profileLabel(value) {
+            if (value === 'voorzichtig') return 'Voorzichtig';
+            if (value === 'directief') return 'Directief';
+            return 'Gebalanceerd';
+        }
+
+        function phaseLabel(value) {
+            if (value === 'crisis') return 'Crisis';
+            if (value === 'groei') return 'Groei';
+            return 'Stabilisatie';
+        }
+
+        function renderCrossSettingsStatus() {
+            const statusEl = document.getElementById('crossSettingsStatus');
+            if (!statusEl || !iamData || typeof iamData.getCrossPollinationSettings !== 'function') return;
+
+            const settings = iamData.getCrossPollinationSettings();
+            const tuning = typeof iamData.getCrossPollinationTuning === 'function'
+                ? iamData.getCrossPollinationTuning()
+                : null;
+
+            if (tuning) {
+                statusEl.textContent = `Actief: ${profileLabel(settings.profile)} / ${phaseLabel(settings.phase)}. Intensiteit: ${tuning.mainCap} kernsuggesties.`;
+                return;
+            }
+
+            statusEl.textContent = `Actief: ${profileLabel(settings.profile)} / ${phaseLabel(settings.phase)}.`;
+        }
+
+        function initializeCrossPollinationSettings() {
+            const profileEl = document.getElementById('crossProfile');
+            const phaseEl = document.getElementById('crossPhase');
+            const saveButton = document.getElementById('crossSettingsSaveButton');
+            if (!profileEl || !phaseEl || !saveButton) return;
+            if (!iamData || typeof iamData.getCrossPollinationSettings !== 'function' || typeof iamData.setCrossPollinationSettings !== 'function') return;
+
+            const settings = iamData.getCrossPollinationSettings();
+            profileEl.value = settings.profile || 'gebalanceerd';
+            phaseEl.value = settings.phase || 'stabilisatie';
+            renderCrossSettingsStatus();
+
+            const saveCrossSettings = (showSavedLabel = false) => {
+                iamData.setCrossPollinationSettings({
+                    profile: profileEl.value,
+                    phase: phaseEl.value
+                });
+                renderCrossSettingsStatus();
+                if (showSavedLabel) {
+                    const statusEl = document.getElementById('crossSettingsStatus');
+                    if (statusEl) {
+                        statusEl.textContent = `${statusEl.textContent} Handmatig opgeslagen.`;
+                    }
+                }
+                if (typeof refreshDashboard === 'function') {
+                    refreshDashboard();
+                }
+            };
+
+            saveButton.addEventListener('click', () => {
+                saveCrossSettings(true);
+            });
+
+            profileEl.addEventListener('change', () => saveCrossSettings(false));
+            phaseEl.addEventListener('change', () => saveCrossSettings(false));
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             initializeThemeSettings();
+            initializeCrossPollinationSettings();
             initializeRecentVisitsTracking();
             renderRecentVisits();
             initializeCollapsibleChapters();
@@ -2949,7 +3065,10 @@
                 });
             });
             refreshDashboard();
-            window.addEventListener('focus', renderMotivatingMottoSpot);
+            window.addEventListener('focus', () => {
+                renderMotivatingMottoSpot();
+                renderCrossSettingsStatus();
+            });
         });
     </script>
 

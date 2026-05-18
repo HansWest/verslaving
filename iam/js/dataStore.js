@@ -124,6 +124,11 @@ class IamDataStore {
           social: false,
           emotion: false,
           frustration: false
+        },
+        crossPollination: {
+          profile: 'gebalanceerd',
+          phase: 'stabilisatie',
+          lastModified: null
         }
       },
       forms: {
@@ -521,6 +526,227 @@ class IamDataStore {
     }
 
     return data.integrationSummary;
+  }
+
+  topInsightItems(items, max = 2) {
+    if (!Array.isArray(items)) return [];
+    return this.uniqueLimited(items.filter(Boolean), max);
+  }
+
+  getCrossPollinationPack(context) {
+    const tuning = this.getCrossPollinationTuning();
+    const summary = this.getIntegrationSummary();
+    if (!summary) {
+      return { context, available: false };
+    }
+
+    if (context === 'sova-grenzen') {
+      return {
+        context,
+        available: true,
+        triggers: this.topInsightItems(summary.topTriggers, tuning.mainCap),
+        supports: this.topInsightItems(summary.supportNetwork, tuning.secondaryCap),
+        interventions: this.topInsightItems(summary.bestInterventions, tuning.mainCap)
+      };
+    }
+
+    if (context === 'sova-mixed-signals') {
+      return {
+        context,
+        available: true,
+        triggers: this.topInsightItems(summary.topTriggers, tuning.mainCap),
+        supports: this.topInsightItems(summary.supportNetwork, tuning.secondaryCap),
+        fallbacks: this.topInsightItems(summary.fallbackMoves, tuning.mainCap)
+      };
+    }
+
+    if (context === 'smoezenboekverhaal') {
+      return {
+        context,
+        available: true,
+        triggers: this.topInsightItems(summary.topTriggers, tuning.triggerCap),
+        motivations: this.topInsightItems(summary.motivationAnchors, tuning.secondaryCap),
+        interventions: this.topInsightItems(summary.bestInterventions, tuning.mainCap)
+      };
+    }
+
+    if (context === 'to-do-lijst') {
+      const suggestions = [];
+      this.topInsightItems(summary.earlyWarnings, tuning.mainCap).forEach((item) => {
+        suggestions.push({ title: `Vroege waarschuwing monitoren: ${item}`, importance: 'hoog', urgency: 'nu' });
+      });
+      this.topInsightItems(summary.bestInterventions, tuning.mainCap).forEach((item) => {
+        suggestions.push({ title: `Interventie inplannen: ${item}`, importance: 'hoog', urgency: 'deze-week' });
+      });
+      this.topInsightItems(summary.supportNetwork, tuning.secondaryCap).forEach((item) => {
+        suggestions.push({ title: `Steuncontact plannen met: ${item}`, importance: 'middel', urgency: 'deze-week' });
+      });
+
+      const seen = new Set();
+      const uniqueSuggestions = [];
+      suggestions.forEach((item) => {
+        const key = String(item.title || '').trim().toLowerCase();
+        if (!key || seen.has(key)) return;
+        seen.add(key);
+        uniqueSuggestions.push(item);
+      });
+
+      return {
+        context,
+        available: true,
+        suggestions: uniqueSuggestions.slice(0, tuning.todoCap)
+      };
+    }
+
+    if (context === 'plan-van-aanpak-core') {
+      const balans = this.getFormData('voor-nadelen-balansen') || {};
+      const trek = this.getFormData('soorten-trek') || {};
+      const risicoSituaties = this.getFormData('risico-situaties') || {};
+      const risicoMensen = this.getFormData('risico-mensen') || {};
+      const sociaalNetwerk = this.getFormData('sociaal-netwerk') || {};
+      const risicoActiviteiten = this.getFormData('risico-activiteiten') || {};
+      const stimulus = this.getFormData('stimulus-respons') || {};
+      const gevoelens = this.getFormData('lastige-gevoelens') || {};
+      const smoezen = this.getFormData('smoezenboekverhaal') || {};
+      const sovaGrenzen = this.getFormData('sova-grenzen') || {};
+      const sovaMixed = this.getFormData('sova-mixed-signals') || {};
+
+      const pool = [
+        { text: summary?.topTriggers?.[0] || risicoSituaties.riskySituations, source: 'risico-situaties', target: 'startPoint' },
+        { text: summary?.motivationAnchors?.[0] || balans.decisionNote, source: 'voor-nadelen-balansen', target: 'mainGoal' },
+        { text: risicoSituaties.responsePlan || stimulus.functionalAlternative, source: 'risico-situaties / stimulus-respons', target: 'planA' },
+        { text: risicoActiviteiten.exitStrategy || risicoActiviteiten.afterRisks, source: 'risico-activiteiten', target: 'planB' },
+        { text: summary?.supportNetwork?.[0] || risicoMensen.personName || sociaalNetwerk.reachableSupport || sociaalNetwerk.firstReachOut || stimulus.socialSupport, source: 'supportNetwork', target: 'supportPeople' },
+        { text: stimulus.contingencyReward || gevoelens.enduranceSupport, source: 'stimulus-respons / lastige-gevoelens', target: 'rewards' },
+        { text: summary?.fallbackMoves?.[0] || trek.noGoSignals || risicoMensen.boundarySummary, source: 'nood/terugvalsignalen', target: 'fallbackGoal' },
+        { text: smoezen.ontkrachting01 || smoezen.ontkrachting02, source: 'smoezenboek', target: 'planB' },
+        { text: sovaGrenzen.wensgedrag || sovaMixed.wensgedrag, source: 'sova', target: 'planA' }
+      ];
+
+      const unique = [];
+      pool.forEach((item) => {
+        const clean = String(item.text || '').trim();
+        if (!clean) return;
+        if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+        unique.push({ ...item, text: clean });
+      });
+
+      return {
+        context,
+        available: unique.length > 0,
+        suggestions: unique.slice(0, tuning.planCap)
+      };
+    }
+
+    if (context === 'plan-van-aanpak-boost') {
+      const smoezen = this.getFormData('smoezenboekverhaal') || {};
+      const sovaGrenzen = this.getFormData('sova-grenzen') || {};
+      const sovaMixed = this.getFormData('sova-mixed-signals') || {};
+
+      const pool = [
+        { text: smoezen.smoes01, source: 'smoes01', target: 'fallbackGoal', prefix: 'Herken-smoes' },
+        { text: smoezen.ontkrachting01, source: 'ontkrachting01', target: 'planB', prefix: 'Ontkrachting' },
+        { text: smoezen.ontkrachting02, source: 'ontkrachting02', target: 'planB', prefix: 'Ontkrachting' },
+        { text: sovaGrenzen.wensgedrag, source: 'sova-grenzen', target: 'planA', prefix: 'Grensactie' },
+        { text: sovaMixed.wensgedrag, source: 'sova-mixed-signals', target: 'planA', prefix: 'Communicatie-actie' },
+        { text: sovaMixed.wensgedrag02, source: 'sova-mixed-signals', target: 'planA', prefix: 'Reserve-afspraak' }
+      ];
+
+      const unique = [];
+      pool.forEach((item) => {
+        const clean = String(item.text || '').trim();
+        if (!clean) return;
+        const key = clean.toLowerCase();
+        if (unique.some((entry) => entry.key === key)) return;
+        unique.push({ ...item, text: clean, key: key });
+      });
+
+      return {
+        context,
+        available: unique.length > 0,
+        suggestions: unique.slice(0, tuning.boostCap)
+      };
+    }
+
+    return { context, available: false };
+  }
+
+  getCrossPollinationSettings() {
+    const stored = this.getAppMeta('crossPollination') || {};
+    const profile = ['voorzichtig', 'gebalanceerd', 'directief'].includes(stored.profile)
+      ? stored.profile
+      : 'gebalanceerd';
+    const phase = ['crisis', 'stabilisatie', 'groei'].includes(stored.phase)
+      ? stored.phase
+      : 'stabilisatie';
+
+    return {
+      profile,
+      phase,
+      lastModified: stored.lastModified || null
+    };
+  }
+
+  setCrossPollinationSettings(next = {}) {
+    const current = this.getCrossPollinationSettings();
+    const profile = ['voorzichtig', 'gebalanceerd', 'directief'].includes(next.profile)
+      ? next.profile
+      : current.profile;
+    const phase = ['crisis', 'stabilisatie', 'groei'].includes(next.phase)
+      ? next.phase
+      : current.phase;
+
+    return this.updateAppMeta('crossPollination', {
+      profile,
+      phase,
+      lastModified: new Date().toISOString()
+    });
+  }
+
+  getCrossPollinationTuning() {
+    const settings = this.getCrossPollinationSettings();
+    const profileMap = {
+      voorzichtig: {
+        mainCap: 1,
+        secondaryCap: 1,
+        triggerCap: 2,
+        todoCap: 3,
+        planCap: 3,
+        boostCap: 3
+      },
+      gebalanceerd: {
+        mainCap: 2,
+        secondaryCap: 2,
+        triggerCap: 3,
+        todoCap: 6,
+        planCap: 5,
+        boostCap: 6
+      },
+      directief: {
+        mainCap: 3,
+        secondaryCap: 2,
+        triggerCap: 4,
+        todoCap: 8,
+        planCap: 7,
+        boostCap: 8
+      }
+    };
+
+    const phaseAdjustments = {
+      crisis: { mainCap: 1, secondaryCap: 1, triggerCap: 2 },
+      stabilisatie: { },
+      groei: { mainCap: 1, triggerCap: 1 }
+    };
+
+    const base = profileMap[settings.profile] || profileMap.gebalanceerd;
+    const adjusted = { ...base };
+    const phaseShift = phaseAdjustments[settings.phase] || phaseAdjustments.stabilisatie;
+
+    Object.keys(phaseShift).forEach((key) => {
+      adjusted[key] = Math.max(1, (adjusted[key] || 1) + phaseShift[key]);
+    });
+
+    return adjusted;
   }
 
   /**

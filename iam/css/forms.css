@@ -178,6 +178,19 @@ input[type="radio"] {
     margin-top: 0.25rem;
 }
 
+/* Shared cross-pollination list style */
+.iam-cross-list {
+    margin: 0.5rem 0 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.35rem;
+}
+
+.iam-cross-list li {
+    color: #365063;
+    line-height: 1.45;
+}
+
 /* Error messages */
 .error-message,
 .form-error {
