@@ -1187,6 +1187,7 @@
       const trek = iamData.getFormData('soorten-trek') || {};
       const risicoSituaties = iamData.getFormData('risico-situaties') || {};
       const risicoMensen = iamData.getFormData('risico-mensen') || {};
+      const sociaalNetwerk = iamData.getFormData('sociaal-netwerk') || {};
       const risicoActiviteiten = iamData.getFormData('risico-activiteiten') || {};
       const stimulus = iamData.getFormData('stimulus-respons') || {};
       const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
@@ -1196,7 +1197,7 @@
         { text: integration?.motivationAnchors?.[0] || balans.decisionNote, source: 'voor-nadelen-balansen', target: 'mainGoal' },
         { text: risicoSituaties.responsePlan || stimulus.functionalAlternative, source: 'risico-situaties / stimulus-respons', target: 'planA' },
         { text: risicoActiviteiten.exitStrategy || risicoActiviteiten.afterRisks, source: 'risico-activiteiten', target: 'planB' },
-        { text: integration?.supportNetwork?.[0] || risicoMensen.personName || stimulus.socialSupport, source: 'supportNetwork', target: 'supportPeople' },
+        { text: integration?.supportNetwork?.[0] || risicoMensen.personName || sociaalNetwerk.reachableSupport || sociaalNetwerk.firstReachOut || stimulus.socialSupport, source: 'supportNetwork', target: 'supportPeople' },
         { text: stimulus.contingencyReward || gevoelens.enduranceSupport, source: 'stimulus-respons / lastige-gevoelens', target: 'rewards' },
         { text: integration?.fallbackMoves?.[0] || trek.noGoSignals || risicoMensen.boundarySummary, source: 'nood/terugvalsignalen', target: 'fallbackGoal' }
       ];
@@ -1327,6 +1328,7 @@
       const trek = iamData.getFormData('soorten-trek') || {};
       const risicoSituaties = iamData.getFormData('risico-situaties') || {};
       const risicoMensen = iamData.getFormData('risico-mensen') || {};
+      const sociaalNetwerk = iamData.getFormData('sociaal-netwerk') || {};
       const risicoActiviteiten = iamData.getFormData('risico-activiteiten') || {};
       const stimulus = iamData.getFormData('stimulus-respons') || {};
       const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
@@ -1378,6 +1380,8 @@
       appendUniqueLine(supportPeople, firstNonEmpty([
         integration?.supportNetwork?.[0],
         integration?.supportNetwork?.[1],
+        sociaalNetwerk.reachableSupport,
+        sociaalNetwerk.firstReachOut,
         stimulus.socialSupport,
         risicoMensen.personName,
         gevoelens.talkPeople

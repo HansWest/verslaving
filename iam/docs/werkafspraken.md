@@ -261,6 +261,14 @@ Doel van deze overname: pedagogische scherpte uit legacy behouden zonder terug t
 - **Fase-plaatsing**: Fase 5 (Borging en ritme), omdat de pagina wens, bijdrage, planning en volhouden samenbrengt
 - **Data-opslag**: Lokale dataStore per datum, zodat wens en plan later terug te vinden zijn
 
+### Index weekreview -> plan/escalatie (kruisbestuiving)
+
+- De weekreview op `index.htm` gebruikt niet alleen integratiesamenvatting, maar ook `attemptMeta` uit historielijst.
+- Bij meerdere pogingen verschijnt een directe doorklik naar `plan-van-aanpak.htm`.
+- Bij labels `niet-nuttig` verschijnt extra route naar `plan-backupplan.htm`.
+- Bij herhaald `niet-nuttig` verschijnt escalatieroute naar `noodplan-wegglijden.htm`.
+- Doel: tijdig bijsturen op Plan A -> Plan B -> escalatie, zonder extra zoekwerk voor gebruiker.
+
 ## Leidende Set (Kernflow)
 
 De onderstaande pagina's vormen de actieve kernflow van IAM in `iam/htm`.

@@ -2397,7 +2397,7 @@
             });
         }
 
-        function renderWeeklyReviewLinks(summary) {
+        function renderWeeklyReviewLinks(summary, weekly) {
             const container = document.getElementById('weeklyReviewLinks');
             if (!container) return;
 
@@ -2415,7 +2415,23 @@
                 links.push({ href: 'plan-van-aanpak.htm', label: 'Werk je plan bij' });
             }
 
-            const uniqueLinks = links.filter((link, index, arr) => arr.findIndex((item) => item.href === link.href) === index).slice(0, 4);
+            const attemptMeta = normalizeAttemptMeta(weekly);
+            const history = Array.isArray(attemptMeta.history) ? attemptMeta.history : [];
+            const notUsefulCount = history.filter((entry) => entry.attemptTag === 'niet-nuttig').length;
+
+            if (attemptMeta.attemptCount >= 2) {
+                links.push({ href: 'plan-van-aanpak.htm', label: 'Zet je volgende stap in Plan van aanpak' });
+            }
+
+            if (notUsefulCount >= 1) {
+                links.push({ href: 'plan-backupplan.htm', label: 'Werk je Plan B (backup) bij' });
+            }
+
+            if (notUsefulCount >= 2) {
+                links.push({ href: 'noodplan-wegglijden.htm', label: 'Scherp escalatieplan aan (wegglijden)' });
+            }
+
+            const uniqueLinks = links.filter((link, index, arr) => arr.findIndex((item) => item.href === link.href) === index).slice(0, 5);
             container.innerHTML = '';
 
             if (!uniqueLinks.length) {
@@ -2469,7 +2485,7 @@
                 meta.textContent = `${lastText}${summaryText}`;
             }
 
-            renderWeeklyReviewLinks(summary);
+            renderWeeklyReviewLinks(summary, weekly);
             renderWeeklyAttemptHistory(weekly);
         }
 

@@ -807,6 +807,8 @@
 
             appendUniqueLine(decisionNote, firstNonEmpty([
                 waaromWel.functionSummary ? `Functieanalyse meewegen: ${waaromWel.functionSummary}.` : '',
+                waaromWel.notFeeling ? `Ik zie wat ik probeer niet te voelen: ${waaromWel.notFeeling}.` : '',
+                waaromWel.notThinking ? `Ik zie wat ik probeer niet te denken: ${waaromWel.notThinking}.` : '',
                 trek.behoefte ? `ABCDaaah-behoefte expliciet meenemen: ${trek.behoefte}.` : ''
             ]));
 
@@ -859,6 +861,7 @@
                 { text: whyUse.functionSummary || whyUse.notFeeling, source: 'waarom-wel-gebruiken', target: 'usageAdvantagesText' },
                 { text: whyUse.notThinking, source: 'waarom-wel-gebruiken', target: 'usageAdvantagesText' },
                 { text: whyUse.spaceGiven, source: 'waarom-wel-gebruiken', target: 'usageAdvantagesText' },
+                { text: whyUse.functionSummary, source: 'waarom-wel-gebruiken', target: 'decisionNote' },
                 { text: trek.behoefte, source: 'trek-opvangen', target: 'changeAdvantagesText' },
                 { text: trek.alternatief, source: 'trek-opvangen', target: 'changeAdvantagesText' },
                 { text: riskDenken.alternatiefDenken, source: 'risico-denken', target: 'decisionNote' }

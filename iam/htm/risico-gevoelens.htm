@@ -495,7 +495,9 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
                 { text: denken.alternatiefDenken, source: 'risico-denken', target: 'cat1Plan' },
                 { text: denken.interneRisicosDenken, source: 'risico-denken', target: 'interneRisicos' },
                 { text: gevoelensLang.acceptancePractice, source: 'lastige-gevoelens', target: 'cat1Plan' },
-                { text: sociaal.reachableSupport, source: 'sociaal-netwerk', target: 'cat2Plan' }
+                { text: gevoelensLang.talkPeople, source: 'lastige-gevoelens', target: 'cat2Plan' },
+                { text: sociaal.reachableSupport, source: 'sociaal-netwerk', target: 'cat2Plan' },
+                { text: sociaal.firstReachOut, source: 'sociaal-netwerk', target: 'cat2Plan' }
             ];
 
             const unique = [];
@@ -506,7 +508,7 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
                 unique.push({ ...item, text: clean });
             });
 
-            return unique.slice(0, 5);
+            return unique.slice(0, 6);
         }
 
         function renderCrossSuggestions() {
