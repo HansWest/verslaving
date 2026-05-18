@@ -583,6 +583,14 @@
             <input id="usageUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 1.5 of -0.5" />
           </div>
           <div class="form-group">
+            <label for="firstUnitsTime">Tijd eerste eenheden</label>
+            <input id="firstUnitsTime" type="time" />
+          </div>
+          <div class="form-group">
+            <label for="firstUnitsPlace">Plek eerste eenheden</label>
+            <input id="firstUnitsPlace" type="text" placeholder="Bijv. thuis, café, onderweg, feest..." />
+          </div>
+          <div class="form-group">
             <label for="usageNote">Korte toelichting op gebruik</label>
             <textarea id="usageNote" placeholder="Bijvoorbeeld: alleen thuis, feestje, stress na werk."></textarea>
           </div>
@@ -601,7 +609,7 @@
 
         <div class="tracker-grid" id="sleepTrackingSection">
           <div class="form-group">
-            <label for="sleepStart">Inslaptijd</label>
+            <label for="sleepStart">Inslaaptijd</label>
             <input id="sleepStart" type="time" />
           </div>
           <div class="form-group">
@@ -611,6 +619,11 @@
           <div class="form-group">
             <label for="sleepHours">Slaapuren (automatisch)</label>
             <input id="sleepHours" type="number" step="0.1" readonly />
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <p class="observation-help" style="margin: 0;">
+              Noteer hier de nacht die op deze dag uitkomt. Als je om 20:00 uur op dezelfde dag gaat slapen en pas de volgende ochtend wakker wordt, vul dan de slaap in bij de dag waarop je wakker wordt. Die afgelopen nacht telt meestal het meest mee voor hoe deze dag voelt.
+            </p>
           </div>
         </div>
 
@@ -1002,6 +1015,8 @@
     function setSelectedFields(entry) {
       document.getElementById('plannedUnits').value = entry && entry.plannedUnits !== '' && entry.plannedUnits !== null && entry.plannedUnits !== undefined ? entry.plannedUnits : '';
       document.getElementById('usageUnits').value = entry && entry.units !== '' && entry.units !== null && entry.units !== undefined ? entry.units : '';
+      document.getElementById('firstUnitsTime').value = entry?.firstUnitsTime || '';
+      document.getElementById('firstUnitsPlace').value = entry?.firstUnitsPlace || '';
       document.getElementById('usageNote').value = entry?.usageNote || '';
       document.getElementById('riskNote').value = entry?.riskNote || '';
       document.getElementById('motivationNote').value = entry?.motivationNote || '';
@@ -1035,6 +1050,8 @@
       if (entry.units !== '' && entry.units !== null && entry.units !== undefined) {
         parts.push(`Gebruik: ${entry.units} eenheden`);
       }
+      if (entry.firstUnitsTime) parts.push(`Eerste eenheden tijd: ${entry.firstUnitsTime}`);
+      if (entry.firstUnitsPlace) parts.push(`Eerste eenheden plek: ${entry.firstUnitsPlace}`);
       if (isNumericUnits(entry.sleepHours)) parts.push(`Slaap: ${formatUnits(entry.sleepHours)} uur`);
       if (entry.riskNote) parts.push('Risico ingevuld');
       if (entry.motivationNote) parts.push('Motivatie ingevuld');
@@ -1067,6 +1084,8 @@
       return {
         plannedUnits: rawPlanned === '' ? '' : Number(rawPlanned),
         units: rawUnits === '' ? '' : Number(rawUnits),
+        firstUnitsTime: document.getElementById('firstUnitsTime').value,
+        firstUnitsPlace: document.getElementById('firstUnitsPlace').value.trim(),
         usageNote: document.getElementById('usageNote').value.trim(),
         riskNote: document.getElementById('riskNote').value.trim(),
         motivationNote: document.getElementById('motivationNote').value.trim(),
@@ -1092,6 +1111,8 @@
       return entry && (
         (entry.plannedUnits !== '' && entry.plannedUnits !== null && entry.plannedUnits !== undefined) ||
         (entry.units !== '' && entry.units !== null && entry.units !== undefined) ||
+        Boolean(entry.firstUnitsTime) ||
+        Boolean(entry.firstUnitsPlace) ||
         Boolean(entry.usageNote) ||
         Boolean(entry.riskNote) ||
         Boolean(entry.motivationNote) ||
@@ -1386,6 +1407,8 @@
         if (isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units)) {
           parts.push(`Verschil: ${formatUnits(Number(entry.units) - Number(entry.plannedUnits))} eenheden`);
         }
+        if (entry.firstUnitsTime) parts.push(`Eerste eenheden tijd: ${entry.firstUnitsTime}`);
+        if (entry.firstUnitsPlace) parts.push(`Eerste eenheden plek: ${entry.firstUnitsPlace}`);
         if (entry.riskNote) parts.push(`Risico: ${entry.riskNote}`);
         if (entry.motivationNote) parts.push(`Motivatie: ${entry.motivationNote}`);
         if (entry.usageNote) parts.push(`Toelichting: ${entry.usageNote}`);
@@ -1447,7 +1470,7 @@
         filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
         const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
         const rows = [
-          ['date', 'plannedUnits', 'units', 'difference', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionSwallowedPercent', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionSwallowedPercent', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
           ...sortedEntries.map((entry) => {
             const hasBoth = isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units);
             const difference = hasBoth ? Number(entry.units) - Number(entry.plannedUnits) : '';
@@ -1456,6 +1479,8 @@
               entry.plannedUnits ?? '',
               entry.units ?? '',
               difference,
+              entry.firstUnitsTime || '',
+              entry.firstUnitsPlace || '',
               entry.sleepStart || '',
               entry.sleepEnd || '',
               entry.sleepHours ?? '',
@@ -1602,6 +1627,18 @@
           const sleepEnd = document.createElement('p');
           sleepEnd.textContent = `Wakker: ${entry.sleepEnd}`;
           item.appendChild(sleepEnd);
+        }
+
+        if (entry.firstUnitsTime) {
+          const firstTime = document.createElement('p');
+          firstTime.textContent = `Eerste eenheden tijd: ${entry.firstUnitsTime}`;
+          item.appendChild(firstTime);
+        }
+
+        if (entry.firstUnitsPlace) {
+          const firstPlace = document.createElement('p');
+          firstPlace.textContent = `Eerste eenheden plek: ${entry.firstUnitsPlace}`;
+          item.appendChild(firstPlace);
         }
 
         if (isNumericUnits(entry.sleepHours)) {
