@@ -498,31 +498,31 @@
           <div class="settings-grid">
             <label class="settings-option" for="settingGlobalSleep">
               <input type="checkbox" id="settingGlobalSleep" />
-              <span>Globale slaaptracking aan (app-breed)</span>
+              <span>Globale slaaptracking aan</span>
             </label>
             <label class="settings-option" for="settingGlobalFood">
               <input type="checkbox" id="settingGlobalFood" />
-              <span>Globale voeding-tracking aan (app-breed)</span>
+              <span>Globale voeding-tracking aan</span>
             </label>
             <label class="settings-option" for="settingGlobalTraining">
               <input type="checkbox" id="settingGlobalTraining" />
-              <span>Globale training-tracking aan (app-breed)</span>
+              <span>Globale training-tracking aan</span>
             </label>
             <label class="settings-option" for="settingGlobalMeditation">
               <input type="checkbox" id="settingGlobalMeditation" />
-              <span>Globale meditatie-tracking aan (app-breed)</span>
+              <span>Globale meditatie-tracking aan</span>
             </label>
             <label class="settings-option" for="settingGlobalSocial">
               <input type="checkbox" id="settingGlobalSocial" />
-              <span>Globale sociale-tracking aan (app-breed)</span>
+              <span>Globale sociale-tracking aan</span>
             </label>
             <label class="settings-option" for="settingGlobalEmotion">
               <input type="checkbox" id="settingGlobalEmotion" />
-              <span>Globale emotie-tracking aan (app-breed)</span>
+              <span>Emotie</span>
             </label>
             <label class="settings-option" for="settingGlobalFrustration">
               <input type="checkbox" id="settingGlobalFrustration" />
-              <span>Globale frustratie-tracking aan (app-breed)</span>
+              <span>Frustratie</span>
             </label>
             <label class="settings-option" for="settingShowSleep">
               <input type="checkbox" id="settingShowSleep" checked />
@@ -861,8 +861,8 @@
       if (sleepToggle) sleepToggle.disabled = !globalSleepEnabled;
       if (sleepHint) {
         sleepHint.textContent = globalSleepEnabled
-          ? 'Slaaptracking staat globaal aan.'
-          : 'Slaaptracking staat globaal uit in hoofdinstellingen (main). Zet daar eerst Slaap aan om dit blok te gebruiken.';
+          ? 'Slaaptracking staat aan. Je zet dit aan of uit via de ⚙-instellingen op deze pagina.'
+          : 'Slaaptracking staat uit. Zet Slaap aan via de ⚙-instellingen op deze pagina om dit blok te gebruiken.';
       }
 
       if (sleepSection) sleepSection.classList.toggle('is-hidden-by-setting', !showSleepSection);
