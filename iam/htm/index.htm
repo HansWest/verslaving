@@ -1356,6 +1356,14 @@
             <p class="priority-note">Als trek nu het meest op de voorgrond staat, begin dan eerst met trek opvangen en kom later terug naar de cyclus.</p>
         </div>
 
+        <div class="distraction-break" style="background: linear-gradient(135deg, #fff8e1 0%, #ffe8b6 100%); border: 2px solid #ffc107; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: var(--shadow-soft);">
+            <h3 style="margin-top: 0; color: #f57f17;">🎮 Zinnen verzetten & afleiding</h3>
+            <p style="color: #545454; margin: 0.5rem 0;">Soms heb je gewoon nodig om je hoofd helemaal leeg te maken. Dit is geen onderdeel van de behandelcyclus, maar een pauze om te herstellen.</p>
+            <div class="action-buttons" style="margin-top: 1rem;">
+                <button class="btn-action" onclick="window.location.href='to_self_manage_game.htm'" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%); border: none;">🕹️ Speelbasis uitrusten</button>
+            </div>
+        </div>
+
         <section class="motto-focus" aria-labelledby="sharedMottoTitle">
             <div class="motto-focus-head">
                 <h3 id="sharedMottoTitle">Motiverend motto</h3>
@@ -1903,15 +1911,18 @@
             'levensdoelen-stellen.htm': 'levensdoelen-stellen',
             'agenda.htm': 'agenda',
             'waardigheid.htm': 'waardigheid',
-            'plan-backupplan.htm': 'plan-backupplan'
+            'plan-backupplan.htm': 'plan-backupplan',
+            'verwijten-en-empathie.htm': 'verwijten-en-empathie',
+            'de-spiraal.htm': 'de-spiraal',
+            'verbinding-en-bijdrage.htm': 'verbinding-en-bijdrage'
         };
 
         const PHASE_FORMS = {
-            'Fase 1': ['waardigheid', 'waarom-wel-gebruiken', 'wat-is-mijn-ik', 'persoonlijke-waarden', 'dagelijks-gevolg', 'gebruik-bijhouden'],
-            'Fase 2': ['lastige-gevoelens', 'craving-1-10', 'craving-gevoel', 'voor-nadelen-balansen'],
-            'Fase 3': ['stimulus-respons', 'risico-situaties', 'risico-gevoelens', 'risico-denken', 'risico-mensen', 'risico-activiteiten', 'soorten-trek'],
+            'Fase 1': ['waardigheid', 'waarom-wel-gebruiken', 'wat-is-mijn-ik', 'persoonlijke-waarden', 'dagelijks-gevolg'],
+            'Fase 2': ['lastige-gevoelens', 'craving-1-10', 'craving-gevoel', 'voor-nadelen-balansen', 'verwijten-en-empathie'],
+            'Fase 3': ['stimulus-respons', 'risico-situaties', 'risico-gevoelens', 'risico-denken', 'risico-mensen', 'risico-activiteiten', 'soorten-trek', 'de-spiraal'],
             'Fase 4': ['plan-backupplan', 'noodplan-wegglijden', 'noodplan-forse-trek', 'trek-opvangen', 'trek-opvangen-2', 'plan-van-aanpak', 'plan-bij-uitglijden', 'chemsex-patroon', 'chemsex-noodplan', 'chemsex-wat-wil-ik'],
-            'Fase 5': ['sociaal-netwerk', 'steunnetwerk', 'motiverende-mensen', 'genieten-belonen', 'evenwicht', 'levenskwaliteit', 'levensdoelen-stellen', 'agenda']
+            'Fase 5': ['sociaal-netwerk', 'steunnetwerk', 'motiverende-mensen', 'genieten-belonen', 'evenwicht', 'levenskwaliteit', 'levensdoelen-stellen', 'verbinding-en-bijdrage', 'agenda']
         };
 
         const MODERN_STRUCTURED_FORMS = new Set([
@@ -1934,7 +1945,6 @@
             'chemsex-wat-wil-ik',
             'plan-van-aanpak',
             'dagelijks-gevolg',
-            'gebruik-bijhouden',
             'plan-bij-uitglijden',
             'noodplan-wegglijden',
             'plan-backupplan',
@@ -1949,7 +1959,10 @@
             'evenwicht',
             'levenskwaliteit',
             'levensdoelen-stellen',
-            'agenda'
+            'verbinding-en-bijdrage',
+            'agenda',
+            'verwijten-en-empathie',
+            'de-spiraal'
         ]);
 
         const WEEKLY_REVIEW_KEY = 'weeklyReview';

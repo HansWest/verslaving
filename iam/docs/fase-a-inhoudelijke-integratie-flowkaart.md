@@ -23,10 +23,9 @@ Doorstapregel:
 - Als doel en startstap helder zijn -> door naar risico-architectuur.
 
 ### Keten 2 - Waarnemen en patroonzicht
-1. gebruik-bijhouden.htm
-2. dagelijks-gevolg.htm
-3. craving-1-10.htm
-4. craving-gevoel.htm
+1. dagelijks-gevolg.htm
+2. craving-1-10.htm
+3. craving-gevoel.htm
 
 Functionele bedoeling:
 - Van oordeel naar patroonherkenning met concrete signalen.
@@ -40,9 +39,11 @@ Doorstapregel:
 3. risico-denken.htm
 4. risico-mensen.htm
 5. risico-activiteiten.htm
+6. de-spiraal.htm
 
 Functionele bedoeling:
 - Risico opdelen in context, emotie, cognitie, sociaal en gedrag.
+- `de-spiraal.htm` helpt zien hóé isolatie en verdoving in elkaar grijpen (gesloten spiraal) en hoe verbinding breekt (open spiraal).
 
 Doorstapregel:
 - Bij hoge actuele druk of terugkerende trek -> door naar acute interventie.
@@ -98,10 +99,11 @@ Per kernpagina vastleggen met 1 label:
 - Borgt: vertaalt naar ritme en herhaling
 
 Aanbevolen labels:
-- gebruik-bijhouden.htm: Observeert
 - risico-situaties.htm: Observeert
 - risico-gevoelens.htm: Observeert/Verklaart
 - risico-denken.htm: Verklaart
+- de-spiraal.htm: Verklaart (hoe gesloten/open spiraal werkt)
+- verwijten-en-empathie.htm: Verklaart/Voelt
 - smoezenboek.htm: Ingrijpt
 - trek-opvangen.htm: Ingrijpt
 - noodplan-forse-trek.htm: Ingrijpt

@@ -14,6 +14,14 @@ Deze notitie bevat praktische afspraken over hoe we IAM ontwikkelen en hoe nieuw
 - Nieuwe werkafspraken worden opgenomen in de documentatiemap.
 - Houd kennis expliciet, zichtbaar en overdraagbaar in de repo zelf.
 
+## Numeriek waar mogelijk (slider-check)
+
+- Bij elk formulier- of UI-ontwerp doen we een vaste check: kan dit invoerveld zinnig numeriek met een slider (`0-100` of andere duidelijke schaal)?
+- Als een slider pedagogisch helpt (sneller kiezen, beter vergelijken, trend zichtbaar), krijgt die voorkeur boven vrije tekst of losse labels.
+- Elke nieuwe slider krijgt altijd: schaaluitleg (`wat betekent laag/hoog`), opslag in data, weergave in historie en opname in export.
+- Als een veld niet geschikt is voor een slider, leggen we kort vast waarom (bijvoorbeeld te contextueel of narratief).
+- Gebruik voor snelle pagina-QA de checklist in `iam/docs/pagina-review-checklist.md`.
+
 ## One Truth Aanpak
 
 - We werken met een single source of truth: per onderwerp is er steeds 1 leidende plek.
@@ -190,6 +198,66 @@ De volgende inhoudelijke inzichten uit legacy-formulieren zijn bewust behouden i
 
 Doel van deze overname: pedagogische scherpte uit legacy behouden zonder terug te vallen op oude techniek of oude UI.
 
+## Pagina's met bijzondere status
+
+### to_self_manage_game.htm — standalone spel, geen IAM-kernpagina
+
+- `to_self_manage_game.htm` is een zelfstandig spel en valt **buiten de IAM-kernflow**.
+- Het krijgt **geen algemene IAM-aanpassingen**: 
+  - Geen koppeling aan `mobile.css`/`forms.css`
+  - Geen dataStore-integratie met andere formulieren
+  - Geen One Truth-check of automatische sync met IAM-kernpagina's
+  - Geen refactoring of modernisering die aan kernpagina's wordt toegepast
+- Aanpassingen aan dit spel zijn altijd game-specifiek en worden expliciet als zodanig behandeld
+- De pagina wordt in `index.htm` aangeboden als optioneel extra (Zinnen verzetten & afleiding), niet als onderdeel van een IAM-fase
+- Dit is bewust anders: het spel is bedoeld als pauze/afleiding, niet als onderdeel van de therapeutische interventies
+
+### gebruik-bijhouden.htm — verwijderd (redundante redirect)
+
+- `gebruik-bijhouden.htm` was een pure redirect naar `dagelijks-gevolg.htm` zonder eigen inhoud of intelligentie.
+- Omdat `dagelijks-gevolg.htm` zelf al in de navigatie staat, was de redirect dubbel en zonder meerwaarde.
+- Het bestand en alle verwijzingen ernaar zijn verwijderd (mei 2026).
+
+### verwijten-en-empathie.htm — relationele gevoelsverwerking, steunpagina
+
+- `verwijten-en-empathie.htm` is een pagina voor verwerking van verwijten zonder in verdediging te schieten.
+- Doel: van defensie naar empathie, van schuld naar verantwoordelijkheid.
+- **Structuur** (5 stappen):
+  1. **Inventaris**: Wat zei/zegt de ander precies (zonder evaluatie)?
+  2. **Adem & voelen**: Grounding-moment; voelen hoe getriggerd je bent
+  3. **Eigen verhaal**: Jouw rationalisaties en verdedigingsmechanismes opschrijven
+  4. **Empathie**: Wat voelt de ander, wat heeft de ander nodig?
+  5. **Verantwoordelijkheid**: Wat neem jij op je (zonder jezelf klein te maken)?
+- **Koppeling**: Werkt samen met `ingeslikte-emoties.htm` (wat je zelf inslikt) en kan triggers onderzoeken vanuit `risico-gevoelens.htm`
+- **Fase-plaatsing**: Fase 2 (lastige gevoelens onderzoeken), ook bruikbaar in Fase 4 (conflict-opvangst na uitglijder)
+- **Data-opslag**: Lokale dataStore per datum/persoon-combinatie, exporteerbaar
+
+### de-spiraal.htm — mechanismevisualisatie: isolatie vs. verbinding
+
+- `de-spiraal.htm` helpt gebruikers zien hóé hun gevoelens, gedachten en gedrag **zichzelf versterken** (gesloten spiraal) óf **zich helen** (open spiraal).
+- Doel: van abstracte risico-verkenning naar concreet patroonzicht en hoe je het doorbreekt.
+- **Kernstructuur**:
+  1. **Gesloten Spiraal** (⬇️): Moeilijke gevoelens → Verdedigende gedachten → Terugtrekking → Ander voelt zich afgewezen → JIJ voelt je meer alleen
+  2. **Open Spiraal** (⬆️): Moeilijke gevoelens erkend → Kwetsbare gedachten → Open gedrag → Ander voelt zich vertrouwd → JIJ voelt je verbonden
+  3. **Vergelijking & Reflectie**: Gebruiker bepaalt welke spiraal actief is en wat de volgende stap kan zijn
+- **Koppeling**: Brug tussen risico-inzicht (Fase 3) en praktische relatie-werk (`verwijten-en-empathie.htm`, `sociaal-netwerk.htm`, `steunnetwerk.htm`)
+- **Fase-plaatsing**: Fase 3 (Risico-architectuur), als sluitstuk dat toont *waarom* risico's kunnen escaleren en *hoe* verbinding breekt
+- **Data-opslag**: Lokale dataStore per datum, focust op herkenning van patronen
+
+### verbinding-en-bijdrage.htm — verbinding, bijdrage en planstap
+
+- `verbinding-en-bijdrage.htm` is de moderne, accuratere opvolger van het oude creatiespiraal-concept.
+- Doel: van positieve wens naar betekenisvolle verbinding, sociale bijdrage en eerste haalbare stap.
+- **Kernstructuur**:
+	1. Positief formuleren van de wens
+	2. Eindresultaat concreet maken
+	3. Zien wie hier beter van wordt
+	4. Koppelen aan mensen die kunnen helpen
+	5. Omzetten in een kleine planstap
+- **Koppeling**: sluit aan op `levensdoelen-stellen.htm`, `motiverende-mensen.htm`, `sociaal-netwerk.htm`, `steunnetwerk.htm`, `plan-van-aanpak.htm` en `genieten-belonen.htm`
+- **Fase-plaatsing**: Fase 5 (Borging en ritme), omdat de pagina wens, bijdrage, planning en volhouden samenbrengt
+- **Data-opslag**: Lokale dataStore per datum, zodat wens en plan later terug te vinden zijn
+
 ## Leidende Set (Kernflow)
 
 De onderstaande pagina's vormen de actieve kernflow van IAM in `iam/htm`.
@@ -203,17 +271,22 @@ De onderstaande pagina's vormen de actieve kernflow van IAM in `iam/htm`.
 - `craving-1-10.htm`
 - `craving-gevoel.htm`
 - `voor-nadelen-balansen.htm`
+- `verwijten-en-empathie.htm`
 - `stimulus-respons.htm`
 - `risico-situaties.htm`
+- `risico-gevoelens.htm`
+- `risico-denken.htm`
 - `risico-mensen.htm`
 - `risico-activiteiten.htm`
 - `soorten-trek.htm`
+- `de-spiraal.htm`
 - `noodplan-forse-trek.htm`
 - `trek-opvangen.htm`
 - `trek-opvangen-2.htm`
 - `plan-van-aanpak.htm`
 - `motiverende-mensen.htm`
 - `genieten-belonen.htm`
+- `verbinding-en-bijdrage.htm`
 - `agenda.htm`
 
 Alles buiten deze set is voorlopig niet leidend in de kernflow, tenzij expliciet toegevoegd in dit document.

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>De Spiraal: Hoe Je Jezelf en Anderen Beïnvloedt - IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #173249;
+      --main: #2d6a4f;
+      --accent: #52b788;
+      --danger: #d62828;
+      --soft: #f1faee;
+      --warm: #ff9800;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(45, 106, 79, 0.12), transparent 40%),
+        linear-gradient(180deg, #f8fdf9 0%, #eef6f1 100%);
+      color: var(--ink);
+    }
+    .page-shell {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .hero {
+      margin-top: 1rem;
+      background: linear-gradient(145deg, var(--main) 0%, #1b4d35 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.25rem;
+      box-shadow: 0 14px 30px rgba(45, 106, 79, 0.25);
+    }
+    .top-links {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 0.45rem 0.82rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .top-links a:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-top: 1.2rem;
+      box-shadow: 0 9px 22px rgba(45, 106, 79, 0.09);
+      border-left: 5px solid var(--accent);
+    }
+    .card.open-spiral {
+      border-left-color: #52b788;
+      background: linear-gradient(135deg, rgba(241, 250, 238, 0.6), rgba(255, 255, 255, 0.96));
+    }
+    .card.closed-spiral {
+      border-left-color: #d62828;
+      background: linear-gradient(135deg, rgba(255, 241, 241, 0.6), rgba(255, 255, 255, 0.96));
+    }
+    h2 {
+      margin: 0 0 0.8rem;
+      color: var(--main);
+      border-bottom: 2px solid rgba(45, 106, 79, 0.15);
+      padding-bottom: 0.5rem;
+    }
+    .intro-text {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #456;
+      margin-bottom: 1rem;
+    }
+    .spiral-diagram {
+      background: linear-gradient(135deg, #f8fdf9, #f0f7f3);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .spiral-step {
+      background: #fff;
+      border: 2px solid var(--accent);
+      border-radius: 10px;
+      padding: 0.8rem;
+      margin: 0.6rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .spiral-step.danger {
+      border-color: var(--danger);
+      background: linear-gradient(135deg, rgba(214, 40, 40, 0.06), white);
+    }
+    .spiral-icon {
+      font-size: 1.8rem;
+      min-width: 2.2rem;
+      height: 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(82, 183, 136, 0.15);
+      border-radius: 50%;
+      font-weight: 600;
+    }
+    .spiral-step.danger .spiral-icon {
+      background: rgba(214, 40, 40, 0.15);
+    }
+    .spiral-text {
+      text-align: left;
+      flex: 1;
+    }
+    .spiral-text strong {
+      display: block;
+      color: var(--main);
+      font-size: 0.95rem;
+    }
+    .spiral-text em {
+      display: block;
+      color: #888;
+      font-size: 0.85rem;
+      margin-top: 0.2rem;
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    @media (max-width: 640px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .comparison-col {
+      padding: 1rem;
+      border-radius: 12px;
+    }
+    .comparison-col.closed {
+      background: linear-gradient(135deg, #ffe0e0, #fff5f5);
+      border: 2px solid #f08080;
+    }
+    .comparison-col.open {
+      background: linear-gradient(135deg, #e0f2e0, #f5fff5);
+      border: 2px solid #80c080;
+    }
+    .comparison-col h3 {
+      margin: 0 0 0.6rem;
+      font-size: 1.05rem;
+    }
+    .comparison-col.closed h3 {
+      color: #c41c3b;
+    }
+    .comparison-col.open h3 {
+      color: #2d6a4f;
+    }
+    .comparison-list {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #333;
+    }
+    .comparison-list li {
+      margin: 0.35rem 0;
+    }
+    .form-group {
+      margin: 1rem 0;
+      display: grid;
+      gap: 0.4rem;
+    }
+    .form-group label {
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      border-radius: 10px;
+      border: 1px solid rgba(45, 106, 79, 0.2);
+      padding: 0.7rem;
+      background: #fff;
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.95rem;
+      resize: vertical;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.1);
+    }
+    .insight-box {
+      background: linear-gradient(135deg, #f0f7ff, #e8f4ff);
+      border: 1px solid #c8e0ff;
+      border-left: 4px solid var(--main);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      margin: 0.8rem 0;
+      color: #2c4a63;
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    button {
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(45, 106, 79, 0.2);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.6rem 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: rgba(45, 106, 79, 0.1);
+    }
+    button.primary {
+      background: var(--main);
+      color: #fff;
+      border-color: var(--main);
+    }
+    button.primary:hover {
+      background: #1b4d35;
+    }
+    .message {
+      display: none;
+      margin-top: 1rem;
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      border-left: 4px solid var(--accent);
+      background: #eef8ee;
+      color: #2d6a4f;
+      font-weight: 600;
+    }
+    .message.show {
+      display: block;
+    }
+    .reflection-prompt {
+      background: linear-gradient(135deg, rgba(82, 183, 136, 0.08), transparent);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 0.8rem 0;
+      border-left: 4px solid var(--accent);
+      color: #333;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #0f1419;
+      }
+      .card {
+        background: rgba(20, 40, 30, 0.9);
+        color: #e0e0e0;
+      }
+      textarea {
+        background: #1a2f26;
+        color: #e0e0e0;
+      }
+      button {
+        background: #1a2f26;
+        color: #e0e0e0;
+      }
+    }
+  </style>
+  <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="top-links">
+          <a href="./risico-gevoelens.htm">← Risico-gevoelens</a>
+          <a href="./sociaal-netwerk.htm">Sociaal netwerk →</a>
+          <a href="./index.htm">Naar overzicht</a>
+        </div>
+        <h1>🌀 De Spiraal</h1>
+        <p>Hoe je jezelf en anderen beïnvloedt—en hoe dat terugkomt naar jou</p>
+      </header>
+
+      <!-- Intro -->
+      <section class="card">
+        <h2>Wat is de Spiraal?</h2>
+        <p class="intro-text">
+          Alles wat jij voelt, denkt en doet, raakt iemand anders. En wat anderen voelen en doen, raakt jou terug. 
+          Dit gebeurt in een <strong>spiraal</strong>—niet een cirkel, maar een beweging die omhoog gaat (beter, meer verbinding) 
+          óf omlaag (slechter, meer isolatie).
+        </p>
+        <p class="intro-text">
+          Je kent dit misschien uit je eigen ervaring:
+        </p>
+        <ul style="margin: 0.6rem 0 0; padding-left: 1.2rem; font-size: 0.95rem; line-height: 1.7;">
+          <li><strong>Gesloten spiraal:</strong> Ik voel me alleen → ik trek me terug → anderen voelen zich afgewezen → ik voel me nog meer alleen</li>
+          <li><strong>Open spiraal:</strong> Ik voelme kwetsbaar → ik deel → anderen voelen zich gezien → ik voel me verbonden</li>
+          <li><strong>Met middelen:</strong> Ik voel pijn → ik gebruik → pijn verdwijnt (tijdelijk) → anderen zien alleen de verdoving → ik ben nog meer alleen</li>
+        </ul>
+        <div class="insight-box">
+          💡 <strong>Kernidee:</strong> Je kunt niet alleen voor jezelf beter worden. Je wordt beter dóórdat je met anderen beter wordt.
+        </div>
+      </section>
+
+      <!-- De Gesloten Spiraal -->
+      <section class="card closed-spiral">
+        <h2>⬇️ De Gesloten Spiraal (Isolatie & Verdoving)</h2>
+        <p class="intro-text">
+          Dit is de kant waar veel verslaving leeft: je trekt je in jezelf terug, en hoe meer je dat doet, 
+          hoe verder je van anderen af raakt.
+        </p>
+        <div class="spiral-diagram">
+          <div class="spiral-step danger">
+            <div class="spiral-icon">1️⃣</div>
+            <div class="spiral-text">
+              <strong>Moeilijke Gevoelens</strong>
+              <em>Angst, verdriet, eenzaamheid, schaamte, hulpeloosheid</em>
+            </div>
+          </div>
+          <div style="text-align: center; color: #d62828; font-weight: 700;">↓</div>
+          <div class="spiral-step danger">
+            <div class="spiral-icon">2️⃣</div>
+            <div class="spiral-text">
+              <strong>Verdedigde Gedachten</strong>
+              <em>"Niemand kan me helpen", "Beter alleen", "Het werkt toch niet", "Iedereen verzaakt me"</em>
+            </div>
+          </div>
+          <div style="text-align: center; color: #d62828; font-weight: 700;">↓</div>
+          <div class="spiral-step danger">
+            <div class="spiral-icon">3️⃣</div>
+            <div class="spiral-text">
+              <strong>Teruggetrokken Gedrag</strong>
+              <em>Ik zeg niks, ik vraag niks, ik sluit me af, ik gebruik (middel / werk / schermen)</em>
+            </div>
+          </div>
+          <div style="text-align: center; color: #d62828; font-weight: 700;">↓</div>
+          <div class="spiral-step danger">
+            <div class="spiral-icon">4️⃣</div>
+            <div class="spiral-text">
+              <strong>Gevolg voor Ander</strong>
+              <em>De ander voelt zich afgewezen, niet genoeg, verwaarloosd, boos, eenzaam</em>
+            </div>
+          </div>
+          <div style="text-align: center; color: #d62828; font-weight: 700;">↓</div>
+          <div class="spiral-step danger">
+            <div class="spiral-icon">5️⃣</div>
+            <div class="spiral-text">
+              <strong>Reactie van Ander</strong>
+              <em>Zij/hij voelt zich ook afgewezen, trekt zich in, wordt boos, geeft het op</em>
+            </div>
+          </div>
+          <div style="text-align: center; color: #d62828; font-weight: 700; font-size: 1.3rem;">↓ ⟲</div>
+          <p style="color: #d62828; font-weight: 700; margin: 0.6rem 0;">JIJ voelt je nog méér alleen en begrijp nu niks van wat je doet</p>
+        </div>
+
+        <div class="reflection-prompt">
+          <strong>🤔 Herken je dit?</strong> Wat is jouw gesloten spiraal? 
+          Hoe zie je dit teruggezegd door iemand dicht bij je?
+        </div>
+
+        <div class="form-group">
+          <label for="closedSpiral">Mijn gesloten spiraal (hoe ik mij afsluit)</label>
+          <textarea id="closedSpiral" placeholder="Bijv. Als ik me alleen voel, zeg ik niks. Dan ignoreert mijn partner me. Dan voel ik me nog meer alleen. Dan pak ik de fles..."></textarea>
+        </div>
+      </section>
+
+      <!-- De Open Spiraal -->
+      <section class="card open-spiral">
+        <h2>⬆️ De Open Spiraal (Connectie & Genezing)</h2>
+        <p class="intro-text">
+          Dit is de andere kant: hoe je risico neemt, je openstelt, en hoe dat anderen en jezelf verandert. 
+          Dit vergt moed, maar het werkt.
+        </p>
+        <div class="spiral-diagram">
+          <div class="spiral-step">
+            <div class="spiral-icon">1️⃣</div>
+            <div class="spiral-text">
+              <strong>Moeilijke Gevoelens (Erkend)</strong>
+              <em>Ik voel angst, verdriet, eenzaamheid—en dat is oké</em>
+            </div>
+          </div>
+          <div style="text-align: center; color: #52b788; font-weight: 700;">↑</div>
+          <div class="spiral-step">
+            <div class="spiral-icon">2️⃣</div>
+            <div class="spiral-text">
+              <strong>Kwetsbare Gedachten</strong>
+              <em>"Ik wil niet alleen zijn", "Ik heb hulp nodig", "Ik mag om steun vragen"</em>
+            </div>
+          </div>
+          <div style="text-align: center; color: #52b788; font-weight: 700;">↑</div>
+          <div class="spiral-step">
+            <div class="spiral-icon">3️⃣</div>
+            <div class="spiral-text">
+              <strong>Open Gedrag</strong>
+              <em>Ik zeg: "Het voelt lastig nu", ik vraag hulp, ik vertel wat ik nodig heb</em>
+            </div>
+          </div>
+          <div style="text-align: center; color: #52b788; font-weight: 700;">↑</div>
+          <div class="spiral-step">
+            <div class="spiral-icon">4️⃣</div>
+            <div class="spiral-text">
+              <strong>Gevolg voor Ander</strong>
+              <em>De ander voelt zich vertrouwd, gezien, nodig, kan helpen</em>
+            </div>
+          </div>
+          <div style="text-align: center; color: #52b788; font-weight: 700;">↑</div>
+          <div class="spiral-step">
+            <div class="spiral-icon">5️⃣</div>
+            <div class="spiral-text">
+              <strong>Reactie van Ander</strong>
+              <em>Zij/hij voelt zich waardevol, geeft wat hij/zij kan, wordt ook openaar</em>
+            </div>
+          </div>
+          <div style="text-align: center; color: #52b788; font-weight: 700; font-size: 1.3rem;">↑ ⟲</div>
+          <p style="color: #52b788; font-weight: 700; margin: 0.6rem 0;">JIJ voelt je gezien, begrepen, sterker dóórdat je je klein durfde te maken</p>
+        </div>
+
+        <div class="reflection-prompt">
+          <strong>🌱 Waar kan dit groeien?</strong> Met wie in je leven 
+          zou je voorzichtig kunnen beginnen met eerlijkheid?
+        </div>
+
+        <div class="form-group">
+          <label for="openSpiral">Mijn open spiraal (hoe ik me durف te openen)</label>
+          <textarea id="openSpiral" placeholder="Bijv. Als ik voelme eenzaam, zeg ik 'Ik voel me raar'. Mijn partner vraagt wat er aan de hand is. Ik vertel eerlijk. Zij voelt zich dicht bij me. Ik voel me minder alleen..."></textarea>
+        </div>
+      </section>
+
+      <!-- Vergelijking -->
+      <section class="card">
+        <h2>⚖️ Gesloten vs. Open</h2>
+        <div class="comparison-grid">
+          <div class="comparison-col closed">
+            <h3>❌ Gesloten Spiraal</h3>
+            <ul class="comparison-list">
+              <li>Gevoelens verdoven</li>
+              <li>Niks zeggen</li>
+              <li>Jezelf beschermen</li>
+              <li>Middel/werk/scherm</li>
+              <li>Anderen voelen zich afgewezen</li>
+              <li>Je bent steeds meer alleen</li>
+              <li>Schuld en schaamte groeien</li>
+              <li>Gebruikt afhankelijkheid</li>
+            </ul>
+          </div>
+          <div class="comparison-col open">
+            <h3>✅ Open Spiraal</h3>
+            <ul class="comparison-list">
+              <li>Gevoelens voelen</li>
+              <li>Je verhaal delen</li>
+              <li>Risico nemen</li>
+              <li>Steun zoeken</li>
+              <li>Anderen voelen zich gezien</li>
+              <li>Je bent steeds meer verbonden</li>
+              <li>Waardigheid groeit</li>
+              <li>Breekt afhankelijkheid</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-box">
+          🎯 <strong>De Vraag:</strong> Welke spiraal werk je versterken? 
+          Welke wil je zwakker maken? <strong>Jouw keuzes bepalen dit.</strong>
+        </div>
+      </section>
+
+      <!-- Praktische Toepassing -->
+      <section class="card">
+        <h2>🛠️ Hoe Gebruik Ik Dit?</h2>
+        <div class="form-group">
+          <label for="currentSituation"><strong>Wat gebeurt er nu?</strong> Beschrijf een situatie van afgelopen dagen</label>
+          <textarea id="currentSituation" placeholder="Bijv. Mijn partner stelde een vraag, en ik antwoordde niet. Nu geeft zij het op en spreekt niet meer met me..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="spiralType"><strong>Welke spiraal herken je?</strong></label>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.6rem;">
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-weight: normal;">
+              <input type="radio" name="spiralChoice" value="gesloten" />
+              <span>⬇️ Gesloten (ik trek me in)</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-weight: normal;">
+              <input type="radio" name="spiralChoice" value="open" />
+              <span>⬆️ Open (ik deel wat ik voel)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nextStep"><strong>Volgende Stap</strong></label>
+          <p style="font-size: 0.9rem; color: #666; margin: 0.4rem 0;">
+            Als het gesloten spiraal is: wat zou je kunnen doen om meer open te gaan?<br/>
+            Als het open spiraal is: hoe verdiep je dat verder?
+          </p>
+          <textarea id="nextStep" placeholder="Bijv. Volgende keer als ik iets voelens, zeg ik het meteen in plaats van te zwijgen..."></textarea>
+        </div>
+
+        <div class="action-buttons">
+          <button class="primary" type="button" id="saveButton">💾 Bewaar reflectie</button>
+          <button type="button" id="resetButton">🔄 Leeg formulier</button>
+        </div>
+
+        <div id="message" class="message"></div>
+      </section>
+
+      <!-- Links naar volgende -->
+      <section class="card" style="background: linear-gradient(135deg, rgba(45, 106, 79, 0.06), transparent); border-left: 5px solid #ccc; margin-bottom: 2rem;">
+        <h3 style="margin: 0 0 0.6rem; color: #555; font-size: 0.95rem;">🔗 Volgende Stappen?</h3>
+        <ul style="margin: 0.5rem 0 0; padding-left: 1.2rem; font-size: 0.9rem; color: #666; line-height: 1.8;">
+          <li><a href="./ingeslikte-emoties.htm" style="color: var(--main); font-weight: 600;">Welke emoties slikt je in?</a> — Dieper inzicht in je gesloten spiraal</li>
+          <li><a href="./verwijten-en-empathie.htm" style="color: var(--main); font-weight: 600;">Verwijten & Empathie</a> — Hoe open spiraal werkt in conflict</li>
+          <li><a href="./sociaal-netwerk.htm" style="color: var(--main); font-weight: 600;">Wie is je netwerk?</a> — Waar kun je veilig open zijn?</li>
+          <li><a href="./steunnetwerk.htm" style="color: var(--main); font-weight: 600;">Wie helpt concreet?</a> — Bouw je open spiraal</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const FORM_KEY = 'de-spiraal';
+
+    function getTodayDateKey() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function showMessage(text, isSuccess = true) {
+      const msg = document.getElementById('message');
+      msg.textContent = text;
+      msg.className = `message show ${isSuccess ? '' : 'error'}`;
+      setTimeout(() => msg.classList.remove('show'), 4000);
+    }
+
+    function collectFormData() {
+      const spiralChoice = document.querySelector('input[name="spiralChoice"]:checked');
+      return {
+        closedSpiral: document.getElementById('closedSpiral').value || '',
+        openSpiral: document.getElementById('openSpiral').value || '',
+        currentSituation: document.getElementById('currentSituation').value || '',
+        spiralType: spiralChoice ? spiralChoice.value : '',
+        nextStep: document.getElementById('nextStep').value || ''
+      };
+    }
+
+    function loadFormData(data) {
+      if (!data) return;
+      document.getElementById('closedSpiral').value = data.closedSpiral || '';
+      document.getElementById('openSpiral').value = data.openSpiral || '';
+      document.getElementById('currentSituation').value = data.currentSituation || '';
+      document.getElementById('nextStep').value = data.nextStep || '';
+      if (data.spiralType) {
+        const radio = document.querySelector(`input[name="spiralChoice"][value="${data.spiralType}"]`);
+        if (radio) radio.checked = true;
+      }
+    }
+
+    document.getElementById('saveButton').addEventListener('click', () => {
+      const data = collectFormData();
+      const storageKey = `${FORM_KEY}:${getTodayDateKey()}`;
+      try {
+        storeData(storageKey, data);
+        showMessage('✓ Reflectie opgeslagen! Je ziet je patronen steeds duidelijker.', true);
+      } catch (e) {
+        showMessage('❌ Opslaan mislukt. Probeer het opnieuw.', false);
+      }
+    });
+
+    document.getElementById('resetButton').addEventListener('click', () => {
+      if (confirm('Leeg het hele formulier? Huidige invoer gaat verloren.')) {
+        Array.from(document.querySelectorAll('textarea')).forEach(el => el.value = '');
+        document.querySelectorAll('input[name="spiralChoice"]').forEach(cb => cb.checked = false);
+        showMessage('Formulier leeggemaakt.', true);
+      }
+    });
+
+    // Load today's data if available
+    const todayData = retrieveData(`${FORM_KEY}:${getTodayDateKey()}`);
+    if (todayData) {
+      loadFormData(todayData);
+    }
+  </script>
+</body>
+</html>

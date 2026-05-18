@@ -27,7 +27,6 @@ Strategische functie:
 
 ### 2. Meten en waarnemen
 
-- `gebruik-bijhouden.htm` (14 dagen)
 - `dagelijks-gevolg.htm`
 - `craving-1-10.htm`
 - `craving-gevoel.htm`
@@ -72,18 +71,21 @@ Strategische functie:
 - `sociaal-netwerk.htm`
 - `steunnetwerk.htm`
 - `motiverende-mensen.htm`
+- `verbinding-en-bijdrage.htm`
 - `sova-grenzen.htm`
 - `sova-mixed-signals.htm`
 
 Strategische functie:
 - vermindert afhankelijkheid van puur wilskrachtgedrag
 - bouwt sociale en gedragsmatige buffers in
+- verbindt persoonlijke wens aan merkbare bijdrage voor anderen via verbinding
 
 #### Rolverdeling steunpagina's (expliciet)
 
 - `sociaal-netwerk.htm`: breed netwerkoverzicht (wie hoort bij mijn omgeving).
 - `steunnetwerk.htm`: operationele steun (wie helpt concreet bij moeilijke momenten en hoe).
 - `motiverende-mensen.htm`: richting en betekenis (voor wie/waarvoor doe ik dit, inclusief toekomstgerichte rollen).
+- `verbinding-en-bijdrage.htm`: positieve wens, concreet eindbeeld, verbinding en planbare bijdrage.
 
 Ontwerpprincipe: deze drie vullen elkaar aan en zijn niet inwisselbaar.
 
@@ -106,7 +108,6 @@ Strategische functie:
 - `jouw-verslaving.htm`: sterke bio-psycho-sociale startvraag
 - `smoezenboek.htm`: directe cognitieve interventie bij trekdenken
 - `risico-tekst.htm`: helder theoretisch kader (kans x gevolg, signalering, wilskracht)
-- `gebruik-bijhouden.htm`: concrete observatiefase zonder directe prestatiedruk
 - `genieten-belonen.htm`: gedragsversterking via beloningslogica
 - `evenwicht.htm`: balanskader rond krachten richting gebruik versus herstel
 
@@ -119,7 +120,7 @@ Strategische functie:
 Praktische minimale route (kort):
 
 1. `jouw-verslaving.htm`
-2. `gebruik-bijhouden.htm`
+2. `dagelijks-gevolg.htm`
 3. `risico-situaties.htm` + `risico-gevoelens.htm`
 4. `smoezenboek.htm` + `trek-opvangen.htm`
 5. `plan-van-aanpak.htm` + `noodplan-forse-trek.htm`

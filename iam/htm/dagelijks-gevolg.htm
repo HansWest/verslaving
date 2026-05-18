@@ -474,6 +474,52 @@
       color: #5f5541;
       font-size: 0.9rem;
     }
+    .interaction-slider-grid {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .interaction-slider-item {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      background: #fbfdfe;
+      border-radius: 12px;
+      padding: 0.65rem 0.72rem;
+      display: grid;
+      gap: 0.45rem;
+    }
+    .interaction-slider-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+    .interaction-slider-head label {
+      margin: 0;
+      font-weight: 700;
+      color: #2f4a5b;
+      font-size: 0.92rem;
+    }
+    .interaction-slider-value {
+      border-radius: 999px;
+      background: #e8f1f7;
+      color: #245377;
+      min-width: 2.7rem;
+      text-align: center;
+      padding: 0.15rem 0.5rem;
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+    .interaction-slider-item input[type="range"] {
+      width: 100%;
+    }
+    .interaction-index-box {
+      margin-top: 0.75rem;
+      border: 1px solid rgba(23, 50, 73, 0.12);
+      background: #f3f8fc;
+      border-radius: 12px;
+      padding: 0.7rem 0.8rem;
+    }
+    .interaction-index-box p { margin: 0; }
     .two-week-setup {
       margin-top: 0.8rem;
       display: grid;
@@ -696,7 +742,7 @@
           <div class="form-group" style="grid-column: 1 / -1;">
             <p class="observation-help" style="margin: 0;">
               Noteer hier de nacht die op deze dag uitkomt. Als je voor 24:00 uur gisteren bent gaan slapen en vanochtend wakker werd, dan hoort die slaap bij de dag waarop je wakker wordt. De afgelopen nacht bepaalt vooral hoe je denkkracht is en hoe deze dag voelt.
-            </p
+            </p>
           </div>
         </div>
 
@@ -761,6 +807,67 @@
           <div class="form-group">
             <label for="tooMuchTodayNote">Wat was er vandaag te veel?</label>
             <textarea id="tooMuchTodayNote" placeholder="Wat was te veel qua druk, prikkels, mensen, gebruik of verwachtingen?"></textarea>
+          </div>
+        </div>
+
+        <div class="tracker-grid" id="interactionTrackingSection">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label style="margin-bottom:0.45rem; display:block;">Interactie van de dag (numeriek)</label>
+            <div class="interaction-slider-grid">
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="dayPressureSlider">Dagdruk</label>
+                  <span class="interaction-slider-value" id="dayPressureSliderValue">50</span>
+                </div>
+                <input id="dayPressureSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="selfRegieSlider">Zelfregie</label>
+                  <span class="interaction-slider-value" id="selfRegieSliderValue">50</span>
+                </div>
+                <input id="selfRegieSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="cravingPeakSlider">Craving (trek)</label>
+                  <span class="interaction-slider-value" id="cravingPeakSliderValue">50</span>
+                </div>
+                <input id="cravingPeakSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="recoveryActionSlider">Herstelgedrag</label>
+                  <span class="interaction-slider-value" id="recoveryActionSliderValue">50</span>
+                </div>
+                <input id="recoveryActionSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="contactQualitySlider">Contactkwaliteit</label>
+                  <span class="interaction-slider-value" id="contactQualitySliderValue">50</span>
+                </div>
+                <input id="contactQualitySlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="bodyRestSlider">Lichamelijke rust</label>
+                  <span class="interaction-slider-value" id="bodyRestSliderValue">50</span>
+                </div>
+                <input id="bodyRestSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="emotionExpressionGapSlider">Gevoelde emotie vs geuite emotie</label>
+                  <span class="interaction-slider-value" id="emotionExpressionGapSliderValue">50</span>
+                </div>
+                <input id="emotionExpressionGapSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+            </div>
+            <div class="interaction-index-box">
+              <p><strong>Daginteractie-index:</strong> <span id="dayInteractionIndexValue">0</span></p>
+              <p class="observation-help" id="dayInteractionIndexHint" style="margin-top:0.35rem;">Neutraal beeld voor deze dag. Bij deze emotie-slider geldt: 0 = volledig geuit, 100 = volledig ingeslikt.</p>
+            </div>
           </div>
         </div>
 
@@ -844,8 +951,69 @@
       'niet-nuttig': 'Niet nuttig',
       later: 'Later opnieuw proberen'
     };
+    const INTERACTION_SLIDER_IDS = [
+      'dayPressureSlider',
+      'selfRegieSlider',
+      'cravingPeakSlider',
+      'recoveryActionSlider',
+      'contactQualitySlider',
+      'bodyRestSlider',
+      'emotionExpressionGapSlider'
+    ];
     const historyLimit = 14;
     let selectedHistoryRange = 7;
+
+    function getSliderNumber(id, fallback = 50) {
+      const el = document.getElementById(id);
+      if (!el) return fallback;
+      const num = Number(el.value);
+      return Number.isNaN(num) ? fallback : num;
+    }
+
+    function updateSliderValueBadge(id) {
+      const el = document.getElementById(id);
+      const badge = document.getElementById(`${id}Value`);
+      if (!el || !badge) return;
+      badge.textContent = String(el.value);
+    }
+
+    function computeDayInteractionIndex(values) {
+      const index =
+        0.35 * values.selfRegie -
+        0.30 * values.dayPressure -
+        0.25 * values.cravingPeak +
+        0.25 * values.recoveryAction +
+        0.15 * values.contactQuality +
+        0.10 * values.bodyRest -
+        0.15 * values.emotionExpressionGap;
+      return Math.round(index * 10) / 10;
+    }
+
+    function updateDayInteractionSummary() {
+      const values = {
+        dayPressure: getSliderNumber('dayPressureSlider'),
+        selfRegie: getSliderNumber('selfRegieSlider'),
+        cravingPeak: getSliderNumber('cravingPeakSlider'),
+        recoveryAction: getSliderNumber('recoveryActionSlider'),
+        contactQuality: getSliderNumber('contactQualitySlider'),
+        bodyRest: getSliderNumber('bodyRestSlider'),
+        emotionExpressionGap: getSliderNumber('emotionExpressionGapSlider')
+      };
+      const index = computeDayInteractionIndex(values);
+      const valueEl = document.getElementById('dayInteractionIndexValue');
+      const hintEl = document.getElementById('dayInteractionIndexHint');
+      if (valueEl) valueEl.textContent = String(index);
+      if (hintEl) {
+        if (index >= 20) {
+          hintEl.textContent = 'Sterk regulerend dagpatroon.';
+        } else if (index <= -20) {
+          hintEl.textContent = 'Kwetsbaar dagpatroon: extra steun en bijsturing kan helpen.';
+        } else {
+          hintEl.textContent = 'Neutraal beeld voor deze dag.';
+        }
+      }
+      return index;
+    }
 
     function getTodayDateKey() {
       const d = new Date();
@@ -1046,6 +1214,7 @@
         if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
         if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
         if (isNumericUnits(entry.emotionSwallowedPercent)) parts.push(`Emoties ingeslikt: ${formatUnits(entry.emotionSwallowedPercent)}%`);
+        if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) parts.push(`Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`);
         if (entry.swallowedEmotionMain) parts.push(`Ingeslikte emotie: ${entry.swallowedEmotionMain}`);
         const swallowedBasics = [
           entry.swallowedCuriosity ? 'Nieuwsgierigheid' : '',
@@ -1298,6 +1467,15 @@
       document.getElementById('swallowedSadness').checked = Boolean(entry?.swallowedSadness);
       document.getElementById('swallowedFear').checked = Boolean(entry?.swallowedFear);
       document.getElementById('swallowedDesire').checked = Boolean(entry?.swallowedDesire);
+      document.getElementById('dayPressureSlider').value = entry && entry.dayPressure !== undefined && entry.dayPressure !== null ? entry.dayPressure : 50;
+      document.getElementById('selfRegieSlider').value = entry && entry.selfRegie !== undefined && entry.selfRegie !== null ? entry.selfRegie : 50;
+      document.getElementById('cravingPeakSlider').value = entry && entry.cravingPeak !== undefined && entry.cravingPeak !== null ? entry.cravingPeak : 50;
+      document.getElementById('recoveryActionSlider').value = entry && entry.recoveryAction !== undefined && entry.recoveryAction !== null ? entry.recoveryAction : 50;
+      document.getElementById('contactQualitySlider').value = entry && entry.contactQuality !== undefined && entry.contactQuality !== null ? entry.contactQuality : 50;
+      document.getElementById('bodyRestSlider').value = entry && entry.bodyRest !== undefined && entry.bodyRest !== null ? entry.bodyRest : 50;
+      document.getElementById('emotionExpressionGapSlider').value = entry && entry.emotionExpressionGap !== undefined && entry.emotionExpressionGap !== null ? entry.emotionExpressionGap : 50;
+      INTERACTION_SLIDER_IDS.forEach(updateSliderValueBadge);
+      updateDayInteractionSummary();
       document.getElementById('missedTodayNote').value = entry?.missedTodayNote || '';
       document.getElementById('tooMuchTodayNote').value = entry?.tooMuchTodayNote || '';
       document.getElementById('emotionSwallowedPercent').value = entry && entry.emotionSwallowedPercent !== '' && entry.emotionSwallowedPercent !== null && entry.emotionSwallowedPercent !== undefined ? entry.emotionSwallowedPercent : '';
@@ -1332,6 +1510,9 @@
       if (entry.swallowedEmotionMain || entry.swallowedCuriosity || entry.swallowedAnger || entry.swallowedSadness || entry.swallowedFear || entry.swallowedDesire) {
         parts.push('Ingeslikte emoties ingevuld');
       }
+      if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) {
+        parts.push(`Daginteractie-index: ${entry.dayInteractionIndex}`);
+      }
       if (entry.missedTodayNote) parts.push('Gemist ingevuld');
       if (entry.tooMuchTodayNote) parts.push('Te veel ingevuld');
       state.textContent = parts.length ? parts.join(' | ') : 'Dag opgeslagen';
@@ -1355,6 +1536,13 @@
       const rawEnjoyment = document.getElementById('enjoymentPercent').value.trim().replace(',', '.');
       const rawSocialOnline = document.getElementById('socialOnlinePercent').value.trim().replace(',', '.');
       const rawSocialIrl = document.getElementById('socialIrlPercent').value.trim().replace(',', '.');
+      const dayPressure = getSliderNumber('dayPressureSlider');
+      const selfRegie = getSliderNumber('selfRegieSlider');
+      const cravingPeak = getSliderNumber('cravingPeakSlider');
+      const recoveryAction = getSliderNumber('recoveryActionSlider');
+      const contactQuality = getSliderNumber('contactQualitySlider');
+      const bodyRest = getSliderNumber('bodyRestSlider');
+      const emotionExpressionGap = getSliderNumber('emotionExpressionGapSlider');
       return {
         plannedUnits: rawPlanned === '' ? '' : Number(rawPlanned),
         units: rawUnits === '' ? '' : Number(rawUnits),
@@ -1370,6 +1558,14 @@
         enjoymentPercent: rawEnjoyment === '' ? '' : Number(rawEnjoyment),
         socialOnlinePercent: rawSocialOnline === '' ? '' : Number(rawSocialOnline),
         socialIrlPercent: rawSocialIrl === '' ? '' : Number(rawSocialIrl),
+        dayPressure,
+        selfRegie,
+        cravingPeak,
+        recoveryAction,
+        contactQuality,
+        bodyRest,
+        emotionExpressionGap,
+        dayInteractionIndex: computeDayInteractionIndex({ dayPressure, selfRegie, cravingPeak, recoveryAction, contactQuality, bodyRest, emotionExpressionGap }),
         swallowedEmotionMain: document.getElementById('swallowedEmotionMain').value.trim(),
         swallowedCuriosity: document.getElementById('swallowedCuriosity').checked,
         swallowedAnger: document.getElementById('swallowedAnger').checked,
@@ -1409,6 +1605,13 @@
         Boolean(entry.swallowedSadness) ||
         Boolean(entry.swallowedFear) ||
         Boolean(entry.swallowedDesire) ||
+        (entry.dayPressure !== undefined && entry.dayPressure !== null && Number(entry.dayPressure) !== 50) ||
+        (entry.selfRegie !== undefined && entry.selfRegie !== null && Number(entry.selfRegie) !== 50) ||
+        (entry.cravingPeak !== undefined && entry.cravingPeak !== null && Number(entry.cravingPeak) !== 50) ||
+        (entry.recoveryAction !== undefined && entry.recoveryAction !== null && Number(entry.recoveryAction) !== 50) ||
+        (entry.contactQuality !== undefined && entry.contactQuality !== null && Number(entry.contactQuality) !== 50) ||
+        (entry.bodyRest !== undefined && entry.bodyRest !== null && Number(entry.bodyRest) !== 50) ||
+        (entry.emotionExpressionGap !== undefined && entry.emotionExpressionGap !== null && Number(entry.emotionExpressionGap) !== 50) ||
         Boolean(entry.missedTodayNote) ||
         Boolean(entry.tooMuchTodayNote) ||
         (entry.emotionSwallowedPercent !== '' && entry.emotionSwallowedPercent !== null && entry.emotionSwallowedPercent !== undefined)
@@ -1706,6 +1909,7 @@
         if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
         if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
         if (isNumericUnits(entry.emotionSwallowedPercent)) parts.push(`Emoties ingeslikt: ${formatUnits(entry.emotionSwallowedPercent)}%`);
+        if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) parts.push(`Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`);
         if (entry.swallowedEmotionMain) parts.push(`Ingeslikte emotie: ${entry.swallowedEmotionMain}`);
         const swallowedBasics = [
           entry.swallowedCuriosity ? 'Nieuwsgierigheid' : '',
@@ -1765,7 +1969,7 @@
         filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
         const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
         const rows = [
-          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionSwallowedPercent', 'swallowedEmotionMain', 'swallowedCuriosity', 'swallowedAnger', 'swallowedSadness', 'swallowedFear', 'swallowedDesire', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionSwallowedPercent', 'dayPressure', 'selfRegie', 'cravingPeak', 'recoveryAction', 'contactQuality', 'bodyRest', 'emotionExpressionGap', 'dayInteractionIndex', 'swallowedEmotionMain', 'swallowedCuriosity', 'swallowedAnger', 'swallowedSadness', 'swallowedFear', 'swallowedDesire', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
           ...sortedEntries.map((entry) => {
             const hasBoth = isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units);
             const difference = hasBoth ? Number(entry.units) - Number(entry.plannedUnits) : '';
@@ -1784,6 +1988,14 @@
               entry.socialOnlinePercent ?? '',
               entry.socialIrlPercent ?? '',
               entry.emotionSwallowedPercent ?? '',
+              entry.dayPressure ?? '',
+              entry.selfRegie ?? '',
+              entry.cravingPeak ?? '',
+              entry.recoveryAction ?? '',
+              entry.contactQuality ?? '',
+              entry.bodyRest ?? '',
+              entry.emotionExpressionGap ?? '',
+              entry.dayInteractionIndex ?? '',
               entry.swallowedEmotionMain || '',
               entry.swallowedCuriosity ? 'ja' : '',
               entry.swallowedAnger ? 'ja' : '',
@@ -1978,6 +2190,12 @@
           item.appendChild(emotionSwallowed);
         }
 
+        if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) {
+          const interactionIndex = document.createElement('p');
+          interactionIndex.textContent = `Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`;
+          item.appendChild(interactionIndex);
+        }
+
         if (entry.swallowedEmotionMain) {
           const swallowedMain = document.createElement('p');
           swallowedMain.textContent = `Ingeslikte emotie: ${entry.swallowedEmotionMain}`;
@@ -2069,6 +2287,16 @@
       renderAttemptSummary();
       renderMotivatingMottoSpot();
       renderSelectedDay();
+      INTERACTION_SLIDER_IDS.forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        updateSliderValueBadge(id);
+        el.addEventListener('input', () => {
+          updateSliderValueBadge(id);
+          updateDayInteractionSummary();
+        });
+      });
+      updateDayInteractionSummary();
       updateSwallowedEmotionResearchLink();
       renderHistory();
       render14DayOverview();
