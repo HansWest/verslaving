@@ -93,6 +93,48 @@
       flex: 1 1 180px;
       text-decoration: none;
     }
+
+    .pillar-tension {
+      background: #fff8f5;
+      border: 1px solid #f0d5c8;
+      border-radius: 10px;
+      padding: 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .pillar-tension > label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.45rem;
+      color: var(--page-ink);
+    }
+
+    .tension-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .tension-slider {
+      flex: 1;
+      accent-color: var(--page-accent);
+      cursor: pointer;
+      height: 6px;
+    }
+
+    .tension-pole {
+      font-size: 0.78rem;
+      color: #7a6a62;
+      white-space: nowrap;
+    }
+
+    .tension-output {
+      margin: 0.4rem 0 0;
+      font-weight: 700;
+      color: var(--page-accent);
+      font-size: 0.92rem;
+    }
   </style>
   <script src="../js/themeMode.js"></script>
 </head>
@@ -119,7 +161,7 @@
 
       <section class="context-card">
         <h2>Petzold: identiteit als tempeldak op pilaren</h2>
-        <p class="subtle-help">In het model van Hilarion Petzold rust identiteit op meerdere levenspilaren. Verslaving beschadigt vaak niet een enkele pilaar, maar zorgt voor scheefstand tussen pilaren.</p>
+        <p class="subtle-help">In het model van Hilarion Petzold rust onze 'identiteit' op meerdere levenspilaren. Verslaving beschadigt niet alleen vaak meerdere pilaren tegelijkertijd, maar zorgt ook voor scheefstand tussen die pilaren (en daardoor ontstaan er scheuren in je identiteit).<br/>De belangrijkste 'pilaren van onze identiteit' zijn:</p>
         <ul style="margin:0.4rem 0 0.2rem; padding-left:1.15rem; line-height:1.6;">
           <li><strong>Lichamelijkheid:</strong> energie, slaap, gezondheid, lichaamsgevoel.</li>
           <li><strong>Seksualiteit en intimiteit:</strong> nabijheid, grenzen, verlangen, relationele veiligheid.</li>
@@ -144,6 +186,15 @@
               <textarea id="lijfander" name="lijfander" rows="3"></textarea>
             </div>
           </div>
+          <div class="pillar-tension">
+            <label for="lijfspanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="lijfspanning" name="lijfspanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="lijfspanning_out">0%</p>
+          </div>
           <div class="pillar-score">
             <label for="lichamelijkheidkracht">Draagkracht van deze pilaar nu</label>
             <select id="lichamelijkheidkracht" name="lichamelijkheidkracht"></select>
@@ -165,6 +216,15 @@
               <label for="seksander">Wat laat ik anderen zien?</label>
               <textarea id="seksander" name="seksander" rows="3"></textarea>
             </div>
+          </div>
+          <div class="pillar-tension">
+            <label for="seksspanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="seksspanning" name="seksspanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="seksspanning_out">0%</p>
           </div>
           <div class="pillar-score">
             <label for="seksualiteitkracht">Draagkracht van deze pilaar nu</label>
@@ -188,6 +248,15 @@
               <textarea id="socander" name="socander" rows="3"></textarea>
             </div>
           </div>
+          <div class="pillar-tension">
+            <label for="socspanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="socspanning" name="socspanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="socspanning_out">0%</p>
+          </div>
           <div class="pillar-score">
             <label for="sociaalkracht">Draagkracht van deze pilaar nu</label>
             <select id="sociaalkracht" name="sociaalkracht"></select>
@@ -209,6 +278,15 @@
               <label for="werkander">Wat laat ik anderen zien?</label>
               <textarea id="werkander" name="werkander" rows="3"></textarea>
             </div>
+          </div>
+          <div class="pillar-tension">
+            <label for="werkspanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="werkspanning" name="werkspanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="werkspanning_out">0%</p>
           </div>
           <div class="pillar-score">
             <label for="prestatiekracht">Draagkracht van deze pilaar nu</label>
@@ -232,6 +310,15 @@
               <textarea id="materieander" name="materieander" rows="3"></textarea>
             </div>
           </div>
+          <div class="pillar-tension">
+            <label for="materiespanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="materiespanning" name="materiespanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="materiespanning_out">0%</p>
+          </div>
           <div class="pillar-score">
             <label for="materiekracht">Draagkracht van deze pilaar nu</label>
             <select id="materiekracht" name="materiekracht"></select>
@@ -253,6 +340,15 @@
               <label for="normander">Wat laat ik anderen zien?</label>
               <textarea id="normander" name="normander" rows="3"></textarea>
             </div>
+          </div>
+          <div class="pillar-tension">
+            <label for="normspanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="normspanning" name="normspanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="normspanning_out">0%</p>
           </div>
           <div class="pillar-score">
             <label for="normkracht">Draagkracht van deze pilaar nu</label>
@@ -277,13 +373,30 @@
     const canonicalFormKey = 'wat-is-mijn-ik';
     const legacyFormKey = 'wat-is-mijn-identiteit';
     const fieldNames = [
-      'lijfzelf', 'lijfander', 'lijfdoen', 'lichamelijkheidkracht',
-      'sekszelf', 'seksander', 'seksdoen', 'seksualiteitkracht',
-      'soczelf', 'socander', 'socdoen', 'sociaalkracht',
-      'werkzelf', 'werkander', 'arbeiddoen', 'prestatiekracht',
-      'materiezelf', 'materieander', 'materiedoen', 'materiekracht',
-      'normzelf', 'normander', 'normdoen', 'normkracht'
+      'lijfzelf', 'lijfander', 'lijfspanning', 'lijfdoen', 'lichamelijkheidkracht',
+      'sekszelf', 'seksander', 'seksspanning', 'seksdoen', 'seksualiteitkracht',
+      'soczelf', 'socander', 'socspanning', 'socdoen', 'sociaalkracht',
+      'werkzelf', 'werkander', 'werkspanning', 'arbeiddoen', 'prestatiekracht',
+      'materiezelf', 'materieander', 'materiespanning', 'materiedoen', 'materiekracht',
+      'normzelf', 'normander', 'normspanning', 'normdoen', 'normkracht'
     ];
+
+    function updateTensionDisplay(slider) {
+      const out = document.getElementById(slider.id + '_out');
+      if (!out) return;
+      const val = parseInt(slider.value, 10);
+      if (val === 0) {
+        out.textContent = '0% — geen spanning';
+      } else if (val >= 75) {
+        out.textContent = val + '% — hoge spanning (interessant: waarom gebruik ik? wat lokt trek uit?)';
+      } else {
+        out.textContent = val + '%';
+      }
+    }
+
+    function initTensionDisplays() {
+      document.querySelectorAll('.tension-slider').forEach((slider) => updateTensionDisplay(slider));
+    }
 
     function renderPercentOptions(selectId) {
       const select = document.getElementById(selectId);
@@ -320,26 +433,32 @@
       return {
         bodySelfView: identityData.lijfzelf || '',
         bodyShown: identityData.lijfander || '',
+        bodyTension: identityData.lijfspanning || '0',
         bodyStrengthen: identityData.lijfdoen || '',
         bodyStrengthPct: identityData.lichamelijkheidkracht || '50',
         sexualSelfView: identityData.sekszelf || '',
         sexualShown: identityData.seksander || '',
+        sexualTension: identityData.seksspanning || '0',
         sexualStrengthen: identityData.seksdoen || '',
         sexualStrengthPct: identityData.seksualiteitkracht || '50',
         socialSelfView: identityData.soczelf || '',
         socialShown: identityData.socander || '',
+        socialTension: identityData.socspanning || '0',
         socialStrengthen: identityData.socdoen || '',
         socialStrengthPct: identityData.sociaalkracht || '50',
         workSelfView: identityData.werkzelf || '',
         workShown: identityData.werkander || '',
+        workTension: identityData.werkspanning || '0',
         workStrengthen: identityData.arbeiddoen || '',
         workStrengthPct: identityData.prestatiekracht || '50',
         matterSelfView: identityData.materiezelf || '',
         matterShown: identityData.materieander || '',
+        matterTension: identityData.materiespanning || '0',
         matterStrengthen: identityData.materiedoen || '',
         matterStrengthPct: identityData.materiekracht || '50',
         valuesSelfView: identityData.normzelf || '',
         valuesShown: identityData.normander || '',
+        valuesTension: identityData.normspanning || '0',
         valuesStrengthen: identityData.normdoen || '',
         valuesStrengthPct: identityData.normkracht || '50'
       };
@@ -349,26 +468,32 @@
       return {
         lijfzelf: canonicalData.bodySelfView || '',
         lijfander: canonicalData.bodyShown || '',
+        lijfspanning: canonicalData.bodyTension || '0',
         lijfdoen: canonicalData.bodyStrengthen || '',
         lichamelijkheidkracht: canonicalData.bodyStrengthPct || '50',
         sekszelf: canonicalData.sexualSelfView || '',
         seksander: canonicalData.sexualShown || '',
+        seksspanning: canonicalData.sexualTension || '0',
         seksdoen: canonicalData.sexualStrengthen || '',
         seksualiteitkracht: canonicalData.sexualStrengthPct || '50',
         soczelf: canonicalData.socialSelfView || '',
         socander: canonicalData.socialShown || '',
+        socspanning: canonicalData.socialTension || '0',
         socdoen: canonicalData.socialStrengthen || '',
         sociaalkracht: canonicalData.socialStrengthPct || '50',
         werkzelf: canonicalData.workSelfView || '',
         werkander: canonicalData.workShown || '',
+        werkspanning: canonicalData.workTension || '0',
         arbeiddoen: canonicalData.workStrengthen || '',
         prestatiekracht: canonicalData.workStrengthPct || '50',
         materiezelf: canonicalData.matterSelfView || '',
         materieander: canonicalData.matterShown || '',
+        materiespanning: canonicalData.matterTension || '0',
         materiedoen: canonicalData.matterStrengthen || '',
         materiekracht: canonicalData.matterStrengthPct || '50',
         normzelf: canonicalData.valuesSelfView || '',
         normander: canonicalData.valuesShown || '',
+        normspanning: canonicalData.valuesTension || '0',
         normdoen: canonicalData.valuesStrengthen || '',
         normkracht: canonicalData.valuesStrengthPct || '50'
       };
@@ -422,6 +547,7 @@
       ['lichamelijkheidkracht', 'seksualiteitkracht', 'sociaalkracht', 'prestatiekracht', 'materiekracht', 'normkracht']
         .forEach(renderPercentOptions);
       loadData();
+      initTensionDisplays();
       document.getElementById('saveButton').addEventListener('click', () => saveData(true));
       document.getElementById('exportButton').addEventListener('click', exportData);
       document.getElementById('identiteitForm').addEventListener('input', () => saveData(false));

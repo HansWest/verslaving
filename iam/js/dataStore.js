@@ -965,9 +965,17 @@ class IamDataStore {
       levensdoelen.grensSignalen,
       chemsexPatroon.earlySignals,
       watIsMijnIk.waveTriggerMap,
+      watIsMijnIk.boardEmotionalProfile,
+      watIsMijnIk.boardBiologyProfile,
       watIsMijnIk.boardProfile,
       watIsMijnIk.upperCost,
-      watIsMijnIk.downerCost
+      watIsMijnIk.downerCost,
+      watIsMijnIk.bodyTension > '50' ? `Lichamelijkheid: ${watIsMijnIk.bodyTension}% spanning (zelf vs. zichtbaar)` : null,
+      watIsMijnIk.sexualTension > '50' ? `Seksualiteit: ${watIsMijnIk.sexualTension}% spanning (zelf vs. zichtbaar)` : null,
+      watIsMijnIk.socialTension > '50' ? `Sociaal: ${watIsMijnIk.socialTension}% spanning (zelf vs. zichtbaar)` : null,
+      watIsMijnIk.workTension > '50' ? `Arbeid: ${watIsMijnIk.workTension}% spanning (zelf vs. zichtbaar)` : null,
+      watIsMijnIk.matterTension > '50' ? `Materie: ${watIsMijnIk.matterTension}% spanning (zelf vs. zichtbaar)` : null,
+      watIsMijnIk.valuesTension > '50' ? `Waarden: ${watIsMijnIk.valuesTension}% spanning (zelf vs. zichtbaar)` : null
     ], 8);
 
     const motivationAnchorsBucket = this.buildInsightBucket([

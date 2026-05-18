@@ -135,7 +135,7 @@
 
       <details class="context-card" style="margin-top:1rem;">
         <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:0.5rem; font-size:1.1rem; font-weight:700; color:var(--page-main);">
-          <span>⚙ Ik, Zelf en identiteit: de theorie in het kort</span>
+          <span>⚙ Mijn 'ik' en mijn 'zelf': de theorie in het kort</span>
         </summary>
         <div style="margin-top:0.75rem;">
           <p><strong>'Ik' en 'zelf' zijn niet hetzelfde.</strong> Het <em>ik</em> is de denkende, redenerende stem — de neo-cortex die plannen maakt en beslissingen neemt. Maar daaronder liggen twee oudere lagen:</p>
@@ -186,9 +186,15 @@
             <textarea id="surfSkills" rows="4" placeholder="Bijv. pauzeren, golf benoemen, automatische reactie labelen, emotie labelen, 90 sec reguleren, richtingkeuze maken."></textarea>
           </div>
         </div>
-        <div class="form-group">
-          <label for="boardProfile">Wat voor surfboard heb ik?</label>
-          <textarea id="boardProfile" rows="4" placeholder="Reageer ik heftig op kleine golven? Of reageer ik op oude golven (herinnering/trauma) alsof ze nu gebeuren? Wanneer ben ik emotioneel niet in het hier-en-nu?"></textarea>
+        <div class="grid-two">
+          <div class="form-group">
+            <label for="boardEmotionalProfile">Wat voor surfboard heb ik (emotioneel gezien)?</label>
+            <textarea id="boardEmotionalProfile" rows="4" placeholder="Reageer ik heftig op kleine golven? Reageer ik op oude golven alsof ze nu gebeuren? Wanneer ben ik emotioneel niet in het hier-en-nu?"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="boardBiologyProfile">Wat voor surfboard heb ik (automatische reacties in de biologie)?</label>
+            <textarea id="boardBiologyProfile" rows="4" placeholder="Wat doet mijn lijf automatisch bij spanning? Versnelt het, verstijft het, zoekt het direct middel? Welke biologische reflexen sturen mij weg van keuzevrijheid?"></textarea>
+          </div>
         </div>
         <div class="grid-two">
           <div class="form-group">
@@ -207,14 +213,6 @@
       </section>
 
       <form id="ikForm">
-        <section class="context-card">
-          <h2>Pilaren blijven in de identiteitspagina</h2>
-          <p class="subtle-help">De Petzold-pilaren beheer je op de identiteitspagina. Zo voorkom je dubbele invoer, terwijl alle data in dezelfde kernset voor kruisbestuiving blijft.</p>
-          <div class="action-bar" style="margin-top:0.5rem;">
-            <a class="button-secondary" href="./wat-is-mijn-identiteit.htm">Open Petzold-pilaren</a>
-          </div>
-        </section>
-
         <section class="route-card">
           <h2>Klaar om toe te passen?</h2>
           <p class="subtle-help">Kies je vervolgstap: verder verdiepen of meteen omzetten in concrete actie.</p>
@@ -239,7 +237,7 @@
   <script>
     const formKey = 'wat-is-mijn-ik';
     const fields = [
-      'waveTriggerMap', 'surfSkills', 'boardProfile', 'upperCost', 'downerCost', 'surfPlan'
+      'waveTriggerMap', 'surfSkills', 'boardEmotionalProfile', 'boardBiologyProfile', 'upperCost', 'downerCost', 'surfPlan'
     ];
 
     function showMessage(text, isError = false) {
@@ -253,6 +251,12 @@
 
     function loadData() {
       const saved = iamData.getFormData(formKey) || {};
+      if (!saved.boardEmotionalProfile && saved.boardProfile) {
+        saved.boardEmotionalProfile = saved.boardProfile;
+      }
+      if (!saved.boardBiologyProfile && saved.boardProfile) {
+        saved.boardBiologyProfile = saved.boardProfile;
+      }
       fields.forEach((id) => {
         const el = document.getElementById(id);
         if (el) el.value = saved[id] || '';
@@ -265,6 +269,7 @@
         const el = document.getElementById(id);
         data[id] = el ? el.value.trim() : '';
       });
+      data.boardProfile = [data.boardEmotionalProfile, data.boardBiologyProfile].filter(Boolean).join(' | ');
       return data;
     }
 
