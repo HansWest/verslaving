@@ -862,6 +862,9 @@
                         <button id="btn-new-round" class="mt-6 py-2 px-6 bg-teal-600 hover:bg-teal-700 rounded-full font-bold text-gray-100 text-sm transition duration-200">
                             Start nieuwe ronde
                         </button>
+                     <button id="btn-overview" class="mt-6 py-2 px-6 bg-teal-600 hover:bg-teal-700 rounded-full font-bold text-gray-100 text-sm transition duration-200">
+                            Naar Overzicht
+                        </button>
                     </div>
                 `;
                 gameActive = false;
@@ -912,6 +915,12 @@
                 setupGameCardListeners();
             } else if (isRoundOver) {
                 document.getElementById('btn-new-round').addEventListener('click', startGame);
+                const overviewBtn = document.getElementById('btn-overview');
+                if (overviewBtn) {
+                    overviewBtn.addEventListener('click', () => {
+                        window.location.href = './index.htm';
+                    });
+                }
                 const checkoutForm = document.getElementById('form-round-checkout');
                 if (checkoutForm) checkoutForm.addEventListener('submit', handleRoundCheckOutSubmit);
             }
