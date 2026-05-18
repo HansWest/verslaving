@@ -22,6 +22,11 @@ Deze notitie bevat praktische afspraken over hoe we IAM ontwikkelen en hoe nieuw
 - Als een veld niet geschikt is voor een slider, leggen we kort vast waarom (bijvoorbeeld te contextueel of narratief).
 - Gebruik voor snelle pagina-QA de checklist in `iam/docs/pagina-review-checklist.md`.
 
+## Instellingen herkenbaar maken
+
+- Instellingenblokken krijgen in de kop bij voorkeur een duidelijk ⚙-icoon, zodat gebruikers ze snel scannen als configuratie in plaats van inhoud.
+- Als een instellingenblok een titel heeft in een `details`-summary of settingsheader, combineer die titel met het icoon in dezelfde kopregel.
+
 ## One Truth Aanpak
 
 - We werken met een single source of truth: per onderwerp is er steeds 1 leidende plek.

@@ -53,6 +53,16 @@
         @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
         .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
         .action-bar button { flex: 1 1 180px; }
+        #saveButton {
+            flex: 2 1 260px;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            box-shadow: 0 10px 20px rgba(47, 107, 143, 0.18);
+        }
+        #saveButton:hover,
+        #saveButton:focus-visible {
+            box-shadow: 0 12px 24px rgba(47, 107, 143, 0.24);
+        }
         .weight-grid {
             display: grid;
             gap: 0.8rem;
@@ -256,8 +266,24 @@
             font-size: 0.78rem;
             color: #556b7a;
         }
-        .message { display: none; border-left: 4px solid #5a8840; }
-        .message.show { display: block; }
+        .message {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 1000;
+            width: min(420px, calc(100vw - 2rem));
+            margin-top: 0;
+            border-left: 4px solid #5a8840;
+            box-shadow: 0 14px 32px rgba(30, 55, 74, 0.18);
+            opacity: 0;
+            transform: translateY(14px);
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+        .message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
         .message.error { border-left-color: var(--page-accent); }
         .route-card {
             border-top: 4px solid #5b744a;
@@ -298,6 +324,23 @@
             align-items: center;
             gap: 0.55rem;
             user-select: none;
+        }
+        .lt-settings-title {
+            flex: 1;
+        }
+        .lt-settings-cog {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.9rem;
+            min-height: 1.9rem;
+            border-radius: 999px;
+            border: 1px solid #c9dbe7;
+            background: #f4f9fb;
+            color: var(--page-main);
+            font-size: 1rem;
+            line-height: 1;
+            flex: 0 0 auto;
         }
         .lt-settings-block summary::-webkit-details-marker { display: none; }
         .lt-settings-block summary::before {
@@ -372,21 +415,18 @@
             color: #305a26;
         }
 
-        /* ── Naast-elkaar kolommen: Gebruiken | Veranderen ──────────── */
-        .balance-columns {
+        /* ── Balans per thema: gebruik en veranderen ───────────────── */
+        .balance-groups {
             display: grid;
             gap: 1rem;
             margin-top: 1rem;
         }
-        @media (min-width: 760px) {
-            .balance-columns { grid-template-columns: 1fr 1fr; }
-        }
-        .balance-column {
+        .balance-group {
             display: flex;
             flex-direction: column;
             gap: 0.85rem;
         }
-        .balance-column-header {
+        .balance-group-header {
             border-radius: 12px;
             padding: 0.65rem 1rem;
             color: #fff;
@@ -394,11 +434,18 @@
             font-weight: 800;
             letter-spacing: 0.02em;
         }
-        .balance-column-header.gebruik {
+        .balance-group-header.gebruik {
             background: linear-gradient(135deg, #c96a4b 0%, #a04e34 100%);
         }
-        .balance-column-header.veranderen {
+        .balance-group-header.veranderen {
             background: linear-gradient(135deg, #2f6b8f 0%, #57744a 100%);
+        }
+        .balance-group-grid {
+            display: grid;
+            gap: 0.85rem;
+        }
+        @media (min-width: 760px) {
+            .balance-group-grid { grid-template-columns: 1fr 1fr; }
         }
         .balance-column-card {
             background: rgba(255,255,255,0.94);
@@ -673,7 +720,7 @@
                 <p>Aan elk gedrag kleven voor- en nadelen. Dit geldt ook voor verandering van gedrag. In deze balans zetten we de voor- en nadelen van gebruik en van verandering op een rijtje. Daarbij is het belangrijk om naar de korte en lange termijn te kijken. De balans opmaken kan helpen bij het nemen van een beslissing.</p>
             </header>
 
-            <div id="message" class="message"></div>
+            <div id="message" class="message" role="status" aria-live="polite"></div>
 
             <section class="intro-card">
                 <h2>Aan de slag: concrete punten per vak</h2>
@@ -706,7 +753,10 @@
             <form id="balansForm">
                 <!-- ── Instellingen: verhouding korte en lange termijn ──────── -->
                 <details id="ltSettingsBlock" open class="lt-settings-block">
-                    <summary>Instellingen: verhouding korte en lange termijn</summary>
+                    <summary>
+                        <span class="lt-settings-title">Instellingen: verhouding korte en lange termijn</span>
+                        <span class="lt-settings-cog" aria-hidden="true">⚙️</span>
+                    </summary>
                     <div class="settings-body">
                         <p>Hoe zwaar weegt <strong>lange termijn</strong> voor jou ten opzichte van <strong>korte termijn</strong>? Dit berekent het LT-gewicht als KT-score × factor.</p>
                         <div class="lt-slider-wrap">
@@ -728,36 +778,38 @@
                     </div>
                 </details>
 
-                <!-- ── Naast-elkaar weergave: Gebruiken | Veranderen ──────── -->
-                <div class="balance-columns">
+                <!-- ── Eerst gebruik, dan veranderen; binnen elk naast elkaar ─ -->
+                <div class="balance-groups">
 
-                    <!-- GEBRUIKEN -->
-                    <div class="balance-column">
-                        <div class="balance-column-header gebruik">Gebruiken</div>
+                    <!-- GEBRUIK -->
+                    <div class="balance-group">
+                        <div class="balance-group-header gebruik">Gebruik: voordelen en nadelen</div>
 
-                        <div class="balance-column-card voordelen">
-                            <h3 class="card-section-title">Voordelen van gebruik</h3>
-                            <div class="form-group">
-                                <label for="usageAdvantagesText">Wat lijkt gebruik je te geven?</label>
-                                <textarea id="usageAdvantagesText" rows="6" placeholder="Bijv. snelle rust, minder spanning, me socialer voelen. Elke regel is een punt."></textarea>
+                        <div class="balance-group-grid">
+                            <div class="balance-column-card voordelen">
+                                <h3 class="card-section-title">Voordelen van gebruik</h3>
+                                <div class="form-group">
+                                    <label for="usageAdvantagesText">Wat lijkt gebruik je te geven?</label>
+                                    <textarea id="usageAdvantagesText" rows="6" placeholder="Bijv. snelle rust, minder spanning, me socialer voelen. Elke regel is een punt."></textarea>
+                                </div>
+                                <div class="inline-weight-box">
+                                    <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                    <div class="item-weight-list" id="usageAdvItemWeights"></div>
+                                    <div class="effective-weight-display" id="effUsageAdv">Effectief gewicht: —</div>
+                                </div>
                             </div>
-                            <div class="inline-weight-box">
-                                <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
-                                <div class="item-weight-list" id="usageAdvItemWeights"></div>
-                                <div class="effective-weight-display" id="effUsageAdv">Effectief gewicht: —</div>
-                            </div>
-                        </div>
 
-                        <div class="balance-column-card nadelen">
-                            <h3 class="card-section-title">Nadelen van gebruik</h3>
-                            <div class="form-group">
-                                <label for="usageDisadvantagesText">Wat kost gebruik je direct of later?</label>
-                                <textarea id="usageDisadvantagesText" rows="6" placeholder="Bijv. onrust, gedoe thuis/werk, herstelkost, schaamte. Elke regel is een punt."></textarea>
-                            </div>
-                            <div class="inline-weight-box">
-                                <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
-                                <div class="item-weight-list" id="usageDisItemWeights"></div>
-                                <div class="effective-weight-display" id="effUsageDis">Effectief gewicht: —</div>
+                            <div class="balance-column-card nadelen">
+                                <h3 class="card-section-title">Nadelen van gebruik</h3>
+                                <div class="form-group">
+                                    <label for="usageDisadvantagesText">Wat kost gebruik je direct of later?</label>
+                                    <textarea id="usageDisadvantagesText" rows="6" placeholder="Bijv. onrust, gedoe thuis/werk, herstelkost, schaamte. Elke regel is een punt."></textarea>
+                                </div>
+                                <div class="inline-weight-box">
+                                    <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                    <div class="item-weight-list" id="usageDisItemWeights"></div>
+                                    <div class="effective-weight-display" id="effUsageDis">Effectief gewicht: —</div>
+                                </div>
                             </div>
                         </div>
 
@@ -765,32 +817,34 @@
                     </div>
 
                     <!-- VERANDEREN -->
-                    <div class="balance-column">
-                        <div class="balance-column-header veranderen">Veranderen</div>
+                    <div class="balance-group">
+                        <div class="balance-group-header veranderen">Veranderen: voordelen en nadelen</div>
 
-                        <div class="balance-column-card voordelen">
-                            <h3 class="card-section-title">Voordelen van veranderen</h3>
-                            <div class="form-group">
-                                <label for="changeAdvantagesText">Wat levert veranderen je op?</label>
-                                <textarea id="changeAdvantagesText" rows="6" placeholder="Bijv. trots, betrouwbaarheid, rust, betere relaties. Elke regel is een punt."></textarea>
+                        <div class="balance-group-grid">
+                            <div class="balance-column-card voordelen">
+                                <h3 class="card-section-title">Voordelen van veranderen</h3>
+                                <div class="form-group">
+                                    <label for="changeAdvantagesText">Wat levert veranderen je op?</label>
+                                    <textarea id="changeAdvantagesText" rows="6" placeholder="Bijv. trots, betrouwbaarheid, rust, betere relaties. Elke regel is een punt."></textarea>
+                                </div>
+                                <div class="inline-weight-box">
+                                    <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                    <div class="item-weight-list" id="changeAdvItemWeights"></div>
+                                    <div class="effective-weight-display" id="effChangeAdv">Effectief gewicht: —</div>
+                                </div>
                             </div>
-                            <div class="inline-weight-box">
-                                <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
-                                <div class="item-weight-list" id="changeAdvItemWeights"></div>
-                                <div class="effective-weight-display" id="effChangeAdv">Effectief gewicht: —</div>
-                            </div>
-                        </div>
 
-                        <div class="balance-column-card nadelen">
-                            <h3 class="card-section-title">Nadelen van veranderen</h3>
-                            <div class="form-group">
-                                <label for="changeDisadvantagesText">Wat maakt veranderen lastig of spannend?</label>
-                                <textarea id="changeDisadvantagesText" rows="6" placeholder="Bijv. ongemak, oefenen, gemis, sociale spanning. Elke regel is een punt."></textarea>
-                            </div>
-                            <div class="inline-weight-box">
-                                <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
-                                <div class="item-weight-list" id="changeDisItemWeights"></div>
-                                <div class="effective-weight-display" id="effChangeDis">Effectief gewicht: —</div>
+                            <div class="balance-column-card nadelen">
+                                <h3 class="card-section-title">Nadelen van veranderen</h3>
+                                <div class="form-group">
+                                    <label for="changeDisadvantagesText">Wat maakt veranderen lastig of spannend?</label>
+                                    <textarea id="changeDisadvantagesText" rows="6" placeholder="Bijv. ongemak, oefenen, gemis, sociale spanning. Elke regel is een punt."></textarea>
+                                </div>
+                                <div class="inline-weight-box">
+                                    <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                    <div class="item-weight-list" id="changeDisItemWeights"></div>
+                                    <div class="effective-weight-display" id="effChangeDis">Effectief gewicht: —</div>
+                                </div>
                             </div>
                         </div>
 
@@ -798,14 +852,31 @@
                     </div>
                 </div>
 
-                <!-- ── Stuur naar spel ────────────────────────────────────── -->
-                <details class="game-send-block" id="gameSendPanel">
-                    <summary>Stuur punten naar het zelfmanagementspel</summary>
-                    <div class="game-send-body">
-                        <p class="weight-help">Kies welke punten uit je balans je wilt opnemen in het spel. Houd het overzichtelijk — het spel werkt het best met 5–15 items. Voordelen van gebruik worden negatieve items (verleidingen); nadelen van gebruik en voordelen van veranderen worden positieve items (motivatie).</p>
-                        <div id="gameSendContent"></div>
+                <section class="note-card">
+                    <h2>Punten uit andere pagina's en spel</h2>
+                    <p class="weight-help">Hier verzamel je punten die al elders in IAM of in het zelfmanagementspel naar voren kwamen. Je kunt ze hier toevoegen aan je balans, of juist vanuit deze balans doorsturen naar het spel.</p>
+                    <div class="action-bar" style="margin-top: 0.75rem;">
+                        <button type="button" class="button-secondary" id="suggestButton">Vul aan vanuit gekoppelde pagina's</button>
                     </div>
-                </details>
+
+                    <details class="cross-suggest-details" id="crossSuggestDetails">
+                        <summary>Ideeën uit verwante pagina's<span id="crossSuggestCount"></span></summary>
+                        <div class="cross-suggest-box">
+                            <p>Hier zie je punten uit onder meer waarom-wel-gebruiken, trek-opvangen, risico-denken en het zelfmanagementspel. Voeg ze toe aan de juiste balanskolom. Via <strong>Verwijder</strong> verdwijnt een idee uit deze lijst — bij spel-items ook uit het zelfmanagementspel.</p>
+                            <ul class="cross-suggest-list" id="balanceCrossSuggestList">
+                                <li class="cross-suggest-item"><span>Nog geen suggesties uit gekoppelde pagina's gevonden.</span></li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details class="game-send-block" id="gameSendPanel">
+                        <summary>Stuur punten naar het zelfmanagementspel</summary>
+                        <div class="game-send-body">
+                            <p class="weight-help">Kies welke punten uit je balans je wilt opnemen in het spel. Houd het overzichtelijk — het spel werkt het best met 5–15 items. Voordelen van gebruik worden negatieve items (verleidingen); nadelen van gebruik en voordelen van veranderen worden positieve items (motivatie).</p>
+                            <div id="gameSendContent"></div>
+                        </div>
+                    </details>
+                </section>
 
                 <!-- ── Balansoverzicht ─────────────────────────────────────── -->
                 <section class="note-card">
@@ -852,15 +923,6 @@
                             </div>
                         </div>
                     </div>
-                    <details class="cross-suggest-details" id="crossSuggestDetails">
-                        <summary>Ideeën uit verwante pagina's<span id="crossSuggestCount"></span></summary>
-                        <div class="cross-suggest-box">
-                            <p>Voeg ideeën toe aan de juiste balanskolom. Via <strong>Verwijder</strong> verdwijnt een idee uit deze lijst — bij spel-items ook uit het zelfmanagementspel.</p>
-                            <ul class="cross-suggest-list" id="balanceCrossSuggestList">
-                                <li class="cross-suggest-item"><span>Nog geen suggesties uit gekoppelde pagina's gevonden.</span></li>
-                            </ul>
-                        </div>
-                    </details>
                 </section>
 
                 <section class="note-card">
@@ -900,7 +962,6 @@
 
                 <div class="action-bar">
                     <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
-                    <button type="button" class="button-secondary" id="suggestButton">Vul vanuit waarom-wel-gebruiken</button>
                     <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
                     <button type="button" class="button-secondary" id="printButton">Print of bewaar als PDF</button>
                 </div>
@@ -1284,6 +1345,7 @@
 
         function showMessage(text, isError = false) {
             const message = document.getElementById('message');
+            if (!message) return;
             message.textContent = text;
             message.classList.add('show');
             message.classList.toggle('error', isError);
