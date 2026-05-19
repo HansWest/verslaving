@@ -918,7 +918,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
 
               <div class="percent-slider-item">
                 <div class="percent-slider-head">
-                  <label for="emotionSwallowedPercentRange">Heb je emoties als verdriet gevoeld en ingeslikt?</label>
+                  <label for="emotionSwallowedPercentRange">In welke mate heb je vandaag emoties ingeslikt?</label>
                   <span class="percent-slider-value" id="emotionSwallowedPercentValue">Nog niet gekozen</span>
                 </div>
                 <input id="emotionSwallowedPercentRange" type="range" min="0" max="100" step="1" value="50" />
@@ -927,34 +927,55 @@ Wat niet hielp: alleen blijven malen.</textarea>
             </div>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
-            <label for="swallowedEmotionMain">Welke emotie wordt vooral ingeslikt?</label>
-            <input id="swallowedEmotionMain" type="text" placeholder="Bijv. ingehouden boosheid, niet-gevoeld verdriet, weggedrukte angst..." />
-          </div>
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <label>Ingeslikte basis-emoties van vandaag</label>
-            <div class="emotion-check-grid">
-              <label class="emotion-check-item" for="swallowedCuriosity">
-                <input type="checkbox" id="swallowedCuriosity" />
-                <span>Nieuwsgierigheid</span>
-              </label>
-              <label class="emotion-check-item" for="swallowedAnger">
-                <input type="checkbox" id="swallowedAnger" />
-                <span>Boosheid</span>
-              </label>
-              <label class="emotion-check-item" for="swallowedSadness">
-                <input type="checkbox" id="swallowedSadness" />
-                <span>Verdriet</span>
-              </label>
-              <label class="emotion-check-item" for="swallowedFear">
-                <input type="checkbox" id="swallowedFear" />
-                <span>Angst</span>
-              </label>
-              <label class="emotion-check-item" for="swallowedDesire">
-                <input type="checkbox" id="swallowedDesire" />
-                <span>Begeerte</span>
-              </label>
+            <label>Ingeslikte basis-emoties van vandaag (per emotie)</label>
+            <p class="observation-help" style="margin:0.25rem 0 0.55rem;">Gebruik per emotie de schaal: 0 = niet ingeslikt, 100 = volledig ingeslikt.</p>
+            <div class="percent-slider-grid">
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="swallowedCuriosityRange">Nieuwsgierigheid</label>
+                  <span class="percent-slider-value" id="swallowedCuriosityValue">Nog niet gekozen</span>
+                </div>
+                <input id="swallowedCuriosityRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="swallowedCuriosity" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="swallowedAngerRange">Boosheid</label>
+                  <span class="percent-slider-value" id="swallowedAngerValue">Nog niet gekozen</span>
+                </div>
+                <input id="swallowedAngerRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="swallowedAnger" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="swallowedSadnessRange">Verdriet</label>
+                  <span class="percent-slider-value" id="swallowedSadnessValue">Nog niet gekozen</span>
+                </div>
+                <input id="swallowedSadnessRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="swallowedSadness" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="swallowedFearRange">Angst</label>
+                  <span class="percent-slider-value" id="swallowedFearValue">Nog niet gekozen</span>
+                </div>
+                <input id="swallowedFearRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="swallowedFear" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="swallowedDesireRange">Begeerte</label>
+                  <span class="percent-slider-value" id="swallowedDesireValue">Nog niet gekozen</span>
+                </div>
+                <input id="swallowedDesireRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="swallowedDesire" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
             </div>
             <p class="observation-help" style="margin-top:0.45rem;">Onderzoek dit verder op <a id="swallowedEmotionResearchLink" href="./ingeslikte-emoties.htm">ingeslikte emoties</a>.</p>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="swallowedEmotionMain">Waarom heb je deze emoties vandaag liever ingeslikt?</label>
+            <input id="swallowedEmotionMain" type="text" placeholder="Bijv. conflict vermijden, geen ruimte voelen, bang zijn voor reactie..." />
           </div>
         </div>
 
@@ -1116,7 +1137,19 @@ Wat niet hielp: alleen blijven malen.</textarea>
       { fieldId: 'enjoymentPercent', sliderId: 'enjoymentPercentRange', valueId: 'enjoymentPercentValue' },
       { fieldId: 'socialIrlPercent', sliderId: 'socialIrlPercentRange', valueId: 'socialIrlPercentValue' },
       { fieldId: 'socialOnlinePercent', sliderId: 'socialOnlinePercentRange', valueId: 'socialOnlinePercentValue' },
-      { fieldId: 'emotionSwallowedPercent', sliderId: 'emotionSwallowedPercentRange', valueId: 'emotionSwallowedPercentValue' }
+      { fieldId: 'emotionSwallowedPercent', sliderId: 'emotionSwallowedPercentRange', valueId: 'emotionSwallowedPercentValue' },
+      { fieldId: 'swallowedCuriosity', sliderId: 'swallowedCuriosityRange', valueId: 'swallowedCuriosityValue' },
+      { fieldId: 'swallowedAnger', sliderId: 'swallowedAngerRange', valueId: 'swallowedAngerValue' },
+      { fieldId: 'swallowedSadness', sliderId: 'swallowedSadnessRange', valueId: 'swallowedSadnessValue' },
+      { fieldId: 'swallowedFear', sliderId: 'swallowedFearRange', valueId: 'swallowedFearValue' },
+      { fieldId: 'swallowedDesire', sliderId: 'swallowedDesireRange', valueId: 'swallowedDesireValue' }
+    ];
+    const SWALLOWED_BASIS_FIELDS = [
+      { key: 'swallowedCuriosity', label: 'Nieuwsgierigheid' },
+      { key: 'swallowedAnger', label: 'Boosheid' },
+      { key: 'swallowedSadness', label: 'Verdriet' },
+      { key: 'swallowedFear', label: 'Angst' },
+      { key: 'swallowedDesire', label: 'Begeerte' }
     ];
     const historyLimit = 14;
     let selectedHistoryRange = 7;
@@ -1220,6 +1253,18 @@ Wat niet hielp: alleen blijven malen.</textarea>
       if (online === null) return irl;
       if (irl === null) return online;
       return Math.round((online + irl) / 2);
+    }
+
+    function getSwallowedBasicsSummary(entry) {
+      return SWALLOWED_BASIS_FIELDS
+        .map(({ key, label }) => {
+          const raw = entry?.[key];
+          if (!isNumericUnits(raw)) return '';
+          const value = Number(raw);
+          if (value <= 0) return '';
+          return `${label} ${formatUnits(value)}%`;
+        })
+        .filter(Boolean);
     }
 
     function syncDerivedInteractionFromPercents() {
@@ -1494,13 +1539,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
         if (isNumericUnits(entry.emotionSwallowedPercent)) parts.push(`Emoties ingeslikt: ${formatUnits(entry.emotionSwallowedPercent)}%`);
         if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) parts.push(`Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`);
         if (entry.swallowedEmotionMain) parts.push(`Ingeslikte emotie: ${entry.swallowedEmotionMain}`);
-        const swallowedBasics = [
-          entry.swallowedCuriosity ? 'Nieuwsgierigheid' : '',
-          entry.swallowedAnger ? 'Boosheid' : '',
-          entry.swallowedSadness ? 'Verdriet' : '',
-          entry.swallowedFear ? 'Angst' : '',
-          entry.swallowedDesire ? 'Begeerte' : ''
-        ].filter(Boolean);
+        const swallowedBasics = getSwallowedBasicsSummary(entry);
         if (swallowedBasics.length) parts.push(`Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`);
         if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
         if (entry.tooMuchTodayNote) parts.push(`Te veel: ${entry.tooMuchTodayNote}`);
@@ -1740,11 +1779,11 @@ Wat niet hielp: alleen blijven malen.</textarea>
       document.getElementById('socialOnlinePercent').value = entry && entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined ? entry.socialOnlinePercent : '';
       document.getElementById('socialIrlPercent').value = entry && entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined ? entry.socialIrlPercent : '';
       document.getElementById('swallowedEmotionMain').value = entry?.swallowedEmotionMain || '';
-      document.getElementById('swallowedCuriosity').checked = Boolean(entry?.swallowedCuriosity);
-      document.getElementById('swallowedAnger').checked = Boolean(entry?.swallowedAnger);
-      document.getElementById('swallowedSadness').checked = Boolean(entry?.swallowedSadness);
-      document.getElementById('swallowedFear').checked = Boolean(entry?.swallowedFear);
-      document.getElementById('swallowedDesire').checked = Boolean(entry?.swallowedDesire);
+      document.getElementById('swallowedCuriosity').value = entry && entry.swallowedCuriosity !== '' && entry.swallowedCuriosity !== null && entry.swallowedCuriosity !== undefined ? entry.swallowedCuriosity : '';
+      document.getElementById('swallowedAnger').value = entry && entry.swallowedAnger !== '' && entry.swallowedAnger !== null && entry.swallowedAnger !== undefined ? entry.swallowedAnger : '';
+      document.getElementById('swallowedSadness').value = entry && entry.swallowedSadness !== '' && entry.swallowedSadness !== null && entry.swallowedSadness !== undefined ? entry.swallowedSadness : '';
+      document.getElementById('swallowedFear').value = entry && entry.swallowedFear !== '' && entry.swallowedFear !== null && entry.swallowedFear !== undefined ? entry.swallowedFear : '';
+      document.getElementById('swallowedDesire').value = entry && entry.swallowedDesire !== '' && entry.swallowedDesire !== null && entry.swallowedDesire !== undefined ? entry.swallowedDesire : '';
       document.getElementById('dayPressureSlider').value = entry && entry.dayPressure !== undefined && entry.dayPressure !== null ? entry.dayPressure : 50;
       document.getElementById('selfRegieSlider').value = entry && entry.selfRegie !== undefined && entry.selfRegie !== null ? entry.selfRegie : 50;
       document.getElementById('cravingPeakSlider').value = entry && entry.cravingPeak !== undefined && entry.cravingPeak !== null ? entry.cravingPeak : 50;
@@ -1786,7 +1825,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       if (isNumericUnits(entry.naturePercent) || isNumericUnits(entry.enjoymentPercent) || isNumericUnits(entry.socialOnlinePercent) || isNumericUnits(entry.socialIrlPercent) || isNumericUnits(entry.emotionSwallowedPercent)) {
         parts.push('Realiteitsscores ingevuld');
       }
-      if (entry.swallowedEmotionMain || entry.swallowedCuriosity || entry.swallowedAnger || entry.swallowedSadness || entry.swallowedFear || entry.swallowedDesire) {
+      if (entry.swallowedEmotionMain || isNumericUnits(entry.swallowedCuriosity) || isNumericUnits(entry.swallowedAnger) || isNumericUnits(entry.swallowedSadness) || isNumericUnits(entry.swallowedFear) || isNumericUnits(entry.swallowedDesire)) {
         parts.push('Ingeslikte emoties ingevuld');
       }
       if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) {
@@ -1815,6 +1854,11 @@ Wat niet hielp: alleen blijven malen.</textarea>
       const rawEnjoyment = document.getElementById('enjoymentPercent').value.trim().replace(',', '.');
       const rawSocialOnline = document.getElementById('socialOnlinePercent').value.trim().replace(',', '.');
       const rawSocialIrl = document.getElementById('socialIrlPercent').value.trim().replace(',', '.');
+      const rawSwallowedCuriosity = document.getElementById('swallowedCuriosity').value.trim().replace(',', '.');
+      const rawSwallowedAnger = document.getElementById('swallowedAnger').value.trim().replace(',', '.');
+      const rawSwallowedSadness = document.getElementById('swallowedSadness').value.trim().replace(',', '.');
+      const rawSwallowedFear = document.getElementById('swallowedFear').value.trim().replace(',', '.');
+      const rawSwallowedDesire = document.getElementById('swallowedDesire').value.trim().replace(',', '.');
       const dayPressure = getSliderNumber('dayPressureSlider');
       const selfRegie = getSliderNumber('selfRegieSlider');
       const cravingPeak = getSliderNumber('cravingPeakSlider');
@@ -1850,11 +1894,11 @@ Wat niet hielp: alleen blijven malen.</textarea>
         emotionExpressionGap,
         dayInteractionIndex: computeDayInteractionIndex({ dayPressure, selfRegie, cravingPeak, recoveryAction, contactQuality: contactQualityForIndex, bodyRest, emotionExpressionGap: emotionExpressionGapForIndex }),
         swallowedEmotionMain: document.getElementById('swallowedEmotionMain').value.trim(),
-        swallowedCuriosity: document.getElementById('swallowedCuriosity').checked,
-        swallowedAnger: document.getElementById('swallowedAnger').checked,
-        swallowedSadness: document.getElementById('swallowedSadness').checked,
-        swallowedFear: document.getElementById('swallowedFear').checked,
-        swallowedDesire: document.getElementById('swallowedDesire').checked,
+        swallowedCuriosity: rawSwallowedCuriosity === '' ? '' : Number(rawSwallowedCuriosity),
+        swallowedAnger: rawSwallowedAnger === '' ? '' : Number(rawSwallowedAnger),
+        swallowedSadness: rawSwallowedSadness === '' ? '' : Number(rawSwallowedSadness),
+        swallowedFear: rawSwallowedFear === '' ? '' : Number(rawSwallowedFear),
+        swallowedDesire: rawSwallowedDesire === '' ? '' : Number(rawSwallowedDesire),
         missedTodayNote: document.getElementById('missedTodayNote').value.trim(),
         tooMuchTodayNote: document.getElementById('tooMuchTodayNote').value.trim(),
         emotionSwallowedPercent: (() => { const r = document.getElementById('emotionSwallowedPercent').value.trim().replace(',', '.'); return r === '' ? '' : Number(r); })(),
@@ -1883,11 +1927,11 @@ Wat niet hielp: alleen blijven malen.</textarea>
         (entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined) ||
         (entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined) ||
         Boolean(entry.swallowedEmotionMain) ||
-        Boolean(entry.swallowedCuriosity) ||
-        Boolean(entry.swallowedAnger) ||
-        Boolean(entry.swallowedSadness) ||
-        Boolean(entry.swallowedFear) ||
-        Boolean(entry.swallowedDesire) ||
+        isNumericUnits(entry.swallowedCuriosity) ||
+        isNumericUnits(entry.swallowedAnger) ||
+        isNumericUnits(entry.swallowedSadness) ||
+        isNumericUnits(entry.swallowedFear) ||
+        isNumericUnits(entry.swallowedDesire) ||
         (entry.dayPressure !== undefined && entry.dayPressure !== null && Number(entry.dayPressure) !== 50) ||
         (entry.selfRegie !== undefined && entry.selfRegie !== null && Number(entry.selfRegie) !== 50) ||
         (entry.cravingPeak !== undefined && entry.cravingPeak !== null && Number(entry.cravingPeak) !== 50) ||
@@ -1942,6 +1986,26 @@ Wat niet hielp: alleen blijven malen.</textarea>
       }
       if (entry.emotionSwallowedPercent !== '' && (Number.isNaN(entry.emotionSwallowedPercent) || !isValidPercent(entry.emotionSwallowedPercent))) {
         showMessage('Ingeslikt emotie moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.swallowedCuriosity !== '' && (Number.isNaN(entry.swallowedCuriosity) || !isValidPercent(entry.swallowedCuriosity))) {
+        showMessage('Nieuwsgierigheid moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.swallowedAnger !== '' && (Number.isNaN(entry.swallowedAnger) || !isValidPercent(entry.swallowedAnger))) {
+        showMessage('Boosheid moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.swallowedSadness !== '' && (Number.isNaN(entry.swallowedSadness) || !isValidPercent(entry.swallowedSadness))) {
+        showMessage('Verdriet moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.swallowedFear !== '' && (Number.isNaN(entry.swallowedFear) || !isValidPercent(entry.swallowedFear))) {
+        showMessage('Angst moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.swallowedDesire !== '' && (Number.isNaN(entry.swallowedDesire) || !isValidPercent(entry.swallowedDesire))) {
+        showMessage('Begeerte moet tussen 0 en 100 liggen.');
         return;
       }
 
@@ -2194,13 +2258,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
         if (isNumericUnits(entry.emotionSwallowedPercent)) parts.push(`Emoties ingeslikt: ${formatUnits(entry.emotionSwallowedPercent)}%`);
         if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) parts.push(`Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`);
         if (entry.swallowedEmotionMain) parts.push(`Ingeslikte emotie: ${entry.swallowedEmotionMain}`);
-        const swallowedBasics = [
-          entry.swallowedCuriosity ? 'Nieuwsgierigheid' : '',
-          entry.swallowedAnger ? 'Boosheid' : '',
-          entry.swallowedSadness ? 'Verdriet' : '',
-          entry.swallowedFear ? 'Angst' : '',
-          entry.swallowedDesire ? 'Begeerte' : ''
-        ].filter(Boolean);
+        const swallowedBasics = getSwallowedBasicsSummary(entry);
         if (swallowedBasics.length) parts.push(`Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`);
         if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
         if (entry.tooMuchTodayNote) parts.push(`Te veel: ${entry.tooMuchTodayNote}`);
@@ -2280,11 +2338,11 @@ Wat niet hielp: alleen blijven malen.</textarea>
               entry.emotionExpressionGap ?? '',
               entry.dayInteractionIndex ?? '',
               entry.swallowedEmotionMain || '',
-              entry.swallowedCuriosity ? 'ja' : '',
-              entry.swallowedAnger ? 'ja' : '',
-              entry.swallowedSadness ? 'ja' : '',
-              entry.swallowedFear ? 'ja' : '',
-              entry.swallowedDesire ? 'ja' : '',
+              entry.swallowedCuriosity ?? '',
+              entry.swallowedAnger ?? '',
+              entry.swallowedSadness ?? '',
+              entry.swallowedFear ?? '',
+              entry.swallowedDesire ?? '',
               entry.missedTodayNote || '',
               entry.tooMuchTodayNote || '',
               entry.usageNote || '',
@@ -2485,13 +2543,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
           item.appendChild(swallowedMain);
         }
 
-        const swallowedBasics = [
-          entry.swallowedCuriosity ? 'Nieuwsgierigheid' : '',
-          entry.swallowedAnger ? 'Boosheid' : '',
-          entry.swallowedSadness ? 'Verdriet' : '',
-          entry.swallowedFear ? 'Angst' : '',
-          entry.swallowedDesire ? 'Begeerte' : ''
-        ].filter(Boolean);
+        const swallowedBasics = getSwallowedBasicsSummary(entry);
         if (swallowedBasics.length) {
           const swallowedBasicsP = document.createElement('p');
           swallowedBasicsP.textContent = `Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`;
