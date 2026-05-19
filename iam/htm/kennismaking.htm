@@ -33,9 +33,22 @@
         .full { grid-column: 1 / -1; }
         .check-grid { display:grid; gap:0.45rem; }
         .check-grid label { display:flex; gap:0.55rem; align-items:flex-start; }
+        .check-grid input[type="checkbox"] { width:auto; min-height:auto; margin-top:0.25rem; }
+        .other-field { margin-top:0.7rem; }
+        .hidden { display:none; }
         input[type="text"], input[type="number"], textarea, select {
             width:100%; min-height:44px; border-radius:10px; border:1px solid rgba(23,50,73,0.18);
             padding:0.6rem 0.75rem; background:#fff; color:var(--ink);
+        }
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.85rem center;
+            background-size: 1.1em 1.1em;
+            padding-right: 2.4rem;
         }
         textarea { min-height:100px; }
         .actions { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top: 0.8rem; }
@@ -72,7 +85,7 @@
                 <form id="intakeForm">
                     <div class="form-grid">
                         <div>
-                            <label for="naam">Naam (optioneel)</label>
+                            <label for="naam">Naam (of Nickname)</label>
                             <input id="naam" name="naam" type="text" />
                         </div>
                         <div>
@@ -85,15 +98,27 @@
                                 <option value="">Kies...</option>
                                 <option value="vrouw">Vrouw</option>
                                 <option value="man">Man</option>
-                                <option value="mvx">MVX</option>
                                 <option value="anders">Anders</option>
                                 <option value="zeg-ik-liever-niet">Zeg ik liever niet</option>
                             </select>
                         </div>
 
                         <div class="full">
-                            <label for="zorgen">Waar zit nu het ervaren probleem?</label>
-                            <textarea id="zorgen" name="zorgen" placeholder="Bijv. trekpieken, terugvalmomenten, relaties, structuur, eenzaamheid..."></textarea>
+                            <label>Waar zit nu het ervaren probleem?</label>
+                            <div class="check-grid">
+                                <label><input type="checkbox" name="probleem_trek" /> Trek / zin / craving</label>
+                                <label><input type="checkbox" name="probleem_routine" /> Moeite met routine of structuur</label>
+                                <label><input type="checkbox" name="probleem_eenzaamheid" /> Eenzaamheid of leegte</label>
+                                <label><input type="checkbox" name="probleem_spanning" /> Spanning, stress of onrust</label>
+                                <label><input type="checkbox" name="probleem_slaap" /> Slaap of herstel</label>
+                                <label><input type="checkbox" name="probleem_relaties" /> Relaties of contact</label>
+                                <label><input type="checkbox" name="probleem_werk" /> Werk, studie of daginvulling</label>
+                                <label><input type="checkbox" name="probleem_anders" /> Anders</label>
+                            </div>
+                            <div class="other-field">
+                                <label for="probleem_anders_tekst">Toelichting bij anders</label>
+                                <input id="probleem_anders_tekst" name="probleem_anders_tekst" type="text" placeholder="Bijv. lichamelijke klachten, ruzie thuis, geldproblemen..." />
+                            </div>
                         </div>
 
                         <div class="full">
@@ -113,11 +138,6 @@
                             </select>
                         </div>
 
-                        <div>
-                            <label for="motief_anders_tekst">Extra motivatie of toelichting</label>
-                            <input id="motief_anders_tekst" name="motief_anders_tekst" type="text" placeholder="Bijv. mijn kinderen, energie, vertrouwen..." />
-                        </div>
-
                         <div class="full">
                             <label>Wat motiveert je vooral om te veranderen?</label>
                             <div class="check-grid">
@@ -128,6 +148,10 @@
                                 <label><input type="checkbox" name="motief_zelfrespect" /> Zelfrespect</label>
                                 <label><input type="checkbox" name="motief_anders" /> Anders (zie toelichting)</label>
                             </div>
+                            <div class="other-field hidden" id="motiefAndersField">
+                                <label for="motief_anders_tekst">Toelichting bij anders</label>
+                                <input id="motief_anders_tekst" name="motief_anders_tekst" type="text" placeholder="Bijv. mijn kinderen, energie, vertrouwen..." />
+                            </div>
                         </div>
 
                         <div class="full">
@@ -136,7 +160,7 @@
                         </div>
 
                         <div class="full">
-                            <label for="hulpmiddelen">Wat heb je nodig om te slagen?</label>
+                            <label for="hulpmiddelen">Wat heb je nodig om het gevoel te hebben dat dit gaat slagen?</label>
                             <textarea id="hulpmiddelen" name="hulpmiddelen" placeholder="Bijv. dagstructuur, noodplan, contactmomenten, slaapritme..."></textarea>
                         </div>
                     </div>
@@ -194,10 +218,34 @@
                 }
                 el.value = data[el.name] || '';
             });
+            syncMotiefAndersField();
             renderInsight(data);
         }
 
+        function syncMotiefAndersField() {
+            const checkbox = document.querySelector('input[name="motief_anders"]');
+            const field = document.getElementById('motiefAndersField');
+            if (!checkbox || !field) return;
+            field.classList.toggle('hidden', !checkbox.checked);
+            const input = document.getElementById('motief_anders_tekst');
+            if (!checkbox.checked && input) input.value = '';
+        }
+
         function renderInsight(data) {
+            const problems = [];
+            if (data.probleem_trek) problems.push('trek / craving');
+            if (data.probleem_routine) problems.push('routine of structuur');
+            if (data.probleem_eenzaamheid) problems.push('eenzaamheid of leegte');
+            if (data.probleem_spanning) problems.push('spanning of stress');
+            if (data.probleem_slaap) problems.push('slaap of herstel');
+            if (data.probleem_relaties) problems.push('relaties of contact');
+            if (data.probleem_werk) problems.push('werk, studie of daginvulling');
+            if (data.probleem_anders && data.probleem_anders_tekst) {
+                problems.push(`anders: ${data.probleem_anders_tekst}`);
+            } else if (data.probleem_anders) {
+                problems.push('anders');
+            }
+
             const motives = [];
             if (data.motief_gezondheid) motives.push('gezondheid');
             if (data.motief_relaties) motives.push('relaties');
@@ -215,7 +263,7 @@
             };
 
             const pressure = data.frequentie ? (freqMap[data.frequentie] || 'onbekende gebruiksdruk') : 'nog geen frequentie gekozen';
-            const concern = data.zorgen ? `Ervaren probleem: ${data.zorgen}` : 'Ervaren probleem nog niet ingevuld.';
+            const concern = problems.length ? `Ervaren probleem: ${problems.join(', ')}.` : 'Ervaren probleem nog niet ingevuld.';
             const motive = motives.length ? `Motivatie lijkt vooral te zitten in: ${motives.join(', ')}.` : 'Motivatiebronnen nog niet aangevinkt.';
 
             document.getElementById('intakeInsightText').textContent = `${concern} Inschatting druk: ${pressure}. ${motive}`;
@@ -243,6 +291,7 @@
             document.getElementById('saveButton').addEventListener('click', saveForm);
             document.getElementById('loadButton').addEventListener('click', loadForm);
             document.getElementById('clearButton').addEventListener('click', clearForm);
+            document.querySelector('input[name="motief_anders"]').addEventListener('change', syncMotiefAndersField);
             loadForm();
         });
     </script>
