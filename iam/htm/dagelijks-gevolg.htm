@@ -916,14 +916,6 @@ Wat niet hielp: alleen blijven malen.</textarea>
                 <input id="socialOnlinePercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
               </div>
 
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="emotionSwallowedPercentRange">In welke mate heb je vandaag emoties ingeslikt?</label>
-                  <span class="percent-slider-value" id="emotionSwallowedPercentValue">Nog niet gekozen</span>
-                </div>
-                <input id="emotionSwallowedPercentRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="emotionSwallowedPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
-              </div>
             </div>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
@@ -970,8 +962,21 @@ Wat niet hielp: alleen blijven malen.</textarea>
                 <input id="swallowedDesireRange" type="range" min="0" max="100" step="1" value="50" />
                 <input id="swallowedDesire" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
               </div>
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="emotionSwallowedPercentRange">Emotionele ruimte vandaag</label>
+                  <span class="percent-slider-value" id="emotionSwallowedPercentValue">Nog niet gekozen</span>
+                </div>
+                <input id="emotionSwallowedPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="emotionSwallowedPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                <p class="observation-help" style="margin:0.45rem 0 0;">Links: 100% expressie gegeven. Rechts: 100% ingeslikt.</p>
+              </div>
             </div>
             <p class="observation-help" style="margin-top:0.45rem;">Onderzoek dit verder op <a id="swallowedEmotionResearchLink" href="./ingeslikte-emoties.htm">ingeslikte emoties</a>.</p>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="swallowedEmotionOther">Andere emotie die meespeelde</label>
+            <input id="swallowedEmotionOther" type="text" placeholder="Bijv. schaamte, jaloezie, trots, opluchting..." />
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
             <label for="swallowedEmotionMain">Waarom heb je deze emoties vandaag liever ingeslikt?</label>
@@ -1267,6 +1272,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
         .filter(Boolean);
     }
 
+    function formatEmotionBalanceText(value) {
+      if (!isNumericUnits(value)) return '';
+      if (Number(value) === 50) return 'Emotionele ruimte: in balans tussen expressie en inslikken';
+      if (Number(value) < 50) return `Emotionele ruimte: ${formatUnits(100 - Number(value))}% richting expressie`;
+      return `Emotionele ruimte: ${formatUnits(Number(value))}% richting inslikken`;
+    }
+
     function syncDerivedInteractionFromPercents() {
       const contactEl = document.getElementById('contactQualitySlider');
       const gapEl = document.getElementById('emotionExpressionGapSlider');
@@ -1536,9 +1548,11 @@ Wat niet hielp: alleen blijven malen.</textarea>
         if (isNumericUnits(entry.enjoymentPercent)) parts.push(`Genoten: ${formatUnits(entry.enjoymentPercent)}%`);
         if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
         if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
-        if (isNumericUnits(entry.emotionSwallowedPercent)) parts.push(`Emoties ingeslikt: ${formatUnits(entry.emotionSwallowedPercent)}%`);
+        const emotionBalanceText = formatEmotionBalanceText(entry.emotionSwallowedPercent);
+        if (emotionBalanceText) parts.push(emotionBalanceText);
         if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) parts.push(`Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`);
-        if (entry.swallowedEmotionMain) parts.push(`Ingeslikte emotie: ${entry.swallowedEmotionMain}`);
+        if (entry.swallowedEmotionOther) parts.push(`Andere emotie: ${entry.swallowedEmotionOther}`);
+        if (entry.swallowedEmotionMain) parts.push(`Reden om liever in te slikken: ${entry.swallowedEmotionMain}`);
         const swallowedBasics = getSwallowedBasicsSummary(entry);
         if (swallowedBasics.length) parts.push(`Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`);
         if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
@@ -1778,6 +1792,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       document.getElementById('enjoymentPercent').value = entry && entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined ? entry.enjoymentPercent : '';
       document.getElementById('socialOnlinePercent').value = entry && entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined ? entry.socialOnlinePercent : '';
       document.getElementById('socialIrlPercent').value = entry && entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined ? entry.socialIrlPercent : '';
+      document.getElementById('swallowedEmotionOther').value = entry?.swallowedEmotionOther || '';
       document.getElementById('swallowedEmotionMain').value = entry?.swallowedEmotionMain || '';
       document.getElementById('swallowedCuriosity').value = entry && entry.swallowedCuriosity !== '' && entry.swallowedCuriosity !== null && entry.swallowedCuriosity !== undefined ? entry.swallowedCuriosity : '';
       document.getElementById('swallowedAnger').value = entry && entry.swallowedAnger !== '' && entry.swallowedAnger !== null && entry.swallowedAnger !== undefined ? entry.swallowedAnger : '';
@@ -1825,7 +1840,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       if (isNumericUnits(entry.naturePercent) || isNumericUnits(entry.enjoymentPercent) || isNumericUnits(entry.socialOnlinePercent) || isNumericUnits(entry.socialIrlPercent) || isNumericUnits(entry.emotionSwallowedPercent)) {
         parts.push('Realiteitsscores ingevuld');
       }
-      if (entry.swallowedEmotionMain || isNumericUnits(entry.swallowedCuriosity) || isNumericUnits(entry.swallowedAnger) || isNumericUnits(entry.swallowedSadness) || isNumericUnits(entry.swallowedFear) || isNumericUnits(entry.swallowedDesire)) {
+      if (entry.swallowedEmotionMain || entry.swallowedEmotionOther || isNumericUnits(entry.swallowedCuriosity) || isNumericUnits(entry.swallowedAnger) || isNumericUnits(entry.swallowedSadness) || isNumericUnits(entry.swallowedFear) || isNumericUnits(entry.swallowedDesire)) {
         parts.push('Ingeslikte emoties ingevuld');
       }
       if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) {
@@ -1893,6 +1908,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
         bodyRest,
         emotionExpressionGap,
         dayInteractionIndex: computeDayInteractionIndex({ dayPressure, selfRegie, cravingPeak, recoveryAction, contactQuality: contactQualityForIndex, bodyRest, emotionExpressionGap: emotionExpressionGapForIndex }),
+        swallowedEmotionOther: document.getElementById('swallowedEmotionOther').value.trim(),
         swallowedEmotionMain: document.getElementById('swallowedEmotionMain').value.trim(),
         swallowedCuriosity: rawSwallowedCuriosity === '' ? '' : Number(rawSwallowedCuriosity),
         swallowedAnger: rawSwallowedAnger === '' ? '' : Number(rawSwallowedAnger),
@@ -1926,6 +1942,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
         (entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined) ||
         (entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined) ||
         (entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined) ||
+        Boolean(entry.swallowedEmotionOther) ||
         Boolean(entry.swallowedEmotionMain) ||
         isNumericUnits(entry.swallowedCuriosity) ||
         isNumericUnits(entry.swallowedAnger) ||
@@ -2255,9 +2272,11 @@ Wat niet hielp: alleen blijven malen.</textarea>
         if (isNumericUnits(entry.enjoymentPercent)) parts.push(`Genoten: ${formatUnits(entry.enjoymentPercent)}%`);
         if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
         if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
-        if (isNumericUnits(entry.emotionSwallowedPercent)) parts.push(`Emoties ingeslikt: ${formatUnits(entry.emotionSwallowedPercent)}%`);
+        const emotionBalanceText = formatEmotionBalanceText(entry.emotionSwallowedPercent);
+        if (emotionBalanceText) parts.push(emotionBalanceText);
         if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) parts.push(`Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`);
-        if (entry.swallowedEmotionMain) parts.push(`Ingeslikte emotie: ${entry.swallowedEmotionMain}`);
+        if (entry.swallowedEmotionOther) parts.push(`Andere emotie: ${entry.swallowedEmotionOther}`);
+        if (entry.swallowedEmotionMain) parts.push(`Reden om liever in te slikken: ${entry.swallowedEmotionMain}`);
         const swallowedBasics = getSwallowedBasicsSummary(entry);
         if (swallowedBasics.length) parts.push(`Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`);
         if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
@@ -2310,7 +2329,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
         filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
         const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
         const rows = [
-          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionSwallowedPercent', 'dayPressure', 'selfRegie', 'cravingPeak', 'recoveryAction', 'contactQuality', 'bodyRest', 'emotionExpressionGap', 'dayInteractionIndex', 'swallowedEmotionMain', 'swallowedCuriosity', 'swallowedAnger', 'swallowedSadness', 'swallowedFear', 'swallowedDesire', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionSwallowedPercent', 'dayPressure', 'selfRegie', 'cravingPeak', 'recoveryAction', 'contactQuality', 'bodyRest', 'emotionExpressionGap', 'dayInteractionIndex', 'swallowedEmotionOther', 'swallowedEmotionMain', 'swallowedCuriosity', 'swallowedAnger', 'swallowedSadness', 'swallowedFear', 'swallowedDesire', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
           ...sortedEntries.map((entry) => {
             const hasBoth = isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units);
             const difference = hasBoth ? Number(entry.units) - Number(entry.plannedUnits) : '';
@@ -2337,6 +2356,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
               entry.bodyRest ?? '',
               entry.emotionExpressionGap ?? '',
               entry.dayInteractionIndex ?? '',
+              entry.swallowedEmotionOther || '',
               entry.swallowedEmotionMain || '',
               entry.swallowedCuriosity ?? '',
               entry.swallowedAnger ?? '',
@@ -2525,9 +2545,10 @@ Wat niet hielp: alleen blijven malen.</textarea>
           item.appendChild(socialIrl);
         }
 
-        if (isNumericUnits(entry.emotionSwallowedPercent)) {
+        const emotionBalanceText = formatEmotionBalanceText(entry.emotionSwallowedPercent);
+        if (emotionBalanceText) {
           const emotionSwallowed = document.createElement('p');
-          emotionSwallowed.textContent = `Emoties ingeslikt: ${formatUnits(entry.emotionSwallowedPercent)}%`;
+          emotionSwallowed.textContent = emotionBalanceText;
           item.appendChild(emotionSwallowed);
         }
 
@@ -2537,9 +2558,15 @@ Wat niet hielp: alleen blijven malen.</textarea>
           item.appendChild(interactionIndex);
         }
 
+        if (entry.swallowedEmotionOther) {
+          const swallowedOther = document.createElement('p');
+          swallowedOther.textContent = `Andere emotie: ${entry.swallowedEmotionOther}`;
+          item.appendChild(swallowedOther);
+        }
+
         if (entry.swallowedEmotionMain) {
           const swallowedMain = document.createElement('p');
-          swallowedMain.textContent = `Ingeslikte emotie: ${entry.swallowedEmotionMain}`;
+          swallowedMain.textContent = `Reden om liever in te slikken: ${entry.swallowedEmotionMain}`;
           item.appendChild(swallowedMain);
         }
 
