@@ -919,68 +919,67 @@ Wat niet hielp: alleen blijven malen.</textarea>
             </div>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
-            <label>Expressie van basis-emoties van <span id="swallowedEmotionSectionDateLabel">vandaag</span> (per emotie)</label>
-            <p class="observation-help" style="margin:0.25rem 0 0.55rem;">Gebruik per emotie de schaal: 0 = 100% ingeslikt, 100 = 100% expressie gegeven.</p>
+            <label>Expressie van basis-emoties van <span id="expressedEmotionSectionDateLabel">vandaag</span> (per emotie)</label>
+            <p class="observation-help" style="margin:0.25rem 0 0.55rem;">Gebruik per emotie de schaal: 0 = volledig ingeslikt, 100 = volledig geuit.</p>
             <div class="percent-slider-grid">
               <div class="percent-slider-item">
                 <div class="percent-slider-head">
-                  <label for="swallowedCuriosityRange">Nieuwsgierigheid</label>
-                  <span class="percent-slider-value" id="swallowedCuriosityValue">Nog niet gekozen</span>
+                  <label for="expressedCuriosityRange">Nieuwsgierigheid</label>
+                  <span class="percent-slider-value" id="expressedCuriosityValue">Nog niet gekozen</span>
                 </div>
-                <input id="swallowedCuriosityRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="swallowedCuriosity" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                <input id="expressedCuriosityRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="expressedCuriosity" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
               </div>
               <div class="percent-slider-item">
                 <div class="percent-slider-head">
-                  <label for="swallowedAngerRange">Boosheid</label>
-                  <span class="percent-slider-value" id="swallowedAngerValue">Nog niet gekozen</span>
+                  <label for="expressedAngerRange">Boosheid</label>
+                  <span class="percent-slider-value" id="expressedAngerValue">Nog niet gekozen</span>
                 </div>
-                <input id="swallowedAngerRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="swallowedAnger" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                <input id="expressedAngerRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="expressedAnger" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
               </div>
               <div class="percent-slider-item">
                 <div class="percent-slider-head">
-                  <label for="swallowedSadnessRange">Verdriet</label>
-                  <span class="percent-slider-value" id="swallowedSadnessValue">Nog niet gekozen</span>
+                  <label for="expressedSadnessRange">Verdriet</label>
+                  <span class="percent-slider-value" id="expressedSadnessValue">Nog niet gekozen</span>
                 </div>
-                <input id="swallowedSadnessRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="swallowedSadness" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                <input id="expressedSadnessRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="expressedSadness" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
               </div>
               <div class="percent-slider-item">
                 <div class="percent-slider-head">
-                  <label for="swallowedFearRange">Angst</label>
-                  <span class="percent-slider-value" id="swallowedFearValue">Nog niet gekozen</span>
+                  <label for="expressedFearRange">Angst</label>
+                  <span class="percent-slider-value" id="expressedFearValue">Nog niet gekozen</span>
                 </div>
-                <input id="swallowedFearRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="swallowedFear" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                <input id="expressedFearRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="expressedFear" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
               </div>
               <div class="percent-slider-item">
                 <div class="percent-slider-head">
-                  <label for="swallowedDesireRange">Begeerte</label>
-                  <span class="percent-slider-value" id="swallowedDesireValue">Nog niet gekozen</span>
+                  <label for="expressedDesireRange">Begeerte</label>
+                  <span class="percent-slider-value" id="expressedDesireValue">Nog niet gekozen</span>
                 </div>
-                <input id="swallowedDesireRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="swallowedDesire" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
-              </div>
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="emotionSwallowedPercentRange">Emotionele ruimte vandaag</label>
-                  <span class="percent-slider-value" id="emotionSwallowedPercentValue">Nog niet gekozen</span>
-                </div>
-                <input id="emotionSwallowedPercentRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="emotionSwallowedPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
-                <p class="observation-help" style="margin:0.45rem 0 0;">Links: 100% expressie gegeven. Rechts: 100% ingeslikt.</p>
+                <input id="expressedDesireRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="expressedDesire" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
               </div>
             </div>
-            <p class="observation-help" style="margin-top:0.45rem;">Onderzoek dit verder op <a id="swallowedEmotionResearchLink" href="./ingeslikte-emoties.htm">ingeslikte emoties</a>.</p>
+            <p class="observation-help" style="margin-top:0.45rem;">Onderzoek dit verder op <a id="expressedEmotionResearchLink" href="./ingeslikte-emoties.htm">ingeslikte emoties</a>.</p>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
-            <label for="swallowedEmotionOther">Andere emotie die meespeelde</label>
-            <input id="swallowedEmotionOther" type="text" placeholder="Bijv. schaamte, jaloezie, trots, opluchting..." />
+            <label for="expressedEmotionOther">Andere emotie die meespeelde</label>
+            <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+              <input id="expressedEmotionOther" type="text" placeholder="Bijv. schaamte, jaloezie, trots, opluchting..." style="flex:1; min-width:12rem;" />
+              <div style="display:flex; align-items:center; gap:0.4rem; min-width:14rem;">
+                <span class="percent-slider-value" id="expressedOtherPercentValue" style="min-width:4rem;">Nog niet gekozen</span>
+                <input id="expressedOtherPercentRange" type="range" min="0" max="100" step="1" value="50" style="flex:1;" />
+                <input id="expressedOtherPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+            </div>
+            <p class="observation-help" style="margin:0.2rem 0 0;">Schuif naar rechts voor meer expressie (100 = volledig geuit).</p>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
-            <label for="swallowedEmotionMain">Waarom heb je deze emoties vandaag liever ingeslikt?</label>
-            <input id="swallowedEmotionMain" type="text" placeholder="Bijv. conflict vermijden, geen ruimte voelen, bang zijn voor reactie..." />
+            <label for="suppressionReason">Waarom heb je deze emoties vandaag liever ingeslikt?</label>
+            <input id="suppressionReason" type="text" placeholder="Bijv. conflict vermijden, geen ruimte voelen, bang zijn voor reactie..." />
           </div>
         </div>
 
@@ -1000,7 +999,10 @@ Wat niet hielp: alleen blijven malen.</textarea>
 
         <div class="tracker-grid" id="interactionTrackingSection">
           <div class="form-group" style="grid-column: 1 / -1;">
-            <label style="margin-bottom:0.45rem; display:block;">6) Interactie van de dag (numeriek)</label>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <label style="margin-bottom:0; display:inline;">6) Interactie van de dag (numeriek)</label>
+              <button type="button" id="interactionIndexInfoButton" class="info-button" style="border:none; background:none; cursor:pointer; color:#666; font-weight:bold; font-size:1rem; padding:0 0.2rem;" title="Meer info over dagdruk, zelfregie en herstelgedrag">[!]</button>
+            </div>
             <p class="section-mini-sub" style="margin-bottom:0.6rem;">Contactkwaliteit en emotie-uitingskloof worden automatisch afgeleid uit de realiteitsscores, zodat je die niet dubbel hoeft in te vullen.</p>
             <p class="section-mini-sub" id="interactionDerivedHint" style="margin-bottom:0.6rem;"></p>
             <div class="interaction-slider-grid">
@@ -1041,10 +1043,18 @@ Wat niet hielp: alleen blijven malen.</textarea>
               </div>
             </div>
             <input id="contactQualitySlider" class="percent-hidden-input" type="range" min="0" max="100" step="1" value="50" tabindex="-1" aria-hidden="true" />
-            <input id="emotionExpressionGapSlider" class="percent-hidden-input" type="range" min="0" max="100" step="1" value="50" tabindex="-1" aria-hidden="true" />
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="emotionExpressionPercentRange">Emotionele ruimte</label>
+                  <span class="interaction-slider-value" id="emotionExpressionPercentRangeValue">50</span>
+                </div>
+                <input id="emotionExpressionPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="emotionExpressionPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                <p class="observation-help" style="margin:0.3rem 0 0;">Links: 100% ingeslikt. Rechts: 100% expressie gegeven.</p>
+              </div>
             <div class="interaction-index-box">
               <p><strong>Daginteractie-index:</strong> <span id="dayInteractionIndexValue">0</span></p>
-              <p class="observation-help" id="dayInteractionIndexHint" style="margin-top:0.35rem;">Neutraal beeld voor deze dag. Bij deze emotie-slider geldt: 0 = volledig geuit, 100 = volledig ingeslikt.</p>
+              <p class="observation-help" id="dayInteractionIndexHint" style="margin-top:0.35rem;">Neutraal beeld voor deze dag.</p>
             </div>
           </div>
         </div>
@@ -1106,7 +1116,28 @@ Wat niet hielp: alleen blijven malen.</textarea>
         </div>
       </section>
 
-      <div id="hulpzinnetjeModal" class="hulpzinnetje-modal" aria-hidden="true">
+      <div id="interactionIndexModal" class="hulpzinnetje-modal" aria-hidden="true">
+        <div class="hulpzinnetje-dialog" role="dialog" aria-modal="true" aria-labelledby="interactionIndexTitle">
+          <h3 id="interactionIndexTitle">Daginteractie-index: Componenten en gewichten</h3>
+          <div style="overflow-y:auto; max-height:70vh; padding:0.5rem 0; font-size:0.95rem;">
+            <p><strong>Wat meet de daginteractie-index?</strong><br />Deze index balanceert stress, sturing, en emotie-expressie. Een hoger getal = beter vermogen om op koers te blijven.</p>
+            <hr style="margin:0.5rem 0; border:none; border-top:1px solid #ddd;" />
+            <p><strong>Zelfregie</strong> (gewicht: <strong>+0.35</strong> — sterkste positieve effect)<br />Hoe veel controle en bewustzijn heb je over je dag? Hogere waarden = meer regie.</p>
+            <p><strong>Dagdruk</strong> (gewicht: <strong>−0.30</strong>)<br />Hoe veel stress, druk of prikkeling voel je? Hogere waarden = meer druk. Dit vermindert je vermogen om op koers te blijven.</p>
+            <p><strong>Herstelgedrag</strong> (gewicht: <strong>+0.25</strong>)<br />In hoeverre zorg je goed voor jezelf (slaap, beweging, rust, ontspanning)? Hogere waarden = meer zelfzorg.</p>
+            <p><strong>Craving (trek)</strong> (gewicht: <strong>−0.25</strong>)<br />Hoe sterk is je trek naar gebruik? Hogere waarden = sterker craving, wat de index vermindert.</p>
+            <p><strong>Contactkwaliteit</strong> (gewicht: <strong>+0.15</strong>)<br />Automatisch afgeleid uit je online- en IRL-contactscores. Ondersteunt regulering.</p>
+            <p><strong>Lichamelijke rust</strong> (gewicht: <strong>+0.10</strong>)<br />Hoeveel rust/ontspanning heb je? Hogere waarden = meer rust, wat helpt om stabiel te blijven.</p>
+            <p><strong>Emotie-expressie</strong> (gewicht: <strong>+0.15</strong>)<br />Hoeveel van je basis-emoties heb je kunnen uiten vandaag? Hogere waarden = meer expressie = minder terugdruk op trek.</p>
+            <p><strong>Interactie-effect</strong> (gewicht: <strong>−0.15</strong>)<br />Stress × (100 − expressie). Dit meet de versterking: hoge stress + weinig expressie tezamen maken je extra kwetsbaar.</p>
+            <hr style="margin:0.5rem 0; border:none; border-top:1px solid #ddd;" />
+            <p style="font-size:0.9rem; color:#666;"><strong>Score uitleg:</strong><br />Boven 20 = sterk regulerend patroon (goed)<br />−20 tot +20 = neutraal beeld<br />Onder −20 = kwetsbaar patroon (let op zelfzorg)</p>
+          </div>
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="closeInteractionIndexButton">Sluiten</button>
+          </div>
+        </div>
+      </div>
         <div class="hulpzinnetje-dialog" role="dialog" aria-modal="true" aria-labelledby="hulpzinnetjeTitle">
           <h3 id="hulpzinnetjeTitle">Hulpzinnetje</h3>
           <p id="hulpzinnetjeText"></p>
@@ -1135,26 +1166,28 @@ Wat niet hielp: alleen blijven malen.</textarea>
       'recoveryActionSlider',
       'contactQualitySlider',
       'bodyRestSlider',
-      'emotionExpressionGapSlider'
+      'emotionExpressionPercentRange'
     ];
     const PERCENT_SLIDER_FIELDS = [
       { fieldId: 'naturePercent', sliderId: 'naturePercentRange', valueId: 'naturePercentValue' },
       { fieldId: 'enjoymentPercent', sliderId: 'enjoymentPercentRange', valueId: 'enjoymentPercentValue' },
       { fieldId: 'socialIrlPercent', sliderId: 'socialIrlPercentRange', valueId: 'socialIrlPercentValue' },
       { fieldId: 'socialOnlinePercent', sliderId: 'socialOnlinePercentRange', valueId: 'socialOnlinePercentValue' },
-      { fieldId: 'emotionSwallowedPercent', sliderId: 'emotionSwallowedPercentRange', valueId: 'emotionSwallowedPercentValue' },
-      { fieldId: 'swallowedCuriosity', sliderId: 'swallowedCuriosityRange', valueId: 'swallowedCuriosityValue' },
-      { fieldId: 'swallowedAnger', sliderId: 'swallowedAngerRange', valueId: 'swallowedAngerValue' },
-      { fieldId: 'swallowedSadness', sliderId: 'swallowedSadnessRange', valueId: 'swallowedSadnessValue' },
-      { fieldId: 'swallowedFear', sliderId: 'swallowedFearRange', valueId: 'swallowedFearValue' },
-      { fieldId: 'swallowedDesire', sliderId: 'swallowedDesireRange', valueId: 'swallowedDesireValue' }
+      { fieldId: 'emotionExpressionPercent', sliderId: 'emotionExpressionPercentRange', valueId: 'emotionExpressionPercentRangeValue' },
+      { fieldId: 'expressedCuriosity', sliderId: 'expressedCuriosityRange', valueId: 'expressedCuriosityValue' },
+      { fieldId: 'expressedAnger', sliderId: 'expressedAngerRange', valueId: 'expressedAngerValue' },
+      { fieldId: 'expressedSadness', sliderId: 'expressedSadnessRange', valueId: 'expressedSadnessValue' },
+      { fieldId: 'expressedFear', sliderId: 'expressedFearRange', valueId: 'expressedFearValue' },
+      { fieldId: 'expressedDesire', sliderId: 'expressedDesireRange', valueId: 'expressedDesireValue' },
+      { fieldId: 'expressedOtherPercent', sliderId: 'expressedOtherPercentRange', valueId: 'expressedOtherPercentValue' }
     ];
-    const SWALLOWED_BASIS_FIELDS = [
-      { key: 'swallowedCuriosity', label: 'Nieuwsgierigheid' },
-      { key: 'swallowedAnger', label: 'Boosheid' },
-      { key: 'swallowedSadness', label: 'Verdriet' },
-      { key: 'swallowedFear', label: 'Angst' },
-      { key: 'swallowedDesire', label: 'Begeerte' }
+    const EXPRESSED_BASIS_FIELDS = [
+      { key: 'expressedCuriosity', label: 'Nieuwsgierigheid' },
+      { key: 'expressedAnger', label: 'Boosheid' },
+      { key: 'expressedSadness', label: 'Verdriet' },
+      { key: 'expressedFear', label: 'Angst' },
+      { key: 'expressedDesire', label: 'Begeerte' },
+      { key: 'expressedOtherPercent', label: 'Andere emotie' }
     ];
     const historyLimit = 14;
     let selectedHistoryRange = 7;
@@ -1207,14 +1240,17 @@ Wat niet hielp: alleen blijven malen.</textarea>
     }
 
     function computeDayInteractionIndex(values) {
+      const expressionLevel = values.emotionExpression ?? 50;
+      const suppressionLevel = 100 - expressionLevel;
       const index =
         0.35 * values.selfRegie -
         0.30 * values.dayPressure -
         0.25 * values.cravingPeak +
         0.25 * values.recoveryAction +
         0.15 * values.contactQuality +
-        0.10 * values.bodyRest -
-        0.15 * values.emotionExpressionGap;
+        0.10 * values.bodyRest +
+        0.15 * expressionLevel -
+        0.15 * (values.dayPressure * suppressionLevel) / 100;
       return Math.round(index * 10) / 10;
     }
 
@@ -1260,8 +1296,8 @@ Wat niet hielp: alleen blijven malen.</textarea>
       return Math.round((online + irl) / 2);
     }
 
-    function getSwallowedBasicsSummary(entry) {
-      return SWALLOWED_BASIS_FIELDS
+    function getExpressedBasicsSummary(entry) {
+      return EXPRESSED_BASIS_FIELDS
         .map(({ key, label }) => {
           const raw = entry?.[key];
           if (!isNumericUnits(raw)) return '';
@@ -1275,24 +1311,20 @@ Wat niet hielp: alleen blijven malen.</textarea>
     function formatEmotionBalanceText(value) {
       if (!isNumericUnits(value)) return '';
       if (Number(value) === 50) return 'Emotionele ruimte: in balans tussen expressie en inslikken';
-      if (Number(value) < 50) return `Emotionele ruimte: ${formatUnits(100 - Number(value))}% richting expressie`;
-      return `Emotionele ruimte: ${formatUnits(Number(value))}% richting inslikken`;
+      if (Number(value) > 50) return `Emotionele ruimte: ${formatUnits(Number(value))}% richting expressie`;
+      return `Emotionele ruimte: ${formatUnits(100 - Number(value))}% richting inslikken`;
     }
 
     function syncDerivedInteractionFromPercents() {
       const contactEl = document.getElementById('contactQualitySlider');
-      const gapEl = document.getElementById('emotionExpressionGapSlider');
       const socialOnlineEl = document.getElementById('socialOnlinePercent');
       const socialIrlEl = document.getElementById('socialIrlPercent');
-      const swallowedEl = document.getElementById('emotionSwallowedPercent');
 
-      if (!contactEl || !gapEl || !socialOnlineEl || !socialIrlEl || !swallowedEl) return;
+      if (!contactEl || !socialOnlineEl || !socialIrlEl) return;
 
       const derivedContact = deriveContactQualityFromPercents(socialOnlineEl.value, socialIrlEl.value);
-      const derivedGap = toOptionalPercentNumber(swallowedEl.value);
 
       contactEl.value = String(derivedContact === null ? 50 : derivedContact);
-      gapEl.value = String(derivedGap === null ? 50 : derivedGap);
 
       updateDayInteractionSummary();
     }
@@ -1322,7 +1354,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
         recoveryAction: getSliderNumber('recoveryActionSlider'),
         contactQuality: getSliderNumber('contactQualitySlider'),
         bodyRest: getSliderNumber('bodyRestSlider'),
-        emotionExpressionGap: getSliderNumber('emotionExpressionGapSlider')
+        emotionExpression: getSliderNumber('emotionExpressionPercentRange')
       };
       const index = computeDayInteractionIndex(values);
       const valueEl = document.getElementById('dayInteractionIndexValue');
@@ -1331,8 +1363,8 @@ Wat niet hielp: alleen blijven malen.</textarea>
       if (valueEl) valueEl.textContent = String(index);
       if (derivedEl) {
         const contactText = Number.isFinite(values.contactQuality) ? `${Math.round(values.contactQuality)}%` : 'n.v.t.';
-        const gapText = Number.isFinite(values.emotionExpressionGap) ? `${Math.round(values.emotionExpressionGap)}%` : 'n.v.t.';
-        derivedEl.textContent = `Afgeleid: contactkwaliteit ${contactText} | emotiekloof ${gapText}.`;
+        const expressionText = Number.isFinite(values.emotionExpression) ? `${Math.round(values.emotionExpression)}%` : 'n.v.t.';
+        derivedEl.textContent = `Afgeleid: contactkwaliteit ${contactText} | emotie-expressie ${expressionText}.`;
       }
       if (hintEl) {
         if (index >= 20) {
@@ -1548,13 +1580,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
         if (isNumericUnits(entry.enjoymentPercent)) parts.push(`Genoten: ${formatUnits(entry.enjoymentPercent)}%`);
         if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
         if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
-        const emotionBalanceText = formatEmotionBalanceText(entry.emotionSwallowedPercent);
+        const emotionBalanceText = formatEmotionBalanceText(entry.emotionExpressionPercent);
         if (emotionBalanceText) parts.push(emotionBalanceText);
         if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) parts.push(`Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`);
-        if (entry.swallowedEmotionOther) parts.push(`Andere emotie: ${entry.swallowedEmotionOther}`);
-        if (entry.swallowedEmotionMain) parts.push(`Reden om liever in te slikken: ${entry.swallowedEmotionMain}`);
-        const swallowedBasics = getSwallowedBasicsSummary(entry);
-        if (swallowedBasics.length) parts.push(`Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`);
+        if (entry.expressedEmotionOther) parts.push(`Andere emotie: ${entry.expressedEmotionOther}`);
+        if (entry.suppressionReason) parts.push(`Reden om liever in te slikken: ${entry.suppressionReason}`);
+        const expressedBasics = getExpressedBasicsSummary(entry);
+        if (expressedBasics.length) parts.push(`Expressie basis-emoties: ${expressedBasics.join(', ')}`);
         if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
         if (entry.tooMuchTodayNote) parts.push(`Te veel: ${entry.tooMuchTodayNote}`);
         return `<div class="observation-day"><h3>${formatDateLabel(dateKey)}</h3>${parts.map((p) => `<p>${p}</p>`).join('')}</div>`;
@@ -1719,6 +1751,22 @@ Wat niet hielp: alleen blijven malen.</textarea>
       });
     }
 
+    function openInteractionIndexModal() {
+      const modal = document.getElementById('interactionIndexModal');
+      if (modal) {
+        modal.setAttribute('aria-hidden', 'false');
+        modal.style.display = 'flex';
+      }
+    }
+
+    function closeInteractionIndexModal() {
+      const modal = document.getElementById('interactionIndexModal');
+      if (modal) {
+        modal.setAttribute('aria-hidden', 'true');
+        modal.style.display = 'none';
+      }
+    }
+
     function openHulpzinnetjeModal(title, text) {
       const modal = document.getElementById('hulpzinnetjeModal');
       const titleEl = document.getElementById('hulpzinnetjeTitle');
@@ -1765,7 +1813,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       baseDate.setDate(baseDate.getDate() + days);
       dateInput.value = toDateKey(baseDate);
       renderSelectedDay();
-      updateSwallowedEmotionResearchLink();
+      updateExpressedEmotionResearchLink();
     }
 
     function getFormState() {
@@ -1792,25 +1840,26 @@ Wat niet hielp: alleen blijven malen.</textarea>
       document.getElementById('enjoymentPercent').value = entry && entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined ? entry.enjoymentPercent : '';
       document.getElementById('socialOnlinePercent').value = entry && entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined ? entry.socialOnlinePercent : '';
       document.getElementById('socialIrlPercent').value = entry && entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined ? entry.socialIrlPercent : '';
-      document.getElementById('swallowedEmotionOther').value = entry?.swallowedEmotionOther || '';
-      document.getElementById('swallowedEmotionMain').value = entry?.swallowedEmotionMain || '';
-      document.getElementById('swallowedCuriosity').value = entry && entry.swallowedCuriosity !== '' && entry.swallowedCuriosity !== null && entry.swallowedCuriosity !== undefined ? entry.swallowedCuriosity : '';
-      document.getElementById('swallowedAnger').value = entry && entry.swallowedAnger !== '' && entry.swallowedAnger !== null && entry.swallowedAnger !== undefined ? entry.swallowedAnger : '';
-      document.getElementById('swallowedSadness').value = entry && entry.swallowedSadness !== '' && entry.swallowedSadness !== null && entry.swallowedSadness !== undefined ? entry.swallowedSadness : '';
-      document.getElementById('swallowedFear').value = entry && entry.swallowedFear !== '' && entry.swallowedFear !== null && entry.swallowedFear !== undefined ? entry.swallowedFear : '';
-      document.getElementById('swallowedDesire').value = entry && entry.swallowedDesire !== '' && entry.swallowedDesire !== null && entry.swallowedDesire !== undefined ? entry.swallowedDesire : '';
+      document.getElementById('expressedEmotionOther').value = entry?.expressedEmotionOther || '';
+      document.getElementById('suppressionReason').value = entry?.suppressionReason || '';
+      document.getElementById('expressedCuriosity').value = entry && entry.expressedCuriosity !== '' && entry.expressedCuriosity !== null && entry.expressedCuriosity !== undefined ? entry.expressedCuriosity : '';
+      document.getElementById('expressedAnger').value = entry && entry.expressedAnger !== '' && entry.expressedAnger !== null && entry.expressedAnger !== undefined ? entry.expressedAnger : '';
+      document.getElementById('expressedSadness').value = entry && entry.expressedSadness !== '' && entry.expressedSadness !== null && entry.expressedSadness !== undefined ? entry.expressedSadness : '';
+      document.getElementById('expressedFear').value = entry && entry.expressedFear !== '' && entry.expressedFear !== null && entry.expressedFear !== undefined ? entry.expressedFear : '';
+      document.getElementById('expressedDesire').value = entry && entry.expressedDesire !== '' && entry.expressedDesire !== null && entry.expressedDesire !== undefined ? entry.expressedDesire : '';
+      document.getElementById('expressedOtherPercent').value = entry && entry.expressedOtherPercent !== '' && entry.expressedOtherPercent !== null && entry.expressedOtherPercent !== undefined ? entry.expressedOtherPercent : '';
       document.getElementById('dayPressureSlider').value = entry && entry.dayPressure !== undefined && entry.dayPressure !== null ? entry.dayPressure : 50;
       document.getElementById('selfRegieSlider').value = entry && entry.selfRegie !== undefined && entry.selfRegie !== null ? entry.selfRegie : 50;
       document.getElementById('cravingPeakSlider').value = entry && entry.cravingPeak !== undefined && entry.cravingPeak !== null ? entry.cravingPeak : 50;
       document.getElementById('recoveryActionSlider').value = entry && entry.recoveryAction !== undefined && entry.recoveryAction !== null ? entry.recoveryAction : 50;
       document.getElementById('contactQualitySlider').value = entry && entry.contactQuality !== undefined && entry.contactQuality !== null ? entry.contactQuality : 50;
       document.getElementById('bodyRestSlider').value = entry && entry.bodyRest !== undefined && entry.bodyRest !== null ? entry.bodyRest : 50;
-      document.getElementById('emotionExpressionGapSlider').value = entry && entry.emotionExpressionGap !== undefined && entry.emotionExpressionGap !== null ? entry.emotionExpressionGap : 50;
+      document.getElementById('emotionExpressionPercentRange').value = entry && entry.emotionExpression !== undefined && entry.emotionExpression !== null ? entry.emotionExpression : 50;
+      document.getElementById('emotionExpressionPercent').value = entry && entry.emotionExpressionPercent !== '' && entry.emotionExpressionPercent !== null && entry.emotionExpressionPercent !== undefined ? entry.emotionExpressionPercent : '';
       INTERACTION_SLIDER_IDS.forEach(updateSliderValueBadge);
       updateDayInteractionSummary();
       document.getElementById('missedTodayNote').value = entry?.missedTodayNote || '';
       document.getElementById('tooMuchTodayNote').value = entry?.tooMuchTodayNote || '';
-      document.getElementById('emotionSwallowedPercent').value = entry && entry.emotionSwallowedPercent !== '' && entry.emotionSwallowedPercent !== null && entry.emotionSwallowedPercent !== undefined ? entry.emotionSwallowedPercent : '';
       syncAllPercentSlidersFromFields();
     }
 
@@ -1837,11 +1886,11 @@ Wat niet hielp: alleen blijven malen.</textarea>
       if (isNumericUnits(entry.sleepHours)) parts.push(`Slaap: ${formatUnits(entry.sleepHours)} uur`);
       if (entry.riskNote) parts.push('Risico ingevuld');
       if (entry.motivationNote) parts.push('Motivatie ingevuld');
-      if (isNumericUnits(entry.naturePercent) || isNumericUnits(entry.enjoymentPercent) || isNumericUnits(entry.socialOnlinePercent) || isNumericUnits(entry.socialIrlPercent) || isNumericUnits(entry.emotionSwallowedPercent)) {
+      if (isNumericUnits(entry.naturePercent) || isNumericUnits(entry.enjoymentPercent) || isNumericUnits(entry.socialOnlinePercent) || isNumericUnits(entry.socialIrlPercent) || isNumericUnits(entry.emotionExpressionPercent)) {
         parts.push('Realiteitsscores ingevuld');
       }
-      if (entry.swallowedEmotionMain || entry.swallowedEmotionOther || isNumericUnits(entry.swallowedCuriosity) || isNumericUnits(entry.swallowedAnger) || isNumericUnits(entry.swallowedSadness) || isNumericUnits(entry.swallowedFear) || isNumericUnits(entry.swallowedDesire)) {
-        parts.push('Ingeslikte emoties ingevuld');
+      if (entry.suppressionReason || entry.expressedEmotionOther || isNumericUnits(entry.expressedCuriosity) || isNumericUnits(entry.expressedAnger) || isNumericUnits(entry.expressedSadness) || isNumericUnits(entry.expressedFear) || isNumericUnits(entry.expressedDesire) || isNumericUnits(entry.expressedOtherPercent)) {
+        parts.push('Emotie-expressie ingevuld');
       }
       if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) {
         parts.push(`Daginteractie-index: ${entry.dayInteractionIndex}`);
@@ -1859,7 +1908,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
         calculateSleepHours();
       }
       renderSelectedDayMeta(entry, dateKey);
-      const emotionDateLabel = document.getElementById('swallowedEmotionSectionDateLabel');
+      const emotionDateLabel = document.getElementById('expressedEmotionSectionDateLabel');
       if (emotionDateLabel) {
         const todayKey = toDateKey(new Date());
         emotionDateLabel.textContent = dateKey === todayKey ? 'vandaag' : formatDateLabel(dateKey);
@@ -1874,11 +1923,12 @@ Wat niet hielp: alleen blijven malen.</textarea>
       const rawEnjoyment = document.getElementById('enjoymentPercent').value.trim().replace(',', '.');
       const rawSocialOnline = document.getElementById('socialOnlinePercent').value.trim().replace(',', '.');
       const rawSocialIrl = document.getElementById('socialIrlPercent').value.trim().replace(',', '.');
-      const rawSwallowedCuriosity = document.getElementById('swallowedCuriosity').value.trim().replace(',', '.');
-      const rawSwallowedAnger = document.getElementById('swallowedAnger').value.trim().replace(',', '.');
-      const rawSwallowedSadness = document.getElementById('swallowedSadness').value.trim().replace(',', '.');
-      const rawSwallowedFear = document.getElementById('swallowedFear').value.trim().replace(',', '.');
-      const rawSwallowedDesire = document.getElementById('swallowedDesire').value.trim().replace(',', '.');
+      const rawExpressedCuriosity = document.getElementById('expressedCuriosity').value.trim().replace(',', '.');
+      const rawExpressedAnger = document.getElementById('expressedAnger').value.trim().replace(',', '.');
+      const rawExpressedSadness = document.getElementById('expressedSadness').value.trim().replace(',', '.');
+      const rawExpressedFear = document.getElementById('expressedFear').value.trim().replace(',', '.');
+      const rawExpressedDesire = document.getElementById('expressedDesire').value.trim().replace(',', '.');
+      const rawExpressedOtherPercent = document.getElementById('expressedOtherPercent').value.trim().replace(',', '.');
       const dayPressure = getSliderNumber('dayPressureSlider');
       const selfRegie = getSliderNumber('selfRegieSlider');
       const cravingPeak = getSliderNumber('cravingPeakSlider');
@@ -1887,9 +1937,9 @@ Wat niet hielp: alleen blijven malen.</textarea>
       const contactQuality = contactQualityDerived === null ? '' : contactQualityDerived;
       const contactQualityForIndex = contactQualityDerived === null ? 50 : contactQualityDerived;
       const bodyRest = getSliderNumber('bodyRestSlider');
-      const emotionGapDerived = toOptionalPercentNumber(document.getElementById('emotionSwallowedPercent').value);
-      const emotionExpressionGap = emotionGapDerived === null ? '' : emotionGapDerived;
-      const emotionExpressionGapForIndex = emotionGapDerived === null ? 50 : emotionGapDerived;
+      const emotionExpressionDerived = toOptionalPercentNumber(document.getElementById('emotionExpressionPercent').value);
+      const emotionExpression = emotionExpressionDerived === null ? '' : emotionExpressionDerived;
+      const emotionExpressionForIndex = emotionExpressionDerived === null ? 50 : emotionExpressionDerived;
       return {
         plannedUnits: rawPlanned === '' ? '' : Number(rawPlanned),
         units: rawUnits === '' ? '' : Number(rawUnits),
@@ -1911,18 +1961,19 @@ Wat niet hielp: alleen blijven malen.</textarea>
         recoveryAction,
         contactQuality,
         bodyRest,
-        emotionExpressionGap,
-        dayInteractionIndex: computeDayInteractionIndex({ dayPressure, selfRegie, cravingPeak, recoveryAction, contactQuality: contactQualityForIndex, bodyRest, emotionExpressionGap: emotionExpressionGapForIndex }),
-        swallowedEmotionOther: document.getElementById('swallowedEmotionOther').value.trim(),
-        swallowedEmotionMain: document.getElementById('swallowedEmotionMain').value.trim(),
-        swallowedCuriosity: rawSwallowedCuriosity === '' ? '' : Number(rawSwallowedCuriosity),
-        swallowedAnger: rawSwallowedAnger === '' ? '' : Number(rawSwallowedAnger),
-        swallowedSadness: rawSwallowedSadness === '' ? '' : Number(rawSwallowedSadness),
-        swallowedFear: rawSwallowedFear === '' ? '' : Number(rawSwallowedFear),
-        swallowedDesire: rawSwallowedDesire === '' ? '' : Number(rawSwallowedDesire),
+        emotionExpression,
+        dayInteractionIndex: computeDayInteractionIndex({ dayPressure, selfRegie, cravingPeak, recoveryAction, contactQuality: contactQualityForIndex, bodyRest, emotionExpression: emotionExpressionForIndex }),
+        expressedEmotionOther: document.getElementById('expressedEmotionOther').value.trim(),
+        suppressionReason: document.getElementById('suppressionReason').value.trim(),
+        expressedCuriosity: rawExpressedCuriosity === '' ? '' : Number(rawExpressedCuriosity),
+        expressedAnger: rawExpressedAnger === '' ? '' : Number(rawExpressedAnger),
+        expressedSadness: rawExpressedSadness === '' ? '' : Number(rawExpressedSadness),
+        expressedFear: rawExpressedFear === '' ? '' : Number(rawExpressedFear),
+        expressedDesire: rawExpressedDesire === '' ? '' : Number(rawExpressedDesire),
+        expressedOtherPercent: rawExpressedOtherPercent === '' ? '' : Number(rawExpressedOtherPercent),
         missedTodayNote: document.getElementById('missedTodayNote').value.trim(),
         tooMuchTodayNote: document.getElementById('tooMuchTodayNote').value.trim(),
-        emotionSwallowedPercent: (() => { const r = document.getElementById('emotionSwallowedPercent').value.trim().replace(',', '.'); return r === '' ? '' : Number(r); })(),
+        emotionExpressionPercent: (() => { const r = document.getElementById('emotionExpressionPercent').value.trim().replace(',', '.'); return r === '' ? '' : Number(r); })(),
         updatedAt: new Date().toISOString()
       };
     }
@@ -1947,23 +1998,24 @@ Wat niet hielp: alleen blijven malen.</textarea>
         (entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined) ||
         (entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined) ||
         (entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined) ||
-        Boolean(entry.swallowedEmotionOther) ||
-        Boolean(entry.swallowedEmotionMain) ||
-        isNumericUnits(entry.swallowedCuriosity) ||
-        isNumericUnits(entry.swallowedAnger) ||
-        isNumericUnits(entry.swallowedSadness) ||
-        isNumericUnits(entry.swallowedFear) ||
-        isNumericUnits(entry.swallowedDesire) ||
+        Boolean(entry.expressedEmotionOther) ||
+        Boolean(entry.suppressionReason) ||
+        isNumericUnits(entry.expressedCuriosity) ||
+        isNumericUnits(entry.expressedAnger) ||
+        isNumericUnits(entry.expressedSadness) ||
+        isNumericUnits(entry.expressedFear) ||
+        isNumericUnits(entry.expressedDesire) ||
+        isNumericUnits(entry.expressedOtherPercent) ||
         (entry.dayPressure !== undefined && entry.dayPressure !== null && Number(entry.dayPressure) !== 50) ||
         (entry.selfRegie !== undefined && entry.selfRegie !== null && Number(entry.selfRegie) !== 50) ||
         (entry.cravingPeak !== undefined && entry.cravingPeak !== null && Number(entry.cravingPeak) !== 50) ||
         (entry.recoveryAction !== undefined && entry.recoveryAction !== null && Number(entry.recoveryAction) !== 50) ||
         (entry.contactQuality !== undefined && entry.contactQuality !== null && Number(entry.contactQuality) !== 50) ||
         (entry.bodyRest !== undefined && entry.bodyRest !== null && Number(entry.bodyRest) !== 50) ||
-        (entry.emotionExpressionGap !== undefined && entry.emotionExpressionGap !== null && Number(entry.emotionExpressionGap) !== 50) ||
+        (entry.emotionExpression !== undefined && entry.emotionExpression !== null && Number(entry.emotionExpression) !== 50) ||
+        (entry.emotionExpressionPercent !== '' && entry.emotionExpressionPercent !== null && entry.emotionExpressionPercent !== undefined) ||
         Boolean(entry.missedTodayNote) ||
-        Boolean(entry.tooMuchTodayNote) ||
-        (entry.emotionSwallowedPercent !== '' && entry.emotionSwallowedPercent !== null && entry.emotionSwallowedPercent !== undefined)
+        Boolean(entry.tooMuchTodayNote)
       );
     }
 
@@ -2006,28 +2058,32 @@ Wat niet hielp: alleen blijven malen.</textarea>
         showMessage('IRL contact moet tussen 0 en 100 liggen.');
         return;
       }
-      if (entry.emotionSwallowedPercent !== '' && (Number.isNaN(entry.emotionSwallowedPercent) || !isValidPercent(entry.emotionSwallowedPercent))) {
-        showMessage('Ingeslikt emotie moet tussen 0 en 100 liggen.');
+      if (entry.emotionExpressionPercent !== '' && (Number.isNaN(entry.emotionExpressionPercent) || !isValidPercent(entry.emotionExpressionPercent))) {
+        showMessage('Emotionele ruimte moet tussen 0 en 100 liggen.');
         return;
       }
-      if (entry.swallowedCuriosity !== '' && (Number.isNaN(entry.swallowedCuriosity) || !isValidPercent(entry.swallowedCuriosity))) {
+      if (entry.expressedCuriosity !== '' && (Number.isNaN(entry.expressedCuriosity) || !isValidPercent(entry.expressedCuriosity))) {
         showMessage('Nieuwsgierigheid moet tussen 0 en 100 liggen.');
         return;
       }
-      if (entry.swallowedAnger !== '' && (Number.isNaN(entry.swallowedAnger) || !isValidPercent(entry.swallowedAnger))) {
+      if (entry.expressedAnger !== '' && (Number.isNaN(entry.expressedAnger) || !isValidPercent(entry.expressedAnger))) {
         showMessage('Boosheid moet tussen 0 en 100 liggen.');
         return;
       }
-      if (entry.swallowedSadness !== '' && (Number.isNaN(entry.swallowedSadness) || !isValidPercent(entry.swallowedSadness))) {
+      if (entry.expressedSadness !== '' && (Number.isNaN(entry.expressedSadness) || !isValidPercent(entry.expressedSadness))) {
         showMessage('Verdriet moet tussen 0 en 100 liggen.');
         return;
       }
-      if (entry.swallowedFear !== '' && (Number.isNaN(entry.swallowedFear) || !isValidPercent(entry.swallowedFear))) {
+      if (entry.expressedFear !== '' && (Number.isNaN(entry.expressedFear) || !isValidPercent(entry.expressedFear))) {
         showMessage('Angst moet tussen 0 en 100 liggen.');
         return;
       }
-      if (entry.swallowedDesire !== '' && (Number.isNaN(entry.swallowedDesire) || !isValidPercent(entry.swallowedDesire))) {
+      if (entry.expressedDesire !== '' && (Number.isNaN(entry.expressedDesire) || !isValidPercent(entry.expressedDesire))) {
         showMessage('Begeerte moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.expressedOtherPercent !== '' && (Number.isNaN(entry.expressedOtherPercent) || !isValidPercent(entry.expressedOtherPercent))) {
+        showMessage('Andere emotie moet tussen 0 en 100 liggen.');
         return;
       }
 
@@ -2277,13 +2333,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
         if (isNumericUnits(entry.enjoymentPercent)) parts.push(`Genoten: ${formatUnits(entry.enjoymentPercent)}%`);
         if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
         if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
-        const emotionBalanceText = formatEmotionBalanceText(entry.emotionSwallowedPercent);
+        const emotionBalanceText = formatEmotionBalanceText(entry.emotionExpressionPercent);
         if (emotionBalanceText) parts.push(emotionBalanceText);
         if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) parts.push(`Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`);
-        if (entry.swallowedEmotionOther) parts.push(`Andere emotie: ${entry.swallowedEmotionOther}`);
-        if (entry.swallowedEmotionMain) parts.push(`Reden om liever in te slikken: ${entry.swallowedEmotionMain}`);
-        const swallowedBasics = getSwallowedBasicsSummary(entry);
-        if (swallowedBasics.length) parts.push(`Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`);
+        if (entry.expressedEmotionOther) parts.push(`Andere emotie: ${entry.expressedEmotionOther}`);
+        if (entry.suppressionReason) parts.push(`Reden om liever in te slikken: ${entry.suppressionReason}`);
+        const expressedBasics = getExpressedBasicsSummary(entry);
+        if (expressedBasics.length) parts.push(`Expressie basis-emoties: ${expressedBasics.join(', ')}`);
         if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
         if (entry.tooMuchTodayNote) parts.push(`Te veel: ${entry.tooMuchTodayNote}`);
 
@@ -2334,7 +2390,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
         filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
         const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
         const rows = [
-          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionSwallowedPercent', 'dayPressure', 'selfRegie', 'cravingPeak', 'recoveryAction', 'contactQuality', 'bodyRest', 'emotionExpressionGap', 'dayInteractionIndex', 'swallowedEmotionOther', 'swallowedEmotionMain', 'swallowedCuriosity', 'swallowedAnger', 'swallowedSadness', 'swallowedFear', 'swallowedDesire', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionExpressionPercent', 'dayPressure', 'selfRegie', 'cravingPeak', 'recoveryAction', 'contactQuality', 'bodyRest', 'emotionExpression', 'dayInteractionIndex', 'expressedEmotionOther', 'suppressionReason', 'expressedCuriosity', 'expressedAnger', 'expressedSadness', 'expressedFear', 'expressedDesire', 'expressedOtherPercent', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
           ...sortedEntries.map((entry) => {
             const hasBoth = isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units);
             const difference = hasBoth ? Number(entry.units) - Number(entry.plannedUnits) : '';
@@ -2352,22 +2408,23 @@ Wat niet hielp: alleen blijven malen.</textarea>
               entry.enjoymentPercent ?? '',
               entry.socialOnlinePercent ?? '',
               entry.socialIrlPercent ?? '',
-              entry.emotionSwallowedPercent ?? '',
+              entry.emotionExpressionPercent ?? '',
               entry.dayPressure ?? '',
               entry.selfRegie ?? '',
               entry.cravingPeak ?? '',
               entry.recoveryAction ?? '',
               entry.contactQuality ?? '',
               entry.bodyRest ?? '',
-              entry.emotionExpressionGap ?? '',
+              entry.emotionExpression ?? '',
               entry.dayInteractionIndex ?? '',
-              entry.swallowedEmotionOther || '',
-              entry.swallowedEmotionMain || '',
-              entry.swallowedCuriosity ?? '',
-              entry.swallowedAnger ?? '',
-              entry.swallowedSadness ?? '',
-              entry.swallowedFear ?? '',
-              entry.swallowedDesire ?? '',
+              entry.expressedEmotionOther || '',
+              entry.suppressionReason || '',
+              entry.expressedCuriosity ?? '',
+              entry.expressedAnger ?? '',
+              entry.expressedSadness ?? '',
+              entry.expressedFear ?? '',
+              entry.expressedDesire ?? '',
+              entry.expressedOtherPercent ?? '',
               entry.missedTodayNote || '',
               entry.tooMuchTodayNote || '',
               entry.usageNote || '',
@@ -2550,7 +2607,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
           item.appendChild(socialIrl);
         }
 
-        const emotionBalanceText = formatEmotionBalanceText(entry.emotionSwallowedPercent);
+        const emotionBalanceText = formatEmotionBalanceText(entry.emotionExpressionPercent);
         if (emotionBalanceText) {
           const emotionSwallowed = document.createElement('p');
           emotionSwallowed.textContent = emotionBalanceText;
@@ -2563,23 +2620,23 @@ Wat niet hielp: alleen blijven malen.</textarea>
           item.appendChild(interactionIndex);
         }
 
-        if (entry.swallowedEmotionOther) {
-          const swallowedOther = document.createElement('p');
-          swallowedOther.textContent = `Andere emotie: ${entry.swallowedEmotionOther}`;
-          item.appendChild(swallowedOther);
+        if (entry.expressedEmotionOther) {
+          const expressedOther = document.createElement('p');
+          expressedOther.textContent = `Andere emotie: ${entry.expressedEmotionOther}`;
+          item.appendChild(expressedOther);
         }
 
-        if (entry.swallowedEmotionMain) {
-          const swallowedMain = document.createElement('p');
-          swallowedMain.textContent = `Reden om liever in te slikken: ${entry.swallowedEmotionMain}`;
-          item.appendChild(swallowedMain);
+        if (entry.suppressionReason) {
+          const suppressionMain = document.createElement('p');
+          suppressionMain.textContent = `Reden om liever in te slikken: ${entry.suppressionReason}`;
+          item.appendChild(suppressionMain);
         }
 
-        const swallowedBasics = getSwallowedBasicsSummary(entry);
-        if (swallowedBasics.length) {
-          const swallowedBasicsP = document.createElement('p');
-          swallowedBasicsP.textContent = `Ingeslikte basis-emoties: ${swallowedBasics.join(', ')}`;
-          item.appendChild(swallowedBasicsP);
+        const expressedBasics = getExpressedBasicsSummary(entry);
+        if (expressedBasics.length) {
+          const expressedBasicsP = document.createElement('p');
+          expressedBasicsP.textContent = `Expressie basis-emoties: ${expressedBasics.join(', ')}`;
+          item.appendChild(expressedBasicsP);
         }
 
         if (entry.missedTodayNote) {
@@ -2638,8 +2695,8 @@ Wat niet hielp: alleen blijven malen.</textarea>
       hoursEl.value = String(Math.round(hours * 10) / 10);
     }
 
-    function updateSwallowedEmotionResearchLink() {
-      const link = document.getElementById('swallowedEmotionResearchLink');
+    function updateExpressedEmotionResearchLink() {
+      const link = document.getElementById('expressedEmotionResearchLink');
       const dateInput = document.getElementById('usageDate');
       if (!link || !dateInput) return;
       const dateKey = dateInput.value || toDateKey(new Date());
@@ -2666,7 +2723,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       });
       setupPercentSliderBindings();
       updateDayInteractionSummary();
-      updateSwallowedEmotionResearchLink();
+      updateExpressedEmotionResearchLink();
       renderHistory();
       render14DayOverview();
 
@@ -2685,6 +2742,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
         });
       }
 
+      document.getElementById('interactionIndexInfoButton').addEventListener('click', openInteractionIndexModal);
+      document.getElementById('closeInteractionIndexButton').addEventListener('click', closeInteractionIndexModal);
+      document.getElementById('interactionIndexModal').addEventListener('click', (event) => {
+        if (event.target.id === 'interactionIndexModal') {
+          closeInteractionIndexModal();
+        }
+      });
       document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
         button.addEventListener('click', () => {
           openHulpzinnetjeModal(button.dataset.hulpzinnetjeTitle || 'Hulpzinnetje', button.dataset.hulpzinnetjeContent || '');
@@ -2700,7 +2764,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       document.getElementById('nextDayButton').addEventListener('click', () => shiftSelectedDate(1));
       document.getElementById('usageDate').addEventListener('change', () => {
         renderSelectedDay();
-        updateSwallowedEmotionResearchLink();
+        updateExpressedEmotionResearchLink();
       });
       document.getElementById('saveDayButton').addEventListener('click', saveSelectedDay);
       document.getElementById('sleepStart').addEventListener('change', calculateSleepHours);
@@ -2708,7 +2772,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       document.getElementById('copyTodayButton').addEventListener('click', () => {
         dateInput.value = toDateKey(new Date());
         renderSelectedDay();
-        updateSwallowedEmotionResearchLink();
+        updateExpressedEmotionResearchLink();
       });
       document.querySelectorAll('[data-range]').forEach((button) => {
         button.addEventListener('click', () => setHistoryFilter(Number(button.dataset.range)));
