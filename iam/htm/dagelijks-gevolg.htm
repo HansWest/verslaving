@@ -89,6 +89,29 @@
       gap: 0.9rem;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
+    .section-mini-head {
+      margin: 0 0 0.2rem;
+      color: #2f4a5b;
+      font-size: 1.02rem;
+    }
+    .section-mini-sub {
+      margin: 0;
+      color: #4d6476;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+    .usage-row {
+      display: grid;
+      gap: 0.9rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .usage-row .form-group { margin: 0; }
+    .sleep-row {
+      display: grid;
+      gap: 0.9rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sleep-row .form-group { margin: 0; }
     .tracker-grid .form-group,
     .tracker-shell .form-group { margin: 0; }
     input[type="number"],
@@ -100,6 +123,17 @@
       padding: 0.65rem 0.8rem;
       background: #fff;
       color: var(--ink);
+    }
+    input[type="date"] {
+      padding-right: 2.8rem;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23235171' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='5' width='18' height='16' rx='3' ry='3'/%3e%3cline x1='8' y1='3.5' x2='8' y2='7'/%3e%3cline x1='16' y1='3.5' x2='16' y2='7'/%3e%3cline x1='3' y1='10' x2='21' y2='10'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      background-size: 1.1em 1.1em;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: 0;
+      cursor: pointer;
     }
     .history-head {
       display: flex;
@@ -512,6 +546,49 @@
     .interaction-slider-item input[type="range"] {
       width: 100%;
     }
+    .percent-slider-grid {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .percent-slider-item {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      background: #fbfdfe;
+      border-radius: 12px;
+      padding: 0.65rem 0.72rem;
+      display: grid;
+      gap: 0.45rem;
+    }
+    .percent-slider-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+    .percent-slider-head label {
+      margin: 0;
+      font-weight: 700;
+      color: #2f4a5b;
+      font-size: 0.92rem;
+    }
+    .percent-slider-value {
+      border-radius: 999px;
+      background: #e8f1f7;
+      color: #245377;
+      min-width: 6.5rem;
+      text-align: center;
+      padding: 0.15rem 0.5rem;
+      font-weight: 700;
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+    .percent-hidden-input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
     .interaction-index-box {
       margin-top: 0.75rem;
       border: 1px solid rgba(23, 50, 73, 0.12);
@@ -533,11 +610,34 @@
       font-size: 0.92rem;
       line-height: 1.45;
     }
+    .two-week-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .two-week-head h2 { margin: 0; }
+    .two-week-toggle {
+      border: 1px solid rgba(23, 50, 73, 0.16);
+      border-radius: 999px;
+      background: #f3f8fc;
+      color: #235171;
+      min-height: 38px;
+      padding: 0.35rem 0.8rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+    .two-week-card-body.is-collapsed {
+      display: none;
+    }
     .fourteen-day-overview { margin-top: 1rem; }
     .overview-empty { opacity: 0.55; }
     @media (max-width: 640px) {
       .tracker-toolbar { grid-template-columns: 1fr; }
       .nav-day { width: 100%; }
+      .usage-row { grid-template-columns: 1fr; }
+      .sleep-row { grid-template-columns: 1fr; }
       .observation-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -572,7 +672,11 @@
       </section>
 
       <section class="card" aria-labelledby="twoWeekObserveTitle">
-        <h2 id="twoWeekObserveTitle">Twee weken gebruik bijhouden: eerst waarnemen, dan sturen</h2>
+        <div class="two-week-head">
+          <h2 id="twoWeekObserveTitle">Twee weken gebruik bijhouden: eerst waarnemen, dan sturen</h2>
+          <button type="button" id="twoWeekToggleButton" class="two-week-toggle" aria-expanded="true" aria-controls="twoWeekCardBody">Inklappen</button>
+        </div>
+        <div id="twoWeekCardBody" class="two-week-card-body">
         <p class="observation-help">Je hoeft de komende twee weken niet direct minder te gebruiken. Het doel is eerst zicht krijgen op je gebruik: waarom wil je nu gebruiken, wat voel je, wat denk je, en in welke situatie gebeurt het?</p>
         <p class="observation-help">Als je wilt opschrijven: omdat ik daar nou eenmaal zin in heb, probeer dan toch even stil te staan bij de vraag waarom je daar nu zin in hebt.</p>
         <div class="two-week-setup">
@@ -587,14 +691,19 @@
         <p id="twoWeekPhaseStatus" class="two-week-status">Nog geen begindatum ingesteld. Kies een startdatum om je eerste twee weken vast te leggen.</p>
         <div class="zone" style="margin-top:0.9rem;">
           <h3 style="margin:0 0 0.45rem;">Voorbeeld: het hoeft niet perfect</h3>
-          <textarea readonly>dag 8.
-17:00 op de bank even ontspannen na m'n werk, 19:00 kroeg "ik kan hier toch niet in m'n eentje cola gaan zitten zuipen", *shit toch vergeten op te schrijven: ik denk 5 of 6*, 00:40 eentje om te slapen, 00:50 nog even een goeie om even echt snel in slaap te vallen</textarea>
+          <textarea readonly>dag 6.
+18:20 thuis. Trek 7/10 na gedoe op werk. Eerst wilde ik direct gebruiken.
+19:10 toch eerst gegeten en 10 min gelopen.
+21:00 uiteindelijk 2 eenheden gebruikt (plan was 1).
+Wat hielp: appje gestuurd naar maatje.
+Wat niet hielp: alleen blijven malen.</textarea>
           <p class="observation-help" style="margin-top:0.45rem;">Nog mooier is het als je ook tijd, plaats, gevoel of gedachten noteert. Dat helpt om achteraf te analyseren welke risico's er wanneer spelen.</p>
         </div>
         <div id="fourteenDayOverview" class="fourteen-day-overview">
           <p class="observation-help">Overzicht wordt geladen…</p>
         </div>
         <p class="observation-help" style="margin-top:0.85rem;"><strong>Waarom dit helpt:</strong> door twee weken bij te houden wat er vlak voor gebruik gebeurt, krijg je later veel meer materiaal om risico-situaties, gevoelens, gedachten en gewoontes te analyseren. Dit is sterke voorinformatie voor analyse achteraf en je plan van aanpak.</p>
+        </div>
       </section>
 
       <div id="message" class="message"></div>
@@ -694,21 +803,29 @@
         </div>
 
         <div class="tracker-grid">
-          <div class="form-group">
-            <label for="plannedUnits">Gepland gebruik (eenheden)</label>
-            <input id="plannedUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 0.5 of 2" />
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <h3 class="section-mini-head">1) Gebruik en context</h3>
+            <p class="section-mini-sub">Plan en realiteit naast elkaar, plus waar en wanneer het begon.</p>
           </div>
-          <div class="form-group">
-            <label for="usageUnits">Werkelijk gebruik (eenheden)</label>
-            <input id="usageUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 1.5 of -0.5" />
+          <div class="usage-row">
+            <div class="form-group">
+              <label for="plannedUnits">Gepland gebruik (eenheden)</label>
+              <input id="plannedUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 0.5 of 2" />
+            </div>
+            <div class="form-group">
+              <label for="usageUnits">Werkelijk gebruik (eenheden)</label>
+              <input id="usageUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 1.5 of -0.5" />
+            </div>
           </div>
-          <div class="form-group">
-            <label for="firstUnitsTime">Tijd eerste eenheden</label>
-            <input id="firstUnitsTime" type="time" />
-          </div>
-          <div class="form-group">
-            <label for="firstUnitsPlace">Plek eerste eenheden</label>
-            <input id="firstUnitsPlace" type="text" placeholder="Bijv. thuis, café, onderweg, feest..." />
+          <div class="usage-row">
+            <div class="form-group">
+              <label for="firstUnitsPlace">Plek eerste eenheden</label>
+              <input id="firstUnitsPlace" type="text" placeholder="Bijv. thuis, café, onderweg, feest..." />
+            </div>
+            <div class="form-group">
+              <label for="firstUnitsTime">Tijd eerste eenheden</label>
+              <input id="firstUnitsTime" type="time" />
+            </div>
           </div>
           <div class="form-group">
             <label for="usageNote">Korte toelichting op gebruik</label>
@@ -717,6 +834,10 @@
         </div>
 
         <div class="tracker-grid">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <h3 class="section-mini-head">2) Risico en motivatie</h3>
+            <p class="section-mini-sub">Kerninschatting voor deze dag: wat trekt je naar gebruik en wat houdt je op koers.</p>
+          </div>
           <div class="form-group">
             <label for="riskNote">Risico op deze dag</label>
             <textarea id="riskNote" placeholder="Wat maakt deze dag kwetsbaar of risicovol?"></textarea>
@@ -728,16 +849,21 @@
         </div>
 
         <div class="tracker-grid" id="sleepTrackingSection">
-          <div class="form-group">
-            <label for="sleepStart">Inslaaptijd</label>
-            <input id="sleepStart" type="time" />
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <h3 class="section-mini-head">3) Herstelbasis slaap</h3>
+          </div>
+          <div class="sleep-row">
+            <div class="form-group">
+              <label for="sleepStart">Inslaaptijd:</label>
+              <input id="sleepStart" type="time" />
+            </div>
+            <div class="form-group">
+              <label for="sleepEnd">Wakker om:</label>
+              <input id="sleepEnd" type="time" />
+            </div>
           </div>
           <div class="form-group">
-            <label for="sleepEnd">Wakker-word-tijd</label>
-            <input id="sleepEnd" type="time" />
-          </div>
-          <div class="form-group">
-            <label for="sleepHours">Slaapuren (automatisch)</label>
+            <label for="sleepHours">Slaap (automatisch)</label>
             <input id="sleepHours" type="number" step="0.1" readonly />
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
@@ -748,25 +874,57 @@
         </div>
 
         <div class="tracker-grid" id="realityTrackingSection">
-          <div class="form-group">
-            <label for="naturePercent">Ben je buiten in <em>natuur</em> geweest? (0-100%)</label>
-            <input id="naturePercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <h3 class="section-mini-head">4) Realiteitsscores (%)</h3>
+            <p class="section-mini-sub">Hier verzamel je de concrete dagsignalen. Deze waarden voeden automatisch de daginteractie-index.</p>
           </div>
-          <div class="form-group">
-            <label for="enjoymentPercent">Heb je deze dag <em>genoten</em> (van seks bijv.)? (0-100%)</label>
-            <input id="enjoymentPercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
-          </div>
-           <div class="form-group">
-            <label for="socialIrlPercent">Contact met andere mensen <em>in het echt</em> (0-100%)</label>
-            <input id="socialIrlPercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
-          </div>
-          <div class="form-group">
-            <label for="socialOnlinePercent">Contact met andere mensen <em>online</em> (0-100%)</label>
-            <input id="socialOnlinePercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
-          </div>
-         <div class="form-group">
-            <label for="emotionSwallowedPercent">Heb je emoties als verdriet gevoeld en ingeslikt? (0-100%)</label>
-            <input id="emotionSwallowedPercent" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="0 tot 100" />
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <div class="percent-slider-grid">
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="naturePercentRange">Ben je buiten in <em>natuur</em> geweest?</label>
+                  <span class="percent-slider-value" id="naturePercentValue">Nog niet gekozen</span>
+                </div>
+                <input id="naturePercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="naturePercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="enjoymentPercentRange">Heb je deze dag <em>genoten</em> (van seks bijv.)?</label>
+                  <span class="percent-slider-value" id="enjoymentPercentValue">Nog niet gekozen</span>
+                </div>
+                <input id="enjoymentPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="enjoymentPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="socialIrlPercentRange">Contact met andere mensen <em>in het echt</em></label>
+                  <span class="percent-slider-value" id="socialIrlPercentValue">Nog niet gekozen</span>
+                </div>
+                <input id="socialIrlPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="socialIrlPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="socialOnlinePercentRange">Contact met andere mensen <em>online</em></label>
+                  <span class="percent-slider-value" id="socialOnlinePercentValue">Nog niet gekozen</span>
+                </div>
+                <input id="socialOnlinePercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="socialOnlinePercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="emotionSwallowedPercentRange">Heb je emoties als verdriet gevoeld en ingeslikt?</label>
+                  <span class="percent-slider-value" id="emotionSwallowedPercentValue">Nog niet gekozen</span>
+                </div>
+                <input id="emotionSwallowedPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="emotionSwallowedPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+            </div>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
             <label for="swallowedEmotionMain">Welke emotie wordt vooral ingeslikt?</label>
@@ -801,6 +959,9 @@
         </div>
 
         <div class="tracker-grid" id="reflectionTrackingSection">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <h3 class="section-mini-head">5) Reflectie</h3>
+          </div>
           <div class="form-group">
             <label for="missedTodayNote">Wat heb je vandaag gemist?</label>
             <textarea id="missedTodayNote" placeholder="Wat had je vandaag nodig maar ontbrak?"></textarea>
@@ -813,7 +974,9 @@
 
         <div class="tracker-grid" id="interactionTrackingSection">
           <div class="form-group" style="grid-column: 1 / -1;">
-            <label style="margin-bottom:0.45rem; display:block;">Interactie van de dag (numeriek)</label>
+            <label style="margin-bottom:0.45rem; display:block;">6) Interactie van de dag (numeriek)</label>
+            <p class="section-mini-sub" style="margin-bottom:0.6rem;">Contactkwaliteit en emotie-uitingskloof worden automatisch afgeleid uit de realiteitsscores, zodat je die niet dubbel hoeft in te vullen.</p>
+            <p class="section-mini-sub" id="interactionDerivedHint" style="margin-bottom:0.6rem;"></p>
             <div class="interaction-slider-grid">
               <div class="interaction-slider-item">
                 <div class="interaction-slider-head">
@@ -845,26 +1008,14 @@
               </div>
               <div class="interaction-slider-item">
                 <div class="interaction-slider-head">
-                  <label for="contactQualitySlider">Contactkwaliteit</label>
-                  <span class="interaction-slider-value" id="contactQualitySliderValue">50</span>
-                </div>
-                <input id="contactQualitySlider" type="range" min="0" max="100" step="1" value="50" />
-              </div>
-              <div class="interaction-slider-item">
-                <div class="interaction-slider-head">
                   <label for="bodyRestSlider">Lichamelijke rust</label>
                   <span class="interaction-slider-value" id="bodyRestSliderValue">50</span>
                 </div>
                 <input id="bodyRestSlider" type="range" min="0" max="100" step="1" value="50" />
               </div>
-              <div class="interaction-slider-item">
-                <div class="interaction-slider-head">
-                  <label for="emotionExpressionGapSlider">Gevoelde emotie vs geuite emotie</label>
-                  <span class="interaction-slider-value" id="emotionExpressionGapSliderValue">50</span>
-                </div>
-                <input id="emotionExpressionGapSlider" type="range" min="0" max="100" step="1" value="50" />
-              </div>
             </div>
+            <input id="contactQualitySlider" class="percent-hidden-input" type="range" min="0" max="100" step="1" value="50" tabindex="-1" aria-hidden="true" />
+            <input id="emotionExpressionGapSlider" class="percent-hidden-input" type="range" min="0" max="100" step="1" value="50" tabindex="-1" aria-hidden="true" />
             <div class="interaction-index-box">
               <p><strong>Daginteractie-index:</strong> <span id="dayInteractionIndexValue">0</span></p>
               <p class="observation-help" id="dayInteractionIndexHint" style="margin-top:0.35rem;">Neutraal beeld voor deze dag. Bij deze emotie-slider geldt: 0 = volledig geuit, 100 = volledig ingeslikt.</p>
@@ -960,8 +1111,30 @@
       'bodyRestSlider',
       'emotionExpressionGapSlider'
     ];
+    const PERCENT_SLIDER_FIELDS = [
+      { fieldId: 'naturePercent', sliderId: 'naturePercentRange', valueId: 'naturePercentValue' },
+      { fieldId: 'enjoymentPercent', sliderId: 'enjoymentPercentRange', valueId: 'enjoymentPercentValue' },
+      { fieldId: 'socialIrlPercent', sliderId: 'socialIrlPercentRange', valueId: 'socialIrlPercentValue' },
+      { fieldId: 'socialOnlinePercent', sliderId: 'socialOnlinePercentRange', valueId: 'socialOnlinePercentValue' },
+      { fieldId: 'emotionSwallowedPercent', sliderId: 'emotionSwallowedPercentRange', valueId: 'emotionSwallowedPercentValue' }
+    ];
     const historyLimit = 14;
     let selectedHistoryRange = 7;
+    let twoWeekCardUserToggled = false;
+
+    function setTwoWeekCardCollapsed(collapsed) {
+      const body = document.getElementById('twoWeekCardBody');
+      const btn = document.getElementById('twoWeekToggleButton');
+      if (!body || !btn) return;
+      body.classList.toggle('is-collapsed', collapsed);
+      btn.textContent = collapsed ? 'Uitklappen' : 'Inklappen';
+      btn.setAttribute('aria-expanded', String(!collapsed));
+    }
+
+    function isTwoWeekCardCollapsed() {
+      const body = document.getElementById('twoWeekCardBody');
+      return Boolean(body && body.classList.contains('is-collapsed'));
+    }
 
     function renderPersonalizedGreeting() {
       const greetingEl = document.getElementById('personalGreeting');
@@ -1007,6 +1180,83 @@
       return Math.round(index * 10) / 10;
     }
 
+    function syncPercentSliderFromField(fieldId, sliderId, valueId) {
+      const fieldEl = document.getElementById(fieldId);
+      const sliderEl = document.getElementById(sliderId);
+      const valueEl = document.getElementById(valueId);
+      if (!fieldEl || !sliderEl || !valueEl) return;
+
+      const raw = String(fieldEl.value || '').trim();
+      if (raw === '' || Number.isNaN(Number(raw))) {
+        sliderEl.value = '50';
+        valueEl.textContent = 'Nog niet gekozen';
+        return;
+      }
+
+      const clamped = Math.min(100, Math.max(0, Number(raw)));
+      sliderEl.value = String(clamped);
+      valueEl.textContent = `${clamped}%`;
+    }
+
+    function syncAllPercentSlidersFromFields() {
+      PERCENT_SLIDER_FIELDS.forEach(({ fieldId, sliderId, valueId }) => {
+        syncPercentSliderFromField(fieldId, sliderId, valueId);
+      });
+      syncDerivedInteractionFromPercents();
+    }
+
+    function toOptionalPercentNumber(rawValue) {
+      const raw = String(rawValue ?? '').trim().replace(',', '.');
+      if (raw === '') return null;
+      const num = Number(raw);
+      if (Number.isNaN(num)) return null;
+      return Math.min(100, Math.max(0, num));
+    }
+
+    function deriveContactQualityFromPercents(onlineRaw, irlRaw) {
+      const online = toOptionalPercentNumber(onlineRaw);
+      const irl = toOptionalPercentNumber(irlRaw);
+      if (online === null && irl === null) return null;
+      if (online === null) return irl;
+      if (irl === null) return online;
+      return Math.round((online + irl) / 2);
+    }
+
+    function syncDerivedInteractionFromPercents() {
+      const contactEl = document.getElementById('contactQualitySlider');
+      const gapEl = document.getElementById('emotionExpressionGapSlider');
+      const socialOnlineEl = document.getElementById('socialOnlinePercent');
+      const socialIrlEl = document.getElementById('socialIrlPercent');
+      const swallowedEl = document.getElementById('emotionSwallowedPercent');
+
+      if (!contactEl || !gapEl || !socialOnlineEl || !socialIrlEl || !swallowedEl) return;
+
+      const derivedContact = deriveContactQualityFromPercents(socialOnlineEl.value, socialIrlEl.value);
+      const derivedGap = toOptionalPercentNumber(swallowedEl.value);
+
+      contactEl.value = String(derivedContact === null ? 50 : derivedContact);
+      gapEl.value = String(derivedGap === null ? 50 : derivedGap);
+
+      updateDayInteractionSummary();
+    }
+
+    function setupPercentSliderBindings() {
+      PERCENT_SLIDER_FIELDS.forEach(({ fieldId, sliderId, valueId }) => {
+        const fieldEl = document.getElementById(fieldId);
+        const sliderEl = document.getElementById(sliderId);
+        const valueEl = document.getElementById(valueId);
+        if (!fieldEl || !sliderEl || !valueEl) return;
+
+        sliderEl.addEventListener('input', () => {
+          fieldEl.value = sliderEl.value;
+          valueEl.textContent = `${sliderEl.value}%`;
+          syncDerivedInteractionFromPercents();
+        });
+      });
+
+      syncAllPercentSlidersFromFields();
+    }
+
     function updateDayInteractionSummary() {
       const values = {
         dayPressure: getSliderNumber('dayPressureSlider'),
@@ -1020,7 +1270,13 @@
       const index = computeDayInteractionIndex(values);
       const valueEl = document.getElementById('dayInteractionIndexValue');
       const hintEl = document.getElementById('dayInteractionIndexHint');
+      const derivedEl = document.getElementById('interactionDerivedHint');
       if (valueEl) valueEl.textContent = String(index);
+      if (derivedEl) {
+        const contactText = Number.isFinite(values.contactQuality) ? `${Math.round(values.contactQuality)}%` : 'n.v.t.';
+        const gapText = Number.isFinite(values.emotionExpressionGap) ? `${Math.round(values.emotionExpressionGap)}%` : 'n.v.t.';
+        derivedEl.textContent = `Afgeleid: contactkwaliteit ${contactText} | emotiekloof ${gapText}.`;
+      }
       if (hintEl) {
         if (index >= 20) {
           hintEl.textContent = 'Sterk regulerend dagpatroon.';
@@ -1205,6 +1461,10 @@
           const dayNumber = getDateDiffInDays(todayKey, phase.startDate) + 1;
           statusEl.textContent = `Je zit in dag ${dayNumber} van je eerste 14-dagenfase (${phase.startDate} t/m ${phase.endDate}).`;
         }
+      }
+
+      if (!twoWeekCardUserToggled) {
+        setTwoWeekCardCollapsed(isAfter);
       }
 
       const filledCount = days.filter((k) => entries[k] && hasEntryContent(entries[k])).length;
@@ -1497,6 +1757,7 @@
       document.getElementById('missedTodayNote').value = entry?.missedTodayNote || '';
       document.getElementById('tooMuchTodayNote').value = entry?.tooMuchTodayNote || '';
       document.getElementById('emotionSwallowedPercent').value = entry && entry.emotionSwallowedPercent !== '' && entry.emotionSwallowedPercent !== null && entry.emotionSwallowedPercent !== undefined ? entry.emotionSwallowedPercent : '';
+      syncAllPercentSlidersFromFields();
     }
 
     function renderSelectedDayMeta(entry, dateKey) {
@@ -1558,9 +1819,13 @@
       const selfRegie = getSliderNumber('selfRegieSlider');
       const cravingPeak = getSliderNumber('cravingPeakSlider');
       const recoveryAction = getSliderNumber('recoveryActionSlider');
-      const contactQuality = getSliderNumber('contactQualitySlider');
+      const contactQualityDerived = deriveContactQualityFromPercents(rawSocialOnline, rawSocialIrl);
+      const contactQuality = contactQualityDerived === null ? '' : contactQualityDerived;
+      const contactQualityForIndex = contactQualityDerived === null ? 50 : contactQualityDerived;
       const bodyRest = getSliderNumber('bodyRestSlider');
-      const emotionExpressionGap = getSliderNumber('emotionExpressionGapSlider');
+      const emotionGapDerived = toOptionalPercentNumber(document.getElementById('emotionSwallowedPercent').value);
+      const emotionExpressionGap = emotionGapDerived === null ? '' : emotionGapDerived;
+      const emotionExpressionGapForIndex = emotionGapDerived === null ? 50 : emotionGapDerived;
       return {
         plannedUnits: rawPlanned === '' ? '' : Number(rawPlanned),
         units: rawUnits === '' ? '' : Number(rawUnits),
@@ -1583,7 +1848,7 @@
         contactQuality,
         bodyRest,
         emotionExpressionGap,
-        dayInteractionIndex: computeDayInteractionIndex({ dayPressure, selfRegie, cravingPeak, recoveryAction, contactQuality, bodyRest, emotionExpressionGap }),
+        dayInteractionIndex: computeDayInteractionIndex({ dayPressure, selfRegie, cravingPeak, recoveryAction, contactQuality: contactQualityForIndex, bodyRest, emotionExpressionGap: emotionExpressionGapForIndex }),
         swallowedEmotionMain: document.getElementById('swallowedEmotionMain').value.trim(),
         swallowedCuriosity: document.getElementById('swallowedCuriosity').checked,
         swallowedAnger: document.getElementById('swallowedAnger').checked,
@@ -2315,6 +2580,7 @@
           updateDayInteractionSummary();
         });
       });
+      setupPercentSliderBindings();
       updateDayInteractionSummary();
       updateSwallowedEmotionResearchLink();
       renderHistory();
@@ -2322,9 +2588,16 @@
 
       const twoWeekStartBtn = document.getElementById('startTwoWeekPhaseButton');
       const twoWeekStartInput = document.getElementById('twoWeekStartDate');
+      const twoWeekToggleBtn = document.getElementById('twoWeekToggleButton');
       if (twoWeekStartBtn && twoWeekStartInput) {
         twoWeekStartBtn.addEventListener('click', () => {
           saveTwoWeekPhaseStart(twoWeekStartInput.value || toDateKey(new Date()));
+        });
+      }
+      if (twoWeekToggleBtn) {
+        twoWeekToggleBtn.addEventListener('click', () => {
+          twoWeekCardUserToggled = true;
+          setTwoWeekCardCollapsed(!isTwoWeekCardCollapsed());
         });
       }
 
