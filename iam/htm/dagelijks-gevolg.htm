@@ -919,8 +919,8 @@ Wat niet hielp: alleen blijven malen.</textarea>
             </div>
           </div>
           <div class="form-group" style="grid-column: 1 / -1;">
-            <label>Ingeslikte basis-emoties van vandaag (per emotie)</label>
-            <p class="observation-help" style="margin:0.25rem 0 0.55rem;">Gebruik per emotie de schaal: 0 = niet ingeslikt, 100 = volledig ingeslikt.</p>
+            <label>Expressie van basis-emoties van <span id="swallowedEmotionSectionDateLabel">vandaag</span> (per emotie)</label>
+            <p class="observation-help" style="margin:0.25rem 0 0.55rem;">Gebruik per emotie de schaal: 0 = 100% ingeslikt, 100 = 100% expressie gegeven.</p>
             <div class="percent-slider-grid">
               <div class="percent-slider-item">
                 <div class="percent-slider-head">
@@ -1859,6 +1859,11 @@ Wat niet hielp: alleen blijven malen.</textarea>
         calculateSleepHours();
       }
       renderSelectedDayMeta(entry, dateKey);
+      const emotionDateLabel = document.getElementById('swallowedEmotionSectionDateLabel');
+      if (emotionDateLabel) {
+        const todayKey = toDateKey(new Date());
+        emotionDateLabel.textContent = dateKey === todayKey ? 'vandaag' : formatDateLabel(dateKey);
+      }
     }
 
     function collectSelectedDayData() {
