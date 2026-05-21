@@ -801,6 +801,34 @@ Wat niet hielp: alleen blijven malen.</textarea>
               <input type="checkbox" id="settingShowReality" checked />
               <span>Realiteitsscores (natuur, genieten, contact)</span>
             </label>
+            <label class="settings-option" for="settingShowNutritionQuality">
+              <input type="checkbox" id="settingShowNutritionQuality" checked />
+              <span>Toon: Voedingskwaliteit</span>
+            </label>
+            <label class="settings-option" for="settingShowHydration">
+              <input type="checkbox" id="settingShowHydration" checked />
+              <span>Toon: Hydratatie</span>
+            </label>
+            <label class="settings-option" for="settingShowMealRhythm">
+              <input type="checkbox" id="settingShowMealRhythm" checked />
+              <span>Toon: Regelmaat maaltijden</span>
+            </label>
+            <label class="settings-option" for="settingShowMovement">
+              <input type="checkbox" id="settingShowMovement" checked />
+              <span>Toon: Beweging</span>
+            </label>
+            <label class="settings-option" for="settingShowRestMoments">
+              <input type="checkbox" id="settingShowRestMoments" checked />
+              <span>Toon: Rustmomenten</span>
+            </label>
+            <label class="settings-option" for="settingShowScreenWinddown">
+              <input type="checkbox" id="settingShowScreenWinddown" checked />
+              <span>Toon: Schermhygiene avond</span>
+            </label>
+            <label class="settings-option" for="settingShowMedAdherence">
+              <input type="checkbox" id="settingShowMedAdherence" checked />
+              <span>Toon: Medicatie/supplement-adherentie</span>
+            </label>
             <label class="settings-option" for="settingShowReflection">
               <input type="checkbox" id="settingShowReflection" checked />
               <span>Reflectie (gemist / te veel)</span>
@@ -947,7 +975,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
                     <input id="enjoymentPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
                   </div>
 
-                  <div class="percent-slider-item">
+                  <div class="percent-slider-item" id="nutritionQualitySliderItem">
                     <div class="percent-slider-head">
                       <label for="nutritionQualityPercentRange">Wat was de kwaliteit van de voeding vandaag?</label>
                       <span class="percent-slider-value" id="nutritionQualityPercentValue">Nog niet gekozen</span>
@@ -956,7 +984,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
                     <input id="nutritionQualityPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
                   </div>
 
-                  <div class="percent-slider-item">
+                  <div class="percent-slider-item" id="hydrationSliderItem">
                     <div class="percent-slider-head">
                       <label for="hydrationPercentRange">Hydratatie: hoe goed heb je voldoende gedronken?</label>
                       <span class="percent-slider-value" id="hydrationPercentValue">Nog niet gekozen</span>
@@ -965,7 +993,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
                     <input id="hydrationPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
                   </div>
 
-                  <div class="percent-slider-item">
+                  <div class="percent-slider-item" id="mealRhythmSliderItem">
                     <div class="percent-slider-head">
                       <label for="mealRhythmPercentRange">Regelmaat maaltijden: hoe stabiel was je eetritme?</label>
                       <span class="percent-slider-value" id="mealRhythmPercentValue">Nog niet gekozen</span>
@@ -974,7 +1002,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
                     <input id="mealRhythmPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
                   </div>
 
-                  <div class="percent-slider-item">
+                  <div class="percent-slider-item" id="movementSliderItem">
                     <div class="percent-slider-head">
                       <label for="movementPercentRange">Beweging: hoe actief was je lichaam vandaag?</label>
                       <span class="percent-slider-value" id="movementPercentValue">Nog niet gekozen</span>
@@ -983,7 +1011,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
                     <input id="movementPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
                   </div>
 
-                  <div class="percent-slider-item">
+                  <div class="percent-slider-item" id="restMomentSliderItem">
                     <div class="percent-slider-head">
                       <label for="restMomentPercentRange">Rustmomenten: hoe goed nam je pauzes/herstelmomenten?</label>
                       <span class="percent-slider-value" id="restMomentPercentValue">Nog niet gekozen</span>
@@ -992,7 +1020,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
                     <input id="restMomentPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
                   </div>
 
-                  <div class="percent-slider-item">
+                  <div class="percent-slider-item" id="screenWinddownSliderItem">
                     <div class="percent-slider-head">
                       <label for="screenWinddownPercentRange">Schermhygiene avond: hoe goed lukte afbouwen voor slaap?</label>
                       <span class="percent-slider-value" id="screenWinddownPercentValue">Nog niet gekozen</span>
@@ -1001,7 +1029,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
                     <input id="screenWinddownPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
                   </div>
 
-                  <div class="percent-slider-item">
+                  <div class="percent-slider-item" id="medAdherenceSliderItem">
                     <div class="percent-slider-head">
                       <label for="medAdherencePercentRange">Medicatie/supplement-adherentie: in hoeverre nam je wat afgesproken is?</label>
                       <span class="percent-slider-value" id="medAdherencePercentValue">Nog niet gekozen</span>
@@ -1613,7 +1641,14 @@ Wat niet hielp: alleen blijven malen.</textarea>
       return {
         showSleep: saved.showSleep !== false,
         showReality: saved.showReality !== false,
-        showReflection: saved.showReflection !== false
+        showReflection: saved.showReflection !== false,
+        showNutritionQuality: saved.showNutritionQuality !== false,
+        showHydration: saved.showHydration !== false,
+        showMealRhythm: saved.showMealRhythm !== false,
+        showMovement: saved.showMovement !== false,
+        showRestMoments: saved.showRestMoments !== false,
+        showScreenWinddown: saved.showScreenWinddown !== false,
+        showMedAdherence: saved.showMedAdherence !== false
       };
     }
 
@@ -1803,6 +1838,20 @@ Wat niet hielp: alleen blijven malen.</textarea>
       const sleepToggle = document.getElementById('settingShowSleep');
       const realityToggle = document.getElementById('settingShowReality');
       const reflectionToggle = document.getElementById('settingShowReflection');
+      const nutritionQualityToggle = document.getElementById('settingShowNutritionQuality');
+      const hydrationToggle = document.getElementById('settingShowHydration');
+      const mealRhythmToggle = document.getElementById('settingShowMealRhythm');
+      const movementToggle = document.getElementById('settingShowMovement');
+      const restMomentsToggle = document.getElementById('settingShowRestMoments');
+      const screenWinddownToggle = document.getElementById('settingShowScreenWinddown');
+      const medAdherenceToggle = document.getElementById('settingShowMedAdherence');
+      const nutritionQualityItem = document.getElementById('nutritionQualitySliderItem');
+      const hydrationItem = document.getElementById('hydrationSliderItem');
+      const mealRhythmItem = document.getElementById('mealRhythmSliderItem');
+      const movementItem = document.getElementById('movementSliderItem');
+      const restMomentItem = document.getElementById('restMomentSliderItem');
+      const screenWinddownItem = document.getElementById('screenWinddownSliderItem');
+      const medAdherenceItem = document.getElementById('medAdherenceSliderItem');
       const sleepHint = document.getElementById('sleepSettingHint');
 
       if (globalSleepToggle) globalSleepToggle.checked = globalSleepEnabled;
@@ -1815,8 +1864,22 @@ Wat niet hielp: alleen blijven malen.</textarea>
       if (sleepToggle) sleepToggle.checked = settings.showSleep;
       if (realityToggle) realityToggle.checked = settings.showReality;
       if (reflectionToggle) reflectionToggle.checked = settings.showReflection;
+      if (nutritionQualityToggle) nutritionQualityToggle.checked = settings.showNutritionQuality;
+      if (hydrationToggle) hydrationToggle.checked = settings.showHydration;
+      if (mealRhythmToggle) mealRhythmToggle.checked = settings.showMealRhythm;
+      if (movementToggle) movementToggle.checked = settings.showMovement;
+      if (restMomentsToggle) restMomentsToggle.checked = settings.showRestMoments;
+      if (screenWinddownToggle) screenWinddownToggle.checked = settings.showScreenWinddown;
+      if (medAdherenceToggle) medAdherenceToggle.checked = settings.showMedAdherence;
 
       if (sleepToggle) sleepToggle.disabled = !globalSleepEnabled;
+      if (nutritionQualityToggle) nutritionQualityToggle.disabled = !settings.showReality;
+      if (hydrationToggle) hydrationToggle.disabled = !settings.showReality;
+      if (mealRhythmToggle) mealRhythmToggle.disabled = !settings.showReality;
+      if (movementToggle) movementToggle.disabled = !settings.showReality;
+      if (restMomentsToggle) restMomentsToggle.disabled = !settings.showReality;
+      if (screenWinddownToggle) screenWinddownToggle.disabled = !settings.showReality;
+      if (medAdherenceToggle) medAdherenceToggle.disabled = !settings.showReality;
       if (sleepHint) {
         sleepHint.textContent = globalSleepEnabled
           ? 'Slaaptracking staat aan. Je zet dit aan of uit via de ⚙-instellingen op deze pagina.'
@@ -1826,6 +1889,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
       if (sleepSection) sleepSection.classList.toggle('is-hidden-by-setting', !showSleepSection);
       if (realitySection) realitySection.classList.toggle('is-hidden-by-setting', !settings.showReality);
       if (reflectionSection) reflectionSection.classList.toggle('is-hidden-by-setting', !settings.showReflection);
+      if (nutritionQualityItem) nutritionQualityItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showNutritionQuality);
+      if (hydrationItem) hydrationItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showHydration);
+      if (mealRhythmItem) mealRhythmItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showMealRhythm);
+      if (movementItem) movementItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showMovement);
+      if (restMomentItem) restMomentItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showRestMoments);
+      if (screenWinddownItem) screenWinddownItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showScreenWinddown);
+      if (medAdherenceItem) medAdherenceItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showMedAdherence);
     }
 
     function getWeeklyReview() {
@@ -3140,6 +3210,34 @@ Wat niet hielp: alleen blijven malen.</textarea>
       });
       document.getElementById('settingShowReality').addEventListener('change', (event) => {
         saveDailySectionSettings({ showReality: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowNutritionQuality').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showNutritionQuality: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowHydration').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showHydration: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowMealRhythm').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showMealRhythm: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowMovement').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showMovement: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowRestMoments').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showRestMoments: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowScreenWinddown').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showScreenWinddown: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowMedAdherence').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showMedAdherence: event.target.checked });
         applyDailySectionSettings();
       });
       document.getElementById('settingShowReflection').addEventListener('change', (event) => {
