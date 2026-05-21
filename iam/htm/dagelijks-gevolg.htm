@@ -68,6 +68,13 @@
       font-size: 1.1rem;
       font-weight: 700;
     }
+    .tracker-date-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.55rem;
+    }
     .tracker-meta {
       display: flex;
       flex-wrap: wrap;
@@ -311,6 +318,16 @@
       background: #eef8ee; border-left: 4px solid var(--ok); color: #204f22;
     }
     .message.show { display: block; }
+    .save-day-feedback {
+      margin: 0.45rem 0 0;
+      color: #2f5a76;
+      font-size: 0.92rem;
+      font-weight: 600;
+      min-height: 1.2rem;
+    }
+    .save-day-feedback.is-error {
+      color: #8a2f1c;
+    }
     .attempt-summary-box {
       border-top: 4px solid #7b5b2e;
     }
@@ -631,6 +648,39 @@
     .two-week-card-body.is-collapsed {
       display: none;
     }
+    .tracker-collapsible {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      border-radius: 14px;
+      background: #fbfdfe;
+      padding: 0.9rem;
+    }
+    .tracker-collapsible + .tracker-collapsible {
+      margin-top: 0.9rem;
+    }
+    .tracker-collapsible-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.65rem;
+    }
+    .tracker-collapsible-head h3 {
+      margin: 0;
+    }
+    .tracker-collapsible-toggle {
+      border: 1px solid rgba(23, 50, 73, 0.16);
+      border-radius: 999px;
+      background: #f3f8fc;
+      color: #235171;
+      min-height: 38px;
+      padding: 0.35rem 0.8rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+    .tracker-collapsible-body.is-collapsed {
+      display: none;
+    }
     .fourteen-day-overview { margin-top: 1rem; }
     .overview-empty { opacity: 0.55; }
     @media (max-width: 640px) {
@@ -761,6 +811,34 @@ Wat niet hielp: alleen blijven malen.</textarea>
               <input type="checkbox" id="settingShowReality" checked />
               <span>Realiteitsscores (natuur, genieten, contact)</span>
             </label>
+            <label class="settings-option" for="settingShowNutritionQuality">
+              <input type="checkbox" id="settingShowNutritionQuality" checked />
+              <span>Toon: Voedingskwaliteit</span>
+            </label>
+            <label class="settings-option" for="settingShowHydration">
+              <input type="checkbox" id="settingShowHydration" checked />
+              <span>Toon: Hydratatie</span>
+            </label>
+            <label class="settings-option" for="settingShowMealRhythm">
+              <input type="checkbox" id="settingShowMealRhythm" checked />
+              <span>Toon: Regelmaat maaltijden</span>
+            </label>
+            <label class="settings-option" for="settingShowMovement">
+              <input type="checkbox" id="settingShowMovement" checked />
+              <span>Toon: Beweging</span>
+            </label>
+            <label class="settings-option" for="settingShowRestMoments">
+              <input type="checkbox" id="settingShowRestMoments" checked />
+              <span>Toon: Rustmomenten</span>
+            </label>
+            <label class="settings-option" for="settingShowScreenWinddown">
+              <input type="checkbox" id="settingShowScreenWinddown" checked />
+              <span>Toon: Schermhygiene avond</span>
+            </label>
+            <label class="settings-option" for="settingShowMedAdherence">
+              <input type="checkbox" id="settingShowMedAdherence" checked />
+              <span>Toon: Medicatie/supplement-adherentie</span>
+            </label>
             <label class="settings-option" for="settingShowReflection">
               <input type="checkbox" id="settingShowReflection" checked />
               <span>Reflectie (gemist / te veel)</span>
@@ -793,6 +871,9 @@ Wat niet hielp: alleen blijven malen.</textarea>
           <div class="form-group">
             <label for="usageDate">Datum</label>
             <input id="usageDate" type="date" />
+            <div class="tracker-date-actions">
+              <button type="button" class="button-secondary" id="copyTodayButton">Gebruik vandaag als datum</button>
+            </div>
           </div>
           <button type="button" class="nav-day" id="nextDayButton" aria-label="Ga naar volgende dag">&gt;</button>
         </div>
@@ -848,144 +929,295 @@ Wat niet hielp: alleen blijven malen.</textarea>
           </div>
         </div>
 
-        <div class="tracker-grid" id="sleepTrackingSection">
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <h3 class="section-mini-head">3) Herstelbasis slaap</h3>
+        <div class="tracker-collapsible" id="selfCareCard">
+          <div class="tracker-collapsible-head">
+            <h3 class="section-mini-head">Zelfzorg</h3>
+            <button type="button" class="tracker-collapsible-toggle" id="selfCareToggleButton" aria-expanded="true" aria-controls="selfCareCardBody">Inklappen</button>
           </div>
-          <div class="sleep-row">
-            <div class="form-group">
-              <label for="sleepStart">Inslaaptijd:</label>
-              <input id="sleepStart" type="time" />
+          <div id="selfCareCardBody" class="tracker-collapsible-body">
+            <div class="tracker-grid" id="sleepTrackingSection">
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <h3 class="section-mini-head">Herstelbasis slaap</h3>
+              </div>
+              <div class="sleep-row">
+                <div class="form-group">
+                  <label for="sleepStart">Inslaaptijd:</label>
+                  <input id="sleepStart" type="time" />
+                </div>
+                <div class="form-group">
+                  <label for="sleepEnd">Wakker om:</label>
+                  <input id="sleepEnd" type="time" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="sleepHours">Slaap (automatisch)</label>
+                <input id="sleepHours" type="number" step="0.1" readonly />
+              </div>
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <p class="observation-help" style="margin: 0;">
+                  Noteer hier de nacht die op deze dag uitkomt. Als je voor 24:00 uur gisteren bent gaan slapen en vanochtend wakker werd, dan hoort die slaap bij de dag waarop je wakker wordt. De afgelopen nacht bepaalt vooral hoe je denkkracht is en hoe deze dag voelt.
+                </p>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="sleepEnd">Wakker om:</label>
-              <input id="sleepEnd" type="time" />
+
+            <div class="tracker-grid" id="realityTrackingSection">
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <h3 class="section-mini-head">Realiteitsscores (%)</h3>
+                <p class="section-mini-sub">Hier verzamel je de concrete dagsignalen. Deze waarden voeden automatisch de daginteractie-index.</p>
+              </div>
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <div class="percent-slider-grid">
+                  <div class="percent-slider-item">
+                    <div class="percent-slider-head">
+                      <label for="naturePercentRange">Ben je buiten in <em>natuur</em> geweest?</label>
+                      <span class="percent-slider-value" id="naturePercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="naturePercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="naturePercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+
+                  <div class="percent-slider-item">
+                    <div class="percent-slider-head">
+                      <label for="enjoymentPercentRange">Heb je deze dag <em>genoten</em> (van seks bijv.)?</label>
+                      <span class="percent-slider-value" id="enjoymentPercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="enjoymentPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="enjoymentPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+
+                  <div class="percent-slider-item" id="nutritionQualitySliderItem">
+                    <div class="percent-slider-head">
+                      <label for="nutritionQualityPercentRange">Wat was de kwaliteit van de voeding vandaag?</label>
+                      <span class="percent-slider-value" id="nutritionQualityPercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="nutritionQualityPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="nutritionQualityPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+
+                  <div class="percent-slider-item" id="hydrationSliderItem">
+                    <div class="percent-slider-head">
+                      <label for="hydrationPercentRange">Hydratatie: hoe goed heb je voldoende gedronken?</label>
+                      <span class="percent-slider-value" id="hydrationPercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="hydrationPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="hydrationPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+
+                  <div class="percent-slider-item" id="mealRhythmSliderItem">
+                    <div class="percent-slider-head">
+                      <label for="mealRhythmPercentRange">Regelmaat maaltijden: hoe stabiel was je eetritme?</label>
+                      <span class="percent-slider-value" id="mealRhythmPercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="mealRhythmPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="mealRhythmPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+
+                  <div class="percent-slider-item" id="movementSliderItem">
+                    <div class="percent-slider-head">
+                      <label for="movementPercentRange">Beweging: hoe actief was je lichaam vandaag?</label>
+                      <span class="percent-slider-value" id="movementPercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="movementPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="movementPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+
+                  <div class="percent-slider-item" id="restMomentSliderItem">
+                    <div class="percent-slider-head">
+                      <label for="restMomentPercentRange">Rustmomenten: hoe goed nam je pauzes/herstelmomenten?</label>
+                      <span class="percent-slider-value" id="restMomentPercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="restMomentPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="restMomentPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+
+                  <div class="percent-slider-item" id="screenWinddownSliderItem">
+                    <div class="percent-slider-head">
+                      <label for="screenWinddownPercentRange">Schermhygiene avond: hoe goed lukte afbouwen voor slaap?</label>
+                      <span class="percent-slider-value" id="screenWinddownPercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="screenWinddownPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="screenWinddownPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+
+                  <div class="percent-slider-item" id="medAdherenceSliderItem">
+                    <div class="percent-slider-head">
+                      <label for="medAdherencePercentRange">Medicatie/supplement-adherentie: in hoeverre nam je wat afgesproken is?</label>
+                      <span class="percent-slider-value" id="medAdherencePercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="medAdherencePercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="medAdherencePercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+
+                  <div class="percent-slider-item">
+                    <div class="percent-slider-head">
+                      <label for="socialIrlPercentRange">Contact met andere mensen <em>in het echt</em></label>
+                      <span class="percent-slider-value" id="socialIrlPercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="socialIrlPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="socialIrlPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+
+                  <div class="percent-slider-item">
+                    <div class="percent-slider-head">
+                      <label for="socialOnlinePercentRange">Contact met andere mensen <em>online</em></label>
+                      <span class="percent-slider-value" id="socialOnlinePercentValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="socialOnlinePercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="socialOnlinePercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="sleepHours">Slaap (automatisch)</label>
-            <input id="sleepHours" type="number" step="0.1" readonly />
-          </div>
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <p class="observation-help" style="margin: 0;">
-              Noteer hier de nacht die op deze dag uitkomt. Als je voor 24:00 uur gisteren bent gaan slapen en vanochtend wakker werd, dan hoort die slaap bij de dag waarop je wakker wordt. De afgelopen nacht bepaalt vooral hoe je denkkracht is en hoe deze dag voelt.
-            </p>
           </div>
         </div>
 
-        <div class="tracker-grid" id="realityTrackingSection">
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <h3 class="section-mini-head">4) Realiteitsscores (%)</h3>
-            <p class="section-mini-sub">Hier verzamel je de concrete dagsignalen. Deze waarden voeden automatisch de daginteractie-index.</p>
+        <div class="tracker-collapsible" id="emotionCard">
+          <div class="tracker-collapsible-head">
+            <h3 class="section-mini-head">Emoties</h3>
+            <button type="button" class="tracker-collapsible-toggle" id="emotionToggleButton" aria-expanded="true" aria-controls="emotionCardBody">Inklappen</button>
           </div>
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <div class="percent-slider-grid">
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="naturePercentRange">Ben je buiten in <em>natuur</em> geweest?</label>
-                  <span class="percent-slider-value" id="naturePercentValue">Nog niet gekozen</span>
+          <div id="emotionCardBody" class="tracker-collapsible-body">
+            <div class="tracker-grid">
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <label>Expressie van basis-emoties van <span id="expressedEmotionSectionDateLabel">vandaag</span> (per emotie)</label>
+                <p class="observation-help" style="margin:0.25rem 0 0.55rem;">Gebruik per emotie de schaal: 0 = volledig ingeslikt, 100 = volledig geuit.</p>
+                <div class="percent-slider-grid">
+                  <div class="percent-slider-item">
+                    <div class="percent-slider-head">
+                      <label for="expressedCuriosityRange">Nieuwsgierigheid</label>
+                      <span class="percent-slider-value" id="expressedCuriosityValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="expressedCuriosityRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="expressedCuriosity" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+                  <div class="percent-slider-item">
+                    <div class="percent-slider-head">
+                      <label for="expressedAngerRange">Boosheid</label>
+                      <span class="percent-slider-value" id="expressedAngerValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="expressedAngerRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="expressedAnger" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+                  <div class="percent-slider-item">
+                    <div class="percent-slider-head">
+                      <label for="expressedSadnessRange">Verdriet</label>
+                      <span class="percent-slider-value" id="expressedSadnessValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="expressedSadnessRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="expressedSadness" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+                  <div class="percent-slider-item">
+                    <div class="percent-slider-head">
+                      <label for="expressedFearRange">Angst</label>
+                      <span class="percent-slider-value" id="expressedFearValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="expressedFearRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="expressedFear" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
+                  <div class="percent-slider-item">
+                    <div class="percent-slider-head">
+                      <label for="expressedDesireRange">Begeerte</label>
+                      <span class="percent-slider-value" id="expressedDesireValue">Nog niet gekozen</span>
+                    </div>
+                    <input id="expressedDesireRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="expressedDesire" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
                 </div>
-                <input id="naturePercentRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="naturePercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                <p class="observation-help" style="margin-top:0.45rem;">Onderzoek dit verder op <a id="expressedEmotionResearchLink" href="./ingeslikte-emoties.htm">ingeslikte emoties</a>.</p>
               </div>
-
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="enjoymentPercentRange">Heb je deze dag <em>genoten</em> (van seks bijv.)?</label>
-                  <span class="percent-slider-value" id="enjoymentPercentValue">Nog niet gekozen</span>
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="expressedEmotionOther">Andere emotie die meespeelde</label>
+                <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+                  <input id="expressedEmotionOther" type="text" placeholder="Bijv. schaamte, jaloezie, trots, opluchting..." style="flex:1; min-width:12rem;" />
+                  <div style="display:flex; align-items:center; gap:0.4rem; min-width:14rem;">
+                    <span class="percent-slider-value" id="expressedOtherPercentValue" style="min-width:4rem;">Nog niet gekozen</span>
+                    <input id="expressedOtherPercentRange" type="range" min="0" max="100" step="1" value="50" style="flex:1;" />
+                    <input id="expressedOtherPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                  </div>
                 </div>
-                <input id="enjoymentPercentRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="enjoymentPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                <p class="observation-help" style="margin:0.2rem 0 0;">Schuif naar rechts voor meer expressie (100 = volledig geuit).</p>
               </div>
-
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="socialIrlPercentRange">Contact met andere mensen <em>in het echt</em></label>
-                  <span class="percent-slider-value" id="socialIrlPercentValue">Nog niet gekozen</span>
-                </div>
-                <input id="socialIrlPercentRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="socialIrlPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="suppressionReason">Waarom heb je deze emoties vandaag liever ingeslikt?</label>
+                <input id="suppressionReason" type="text" placeholder="Bijv. conflict vermijden, geen ruimte voelen, bang zijn voor reactie..." />
               </div>
-
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="socialOnlinePercentRange">Contact met andere mensen <em>online</em></label>
-                  <span class="percent-slider-value" id="socialOnlinePercentValue">Nog niet gekozen</span>
-                </div>
-                <input id="socialOnlinePercentRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="socialOnlinePercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
-              </div>
-
             </div>
           </div>
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <label>Expressie van basis-emoties van <span id="expressedEmotionSectionDateLabel">vandaag</span> (per emotie)</label>
-            <p class="observation-help" style="margin:0.25rem 0 0.55rem;">Gebruik per emotie de schaal: 0 = volledig ingeslikt, 100 = volledig geuit.</p>
-            <div class="percent-slider-grid">
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="expressedCuriosityRange">Nieuwsgierigheid</label>
-                  <span class="percent-slider-value" id="expressedCuriosityValue">Nog niet gekozen</span>
+        </div>
+
+        <div class="tracker-collapsible" id="socialCard">
+          <div class="tracker-collapsible-head">
+            <h3 class="section-mini-head">Sociaal</h3>
+            <button type="button" class="tracker-collapsible-toggle" id="socialToggleButton" aria-expanded="true" aria-controls="socialCardBody">Inklappen</button>
+          </div>
+          <div id="socialCardBody" class="tracker-collapsible-body">
+            <div class="tracker-grid" id="interactionTrackingSection">
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                  <label style="margin-bottom:0; display:inline;">Interactie van de dag (numeriek)</label>
+                  <button type="button" id="interactionIndexInfoButton" class="info-button" style="border:none; background:none; cursor:pointer; color:#666; font-weight:bold; font-size:1rem; padding:0 0.2rem;" title="Meer info over dagdruk, zelfregie en herstelgedrag">[!]</button>
                 </div>
-                <input id="expressedCuriosityRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="expressedCuriosity" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
-              </div>
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="expressedAngerRange">Boosheid</label>
-                  <span class="percent-slider-value" id="expressedAngerValue">Nog niet gekozen</span>
+                <p class="section-mini-sub" style="margin-bottom:0.6rem;">Contactkwaliteit en emotie-uitingskloof worden automatisch afgeleid uit de realiteitsscores, zodat je die niet dubbel hoeft in te vullen.</p>
+                <p class="section-mini-sub" id="interactionDerivedHint" style="margin-bottom:0.6rem;"></p>
+                <div class="interaction-slider-grid">
+                  <div class="interaction-slider-item">
+                    <div class="interaction-slider-head">
+                      <label for="dayPressureSlider">Dagdruk</label>
+                      <span class="interaction-slider-value" id="dayPressureSliderValue">50</span>
+                    </div>
+                    <input id="dayPressureSlider" type="range" min="0" max="100" step="1" value="50" />
+                  </div>
+                  <div class="interaction-slider-item">
+                    <div class="interaction-slider-head">
+                      <label for="selfRegieSlider">Zelfregie</label>
+                      <span class="interaction-slider-value" id="selfRegieSliderValue">50</span>
+                    </div>
+                    <input id="selfRegieSlider" type="range" min="0" max="100" step="1" value="50" />
+                  </div>
+                  <div class="interaction-slider-item">
+                    <div class="interaction-slider-head">
+                      <label for="cravingPeakSlider">Craving (trek)</label>
+                      <span class="interaction-slider-value" id="cravingPeakSliderValue">50</span>
+                    </div>
+                    <input id="cravingPeakSlider" type="range" min="0" max="100" step="1" value="50" />
+                  </div>
+                  <div class="interaction-slider-item">
+                    <div class="interaction-slider-head">
+                      <label for="recoveryActionSlider">Herstelgedrag</label>
+                      <span class="interaction-slider-value" id="recoveryActionSliderValue">50</span>
+                    </div>
+                    <input id="recoveryActionSlider" type="range" min="0" max="100" step="1" value="50" />
+                  </div>
+                  <div class="interaction-slider-item">
+                    <div class="interaction-slider-head">
+                      <label for="bodyRestSlider">Lichamelijke rust</label>
+                      <span class="interaction-slider-value" id="bodyRestSliderValue">50</span>
+                    </div>
+                    <input id="bodyRestSlider" type="range" min="0" max="100" step="1" value="50" />
+                  </div>
                 </div>
-                <input id="expressedAngerRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="expressedAnger" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
-              </div>
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="expressedSadnessRange">Verdriet</label>
-                  <span class="percent-slider-value" id="expressedSadnessValue">Nog niet gekozen</span>
+                <input id="contactQualitySlider" class="percent-hidden-input" type="range" min="0" max="100" step="1" value="50" tabindex="-1" aria-hidden="true" />
+                  <div class="interaction-slider-item">
+                    <div class="interaction-slider-head">
+                      <label for="emotionExpressionPercentRange">Emotionele ruimte</label>
+                      <span class="interaction-slider-value" id="emotionExpressionPercentRangeValue">50</span>
+                    </div>
+                    <input id="emotionExpressionPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                    <input id="emotionExpressionPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                    <p class="observation-help" style="margin:0.3rem 0 0;">Links: 100% ingeslikt. Rechts: 100% expressie gegeven.</p>
+                  </div>
+                <div class="interaction-index-box">
+                  <p><strong>Daginteractie-index:</strong> <span id="dayInteractionIndexValue">0</span></p>
+                  <p class="observation-help" id="dayInteractionIndexHint" style="margin-top:0.35rem;">Neutraal beeld voor deze dag.</p>
                 </div>
-                <input id="expressedSadnessRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="expressedSadness" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
-              </div>
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="expressedFearRange">Angst</label>
-                  <span class="percent-slider-value" id="expressedFearValue">Nog niet gekozen</span>
-                </div>
-                <input id="expressedFearRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="expressedFear" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
-              </div>
-              <div class="percent-slider-item">
-                <div class="percent-slider-head">
-                  <label for="expressedDesireRange">Begeerte</label>
-                  <span class="percent-slider-value" id="expressedDesireValue">Nog niet gekozen</span>
-                </div>
-                <input id="expressedDesireRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="expressedDesire" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
               </div>
             </div>
-            <p class="observation-help" style="margin-top:0.45rem;">Onderzoek dit verder op <a id="expressedEmotionResearchLink" href="./ingeslikte-emoties.htm">ingeslikte emoties</a>.</p>
-          </div>
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <label for="expressedEmotionOther">Andere emotie die meespeelde</label>
-            <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
-              <input id="expressedEmotionOther" type="text" placeholder="Bijv. schaamte, jaloezie, trots, opluchting..." style="flex:1; min-width:12rem;" />
-              <div style="display:flex; align-items:center; gap:0.4rem; min-width:14rem;">
-                <span class="percent-slider-value" id="expressedOtherPercentValue" style="min-width:4rem;">Nog niet gekozen</span>
-                <input id="expressedOtherPercentRange" type="range" min="0" max="100" step="1" value="50" style="flex:1;" />
-                <input id="expressedOtherPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
-              </div>
-            </div>
-            <p class="observation-help" style="margin:0.2rem 0 0;">Schuif naar rechts voor meer expressie (100 = volledig geuit).</p>
-          </div>
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <label for="suppressionReason">Waarom heb je deze emoties vandaag liever ingeslikt?</label>
-            <input id="suppressionReason" type="text" placeholder="Bijv. conflict vermijden, geen ruimte voelen, bang zijn voor reactie..." />
           </div>
         </div>
 
         <div class="tracker-grid" id="reflectionTrackingSection">
           <div class="form-group" style="grid-column: 1 / -1;">
-            <h3 class="section-mini-head">5) Reflectie</h3>
+            <h3 class="section-mini-head">Reflectie</h3>
           </div>
           <div class="form-group">
             <label for="missedTodayNote">Wat heb je vandaag gemist?</label>
@@ -997,72 +1229,10 @@ Wat niet hielp: alleen blijven malen.</textarea>
           </div>
         </div>
 
-        <div class="tracker-grid" id="interactionTrackingSection">
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <div style="display:flex; align-items:center; gap:0.5rem;">
-              <label style="margin-bottom:0; display:inline;">6) Interactie van de dag (numeriek)</label>
-              <button type="button" id="interactionIndexInfoButton" class="info-button" style="border:none; background:none; cursor:pointer; color:#666; font-weight:bold; font-size:1rem; padding:0 0.2rem;" title="Meer info over dagdruk, zelfregie en herstelgedrag">[!]</button>
-            </div>
-            <p class="section-mini-sub" style="margin-bottom:0.6rem;">Contactkwaliteit en emotie-uitingskloof worden automatisch afgeleid uit de realiteitsscores, zodat je die niet dubbel hoeft in te vullen.</p>
-            <p class="section-mini-sub" id="interactionDerivedHint" style="margin-bottom:0.6rem;"></p>
-            <div class="interaction-slider-grid">
-              <div class="interaction-slider-item">
-                <div class="interaction-slider-head">
-                  <label for="dayPressureSlider">Dagdruk</label>
-                  <span class="interaction-slider-value" id="dayPressureSliderValue">50</span>
-                </div>
-                <input id="dayPressureSlider" type="range" min="0" max="100" step="1" value="50" />
-              </div>
-              <div class="interaction-slider-item">
-                <div class="interaction-slider-head">
-                  <label for="selfRegieSlider">Zelfregie</label>
-                  <span class="interaction-slider-value" id="selfRegieSliderValue">50</span>
-                </div>
-                <input id="selfRegieSlider" type="range" min="0" max="100" step="1" value="50" />
-              </div>
-              <div class="interaction-slider-item">
-                <div class="interaction-slider-head">
-                  <label for="cravingPeakSlider">Craving (trek)</label>
-                  <span class="interaction-slider-value" id="cravingPeakSliderValue">50</span>
-                </div>
-                <input id="cravingPeakSlider" type="range" min="0" max="100" step="1" value="50" />
-              </div>
-              <div class="interaction-slider-item">
-                <div class="interaction-slider-head">
-                  <label for="recoveryActionSlider">Herstelgedrag</label>
-                  <span class="interaction-slider-value" id="recoveryActionSliderValue">50</span>
-                </div>
-                <input id="recoveryActionSlider" type="range" min="0" max="100" step="1" value="50" />
-              </div>
-              <div class="interaction-slider-item">
-                <div class="interaction-slider-head">
-                  <label for="bodyRestSlider">Lichamelijke rust</label>
-                  <span class="interaction-slider-value" id="bodyRestSliderValue">50</span>
-                </div>
-                <input id="bodyRestSlider" type="range" min="0" max="100" step="1" value="50" />
-              </div>
-            </div>
-            <input id="contactQualitySlider" class="percent-hidden-input" type="range" min="0" max="100" step="1" value="50" tabindex="-1" aria-hidden="true" />
-              <div class="interaction-slider-item">
-                <div class="interaction-slider-head">
-                  <label for="emotionExpressionPercentRange">Emotionele ruimte</label>
-                  <span class="interaction-slider-value" id="emotionExpressionPercentRangeValue">50</span>
-                </div>
-                <input id="emotionExpressionPercentRange" type="range" min="0" max="100" step="1" value="50" />
-                <input id="emotionExpressionPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
-                <p class="observation-help" style="margin:0.3rem 0 0;">Links: 100% ingeslikt. Rechts: 100% expressie gegeven.</p>
-              </div>
-            <div class="interaction-index-box">
-              <p><strong>Daginteractie-index:</strong> <span id="dayInteractionIndexValue">0</span></p>
-              <p class="observation-help" id="dayInteractionIndexHint" style="margin-top:0.35rem;">Neutraal beeld voor deze dag.</p>
-            </div>
-          </div>
-        </div>
-
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveDayButton">Sla deze dag op</button>
-          <button type="button" class="button-secondary" id="copyTodayButton">Gebruik vandaag als datum</button>
         </div>
+        <p id="saveDayFeedback" class="save-day-feedback" aria-live="polite"></p>
       </section>
 
       <section class="card">
@@ -1138,6 +1308,8 @@ Wat niet hielp: alleen blijven malen.</textarea>
           </div>
         </div>
       </div>
+
+      <div id="hulpzinnetjeModal" class="hulpzinnetje-modal" aria-hidden="true">
         <div class="hulpzinnetje-dialog" role="dialog" aria-modal="true" aria-labelledby="hulpzinnetjeTitle">
           <h3 id="hulpzinnetjeTitle">Hulpzinnetje</h3>
           <p id="hulpzinnetjeText"></p>
@@ -1171,6 +1343,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
     const PERCENT_SLIDER_FIELDS = [
       { fieldId: 'naturePercent', sliderId: 'naturePercentRange', valueId: 'naturePercentValue' },
       { fieldId: 'enjoymentPercent', sliderId: 'enjoymentPercentRange', valueId: 'enjoymentPercentValue' },
+      { fieldId: 'nutritionQualityPercent', sliderId: 'nutritionQualityPercentRange', valueId: 'nutritionQualityPercentValue' },
+      { fieldId: 'hydrationPercent', sliderId: 'hydrationPercentRange', valueId: 'hydrationPercentValue' },
+      { fieldId: 'mealRhythmPercent', sliderId: 'mealRhythmPercentRange', valueId: 'mealRhythmPercentValue' },
+      { fieldId: 'movementPercent', sliderId: 'movementPercentRange', valueId: 'movementPercentValue' },
+      { fieldId: 'restMomentPercent', sliderId: 'restMomentPercentRange', valueId: 'restMomentPercentValue' },
+      { fieldId: 'screenWinddownPercent', sliderId: 'screenWinddownPercentRange', valueId: 'screenWinddownPercentValue' },
+      { fieldId: 'medAdherencePercent', sliderId: 'medAdherencePercentRange', valueId: 'medAdherencePercentValue' },
       { fieldId: 'socialIrlPercent', sliderId: 'socialIrlPercentRange', valueId: 'socialIrlPercentValue' },
       { fieldId: 'socialOnlinePercent', sliderId: 'socialOnlinePercentRange', valueId: 'socialOnlinePercentValue' },
       { fieldId: 'emotionExpressionPercent', sliderId: 'emotionExpressionPercentRange', valueId: 'emotionExpressionPercentRangeValue' },
@@ -1205,6 +1384,21 @@ Wat niet hielp: alleen blijven malen.</textarea>
     function isTwoWeekCardCollapsed() {
       const body = document.getElementById('twoWeekCardBody');
       return Boolean(body && body.classList.contains('is-collapsed'));
+    }
+
+    function setTrackerCardCollapsed(bodyId, buttonId, collapsed) {
+      const body = document.getElementById(bodyId);
+      const btn = document.getElementById(buttonId);
+      if (!body || !btn) return;
+      body.classList.toggle('is-collapsed', collapsed);
+      btn.textContent = collapsed ? 'Uitklappen' : 'Inklappen';
+      btn.setAttribute('aria-expanded', String(!collapsed));
+    }
+
+    function toggleTrackerCard(bodyId, buttonId) {
+      const body = document.getElementById(bodyId);
+      if (!body) return;
+      setTrackerCardCollapsed(bodyId, buttonId, !body.classList.contains('is-collapsed'));
     }
 
     function renderPersonalizedGreeting() {
@@ -1458,7 +1652,14 @@ Wat niet hielp: alleen blijven malen.</textarea>
       return {
         showSleep: saved.showSleep !== false,
         showReality: saved.showReality !== false,
-        showReflection: saved.showReflection !== false
+        showReflection: saved.showReflection !== false,
+        showNutritionQuality: saved.showNutritionQuality !== false,
+        showHydration: saved.showHydration !== false,
+        showMealRhythm: saved.showMealRhythm !== false,
+        showMovement: saved.showMovement !== false,
+        showRestMoments: saved.showRestMoments !== false,
+        showScreenWinddown: saved.showScreenWinddown !== false,
+        showMedAdherence: saved.showMedAdherence !== false
       };
     }
 
@@ -1578,6 +1779,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
         if (isNumericUnits(entry.sleepHours)) parts.push(`Slaap: ${formatUnits(entry.sleepHours)} uur`);
         if (isNumericUnits(entry.naturePercent)) parts.push(`Natuur: ${formatUnits(entry.naturePercent)}%`);
         if (isNumericUnits(entry.enjoymentPercent)) parts.push(`Genoten: ${formatUnits(entry.enjoymentPercent)}%`);
+        if (isNumericUnits(entry.nutritionQualityPercent)) parts.push(`Voedingskwaliteit: ${formatUnits(entry.nutritionQualityPercent)}%`);
+        if (isNumericUnits(entry.hydrationPercent)) parts.push(`Hydratatie: ${formatUnits(entry.hydrationPercent)}%`);
+        if (isNumericUnits(entry.mealRhythmPercent)) parts.push(`Regelmaat maaltijden: ${formatUnits(entry.mealRhythmPercent)}%`);
+        if (isNumericUnits(entry.movementPercent)) parts.push(`Beweging: ${formatUnits(entry.movementPercent)}%`);
+        if (isNumericUnits(entry.restMomentPercent)) parts.push(`Rustmomenten: ${formatUnits(entry.restMomentPercent)}%`);
+        if (isNumericUnits(entry.screenWinddownPercent)) parts.push(`Schermhygiene avond: ${formatUnits(entry.screenWinddownPercent)}%`);
+        if (isNumericUnits(entry.medAdherencePercent)) parts.push(`Medicatie/supplement-adherentie: ${formatUnits(entry.medAdherencePercent)}%`);
         if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
         if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
         const emotionBalanceText = formatEmotionBalanceText(entry.emotionExpressionPercent);
@@ -1641,6 +1849,20 @@ Wat niet hielp: alleen blijven malen.</textarea>
       const sleepToggle = document.getElementById('settingShowSleep');
       const realityToggle = document.getElementById('settingShowReality');
       const reflectionToggle = document.getElementById('settingShowReflection');
+      const nutritionQualityToggle = document.getElementById('settingShowNutritionQuality');
+      const hydrationToggle = document.getElementById('settingShowHydration');
+      const mealRhythmToggle = document.getElementById('settingShowMealRhythm');
+      const movementToggle = document.getElementById('settingShowMovement');
+      const restMomentsToggle = document.getElementById('settingShowRestMoments');
+      const screenWinddownToggle = document.getElementById('settingShowScreenWinddown');
+      const medAdherenceToggle = document.getElementById('settingShowMedAdherence');
+      const nutritionQualityItem = document.getElementById('nutritionQualitySliderItem');
+      const hydrationItem = document.getElementById('hydrationSliderItem');
+      const mealRhythmItem = document.getElementById('mealRhythmSliderItem');
+      const movementItem = document.getElementById('movementSliderItem');
+      const restMomentItem = document.getElementById('restMomentSliderItem');
+      const screenWinddownItem = document.getElementById('screenWinddownSliderItem');
+      const medAdherenceItem = document.getElementById('medAdherenceSliderItem');
       const sleepHint = document.getElementById('sleepSettingHint');
 
       if (globalSleepToggle) globalSleepToggle.checked = globalSleepEnabled;
@@ -1653,8 +1875,22 @@ Wat niet hielp: alleen blijven malen.</textarea>
       if (sleepToggle) sleepToggle.checked = settings.showSleep;
       if (realityToggle) realityToggle.checked = settings.showReality;
       if (reflectionToggle) reflectionToggle.checked = settings.showReflection;
+      if (nutritionQualityToggle) nutritionQualityToggle.checked = settings.showNutritionQuality;
+      if (hydrationToggle) hydrationToggle.checked = settings.showHydration;
+      if (mealRhythmToggle) mealRhythmToggle.checked = settings.showMealRhythm;
+      if (movementToggle) movementToggle.checked = settings.showMovement;
+      if (restMomentsToggle) restMomentsToggle.checked = settings.showRestMoments;
+      if (screenWinddownToggle) screenWinddownToggle.checked = settings.showScreenWinddown;
+      if (medAdherenceToggle) medAdherenceToggle.checked = settings.showMedAdherence;
 
       if (sleepToggle) sleepToggle.disabled = !globalSleepEnabled;
+      if (nutritionQualityToggle) nutritionQualityToggle.disabled = !settings.showReality;
+      if (hydrationToggle) hydrationToggle.disabled = !settings.showReality;
+      if (mealRhythmToggle) mealRhythmToggle.disabled = !settings.showReality;
+      if (movementToggle) movementToggle.disabled = !settings.showReality;
+      if (restMomentsToggle) restMomentsToggle.disabled = !settings.showReality;
+      if (screenWinddownToggle) screenWinddownToggle.disabled = !settings.showReality;
+      if (medAdherenceToggle) medAdherenceToggle.disabled = !settings.showReality;
       if (sleepHint) {
         sleepHint.textContent = globalSleepEnabled
           ? 'Slaaptracking staat aan. Je zet dit aan of uit via de ⚙-instellingen op deze pagina.'
@@ -1664,6 +1900,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
       if (sleepSection) sleepSection.classList.toggle('is-hidden-by-setting', !showSleepSection);
       if (realitySection) realitySection.classList.toggle('is-hidden-by-setting', !settings.showReality);
       if (reflectionSection) reflectionSection.classList.toggle('is-hidden-by-setting', !settings.showReflection);
+      if (nutritionQualityItem) nutritionQualityItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showNutritionQuality);
+      if (hydrationItem) hydrationItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showHydration);
+      if (mealRhythmItem) mealRhythmItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showMealRhythm);
+      if (movementItem) movementItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showMovement);
+      if (restMomentItem) restMomentItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showRestMoments);
+      if (screenWinddownItem) screenWinddownItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showScreenWinddown);
+      if (medAdherenceItem) medAdherenceItem.classList.toggle('is-hidden-by-setting', !settings.showReality || !settings.showMedAdherence);
     }
 
     function getWeeklyReview() {
@@ -1838,6 +2081,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
       document.getElementById('sleepHours').value = entry && entry.sleepHours !== '' && entry.sleepHours !== null && entry.sleepHours !== undefined ? entry.sleepHours : '';
       document.getElementById('naturePercent').value = entry && entry.naturePercent !== '' && entry.naturePercent !== null && entry.naturePercent !== undefined ? entry.naturePercent : '';
       document.getElementById('enjoymentPercent').value = entry && entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined ? entry.enjoymentPercent : '';
+      document.getElementById('nutritionQualityPercent').value = entry && entry.nutritionQualityPercent !== '' && entry.nutritionQualityPercent !== null && entry.nutritionQualityPercent !== undefined ? entry.nutritionQualityPercent : '';
+      document.getElementById('hydrationPercent').value = entry && entry.hydrationPercent !== '' && entry.hydrationPercent !== null && entry.hydrationPercent !== undefined ? entry.hydrationPercent : '';
+      document.getElementById('mealRhythmPercent').value = entry && entry.mealRhythmPercent !== '' && entry.mealRhythmPercent !== null && entry.mealRhythmPercent !== undefined ? entry.mealRhythmPercent : '';
+      document.getElementById('movementPercent').value = entry && entry.movementPercent !== '' && entry.movementPercent !== null && entry.movementPercent !== undefined ? entry.movementPercent : '';
+      document.getElementById('restMomentPercent').value = entry && entry.restMomentPercent !== '' && entry.restMomentPercent !== null && entry.restMomentPercent !== undefined ? entry.restMomentPercent : '';
+      document.getElementById('screenWinddownPercent').value = entry && entry.screenWinddownPercent !== '' && entry.screenWinddownPercent !== null && entry.screenWinddownPercent !== undefined ? entry.screenWinddownPercent : '';
+      document.getElementById('medAdherencePercent').value = entry && entry.medAdherencePercent !== '' && entry.medAdherencePercent !== null && entry.medAdherencePercent !== undefined ? entry.medAdherencePercent : '';
       document.getElementById('socialOnlinePercent').value = entry && entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined ? entry.socialOnlinePercent : '';
       document.getElementById('socialIrlPercent').value = entry && entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined ? entry.socialIrlPercent : '';
       document.getElementById('expressedEmotionOther').value = entry?.expressedEmotionOther || '';
@@ -1886,7 +2136,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       if (isNumericUnits(entry.sleepHours)) parts.push(`Slaap: ${formatUnits(entry.sleepHours)} uur`);
       if (entry.riskNote) parts.push('Risico ingevuld');
       if (entry.motivationNote) parts.push('Motivatie ingevuld');
-      if (isNumericUnits(entry.naturePercent) || isNumericUnits(entry.enjoymentPercent) || isNumericUnits(entry.socialOnlinePercent) || isNumericUnits(entry.socialIrlPercent) || isNumericUnits(entry.emotionExpressionPercent)) {
+      if (isNumericUnits(entry.naturePercent) || isNumericUnits(entry.enjoymentPercent) || isNumericUnits(entry.nutritionQualityPercent) || isNumericUnits(entry.hydrationPercent) || isNumericUnits(entry.mealRhythmPercent) || isNumericUnits(entry.movementPercent) || isNumericUnits(entry.restMomentPercent) || isNumericUnits(entry.screenWinddownPercent) || isNumericUnits(entry.medAdherencePercent) || isNumericUnits(entry.socialOnlinePercent) || isNumericUnits(entry.socialIrlPercent) || isNumericUnits(entry.emotionExpressionPercent)) {
         parts.push('Realiteitsscores ingevuld');
       }
       if (entry.suppressionReason || entry.expressedEmotionOther || isNumericUnits(entry.expressedCuriosity) || isNumericUnits(entry.expressedAnger) || isNumericUnits(entry.expressedSadness) || isNumericUnits(entry.expressedFear) || isNumericUnits(entry.expressedDesire) || isNumericUnits(entry.expressedOtherPercent)) {
@@ -1921,6 +2171,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
       const rawSleepHours = document.getElementById('sleepHours').value.trim().replace(',', '.');
       const rawNature = document.getElementById('naturePercent').value.trim().replace(',', '.');
       const rawEnjoyment = document.getElementById('enjoymentPercent').value.trim().replace(',', '.');
+      const rawNutritionQuality = document.getElementById('nutritionQualityPercent').value.trim().replace(',', '.');
+      const rawHydration = document.getElementById('hydrationPercent').value.trim().replace(',', '.');
+      const rawMealRhythm = document.getElementById('mealRhythmPercent').value.trim().replace(',', '.');
+      const rawMovement = document.getElementById('movementPercent').value.trim().replace(',', '.');
+      const rawRestMoment = document.getElementById('restMomentPercent').value.trim().replace(',', '.');
+      const rawScreenWinddown = document.getElementById('screenWinddownPercent').value.trim().replace(',', '.');
+      const rawMedAdherence = document.getElementById('medAdherencePercent').value.trim().replace(',', '.');
       const rawSocialOnline = document.getElementById('socialOnlinePercent').value.trim().replace(',', '.');
       const rawSocialIrl = document.getElementById('socialIrlPercent').value.trim().replace(',', '.');
       const rawExpressedCuriosity = document.getElementById('expressedCuriosity').value.trim().replace(',', '.');
@@ -1953,6 +2210,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
         sleepHours: rawSleepHours === '' ? '' : Number(rawSleepHours),
         naturePercent: rawNature === '' ? '' : Number(rawNature),
         enjoymentPercent: rawEnjoyment === '' ? '' : Number(rawEnjoyment),
+        nutritionQualityPercent: rawNutritionQuality === '' ? '' : Number(rawNutritionQuality),
+        hydrationPercent: rawHydration === '' ? '' : Number(rawHydration),
+        mealRhythmPercent: rawMealRhythm === '' ? '' : Number(rawMealRhythm),
+        movementPercent: rawMovement === '' ? '' : Number(rawMovement),
+        restMomentPercent: rawRestMoment === '' ? '' : Number(rawRestMoment),
+        screenWinddownPercent: rawScreenWinddown === '' ? '' : Number(rawScreenWinddown),
+        medAdherencePercent: rawMedAdherence === '' ? '' : Number(rawMedAdherence),
         socialOnlinePercent: rawSocialOnline === '' ? '' : Number(rawSocialOnline),
         socialIrlPercent: rawSocialIrl === '' ? '' : Number(rawSocialIrl),
         dayPressure,
@@ -1996,6 +2260,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
         (entry.sleepHours !== '' && entry.sleepHours !== null && entry.sleepHours !== undefined) ||
         (entry.naturePercent !== '' && entry.naturePercent !== null && entry.naturePercent !== undefined) ||
         (entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined) ||
+        (entry.nutritionQualityPercent !== '' && entry.nutritionQualityPercent !== null && entry.nutritionQualityPercent !== undefined) ||
+        (entry.hydrationPercent !== '' && entry.hydrationPercent !== null && entry.hydrationPercent !== undefined) ||
+        (entry.mealRhythmPercent !== '' && entry.mealRhythmPercent !== null && entry.mealRhythmPercent !== undefined) ||
+        (entry.movementPercent !== '' && entry.movementPercent !== null && entry.movementPercent !== undefined) ||
+        (entry.restMomentPercent !== '' && entry.restMomentPercent !== null && entry.restMomentPercent !== undefined) ||
+        (entry.screenWinddownPercent !== '' && entry.screenWinddownPercent !== null && entry.screenWinddownPercent !== undefined) ||
+        (entry.medAdherencePercent !== '' && entry.medAdherencePercent !== null && entry.medAdherencePercent !== undefined) ||
         (entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined) ||
         (entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined) ||
         Boolean(entry.expressedEmotionOther) ||
@@ -2023,7 +2294,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       const dateKey = document.getElementById('usageDate').value;
       if (!dateKey) {
         showMessage('Kies eerst een datum voor deze dagkaart.');
-        return;
+        return false;
       }
 
       const state = getFormState();
@@ -2032,59 +2303,87 @@ Wat niet hielp: alleen blijven malen.</textarea>
 
       if (entry.plannedUnits !== '' && Number.isNaN(entry.plannedUnits)) {
         showMessage('Gepland gebruik moet een geldig getal zijn.');
-        return;
+        return false;
       }
       if (entry.units !== '' && Number.isNaN(entry.units)) {
         showMessage('Gebruik in eenheden moet een geldig getal zijn.');
-        return;
+        return false;
       }
       if (entry.sleepHours !== '' && Number.isNaN(entry.sleepHours)) {
         showMessage('Slaapuren moeten een geldig getal zijn.');
-        return;
+        return false;
       }
       if (entry.naturePercent !== '' && (Number.isNaN(entry.naturePercent) || !isValidPercent(entry.naturePercent))) {
         showMessage('Natuur moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.enjoymentPercent !== '' && (Number.isNaN(entry.enjoymentPercent) || !isValidPercent(entry.enjoymentPercent))) {
         showMessage('Genoten moet tussen 0 en 100 liggen.');
-        return;
+        return false;
+      }
+      if (entry.nutritionQualityPercent !== '' && (Number.isNaN(entry.nutritionQualityPercent) || !isValidPercent(entry.nutritionQualityPercent))) {
+        showMessage('Voedingskwaliteit moet tussen 0 en 100 liggen.');
+        return false;
+      }
+      if (entry.hydrationPercent !== '' && (Number.isNaN(entry.hydrationPercent) || !isValidPercent(entry.hydrationPercent))) {
+        showMessage('Hydratatie moet tussen 0 en 100 liggen.');
+        return false;
+      }
+      if (entry.mealRhythmPercent !== '' && (Number.isNaN(entry.mealRhythmPercent) || !isValidPercent(entry.mealRhythmPercent))) {
+        showMessage('Regelmaat maaltijden moet tussen 0 en 100 liggen.');
+        return false;
+      }
+      if (entry.movementPercent !== '' && (Number.isNaN(entry.movementPercent) || !isValidPercent(entry.movementPercent))) {
+        showMessage('Beweging moet tussen 0 en 100 liggen.');
+        return false;
+      }
+      if (entry.restMomentPercent !== '' && (Number.isNaN(entry.restMomentPercent) || !isValidPercent(entry.restMomentPercent))) {
+        showMessage('Rustmomenten moet tussen 0 en 100 liggen.');
+        return false;
+      }
+      if (entry.screenWinddownPercent !== '' && (Number.isNaN(entry.screenWinddownPercent) || !isValidPercent(entry.screenWinddownPercent))) {
+        showMessage('Schermhygiene avond moet tussen 0 en 100 liggen.');
+        return false;
+      }
+      if (entry.medAdherencePercent !== '' && (Number.isNaN(entry.medAdherencePercent) || !isValidPercent(entry.medAdherencePercent))) {
+        showMessage('Medicatie/supplement-adherentie moet tussen 0 en 100 liggen.');
+        return false;
       }
       if (entry.socialOnlinePercent !== '' && (Number.isNaN(entry.socialOnlinePercent) || !isValidPercent(entry.socialOnlinePercent))) {
         showMessage('Online contact moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.socialIrlPercent !== '' && (Number.isNaN(entry.socialIrlPercent) || !isValidPercent(entry.socialIrlPercent))) {
         showMessage('IRL contact moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.emotionExpressionPercent !== '' && (Number.isNaN(entry.emotionExpressionPercent) || !isValidPercent(entry.emotionExpressionPercent))) {
         showMessage('Emotionele ruimte moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedCuriosity !== '' && (Number.isNaN(entry.expressedCuriosity) || !isValidPercent(entry.expressedCuriosity))) {
         showMessage('Nieuwsgierigheid moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedAnger !== '' && (Number.isNaN(entry.expressedAnger) || !isValidPercent(entry.expressedAnger))) {
         showMessage('Boosheid moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedSadness !== '' && (Number.isNaN(entry.expressedSadness) || !isValidPercent(entry.expressedSadness))) {
         showMessage('Verdriet moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedFear !== '' && (Number.isNaN(entry.expressedFear) || !isValidPercent(entry.expressedFear))) {
         showMessage('Angst moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedDesire !== '' && (Number.isNaN(entry.expressedDesire) || !isValidPercent(entry.expressedDesire))) {
         showMessage('Begeerte moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedOtherPercent !== '' && (Number.isNaN(entry.expressedOtherPercent) || !isValidPercent(entry.expressedOtherPercent))) {
         showMessage('Andere emotie moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
 
       if (hasEntryContent(entry)) {
@@ -2102,6 +2401,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       renderHistory();
       render14DayOverview();
       showMessage('Dagkaart opgeslagen.');
+      return true;
     }
 
     function formatUnits(value) {
@@ -2331,6 +2631,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
         if (isNumericUnits(entry.sleepHours)) parts.push(`Slaapuren: ${formatUnits(entry.sleepHours)}`);
         if (isNumericUnits(entry.naturePercent)) parts.push(`Natuur: ${formatUnits(entry.naturePercent)}%`);
         if (isNumericUnits(entry.enjoymentPercent)) parts.push(`Genoten: ${formatUnits(entry.enjoymentPercent)}%`);
+        if (isNumericUnits(entry.nutritionQualityPercent)) parts.push(`Voedingskwaliteit: ${formatUnits(entry.nutritionQualityPercent)}%`);
+        if (isNumericUnits(entry.hydrationPercent)) parts.push(`Hydratatie: ${formatUnits(entry.hydrationPercent)}%`);
+        if (isNumericUnits(entry.mealRhythmPercent)) parts.push(`Regelmaat maaltijden: ${formatUnits(entry.mealRhythmPercent)}%`);
+        if (isNumericUnits(entry.movementPercent)) parts.push(`Beweging: ${formatUnits(entry.movementPercent)}%`);
+        if (isNumericUnits(entry.restMomentPercent)) parts.push(`Rustmomenten: ${formatUnits(entry.restMomentPercent)}%`);
+        if (isNumericUnits(entry.screenWinddownPercent)) parts.push(`Schermhygiene avond: ${formatUnits(entry.screenWinddownPercent)}%`);
+        if (isNumericUnits(entry.medAdherencePercent)) parts.push(`Medicatie/supplement-adherentie: ${formatUnits(entry.medAdherencePercent)}%`);
         if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
         if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
         const emotionBalanceText = formatEmotionBalanceText(entry.emotionExpressionPercent);
@@ -2390,7 +2697,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
         filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
         const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
         const rows = [
-          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionExpressionPercent', 'dayPressure', 'selfRegie', 'cravingPeak', 'recoveryAction', 'contactQuality', 'bodyRest', 'emotionExpression', 'dayInteractionIndex', 'expressedEmotionOther', 'suppressionReason', 'expressedCuriosity', 'expressedAnger', 'expressedSadness', 'expressedFear', 'expressedDesire', 'expressedOtherPercent', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'nutritionQualityPercent', 'hydrationPercent', 'mealRhythmPercent', 'movementPercent', 'restMomentPercent', 'screenWinddownPercent', 'medAdherencePercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionExpressionPercent', 'dayPressure', 'selfRegie', 'cravingPeak', 'recoveryAction', 'contactQuality', 'bodyRest', 'emotionExpression', 'dayInteractionIndex', 'expressedEmotionOther', 'suppressionReason', 'expressedCuriosity', 'expressedAnger', 'expressedSadness', 'expressedFear', 'expressedDesire', 'expressedOtherPercent', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
           ...sortedEntries.map((entry) => {
             const hasBoth = isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units);
             const difference = hasBoth ? Number(entry.units) - Number(entry.plannedUnits) : '';
@@ -2406,6 +2713,13 @@ Wat niet hielp: alleen blijven malen.</textarea>
               entry.sleepHours ?? '',
               entry.naturePercent ?? '',
               entry.enjoymentPercent ?? '',
+              entry.nutritionQualityPercent ?? '',
+              entry.hydrationPercent ?? '',
+              entry.mealRhythmPercent ?? '',
+              entry.movementPercent ?? '',
+              entry.restMomentPercent ?? '',
+              entry.screenWinddownPercent ?? '',
+              entry.medAdherencePercent ?? '',
               entry.socialOnlinePercent ?? '',
               entry.socialIrlPercent ?? '',
               entry.emotionExpressionPercent ?? '',
@@ -2595,6 +2909,48 @@ Wat niet hielp: alleen blijven malen.</textarea>
           item.appendChild(enjoyment);
         }
 
+        if (isNumericUnits(entry.nutritionQualityPercent)) {
+          const nutrition = document.createElement('p');
+          nutrition.textContent = `Voedingskwaliteit: ${formatUnits(entry.nutritionQualityPercent)}%`;
+          item.appendChild(nutrition);
+        }
+
+        if (isNumericUnits(entry.hydrationPercent)) {
+          const hydration = document.createElement('p');
+          hydration.textContent = `Hydratatie: ${formatUnits(entry.hydrationPercent)}%`;
+          item.appendChild(hydration);
+        }
+
+        if (isNumericUnits(entry.mealRhythmPercent)) {
+          const mealRhythm = document.createElement('p');
+          mealRhythm.textContent = `Regelmaat maaltijden: ${formatUnits(entry.mealRhythmPercent)}%`;
+          item.appendChild(mealRhythm);
+        }
+
+        if (isNumericUnits(entry.movementPercent)) {
+          const movement = document.createElement('p');
+          movement.textContent = `Beweging: ${formatUnits(entry.movementPercent)}%`;
+          item.appendChild(movement);
+        }
+
+        if (isNumericUnits(entry.restMomentPercent)) {
+          const restMoment = document.createElement('p');
+          restMoment.textContent = `Rustmomenten: ${formatUnits(entry.restMomentPercent)}%`;
+          item.appendChild(restMoment);
+        }
+
+        if (isNumericUnits(entry.screenWinddownPercent)) {
+          const screenWinddown = document.createElement('p');
+          screenWinddown.textContent = `Schermhygiene avond: ${formatUnits(entry.screenWinddownPercent)}%`;
+          item.appendChild(screenWinddown);
+        }
+
+        if (isNumericUnits(entry.medAdherencePercent)) {
+          const medAdherence = document.createElement('p');
+          medAdherence.textContent = `Medicatie/supplement-adherentie: ${formatUnits(entry.medAdherencePercent)}%`;
+          item.appendChild(medAdherence);
+        }
+
         if (isNumericUnits(entry.socialOnlinePercent)) {
           const socialOnline = document.createElement('p');
           socialOnline.textContent = `Contact online: ${formatUnits(entry.socialOnlinePercent)}%`;
@@ -2665,6 +3021,18 @@ Wat niet hielp: alleen blijven malen.</textarea>
       el.classList.add('show');
       clearTimeout(showMessage.timer);
       showMessage.timer = setTimeout(() => el.classList.remove('show'), 2500);
+    }
+
+    function showSaveDayFeedback(text, isError = false) {
+      const el = document.getElementById('saveDayFeedback');
+      if (!el) return;
+      el.textContent = text;
+      el.classList.toggle('is-error', Boolean(isError));
+      clearTimeout(showSaveDayFeedback.timer);
+      showSaveDayFeedback.timer = setTimeout(() => {
+        el.textContent = '';
+        el.classList.remove('is-error');
+      }, 2800);
     }
 
     function calculateSleepHours() {
@@ -2742,31 +3110,66 @@ Wat niet hielp: alleen blijven malen.</textarea>
         });
       }
 
-      document.getElementById('interactionIndexInfoButton').addEventListener('click', openInteractionIndexModal);
-      document.getElementById('closeInteractionIndexButton').addEventListener('click', closeInteractionIndexModal);
-      document.getElementById('interactionIndexModal').addEventListener('click', (event) => {
-        if (event.target.id === 'interactionIndexModal') {
-          closeInteractionIndexModal();
-        }
+      [
+        { buttonId: 'selfCareToggleButton', bodyId: 'selfCareCardBody' },
+        { buttonId: 'emotionToggleButton', bodyId: 'emotionCardBody' },
+        { buttonId: 'socialToggleButton', bodyId: 'socialCardBody' }
+      ].forEach(({ buttonId, bodyId }) => {
+        const btn = document.getElementById(buttonId);
+        if (!btn) return;
+        setTrackerCardCollapsed(bodyId, buttonId, false);
+        btn.addEventListener('click', () => toggleTrackerCard(bodyId, buttonId));
       });
+
+      const interactionIndexInfoButton = document.getElementById('interactionIndexInfoButton');
+      const closeInteractionIndexButton = document.getElementById('closeInteractionIndexButton');
+      const interactionIndexModal = document.getElementById('interactionIndexModal');
+      if (interactionIndexInfoButton) {
+        interactionIndexInfoButton.addEventListener('click', openInteractionIndexModal);
+      }
+      if (closeInteractionIndexButton) {
+        closeInteractionIndexButton.addEventListener('click', closeInteractionIndexModal);
+      }
+      if (interactionIndexModal) {
+        interactionIndexModal.addEventListener('click', (event) => {
+          if (event.target.id === 'interactionIndexModal') {
+            closeInteractionIndexModal();
+          }
+        });
+      }
       document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
         button.addEventListener('click', () => {
           openHulpzinnetjeModal(button.dataset.hulpzinnetjeTitle || 'Hulpzinnetje', button.dataset.hulpzinnetjeContent || '');
         });
       });
-      document.getElementById('closeHulpzinnetjeButton').addEventListener('click', closeHulpzinnetjeModal);
-      document.getElementById('hulpzinnetjeModal').addEventListener('click', (event) => {
-        if (event.target.id === 'hulpzinnetjeModal') {
-          closeHulpzinnetjeModal();
-        }
-      });
+      const closeHulpzinnetjeButton = document.getElementById('closeHulpzinnetjeButton');
+      const hulpzinnetjeModal = document.getElementById('hulpzinnetjeModal');
+      if (closeHulpzinnetjeButton) {
+        closeHulpzinnetjeButton.addEventListener('click', closeHulpzinnetjeModal);
+      }
+      if (hulpzinnetjeModal) {
+        hulpzinnetjeModal.addEventListener('click', (event) => {
+          if (event.target.id === 'hulpzinnetjeModal') {
+            closeHulpzinnetjeModal();
+          }
+        });
+      }
       document.getElementById('prevDayButton').addEventListener('click', () => shiftSelectedDate(-1));
       document.getElementById('nextDayButton').addEventListener('click', () => shiftSelectedDate(1));
-      document.getElementById('usageDate').addEventListener('change', () => {
+      const handleUsageDateSelection = () => {
         renderSelectedDay();
         updateExpressedEmotionResearchLink();
+      };
+      document.getElementById('usageDate').addEventListener('change', handleUsageDateSelection);
+      document.getElementById('usageDate').addEventListener('input', handleUsageDateSelection);
+      document.getElementById('saveDayButton').addEventListener('click', () => {
+        const saved = saveSelectedDay();
+        if (saved) {
+          showSaveDayFeedback('Dag opgeslagen.');
+        } else {
+          showSaveDayFeedback('Niet opgeslagen, controleer je invoer.', true);
+        }
       });
-      document.getElementById('saveDayButton').addEventListener('click', saveSelectedDay);
       document.getElementById('sleepStart').addEventListener('change', calculateSleepHours);
       document.getElementById('sleepEnd').addEventListener('change', calculateSleepHours);
       document.getElementById('copyTodayButton').addEventListener('click', () => {
@@ -2838,6 +3241,34 @@ Wat niet hielp: alleen blijven malen.</textarea>
       });
       document.getElementById('settingShowReality').addEventListener('change', (event) => {
         saveDailySectionSettings({ showReality: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowNutritionQuality').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showNutritionQuality: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowHydration').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showHydration: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowMealRhythm').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showMealRhythm: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowMovement').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showMovement: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowRestMoments').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showRestMoments: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowScreenWinddown').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showScreenWinddown: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowMedAdherence').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showMedAdherence: event.target.checked });
         applyDailySectionSettings();
       });
       document.getElementById('settingShowReflection').addEventListener('change', (event) => {
