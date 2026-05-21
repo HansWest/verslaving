@@ -318,6 +318,16 @@
       background: #eef8ee; border-left: 4px solid var(--ok); color: #204f22;
     }
     .message.show { display: block; }
+    .save-day-feedback {
+      margin: 0.45rem 0 0;
+      color: #2f5a76;
+      font-size: 0.92rem;
+      font-weight: 600;
+      min-height: 1.2rem;
+    }
+    .save-day-feedback.is-error {
+      color: #8a2f1c;
+    }
     .attempt-summary-box {
       border-top: 4px solid #7b5b2e;
     }
@@ -1222,6 +1232,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveDayButton">Sla deze dag op</button>
         </div>
+        <p id="saveDayFeedback" class="save-day-feedback" aria-live="polite"></p>
       </section>
 
       <section class="card">
@@ -2283,7 +2294,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       const dateKey = document.getElementById('usageDate').value;
       if (!dateKey) {
         showMessage('Kies eerst een datum voor deze dagkaart.');
-        return;
+        return false;
       }
 
       const state = getFormState();
@@ -2292,87 +2303,87 @@ Wat niet hielp: alleen blijven malen.</textarea>
 
       if (entry.plannedUnits !== '' && Number.isNaN(entry.plannedUnits)) {
         showMessage('Gepland gebruik moet een geldig getal zijn.');
-        return;
+        return false;
       }
       if (entry.units !== '' && Number.isNaN(entry.units)) {
         showMessage('Gebruik in eenheden moet een geldig getal zijn.');
-        return;
+        return false;
       }
       if (entry.sleepHours !== '' && Number.isNaN(entry.sleepHours)) {
         showMessage('Slaapuren moeten een geldig getal zijn.');
-        return;
+        return false;
       }
       if (entry.naturePercent !== '' && (Number.isNaN(entry.naturePercent) || !isValidPercent(entry.naturePercent))) {
         showMessage('Natuur moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.enjoymentPercent !== '' && (Number.isNaN(entry.enjoymentPercent) || !isValidPercent(entry.enjoymentPercent))) {
         showMessage('Genoten moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.nutritionQualityPercent !== '' && (Number.isNaN(entry.nutritionQualityPercent) || !isValidPercent(entry.nutritionQualityPercent))) {
         showMessage('Voedingskwaliteit moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.hydrationPercent !== '' && (Number.isNaN(entry.hydrationPercent) || !isValidPercent(entry.hydrationPercent))) {
         showMessage('Hydratatie moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.mealRhythmPercent !== '' && (Number.isNaN(entry.mealRhythmPercent) || !isValidPercent(entry.mealRhythmPercent))) {
         showMessage('Regelmaat maaltijden moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.movementPercent !== '' && (Number.isNaN(entry.movementPercent) || !isValidPercent(entry.movementPercent))) {
         showMessage('Beweging moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.restMomentPercent !== '' && (Number.isNaN(entry.restMomentPercent) || !isValidPercent(entry.restMomentPercent))) {
         showMessage('Rustmomenten moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.screenWinddownPercent !== '' && (Number.isNaN(entry.screenWinddownPercent) || !isValidPercent(entry.screenWinddownPercent))) {
         showMessage('Schermhygiene avond moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.medAdherencePercent !== '' && (Number.isNaN(entry.medAdherencePercent) || !isValidPercent(entry.medAdherencePercent))) {
         showMessage('Medicatie/supplement-adherentie moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.socialOnlinePercent !== '' && (Number.isNaN(entry.socialOnlinePercent) || !isValidPercent(entry.socialOnlinePercent))) {
         showMessage('Online contact moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.socialIrlPercent !== '' && (Number.isNaN(entry.socialIrlPercent) || !isValidPercent(entry.socialIrlPercent))) {
         showMessage('IRL contact moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.emotionExpressionPercent !== '' && (Number.isNaN(entry.emotionExpressionPercent) || !isValidPercent(entry.emotionExpressionPercent))) {
         showMessage('Emotionele ruimte moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedCuriosity !== '' && (Number.isNaN(entry.expressedCuriosity) || !isValidPercent(entry.expressedCuriosity))) {
         showMessage('Nieuwsgierigheid moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedAnger !== '' && (Number.isNaN(entry.expressedAnger) || !isValidPercent(entry.expressedAnger))) {
         showMessage('Boosheid moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedSadness !== '' && (Number.isNaN(entry.expressedSadness) || !isValidPercent(entry.expressedSadness))) {
         showMessage('Verdriet moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedFear !== '' && (Number.isNaN(entry.expressedFear) || !isValidPercent(entry.expressedFear))) {
         showMessage('Angst moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedDesire !== '' && (Number.isNaN(entry.expressedDesire) || !isValidPercent(entry.expressedDesire))) {
         showMessage('Begeerte moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
       if (entry.expressedOtherPercent !== '' && (Number.isNaN(entry.expressedOtherPercent) || !isValidPercent(entry.expressedOtherPercent))) {
         showMessage('Andere emotie moet tussen 0 en 100 liggen.');
-        return;
+        return false;
       }
 
       if (hasEntryContent(entry)) {
@@ -2390,6 +2401,7 @@ Wat niet hielp: alleen blijven malen.</textarea>
       renderHistory();
       render14DayOverview();
       showMessage('Dagkaart opgeslagen.');
+      return true;
     }
 
     function formatUnits(value) {
@@ -3011,6 +3023,18 @@ Wat niet hielp: alleen blijven malen.</textarea>
       showMessage.timer = setTimeout(() => el.classList.remove('show'), 2500);
     }
 
+    function showSaveDayFeedback(text, isError = false) {
+      const el = document.getElementById('saveDayFeedback');
+      if (!el) return;
+      el.textContent = text;
+      el.classList.toggle('is-error', Boolean(isError));
+      clearTimeout(showSaveDayFeedback.timer);
+      showSaveDayFeedback.timer = setTimeout(() => {
+        el.textContent = '';
+        el.classList.remove('is-error');
+      }, 2800);
+    }
+
     function calculateSleepHours() {
       const startEl = document.getElementById('sleepStart');
       const endEl = document.getElementById('sleepEnd');
@@ -3138,7 +3162,14 @@ Wat niet hielp: alleen blijven malen.</textarea>
       };
       document.getElementById('usageDate').addEventListener('change', handleUsageDateSelection);
       document.getElementById('usageDate').addEventListener('input', handleUsageDateSelection);
-      document.getElementById('saveDayButton').addEventListener('click', saveSelectedDay);
+      document.getElementById('saveDayButton').addEventListener('click', () => {
+        const saved = saveSelectedDay();
+        if (saved) {
+          showSaveDayFeedback('Dag opgeslagen.');
+        } else {
+          showSaveDayFeedback('Niet opgeslagen, controleer je invoer.', true);
+        }
+      });
       document.getElementById('sleepStart').addEventListener('change', calculateSleepHours);
       document.getElementById('sleepEnd').addEventListener('change', calculateSleepHours);
       document.getElementById('copyTodayButton').addEventListener('click', () => {
