@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start Nu - IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #1f3849;
+      --main: #3f7aa1;
+      --accent: #c9684a;
+      --safe: #4caf50;
+      --warn: #d29b2f;
+      --alert: #d84315;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(63, 122, 161, 0.14), transparent 32%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--ink);
+    }
+    .shell { max-width: 900px; margin: 0 auto; }
+    .hero {
+      margin-top: 1rem;
+      border-radius: 18px;
+      background: linear-gradient(140deg, var(--main) 0%, #5a64b6 100%);
+      color: #fff;
+      padding: 1.35rem;
+      box-shadow: 0 14px 30px rgba(23, 50, 73, 0.18);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 9px 22px rgba(23, 50, 73, 0.09);
+    }
+    .transparency-card {
+      border-left: 5px solid #5a64b6;
+      background: #f2f5ff;
+    }
+    .transparency-card ul {
+      margin: 0.55rem 0 0;
+      padding-left: 1.2rem;
+      line-height: 1.55;
+    }
+    .transparency-card li {
+      margin-bottom: 0.35rem;
+    }
+    .card h2 { margin-top: 0; }
+    .grid-two { display: grid; gap: 0.9rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      background: #e8f1f7;
+      color: #235171;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+    }
+    .route-box {
+      border-left: 5px solid var(--main);
+      border-radius: 12px;
+      background: #f2f7fb;
+      padding: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .route-box.safe { border-left-color: var(--safe); background: #edf8ef; }
+    .route-box.warn { border-left-color: var(--warn); background: #fff8eb; }
+    .route-box.alert { border-left-color: var(--alert); background: #fff3f0; }
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+    .action-bar button { flex: 1 1 180px; }
+    .hint { color: #4a6273; font-size: 0.92rem; margin-top: 0.65rem; }
+  </style>
+    <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="shell">
+      <header class="hero">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./noodplan-forse-trek.htm">Noodplan forse trek</a>
+          <a href="./trek-opvangen.htm">Trek opvangen</a>
+        </div>
+        <h1>Start Nu (60 sec)</h1>
+        <p id="personalGreeting" style="display:none; font-weight:700;"></p>
+        <p>Korte triage voor dit moment: kies wat nu speelt en ga direct naar 1 concrete volgende stap.</p>
+      </header>
+
+      <section class="card">
+        <h2>1) Hoe hoog is de druk nu?</h2>
+        <input id="pressureScore" type="range" min="0" max="10" step="1" value="4" />
+        <p><span class="pill" id="pressureLabel">Score: 4</span></p>
+      </section>
+
+      <section class="card transparency-card">
+        <h2>Openheid vooraf</h2>
+        <ul>
+          <li><strong>Stoppen</strong> voelt vooraf vaak enger dan het achteraf blijkt.</li>
+          <li><strong>Gestopt blijven</strong> blijkt vaak lastiger dan vooraf gedacht.</li>
+          <li>Dat is geen zwakte: als biologische onrust zakt, kom je juist de emotionele/psychologische afhankelijkheid in dagelijks leven tegen.</li>
+        </ul>
+        <p class="hint">Doel van deze triage: volwassen kiezen wat nu het handigst is, niet jezelf veroordelen.</p>
+      </section>
+
+      <section class="card">
+        <h2>2) Is er nu direct risico op doorgaan?</h2>
+        <div class="grid-two">
+          <div class="form-group">
+            <label for="riskNow">Risico nu</label>
+            <select id="riskNow">
+              <option value="nee" selected>Nee, nog onder controle</option>
+              <option value="twijfel">Twijfel, ik voel dat het kantelt</option>
+              <option value="ja">Ja, hoog risico</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="supportNow">Is steun nu bereikbaar?</label>
+            <select id="supportNow">
+              <option value="ja" selected>Ja</option>
+              <option value="nee">Nee</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="routeBox" class="route-box safe">Uitkomst: Stabiliseren met korte techniek.</div>
+        <p id="routeHint" class="hint">Aanbevolen route: Trek opvangen.</p>
+
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="openRouteButton">Open mijn volgende stap</button>
+          <button type="button" class="button-secondary" id="saveSnapshotButton">Bewaar moment</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    let currentRoutePath = './trek-opvangen.htm';
+
+    function renderPersonalizedGreeting() {
+      const greetingEl = document.getElementById('personalGreeting');
+      if (!greetingEl) return;
+
+      const displayName = iamData && typeof iamData.getPreferredDisplayName === 'function'
+        ? iamData.getPreferredDisplayName('')
+        : '';
+
+      if (!displayName) {
+        greetingEl.textContent = '';
+        greetingEl.style.display = 'none';
+        return;
+      }
+
+      greetingEl.textContent = `${displayName}, kies nu je eerstvolgende stap.`;
+      greetingEl.style.display = 'block';
+    }
+
+    function computeRoute() {
+      const pressure = Number(document.getElementById('pressureScore').value || 0);
+      const riskNow = document.getElementById('riskNow').value;
+      const supportNow = document.getElementById('supportNow').value;
+
+      if (pressure >= 8 || riskNow === 'ja') {
+        if (supportNow === 'nee') {
+          return {
+            path: './noodplan-wegglijden.htm',
+            boxClass: 'route-box alert',
+            boxText: 'Uitkomst: Crisisroute zonder directe steun.',
+            hintText: 'Aanbevolen route: Noodplan wegglijden.'
+          };
+        }
+        return {
+          path: './noodplan-forse-trek.htm',
+          boxClass: 'route-box alert',
+          boxText: 'Uitkomst: Crisisroute met directe steun.',
+          hintText: 'Aanbevolen route: Noodplan forse trek.'
+        };
+      }
+
+      if (pressure >= 5 || riskNow === 'twijfel') {
+        return {
+          path: './stimulus-respons.htm',
+          boxClass: 'route-box warn',
+          boxText: 'Uitkomst: Actief reguleren en trigger doorbreken.',
+          hintText: 'Aanbevolen route: Stimulus-respons plan.'
+        };
+      }
+
+      return {
+        path: './trek-opvangen.htm',
+        boxClass: 'route-box safe',
+        boxText: 'Uitkomst: Stabiliseren met korte techniek.',
+        hintText: 'Aanbevolen route: Trek opvangen.'
+      };
+    }
+
+    function renderRoute() {
+      const label = document.getElementById('pressureLabel');
+      const pressure = Number(document.getElementById('pressureScore').value || 0);
+      label.textContent = `Score: ${pressure}`;
+
+      const route = computeRoute();
+      currentRoutePath = route.path;
+
+      const routeBox = document.getElementById('routeBox');
+      const routeHint = document.getElementById('routeHint');
+      routeBox.className = route.boxClass;
+      routeBox.textContent = route.boxText;
+      routeHint.textContent = route.hintText;
+    }
+
+    function saveSnapshot() {
+      const payload = {
+        pressureScore: Number(document.getElementById('pressureScore').value || 0),
+        riskNow: document.getElementById('riskNow').value,
+        supportNow: document.getElementById('supportNow').value,
+        route: currentRoutePath,
+        savedAt: new Date().toISOString()
+      };
+      iamData.updateFormData('start-nu', payload);
+      alert('Moment opgeslagen op dit toestel.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = iamData.getFormData('start-nu') || {};
+      if (Number.isFinite(Number(saved.pressureScore))) {
+        document.getElementById('pressureScore').value = Number(saved.pressureScore);
+      }
+      if (saved.riskNow) document.getElementById('riskNow').value = saved.riskNow;
+      if (saved.supportNow) document.getElementById('supportNow').value = saved.supportNow;
+
+      renderPersonalizedGreeting();
+      renderRoute();
+
+      document.getElementById('pressureScore').addEventListener('input', renderRoute);
+      document.getElementById('riskNow').addEventListener('change', renderRoute);
+      document.getElementById('supportNow').addEventListener('change', renderRoute);
+      document.getElementById('openRouteButton').addEventListener('click', () => {
+        window.location.href = currentRoutePath;
+      });
+      document.getElementById('saveSnapshotButton').addEventListener('click', saveSnapshot);
+
+      window.addEventListener('focus', () => {
+        renderPersonalizedGreeting();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chemsex — Identity &amp; Choices</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #1a2f45;
+      --main: #1d5fa6;
+      --accent: #2e82d0;
+      --soft: #f0f6ff;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(29, 95, 166, 0.14), transparent 34%),
+        linear-gradient(180deg, #fff 0%, #eef5ff 100%);
+      color: var(--ink);
+    }
+    .page-shell { max-width: 920px; margin: 0 auto; }
+    .page-header {
+      background: linear-gradient(140deg, var(--main) 0%, #2e82d0 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(26, 47, 69, 0.16);
+    }
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+    .question-card, .message {
+      background: rgba(255,255,255,0.97);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(26, 47, 69, 0.09);
+    }
+    .question-card { border-top: 4px solid var(--main); }
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
+    .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .action-bar button { flex: 1 1 180px; }
+    .message { display: none; border-left: 4px solid var(--accent); }
+    .message.show { display: block; }
+    .message.error { border-left-color: #8a2f2f; }
+
+    /* identity column layout */
+    .identity-section {
+      margin-top: 1rem;
+    }
+    .identity-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 600px) { .identity-row { grid-template-columns: 1fr; } }
+
+    .choice-card {
+      background: rgba(255,255,255,0.97);
+      border-radius: 16px;
+      padding: 1.2rem;
+      box-shadow: 0 8px 22px rgba(26, 47, 69, 0.09);
+      border-top: 4px solid var(--main);
+    }
+    .choice-card h2 {
+      margin: 0 0 0.8rem;
+      font-size: 1rem;
+      color: var(--main);
+    }
+    .choice-card label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 0.25rem;
+    }
+    .choice-card textarea {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .who-when-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .who-when-grid label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--main);
+      margin: 1.4rem 0 0.5rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid rgba(29,95,166,0.15);
+    }
+  </style>
+    <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./chemsex.htm">← Chemsex overview</a>
+          <a href="./chemsex-patroon.htm">My pattern</a>
+          <a href="./chemsex-risk-analysis.htm">Risk analysis</a>
+          <a href="./chemsex-identity-choices.htm" aria-current="page" style="background:rgba(255,255,255,0.28);">Identity &amp; choices</a>
+          <a href="./chemsex-quality-of-life.htm">Quality of life</a>
+        </div>
+        <h1>Identity Building — Choices</h1>
+        <p style="margin:0.6rem 0 0; font-size:0.95rem; color:rgba(255,255,255,0.88); line-height:1.6;">
+          Who do you want to be? Map the people, moments and commitments that anchor your identity — 
+          and the choices you are making toward that person.
+        </p>
+      </header>
+
+      <div id="message" class="message"></div>
+
+      <form id="identityChoicesForm">
+
+        <!-- Section 1: Who I am / want to be -->
+        <p class="section-title">1 — Who I am &amp; who I want to be</p>
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>My core values</h2>
+            <div class="form-group">
+              <label for="coreValues">What matters most to me in life?</label>
+              <textarea id="coreValues" rows="5" placeholder="e.g. honesty, connection, creativity, health…"></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>The person I want to be</h2>
+            <div class="form-group">
+              <label for="futureIdentity">Describe yourself as the person you are becoming:</label>
+              <textarea id="futureIdentity" rows="5" placeholder="e.g. I am someone who takes care of his health, shows up for friends…"></textarea>
+            </div>
+          </section>
+        </div>
+
+        <!-- Section 2: Anchoring people -->
+        <p class="section-title">2 — People who anchor me</p>
+        <div class="identity-section">
+          <div class="identity-row">
+            <div class="choice-card">
+              <h2>Person 1</h2>
+              <div class="form-group">
+                <label for="anchor1name">Name / relationship</label>
+                <input type="text" id="anchor1name" placeholder="e.g. best friend, therapist, partner…">
+              </div>
+              <div class="form-group">
+                <label for="anchor1why">Why do they matter?</label>
+                <textarea id="anchor1why" rows="3" placeholder="What do they bring out in you?"></textarea>
+              </div>
+            </div>
+            <div class="choice-card">
+              <h2>Person 2</h2>
+              <div class="form-group">
+                <label for="anchor2name">Name / relationship</label>
+                <input type="text" id="anchor2name" placeholder="e.g. best friend, therapist, partner…">
+              </div>
+              <div class="form-group">
+                <label for="anchor2why">Why do they matter?</label>
+                <textarea id="anchor2why" rows="3" placeholder="What do they bring out in you?"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="identity-row">
+            <div class="choice-card">
+              <h2>Person 3</h2>
+              <div class="form-group">
+                <label for="anchor3name">Name / relationship</label>
+                <input type="text" id="anchor3name" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="anchor3why">Why do they matter?</label>
+                <textarea id="anchor3why" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="choice-card">
+              <h2>Person 4</h2>
+              <div class="form-group">
+                <label for="anchor4name">Name / relationship</label>
+                <input type="text" id="anchor4name" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="anchor4why">Why do they matter?</label>
+                <textarea id="anchor4why" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Choices I am making -->
+        <p class="section-title">3 — Choices I am making</p>
+        <div class="identity-section">
+          <div class="identity-row">
+            <div class="choice-card">
+              <h2>Choice A</h2>
+              <div class="form-group">
+                <label for="choiceA">What is the choice?</label>
+                <textarea id="choiceA" rows="3" placeholder="e.g. I choose to use harm-reduction strategies when I use…"></textarea>
+              </div>
+              <div class="who-when-grid">
+                <div>
+                  <label for="choiceAwho">Who supports this?</label>
+                  <input type="text" id="choiceAwho" placeholder="name…">
+                </div>
+                <div>
+                  <label for="choiceAwhen">When / by when?</label>
+                  <input type="text" id="choiceAwhen" placeholder="date / moment…">
+                </div>
+              </div>
+            </div>
+            <div class="choice-card">
+              <h2>Choice B</h2>
+              <div class="form-group">
+                <label for="choiceB">What is the choice?</label>
+                <textarea id="choiceB" rows="3" placeholder=""></textarea>
+              </div>
+              <div class="who-when-grid">
+                <div>
+                  <label for="choiceBwho">Who supports this?</label>
+                  <input type="text" id="choiceBwho" placeholder="name…">
+                </div>
+                <div>
+                  <label for="choiceBwhen">When / by when?</label>
+                  <input type="text" id="choiceBwhen" placeholder="date / moment…">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="identity-row">
+            <div class="choice-card">
+              <h2>Choice C</h2>
+              <div class="form-group">
+                <label for="choiceC">What is the choice?</label>
+                <textarea id="choiceC" rows="3" placeholder=""></textarea>
+              </div>
+              <div class="who-when-grid">
+                <div>
+                  <label for="choiceCwho">Who supports this?</label>
+                  <input type="text" id="choiceCwho" placeholder="name…">
+                </div>
+                <div>
+                  <label for="choiceCwhen">When / by when?</label>
+                  <input type="text" id="choiceCwhen" placeholder="date / moment…">
+                </div>
+              </div>
+            </div>
+            <div class="choice-card">
+              <h2>Choice D</h2>
+              <div class="form-group">
+                <label for="choiceD">What is the choice?</label>
+                <textarea id="choiceD" rows="3" placeholder=""></textarea>
+              </div>
+              <div class="who-when-grid">
+                <div>
+                  <label for="choiceDwho">Who supports this?</label>
+                  <input type="text" id="choiceDwho" placeholder="name…">
+                </div>
+                <div>
+                  <label for="choiceDwhen">When / by when?</label>
+                  <input type="text" id="choiceDwhen" placeholder="date / moment…">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Reflection -->
+        <p class="section-title">4 — Reflection</p>
+        <div class="grid-two">
+          <section class="question-card">
+            <h2>What does chemsex cost my identity?</h2>
+            <div class="form-group">
+              <label for="identityCost">How does chemsex conflict with who I want to be?</label>
+              <textarea id="identityCost" rows="5" placeholder="e.g. I feel disconnected from my values the day after…"></textarea>
+            </div>
+          </section>
+          <section class="question-card">
+            <h2>One step toward my identity</h2>
+            <div class="form-group">
+              <label for="nextStep">The single most important step I can take this week:</label>
+              <textarea id="nextStep" rows="5" placeholder="Small, concrete, and in line with who I want to be…"></textarea>
+            </div>
+          </section>
+        </div>
+
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Save on this device</button>
+          <button type="button" class="button-secondary" id="exportButton">Export all as JSON</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'chemsex-identity-choices';
+    const fields = [
+      'coreValues', 'futureIdentity',
+      'anchor1name', 'anchor1why',
+      'anchor2name', 'anchor2why',
+      'anchor3name', 'anchor3why',
+      'anchor4name', 'anchor4why',
+      'choiceA', 'choiceAwho', 'choiceAwhen',
+      'choiceB', 'choiceBwho', 'choiceBwhen',
+      'choiceC', 'choiceCwho', 'choiceCwhen',
+      'choiceD', 'choiceDwho', 'choiceDwhen',
+      'identityCost', 'nextStep'
+    ];
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function collectFormData() {
+      const result = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        result[id] = el ? el.value.trim() : '';
+      });
+      return result;
+    }
+
+    function fillForm(data) {
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = data[id] || '';
+      });
+    }
+
+    function saveForm(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectFormData());
+        if (feedback) showMessage('Identity & choices saved on this device.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Could not save.', true);
+      }
+    }
+
+    function exportAll() {
+      const exportData = iamData.exportJSON();
+      const url = URL.createObjectURL(exportData.blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = exportData.filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage('Full IAM data exported as JSON.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fillForm(iamData.getFormData(formKey) || {});
+      document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
+      document.getElementById('exportButton').addEventListener('click', exportAll);
+      document.getElementById('identityChoicesForm').addEventListener('input', () => saveForm(false));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verbinding en Bijdrage - IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #173249;
+      --main: #1f7a6d;
+      --accent: #4db6ac;
+      --warm: #f4a261;
+      --soft: #f3faf8;
+      --line: rgba(31, 122, 109, 0.18);
+      --card: rgba(255, 255, 255, 0.96);
+      --shadow: 0 10px 24px rgba(23, 50, 73, 0.08);
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(77, 182, 172, 0.14), transparent 34%),
+        linear-gradient(180deg, #f7fcfb 0%, #eef6f2 100%);
+      color: var(--ink);
+    }
+    .page-shell { max-width: 980px; margin: 0 auto; }
+    .hero {
+      margin-top: 1rem;
+      background: linear-gradient(145deg, #1f7a6d 0%, #145f55 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.25rem;
+      box-shadow: 0 14px 30px rgba(31, 122, 109, 0.22);
+    }
+    .top-links {
+      display: flex; gap: 0.55rem; flex-wrap: wrap; margin-bottom: 0.8rem;
+    }
+    .top-links a {
+      color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.38);
+      background: rgba(255,255,255,0.14); border-radius: 999px; padding: 0.45rem 0.82rem;
+      min-height: 44px; display: inline-flex; align-items: center; font-weight: 700; font-size: 0.9rem;
+    }
+    .top-links a:hover { background: rgba(255,255,255,0.24); }
+    .card {
+      background: var(--card); border-radius: 16px; padding: 1.2rem; margin-top: 1rem;
+      box-shadow: var(--shadow); border-left: 5px solid var(--accent);
+    }
+    .card h2 { margin: 0 0 0.75rem; color: var(--main); border-bottom: 2px solid var(--line); padding-bottom: 0.45rem; }
+    .lead {
+      font-size: 0.96rem; line-height: 1.7; color: #425866; margin: 0 0 1rem;
+    }
+    .flow {
+      display: grid; gap: 0.7rem; margin: 1rem 0;
+    }
+    .flow-step {
+      display: flex; gap: 0.8rem; align-items: flex-start; background: #fff; border: 1px solid var(--line);
+      border-radius: 12px; padding: 0.85rem;
+    }
+    .flow-badge {
+      min-width: 2.3rem; height: 2.3rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(31, 122, 109, 0.14); color: var(--main); font-weight: 800; font-size: 0.95rem;
+    }
+    .flow-step strong { display: block; color: var(--main); margin-bottom: 0.2rem; }
+    .flow-step p { margin: 0; color: #4a5d68; line-height: 1.55; font-size: 0.94rem; }
+    .grid {
+      display: grid; gap: 0.9rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .panel {
+      background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 0.95rem;
+    }
+    .panel h3 { margin: 0 0 0.45rem; color: #1f5f56; font-size: 1rem; }
+    .panel p { margin: 0; color: #48606c; line-height: 1.6; font-size: 0.93rem; }
+    .form-group { margin: 0.95rem 0; display: grid; gap: 0.4rem; }
+    .form-group label { font-weight: 700; color: var(--ink); font-size: 0.95rem; }
+    input[type="text"], input[type="date"], textarea {
+      width: 100%; min-height: 44px; border-radius: 10px; border: 1px solid rgba(31, 122, 109, 0.2);
+      padding: 0.65rem 0.75rem; background: #fff; color: var(--ink); font: inherit; font-size: 0.95rem;
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    textarea:focus, input:focus {
+      outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(77, 182, 172, 0.12);
+    }
+    .callout {
+      background: linear-gradient(135deg, rgba(77, 182, 172, 0.09), rgba(244, 162, 97, 0.08));
+      border: 1px solid rgba(31, 122, 109, 0.16); border-left: 4px solid var(--warm); border-radius: 12px;
+      padding: 0.9rem 1rem; color: #425866; line-height: 1.6; font-size: 0.93rem; margin: 0.9rem 0;
+    }
+    .action-buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+    button {
+      min-height: 44px; border-radius: 10px; border: 1px solid rgba(31, 122, 109, 0.2); background: #fff;
+      color: var(--ink); padding: 0.6rem 1rem; font-weight: 700; cursor: pointer; font-size: 0.95rem;
+    }
+    button:hover { background: rgba(31, 122, 109, 0.08); }
+    button.primary { background: var(--main); color: #fff; border-color: var(--main); }
+    button.primary:hover { background: #155f55; }
+    .message {
+      display: none; margin-top: 1rem; border-radius: 10px; padding: 0.85rem 1rem; background: #eef8ee;
+      border-left: 4px solid #3b7f45; color: #204f22; font-weight: 600;
+    }
+    .message.show { display: block; }
+    .links-list { margin: 0.4rem 0 0; padding-left: 1.2rem; color: #48606c; line-height: 1.7; }
+    .links-list a { color: var(--main); font-weight: 700; text-decoration: none; }
+    .links-list a:hover { text-decoration: underline; }
+    @media (prefers-color-scheme: dark) {
+      body { background-color: #0f1419; }
+      .card { background: rgba(20, 32, 28, 0.92); color: #e2e8eb; }
+      .panel, input, textarea, button { background: #16231f; color: #e2e8eb; }
+      .links-list { color: #c8d7d2; }
+    }
+  </style>
+  <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="top-links">
+          <a href="./levensdoelen-stellen.htm">← Levensdoelen</a>
+          <a href="./motiverende-mensen.htm">Motiverende mensen</a>
+          <a href="./sociaal-netwerk.htm">Sociaal netwerk</a>
+          <a href="./steunnetwerk.htm">Steunnetwerk</a>
+          <a href="./index.htm">Naar overzicht</a>
+        </div>
+        <h1>🌱 Verbinding en Bijdrage</h1>
+        <p>Van positieve wens naar betekenisvolle verbinding, bijdrage en een haalbare stap.</p>
+      </header>
+
+      <section class="card">
+        <h2>Wat is dit?</h2>
+        <p class="lead">
+          Deze pagina is de moderne opvolger van het oude creatiespiraal-concept. De kern is eenvoudig: formuleer een wens positief,
+          maak het eindbeeld concreet, kijk wie daar beter van wordt, en zet het om in een haalbare stap.
+          Daarmee leer je niet alleen iets te krijgen, maar ook iets bij te dragen.
+        </p>
+        <p class="lead">
+          Een belangrijk deel van eenzaamheid ontstaat wanneer je dingen alleen blijft verwerken die je ook had kunnen delen.
+          Dan gaat de afstand niet alleen over middelen of gedrag, maar ook over het niet meer toelaten van andere mensen in je binnenwereld.
+        </p>
+        <div class="callout">
+          <strong>Kernidee:</strong> mensen worden vaak gelukkiger als ze leren wensen om te zetten in gedrag dat ook voor anderen waarde heeft.
+          Dat vraagt richting, verbinding, hulp vragen en plannen.
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>1. Van wens naar eindbeeld</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-badge">1</div>
+            <div>
+              <strong>Formuleer de wens positief</strong>
+              <p>Zeg wat je wél wilt, niet alleen wat je kwijt wilt. Maak het kort, concreet en herkenbaar.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-badge">2</div>
+            <div>
+              <strong>Zie het eindresultaat</strong>
+              <p>Beschrijf hoe het eruitziet als het gelukt is: wat is er zichtbaar, voelbaar en anders in je dag?</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-badge">3</div>
+            <div>
+              <strong>Maak het betekenisvol</strong>
+              <p>Wat wordt er beter voor jou, en wat wordt er beter voor de mensen om je heen?</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-badge">4</div>
+            <div>
+              <strong>Zet het om in 1 kleine stap</strong>
+              <p>Een wens helpt pas als je hem klein genoeg maakt om vandaag al iets mee te doen.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="panel">
+            <h3>Hoe helpt dit anderen?</h3>
+            <p>Niet alleen door hard je best te doen, maar door betrouwbaarheid, aandacht, openheid en iets doen waar de ander echt op kan bouwen.</p>
+          </div>
+          <div class="panel">
+            <h3>Hoe helpt dit jou?</h3>
+            <p>Je krijgt meer richting, minder chaos en meer gevoel van eigen invloed. Dat verlaagt vaak de drang om te verdoven of te vluchten.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>2. Niet alles alleen dragen</h2>
+        <p class="lead">
+          Soms wordt een wens of probleem zwaarder omdat je hem in je eentje blijft verwerken. Dan groeit niet alleen de spanning van middelengebruik,
+          maar ook de zelfverwijdering: je laat anderen minder toe, terwijl delen juist kan helpen om weer contact en zicht op jezelf te krijgen.
+        </p>
+        <p class="lead">
+          Daar zit ook nog een tweede laag onder: emoties die normaal expresie nodig hebben, leer je soms af te tonen. Dan probeert een middel die emotionele lading
+          chemisch te dragen of op te roepen, waardoor het middel in je beleving te veel emotioneel gewicht krijgt. Dan lijkt het niet alleen een middel,
+          maar ook een vervanging voor wat je eigenlijk had willen uiten.
+        </p>
+        <div class="grid">
+          <div class="panel">
+            <h3>Wat draag ik alleen?</h3>
+            <p>Welke emotie, zorg, schaamte of strijd houd ik steeds voor mezelf, terwijl het eigenlijk ook gezegd of gedeeld kan worden?</p>
+          </div>
+          <div class="panel">
+            <h3>Wat kan ik delen?</h3>
+            <p>Wat mag een ander weten, zonder dat ik meteen alles hoef uit te leggen of op te lossen?</p>
+          </div>
+          <div class="panel">
+            <h3>Wie is veilig genoeg?</h3>
+            <p>Wie kan luisteren zonder direct te oordelen, te repareren of je onderuit te halen?</p>
+          </div>
+          <div class="panel">
+            <h3>Wat uit ik niet meer?</h3>
+            <p>Welke emotie of reactie heb ik ooit leren wegdrukken, terwijl die eigenlijk gehoord, benoemd of beweegd wilde worden?</p>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Praktische brug:</strong> als je merkt dat je veel alleen houdt, kijk dan ook naar <a href="./ingeslikte-emoties.htm">ingeslikte emoties</a>,
+          <a href="./verwijten-en-empathie.htm">verwijten en empathie</a> en <a href="./de-spiraal.htm">de spiraal</a>.
+        </div>
+        <div class="action-buttons">
+          <button type="button" onclick="window.location.href='./lastige-gevoelens.htm'">Nu doen: naar Lastige gevoelens</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>3. Schrijf je wens uit</h2>
+        <div class="form-group">
+          <label for="entryDate">Datum</label>
+          <input id="entryDate" type="date" />
+        </div>
+        <div class="form-group">
+          <label for="wish">Wat wil je positief bereiken?</label>
+          <textarea id="wish" placeholder="Bijv. Ik wil rustiger, eerlijker en betrouwbaarder worden in contact met anderen..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="endState">Hoe ziet het eindresultaat eruit?</label>
+          <textarea id="endState" placeholder="Bijv. Ik heb meer contact, minder gedoe, ik slaap beter, en mensen kunnen op me rekenen..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="benefit">Wie wordt hier beter van?</label>
+          <textarea id="benefit" placeholder="Bijv. ikzelf, mijn partner, mijn kind, collega's, vrienden... en op welke manier?"></textarea>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>4. Wie kan helpen?</h2>
+        <p class="lead">Kijk naar de pagina's die hier al op aansluiten. De bedoeling is niet alles op één plek te stoppen, maar de juiste rol op de juiste plek te laten landen.</p>
+        <ul class="links-list">
+          <li><a href="./levensdoelen-stellen.htm">Levensdoelen stellen</a> - maak je wens concreet en planbaar.</li>
+          <li><a href="./motiverende-mensen.htm">Motiverende mensen</a> - wie geeft richting en betekenis?</li>
+          <li><a href="./sociaal-netwerk.htm">Sociaal netwerk</a> - wie hoort in je omgeving?</li>
+          <li><a href="./steunnetwerk.htm">Steunnetwerk</a> - wie helpt concreet bij moeilijke momenten?</li>
+          <li><a href="./ingeslikte-emoties.htm">Ingeslikte emoties</a> - wat draag je alleen en wat kun je delen?</li>
+          <li><a href="./verwijten-en-empathie.htm">Verwijten en empathie</a> - hoe ga je van defensie naar begrip?</li>
+          <li><a href="./lastige-gevoelens.htm">Lastige gevoelens</a> - wat wil eigenlijk gevoel en expressie?</li>
+          <li><a href="./plan-van-aanpak.htm">Plan van aanpak</a> - welke stap volgt vandaag of deze week?</li>
+          <li><a href="./genieten-belonen.htm">Genieten en belonen</a> - hoe houd je gewenst gedrag vol?</li>
+          <li><a href="./de-spiraal.htm">De Spiraal</a> - hoe verandert jouw gedrag de relatie terug?</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>5. Kies je eerstvolgende stap</h2>
+        <div class="form-group">
+          <label for="nextStep">Wat is de kleinste echte stap?</label>
+          <textarea id="nextStep" placeholder="Bijv. vandaag 1 persoon bellen, mijn wens hardop uitspreken, of een afspraak maken om het plan te bespreken..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="helpNeeded">Welke hulp of afstemming heb je nodig?</label>
+          <textarea id="helpNeeded" placeholder="Bijv. aanmoediging, herinnering, meedenken, praktische steun..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="reflection">Wat leer je hiervan over gelukkiger worden?</label>
+          <textarea id="reflection" placeholder="Bijv. ik hoef niet alles alleen te doen; wat goed is voor mij kan ook goed zijn voor anderen..."></textarea>
+        </div>
+
+        <div class="action-buttons">
+          <button class="primary" type="button" id="saveButton">💾 Bewaar wens</button>
+          <button type="button" id="resetButton">🔄 Leeg formulier</button>
+        </div>
+        <div id="message" class="message"></div>
+      </section>
+
+      <section class="card" style="border-left-color: var(--warm);">
+        <h2>Samenvattend</h2>
+        <p class="lead">
+          Deze pagina hoort niet alleen bij dromen, maar ook bij sociale vaardigheid: leren wensen formuleren, bijdragen, hulp vragen en plannen.
+          Dat is vaak de brug tussen afhankelijkheid en een leefbaar, menselijker leven.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const FORM_KEY = 'verbinding-en-bijdrage';
+
+    function getTodayDateKey() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function showMessage(text, isSuccess = true) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.className = `message show ${isSuccess ? '' : 'error'}`;
+      setTimeout(() => message.classList.remove('show'), 4000);
+    }
+
+    function collectFormData() {
+      return {
+        date: document.getElementById('entryDate').value || getTodayDateKey(),
+        wish: document.getElementById('wish').value || '',
+        endState: document.getElementById('endState').value || '',
+        benefit: document.getElementById('benefit').value || '',
+        nextStep: document.getElementById('nextStep').value || '',
+        helpNeeded: document.getElementById('helpNeeded').value || '',
+        reflection: document.getElementById('reflection').value || ''
+      };
+    }
+
+    function loadFormData(data) {
+      if (!data) return;
+      document.getElementById('entryDate').value = data.date || '';
+      document.getElementById('wish').value = data.wish || '';
+      document.getElementById('endState').value = data.endState || '';
+      document.getElementById('benefit').value = data.benefit || '';
+      document.getElementById('nextStep').value = data.nextStep || '';
+      document.getElementById('helpNeeded').value = data.helpNeeded || '';
+      document.getElementById('reflection').value = data.reflection || '';
+    }
+
+    document.getElementById('saveButton').addEventListener('click', () => {
+      const data = collectFormData();
+      const storageKey = `${FORM_KEY}:${data.date || getTodayDateKey()}`;
+      try {
+        storeData(storageKey, data);
+        showMessage('✓ Wens opgeslagen. Je kunt hier later op terugkomen.', true);
+      } catch (error) {
+        showMessage('❌ Opslaan mislukt. Probeer het opnieuw.', false);
+      }
+    });
+
+    document.getElementById('resetButton').addEventListener('click', () => {
+      if (confirm('Leeg het hele formulier? Je huidige invoer gaat verloren.')) {
+        Array.from(document.querySelectorAll('textarea, input[type="text"], input[type="date"]')).forEach(el => el.value = '');
+        showMessage('Formulier leeggemaakt.', true);
+      }
+    });
+
+    const todayData = retrieveData(`${FORM_KEY}:${getTodayDateKey()}`);
+    if (todayData) {
+      loadFormData(todayData);
+    } else {
+      document.getElementById('entryDate').valueAsDate = new Date();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ingeslikte Emoties Onderzoek - IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #173249;
+      --main: #466d8c;
+      --accent: #8a4a2f;
+      --ok: #3b7f45;
+      --soft: #f3f8fc;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(63, 122, 161, 0.16), transparent 36%),
+        linear-gradient(180deg, #f8f3ec 0%, #edf4f7 100%);
+      color: var(--ink);
+    }
+    .page-shell {
+      max-width: 940px;
+      margin: 0 auto;
+    }
+    .hero {
+      margin-top: 1rem;
+      background: linear-gradient(145deg, var(--main) 0%, #845a3b 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.25rem;
+      box-shadow: 0 14px 30px rgba(23, 50, 73, 0.18);
+    }
+    .top-links {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 0.45rem 0.82rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 1.05rem;
+      margin-top: 1rem;
+      box-shadow: 0 9px 22px rgba(23, 50, 73, 0.09);
+    }
+    .day-row {
+      display: grid;
+      gap: 0.7rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      align-items: end;
+    }
+    .emotion-check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.55rem;
+      margin-top: 0.45rem;
+    }
+    .emotion-check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      border: 1px solid rgba(23, 50, 73, 0.12);
+      border-radius: 10px;
+      padding: 0.45rem 0.55rem;
+      background: #fbfdfe;
+      min-height: 40px;
+      font-weight: 600;
+      color: #2f4a5b;
+    }
+    .question-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.9rem;
+    }
+    .question-block {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      border-radius: 12px;
+      background: #fbfdfe;
+      padding: 0.7rem;
+    }
+    .question-block h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+      color: #274e69;
+    }
+    .question-block p {
+      margin: 0 0 0.45rem;
+      color: #4d6476;
+      font-size: 0.9rem;
+    }
+    .form-group {
+      margin: 0;
+      display: grid;
+      gap: 0.4rem;
+    }
+    input[type="date"],
+    input[type="text"],
+    textarea {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      padding: 0.6rem 0.75rem;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.85rem;
+    }
+    button {
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.55rem 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .button-primary {
+      background: var(--main);
+      border-color: var(--main);
+      color: #fff;
+    }
+    .message {
+      display: none;
+      margin-top: 0.8rem;
+      border-radius: 10px;
+      padding: 0.72rem 0.9rem;
+      background: #eef8ee;
+      border-left: 4px solid var(--ok);
+      color: #204f22;
+    }
+    .message.show { display: block; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.65rem;
+      margin-top: 0.7rem;
+    }
+    .summary-item {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      border-radius: 10px;
+      background: #fbfdfe;
+      padding: 0.65rem 0.72rem;
+    }
+    .summary-item h3 {
+      margin: 0 0 0.3rem;
+      font-size: 0.9rem;
+      color: #355971;
+    }
+    .summary-item p {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #213547;
+    }
+    .summary-list {
+      list-style: none;
+      margin: 0.8rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+    .summary-list li {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      border-radius: 10px;
+      background: #fbfdfe;
+      padding: 0.58rem 0.68rem;
+      color: #2f4a5b;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+  </style>
+  <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="top-links">
+          <a href="./dagelijks-gevolg.htm">Terug naar dagkaart</a>
+          <a href="./verwijten-en-empathie.htm">Verwijten & empathie</a>
+          <a href="./risico-gevoelens.htm">Naar risico-gevoelens</a>
+          <a href="./index.htm">Naar overzicht</a>
+        </div>
+        <h1>Onderzoek ingeslikte emoties</h1>
+        <p>Gebruik deze plek om vast te leggen wat je inslikt en waar het inhoudelijk over gaat, zodat je later gericht kunt onderzoeken wat je nodig hebt.</p>
+      </header>
+
+      <section class="card">
+        <div class="day-row">
+          <div class="form-group">
+            <label for="entryDate">Datum</label>
+            <input id="entryDate" type="date" />
+          </div>
+          <div class="form-group">
+            <label for="mainEmotion">Welke emotie wordt vooral ingeslikt?</label>
+            <input id="mainEmotion" type="text" placeholder="Bijv. boze schaamte, niet-geuit verdriet, weggedrukte angst..." />
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top:0.8rem;">
+          <label>Basis-emoties die je op deze dag inslikte</label>
+          <div class="emotion-check-grid">
+            <label class="emotion-check-item" for="baseCuriosity"><input type="checkbox" id="baseCuriosity" /><span>Nieuwsgierigheid</span></label>
+            <label class="emotion-check-item" for="baseAnger"><input type="checkbox" id="baseAnger" /><span>Boosheid</span></label>
+            <label class="emotion-check-item" for="baseSadness"><input type="checkbox" id="baseSadness" /><span>Verdriet</span></label>
+            <label class="emotion-check-item" for="baseFear"><input type="checkbox" id="baseFear" /><span>Angst</span></label>
+            <label class="emotion-check-item" for="baseDesire"><input type="checkbox" id="baseDesire" /><span>Begeerte</span></label>
+          </div>
+        </div>
+
+        <div class="question-grid">
+          <div class="question-block">
+            <h3>Nieuwsgierigheid</h3>
+            <p>Waar ben ik benieuwd naar, maar durf ik niet toe te laten?</p>
+            <textarea id="qCuriosity" placeholder="Waar trekt mijn aandacht heen? Wat zou ik willen ontdekken?"></textarea>
+          </div>
+          <div class="question-block">
+            <h3>Begeerte</h3>
+            <p>Wat begeer ik werkelijk?</p>
+            <textarea id="qDesire" placeholder="Wat verlang ik naar? Wat wil ik ontvangen of ervaren?"></textarea>
+          </div>
+          <div class="question-block">
+            <h3>Boosheid</h3>
+            <p>Wat is het 'iets' waar ik boos over ben en zou willen bevechten, maar niet doe?</p>
+            <textarea id="qAnger" placeholder="Waar zit mijn grens? Wat had ik willen zeggen of beschermen?"></textarea>
+          </div>
+          <div class="question-block">
+            <h3>Verdriet</h3>
+            <p>Wat moet ik loslaten omdat ik het niet kreeg of omdat het mij is afgepakt?</p>
+            <textarea id="qSadness" placeholder="Wat ben ik kwijtgeraakt, gemist of niet gegeven gekregen?"></textarea>
+          </div>
+          <div class="question-block" style="grid-column: 1 / -1;">
+            <h3>Angst</h3>
+            <p>Waar ben ik bang voor? Is dit mijn angst voor pijn/schade, of draag ik angst van iemand anders?</p>
+            <textarea id="qFear" placeholder="Wat is mijn eigen gevaar-inschatting? Wat voelt als overgenomen angst van een ander?"></textarea>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button type="button" class="button-primary" id="saveButton">Sla onderzoek op</button>
+          <button type="button" id="todayButton">Gebruik vandaag</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Weekoverzicht ingeslikte emoties</h2>
+        <p>Snelle spiegel van de afgelopen 7 dagen om patronen te zien.</p>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <h3>Dagen met onderzoek</h3>
+            <p id="summaryDaysWithData">0</p>
+          </div>
+          <div class="summary-item">
+            <h3>Dominante basis-emotie</h3>
+            <p id="summaryDominantEmotion">-</p>
+          </div>
+          <div class="summary-item">
+            <h3>Meeste hoofdlabel</h3>
+            <p id="summaryTopMainEmotion">-</p>
+          </div>
+        </div>
+        <ul class="summary-list" id="summaryEmotionCounts"></ul>
+        <ul class="summary-list" id="summaryRecentDays"></ul>
+      </section>
+
+      <div id="message" class="message"></div>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const FORM_KEY = 'ingeslikte-emoties';
+
+    function toDateKey(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function getDateFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get('date');
+      if (!q || !/^\d{4}-\d{2}-\d{2}$/.test(q)) return '';
+      return q;
+    }
+
+    function getState() {
+      return iamData.getFormData(FORM_KEY) || {};
+    }
+
+    function getEntries() {
+      const state = getState();
+      return state.entries && typeof state.entries === 'object' ? state.entries : {};
+    }
+
+    function getLast7EntryRows() {
+      const today = new Date();
+      const earliest = new Date(today);
+      earliest.setDate(today.getDate() - 6);
+      earliest.setHours(0, 0, 0, 0);
+      const earliestKey = toDateKey(earliest);
+      const todayKey = toDateKey(today);
+
+      return Object.entries(getEntries())
+        .filter(([dateKey, entry]) => dateKey >= earliestKey && dateKey <= todayKey && hasContent(entry))
+        .sort((a, b) => b[0].localeCompare(a[0]));
+    }
+
+    function getCheckedBaseLabels(entry) {
+      const labels = [];
+      if (entry.baseCuriosity) labels.push('Nieuwsgierigheid');
+      if (entry.baseAnger) labels.push('Boosheid');
+      if (entry.baseSadness) labels.push('Verdriet');
+      if (entry.baseFear) labels.push('Angst');
+      if (entry.baseDesire) labels.push('Begeerte');
+      return labels;
+    }
+
+    function renderWeeklySummary() {
+      const rows = getLast7EntryRows();
+      const daysWithDataEl = document.getElementById('summaryDaysWithData');
+      const dominantEl = document.getElementById('summaryDominantEmotion');
+      const topMainEl = document.getElementById('summaryTopMainEmotion');
+      const countsEl = document.getElementById('summaryEmotionCounts');
+      const recentEl = document.getElementById('summaryRecentDays');
+      if (!daysWithDataEl || !dominantEl || !topMainEl || !countsEl || !recentEl) return;
+
+      const baseCounts = {
+        Nieuwsgierigheid: 0,
+        Boosheid: 0,
+        Verdriet: 0,
+        Angst: 0,
+        Begeerte: 0
+      };
+      const mainCounts = {};
+
+      rows.forEach(([, entry]) => {
+        getCheckedBaseLabels(entry).forEach((label) => {
+          baseCounts[label] += 1;
+        });
+        if (entry.mainEmotion) {
+          const key = entry.mainEmotion.toLowerCase();
+          if (!mainCounts[key]) {
+            mainCounts[key] = { text: entry.mainEmotion, count: 0 };
+          }
+          mainCounts[key].count += 1;
+        }
+      });
+
+      daysWithDataEl.textContent = String(rows.length);
+
+      const dominant = Object.entries(baseCounts).sort((a, b) => b[1] - a[1])[0];
+      dominantEl.textContent = dominant && dominant[1] > 0 ? `${dominant[0]} (${dominant[1]})` : '-';
+
+      const topMain = Object.values(mainCounts).sort((a, b) => b.count - a.count)[0];
+      topMainEl.textContent = topMain ? `${topMain.text} (${topMain.count})` : '-';
+
+      countsEl.innerHTML = '';
+      Object.entries(baseCounts).forEach(([label, count]) => {
+        const li = document.createElement('li');
+        li.textContent = `${label}: ${count} dag(en)`;
+        countsEl.appendChild(li);
+      });
+
+      recentEl.innerHTML = '';
+      if (!rows.length) {
+        const li = document.createElement('li');
+        li.textContent = 'Nog geen opgeslagen onderzoek in de afgelopen 7 dagen.';
+        recentEl.appendChild(li);
+        return;
+      }
+
+      rows.slice(0, 5).forEach(([dateKey, entry]) => {
+        const li = document.createElement('li');
+        const base = getCheckedBaseLabels(entry);
+        const baseText = base.length ? base.join(', ') : 'geen basis-emoties aangevinkt';
+        const main = entry.mainEmotion ? ` | Hoofdlabel: ${entry.mainEmotion}` : '';
+        li.textContent = `${dateKey}: ${baseText}${main}`;
+        recentEl.appendChild(li);
+      });
+    }
+
+    function showMessage(text) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.classList.add('show');
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => el.classList.remove('show'), 2600);
+    }
+
+    function setFields(entry) {
+      document.getElementById('mainEmotion').value = entry?.mainEmotion || '';
+      document.getElementById('baseCuriosity').checked = Boolean(entry?.baseCuriosity);
+      document.getElementById('baseAnger').checked = Boolean(entry?.baseAnger);
+      document.getElementById('baseSadness').checked = Boolean(entry?.baseSadness);
+      document.getElementById('baseFear').checked = Boolean(entry?.baseFear);
+      document.getElementById('baseDesire').checked = Boolean(entry?.baseDesire);
+      document.getElementById('qCuriosity').value = entry?.qCuriosity || '';
+      document.getElementById('qDesire').value = entry?.qDesire || '';
+      document.getElementById('qAnger').value = entry?.qAnger || '';
+      document.getElementById('qSadness').value = entry?.qSadness || '';
+      document.getElementById('qFear').value = entry?.qFear || '';
+    }
+
+    function hydrateFromDailyEntry(dateKey) {
+      const daily = iamData.getFormData('craving-1-10') || {};
+      const entry = daily.dailyEntries && daily.dailyEntries[dateKey] ? daily.dailyEntries[dateKey] : null;
+      if (!entry) return;
+
+      if (!document.getElementById('mainEmotion').value) {
+        document.getElementById('mainEmotion').value = entry.swallowedEmotionMain || '';
+      }
+      if (entry.swallowedCuriosity) document.getElementById('baseCuriosity').checked = true;
+      if (entry.swallowedAnger) document.getElementById('baseAnger').checked = true;
+      if (entry.swallowedSadness) document.getElementById('baseSadness').checked = true;
+      if (entry.swallowedFear) document.getElementById('baseFear').checked = true;
+      if (entry.swallowedDesire) document.getElementById('baseDesire').checked = true;
+    }
+
+    function loadSelectedDay() {
+      const dateKey = document.getElementById('entryDate').value;
+      if (!dateKey) return;
+
+      const entry = getEntries()[dateKey] || null;
+      setFields(entry);
+      if (!entry) {
+        hydrateFromDailyEntry(dateKey);
+      }
+    }
+
+    function collectData() {
+      return {
+        mainEmotion: document.getElementById('mainEmotion').value.trim(),
+        baseCuriosity: document.getElementById('baseCuriosity').checked,
+        baseAnger: document.getElementById('baseAnger').checked,
+        baseSadness: document.getElementById('baseSadness').checked,
+        baseFear: document.getElementById('baseFear').checked,
+        baseDesire: document.getElementById('baseDesire').checked,
+        qCuriosity: document.getElementById('qCuriosity').value.trim(),
+        qDesire: document.getElementById('qDesire').value.trim(),
+        qAnger: document.getElementById('qAnger').value.trim(),
+        qSadness: document.getElementById('qSadness').value.trim(),
+        qFear: document.getElementById('qFear').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    function hasContent(entry) {
+      return Boolean(
+        entry.mainEmotion ||
+        entry.baseCuriosity ||
+        entry.baseAnger ||
+        entry.baseSadness ||
+        entry.baseFear ||
+        entry.baseDesire ||
+        entry.qCuriosity ||
+        entry.qDesire ||
+        entry.qAnger ||
+        entry.qSadness ||
+        entry.qFear
+      );
+    }
+
+    function saveEntry() {
+      const dateKey = document.getElementById('entryDate').value;
+      if (!dateKey) {
+        showMessage('Kies eerst een datum.');
+        return;
+      }
+
+      const state = getState();
+      const entries = { ...(state.entries || {}) };
+      const entry = collectData();
+
+      if (hasContent(entry)) {
+        entries[dateKey] = entry;
+      } else {
+        delete entries[dateKey];
+      }
+
+      iamData.updateFormData(FORM_KEY, {
+        entries,
+        lastDate: dateKey
+      });
+
+      renderWeeklySummary();
+      showMessage('Onderzoek opgeslagen.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const state = getState();
+      const fromQuery = getDateFromQuery();
+      document.getElementById('entryDate').value = fromQuery || state.lastDate || toDateKey(new Date());
+      loadSelectedDay();
+      renderWeeklySummary();
+
+      document.getElementById('entryDate').addEventListener('change', loadSelectedDay);
+      document.getElementById('todayButton').addEventListener('click', () => {
+        document.getElementById('entryDate').value = toDateKey(new Date());
+        loadSelectedDay();
+      });
+      document.getElementById('saveButton').addEventListener('click', saveEntry);
+    });
+  </script>
+</body>
+</html>

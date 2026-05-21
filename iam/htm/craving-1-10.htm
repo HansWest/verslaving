@@ -177,7 +177,21 @@
       background: #eef8ee; border-left: 4px solid var(--ok); color: #204f22;
     }
     .message.show { display: block; }
+    .mini-grid {
+      display: grid;
+      gap: 0.8rem;
+    }
+    @media (min-width: 760px) {
+      .mini-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .inline-value {
+      font-weight: 700;
+      color: #214b67;
+    }
   </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
   <div class="container">
@@ -244,11 +258,58 @@
           <label for="scoreNote">Korte notitie (context, trigger of gekozen actie)</label>
           <textarea id="scoreNote" placeholder="Bijv. score 6 na stress op werk, direct wandeling + bellen."></textarea>
         </div>
+        <div class="form-group">
+          <label for="todayFocusCraving">Wat me nu vooral bezighoudt vandaag?</label>
+          <textarea id="todayFocusCraving" placeholder="Welke gedachte, zorg of behoefte staat vandaag op de voorgrond?"></textarea>
+          <p class="attempt-summary-link" id="todayFocusYesterdayCraving">Gisteren: nog niet ingevuld.</p>
+          <div class="action-bar">
+            <button type="button" class="button-secondary" id="todayFocusCarryCraving">Neem gisteren over</button>
+            <button type="button" class="button-secondary" id="todayFocusNewCraving">Nieuw vandaag</button>
+          </div>
+        </div>
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
-          <button type="button" class="button-secondary" id="printButton">Print / bewaar als pdf</button>
         </div>
         <div id="message" class="message"></div>
+      </section>
+
+      <section class="card">
+        <h2>Emotie-golf voorspelling (pilot)</h2>
+        <p>Doel: inzicht geven dat een piek vaak een golf is. Je ziet een verwachte volgende stand en kiest dan een passende actie.</p>
+        <div class="mini-grid">
+          <div class="form-group">
+            <label for="baselineScore">Jouw normale baseline (0-10)</label>
+            <input id="baselineScore" type="range" min="0" max="10" step="1" value="3" />
+            <div class="meta-pill">Baseline: <span id="baselineLabel" class="inline-value">3</span></div>
+          </div>
+          <div class="form-group">
+            <label for="impactLevel">Hoe sterk raakt dit moment je?</label>
+            <select id="impactLevel">
+              <option value="0.5">Laag</option>
+              <option value="1" selected>Middel</option>
+              <option value="1.5">Hoog</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="deltaDirection">Wat doet deze gebeurtenis met je trek?</label>
+            <select id="deltaDirection">
+              <option value="1.5" selected>Trekt omhoog</option>
+              <option value="0">Neutraal</option>
+              <option value="-1.5">Laat zakken</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="decayQuotient">Herstelsnelheid richting baseline</label>
+            <input id="decayQuotient" type="range" min="0.05" max="0.3" step="0.05" value="0.1" />
+            <div class="meta-pill">Decay: <span id="decayLabel" class="inline-value">0.10</span></div>
+          </div>
+        </div>
+        <div class="zone" id="modelResultZone">Verwachte volgende stand: <strong id="predictedScore">0.0</strong></div>
+        <div class="zone safe" id="modelAdviceZone">Advies: kies een kleine preventieve actie (adem, water, korte afleiding).</div>
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="openRecommendedActionButton">Open aanbevolen actiepagina</button>
+        </div>
+        <p class="attempt-summary-link" id="recommendedActionHint">Huidig adviespad: Trek opvangen.</p>
       </section>
 
       <section class="card followup-card">
@@ -257,6 +318,8 @@
         <div class="followup-links">
           <a href="./dagelijks-gevolg.htm">Open Het gebruik van de dag</a>
           <a href="./plan-van-aanpak.htm">Open Plan van aanpak</a>
+          <a href="./plan-bij-uitglijden.htm">Open Plan bij uitglijden</a>
+          <a href="./noodplan-wegglijden.htm">Open Noodplan bij wegglijden</a>
         </div>
       </section>
 
@@ -273,6 +336,8 @@
   </div>
 
   <script src="../js/dataStore.js"></script>
+  <script src="../js/todayFocus.js"></script>
+  <script src="../js/emotionDynamics.js"></script>
   <script>
     const formKey = 'craving-1-10';
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
@@ -281,6 +346,7 @@
       'niet-nuttig': 'Niet nuttig',
       later: 'Later opnieuw proberen'
     };
+    let currentRecommendedActionPath = './trek-opvangen.htm';
 
     function getWeeklyReview() {
       return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
@@ -415,6 +481,96 @@
       label.textContent = `Score: ${score}`;
     }
 
+    function modelAdviceForScore(score) {
+      if (score <= 3.5) {
+        return {
+          cls: 'zone safe',
+          text: 'Advies: kies een kleine preventieve actie (adem, water, korte afleiding).'
+        };
+      }
+      if (score <= 6.5) {
+        return {
+          cls: 'zone warn',
+          text: 'Advies: activeer nu 1-2 kernacties (ABCDaaah, trigger verlaten, steunbericht sturen).'
+        };
+      }
+      return {
+        cls: 'zone alert',
+        text: 'Advies: noodmodus. Bel steun en start direct het noodplan forse trek.'
+      };
+    }
+
+    function actionPathForPredictedScore(score) {
+      if (score <= 3.5) {
+        return {
+          path: './trek-opvangen.htm',
+          label: 'Huidig adviespad: Trek opvangen.'
+        };
+      }
+      if (score <= 6.5) {
+        return {
+          path: './stimulus-respons.htm',
+          label: 'Huidig adviespad: Stimulus-respons plan.'
+        };
+      }
+      return {
+        path: './noodplan-forse-trek.htm',
+        label: 'Huidig adviespad: Noodplan forse trek.'
+      };
+    }
+
+    function updateEmotionModel() {
+      const oldEmotion = Number(document.getElementById('currentScore').value || 0);
+      const originalEmotion = Number(document.getElementById('baselineScore').value || 0);
+      const impact = Number(document.getElementById('impactLevel').value || 1);
+      const delta = Number(document.getElementById('deltaDirection').value || 0);
+      const decayQuotient = Number(document.getElementById('decayQuotient').value || 0.1);
+
+      const baselineLabel = document.getElementById('baselineLabel');
+      const decayLabel = document.getElementById('decayLabel');
+      baselineLabel.textContent = String(originalEmotion);
+      decayLabel.textContent = decayQuotient.toFixed(2);
+
+      const predictedScoreEl = document.getElementById('predictedScore');
+      const modelResultZone = document.getElementById('modelResultZone');
+      const modelAdviceZone = document.getElementById('modelAdviceZone');
+
+      const hasModel = window.iamEmotionDynamics && typeof window.iamEmotionDynamics.updateEmotionState === 'function';
+      if (!hasModel) {
+        predictedScoreEl.textContent = oldEmotion.toFixed(1);
+        modelResultZone.textContent = `Verwachte volgende stand: ${oldEmotion.toFixed(1)} (pilotmodule niet geladen)`;
+        modelAdviceZone.className = 'zone warn';
+        modelAdviceZone.textContent = 'Advies: gebruik de gewone score-zone en noodplanregels.';
+        return;
+      }
+
+      const result = window.iamEmotionDynamics.updateEmotionState({
+        oldEmotion,
+        originalEmotion,
+        delta,
+        impact,
+        decayQuotient,
+        minEmotion: 0,
+        maxEmotion: 10
+      });
+
+      predictedScoreEl.textContent = result.newEmotion.toFixed(1);
+      modelResultZone.innerHTML = `Verwachte volgende stand: <strong>${result.newEmotion.toFixed(1)}</strong> (decay ${result.decay.toFixed(2)}, impact ${result.change.toFixed(2)})`;
+
+      const advice = modelAdviceForScore(result.newEmotion);
+      modelAdviceZone.className = advice.cls;
+      modelAdviceZone.textContent = advice.text;
+
+      const action = actionPathForPredictedScore(result.newEmotion);
+      currentRecommendedActionPath = action.path;
+      const hint = document.getElementById('recommendedActionHint');
+      if (hint) hint.textContent = action.label;
+    }
+
+    function openRecommendedActionPage() {
+      window.location.href = currentRecommendedActionPath;
+    }
+
     function saveData() {
       const score = Number(document.getElementById('currentScore').value || 0);
       const note = document.getElementById('scoreNote').value.trim();
@@ -434,7 +590,17 @@
       renderAttemptSummary();
       scoreInput.value = Number.isFinite(Number(existing.currentScore)) ? Number(existing.currentScore) : 0;
       noteInput.value = existing.scoreNote || '';
+      if (window.iamTodayFocus && typeof window.iamTodayFocus.initDailyFocusWidget === 'function') {
+        window.iamTodayFocus.initDailyFocusWidget({
+          textareaId: 'todayFocusCraving',
+          yesterdayTextId: 'todayFocusYesterdayCraving',
+          carryButtonId: 'todayFocusCarryCraving',
+          newButtonId: 'todayFocusNewCraving',
+          source: formKey
+        });
+      }
       renderAdvice(Number(scoreInput.value));
+      updateEmotionModel();
 
       document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
         button.addEventListener('click', () => {
@@ -448,8 +614,13 @@
         }
       });
       scoreInput.addEventListener('input', () => renderAdvice(Number(scoreInput.value)));
+      scoreInput.addEventListener('input', updateEmotionModel);
+      document.getElementById('baselineScore').addEventListener('input', updateEmotionModel);
+      document.getElementById('impactLevel').addEventListener('change', updateEmotionModel);
+      document.getElementById('deltaDirection').addEventListener('change', updateEmotionModel);
+      document.getElementById('decayQuotient').addEventListener('input', updateEmotionModel);
+      document.getElementById('openRecommendedActionButton').addEventListener('click', openRecommendedActionPage);
       document.getElementById('saveButton').addEventListener('click', saveData);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       window.addEventListener('focus', () => {
         renderAttemptSummary();
       });

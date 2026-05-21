@@ -1,194 +1,244 @@
-<html>
-
-evenwicht.htm
-
-deze code is van controleerjeverslavingszorg.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
-
-Basisgedachte:
-Gedrag op een bepaald moment is een evenwicht of beter gezegd een vectoren optelling van de verschillende richtingen die de verschillende strevingen in zich hebben.
-Inzicht in de gelaagdheid en de verschillende elementen en strevingen helpt mogelijk om daar bewuster mee om te gaan.
-(gedachte dat awareness een weg uit de verslaving is)
-
-Status: idee, nog niet publiceerbaar (ga daar graag even netjes mee om?)
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>in evenwicht met verslaving</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
-
-
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
-
-function hulpscherm()
-{
-hulp_scherm(290,'Genieten in de toekomst', 'Noem het uitglijer, noem het terugval... dat zijn maar woorden.<br/>Waar het om gaat is dat je op een gegeven moment blijkbaar gedacht hebt dat het een goed/lekker/leuk idee was om te gebruiken... en dat je daar dus achteraf weer echt <i>anders</i> over denkt. Waarschijnlijk is dat al vaker gebeurd -bij verslaving gebeurt dat namelijk vaker-<BR>Maar als je van <i>iedere</i> terugval iets leert voor de toekomst, dan is dat een belangrijke bron voor controle.')
-}
-
-</script>
-
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>In Evenwicht Met Jouw Verslaving</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    .page-shell {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .page-header {
+      background: linear-gradient(135deg, #4f6d8c 0%, #5a9c82 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(20, 49, 66, 0.16);
+      margin-bottom: 1.5rem;
+    }
+    .page-header h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+    .page-header p {
+      margin-bottom: 0;
+      max-width: 44rem;
+    }
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .top-links a {
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .top-links a:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+    .intro-card,
+    .form-card,
+    .note-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 18px rgba(22, 50, 79, 0.07);
+    }
+    .eyebrow {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #4f6d8c;
+      margin-bottom: 0.4rem;
+    }
+    .balance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .balance-grid .form-card {
+      margin-bottom: 0;
+    }
+    .note-card {
+      background: #f4faf8;
+      border-left: 4px solid #5a9c82;
+    }
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+    .action-bar button {
+      flex: 1 1 160px;
+    }
+    .message {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border-left: 5px solid #4f6d8c;
+      background: #eef6fb;
+      margin-bottom: 1rem;
+    }
+    .message.show {
+      display: block;
+    }
+    .message.error {
+      border-left-color: #c0392b;
+      background: #fdf0ee;
+    }
+    @media (max-width: 820px) {
+      .balance-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
-<div class="container">
+  <div class="container">
+    <div class="page-shell">
+      <div class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./genieten-belonen.htm">Genieten &amp; belonen</a>
+          <a href="./levenskwaliteit.htm">Levenskwaliteit</a>
+          <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
+        </div>
+        <h1>In Evenwicht Met Jouw Verslaving</h1>
+        <p>Deze pagina gaat niet over belonen, maar over balans: welke krachten trekken jou richting gebruik, welke richting herstel, en wat verschuift dat evenwicht?</p>
+      </div>
 
-<div class="shadow"><div class="content">
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+      <div id="message" class="message"></div>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader"> Genietingen &amp; Beloningen </h1>
-</div>
-<div class="rechtsitalic">@@ overzicht: 5 - 10 minuten</div>
+      <section class="intro-card">
+        <span class="eyebrow">Uitgangspunt</span>
+        <h2>Gedrag is een optelsom van krachten</h2>
+        <p>Gedrag op een bepaald moment is een evenwicht, of beter gezegd een optelsom van verschillende richtingen en strevingen. Soms trekt iets naar rust, plezier of verdoving op de korte termijn. Tegelijk kunnen andere krachten trekken naar gezondheid, eerlijkheid, verbinding of zelfrespect.</p>
+        <p>Deze pagina helpt je dus niet om alleen leuke dingen te bedenken, maar om zicht te krijgen op wat jouw gedrag op een bepaald moment de ene of de andere kant op trekt.</p>
+      </section>
 
-<h1>In evenwicht met jouw verslaving</h1>
-<div class="printhide">
-  Voor een <a href="oefenen-voor-toekomst.htm" target="formulieren">nieuwe
-    toekomst</a> waarin &quot;minder gebruiken&quot; niet hoeft te betekenen
-    dat er voortdurend &quot;hard gewerkt hoeft te worden&quot; is er een hoop dat wel
-    of niet moet gebeuren. minder plezier in het leven is. Juist leren genieten
+      <form id="evenwichtForm">
+        <div class="balance-grid">
+          <section class="form-card">
+            <span class="eyebrow">Trek naar gebruik</span>
+            <h2>Wat trekt mij richting gebruik?</h2>
+            <label for="naarGebruik">Welke krachten, verwachtingen of verlangens duwen mij die kant op?</label>
+            <textarea id="naarGebruik" name="naarGebruik" rows="5" placeholder="Bijvoorbeeld: trek, gewoonte, snel willen ontspannen, erbij willen horen, mezelf verdoven..."></textarea>
+          </section>
 
-Die aandoening maakte juist dat ze er waarschijnlijk al tijden niet echt lekker
-    van genoten hebben! Sterker nog, wanneer een verslaving maar diep genoeg
-    is ingesleten, dan zie je eigenlijk regelmatig dat mensen juist verzuchten:
-    ?ik wÃ¬l helemaal niet meer? En ik geniet er ook helemaal niet meer van? Maar
-    het lijkt gewoon te moeten (en ik kan me er niet meer tegen verzetten)!?
+          <section class="form-card">
+            <span class="eyebrow">Trek naar herstel</span>
+            <h2>Wat trekt mij juist richting herstel?</h2>
+            <label for="naarHerstel">Welke waarden, mensen of doelen houden mij op koers?</label>
+            <textarea id="naarHerstel" name="naarHerstel" rows="5" placeholder="Bijvoorbeeld: gezondheid, kinderen, rust, werk, trots, eerlijkheid..."></textarea>
+          </section>
+        </div>
 
-Ik zal me dan ook vaak richten op vragen als:
+        <section class="form-card">
+          <span class="eyebrow">Aantrekkingskracht</span>
+          <h2>Wat belooft gebruik mij op zo'n moment?</h2>
+          <label for="belofteGebruik">Wat lijkt gebruik mij te geven of op te lossen?</label>
+          <textarea id="belofteGebruik" name="belofteGebruik" rows="4" placeholder="Rust, plezier, demping, ontsnappen, contact, spanning..."></textarea>
+        </section>
 
-?hoe, en waarvan kan jij weer leren genieten??
-?wat is genieten voor jou?
-?waar wil jij in de toekomst van gaan genieten??
-?waar genoot je vroeger van? (en hoe vinden we dat weer terug)?
-?met wie wil je gaan genieten? (want soms kan je enorm leren genieten van het
-    genot van de ander)?
+        <section class="form-card">
+          <span class="eyebrow">Tegenkracht</span>
+          <h2>Wat maakt nuchter of gecontroleerd leven dragelijker?</h2>
+          <label for="dragelijkZonder">Wat helpt om het evenwicht zonder gebruik beter vol te houden?</label>
+          <textarea id="dragelijkZonder" name="dragelijkZonder" rows="4" placeholder="Structuur, slapen, eten, steun, bewegen, openheid, haalbare doelen..."></textarea>
+        </section>
 
-    <p>Aandacht voor: <b>genietingen</b>. Heel veel mensen, verslaafd
-      of niet verslaafd zijn eigenlijk maar bar slecht in genieten. Heel veel
-      mensen moeten zichzelf eerst een beetje verdoven voordat zij zichzelf
-      toestaan om te mogen genieten (genieten heeft namelijk een beetje toestemming
-      nodig van jezelf). <br />
-      Daardoor zie je vaak dat mensen eerst gebruikt moeten hebben iedere keer
-      voor het genieten. En het is natuurlijk best begrijpelijk dat er  al gauw
-      een sterke koppeling gaat ontstaan tussen genieten en gebruik in je brein,
-      als ze allebei telkens samen voorkomen. Veel mensen hebben daardoor al
-      snel het gevoel dat het aan het gebruik ligt dat er zo genoten kan
-      worden. Want begrijp me wel, middelen zijn h&eacute;&eacute;l leuk om te gebruiken, en
-      ze kunnen ook daadwerkelijk bijdragen aan genot. En zo lang zij een toevoeging
-      zijn aan jouw levenskwaliteit is daar wat mij betreft ook helemaal niets
-      mis mee.<br />
-</p>
+        <section class="form-card">
+          <span class="eyebrow">Waarnemen</span>
+          <h2>Hoe merk ik dat het evenwicht aan het verschuiven is?</h2>
+          <label for="signalenVerschuiving">Wat zijn mijn vroege signalen?</label>
+          <textarea id="signalenVerschuiving" name="signalenVerschuiving" rows="4" placeholder="Ik ga onderhandelen, mezelf sussen, contact vermijden, plannen loslaten..."></textarea>
+        </section>
 
+        <section class="form-card">
+          <span class="eyebrow">Eerste stap</span>
+          <h2>Wat is een kleine verschuiving terug richting balans?</h2>
+          <label for="eersteVerschuiving">Welke kleine actie kan ik inzetten voordat het te laat wordt?</label>
+          <textarea id="eersteVerschuiving" name="eersteVerschuiving" rows="4" placeholder="Iemand appen, weggaan, eten, douchen, mijn plan terugpakken, eerlijk benoemen wat er speelt..."></textarea>
+        </section>
 
-    <form name="evenwicht" method="post" action="">
-      <input type="text" name="links" style="text-align:right; font-size:11px; font-weight:bolder; color:#CC0066; background:#DDDDDD; border:none; font-stretch:extra-condensed" disabled="disabled" value="|||||||||||">
-    |
-    <input type="text" name="rechts" style="text-align:left; font-size:11px; color:#009933; background:#DDDDDD; border:none; font-stretch:extra-expanded" disabled="disabled" value="||||||">
-    </form>
-    <p>  Maar als gebruik de enige deur is geworden in de richting van genot, dan is
-      er wel een probleem ontstaan in een leven.</p>
-    <p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <section class="note-card">
+          <p>De kern van deze pagina is: niet alleen vragen waar geniet ik van, maar ook wat duwt mij welke kant op. Daarmee vult deze pagina `genieten-belonen` aan in plaats van die te herhalen.</p>
+          <p>Wil je de richting scherper krijgen? Gebruik dan ook <a href="./levenskwaliteit.htm">levenskwaliteit</a> om te benoemen waar je naartoe wilt.</p>
+        </section>
 
-<p></p><form name="genieten">
+        <div class="action-bar">
+          <button type="button" onclick="saveForm()">Opslaan</button>
+          
+        </div>
+      </form>
+    </div>
+  </div>
 
-<h1>GENIETEN</h1>
-<p>Waar <b>genoot je vroeger</b> van <i><b>(v&oacute;&oacute;r het genieten
-      via gebruik begon)</b>?</i><br/>
-<textarea name="vroeger" cols="55" rows="2" class="praatmethansformtextarea" title="Waar genoot jij vroeger van? (denk aan: natuur, eten, lezen, TV, spelen, sporten, etc.etc.)"></textarea></p>
-<div class="praatmethansheader2">&quot;Wat was vroeger lekker of prettig voor jou?&quot;</div>
-<p></p>
-Waar zie jij andere mensen van  <b>genieten</b>, <i><b>? (los van 
-genieten via gebruik) </b></i><br/>
-<textarea name="anderen" cols="55" rows="2" class="praatmethansformtextarea" title="Waar zie jij andere mensen van genieten -waar je mogelijk ook zelfs jaloers op bent-"></textarea>
-<br />
-<div class="praatmethansheader2">&quot;welke  genietingen zie jij bij anderen?&quot;</div>
-<p></p>
-Welke <b>genietingen</b> ken ik <b>momenteel</b> voor mijzelf, <i><b>die niets
-met gebruik te maken hebben</b></i>?<br/>
-<textarea name="genietingenmomenteel" cols="55" rows="2" class="praatmethansformtextarea" title="Welke soort genietingen ken ik zonder gebruik? (denk aan massage, lichaamsverzorging, snoepen, muziek/films, etc.)"></textarea>
-<br />
-<div class="praatmethansheader2">&quot;welke soorten genietingen ken jij?&quot;</div>
-<p>&nbsp;</p>
-<p>Welke <b>genietingen</b> wil ik gaan oefenen voor de (nabije) toekomst, <i><b>los
-      van gebruik</b></i><br/>
-    <textarea name="textarea" cols="55" rows="2" class="praatmethansformtextarea" title="Welke soort genietingen zonder gebruik wil ik gaan oefenen/toestaan?"></textarea>
-    <br />
-</p>
-<div class="praatmethansheader2">&quot;welke soorten genietingen ga je oefenen?&quot;</div>
-<hr class="formhr" />
-<p>&nbsp;</p>
-<h1>ZELFBELONING</h1>
-<p>Welke (van deze) <b>genietingen</b> kan ik gebruiken als zelf-<b>beloning</b>?<br/>
-    <textarea name="zelfbeloning" cols="55" rows="2" class="praatmethansformtextarea" title="Met welke genietingen kan ik mijzelf belonen als ik dingen goed gedaan heb? (denk aan sauna, geurtjes, verzorging, snoepen, muziek/films, etc.)"></textarea>
-    <br />
-</p>
-<div class="praatmethansheader2">&quot;welke soorten genietingen ga je oefenen?&quot;</div>
-<p><b>Beloning in relatie</b> tot prestatie </p>
-<p><input name="radiobutton" type="radio" value="beloningen opdelen" />
-  zijn dat <b>grote genietingen</b> (die dus zo veel kosten dat je ze moet <b>opdelen</b>
-  in stukjes als we ze voor beloningen willen gebruiken)<br />
-  <input name="radiobutton" type="radio" value="beloning ineens" />
-zijn dit kleine genietingen die als beloning ineens kunnen worden gebruikt?</p>
-<div class="rechtsitalic">Sommige kleine beloningen zijn voor dagelijks of direct
-  gebruik, andere 'deel je op' over meerdere geoeie acties doordat je stereepjes
-  zet bijvoorbeeld. Een dure genieting 'vasien' je dan door tien of twintig keer
-  iets goed hebt gedaan, want het is niet de bedoeling dat zelfbeloning voor
-  financi&euml;le ellende zorgt<br />
-tip: zorg dat je de beloning of het zegeltje snel na het gunstig gedrag gunt
-aan jezel </div>
+  <script>
+    const formType = 'evenwicht';
+    const fieldNames = ['naarGebruik', 'naarHerstel', 'belofteGebruik', 'dragelijkZonder', 'signalenVerschuiving', 'eersteVerschuiving'];
 
-<div class="praatmethansheader2">&quot;beloning ineens of zegeltjes plakken?&quot;</div>
-<p>&nbsp;</p>
-</form><hr class="formhr" />
-<p>&nbsp;</p>
-<p><i>regelmatifg maak ik mee dat mensen mij zeggen dat er geen geld is voor
-    beloning of genieten...  daar heb ik twee antwoorden op:</i></p>
-<ol>
-  <li><i>sorry, (en dat bedoel ik NIET lullig!) maar voor gebruik wist je toch
-      waarschijnlijk toch regelmatig w&egrave;l geld. wanneer jij jouw creatieviteit
-      waarmee je geld scoorde voor gebruik nou eens zou inzetten om geld te regelen
-      voor jouw beloningen en genietingen? Ik ben ervan overtuigd dat je er (kleinere)
-      mogelijkheden zijn om jezelf te waardering te laten zien. </i></li>
-  <li><i>het doel van controle op je gebruik is natuurlijk dat je leven <b>leuker</b> wordt...
-      genieten helpt echt enorm om een leven leuker te maken. <b>Opnieuw leren genieten</b> is vaak behoorlijk centraal bij het terugwinnen van controle op gebruik. </i></li>
-    </ol>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    function fillForm(data) {
+      fieldNames.forEach((name) => {
+        const element = document.getElementById(name);
+        if (element && data[name] !== undefined) {
+          element.value = data[name];
+        }
+      });
+    }
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div>
-</div>
-</div></div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function collectForm() {
+      const data = {};
+      fieldNames.forEach((name) => {
+        const element = document.getElementById(name);
+        if (element) {
+          data[name] = element.value;
+        }
+      });
+      return data;
+    }
+
+    function saveForm() {
+      if (typeof iamData !== 'undefined') {
+        iamData.setFormData(formType, collectForm());
+      }
+      showMessage('Opgeslagen.', false);
+    }
+
+    function showMessage(text, isError) {
+      const element = document.getElementById('message');
+      element.textContent = text;
+      element.className = 'message show' + (isError ? ' error' : '');
+      clearTimeout(showMessage.timeoutId);
+      showMessage.timeoutId = setTimeout(() => {
+        element.className = 'message';
+      }, 2600);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof iamData !== 'undefined') {
+        fillForm(iamData.getFormData(formType) || {});
+      }
+
+      document.getElementById('evenwichtForm').addEventListener('input', () => {
+        saveForm();
+      });
+    });
+  </script>
+  <script src="../js/dataStore.js"></script>
 </body>
 </html>

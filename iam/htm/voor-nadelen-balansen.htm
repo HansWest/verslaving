@@ -53,9 +53,246 @@
         @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
         .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
         .action-bar button { flex: 1 1 180px; }
-        .message { display: none; border-left: 4px solid #5a8840; }
-        .message.show { display: block; }
+        #saveButton {
+            flex: 2 1 260px;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            box-shadow: 0 10px 20px rgba(47, 107, 143, 0.18);
+        }
+        #saveButton:hover,
+        #saveButton:focus-visible {
+            box-shadow: 0 12px 24px rgba(47, 107, 143, 0.24);
+        }
+        .weight-grid {
+            display: grid;
+            gap: 0.8rem;
+            margin-top: 0.75rem;
+        }
+        @media (min-width: 760px) {
+            .weight-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .weight-card {
+            border: 1px solid #d8e4ea;
+            border-radius: 12px;
+            padding: 0.8rem;
+            background: #fff;
+        }
+        .weight-card h3 {
+            margin: 0 0 0.55rem;
+            font-size: 0.98rem;
+            color: var(--page-main);
+        }
+        .weight-row {
+            display: grid;
+            grid-template-columns: 1fr 90px;
+            gap: 0.65rem;
+            align-items: center;
+            margin-bottom: 0.55rem;
+        }
+        .weight-row:last-child { margin-bottom: 0; }
+        .weight-row input {
+            margin: 0;
+            text-align: center;
+        }
+        .weight-help {
+            margin: 0.55rem 0 0;
+            font-size: 0.84rem;
+            color: #526777;
+        }
+        .balance-score {
+            margin-top: 0.9rem;
+            border-radius: 10px;
+            padding: 0.85rem;
+            background: #f4f9fb;
+            border: 1px solid #d7e6ee;
+        }
+        .balance-score p {
+            margin: 0.25rem 0;
+        }
+        .balance-matrix {
+            margin-top: 1rem;
+            border-radius: 12px;
+            border: 1px solid #d7e6ee;
+            background: #f8fcfe;
+            overflow: hidden;
+        }
+        .balance-matrix h3 {
+            margin: 0;
+            padding: 0.75rem 0.85rem;
+            font-size: 0.98rem;
+            color: var(--page-main);
+            background: #eef6fa;
+            border-bottom: 1px solid #d7e6ee;
+        }
+        .balance-matrix-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .balance-cell {
+            padding: 0.75rem 0.85rem;
+            border-right: 1px solid #e3eef4;
+            border-bottom: 1px solid #e3eef4;
+        }
+        .balance-cell:nth-child(2n) { border-right: none; }
+        .balance-cell:nth-last-child(-n+2) { border-bottom: none; }
+        .balance-cell h4 {
+            margin: 0 0 0.2rem;
+            font-size: 0.92rem;
+            color: #36566b;
+        }
+        .balance-cell p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #536979;
+        }
+        .decision-visual {
+            margin-top: 0.8rem;
+            display: grid;
+            gap: 0.45rem;
+        }
+        .decision-track {
+            height: 10px;
+            border-radius: 999px;
+            background: #e6eff4;
+            overflow: hidden;
+        }
+        .decision-bar {
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(90deg, #c96a4b 0%, #2f6b8f 100%);
+            transition: width 0.2s ease;
+        }
+        .decision-label {
+            font-size: 0.85rem;
+            color: #4f6574;
+        }
+
+        .cross-suggest-box {
+            margin-top: 1rem;
+            padding: 0.95rem;
+            border-radius: 12px;
+            background: #f6fafc;
+            border: 1px solid #d7e6ee;
+        }
+
+        .cross-suggest-box p {
+            margin: 0 0 0.6rem;
+            color: #526777;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .cross-suggest-list {
+            display: grid;
+            gap: 0.55rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cross-suggest-item {
+            display: flex;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: #fff;
+            border: 1px solid #d7e6ee;
+            border-radius: 10px;
+            padding: 0.65rem 0.75rem;
+        }
+
+        .cross-suggest-item span {
+            flex: 1 1 260px;
+            color: #334c5d;
+            font-size: 0.88rem;
+            line-height: 1.45;
+        }
+
+        .cross-suggest-item button {
+            border: 1px solid #c8dce8;
+            background: #eef6fb;
+            color: #2b556e;
+            border-radius: 999px;
+            min-height: 36px;
+            padding: 0.4rem 0.78rem;
+            font: inherit;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .scale-visual {
+            margin-top: 0.65rem;
+            padding: 0.75rem 0.6rem 0.35rem;
+            background: #fff;
+            border: 1px solid #d7e6ee;
+            border-radius: 10px;
+        }
+        .scale-base {
+            width: 8px;
+            height: 44px;
+            margin: 0 auto;
+            background: #7f95a4;
+            border-radius: 999px;
+        }
+        .scale-beam {
+            width: 190px;
+            height: 4px;
+            margin: -36px auto 0;
+            background: #5d7484;
+            border-radius: 999px;
+            transform-origin: 50% 50%;
+            transition: transform 0.22s ease;
+            position: relative;
+        }
+        .scale-pan {
+            position: absolute;
+            top: 8px;
+            width: 62px;
+            text-align: center;
+            font-size: 1.2rem;
+            transition: transform 0.22s ease;
+        }
+        .scale-pan.left {
+            left: -22px;
+        }
+        .scale-pan.right {
+            right: -22px;
+        }
+        .scale-pan-labels {
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: #556b7a;
+        }
+        .message {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 1000;
+            width: min(420px, calc(100vw - 2rem));
+            margin-top: 0;
+            border-left: 4px solid #5a8840;
+            box-shadow: 0 14px 32px rgba(30, 55, 74, 0.18);
+            opacity: 0;
+            transform: translateY(14px);
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+        .message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
         .message.error { border-left-color: var(--page-accent); }
+        .route-card {
+            border-top: 4px solid #5b744a;
+        }
+        .route-hint {
+            margin-top: 0.7rem;
+            color: #4f6574;
+            font-size: 0.92rem;
+        }
         .autofill-flash {
             animation: autofillPulse 1.7s ease-out 1;
             outline: 2px solid rgba(47, 107, 143, 0.45);
@@ -66,7 +303,409 @@
             70% { box-shadow: 0 0 0 10px rgba(47, 107, 143, 0); }
             100% { box-shadow: 0 0 0 0 rgba(47, 107, 143, 0); }
         }
+
+        /* ── Instellingen: LT-multiplier blok ──────────────────────── */
+        .lt-settings-block {
+            background: rgba(255,255,255,0.94);
+            border-radius: 16px;
+            margin-top: 1rem;
+            box-shadow: 0 8px 22px rgba(30, 55, 74, 0.09);
+            border-left: 4px solid var(--page-main);
+            overflow: hidden;
+        }
+        .lt-settings-block summary {
+            padding: 0.9rem 1.1rem;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--page-main);
+            font-size: 1rem;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            user-select: none;
+        }
+        .lt-settings-title {
+            flex: 1;
+        }
+        .lt-settings-cog {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.9rem;
+            min-height: 1.9rem;
+            border-radius: 999px;
+            border: 1px solid #c9dbe7;
+            background: #f4f9fb;
+            color: var(--page-main);
+            font-size: 1rem;
+            line-height: 1;
+            flex: 0 0 auto;
+        }
+        .lt-settings-block summary::-webkit-details-marker { display: none; }
+        .lt-settings-block summary::before {
+            content: '▶';
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+            color: var(--page-main);
+        }
+        .lt-settings-block[open] summary::before { transform: rotate(90deg); }
+        .lt-settings-block .settings-body {
+            padding: 0 1.1rem 1rem;
+            border-top: 1px solid #d7e6ee;
+        }
+        .lt-slider-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin-top: 0.65rem;
+        }
+        .lt-slider-wrap input[type="range"] {
+            flex: 1;
+            height: 6px;
+            accent-color: var(--page-main);
+            cursor: pointer;
+        }
+        .lt-value-badge {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--page-main);
+            min-width: 2.8rem;
+            text-align: center;
+            background: #eef6fb;
+            border: 1px solid #c8dce8;
+            border-radius: 8px;
+            padding: 0.25rem 0.5rem;
+        }
+        .lt-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: #526777;
+            margin-top: 0.3rem;
+        }
+        .term-legend {
+            margin: 0.5rem 0 0;
+            display: flex;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: 0.79rem;
+            color: #4b6475;
+        }
+        .term-legend-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            padding: 0.18rem 0.5rem;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            border: 1px solid transparent;
+            min-width: 2.4rem;
+        }
+        .term-legend-badge.kt {
+            background: #fff2d8;
+            border-color: #e7c68a;
+            color: #7b4d12;
+        }
+        .term-legend-badge.lt {
+            background: #e7f4e5;
+            border-color: #a8c6a1;
+            color: #305a26;
+        }
+
+        /* ── Balans per thema: gebruik en veranderen ───────────────── */
+        .balance-groups {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .balance-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        .balance-group-header {
+            border-radius: 12px;
+            padding: 0.65rem 1rem;
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+        .balance-group-header.gebruik {
+            background: linear-gradient(135deg, #c96a4b 0%, #a04e34 100%);
+        }
+        .balance-group-header.veranderen {
+            background: linear-gradient(135deg, #2f6b8f 0%, #57744a 100%);
+        }
+        .balance-group-grid {
+            display: grid;
+            gap: 0.85rem;
+        }
+        @media (min-width: 760px) {
+            .balance-group-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .balance-column-card {
+            background: rgba(255,255,255,0.94);
+            border-radius: 12px;
+            padding: 0.9rem;
+            box-shadow: 0 4px 14px rgba(30, 55, 74, 0.07);
+            border-top: 3px solid #d0e4ee;
+        }
+        .balance-column-card.voordelen { border-top-color: #5b9e4a; }
+        .balance-column-card.nadelen   { border-top-color: #c96a4b; }
+        .card-section-title {
+            margin: 0 0 0.6rem;
+            font-size: 0.98rem;
+            color: var(--page-main);
+        }
+        .inline-weight-box {
+            margin-top: 0.65rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 10px;
+            background: #f4f9fb;
+            border: 1px solid #d7e6ee;
+        }
+        .inline-weight-box .weight-row {
+            grid-template-columns: 1fr 70px;
+            margin-bottom: 0.4rem;
+        }
+        .inline-weight-box .weight-row:last-of-type { margin-bottom: 0; }
+        .item-weight-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            margin-top: 0.45rem;
+        }
+        .item-weight-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 74px 72px;
+            gap: 0.45rem;
+            align-items: center;
+            padding: 0.35rem 0.45rem;
+            border: 1px solid #d7e6ee;
+            border-radius: 9px;
+            background: #ffffff;
+        }
+        .item-weight-text {
+            font-size: 0.84rem;
+            color: #334c5d;
+            line-height: 1.35;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .item-weight-input {
+            width: 100%;
+            min-width: 0;
+            border: 1px solid #c9dbe7;
+            border-radius: 8px;
+            padding: 0.3rem 0.35rem;
+            font-size: 0.82rem;
+            text-align: center;
+        }
+        .term-switch {
+            border: 1px solid #c9dbe7;
+            border-radius: 999px;
+            background: #edf5f9;
+            color: #315166;
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            padding: 0.34rem 0.4rem;
+            cursor: pointer;
+        }
+        .term-switch.term-short {
+            background: #fff2d8;
+            border-color: #e7c68a;
+            color: #7b4d12;
+        }
+        .term-switch.term-long {
+            background: #e7f4e5;
+            border-color: #a8c6a1;
+            color: #305a26;
+        }
+        .item-weight-empty {
+            font-size: 0.82rem;
+            color: #5b7283;
+        }
+        .effective-weight-display {
+            margin-top: 0.5rem;
+            font-size: 0.83rem;
+            color: var(--page-main);
+            font-weight: 600;
+        }
+        .column-total-score {
+            padding: 0.6rem 0.9rem;
+            border-radius: 10px;
+            background: #f4f9fb;
+            border: 1px solid #d7e6ee;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--page-ink);
+            text-align: center;
+        }
+
+        /* ── Stuur naar spel ────────────────────────────────────── */
+        .game-send-block {
+            background: rgba(255,255,255,0.94);
+            border-radius: 16px;
+            margin-top: 1rem;
+            box-shadow: 0 8px 22px rgba(30, 55, 74, 0.09);
+            border-left: 4px solid #57744a;
+            overflow: hidden;
+        }
+        .game-send-block > summary {
+            padding: 0.9rem 1.1rem;
+            cursor: pointer;
+            font-weight: 700;
+            color: #3d5c35;
+            font-size: 1rem;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            user-select: none;
+        }
+        .game-send-block > summary::-webkit-details-marker { display: none; }
+        .game-send-block > summary::before {
+            content: '▶';
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+            color: #3d5c35;
+        }
+        .game-send-block[open] > summary::before { transform: rotate(90deg); }
+        .game-send-block .game-send-body {
+            padding: 0 1.1rem 1rem;
+            border-top: 1px solid #d7e6ee;
+        }
+        .game-send-section { margin-top: 0.85rem; }
+        .game-send-section h4 {
+            font-size: 0.9rem;
+            color: var(--page-main);
+            margin: 0 0 0.35rem;
+        }
+        .game-send-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.32rem 0;
+            border-bottom: 1px solid #edf4f8;
+        }
+        .game-send-row:last-child { border-bottom: none; }
+        .game-send-row > span {
+            flex: 1;
+            font-size: 0.87rem;
+            color: #334c5d;
+            line-height: 1.4;
+        }
+        .already-in-game { color: #7a9c7a !important; text-decoration: line-through; }
+        .btn-add-to-game {
+            white-space: nowrap;
+            border: 1px solid #c5d8c0;
+            background: #f0f7ee;
+            color: #3d5c35;
+            border-radius: 999px;
+            padding: 0.3rem 0.72rem;
+            font: inherit;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-add-to-game:hover { background: #e1f0dc; }
+        .btn-already-game {
+            white-space: nowrap;
+            border: 1px solid #d0e4d0;
+            background: #f5faf5;
+            color: #6a9e6a;
+            border-radius: 999px;
+            padding: 0.3rem 0.72rem;
+            font: inherit;
+            font-size: 0.8rem;
+            cursor: default;
+        }
+        .game-send-type-label {
+            display: inline-block;
+            margin-left: 0.3rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.1rem 0.38rem;
+            border-radius: 999px;
+        }
+        .type-positive { background: #e8f5e3; color: #3d6b2e; }
+        .type-negative { background: #fbeee9; color: #8b3a22; }
+
+        /* ── Collapsible cross-suggest ──────────────────────────────── */
+        .cross-suggest-details {
+            margin-top: 1rem;
+            border-radius: 12px;
+            border: 1px solid #d7e6ee;
+            background: #f6fafc;
+            overflow: hidden;
+        }
+        .cross-suggest-details > summary {
+            padding: 0.72rem 0.95rem;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.93rem;
+            color: var(--page-main);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            user-select: none;
+        }
+        .cross-suggest-details > summary::-webkit-details-marker { display: none; }
+        .cross-suggest-details > summary::before {
+            content: '▶';
+            font-size: 0.7rem;
+            transition: transform 0.18s;
+            color: var(--page-main);
+        }
+        .cross-suggest-details[open] > summary::before { transform: rotate(90deg); }
+        .cross-suggest-details .cross-suggest-box {
+            margin: 0;
+            border-radius: 0;
+            border: none;
+            border-top: 1px solid #d7e6ee;
+            background: transparent;
+        }
+        .suggest-btn-wrap {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+        .btn-dismiss {
+            border: 1px solid #f0c8b8;
+            background: #fdf4f1;
+            color: #8b3a22;
+            border-radius: 999px;
+            min-height: 36px;
+            padding: 0.4rem 0.78rem;
+            font: inherit;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-dismiss:hover { background: #fae4dc; }
+        .game-source-badge {
+            display: inline-block;
+            margin-left: 0.4rem;
+            padding: 0.1rem 0.45rem;
+            border-radius: 999px;
+            background: #e8f0fa;
+            color: #2f6b8f;
+            font-size: 0.72rem;
+            font-weight: 700;
+            vertical-align: middle;
+        }
     </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
     <div class="container">
@@ -78,73 +717,213 @@
                     <a href="./stimulus-respons.htm">Volgende stap</a>
                 </div>
                 <h1>Voor- en nadelen balans</h1>
-                <p>Je hoeft nu geen eindbeslissing te nemen. Deze balans helpt om eerlijk te zien wat aantrekkelijk is en wat het kost, op korte en langere termijn.</p>
+                <p>Aan elk gedrag kleven voor- en nadelen. Dit geldt ook voor verandering van gedrag. In deze balans zetten we de voor- en nadelen van gebruik en van verandering op een rijtje. Daarbij is het belangrijk om naar de korte en lange termijn te kijken. De balans opmaken kan helpen bij het nemen van een beslissing.</p>
             </header>
 
-            <div id="message" class="message"></div>
+            <div id="message" class="message" role="status" aria-live="polite"></div>
 
             <section class="intro-card">
-                <h2>Werk met concrete zinnen</h2>
-                <p>Probeer per vak meerdere punten op te schrijven. Hoe concreter je schrijft, hoe bruikbaarder deze pagina wordt op moeilijke momenten.</p>
+                <h2>Aan de slag: concrete punten per vak</h2>
+                <p>In het bijgevoegde schema kunt u uw eigen balans opmaken. Noem zelf per kolom tenminste twee redenen. Hoe concreter je schrijft (bijv. "Wanneer ik gebruikt heb kan ik de wereld aan" of "Door gebruik kom ik niet meer toe aan andere dingen"), hoe bruikbaarder deze pagina wordt op moeilijke momenten.</p>
             </section>
 
             <section class="note-card">
-                <h2>Legacy-aanvulling: verdiepende vragen</h2>
+                <h2>Handige vragen bij deze balans</h2>
                 <ul class="helper-list">
-                    <li>Waar kijk je naar uit wanneer je trek voelt, waar verlang je dan naar?</li>
-                    <li>Wat verwacht je van gebruik, en klopt die verwachting achteraf meestal?</li>
+                    <li>Waar kijk je naar uit wanneer je trek hebt, waar verlang je dan naar?</li>
+                    <li>Wat verwacht je van gebruik, en kloppen deze verwachtingen achteraf?</li>
                     <li>Wat mis je wanneer je niet gebruikt?</li>
-                    <li>Welke nadelen merk je meteen, en welke pas later?</li>
+                    <li>Welke nadelen of problemen merk je meteen, en welke pas later?</li>
                 </ul>
                 <div class="form-group mt-2">
                     <label for="reflectionDate">Datum van deze balans (optioneel)</label>
                     <input id="reflectionDate" type="date" />
                 </div>
-                <p>Tip uit de oude versie: noteer per kolom minstens twee punten. Deze balans groeit vaak over tijd.</p>
+                <p>Tip: deze balans groeit vaak over tijd. Je zult haar waarschijnlijk nog aanvullen in de toekomst.</p>
             </section>
 
             <section class="note-card">
-                <h2>Koppeling met functieanalyse en behoefte B</h2>
-                <p id="bridgeMeta">Hier verschijnen verbindingen met waarom-wel-gebruiken en ABCDaaah (behoefte B), zodat je voordelen-kolom concreter wordt.</p>
+                <h2>Koppeling met je waarom-wel-gebruiken en behoefte</h2>
+                <p id="bridgeMeta">Hier verschijnen verbindingen met je vorige antwoorden, zodat je balans concreter en persoonlijker wordt.</p>
                 <ul class="helper-list" id="balanceNudges">
-                    <li>Vul een paar velden in; dan verschijnen hier persoonlijke koppelingen.</li>
+                    <li>Vul een paar velden in op deze of vorige pagina's; dan verschijnen hier persoonlijke koppelingen.</li>
                 </ul>
             </section>
 
             <form id="balansForm">
-                <div class="grid-two">
-                    <section class="question-card">
-                        <h2>Voordelen van gebruik</h2>
-                        <div class="form-group">
-                            <label for="usageAdvantagesText">Wat lijkt gebruik je te geven?</label>
-                            <textarea id="usageAdvantagesText" rows="8" placeholder="Bijv. snelle rust, minder spanning, me socialer voelen. Elke regel is een punt."></textarea>
+                <!-- ── Instellingen: verhouding korte en lange termijn ──────── -->
+                <details id="ltSettingsBlock" open class="lt-settings-block">
+                    <summary>
+                        <span class="lt-settings-title">Instellingen: verhouding korte en lange termijn</span>
+                        <span class="lt-settings-cog" aria-hidden="true">⚙️</span>
+                    </summary>
+                    <div class="settings-body">
+                        <p>Hoe zwaar weegt <strong>lange termijn</strong> voor jou ten opzichte van <strong>korte termijn</strong>? Dit berekent het LT-gewicht als KT-score × factor.</p>
+                        <div class="lt-slider-wrap">
+                            <input type="range" id="ltMultiplier" min="1" max="10" step="1" value="1" />
+                            <span class="lt-value-badge" id="ltValueBadge">1×</span>
                         </div>
-                    </section>
-                    <section class="question-card">
-                        <h2>Nadelen van gebruik</h2>
-                        <div class="form-group">
-                            <label for="usageDisadvantagesText">Wat kost gebruik je direct of later?</label>
-                            <textarea id="usageDisadvantagesText" rows="8" placeholder="Bijv. onrust, gedoe thuis/werk, herstelkost, schaamte. Elke regel is een punt."></textarea>
+                        <div class="lt-labels">
+                            <span>Even zwaar (1×)</span>
+                            <span>Midden (5×)</span>
+                            <span>LT 10× zwaarder</span>
                         </div>
-                    </section>
+                        <p class="term-legend">
+                            <span class="term-legend-badge kt">KT</span>
+                            <span>korte termijn: gewicht telt 1×</span>
+                            <span class="term-legend-badge lt">LT</span>
+                            <span>lange termijn: gewicht telt met LT-factor</span>
+                        </p>
+                        <p class="weight-help" id="ltExplanation">Lange termijn telt nu even zwaar als korte termijn. Een KT-score van 7 wordt zo een LT gewicht van: 7.</p>
+                    </div>
+                </details>
+
+                <!-- ── Eerst gebruik, dan veranderen; binnen elk naast elkaar ─ -->
+                <div class="balance-groups">
+
+                    <!-- GEBRUIK -->
+                    <div class="balance-group">
+                        <div class="balance-group-header gebruik">Gebruik: voordelen en nadelen</div>
+
+                        <div class="balance-group-grid">
+                            <div class="balance-column-card voordelen">
+                                <h3 class="card-section-title">Voordelen van gebruik</h3>
+                                <div class="form-group">
+                                    <label for="usageAdvantagesText">Wat lijkt gebruik je te geven?</label>
+                                    <textarea id="usageAdvantagesText" rows="6" placeholder="Bijv. snelle rust, minder spanning, me socialer voelen. Elke regel is een punt."></textarea>
+                                </div>
+                                <div class="inline-weight-box">
+                                    <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                    <div class="item-weight-list" id="usageAdvItemWeights"></div>
+                                    <div class="effective-weight-display" id="effUsageAdv">Effectief gewicht: —</div>
+                                </div>
+                            </div>
+
+                            <div class="balance-column-card nadelen">
+                                <h3 class="card-section-title">Nadelen van gebruik</h3>
+                                <div class="form-group">
+                                    <label for="usageDisadvantagesText">Wat kost gebruik je direct of later?</label>
+                                    <textarea id="usageDisadvantagesText" rows="6" placeholder="Bijv. onrust, gedoe thuis/werk, herstelkost, schaamte. Elke regel is een punt."></textarea>
+                                </div>
+                                <div class="inline-weight-box">
+                                    <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                    <div class="item-weight-list" id="usageDisItemWeights"></div>
+                                    <div class="effective-weight-display" id="effUsageDis">Effectief gewicht: —</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column-total-score" id="columnScoreGebruik">Gebruikssaldo: —</div>
+                    </div>
+
+                    <!-- VERANDEREN -->
+                    <div class="balance-group">
+                        <div class="balance-group-header veranderen">Veranderen: voordelen en nadelen</div>
+
+                        <div class="balance-group-grid">
+                            <div class="balance-column-card voordelen">
+                                <h3 class="card-section-title">Voordelen van veranderen</h3>
+                                <div class="form-group">
+                                    <label for="changeAdvantagesText">Wat levert veranderen je op?</label>
+                                    <textarea id="changeAdvantagesText" rows="6" placeholder="Bijv. trots, betrouwbaarheid, rust, betere relaties. Elke regel is een punt."></textarea>
+                                </div>
+                                <div class="inline-weight-box">
+                                    <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                    <div class="item-weight-list" id="changeAdvItemWeights"></div>
+                                    <div class="effective-weight-display" id="effChangeAdv">Effectief gewicht: —</div>
+                                </div>
+                            </div>
+
+                            <div class="balance-column-card nadelen">
+                                <h3 class="card-section-title">Nadelen van veranderen</h3>
+                                <div class="form-group">
+                                    <label for="changeDisadvantagesText">Wat maakt veranderen lastig of spannend?</label>
+                                    <textarea id="changeDisadvantagesText" rows="6" placeholder="Bijv. ongemak, oefenen, gemis, sociale spanning. Elke regel is een punt."></textarea>
+                                </div>
+                                <div class="inline-weight-box">
+                                    <p class="weight-help">Per punt: geef gewicht (0-10) en kies KT of LT.</p>
+                                    <div class="item-weight-list" id="changeDisItemWeights"></div>
+                                    <div class="effective-weight-display" id="effChangeDis">Effectief gewicht: —</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column-total-score" id="columnScoreVeranderen">Verandersaldo: —</div>
+                    </div>
                 </div>
 
-                <div class="grid-two">
-                    <section class="question-card">
-                        <h2>Voordelen van veranderen</h2>
-                        <div class="form-group">
-                            <label for="changeAdvantagesText">Wat levert veranderen je op?</label>
-                            <textarea id="changeAdvantagesText" rows="8" placeholder="Bijv. trots, betrouwbaarheid, rust, betere relaties. Elke regel is een punt."></textarea>
+                <section class="note-card">
+                    <h2>Punten uit andere pagina's en spel</h2>
+                    <p class="weight-help">Hier verzamel je punten die al elders in IAM of in het zelfmanagementspel naar voren kwamen. Je kunt ze hier toevoegen aan je balans, of juist vanuit deze balans doorsturen naar het spel.</p>
+                    <div class="action-bar" style="margin-top: 0.75rem;">
+                        <button type="button" class="button-secondary" id="suggestButton">Vul aan vanuit gekoppelde pagina's</button>
+                    </div>
+
+                    <details class="cross-suggest-details" id="crossSuggestDetails">
+                        <summary>Ideeën uit verwante pagina's<span id="crossSuggestCount"></span></summary>
+                        <div class="cross-suggest-box">
+                            <p>Hier zie je punten uit onder meer waarom-wel-gebruiken, trek-opvangen, risico-denken en het zelfmanagementspel. Voeg ze toe aan de juiste balanskolom. Via <strong>Verwijder</strong> verdwijnt een idee uit deze lijst — bij spel-items ook uit het zelfmanagementspel.</p>
+                            <ul class="cross-suggest-list" id="balanceCrossSuggestList">
+                                <li class="cross-suggest-item"><span>Nog geen suggesties uit gekoppelde pagina's gevonden.</span></li>
+                            </ul>
                         </div>
-                    </section>
-                    <section class="question-card">
-                        <h2>Nadelen van veranderen</h2>
-                        <div class="form-group">
-                            <label for="changeDisadvantagesText">Wat maakt veranderen lastig of spannend?</label>
-                            <textarea id="changeDisadvantagesText" rows="8" placeholder="Bijv. ongemak, oefenen, gemis, sociale spanning. Elke regel is een punt."></textarea>
+                    </details>
+
+                    <details class="game-send-block" id="gameSendPanel">
+                        <summary>Stuur punten naar het zelfmanagementspel</summary>
+                        <div class="game-send-body">
+                            <p class="weight-help">Kies welke punten uit je balans je wilt opnemen in het spel. Houd het overzichtelijk — het spel werkt het best met 5–15 items. Voordelen van gebruik worden negatieve items (verleidingen); nadelen van gebruik en voordelen van veranderen worden positieve items (motivatie).</p>
+                            <div id="gameSendContent"></div>
                         </div>
-                    </section>
-                </div>
+                    </details>
+                </section>
+
+                <!-- ── Balansoverzicht ─────────────────────────────────────── -->
+                <section class="note-card">
+                    <h2>Balansoverzicht</h2>
+                    <p class="weight-help">0 = speelt bijna geen rol, 10 = weegt heel zwaar. Lange-termijn-scores worden vermenigvuldigd met de bovenstaande instelling.</p>
+                    <div class="balance-score" id="balanceScoreCard">
+                        <p id="balanceUsageScore">Gebruikssaldo: 0</p>
+                        <p id="balanceChangeScore">Verandersaldo: 0</p>
+                        <p id="balanceOutcome">Vul de weging in om je balansbeeld te zien.</p>
+                    </div>
+                    <div class="balance-matrix">
+                        <h3>Visuele 2x2 balans (momentopname)</h3>
+                        <div class="balance-matrix-grid">
+                            <div class="balance-cell">
+                                <h4>Voordelen gebruik</h4>
+                                <p id="matrixUsageAdv">0 punten</p>
+                            </div>
+                            <div class="balance-cell">
+                                <h4>Nadelen gebruik</h4>
+                                <p id="matrixUsageDis">0 punten</p>
+                            </div>
+                            <div class="balance-cell">
+                                <h4>Voordelen veranderen</h4>
+                                <p id="matrixChangeAdv">0 punten</p>
+                            </div>
+                            <div class="balance-cell">
+                                <h4>Nadelen veranderen</h4>
+                                <p id="matrixChangeDis">0 punten</p>
+                            </div>
+                        </div>
+                        <div class="decision-visual">
+                            <div class="decision-label" id="decisionLabel">Besliskompas: neutraal (nog weinig input)</div>
+                            <div class="decision-track"><div id="decisionBar" class="decision-bar"></div></div>
+                            <div class="scale-visual" aria-hidden="true">
+                                <div class="scale-base"></div>
+                                <div class="scale-beam" id="scaleBeam">
+                                    <div class="scale-pan left" id="scalePanLeft">⚖</div>
+                                    <div class="scale-pan right" id="scalePanRight">⚖</div>
+                                </div>
+                                <div class="scale-pan-labels">
+                                    <span>Gebruik trekt</span>
+                                    <span>Veranderen trekt</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
                 <section class="note-card">
                     <h2>Tussenconclusie voor nu</h2>
@@ -154,11 +933,36 @@
                     </div>
                 </section>
 
+                <section class="note-card route-card">
+                    <h2>Van balans naar actie (nu doen)</h2>
+                    <div class="grid-two">
+                        <div class="form-group">
+                            <label for="routeUrgencyBalans">Hoe urgent is het nu?</label>
+                            <select id="routeUrgencyBalans">
+                                <option value="laag" selected>Laag, ik kan plannen</option>
+                                <option value="middel">Middel, ik wil snel doorpakken</option>
+                                <option value="hoog">Hoog, ik voel trek of druk</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="routeFocusBalans">Waar wil je dit in omzetten?</label>
+                            <select id="routeFocusBalans">
+                                <option value="plan" selected>Concreet plan voor deze week</option>
+                                <option value="oefenen">Oefenen met alternatief gedrag</option>
+                                <option value="analyse">Nog 1 reflectieslag</option>
+                                <option value="nood">Directe noodroute</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="action-bar" style="margin-top: 0.5rem;">
+                        <button type="button" class="button-primary" id="openRecommendedRouteBalanceButton">Open aanbevolen actiepagina</button>
+                    </div>
+                    <p class="route-hint" id="routeHintBalance">Huidig adviespad: Plan van aanpak.</p>
+                </section>
+
                 <div class="action-bar">
-                    <button type="button" class="button-secondary" id="suggestButton">Vul vanuit waarom-wel-gebruiken</button>
                     <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
                     <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-                    <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
                 </div>
             </form>
         </div>
@@ -173,8 +977,23 @@
             'changeAdvantagesText',
             'changeDisadvantagesText',
             'decisionNote',
-            'reflectionDate'
+            'reflectionDate',
+            'ltMultiplier'
         ];
+        const weightedTextareas = [
+            'usageAdvantagesText',
+            'usageDisadvantagesText',
+            'changeAdvantagesText',
+            'changeDisadvantagesText'
+        ];
+        const weightControlMap = {
+            usageAdvantagesText: { listId: 'usageAdvItemWeights', summaryId: 'effUsageAdv' },
+            usageDisadvantagesText: { listId: 'usageDisItemWeights', summaryId: 'effUsageDis' },
+            changeAdvantagesText: { listId: 'changeAdvItemWeights', summaryId: 'effChangeAdv' },
+            changeDisadvantagesText: { listId: 'changeDisItemWeights', summaryId: 'effChangeDis' },
+        };
+        let itemMetaByField = {};
+        let currentRoutePath = './plan-van-aanpak.htm';
 
         function toLines(text) {
             return (text || '')
@@ -196,11 +1015,278 @@
                 usageDisadvantagesText: '',
                 changeAdvantagesText: '',
                 changeDisadvantagesText: '',
+                itemMetaByField: {},
                 reflectionDate: '',
                 decisionNote: '',
                 usage: { advantages: [], disadvantages: [] },
                 change: { advantages: [], disadvantages: [] }
             };
+        }
+
+        function scoreValue(rawValue) {
+            const raw = Number(rawValue);
+            if (!Number.isFinite(raw)) return 0;
+            return Math.max(0, Math.min(10, raw));
+        }
+
+        function getLtMultiplier() {
+            const el = document.getElementById('ltMultiplier');
+            if (!el) return 1;
+            const val = parseInt(el.value, 10);
+            if (Number.isNaN(val)) return 1;
+            return Math.min(10, Math.max(1, val));
+        }
+
+        function normalizeTerm(value) {
+            return value === 'long' ? 'long' : 'short';
+        }
+
+        function normalizeItemMetaEntry(line, entry) {
+            const weight = entry && entry.weight !== '' && entry.weight != null ? String(scoreValue(entry.weight)) : '';
+            return {
+                text: String(line || '').trim(),
+                weight,
+                term: normalizeTerm(entry ? entry.term : 'short')
+            };
+        }
+
+        function syncItemMetaForField(fieldId) {
+            const textarea = document.getElementById(fieldId);
+            const lines = toLines(textarea ? textarea.value : '');
+            const previous = Array.isArray(itemMetaByField[fieldId]) ? itemMetaByField[fieldId] : [];
+            const pool = previous.map((entry) => ({ ...entry, _used: false }));
+            const next = [];
+
+            lines.forEach((line, index) => {
+                const normalizedLine = String(line || '').trim().toLowerCase();
+                let match = pool.find((entry) => !entry._used && String(entry.text || '').trim().toLowerCase() === normalizedLine);
+                if (!match && pool[index] && !pool[index]._used) {
+                    match = pool[index];
+                }
+                if (match) match._used = true;
+                next.push(normalizeItemMetaEntry(line, match));
+            });
+
+            itemMetaByField[fieldId] = next;
+            return next;
+        }
+
+        function syncAllItemMetaFromTextareas() {
+            weightedTextareas.forEach((fieldId) => syncItemMetaForField(fieldId));
+        }
+
+        function itemEffectiveWeight(item, multiplier) {
+            const weight = scoreValue(item ? item.weight : 0);
+            const term = normalizeTerm(item ? item.term : 'short');
+            return term === 'long' ? weight * multiplier : weight;
+        }
+
+        function totalEffectiveWeight(fieldId) {
+            const multiplier = getLtMultiplier();
+            const entries = Array.isArray(itemMetaByField[fieldId]) ? itemMetaByField[fieldId] : [];
+            return entries.reduce((sum, item) => sum + itemEffectiveWeight(item, multiplier), 0);
+        }
+
+        function renderItemWeightControls(fieldId) {
+            const config = weightControlMap[fieldId];
+            if (!config) return;
+            const list = document.getElementById(config.listId);
+            if (!list) return;
+
+            const entries = syncItemMetaForField(fieldId);
+            list.innerHTML = '';
+
+            if (!entries.length) {
+                const empty = document.createElement('div');
+                empty.className = 'item-weight-empty';
+                empty.textContent = 'Voeg regels toe in het tekstveld hierboven om KT/LT en gewicht per punt te kiezen.';
+                list.appendChild(empty);
+                return;
+            }
+
+            entries.forEach((entry, index) => {
+                const row = document.createElement('div');
+                row.className = 'item-weight-row';
+
+                const text = document.createElement('span');
+                text.className = 'item-weight-text';
+                text.textContent = `${index + 1}. ${entry.text}`;
+
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.min = '0';
+                input.max = '10';
+                input.step = '1';
+                input.placeholder = '0-10';
+                input.className = 'item-weight-input';
+                input.value = entry.weight;
+                input.setAttribute('aria-label', `Gewicht voor punt ${index + 1}`);
+                input.dataset.metaField = fieldId;
+                input.dataset.metaIndex = String(index);
+
+                const switchBtn = document.createElement('button');
+                switchBtn.type = 'button';
+                switchBtn.className = `term-switch ${entry.term === 'long' ? 'term-long' : 'term-short'}`;
+                switchBtn.textContent = entry.term === 'long' ? 'LT' : 'KT';
+                switchBtn.title = 'Wissel tussen korte termijn en lange termijn';
+                switchBtn.dataset.metaField = fieldId;
+                switchBtn.dataset.metaIndex = String(index);
+                switchBtn.dataset.term = entry.term;
+
+                row.appendChild(text);
+                row.appendChild(input);
+                row.appendChild(switchBtn);
+                list.appendChild(row);
+            });
+        }
+
+        function renderAllItemWeightControls() {
+            weightedTextareas.forEach((fieldId) => renderItemWeightControls(fieldId));
+        }
+
+        function updateItemWeightFromInput(inputEl) {
+            if (!inputEl || !inputEl.dataset) return;
+            const fieldId = inputEl.dataset.metaField;
+            const index = parseInt(inputEl.dataset.metaIndex, 10);
+            if (!fieldId || Number.isNaN(index)) return;
+            const items = Array.isArray(itemMetaByField[fieldId]) ? itemMetaByField[fieldId] : [];
+            if (!items[index]) return;
+            items[index].weight = inputEl.value === '' ? '' : String(scoreValue(inputEl.value));
+        }
+
+        function toggleItemTerm(fieldId, index) {
+            const items = Array.isArray(itemMetaByField[fieldId]) ? itemMetaByField[fieldId] : [];
+            if (!items[index]) return;
+            items[index].term = items[index].term === 'long' ? 'short' : 'long';
+        }
+
+        function updateLtBadge() {
+            const mult = getLtMultiplier();
+            const badge = document.getElementById('ltValueBadge');
+            const explanation = document.getElementById('ltExplanation');
+            if (badge) badge.textContent = `${mult}×`;
+            if (explanation) {
+                explanation.textContent = mult === 1
+                    ? 'Lange termijn telt nu even zwaar als korte termijn. Een KT-score van 7 wordt zo een LT gewicht van: 7.'
+                    : `Lange termijn weegt nu ${mult}× zwaarder. Een KT-score van 7 wordt zo een LT gewicht van: ${7 * mult}.`;
+            }
+        }
+
+        function updateEffectiveWeightDisplays() {
+            const mult = getLtMultiplier();
+            const defs = [
+                { dispId: 'effUsageAdv', fieldId: 'usageAdvantagesText' },
+                { dispId: 'effUsageDis', fieldId: 'usageDisadvantagesText' },
+                { dispId: 'effChangeAdv', fieldId: 'changeAdvantagesText' },
+                { dispId: 'effChangeDis', fieldId: 'changeDisadvantagesText' },
+            ];
+            defs.forEach(({ dispId, fieldId }) => {
+                const el = document.getElementById(dispId);
+                if (!el) return;
+
+                const items = Array.isArray(itemMetaByField[fieldId]) ? itemMetaByField[fieldId] : [];
+                if (!items.length) {
+                    el.textContent = 'Effectief gewicht: —';
+                    return;
+                }
+
+                const shortCount = items.filter((item) => normalizeTerm(item.term) === 'short').length;
+                const longCount = items.length - shortCount;
+                const eff = totalEffectiveWeight(fieldId);
+                el.textContent = `Effectief gewicht: ${eff} (KT punten: ${shortCount}, LT punten: ${longCount}, LT-factor: ${mult}×)`;
+            });
+        }
+
+        function updateWeightedBalanceView() {
+            syncAllItemMetaFromTextareas();
+
+            const usageAdvEff  = totalEffectiveWeight('usageAdvantagesText');
+            const usageDisEff  = totalEffectiveWeight('usageDisadvantagesText');
+            const changeAdvEff = totalEffectiveWeight('changeAdvantagesText');
+            const changeDisEff = totalEffectiveWeight('changeDisadvantagesText');
+
+            const usageScore  = usageAdvEff  - usageDisEff;
+            const changeScore = changeAdvEff - changeDisEff;
+
+            const usageEl    = document.getElementById('balanceUsageScore');
+            const changeEl   = document.getElementById('balanceChangeScore');
+            const outcomeEl  = document.getElementById('balanceOutcome');
+            const colGebruik = document.getElementById('columnScoreGebruik');
+            const colVerand  = document.getElementById('columnScoreVeranderen');
+
+            if (usageEl)    usageEl.textContent   = `Gebruikssaldo: ${usageScore}`;
+            if (changeEl)   changeEl.textContent  = `Verandersaldo: ${changeScore}`;
+            if (colGebruik) colGebruik.textContent = `Gebruikssaldo: ${usageScore >= 0 ? '+' : ''}${usageScore}`;
+            if (colVerand)  colVerand.textContent  = `Verandersaldo: ${changeScore >= 0 ? '+' : ''}${changeScore}`;
+
+            if (!outcomeEl) return;
+            if (usageAdvEff + usageDisEff + changeAdvEff + changeDisEff === 0) {
+                outcomeEl.textContent = 'Vul de weging in om je balansbeeld te zien.';
+            } else {
+                const diff = changeScore - usageScore;
+                if (diff >= 3) {
+                    outcomeEl.textContent = 'Je weging wijst nu duidelijk richting veranderen (vooral op langere termijn).';
+                } else if (diff <= -3) {
+                    outcomeEl.textContent = 'Gebruik trekt nu nog relatief sterk; bekijk vooral welke lange-termijn-nadelen zwaarder mogen wegen.';
+                } else {
+                    outcomeEl.textContent = 'Je balans is nu gemengd. Kijk welke 1-2 punten jij de komende week extra gewicht wilt geven.';
+                }
+            }
+
+            updateBalanceMatrixView(usageScore, changeScore);
+            updateEffectiveWeightDisplays();
+        }
+
+        function countLinesFromId(id) {
+            const el = document.getElementById(id);
+            if (!el) return 0;
+            return toLines(el.value).length;
+        }
+
+        function updateBalanceMatrixView(usageScore, changeScore) {
+            const usageAdvCount = countLinesFromId('usageAdvantagesText');
+            const usageDisCount = countLinesFromId('usageDisadvantagesText');
+            const changeAdvCount = countLinesFromId('changeAdvantagesText');
+            const changeDisCount = countLinesFromId('changeDisadvantagesText');
+
+            const usageAdvEl = document.getElementById('matrixUsageAdv');
+            const usageDisEl = document.getElementById('matrixUsageDis');
+            const changeAdvEl = document.getElementById('matrixChangeAdv');
+            const changeDisEl = document.getElementById('matrixChangeDis');
+
+            if (usageAdvEl) usageAdvEl.textContent = `${usageAdvCount} punt(en)`;
+            if (usageDisEl) usageDisEl.textContent = `${usageDisCount} punt(en)`;
+            if (changeAdvEl) changeAdvEl.textContent = `${changeAdvCount} punt(en)`;
+            if (changeDisEl) changeDisEl.textContent = `${changeDisCount} punt(en)`;
+
+            const label = document.getElementById('decisionLabel');
+            const bar = document.getElementById('decisionBar');
+            const beam = document.getElementById('scaleBeam');
+            const panLeft = document.getElementById('scalePanLeft');
+            const panRight = document.getElementById('scalePanRight');
+            const diff = changeScore - usageScore;
+            const clamped = Math.max(-12, Math.min(12, diff));
+            const percentage = 50 + (clamped / 24) * 50;
+            const tilt = (clamped / 12) * 14;
+
+            if (bar) bar.style.width = `${Math.max(6, Math.min(100, percentage))}%`;
+            if (beam) beam.style.transform = `rotate(${tilt}deg)`;
+            if (panLeft) panLeft.style.transform = `translateY(${Math.max(-8, Math.min(8, tilt * 0.45))}px)`;
+            if (panRight) panRight.style.transform = `translateY(${Math.max(-8, Math.min(8, -tilt * 0.45))}px)`;
+
+            if (!label) return;
+            if (usageAdvCount + usageDisCount + changeAdvCount + changeDisCount === 0) {
+                label.textContent = 'Besliskompas: neutraal (nog weinig input)';
+                return;
+            }
+
+            if (diff >= 3) {
+                label.textContent = 'Besliskompas: weging helt richting veranderen';
+            } else if (diff <= -3) {
+                label.textContent = 'Besliskompas: gebruik trekt nog relatief sterk';
+            } else {
+                label.textContent = 'Besliskompas: gemengd beeld, verfijn je kernpunten';
+            }
         }
 
         function normalizeSavedData(saved) {
@@ -218,6 +1304,11 @@
             }
             if (!data.changeDisadvantagesText && data.change?.disadvantages) {
                 data.changeDisadvantagesText = linesToText(data.change.disadvantages);
+            }
+            if (data.itemMetaByField && typeof data.itemMetaByField === 'object') {
+                itemMetaByField = { ...data.itemMetaByField };
+            } else {
+                itemMetaByField = {};
             }
 
             return data;
@@ -245,12 +1336,15 @@
                 advantages: toLines(collected.changeAdvantagesText),
                 disadvantages: toLines(collected.changeDisadvantagesText)
             };
+            syncAllItemMetaFromTextareas();
+            collected.itemMetaByField = itemMetaByField;
 
             return collected;
         }
 
         function showMessage(text, isError = false) {
             const message = document.getElementById('message');
+            if (!message) return;
             message.textContent = text;
             message.classList.add('show');
             message.classList.toggle('error', isError);
@@ -358,9 +1452,13 @@
 
             appendUniqueLine(decisionNote, firstNonEmpty([
                 waaromWel.functionSummary ? `Functieanalyse meewegen: ${waaromWel.functionSummary}.` : '',
+                waaromWel.notFeeling ? `Ik zie wat ik probeer niet te voelen: ${waaromWel.notFeeling}.` : '',
+                waaromWel.notThinking ? `Ik zie wat ik probeer niet te denken: ${waaromWel.notThinking}.` : '',
                 trek.behoefte ? `ABCDaaah-behoefte expliciet meenemen: ${trek.behoefte}.` : ''
             ]));
 
+            renderAllItemWeightControls();
+            updateWeightedBalanceView();
             saveForm(true);
             showMessage('Voorstel toegevoegd vanuit waarom-wel-gebruiken en ABCDaaah-behoefte.');
         }
@@ -399,6 +1497,280 @@
             }
         }
 
+        function getGameSignals() {
+            const result = {
+                latestDailyFocus: '',
+                latestNote: '',
+                positiveItem: '',
+                negativeItem: ''
+            };
+
+            try {
+                const rawScores = localStorage.getItem('verity_scores');
+                if (rawScores) {
+                    const scores = JSON.parse(rawScores) || {};
+                    const latestKey = Object.keys(scores).sort((a, b) => new Date(b) - new Date(a))[0];
+                    const latest = latestKey ? scores[latestKey] : null;
+                    if (latest) {
+                        result.latestDailyFocus = String(latest.dailyFocus || '').trim();
+                        result.latestNote = String(latest.note || '').trim();
+                    }
+                }
+            } catch (error) {
+                console.warn('Kon verity_scores niet lezen voor balans-koppeling.', error);
+            }
+
+            try {
+                const rawItems = localStorage.getItem('verity_items');
+                if (rawItems) {
+                    const items = JSON.parse(rawItems) || [];
+                    const positive = items.find((item) => item && item.type === 'positive' && String(item.content || '').trim());
+                    const negative = items.find((item) => item && item.type === 'negative' && String(item.content || '').trim());
+                    result.positiveItem = positive ? String(positive.content).trim() : '';
+                    result.negativeItem = negative ? String(negative.content).trim() : '';
+                }
+            } catch (error) {
+                console.warn('Kon verity_items niet lezen voor balans-koppeling.', error);
+            }
+
+            return result;
+        }
+
+        function buildBalanceCrossSuggestions() {
+            if (typeof iamData === 'undefined') return [];
+
+            const whyUse = iamData.getFormData('waarom-wel-gebruiken') || {};
+            const trek = iamData.getFormData('trek-opvangen') || {};
+            const riskDenken = iamData.getFormData('risico-denken') || {};
+            const gameSignals = getGameSignals();
+
+            const pool = [
+                { text: gameSignals.latestDailyFocus, source: 'zelfmanagement-spel (dagfocus)', target: 'decisionNote' },
+                { text: gameSignals.latestNote, source: 'zelfmanagement-spel (notitie)', target: 'decisionNote' },
+                { text: gameSignals.positiveItem, source: 'zelfmanagement-spel (positief item)', target: 'changeAdvantagesText' },
+                { text: gameSignals.negativeItem, source: 'zelfmanagement-spel (negatief item)', target: 'usageDisadvantagesText' },
+                { text: whyUse.functionSummary || whyUse.notFeeling, source: 'waarom-wel-gebruiken', target: 'usageAdvantagesText' },
+                { text: whyUse.notThinking, source: 'waarom-wel-gebruiken', target: 'usageAdvantagesText' },
+                { text: whyUse.spaceGiven, source: 'waarom-wel-gebruiken', target: 'usageAdvantagesText' },
+                { text: whyUse.functionSummary, source: 'waarom-wel-gebruiken', target: 'decisionNote' },
+                { text: trek.behoefte, source: 'trek-opvangen', target: 'changeAdvantagesText' },
+                { text: trek.alternatief, source: 'trek-opvangen', target: 'changeAdvantagesText' },
+                { text: riskDenken.alternatiefDenken, source: 'risico-denken', target: 'decisionNote' }
+            ];
+
+            const unique = [];
+            pool.forEach((item) => {
+                const clean = String(item.text || '').trim();
+                if (!clean) return;
+                if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+                unique.push({ ...item, text: clean });
+            });
+
+            return unique;
+        }
+
+        function getDismissed() {
+            try {
+                return new Set(JSON.parse(localStorage.getItem('iam.dismissedSuggestions') || '[]'));
+            } catch { return new Set(); }
+        }
+
+        function addDismissed(text) {
+            try {
+                const set = getDismissed();
+                set.add(text.toLowerCase().trim());
+                localStorage.setItem('iam.dismissedSuggestions', JSON.stringify([...set]));
+            } catch (e) { console.warn('Kon verwijdering niet opslaan.', e); }
+        }
+
+        function deleteGameSourceItem(item) {
+            const low = item.text.toLowerCase().trim();
+            if (item.source.includes('positief item') || item.source.includes('negatief item')) {
+                try {
+                    const raw = localStorage.getItem('verity_items');
+                    if (raw) {
+                        const items = JSON.parse(raw) || [];
+                        localStorage.setItem('verity_items', JSON.stringify(
+                            items.filter(i => String(i.content || '').trim().toLowerCase() !== low)
+                        ));
+                    }
+                } catch (e) { console.warn('Kon spel-item niet verwijderen.', e); }
+            }
+            if (item.source.includes('dagfocus') || item.source.includes('notitie')) {
+                try {
+                    const raw = localStorage.getItem('verity_scores');
+                    if (raw) {
+                        const scores = JSON.parse(raw) || {};
+                        Object.values(scores).forEach(day => {
+                            if (item.source.includes('dagfocus') && String(day.dailyFocus || '').trim().toLowerCase() === low) day.dailyFocus = '';
+                            if (item.source.includes('notitie') && String(day.note || '').trim().toLowerCase() === low) day.note = '';
+                        });
+                        localStorage.setItem('verity_scores', JSON.stringify(scores));
+                    }
+                } catch (e) { console.warn('Kon spel-score niet bijwerken.', e); }
+            }
+        }
+
+        function renderBalanceCrossSuggestions() {
+            const list = document.getElementById('balanceCrossSuggestList');
+            if (!list) return;
+
+            const dismissed = getDismissed();
+            const suggestions = buildBalanceCrossSuggestions()
+                .filter(item => !dismissed.has(item.text.toLowerCase().trim()));
+
+            const counter = document.getElementById('crossSuggestCount');
+            if (counter) counter.textContent = suggestions.length ? ` (${suggestions.length})` : '';
+
+            list.innerHTML = '';
+
+            if (!suggestions.length) {
+                const empty = document.createElement('li');
+                empty.className = 'cross-suggest-item';
+                empty.innerHTML = '<span>Geen nieuwe ideeën — alles is al toegevoegd of verwijderd.</span>';
+                list.appendChild(empty);
+                return;
+            }
+
+            suggestions.forEach((item) => {
+                const isGame = item.source.startsWith('zelfmanagement-spel');
+                const row = document.createElement('li');
+                row.className = 'cross-suggest-item';
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = `${item.source}: ${item.text}`;
+                if (isGame) {
+                    const badge = document.createElement('span');
+                    badge.className = 'game-source-badge';
+                    badge.textContent = 'spel';
+                    textSpan.appendChild(badge);
+                }
+
+                const addBtn = document.createElement('button');
+                addBtn.type = 'button';
+                addBtn.textContent = 'Voeg toe';
+                addBtn.addEventListener('click', () => {
+                    const target = document.getElementById(item.target);
+                    appendUniqueLine(target, item.text);
+                    saveForm(true);
+                    renderBalanceNudges(collectFormData());
+                    updateWeightedBalanceView();
+                    renderBalanceCrossSuggestions();
+                });
+
+                const delBtn = document.createElement('button');
+                delBtn.type = 'button';
+                delBtn.className = 'btn-dismiss';
+                delBtn.title = isGame
+                    ? 'Let op: verwijdert ook het originele item uit het zelfmanagementspel'
+                    : 'Verbergt dit idee uit de lijst';
+                delBtn.textContent = isGame ? 'Verwijder (ook uit spel)' : 'Verwijder';
+                delBtn.addEventListener('click', () => {
+                    if (isGame) deleteGameSourceItem(item);
+                    addDismissed(item.text);
+                    renderBalanceCrossSuggestions();
+                });
+
+                const btnWrap = document.createElement('div');
+                btnWrap.className = 'suggest-btn-wrap';
+                btnWrap.appendChild(addBtn);
+                btnWrap.appendChild(delBtn);
+                row.appendChild(textSpan);
+                row.appendChild(btnWrap);
+                list.appendChild(row);
+            });
+        }
+
+        function getVerityItems() {
+            try { return JSON.parse(localStorage.getItem('verity_items') || '[]'); } catch { return []; }
+        }
+
+        function isAlreadyInGame(text) {
+            const low = text.toLowerCase().trim();
+            return getVerityItems().some(i => String(i.content || '').toLowerCase().trim() === low);
+        }
+
+        function addToGame(text, type) {
+            const clean = text.trim();
+            if (!clean) return false;
+            const items = getVerityItems();
+            if (items.some(i => String(i.content || '').toLowerCase().trim() === clean.toLowerCase())) return false;
+            items.push({ type, content: clean });
+            localStorage.setItem('verity_items', JSON.stringify(items));
+            return true;
+        }
+
+        function renderGameSendPanel() {
+            const panel = document.getElementById('gameSendPanel');
+            const container = document.getElementById('gameSendContent');
+            if (!panel || !container || !panel.open) return;
+
+            const quadrants = [
+                { id: 'usageAdvantagesText',    title: 'Voordelen van gebruik',    type: 'negative', typeLabel: 'negatief', typeTip: 'verleiding' },
+                { id: 'usageDisadvantagesText', title: 'Nadelen van gebruik',      type: 'positive', typeLabel: 'positief', typeTip: 'reden om te veranderen' },
+                { id: 'changeAdvantagesText',   title: 'Voordelen van veranderen', type: 'positive', typeLabel: 'positief', typeTip: 'motivatie' },
+                { id: 'changeDisadvantagesText',title: 'Nadelen van veranderen',   type: 'negative', typeLabel: 'negatief', typeTip: 'drempel' },
+            ];
+
+            container.innerHTML = '';
+            let anyLines = false;
+
+            quadrants.forEach(q => {
+                const el = document.getElementById(q.id);
+                const lines = el ? toLines(el.value) : [];
+                if (!lines.length) return;
+                anyLines = true;
+
+                const section = document.createElement('div');
+                section.className = 'game-send-section';
+
+                const heading = document.createElement('h4');
+                heading.textContent = q.title;
+                const typeBadge = document.createElement('span');
+                typeBadge.className = `game-send-type-label type-${q.type}`;
+                typeBadge.textContent = `${q.typeLabel} — ${q.typeTip}`;
+                heading.appendChild(typeBadge);
+                section.appendChild(heading);
+
+                lines.forEach(line => {
+                    const row = document.createElement('div');
+                    row.className = 'game-send-row';
+
+                    const textEl = document.createElement('span');
+                    textEl.textContent = line;
+
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+
+                    if (isAlreadyInGame(line)) {
+                        textEl.classList.add('already-in-game');
+                        btn.textContent = '✓ In spel';
+                        btn.className = 'btn-already-game';
+                        btn.disabled = true;
+                    } else {
+                        btn.textContent = '→ Voeg toe';
+                        btn.className = 'btn-add-to-game';
+                        btn.addEventListener('click', () => {
+                            if (addToGame(line, q.type)) {
+                                showMessage(`Toegevoegd aan het spel als ${q.typeLabel} item.`);
+                                renderGameSendPanel();
+                            }
+                        });
+                    }
+
+                    row.appendChild(textEl);
+                    row.appendChild(btn);
+                    section.appendChild(row);
+                });
+
+                container.appendChild(section);
+            });
+
+            if (!anyLines) {
+                container.innerHTML = '<p class="weight-help">Vul eerst inhoud in de balanskolommen.</p>';
+            }
+        }
+
         function exportAll() {
             const exportData = iamData.exportJSON();
             const url = URL.createObjectURL(exportData.blob);
@@ -412,23 +1784,114 @@
             showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
         }
 
+        function getRecommendedRoute() {
+            const urgency = document.getElementById('routeUrgencyBalans').value;
+            const focus = document.getElementById('routeFocusBalans').value;
+
+            if (urgency === 'hoog' || focus === 'nood') {
+                return {
+                    path: './noodplan-forse-trek.htm',
+                    hint: 'Huidig adviespad: Noodplan forse trek.'
+                };
+            }
+            if (focus === 'analyse') {
+                return {
+                    path: './risico-denken.htm',
+                    hint: 'Huidig adviespad: Risico-denken (extra analyse).'
+                };
+            }
+            if (focus === 'oefenen' || urgency === 'middel') {
+                return {
+                    path: './stimulus-respons.htm',
+                    hint: 'Huidig adviespad: Stimulus-respons plan.'
+                };
+            }
+
+            return {
+                path: './plan-van-aanpak.htm',
+                hint: 'Huidig adviespad: Plan van aanpak.'
+            };
+        }
+
+        function updateRouteHint() {
+            const recommendation = getRecommendedRoute();
+            currentRoutePath = recommendation.path;
+            const hintEl = document.getElementById('routeHintBalance');
+            if (hintEl) hintEl.textContent = recommendation.hint;
+        }
+
+        function openRecommendedRoute() {
+            window.location.href = currentRoutePath;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const saved = iamData.getFormData(formKey);
             const initial = normalizeSavedData(saved);
             fillForm(initial);
+            renderAllItemWeightControls();
+
+            // LT-multiplier badge en auto-collapse instellingenblok
+            updateLtBadge();
+            const ltBlock = document.getElementById('ltSettingsBlock');
+            if (ltBlock && saved && saved.ltMultiplier != null) {
+                ltBlock.removeAttribute('open');
+            }
+            const ltSlider = document.getElementById('ltMultiplier');
+            if (ltSlider) {
+                ltSlider.addEventListener('input', () => {
+                    updateLtBadge();
+                    updateWeightedBalanceView();
+                    saveForm(false);
+                });
+            }
+
             renderBalanceNudges(initial);
+            updateWeightedBalanceView();
+            renderBalanceCrossSuggestions();
+            updateRouteHint();
 
             document.getElementById('suggestButton').addEventListener('click', applySuggestionFromWhyUse);
             document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
             document.getElementById('exportButton').addEventListener('click', exportAll);
-            document.getElementById('printButton').addEventListener('click', () => window.print());
-            document.getElementById('balansForm').addEventListener('input', () => {
+            document.getElementById('openRecommendedRouteBalanceButton').addEventListener('click', openRecommendedRoute);
+            document.getElementById('routeUrgencyBalans').addEventListener('change', updateRouteHint);
+            document.getElementById('routeFocusBalans').addEventListener('change', updateRouteHint);
+            const gameSendPanel = document.getElementById('gameSendPanel');
+            if (gameSendPanel) {
+                gameSendPanel.addEventListener('toggle', () => { if (gameSendPanel.open) renderGameSendPanel(); });
+            }
+
+            document.getElementById('balansForm').addEventListener('click', (event) => {
+                const switchBtn = event.target.closest('.term-switch');
+                if (!switchBtn) return;
+                const fieldId = switchBtn.dataset.metaField;
+                const index = parseInt(switchBtn.dataset.metaIndex || '', 10);
+                if (!fieldId || Number.isNaN(index)) return;
+                toggleItemTerm(fieldId, index);
+                renderAllItemWeightControls();
+                updateWeightedBalanceView();
+                saveForm(false);
+            });
+
+            document.getElementById('balansForm').addEventListener('input', (event) => {
+                const target = event.target;
+                if (target && target.classList && target.classList.contains('item-weight-input')) {
+                    updateItemWeightFromInput(target);
+                }
+                if (target && target.id && weightedTextareas.includes(target.id)) {
+                    renderAllItemWeightControls();
+                }
                 saveForm(false);
                 renderBalanceNudges(collectFormData());
+                updateWeightedBalanceView();
+                renderBalanceCrossSuggestions();
+                renderGameSendPanel();
             });
 
             window.addEventListener('focus', () => {
                 renderBalanceNudges(collectFormData());
+                renderBalanceCrossSuggestions();
+                updateRouteHint();
             });
 
             showAutofillHighlightIfNeeded();

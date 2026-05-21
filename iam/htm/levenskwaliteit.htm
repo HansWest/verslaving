@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Levenskwaliteit</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    .page-shell {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .page-header {
+      background: linear-gradient(135deg, #3a7a71 0%, #4b6ba8 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(22, 50, 79, 0.16);
+      margin-bottom: 1.5rem;
+    }
+    .page-header h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+    .page-header p {
+      margin-bottom: 0;
+      max-width: 44rem;
+    }
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .top-links a {
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .top-links a:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+    .intro-card,
+    .form-card,
+    .note-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 18px rgba(22, 50, 79, 0.07);
+    }
+    .eyebrow {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #3a7a71;
+      margin-bottom: 0.4rem;
+    }
+    .note-card {
+      background: #f3faf7;
+      border-left: 4px solid #3a7a71;
+    }
+    .inline-link {
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .inline-link:hover {
+      text-decoration: underline;
+    }
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+    .action-bar button {
+      flex: 1 1 160px;
+    }
+    .message {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border-left: 5px solid #3a7a71;
+      background: #edf8f5;
+      margin-bottom: 1rem;
+    }
+    .message.show {
+      display: block;
+    }
+    .message.error {
+      border-left-color: #c0392b;
+      background: #fdf0ee;
+    }
+  </style>
+    <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <div class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./evenwicht.htm">Evenwicht</a>
+          <a href="./levensdoelen-stellen.htm">Levensdoelen</a>
+        </div>
+        <h1>Levenskwaliteit</h1>
+        <p>Deze oefening helpt je het tegenovergestelde van verslaving concreet te maken: wat is kwaliteit van leven voor jou, welke waarden horen daarbij, en welk gedrag laat dat zien?</p>
+      </div>
+
+      <div id="message" class="message"></div>
+
+      <section class="intro-card">
+        <span class="eyebrow">Uitgangspunt</span>
+        <h2>Onderzoek van het tegenovergestelde</h2>
+        <p>Soms zie je scherper waar je vanaf wilt, door te onderzoeken waar je naartoe wilt. Als verslaving jouw levenskwaliteit verkleint, dan is levenskwaliteit bouwen een richting die je elke dag kunt oefenen.</p>
+        <p><strong>Werkvraag:</strong> als gebruik levenskwaliteit kost, wat is dan voor jou het concrete tegenovergestelde dat levenskwaliteit juist opbouwt?</p>
+      </section>
+
+      <section class="note-card">
+        <span class="eyebrow">Beeld-Denken</span>
+        <h2>Van beeld naar woorden</h2>
+        <p>Beelden en muziek kunnen soms sneller duidelijk maken wat jij onder een goed leven verstaat. Kies 1 beeld of lied dat voor jou "levenskwaliteit" uitdrukt en vertaal dit naar woorden, waarden en gedrag.</p>
+        <ul>
+          <li>Welk beeld of welke song raakt direct jouw gevoel van kwaliteit?</li>
+          <li>Welke waarde zie of hoor je daarin terug?</li>
+          <li>Welk gedrag hoort daar vandaag al bij?</li>
+        </ul>
+        <p style="margin-bottom:0;">Gebruik dit samen met <a class="inline-link" href="./persoonlijke-waarden.htm">persoonlijke waarden</a> om jouw woorden scherper te maken.</p>
+      </section>
+
+      <form id="levenskwaliteitForm">
+        <section class="form-card">
+          <span class="eyebrow">Kernvraag</span>
+          <h2>Wat is kwaliteit van leven voor mij?</h2>
+          <label for="kwaliteitDefinitie">Beschrijf in je eigen woorden wat levenskwaliteit voor jou betekent.</label>
+          <textarea id="kwaliteitDefinitie" name="kwaliteitDefinitie" rows="4" placeholder="Wanneer voelt mijn leven waardevol, kloppend en vrij?"></textarea>
+        </section>
+
+        <section class="form-card">
+          <span class="eyebrow">Beeld Naar Woorden</span>
+          <h2>Welk beeld past bij mijn levenskwaliteit?</h2>
+          <label for="beeldUrl">URL van een beeld dat voor jou levenskwaliteit uitdrukt (optioneel)</label>
+          <input id="beeldUrl" name="beeldUrl" type="url" maxlength="300" placeholder="https://..." />
+
+          <label for="beeldWoorden" style="margin-top: 1rem;">Welke woorden passen bij dat beeld?</label>
+          <textarea id="beeldWoorden" name="beeldWoorden" rows="3" placeholder="Bijvoorbeeld: rust, kracht, verbinding, lichtheid, helderheid..."></textarea>
+
+          <label for="beeldWaarden" style="margin-top: 1rem;">Welke persoonlijke waarden herken je hierin?</label>
+          <textarea id="beeldWaarden" name="beeldWaarden" rows="3" placeholder="Bijvoorbeeld: eerlijkheid, zorg, vrijheid, trouw, verantwoordelijkheid..."></textarea>
+
+          <p style="margin-top: 0.9rem;">Tip: gebruik dit samen met <a class="inline-link" href="./persoonlijke-waarden.htm">persoonlijke waarden</a> als je jouw woorden verder wilt aanscherpen.</p>
+        </section>
+
+        <section class="form-card">
+          <span class="eyebrow">Van Inzicht Naar Gedrag</span>
+          <h2>Wat ga ik doen om mezelf levenskwaliteit te geven?</h2>
+          <label for="kwaliteitActies">Welke acties maken levenskwaliteit zichtbaar in jouw dagelijkse leven?</label>
+          <textarea id="kwaliteitActies" name="kwaliteitActies" rows="4" placeholder="Wat ga ik vaker doen, anders doen, of laten om mijn levenskwaliteit te versterken?"></textarea>
+
+          <label for="eersteStap" style="margin-top: 1rem;">Wat is de eerste kleine stap binnen 24 uur?</label>
+          <textarea id="eersteStap" name="eersteStap" rows="2" placeholder="Een haalbare stap die ik vandaag of morgen echt ga zetten."></textarea>
+        </section>
+
+        <section class="note-card">
+          <p>Je hoeft niet meteen groots te veranderen. Levenskwaliteit groeit vaak via kleine, herhaalbare keuzes. Koppel dit formulier eventueel aan <a class="inline-link" href="./genieten-belonen.htm">genieten &amp; belonen</a> en <a class="inline-link" href="./plan-van-aanpak.htm">plan van aanpak</a>.</p>
+          <p style="margin-top:0.65rem;">Als gevoel oploopt, helpt het om niveaus te onderscheiden: trek, angst, hoop, verbondenheid. Niet elk gevoel vraagt dezelfde reactie.</p>
+        </section>
+
+        <div class="action-bar">
+          <button type="button" onclick="saveForm()">Opslaan</button>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const formType = 'levenskwaliteit';
+    const fieldNames = ['kwaliteitDefinitie', 'beeldUrl', 'beeldWoorden', 'beeldWaarden', 'kwaliteitActies', 'eersteStap'];
+
+    function fillForm(data) {
+      fieldNames.forEach((name) => {
+        const element = document.getElementById(name);
+        if (element && data[name] !== undefined) {
+          element.value = data[name];
+        }
+      });
+    }
+
+    function collectForm() {
+      const data = {};
+      fieldNames.forEach((name) => {
+        const element = document.getElementById(name);
+        if (element) {
+          data[name] = element.value;
+        }
+      });
+      return data;
+    }
+
+    function saveForm() {
+      if (typeof iamData !== 'undefined') {
+        iamData.setFormData(formType, collectForm());
+      }
+      showMessage('Opgeslagen.', false);
+    }
+
+    function showMessage(text, isError) {
+      const element = document.getElementById('message');
+      element.textContent = text;
+      element.className = 'message show' + (isError ? ' error' : '');
+      clearTimeout(showMessage.timeoutId);
+      showMessage.timeoutId = setTimeout(() => {
+        element.className = 'message';
+      }, 2600);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof iamData !== 'undefined') {
+        fillForm(iamData.getFormData(formType) || {});
+      }
+
+      document.getElementById('levenskwaliteitForm').addEventListener('input', () => {
+        saveForm();
+      });
+    });
+  </script>
+  <script src="../js/dataStore.js"></script>
+</body>
+</html>

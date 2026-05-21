@@ -1,293 +1,557 @@
-<html>
-
-wat-is-mijn-identiteit.htm deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
-
-Basisgedachte:
-Gedrag op een bepaald moment is een evenwicht of beter gezegd een vectoren optelling van de verschillende richtingen die de verschillende strevingen in zich hebben.
-Inzicht in de gelaagdheid en de verschillende elementen en strevingen helpt mogelijk om daar bewuster mee om te gaan.
-(gedachte dat awareness een weg uit de verslaving is)
-
-Status: idee, nog niet publiceerbaar (ga daar graag even netjes mee om?)
--->
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>wat is mijn identiteit</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wat is mijn identiteit?</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6b8f;
+      --page-accent: #c96d4f;
+      --page-ok: #5a8840;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="controleerjeverslaving(.nl) is een product van PraatmetHans(.nl) om mensen te helpen om zelfstandig aan de slag te laten gaan met hun verslaving of afhankelijkheid middels verantwoorde formulieren." />
-<meta name="keywords" content="huisarts, poh, verslaving, addiction, zelfstandig, persoonlijk, formulieren, gesprek, keuze, controleerjeverslaving, PraatmetHans.nl" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 107, 143, 0.14), transparent 30%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
 
+    .page-shell { max-width: 980px; margin: 0 auto; }
 
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
 
-function hulppagina()
-{
-window.open ("http://www.helpdisk.nl/controleerjeverslaving/formulieren/wat-is-mijn-identiteit.htm/","controleerjeverslaving");
-}
+    .context-card,
+    .question-card,
+    .message {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
 
-function hulpscherm()
-{
-hulp_scherm(280,'Genieten in de toekomst', 'Het is een gegeven dat een verslaving behoorlijke impact kan hebben op jouw identiteit. Omgekeerd is het in het kader van behandeling ook vaak verstandig om eens goed stil te staan bij de vraag &quot;wie wil ik zijn?&quot;. Want dat kan een vraag zijn wsaarmee je jezelf behoorlijk richting kan geven.<BR>Juist door ook eens te kijken naar je identiteit wordt soms duidelijker waar het schade oploopt door gebruik...')
-}
+    .context-card { border-left: 4px solid var(--page-main); }
+    .question-card { border-top: 4px solid var(--page-main); }
 
-</script>
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .message { display: none; border-left: 4px solid var(--page-ok); }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+
+    .subtle-help {
+      margin: 0.35rem 0 0.6rem;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .pillar-score {
+      background: #f3f8fb;
+      border: 1px solid #d5e5ef;
+      border-radius: 10px;
+      padding: 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+
+    .action-bar button,
+    .action-bar a {
+      flex: 1 1 180px;
+      text-decoration: none;
+    }
+
+    .pillar-tension {
+      background: #fff8f5;
+      border: 1px solid #f0d5c8;
+      border-radius: 10px;
+      padding: 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .pillar-tension > label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.45rem;
+      color: var(--page-ink);
+    }
+
+    .tension-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .tension-slider {
+      flex: 1;
+      accent-color: var(--page-accent);
+      cursor: pointer;
+      height: 6px;
+    }
+
+    .tension-pole {
+      font-size: 0.78rem;
+      color: #7a6a62;
+      white-space: nowrap;
+    }
+
+    .tension-output {
+      margin: 0.4rem 0 0;
+      font-weight: 700;
+      color: var(--page-accent);
+      font-size: 0.92rem;
+    }
+  </style>
+  <script src="../js/themeMode.js"></script>
 </head>
 <body>
-<div class="container">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./wat-is-mijn-ik.htm">Wat is mijn ik</a>
+          <a href="./levensdoelen-stellen.htm">Levensdoelen</a>
+          <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
+        </div>
+        <h1>Wat is mijn identiteit?</h1>
+        <p>Reflecteer op de pilaren die jouw identiteit dragen. Niet om jezelf af te rekenen, maar om richting te kiezen voor herstel en groei.</p>
+      </header>
 
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
+      <div id="message" class="message"></div>
 
-</script>
-</head>
-<body>
-<div class="shadow"><div class="content">
-<script language="javascript">
- 
-writelogo();
--->
-</script>
-<div class="praatmethansheader">
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader"> identiteit &amp; verslaving </h1>
-</div>
-<div class="rechtsitalic"> Voor een aantal mensen is dit on-interessant, voor
-  anderen wezenlijk voor verandering<br />15-18 vragen: 20 - 50 minuten</div>
+      <section class="context-card">
+        <h2>Kernidee</h2>
+        <p>Identiteit heeft twee kanten: wat jij ziet in jezelf en wat anderen (denken te) zien. Door beide serieus te nemen, maak je keuzes die beter aansluiten bij wie je wilt zijn.</p>
+      </section>
 
-<h1>Wat is mijn identiteit?</h1>
-<div class="printhide">
+      <section class="context-card">
+        <h2>Petzold: identiteit als tempeldak op pilaren</h2>
+        <p class="subtle-help">In het model van Hilarion Petzold rust onze 'identiteit' op meerdere levenspilaren. Verslaving beschadigt niet alleen vaak meerdere pilaren tegelijkertijd, maar zorgt ook voor scheefstand tussen die pilaren (en daardoor ontstaan er scheuren in je identiteit).<br/>De belangrijkste 'pilaren van onze identiteit' zijn:</p>
+        <ul style="margin:0.4rem 0 0.2rem; padding-left:1.15rem; line-height:1.6;">
+          <li><strong>Lichamelijkheid:</strong> energie, slaap, gezondheid, lichaamsgevoel.</li>
+          <li><strong>Seksualiteit en intimiteit:</strong> nabijheid, grenzen, verlangen, relationele veiligheid.</li>
+          <li><strong>Sociaal netwerk:</strong> steun, wederkerigheid, erbij horen, aanspreekbaarheid.</li>
+          <li><strong>Arbeid en prestatie:</strong> structuur, bijdrage, competentie, ritme.</li>
+          <li><strong>Materie:</strong> geld, schulden, woonzekerheid, praktische basis.</li>
+          <li><strong>Normen, waarden en spiritualiteit:</strong> richting, betekenis, geweten, levenshouding.</li>
+        </ul>
+        <p class="subtle-help">Werk per pilaar in drie stappen: 1) wat zie ik, 2) wat zien anderen, 3) wat wordt een eerstvolgende kleine herstelactie.</p>
+      </section>
 
-<blockquote>Ben ik alleen nog maar mijn verslaving? Of ben ik meer?</blockquote>
+      <form id="identiteitForm">
+        <section class="question-card">
+          <h2>Lichamelijkheid</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="lijfzelf">Wat zie ik als ik naar mezelf kijk?</label>
+              <textarea id="lijfzelf" name="lijfzelf" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="lijfander">Wat laat ik anderen zien?</label>
+              <textarea id="lijfander" name="lijfander" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="pillar-tension">
+            <label for="lijfspanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="lijfspanning" name="lijfspanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="lijfspanning_out">0%</p>
+          </div>
+          <div class="pillar-score">
+            <label for="lichamelijkheidkracht">Draagkracht van deze pilaar nu</label>
+            <select id="lichamelijkheidkracht" name="lichamelijkheidkracht"></select>
+            <div class="form-group" style="margin-top:0.7rem;">
+              <label for="lijfdoen">Wat ga ik concreet doen om te versterken?</label>
+              <textarea id="lijfdoen" name="lijfdoen" rows="3"></textarea>
+            </div>
+          </div>
+        </section>
 
-<p>...en wat ben ik dan verder? <br />
-  Wat is mijn identiteit en wat is het effect van verslaving voor mij?<br />
-  Daar
-  is niet één enkel antwoord op. Maar het is goed om over na te denken omdat
-  het dus juist de <i>andere </i>delen van een mens zijn die ervoor zullen moeten
-  zorgen dat de verslaving controle krijgt. </p>
-<blockquote><b>nota bene</b>: voor een aantal mensen (met name mensen die zichzelf
-  de hele tijd voordelen) zijn deze vragen soms behoorlijk confronterend. <br />
-  Hou
-  daar rekening mee, misschien is het zelfs verstandig is om deze vragen nog
-  even uit te stellen, als je nu nog niet zo stevig in je vel zit?</blockquote>
-<h1>H. Petzold over identiteit</h1>
-<p>Ik maak hiervoor  gebruik van de identiteitstheorie uit
-  de I.B.T. van H Petzold. <br />
-  Professor Petzold stelt dat een identiteit iets is dat niet in &eacute;&eacute;n zinnetje
-  te pakken is. Een identiteit is iets dat groeit uit de dingen die je tijdens
-  de jeugd over jezelf te horen krijgt en de dingen die je ziet als je in de
-  spiegel kijkt. Wanneer je dus actief aan de slag wilt met je eigen identiteit
-  dan zal je aandacht moeten besteden aan de twee kanten
-  aan het verhaal: wat zie ik zelf? en wat zeggen anderen dat zij zien? <br /> 
-  Als je er aan wilt bouwen dan is het handig om te bedenken hoe zo'n identiteit
-  wordt opgebouwd dan is het model van prf. H. Petzold is verder iets dat opgebouwd
-  is en dat steunt op een aantal zaken. Zoals het dak van een Griekse tempel
-  steunt op pilaren zo zijn er ook een aantal dingen die onder mijn identiteit
-  staan, die het bepalen, die het vormen in de tijd.</p>
-</div>
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <section class="question-card">
+          <h2>Seksualiteit en intimiteit</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="sekszelf">Wat zie ik als ik naar mezelf kijk?</label>
+              <textarea id="sekszelf" name="sekszelf" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="seksander">Wat laat ik anderen zien?</label>
+              <textarea id="seksander" name="seksander" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="pillar-tension">
+            <label for="seksspanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="seksspanning" name="seksspanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="seksspanning_out">0%</p>
+          </div>
+          <div class="pillar-score">
+            <label for="seksualiteitkracht">Draagkracht van deze pilaar nu</label>
+            <select id="seksualiteitkracht" name="seksualiteitkracht"></select>
+            <div class="form-group" style="margin-top:0.7rem;">
+              <label for="seksdoen">Wat ga ik concreet doen om te versterken?</label>
+              <textarea id="seksdoen" name="seksdoen" rows="3"></textarea>
+            </div>
+          </div>
+        </section>
 
-<p></p><form name="identiteit">
-<h1>lichamelijkheid</h1>
-<table>
-<tr><td class="praatmethanstd" colspan="2">
-In hoeverre ben ik mijn lichaam? In hoeverre ben ik mijn vermogen om te bewegen, om te genieten, van aanrakingen, van maaltijden, van sport of beweging?</td></tr>
-<tr><td class="praatmethanstd" >Wat zie ik als ik naar mijzelf kijk?<br /><textarea name="lijfzelf" cols="45" rows="2" class="praatmethansformtextarea" title="Wat zie ik over mijn lichamelijkheid als je in de spiegel kijkt?"></textarea><p></p></td>
-<td class="praatmethanstd" >Wat laat ik anderen (daarvan) zien<br /><textarea name="lijfander" cols="45" rows="2" class="praatmethansformtextarea" title="Wat ziet een ander (of wat zeggen anderen) over jouw lichamelijkheid als je er niet bij bent?"></textarea></td></tr>
-<tr><td class="praatmethanstd" colspan="2"><p>Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat gebruik mijn gezondheid heeft aangetast, of doordat ik afgeleerd heb om op andere manieren te genieten?<br />
-  op dit moment(!) is de draagkracht van deze pilaar nog 
-  <select name="lichamelijkheidkracht">
-          <option value="0">0%</option>
-          <option value="10">10%</option>
-          <option value="20">20%</option>
-          <option value="30">30%</option>
-          <option value="40">40%</option>
-          <option value="50" selected="selected">50%</option>
-          <option value="60">60%</option>
-          <option value="70">70%</option>
-          <option value="80">80%</option>
-          <option value="90">90%</option>
-          <option value="100">100%</option>
-       </select>
-  van wat het had kunnen zijn.</p>
-    <p>Wat kan ik DOEN om dat te versterken?<br /><textarea name="lijfdoen" cols="55" rows="2" class="praatmethansformtextarea" title="Wat kan je doen voor jouw lichamelijkheid?"></textarea></p></td>
-</tr>
-</table>
+        <section class="question-card">
+          <h2>Sociaal netwerk</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="soczelf">Wat zie ik als ik naar mezelf kijk?</label>
+              <textarea id="soczelf" name="soczelf" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="socander">Wat laat ik anderen zien?</label>
+              <textarea id="socander" name="socander" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="pillar-tension">
+            <label for="socspanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="socspanning" name="socspanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="socspanning_out">0%</p>
+          </div>
+          <div class="pillar-score">
+            <label for="sociaalkracht">Draagkracht van deze pilaar nu</label>
+            <select id="sociaalkracht" name="sociaalkracht"></select>
+            <div class="form-group" style="margin-top:0.7rem;">
+              <label for="socdoen">Wat ga ik concreet doen om te versterken?</label>
+              <textarea id="socdoen" name="socdoen" rows="3"></textarea>
+            </div>
+          </div>
+        </section>
 
-<h1>seksualiteit <i>(indien van toepassing) </i></h1>
-<table>
-<tr>
-  <td class="praatmethanstd" colspan="2">
-Ben ik een &quot;echte hetero&quot;, of homo, bi, kinky? Ben ik &uuml;berhaupt niet
-zo seksueel of juist eigenlijk heel erg?</td>
-</tr>
-<tr><td class="praatmethanstd" >Wat zie ik als ik naar mijzelf kijk?<br /><textarea name="sekszelf" cols="45" rows="2" class="praatmethansformtextarea" title="Wat zie ik over mijn seksualiteit als je in de spiegel kijkt?"></textarea><p></p></td>
-<td class="praatmethanstd" >Wat laat ik anderen (daarvan) zien<br /><textarea name="seksander" cols="45" rows="2" class="praatmethansformtextarea" title="Wat ziet een ander (of wat zeggen anderen) over jouw seksualiteit als je er niet bij bent?"></textarea></td></tr>
-<tr><td class="praatmethanstd" colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik miijn seksualiteit alleen nog maar onder invloed uitleef? Of omdat ik het niet meer uitleef omdat ik onder invloed ben?<br />op dit moment(!) is de draagkracht van deze pilaar nog <select name="seksualiteitkracht">
-<option value="0">0%</option>
-<option value="10">10%</option>
-<option value="20">20%</option>
-<option value="30">30%</option>
-<option value="40">40%</option>
-<option value="50" selected="selected">50%</option>
-<option value="60">60%</option>
-<option value="70">70%</option>
-<option value="80">80%</option>
-<option value="90">90%</option>
-<option value="100">100%</option>
- </select> van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?<br /><textarea name="seksdoen" cols="55" rows="2" class="praatmethansformtextarea" title="Wat kan je doen voor jouw seksualiteit?"></textarea></td></tr>
-</table>
+        <section class="question-card">
+          <h2>Arbeid en prestatie</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="werkzelf">Wat zie ik als ik naar mezelf kijk?</label>
+              <textarea id="werkzelf" name="werkzelf" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="werkander">Wat laat ik anderen zien?</label>
+              <textarea id="werkander" name="werkander" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="pillar-tension">
+            <label for="werkspanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="werkspanning" name="werkspanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="werkspanning_out">0%</p>
+          </div>
+          <div class="pillar-score">
+            <label for="prestatiekracht">Draagkracht van deze pilaar nu</label>
+            <select id="prestatiekracht" name="prestatiekracht"></select>
+            <div class="form-group" style="margin-top:0.7rem;">
+              <label for="arbeiddoen">Wat ga ik concreet doen om te versterken?</label>
+              <textarea id="arbeiddoen" name="arbeiddoen" rows="3"></textarea>
+            </div>
+          </div>
+        </section>
 
-<h1>sociaal netwerk</h1>
-<table>
-<tr><td class="praatmethanstd" colspan="2">
-Heb ik veel vrienden of weinig? Steunt mijn familie mij of niet?</td></tr>
-<tr><td class="praatmethanstd" >Wat zie ik als ik naar mijzelf kijk?<br /><textarea name="soczelf" cols="45" rows="2" class="praatmethansformtextarea" title="Wat zie ik over mijn sociaal netwerk en steun als je in de spiegel kijkt?"></textarea><p></p></td>
-<td class="praatmethanstd" >Wat laat ik anderen (daarvan) zien<br /><textarea name="seksander" cols="45" rows="2" class="praatmethansformtextarea" title="Wat ziet een ander (of wat zeggen anderen) over jouw sociaal netwerk als je er niet bij bent?"></textarea></td></tr>
-<tr><td class="praatmethanstd" colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik eigenlijk alleen nog maar mensen met verslaving in mijn netwerk heb? Of omdat ik alleen nog maar met mensen praat als er gebruikt is? Of juist dat mensen niet meer met mij willen praten omdat zij denken dat ik onder invloed ben?<br />op dit moment(!) is de draagkracht van deze pilaar nog <select name="sociaalkracht">
-<option value="0">0%</option>
-<option value="10">10%</option>
-<option value="20">20%</option>
-<option value="30">30%</option>
-<option value="40">40%</option>
-<option value="50" selected="selected">50%</option>
-<option value="60">60%</option>
-<option value="70">70%</option>
-<option value="80">80%</option>
-<option value="90">90%</option>
-<option value="100">100%</option>
- </select> van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?<br /><textarea name="socdoen" cols="55" rows="2" class="praatmethansformtextarea" title="Wat kan je doen voor jouw sociaal netwerk?"></textarea></td></tr>
-</table>
+        <section class="question-card">
+          <h2>Materie (geld, schulden, zekerheid)</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="materiezelf">Wat zie ik als ik naar mezelf kijk?</label>
+              <textarea id="materiezelf" name="materiezelf" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="materieander">Wat laat ik anderen zien?</label>
+              <textarea id="materieander" name="materieander" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="pillar-tension">
+            <label for="materiespanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="materiespanning" name="materiespanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="materiespanning_out">0%</p>
+          </div>
+          <div class="pillar-score">
+            <label for="materiekracht">Draagkracht van deze pilaar nu</label>
+            <select id="materiekracht" name="materiekracht"></select>
+            <div class="form-group" style="margin-top:0.7rem;">
+              <label for="materiedoen">Wat ga ik concreet doen om te versterken?</label>
+              <textarea id="materiedoen" name="materiedoen" rows="3"></textarea>
+            </div>
+          </div>
+        </section>
 
-<h1>arbeid en prestatie</h1>
-<table>
-<tr>
-  <td class="praatmethanstd" colspan="2">
-Heb ik een aardige carri&egrave;re? Krijg ik een beetje waardering voor wat ik
-doe (betaald of niet)? Of ben ik bijvoorbeeld een intreressante opleiding/studie
-aan het doen waar ik iets mee ga kunnen doen?</td>
-</tr>
-<tr><td class="praatmethanstd" >Wat zie ik als ik naar mijzelf kijk?<br /><textarea name="werkzelf" cols="45" rows="2" class="praatmethansformtextarea" title="Wat zie je over jouw werk, prestaties of studie als je in de spiegel kijkt?"></textarea><p></p></td>
-<td class="praatmethanstd" >Wat laat ik anderen (daarvan) zien<br /><textarea name="werkander" cols="45" rows="2" class="praatmethansformtextarea" title="Wat ziet een ander (of wat zeggen anderen) over jouw werk, prestaties of studie als als je er niet bij bent?"></textarea></td></tr>
-<tr><td class="praatmethanstd" colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik mijn werk aan het kwijtraken ben door gebruik? Of omdat ik mijn kop niet zo goed meer zo goed bij mijn opleiding kan houden?<br />op dit moment(!) is de draagkracht van deze pilaar nog <select name="prestatiekracht">
-<option value="0">0%</option>
-<option value="10">10%</option>
-<option value="20">20%</option>
-<option value="30">30%</option>
-<option value="40">40%</option>
-<option value="50" selected="selected">50%</option>
-<option value="60">60%</option>
-<option value="70">70%</option>
-<option value="80">80%</option>
-<option value="90">90%</option>
-<option value="100">100%</option>
- </select> van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?<br /><textarea name="arbeiddoen" cols="55" rows="2" class="praatmethansformtextarea" title="Wat kan je doen voor jouw werk, jouw prestatie, jouw studie?"></textarea></td></tr>
-</table>
+        <section class="question-card">
+          <h2>Normen, waarden en spiritualiteit</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="normzelf">Wat zie ik als ik naar mezelf kijk?</label>
+              <textarea id="normzelf" name="normzelf" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="normander">Wat laat ik anderen zien?</label>
+              <textarea id="normander" name="normander" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="pillar-tension">
+            <label for="normspanning">Spanning: hoe ik mezelf voel vs. wat ik laat zien</label>
+            <div class="tension-row">
+              <span class="tension-pole">Geen spanning</span>
+              <input type="range" id="normspanning" name="normspanning" min="0" max="100" step="5" value="0" class="tension-slider" oninput="updateTensionDisplay(this)" />
+              <span class="tension-pole">Maximale spanning</span>
+            </div>
+            <p class="tension-output" id="normspanning_out">0%</p>
+          </div>
+          <div class="pillar-score">
+            <label for="normkracht">Draagkracht van deze pilaar nu</label>
+            <select id="normkracht" name="normkracht"></select>
+            <div class="form-group" style="margin-top:0.7rem;">
+              <label for="normdoen">Wat ga ik concreet doen om te versterken?</label>
+              <textarea id="normdoen" name="normdoen" rows="3"></textarea>
+            </div>
+          </div>
+        </section>
 
-<h1>materie</h1>
-<table>
-<tr>
-  <td class="praatmethanstd" colspan="2">
-Hoe is het met geld of met schulden. Wat heb ik als eigendom en hoe belangrijk
-  is dat voor mij, hoeveel zekerheid krijg ik daarvan?</td>
-</tr>
-<tr><td class="praatmethanstd" >Wat zie ik als ik naar mijzelf kijk?<br /><textarea name="materiezelf" cols="45" rows="2" class="praatmethansformtextarea" title="Wat zie je over jouw materiele aanwezigheid als je in de spiegel kijkt?"></textarea><p></p></td>
-<td class="praatmethanstd" >Wat laat ik anderen (daarvan) zien<br /><textarea name="materieander" cols="45" rows="2" class="praatmethansformtextarea" title="Wat zien anderen (of wat zeggen anderen) over jouw materiele welvaart of stabiliteit als als je er niet bij bent?"></textarea></td></tr>
-<tr>
-  <td class="praatmethanstd" colspan="2">Als ik eerlijk ben voor mijzelf, in
-    hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast?
-    Bijvoorbeeld doordat ik mijn schulden heb laten oplopen, de belastingen achter
-    me aan heb of omdat ik mijn rekeningen niet meer kan betalen terwijl ik wel
-    geld had voor gebruik?<br />
-    op dit moment(!) is de draagkracht van deze pilaar nog <select name="prestatiekracht">
-<option value="0">0%</option>
-<option value="10">10%</option>
-<option value="20">20%</option>
-<option value="30">30%</option>
-<option value="40">40%</option>
-<option value="50" selected="selected">50%</option>
-<option value="60">60%</option>
-<option value="70">70%</option>
-<option value="80">80%</option>
-<option value="90">90%</option>
-<option value="100">100%</option>
- </select> van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit materi&euml;le gebied in mijn leven te versterken?<br />
-<textarea name="materiedoen" cols="55" rows="2" class="praatmethansformtextarea" title="Wat kan je doen voor jouw spaartegioe, jouw schulden?"></textarea></td></tr>
-</table>
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-<h1>normen en waarden / spiritualiteit</h1>
-<table>
-<tr><td class="praatmethanstd"  colspan="2">
-Heb ik normen en waarden waar ik iets aan heb?</td></tr>
-<tr><td class="praatmethanstd" >Wat zie ik als ik naar mijzelf kijk?</td>
-<td class="praatmethanstd" >Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td class="praatmethanstd" >Wat zie ik als ik naar mijzelf kijk?<br /><textarea name="normzelf" cols="45" rows="2" class="praatmethansformtextarea" title="Wat zie je vamn jouw eigen normen en waarden als je in de spiegel kijkt?"></textarea><p></p></td>
-<td class="praatmethanstd" >Wat laat ik anderen (daarvan) zien<br /><textarea name="normander" cols="45" rows="2" class="praatmethansformtextarea" title="Wat zien anderen (of wat zeggen anderen) over jouw de normen en waarden als jij er niet bij bent?"></textarea></td></tr>
-<tr><td class="praatmethanstd"  colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik eigenlijk alleen nog maar mensen met verslaving in mijn netwerk heb? Of omdat ik alleen nog maar met mensen praat als er gebruikt is? Of juist dat mensen niet meer met mij willen praten omdat zij denken dat ik onder invloed ben?<br />op dit moment(!) is de draagkracht van deze pilaar nog <select name="normkracht">
-<option value="0">0%</option>
-<option value="10">10%</option>
-<option value="20">20%</option>
-<option value="30">30%</option>
-<option value="40">40%</option>
-<option value="50" selected="selected">50%</option>
-<option value="60">60%</option>
-<option value="70">70%</option>
-<option value="80">80%</option>
-<option value="90">90%</option>
-<option value="100">100%</option>
- </select> van wat het had kunnen zijn.<br />
-Wat kan ik DOEN om dit gebied in mijn leven te versterken? (geloofsgemeenschappen,
-politieke partijden, doelen die groter zijn dan ikzelf etc) <br />
-<textarea name="normdoen" cols="55" rows="2" class="praatmethansformtextarea" title="Wat kan je doen voor jouw normen en waarden, jouw spiritualiteit of overtuigingen?"></textarea></td></tr>
-</table>
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const canonicalFormKey = 'wat-is-mijn-ik';
+    const legacyFormKey = 'wat-is-mijn-identiteit';
+    const fieldNames = [
+      'lijfzelf', 'lijfander', 'lijfspanning', 'lijfdoen', 'lichamelijkheidkracht',
+      'sekszelf', 'seksander', 'seksspanning', 'seksdoen', 'seksualiteitkracht',
+      'soczelf', 'socander', 'socspanning', 'socdoen', 'sociaalkracht',
+      'werkzelf', 'werkander', 'werkspanning', 'arbeiddoen', 'prestatiekracht',
+      'materiezelf', 'materieander', 'materiespanning', 'materiedoen', 'materiekracht',
+      'normzelf', 'normander', 'normspanning', 'normdoen', 'normkracht'
+    ];
 
+    function updateTensionDisplay(slider) {
+      const out = document.getElementById(slider.id + '_out');
+      if (!out) return;
+      const val = parseInt(slider.value, 10);
+      if (val === 0) {
+        out.textContent = '0% — geen spanning';
+      } else if (val >= 75) {
+        out.textContent = val + '% — hoge spanning (interessant: waarom gebruik ik? wat lokt trek uit?)';
+      } else {
+        out.textContent = val + '%';
+      }
+    }
 
-</form><hr class="formhr" />
-<p><i>identiteit heeft altijd twee kanten: waar identificeer ik mijzelf mee,
-    wat is de identificatie door anderen.</i>
-</p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    function initTensionDisplays() {
+      document.querySelectorAll('.tension-slider').forEach((slider) => updateTensionDisplay(slider));
+    }
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div>
-</div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function renderPercentOptions(selectId) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
+      select.innerHTML = '';
+      for (let i = 0; i <= 100; i += 10) {
+        const option = document.createElement('option');
+        option.value = String(i);
+        option.textContent = `${i}%`;
+        if (i === 50) option.selected = true;
+        select.appendChild(option);
+      }
+    }
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function collectData() {
+      const data = {};
+      fieldNames.forEach((name) => {
+        const el = document.getElementsByName(name)[0];
+        data[name] = el ? el.value : '';
+      });
+      return data;
+    }
+
+    function identityToCanonical(identityData) {
+      return {
+        bodySelfView: identityData.lijfzelf || '',
+        bodyShown: identityData.lijfander || '',
+        bodyTension: identityData.lijfspanning || '0',
+        bodyStrengthen: identityData.lijfdoen || '',
+        bodyStrengthPct: identityData.lichamelijkheidkracht || '50',
+        sexualSelfView: identityData.sekszelf || '',
+        sexualShown: identityData.seksander || '',
+        sexualTension: identityData.seksspanning || '0',
+        sexualStrengthen: identityData.seksdoen || '',
+        sexualStrengthPct: identityData.seksualiteitkracht || '50',
+        socialSelfView: identityData.soczelf || '',
+        socialShown: identityData.socander || '',
+        socialTension: identityData.socspanning || '0',
+        socialStrengthen: identityData.socdoen || '',
+        socialStrengthPct: identityData.sociaalkracht || '50',
+        workSelfView: identityData.werkzelf || '',
+        workShown: identityData.werkander || '',
+        workTension: identityData.werkspanning || '0',
+        workStrengthen: identityData.arbeiddoen || '',
+        workStrengthPct: identityData.prestatiekracht || '50',
+        matterSelfView: identityData.materiezelf || '',
+        matterShown: identityData.materieander || '',
+        matterTension: identityData.materiespanning || '0',
+        matterStrengthen: identityData.materiedoen || '',
+        matterStrengthPct: identityData.materiekracht || '50',
+        valuesSelfView: identityData.normzelf || '',
+        valuesShown: identityData.normander || '',
+        valuesTension: identityData.normspanning || '0',
+        valuesStrengthen: identityData.normdoen || '',
+        valuesStrengthPct: identityData.normkracht || '50'
+      };
+    }
+
+    function canonicalToIdentity(canonicalData) {
+      return {
+        lijfzelf: canonicalData.bodySelfView || '',
+        lijfander: canonicalData.bodyShown || '',
+        lijfspanning: canonicalData.bodyTension || '0',
+        lijfdoen: canonicalData.bodyStrengthen || '',
+        lichamelijkheidkracht: canonicalData.bodyStrengthPct || '50',
+        sekszelf: canonicalData.sexualSelfView || '',
+        seksander: canonicalData.sexualShown || '',
+        seksspanning: canonicalData.sexualTension || '0',
+        seksdoen: canonicalData.sexualStrengthen || '',
+        seksualiteitkracht: canonicalData.sexualStrengthPct || '50',
+        soczelf: canonicalData.socialSelfView || '',
+        socander: canonicalData.socialShown || '',
+        socspanning: canonicalData.socialTension || '0',
+        socdoen: canonicalData.socialStrengthen || '',
+        sociaalkracht: canonicalData.socialStrengthPct || '50',
+        werkzelf: canonicalData.workSelfView || '',
+        werkander: canonicalData.workShown || '',
+        werkspanning: canonicalData.workTension || '0',
+        arbeiddoen: canonicalData.workStrengthen || '',
+        prestatiekracht: canonicalData.workStrengthPct || '50',
+        materiezelf: canonicalData.matterSelfView || '',
+        materieander: canonicalData.matterShown || '',
+        materiespanning: canonicalData.matterTension || '0',
+        materiedoen: canonicalData.matterStrengthen || '',
+        materiekracht: canonicalData.matterStrengthPct || '50',
+        normzelf: canonicalData.valuesSelfView || '',
+        normander: canonicalData.valuesShown || '',
+        normspanning: canonicalData.valuesTension || '0',
+        normdoen: canonicalData.valuesStrengthen || '',
+        normkracht: canonicalData.valuesStrengthPct || '50'
+      };
+    }
+
+    function loadData() {
+      const canonicalSaved = iamData.getFormData(canonicalFormKey) || {};
+      const legacySaved = iamData.getFormData(legacyFormKey) || {};
+      const saved = Object.keys(canonicalSaved).length
+        ? canonicalToIdentity(canonicalSaved)
+        : legacySaved;
+      fieldNames.forEach((name) => {
+        const el = document.getElementsByName(name)[0];
+        if (el && typeof saved[name] !== 'undefined') {
+          el.value = saved[name];
+        }
+      });
+    }
+
+    function saveData(feedback = true) {
+      try {
+        const identityData = collectData();
+        iamData.updateFormData(canonicalFormKey, identityToCanonical(identityData));
+        if (feedback) showMessage('Identiteit opgeslagen in je centrale ik-profiel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportData() {
+      try {
+        saveData(false);
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geexporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      ['lichamelijkheidkracht', 'seksualiteitkracht', 'sociaalkracht', 'prestatiekracht', 'materiekracht', 'normkracht']
+        .forEach(renderPercentOptions);
+      loadData();
+      initTensionDisplays();
+      document.getElementById('saveButton').addEventListener('click', () => saveData(true));
+      document.getElementById('exportButton').addEventListener('click', exportData);
+      document.getElementById('identiteitForm').addEventListener('input', () => saveData(false));
+    });
+  </script>
 </body>
 </html>

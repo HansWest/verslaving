@@ -1,54 +1,239 @@
-<html>
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Layoutvoorbeeld document Document</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IAM Layout Playground</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6b8f;
+      --page-accent: #c96d4f;
+      --page-ok: #5a8840;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 107, 143, 0.14), transparent 30%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
 
+    .page-shell { max-width: 980px; margin: 0 auto; }
 
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .message,
+    .card,
+    .palette {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
+
+    .card { border-top: 4px solid var(--page-main); }
+    .message { display: none; border-left: 4px solid var(--page-ok); }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.7rem;
+    }
+
+    .swatch {
+      border-radius: 10px;
+      min-height: 74px;
+      padding: 0.55rem;
+      color: #fff;
+      font-weight: 700;
+      display: flex;
+      align-items: end;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .s1 { background: #2f6b8f; }
+    .s2 { background: #5b744a; }
+    .s3 { background: #c96d4f; }
+    .s4 { background: #1f3849; }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .action-bar button,
+    .action-bar a { flex: 1 1 180px; }
+  </style>
+  <script src="../js/themeMode.js"></script>
 </head>
-BODY onUnload="saveSelections(document.forms[0])-->
 <body>
-<div class="container"><div class="shadow"><div class="content"><div class="skrollbox">--><div class="praatmethansheader"><a href="www.praatmehans.nl" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">Layout test</h1>
-</div>
-	<p style="text-align:right">
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="bewaar de tekst uit alle velden in coockies">&nbsp;&nbsp;&nbsp;<font size="+1" color=#BB0033>&diams;</font>&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="haal de tekst op die je eerder in de coockies bewaard hebt">&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="open scherm met toelichting">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a> </p>
-<span style="text-align:right">&nbsp;&nbsp;<a href="javascript:void(0)" onClick="test(document.forms[0]);"  class="praatmethansbutton" title="open scherm met toelichting">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a> </span>
-<noscript><BR /><i>de velden die u invult worden bewaard in coockies, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./index-legacy.htm">Legacy overzicht</a>
+          <a href="./kennismaking.htm">Kennismaking</a>
+        </div>
+        <h1>IAM Layout Playground</h1>
+        <p>Deze pagina is nu een bruikbare stijlgids om formulier-opmaak en teksttoon te testen.</p>
+      </header>
 
-GOED:
-<p style="text-align:right">
-<a href="./index.htm" onClick="hulpscherm();" class="praatmethansbutton" title="ga naat overzichtspagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="open scherm met toelichting">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a></p><noscript><BR /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+      <div id="message" class="message"></div>
 
+      <section class="palette">
+        <h2>Kleurpalet</h2>
+        <div class="swatches">
+          <div class="swatch s1">Primair #2f6b8f</div>
+          <div class="swatch s2">Steun #5b744a</div>
+          <div class="swatch s3">Accent #c96d4f</div>
+          <div class="swatch s4">Inkt #1f3849</div>
+        </div>
+      </section>
 
-<h1>test</h1>
-	<p>Box-shadowed element<textarea name="wie" cols="55" rows="3" class="praatmethansformtextarea" title="Met wie was je (of wie was er juist niet)?"></textarea><br /></p><div class="praatmethansheader2">&quot;Wie?&quot;</div><p></p>
-<p><b>Waar</b> was je?<br/>
-</p>
-	This is a DIV block that is to be centred.  just the block.
-	This is a DIV block that is to be centred.  just the block.
-	This is a DIV block that is to be centred.  just the block.
-	This is a DIV block that is to be centred.  just the block.
-	This is a DIV block that is to be centred.  just the block.
-	This is a DIV block that is to be centred.  just the block.
-	This is a DIV block that is to be centred.  just the block.
-	This is a DIV block that is to be centred.  just the block.
-	This is a DIV block that is to be centred.  just the block.
-	This is a DIV block that is to be centred.  just the block.
+      <form id="layoutForm">
+        <section class="card">
+          <h2>Testblok: inhoud en toon</h2>
+          <div class="form-group">
+            <label for="wie">Voor wie is deze tekst?</label>
+            <textarea id="wie" name="wie" rows="3" placeholder="Bijv. mensen die spanning ervaren rond trek"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="kop">Voorbeeldkop</label>
+            <input id="kop" name="kop" type="text" maxlength="120" placeholder="Bijv. Kies je volgende kleine stap" />
+          </div>
+          <div class="form-group">
+            <label for="toelichting">Voorbeeldtoelichting</label>
+            <textarea id="toelichting" name="toelichting" rows="4" placeholder="Korte, concrete tekst zonder jargon"></textarea>
+          </div>
+        </section>
 
-<p>&nbsp;</p>
-<hr class="formhr" />
-<p><i>(en natuurlijk kan het zijn dat het voor jou anders ligt. Maak dan je eigen 'cijferlijst' raad ik aan -en doe me een lol en stuur 'm eens op a.j.b.? ik ben benieuwd-)</i></p>
-<p align='right' ><i>Copyright 2011 Hans RJ West</i></p>
+        <section class="card">
+          <h2>Voorbeeldacties</h2>
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+            <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+            <button type="button" class="button-secondary" id="fillDemoBtn">Vul demo-inhoud</button>
+          </div>
+        </section>
+      </form>
+    </div>
+  </div>
 
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'layout';
+    const fields = ['wie', 'kop', 'toelichting'];
 
- /inhoud -->
-</div></div>
-</div>
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2600);
+    }
+
+    function collectData() {
+      const data = {};
+      fields.forEach((name) => {
+        const el = document.getElementsByName(name)[0];
+        data[name] = el ? el.value.trim() : '';
+      });
+      return data;
+    }
+
+    function loadData() {
+      const saved = iamData.getFormData(formKey) || {};
+      fields.forEach((name) => {
+        const el = document.getElementsByName(name)[0];
+        if (el && typeof saved[name] !== 'undefined') {
+          el.value = saved[name];
+        }
+      });
+    }
+
+    function saveData(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectData());
+        if (feedback) showMessage('Layout test opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportData() {
+      try {
+        saveData(false);
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geexporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    function fillDemo() {
+      const demo = {
+        wie: 'mensen die op risicomomenten snel meegesleept worden door trek',
+        kop: 'Kies nu je kleinste veilige stap',
+        toelichting: 'Open je noodplan, app een steunpersoon en plan daarna een korte rustige activiteit. Houd het concreet en direct uitvoerbaar.'
+      };
+      Object.keys(demo).forEach((key) => {
+        const el = document.getElementById(key);
+        if (el && !el.value.trim()) {
+          el.value = demo[key];
+        }
+      });
+      saveData(false);
+      showMessage('Demo-inhoud ingevuld.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+      document.getElementById('saveButton').addEventListener('click', () => saveData(true));
+      document.getElementById('exportButton').addEventListener('click', exportData);
+      document.getElementById('fillDemoBtn').addEventListener('click', fillDemo);
+      document.getElementById('layoutForm').addEventListener('input', () => saveData(false));
+    });
+  </script>
 </body>
 </html>

@@ -175,6 +175,7 @@
     .hulpzinnetje-dialog p { margin: 0; line-height: 1.6; }
     .hulpzinnetje-dialog .action-bar { margin-top: 1rem; }
   </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
   <div class="container">
@@ -197,6 +198,7 @@
         <ul>
           <li>De oude pagina werkte met drie belangrijke steunfiguren. Die opzet blijft behouden.</li>
           <li>Belangrijke lijnen blijven ook hetzelfde: bereikbaarheid, snelheid, soort steun, betrouwbaarheid en eventuele handleiding.</li>
+          <li>Overlap met "Steun en motivatie" is bewust beperkt: hier werk je praktische steun uit (wie, hoe, wanneer en wat precies).</li>
           <li>Bestaande opgeslagen legacy-velden worden bij openen meegenomen en omgezet naar deze nieuwe opzet.</li>
         </ul>
       </section>
@@ -285,7 +287,6 @@
           <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
         </div>
       </form>
 
@@ -640,7 +641,6 @@
       document.getElementById('suggestButton').addEventListener('click', applySuggestionFromPreviousSteps);
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('supportForm').addEventListener('input', () => saveForm(false));
 
       window.addEventListener('focus', () => {

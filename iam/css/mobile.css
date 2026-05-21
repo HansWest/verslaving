@@ -37,6 +37,32 @@
     }
 }
 
+html[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #dddddd;
+    --form-label-color: #22313d;
+    --form-control-text: #22313d;
+    --form-control-bg: #ffffff;
+    --form-control-border: #c7d3dd;
+    --form-placeholder-color: #6f8090;
+}
+
+html[data-theme="dark"] {
+    --bg-primary: #1e1e1e;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #f0f0f0;
+    --text-secondary: #aaaaaa;
+    --border-color: #444444;
+    --form-label-color: #22313d;
+    --form-control-text: #22313d;
+    --form-control-bg: #ffffff;
+    --form-control-border: #c7d3dd;
+    --form-placeholder-color: #6f8090;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -54,6 +80,12 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     font-size: 16px;
+}
+
+@media (max-width: 600px) {
+    html {
+        font-size: 18px;
+    }
 }
 
 /* Ensure inputs are not zoomed on focus on iOS */
@@ -84,6 +116,14 @@ input, textarea, select {
 .grid {
     display: grid;
     gap: 1rem;
+}
+
+/* Shared responsive card grid utility used by overview/phase sections. */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 @media (min-width: 600px) {
@@ -130,6 +170,35 @@ a:hover, a:focus {
     text-decoration: underline;
 }
 
+.theme-settings-shortcut-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 0 0.6rem;
+}
+
+.theme-settings-shortcut {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.theme-settings-shortcut:hover,
+.theme-settings-shortcut:focus {
+    text-decoration: none;
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+}
+
 /* Buttons */
 button, .button {
     padding: 0.75rem 1rem;
@@ -153,6 +222,80 @@ button:active {
 button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* Shared IAM action button variants used across many HTML forms. */
+.button-primary,
+.button-secondary {
+    border-radius: 8px;
+    min-height: 44px;
+    padding: 0.72rem 1rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+    box-shadow: 0 6px 16px rgba(31, 56, 73, 0.16);
+    transition: transform 0.12s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.button-primary {
+    background: linear-gradient(140deg, #2f6587 0%, #235171 100%);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.24);
+}
+
+.button-secondary {
+    background: #ffffff;
+    color: #174461;
+    border-color: #6d8ea4;
+}
+
+.button-primary:hover,
+.button-primary:focus-visible {
+    background: linear-gradient(140deg, #235171 0%, #163d57 100%);
+    box-shadow: 0 10px 22px rgba(22, 61, 87, 0.3);
+    transform: translateY(-1px);
+}
+
+.button-secondary:hover,
+.button-secondary:focus-visible {
+    background: #eef4f8;
+    color: #0f334a;
+    border-color: #446780;
+    box-shadow: 0 10px 20px rgba(31, 56, 73, 0.2);
+    transform: translateY(-1px);
+}
+
+.button-primary:focus-visible,
+.button-secondary:focus-visible {
+    outline: 3px solid rgba(201, 104, 74, 0.45);
+    outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .button-secondary {
+        background: #f7fbff;
+        color: #133c56;
+        border-color: #5f839b;
+    }
+
+    .button-secondary:hover,
+    .button-secondary:focus-visible {
+        background: #e9f2f9;
+        color: #0d3146;
+        border-color: #3f667f;
+    }
+}
+
+html[data-theme="dark"] .button-secondary {
+    background: #f7fbff;
+    color: #133c56;
+    border-color: #5f839b;
+}
+
+html[data-theme="dark"] .button-secondary:hover,
+html[data-theme="dark"] .button-secondary:focus-visible {
+    background: #e9f2f9;
+    color: #0d3146;
+    border-color: #3f667f;
 }
 
 /* Inklapbare secties (chapter-host / collapse-toggle) */

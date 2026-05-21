@@ -1,0 +1,29 @@
+{
+  "groups": [
+    {
+      "label": "Sociaal en uitgaan",
+      "items": [
+        "Als ik uitga.",
+        "Als ik ga dansen of naar een afterparty ga.",
+        "Als ik iets wil vieren.",
+        "Als ik op feestdagen in drukte zit."
+      ]
+    },
+    {
+      "label": "Emotie en spanning",
+      "items": [
+        "Als ik me verveel.",
+        "Als ik over emoties ga praten.",
+        "Als ik seks heb en spanning oploopt."
+      ]
+    },
+    {
+      "label": "Routine en context",
+      "items": [
+        "Als ik na sport in de kantine blijf hangen.",
+        "Als ik laat thuiskom en nog veel onrust voel.",
+        "Als ik onverwacht vrije tijd over heb."
+      ]
+    }
+  ]
+}

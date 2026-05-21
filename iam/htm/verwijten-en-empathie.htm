@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verwijten en Empathie - IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #173249;
+      --main: #7b4a8a;
+      --accent: #d4629f;
+      --ok: #3b7f45;
+      --soft: #f3f8fc;
+      --warn: #ff9800;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(123, 74, 138, 0.12), transparent 36%),
+        linear-gradient(180deg, #faf6fc 0%, #eef4f7 100%);
+      color: var(--ink);
+    }
+    .page-shell {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .hero {
+      margin-top: 1rem;
+      background: linear-gradient(145deg, var(--main) 0%, #5a2f6f 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.25rem;
+      box-shadow: 0 14px 30px rgba(123, 74, 138, 0.22);
+    }
+    .top-links {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 0.45rem 0.82rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .top-links a:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-top: 1rem;
+      box-shadow: 0 9px 22px rgba(123, 74, 138, 0.08);
+      border-left: 5px solid var(--accent);
+    }
+    .card.grounding {
+      border-left: 5px solid var(--warn);
+      background: linear-gradient(135deg, rgba(255, 248, 225, 0.7), rgba(255, 255, 255, 0.95));
+    }
+    .card.reflection {
+      border-left: 5px solid var(--main);
+    }
+    .card h2 {
+      margin: 0 0 0.8rem;
+      color: var(--main);
+      border-bottom: 2px solid rgba(123, 74, 138, 0.2);
+      padding-bottom: 0.5rem;
+    }
+    .form-group {
+      margin: 1rem 0;
+      display: grid;
+      gap: 0.4rem;
+    }
+    .form-group label {
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+    input[type="date"],
+    input[type="text"],
+    textarea {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(123, 74, 138, 0.18);
+      padding: 0.6rem 0.75rem;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.95rem;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    textarea:focus,
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(212, 98, 159, 0.1);
+    }
+    .step-intro {
+      background: linear-gradient(135deg, rgba(123, 74, 138, 0.08), rgba(212, 98, 159, 0.06));
+      border: 1px solid rgba(123, 74, 138, 0.15);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.8rem;
+      color: #4a3d52;
+      line-height: 1.6;
+      font-size: 0.93rem;
+    }
+    .step-intro strong {
+      color: var(--main);
+    }
+    .breathing-guide {
+      background: linear-gradient(135deg, #fff9e6, #fff3d9);
+      border: 2px dashed var(--warn);
+      border-radius: 12px;
+      padding: 1.1rem;
+      margin: 1rem 0;
+      text-align: center;
+    }
+    .breathing-guide h3 {
+      margin: 0 0 0.6rem;
+      color: #d97706;
+      font-size: 1.1rem;
+    }
+    .breathing-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+    .breathing-step {
+      background: #fff;
+      border: 1px solid var(--warn);
+      border-radius: 8px;
+      padding: 0.7rem;
+      font-weight: 600;
+      color: #d97706;
+      font-size: 0.9rem;
+    }
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    button {
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(123, 74, 138, 0.2);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.6rem 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: rgba(123, 74, 138, 0.1);
+    }
+    button.primary {
+      background: var(--main);
+      color: #fff;
+      border-color: var(--main);
+    }
+    button.primary:hover {
+      background: #6a3c79;
+    }
+    .message {
+      display: none;
+      margin-top: 1rem;
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      border-left: 4px solid var(--ok);
+      background: #eef8ee;
+      color: #204f22;
+      font-weight: 600;
+    }
+    .message.show {
+      display: block;
+    }
+    .summary-section {
+      background: linear-gradient(135deg, rgba(123, 74, 138, 0.05), transparent);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    .summary-section h3 {
+      margin: 0 0 0.6rem;
+      color: var(--main);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.7rem;
+    }
+    .summary-item {
+      background: #fff;
+      border: 1px solid rgba(123, 74, 138, 0.15);
+      border-radius: 10px;
+      padding: 0.8rem;
+    }
+    .summary-item strong {
+      display: block;
+      margin-bottom: 0.3rem;
+      color: var(--main);
+      font-size: 0.85rem;
+    }
+    .summary-item p {
+      margin: 0;
+      color: #555;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+    .insight-box {
+      background: linear-gradient(135deg, #f0e6ff, #fde6ff);
+      border: 1px solid #e0c8ff;
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      margin: 0.8rem 0;
+      color: #5a3d6f;
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #0f1419;
+      }
+      .card {
+        background: rgba(20, 30, 48, 0.9);
+        color: #e0e0e0;
+      }
+      input, textarea {
+        background: #1a2637;
+        color: #e0e0e0;
+        border-color: rgba(123, 74, 138, 0.3);
+      }
+      button {
+        background: #1a2637;
+        color: #e0e0e0;
+      }
+    }
+  </style>
+  <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="top-links">
+          <a href="./ingeslikte-emoties.htm">← Ingeslikte emoties</a>
+          <a href="./sociaal-netwerk.htm">Sociaal netwerk →</a>
+          <a href="./index.htm">Naar overzicht</a>
+        </div>
+        <h1>💔 Verwijten en Empathie</h1>
+        <p>Verwerken wat een ander je verwijt zonder in verdediging te schieten. Stap voor stap.</p>
+      </header>
+
+      <!-- Stap 1: Inventaris -->
+      <section class="card">
+        <h2>1️⃣ Inventaris: Wat zei/zegt de ander precies?</h2>
+        <div class="step-intro">
+          <strong>Doel:</strong> Schrijf op wat de ander je verwijt zonder het meteen goed te praten. Niet evalueren, niet verdedigen—gewoon verzamelen.
+        </div>
+
+        <div class="form-group">
+          <label for="entryDate">Datum van het conflict</label>
+          <input id="entryDate" type="date" />
+        </div>
+
+        <div class="form-group">
+          <label for="person">Met wie gaat dit?</label>
+          <input id="person" type="text" placeholder="Bijv. mijn partner, mijn moeder, mijn werkgever..." />
+        </div>
+
+        <div class="form-group">
+          <label for="accusations">Wat zei de ander? (Letterlijk of de essentie)</label>
+          <textarea id="accusations" placeholder="Bijv. 'Je luistert niet naar me', 'Je bent altijd alleen maar met jezelf bezig', 'Ik kan niet op je rekenen'..."></textarea>
+        </div>
+
+        <div class="insight-box">
+          💡 <strong>Tip:</strong> Probeer de verwijten samen te vatten zonder er direct tegen in gaan. De bedoeling is luisteren, niet debatteren.
+        </div>
+      </section>
+
+      <!-- Stap 2: Grounding -->
+      <section class="card grounding">
+        <h2>2️⃣ Adem & Voelen: Even stilvallen</h2>
+        <div class="step-intro">
+          <strong>Doel:</strong> Voelen hoe getriggerd je bent zonder eruit te barsten. De adem is je anker.
+        </div>
+
+        <div class="breathing-guide">
+          <h3>⏸️ Ademhaling Reset (2-3 minuten)</h3>
+          <div class="breathing-steps">
+            <div class="breathing-step">Adem in (4 tellen)</div>
+            <div class="breathing-step">Vasthouden (4 tellen)</div>
+            <div class="breathing-step">Adem uit (4 tellen)</div>
+            <div class="breathing-step">Pauze (4 tellen)</div>
+          </div>
+          <p style="margin-top: 0.8rem; font-size: 0.9rem; color: #d97706;">Herhaal 5-6 keer. Dit helpt je lichaam uit fight-mode te gaan.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="bodyFeeling">Wat voel je in je lichaam? (Waar zit de spanning?)</label>
+          <textarea id="bodyFeeling" placeholder="Bijv. stijfheid in schouders, knoop in maag, hart dat klopt, gezicht warm..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="immediateReaction">Wat is je eerste defensieve impuls? (Eerlijk)</label>
+          <textarea id="immediateReaction" placeholder="Bijv. 'Hij/zij heeft ongelijk', 'Dat is niet waar', 'Wat een egoïst'..."></textarea>
+        </div>
+
+        <div class="insight-box">
+          🔍 <strong>Observatie:</strong> Je defensieve impuls is interessant—het laat zien waar je pijn zit. Niks mis mee om dat te voelen.
+        </div>
+      </section>
+
+      <!-- Stap 3: Rationalisaties -->
+      <section class="card reflection">
+        <h2>3️⃣ Je Eigen Verhaal: Rationalisaties opschrijven</h2>
+        <div class="step-intro">
+          <strong>Doel:</strong> Wat zijn jouw redenen/verklaringen? Niet om gelijk te hebben, maar om jezelf te begrijpen.
+        </div>
+
+        <div class="form-group">
+          <label for="myStory">Hoe verklaar jij jezelf dit?</label>
+          <textarea id="myStory" placeholder="Bijv. 'Ik was gestrest door werk', 'De ander kwam me tegemoet', 'Dat klopt niet omdat...'"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="defenseMechanisms">Welke verdedigingsmechanismes herken je?</label>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.5rem; margin-top: 0.6rem;">
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-weight: normal;">
+              <input type="checkbox" class="defense-check" value="ontkenning" />
+              <span>Ontkenning ("Dat is niet zo")</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-weight: normal;">
+              <input type="checkbox" class="defense-check" value="projectie" />
+              <span>Projectie ("Jij bent het probleem")</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-weight: normal;">
+              <input type="checkbox" class="defense-check" value="rationalisatie" />
+              <span>Rationalisatie ("Ik had goede redenen")</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-weight: normal;">
+              <input type="checkbox" class="defense-check" value="schuld_ombuigen" />
+              <span>Schuld ombuigen ("Jij bent schuldig")</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-weight: normal;">
+              <input type="checkbox" class="defense-check" value="humor" />
+              <span>Humor/bagatellisering ("Niet zo serieus")</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.4rem; font-weight: normal;">
+              <input type="checkbox" class="defense-check" value="terugtrekking" />
+              <span>Terugtrekking ("Ik zeg niks meer")</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="insight-box">
+          🤔 <strong>Feit:</strong> Je verdedigingsmechanismes zijn er niet omdat je slecht bent—ze beschermen je. Maar ze creëren ook afstand met de ander.
+        </div>
+      </section>
+
+      <!-- Stap 4: Empathie -->
+      <section class="card">
+        <h2>4️⃣ Empathie: Wat voelt de Ander?</h2>
+        <div class="step-intro">
+          <strong>Doel:</strong> Luisteren naar de pijn van de ander zonder meteen je eigen pijn ter verdediging in te zetten.
+        </div>
+
+        <div class="form-group">
+          <label for="otherPain">Wat denk je dat de ander *voelt* onder het verwijt?</label>
+          <textarea id="otherPain" placeholder="Bijv. zich niet gezien, alleen gelaten, ongehoord, onwaardig, onveilig..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="otherNeeds">Wat denk je dat de ander *nodig* heeft?</label>
+          <textarea id="otherNeeds" placeholder="Bijv. aandacht, erkenning, veiligheid, betrouwbaarheid, samenhang..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="empathyRealization">Wat realiseert zich nu voor je?</label>
+          <textarea id="empathyRealization" placeholder="Bijv. 'De ander voelt zich niet schuldig, maar eenzaam', 'Dit gaat niet over mij, maar over hun pijn'..."></textarea>
+        </div>
+
+        <div class="insight-box">
+          ❤️ <strong>Verschil:</strong> Empathie betekent niet dat je jezelf schuldig voelt of dat je begrijpen het gelijk van de ander is. Het is: ik zie en voel dat dit voor jou pijn is.
+        </div>
+      </section>
+
+      <!-- Stap 5: Verantwoordelijkheid -->
+      <section class="card reflection">
+        <h2>5️⃣ Wat Doe Je Ermee?</h2>
+        <div class="step-intro">
+          <strong>Doel:</strong> Van begrijpen naar handelen. Wat neem jij op je?
+        </div>
+
+        <div class="form-group">
+          <label for="myRole">Wat is mijn aandeel in het verwijt?</label>
+          <textarea id="myRole" placeholder="Bijv. 'Ik luisterde inderdaad niet goed', 'Ik ben inderdaad afwezig geweest', 'Dit is niet mijn schuld, maar ik kan wel beter communiceren'..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="responsibility">Waar voel ik verantwoordelijkheid (zonder schuldigheid)?</label>
+          <textarea id="responsibility" placeholder="Bijv. 'Ik kan beter luisteren', 'Ik kan vaker initiatief nemen', 'Ik kan eerlijker zeggen wat ik voel'..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="nextStep">Wat ga ik concreet anders doen?</label>
+          <textarea id="nextStep" placeholder="Bijv. 'Volgende week zeggen hoe het met me gaat', 'Vragen stellen zonder antwoord al klaar te hebben', 'Eerder belt/bericht sturen'..."></textarea>
+        </div>
+
+        <div class="insight-box">
+          🌱 <strong>Sleutel:</strong> Dit gaat niet om jezelf klein maken—het gaat om je verantwoordelijkheid pakken waar jij die inderdaad hebt.
+        </div>
+      </section>
+
+      <!-- Samenvatting -->
+      <section class="card">
+        <h2>📋 Samenvatting & Reflectie</h2>
+
+        <div class="summary-section">
+          <h3>Wat heb je geleerd?</h3>
+          <div class="form-group">
+            <textarea id="learningReflection" placeholder="Bijv. 'De ander is niet mijn tegenstander', 'Mijn defensie houdt me van de ander af', 'Ik kan allebei aanwezig zijn: mijn pijn EN zijn pijn'..."></textarea>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <h3>Koppeling met ingeslikte emoties</h3>
+          <div class="form-group">
+            <label for="swallowedEmotions">Welke emoties heb je bij dit conflict ingeslikt?</label>
+            <textarea id="swallowedEmotions" placeholder="Bijv. je boosheid, je verdriet, je angst, je schaamte..."></textarea>
+          </div>
+          <p style="margin: 0.6rem 0 0; font-size: 0.9rem; color: #666;">💡 Deze emoties zijn waardevol—ze tonen waar je grenzen of behoeften liggen.</p>
+        </div>
+
+        <div class="action-buttons">
+          <button class="primary" type="button" id="saveButton">💾 Bewaar reflectie</button>
+          <button type="button" id="resetButton">🔄 Leeg formulier</button>
+        </div>
+
+        <div id="message" class="message"></div>
+      </section>
+
+      <section class="card" style="background: linear-gradient(135deg, rgba(123, 74, 138, 0.06), transparent); border-left: 5px solid #ccc; margin-bottom: 2rem;">
+        <h3 style="margin: 0; color: #555; font-size: 0.95rem;">Volgende Stap?</h3>
+        <p style="margin: 0.5rem 0 0; color: #666; font-size: 0.9rem;">
+          Na deze reflectie kun je kiezen:
+          <br/>• <a href="./ingeslikte-emoties.htm" style="color: var(--main); font-weight: 600;">Dieper graven in je ingeslikte emoties</a>
+          <br/>• <a href="./risico-gevoelens.htm" style="color: var(--main); font-weight: 600;">Kijken hoe dit gevoelens in je gebruikt triggert</a>
+          <br/>• <a href="./sociaal-netwerk.htm" style="color: var(--main); font-weight: 600;">Je relatienetwerk herzien</a>
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const FORM_KEY = 'verwijten-en-empathie';
+
+    function toDateKey(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function getTodayDateKey() {
+      return toDateKey(new Date());
+    }
+
+    function showMessage(text, isSuccess = true) {
+      const msg = document.getElementById('message');
+      msg.textContent = text;
+      msg.className = `message show ${isSuccess ? '' : 'error'}`;
+      setTimeout(() => msg.classList.remove('show'), 4000);
+    }
+
+    function collectFormData() {
+      const defenseChecks = Array.from(document.querySelectorAll('.defense-check:checked')).map(el => el.value);
+      return {
+        date: document.getElementById('entryDate').value || getTodayDateKey(),
+        person: document.getElementById('person').value || '',
+        accusations: document.getElementById('accusations').value || '',
+        bodyFeeling: document.getElementById('bodyFeeling').value || '',
+        immediateReaction: document.getElementById('immediateReaction').value || '',
+        myStory: document.getElementById('myStory').value || '',
+        defenseMechanisms: defenseChecks,
+        otherPain: document.getElementById('otherPain').value || '',
+        otherNeeds: document.getElementById('otherNeeds').value || '',
+        empathyRealization: document.getElementById('empathyRealization').value || '',
+        myRole: document.getElementById('myRole').value || '',
+        responsibility: document.getElementById('responsibility').value || '',
+        nextStep: document.getElementById('nextStep').value || '',
+        learningReflection: document.getElementById('learningReflection').value || '',
+        swallowedEmotions: document.getElementById('swallowedEmotions').value || ''
+      };
+    }
+
+    function loadFormData(data) {
+      if (!data) return;
+      document.getElementById('entryDate').value = data.date || '';
+      document.getElementById('person').value = data.person || '';
+      document.getElementById('accusations').value = data.accusations || '';
+      document.getElementById('bodyFeeling').value = data.bodyFeeling || '';
+      document.getElementById('immediateReaction').value = data.immediateReaction || '';
+      document.getElementById('myStory').value = data.myStory || '';
+      document.getElementById('otherPain').value = data.otherPain || '';
+      document.getElementById('otherNeeds').value = data.otherNeeds || '';
+      document.getElementById('empathyRealization').value = data.empathyRealization || '';
+      document.getElementById('myRole').value = data.myRole || '';
+      document.getElementById('responsibility').value = data.responsibility || '';
+      document.getElementById('nextStep').value = data.nextStep || '';
+      document.getElementById('learningReflection').value = data.learningReflection || '';
+      document.getElementById('swallowedEmotions').value = data.swallowedEmotions || '';
+
+      (data.defenseMechanisms || []).forEach(val => {
+        const checkbox = document.querySelector(`.defense-check[value="${val}"]`);
+        if (checkbox) checkbox.checked = true;
+      });
+    }
+
+    document.getElementById('saveButton').addEventListener('click', () => {
+      const data = collectFormData();
+      const dateKey = data.date || getTodayDateKey();
+      const storageKey = `${FORM_KEY}:${dateKey}`;
+      try {
+        storeData(storageKey, data);
+        showMessage('✓ Reflectie opgeslagen! Je kunt dit later weer ophalen.', true);
+      } catch (e) {
+        showMessage('❌ Opslaan mislukt. Probeer het opnieuw.', false);
+      }
+    });
+
+    document.getElementById('resetButton').addEventListener('click', () => {
+      if (confirm('Leeg het hele formulier? Je huidige invoer gaat verloren.')) {
+        document.querySelector('form') || Array.from(document.querySelectorAll('textarea, input[type="text"], input[type="date"]')).forEach(el => el.value = '');
+        document.querySelectorAll('.defense-check').forEach(cb => cb.checked = false);
+        showMessage('Formulier leeggemaakt.', true);
+      }
+    });
+
+    // Load today's data if available
+    const todayData = retrieveData(`${FORM_KEY}:${getTodayDateKey()}`);
+    if (todayData) {
+      loadFormData(todayData);
+    } else {
+      document.getElementById('entryDate').valueAsDate = new Date();
+    }
+  </script>
+</body>
+</html>

@@ -1,295 +1,542 @@
-<html>
-
-to-do-lijst.htm
-
-deze code is van controleerjeverslavingszorg.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
-
-BAsisgedachte:
-pretty self explanatory
-nog integreren met Google
-
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>to do lijst</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-do lijst</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6b8f;
+      --page-accent: #c96d4f;
+      --page-ok: #5a8840;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 107, 143, 0.14), transparent 30%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
 
+    .page-shell { max-width: 980px; margin: 0 auto; }
 
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .intro-card,
+    .question-card,
+    .message {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
 
-function hulpscherm()
-{
-hulp_scherm(280,'To Do lijst','Er is vaak best veel te herstellen en op te pakken na een periode van wegglijden. Dan is het handig om jezel een lijstje te gunnen met de dingen die er moeten gebeuren. Dit is een To-Do-lijst die je helpt om tijdig te doen wat nodig is.')
-}
+    .intro-card { border-left: 4px solid var(--page-main); }
+    .question-card { border-top: 4px solid var(--page-main); }
 
-</script>
+    .message { display: none; border-left: 4px solid var(--page-ok); }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
 
+    .grid-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.75rem;
+      align-items: end;
+    }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .task-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .task-item {
+      border: 1px solid #d3e1ea;
+      border-radius: 12px;
+      padding: 0.8rem;
+      background: #f8fbfd;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .task-item.done {
+      opacity: 0.75;
+      background: #f1f7f2;
+      border-color: #bdd9c0;
+    }
+
+    .task-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .task-title {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      font-size: 0.86rem;
+      color: #415b68;
+    }
+
+    .tag {
+      border-radius: 999px;
+      padding: 0.22rem 0.6rem;
+      border: 1px solid #bfd2de;
+      background: #fff;
+      font-weight: 600;
+    }
+
+    .tag.high { border-color: #d5b26b; background: #fff8e9; }
+    .tag.now { border-color: #d6a697; background: #fff2ee; }
+
+    .task-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+
+    .action-bar button,
+    .action-bar a {
+      flex: 1 1 180px;
+      text-decoration: none;
+    }
+
+    .matrix {
+      margin-top: 0.8rem;
+      border: 1px solid #d3e1ea;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .matrix table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 0.92rem;
+    }
+
+    .matrix th,
+    .matrix td {
+      border: 1px solid #dbe7ee;
+      padding: 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .matrix th {
+      background: #f3f8fb;
+      font-weight: 700;
+    }
+
+  </style>
+  <script src="../js/themeMode.js"></script>
 </head>
 <body>
-<div class="container">
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
+          <a href="./doelen-stellen.htm">Doelen stellen</a>
+          <a href="./agenda.htm">Agenda</a>
+        </div>
+        <h1>To-do lijst</h1>
+        <p>Maak prioriteiten concreet: wat is belangrijk, wat is urgent, en wat is als eerste aan de beurt?</p>
+      </header>
 
+      <div id="message" class="message"></div>
 
-<div class="shadow"><div class="content">
+      <section class="intro-card">
+        <h2>Gebruik de 4-vakken aanpak</h2>
+        <p>Niet alles met spoed is belangrijk. Kies bewust: plan, doe nu, delegeer of schrap.</p>
+        <div class="matrix">
+          <table>
+            <thead>
+              <tr>
+                <th>Belangrijk / Urgent</th>
+                <th>Urgent</th>
+                <th>Niet urgent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Belangrijk</th>
+                <td>Nu aanpakken</td>
+                <td>Inplannen</td>
+              </tr>
+              <tr>
+                <th>Niet belangrijk</th>
+                <td>Begrenzen / delegeren</td>
+                <td>Schrappen of later</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+      <section class="question-card">
+        <h2>Nieuwe taak toevoegen</h2>
+        <div class="grid-form">
+          <div class="form-group" style="margin:0;">
+            <label for="taakTitel">Taak</label>
+            <input id="taakTitel" type="text" maxlength="160" placeholder="Bijv. bel begeleider om 14:00" />
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label for="taakDatum">Datum</label>
+            <input id="taakDatum" type="date" />
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label for="taakBelangrijk">Belangrijkheid</label>
+            <select id="taakBelangrijk">
+              <option value="hoog">Hoog</option>
+              <option value="middel" selected>Middel</option>
+              <option value="laag">Laag</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label for="taakUrgentie">Urgentie</label>
+            <select id="taakUrgentie">
+              <option value="nu">Nu</option>
+              <option value="deze-week" selected>Deze week</option>
+              <option value="later">Later</option>
+            </select>
+          </div>
+        </div>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">To Do lijst </h1>
-</div><div class="rechtsitalic">lijst voor dagelijks gebruik: 5 - 10 minuten</div>
-<div class="printhide">
-<p>Het is handig om dagelijks een overzicht te hebben over de dingen die je moet
-  doen en om er naar te kijken met de vragen &quot;hoeveel haast heeft dit punt?&quot;
-  en &quot;hoe belangrijk is het?&quot;</p>
+        <div class="form-group">
+          <button type="button" class="button-secondary" id="addTaskBtn">Taak toevoegen</button>
+        </div>
 
+        <ul id="taskList" class="task-list"></ul>
+      </section>
 
+      <section class="question-card">
+        <h2>Kruisbestuiving naar acties</h2>
+        <p>Deze suggesties komen uit andere formulieren en helpen je om direct concrete taken te plannen.</p>
+        <ul id="crossTodoSuggestions" class="iam-cross-list"></ul>
+        <div class="form-group" style="margin-top:0.8rem;">
+          <button type="button" class="button-secondary" id="addCrossTasksBtn">Zet suggesties in mijn to-do lijst</button>
+        </div>
+      </section>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+      <div class="action-bar">
+        <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+        <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+      </div>
+    </div>
+  </div>
 
-</div>
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'to-do-lijst';
+    let tasks = [];
+    let crossSuggestions = [];
 
+    function formatDate(dateStr) {
+      if (!dateStr) return 'Geen datum';
+      const d = new Date(dateStr + 'T00:00:00');
+      if (Number.isNaN(d.getTime())) return 'Geen datum';
+      return d.toLocaleDateString('nl-NL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
 
-<table width="100%" border="1" cellspacing="0" cellpadding="0">
-  <tr style='height:2em'>
-    <th bgcolor="#BBBBBB" colspan="2">Belang</th>
-    <th bgcolor="#BBBBBB" colspan="2">Haast</th>
-     <th bgcolor="#BBBBBB" align="left">Taak</th>
-   <th bgcolor="#BBBBBB" >Klaar </th>
-  </tr>
-  <tr style='height:2em'>
-    <th bgcolor="#BBBBBB" width="8%">groot</th>
-    <th bgcolor="#BBBBBB" width="8%">klein</th>
-    <th bgcolor="#BBBBBB" width="8%">veel</th>
-    <th bgcolor="#BBBBBB" width="8%">weinig</th>
-    <th bgcolor="#BBBBBB" width="56%">To Do (werkwoord)</th>
-    <th bgcolor="#BBBBBB" width="12%">d.d.</th>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-  <tr style='height:2.5em'>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="8%">&nbsp;</td>
-    <td width="56%"><p>&nbsp;<br />&nbsp;</p></td>
-    <td width="12%"><p>&nbsp;<br />&nbsp;</p></td>
-  </tr>
-</table>
-<hr class="formhr" />
-<p><i>Een beetje een overzicht in de dingen die moeten gebeuren met verschil tussen haast en belang</i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    function importantLabel(value) {
+      return value === 'hoog' ? 'Belangrijk: hoog' : value === 'laag' ? 'Belangrijk: laag' : 'Belangrijk: middel';
+    }
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function urgencyLabel(value) {
+      return value === 'nu' ? 'Urgentie: nu' : value === 'later' ? 'Urgentie: later' : 'Urgentie: deze week';
+    }
+
+    function normalizeTask(item) {
+      if (!item || typeof item !== 'object') return null;
+      const title = typeof item.title === 'string' ? item.title.trim() : '';
+      if (!title) return null;
+      return {
+        id: item.id || String(Date.now()) + '-' + Math.random().toString(16).slice(2),
+        title,
+        date: typeof item.date === 'string' ? item.date : '',
+        importance: ['hoog', 'middel', 'laag'].includes(item.importance) ? item.importance : 'middel',
+        urgency: ['nu', 'deze-week', 'later'].includes(item.urgency) ? item.urgency : 'deze-week',
+        done: Boolean(item.done)
+      };
+    }
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function saveData(feedback = true) {
+      try {
+        const existing = iamData.getFormData(formKey) || {};
+        iamData.updateFormData(formKey, {
+          ...existing,
+          tasks
+        });
+        if (feedback) showMessage('To-do lijst opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportData() {
+      try {
+        saveData(false);
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geexporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    function sortTasks(list) {
+      return [...list].sort((a, b) => {
+        if (a.done !== b.done) return a.done ? 1 : -1;
+        const urgencyOrder = { 'nu': 0, 'deze-week': 1, 'later': 2 };
+        if (urgencyOrder[a.urgency] !== urgencyOrder[b.urgency]) {
+          return urgencyOrder[a.urgency] - urgencyOrder[b.urgency];
+        }
+        const importanceOrder = { 'hoog': 0, 'middel': 1, 'laag': 2 };
+        if (importanceOrder[a.importance] !== importanceOrder[b.importance]) {
+          return importanceOrder[a.importance] - importanceOrder[b.importance];
+        }
+        if (a.date && b.date) return a.date.localeCompare(b.date);
+        if (a.date) return -1;
+        if (b.date) return 1;
+        return a.title.localeCompare(b.title, 'nl-NL');
+      });
+    }
+
+    function renderTasks() {
+      const host = document.getElementById('taskList');
+      if (!tasks.length) {
+        host.innerHTML = '<li class="task-item"><p class="task-title">Nog geen taken toegevoegd.</p></li>';
+        return;
+      }
+
+      host.innerHTML = sortTasks(tasks).map((task) => {
+        return `
+          <li class="task-item ${task.done ? 'done' : ''}" data-task-id="${task.id}">
+            <div class="task-head">
+              <p class="task-title">${escapeHtml(task.title)}</p>
+              <label style="display:flex;align-items:center;gap:0.4rem;">
+                <input type="checkbox" data-action="toggle" ${task.done ? 'checked' : ''} />
+                Klaar
+              </label>
+            </div>
+            <div class="task-meta">
+              <span class="tag">${formatDate(task.date)}</span>
+              <span class="tag ${task.importance === 'hoog' ? 'high' : ''}">${importantLabel(task.importance)}</span>
+              <span class="tag ${task.urgency === 'nu' ? 'now' : ''}">${urgencyLabel(task.urgency)}</span>
+            </div>
+            <div class="task-actions">
+              <button type="button" class="button-secondary" data-action="remove">Verwijderen</button>
+            </div>
+          </li>`;
+      }).join('');
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function addTask() {
+      const titleInput = document.getElementById('taakTitel');
+      const dateInput = document.getElementById('taakDatum');
+      const importanceInput = document.getElementById('taakBelangrijk');
+      const urgencyInput = document.getElementById('taakUrgentie');
+
+      const title = titleInput.value.trim();
+      if (!title) {
+        showMessage('Vul eerst een taak in.', true);
+        titleInput.focus();
+        return;
+      }
+
+      const task = normalizeTask({
+        title,
+        date: dateInput.value,
+        importance: importanceInput.value,
+        urgency: urgencyInput.value,
+        done: false
+      });
+
+      tasks.push(task);
+      renderTasks();
+      saveData(false);
+
+      titleInput.value = '';
+      dateInput.value = '';
+      importanceInput.value = 'middel';
+      urgencyInput.value = 'deze-week';
+      titleInput.focus();
+      showMessage('Taak toegevoegd.');
+    }
+
+    function removeTask(taskId) {
+      tasks = tasks.filter((item) => item.id !== taskId);
+      renderTasks();
+      saveData(false);
+      showMessage('Taak verwijderd.');
+    }
+
+    function toggleTask(taskId, done) {
+      tasks = tasks.map((item) => item.id === taskId ? { ...item, done } : item);
+      renderTasks();
+      saveData(false);
+    }
+
+    function loadData() {
+      const saved = iamData.getFormData(formKey) || {};
+      const loadedTasks = Array.isArray(saved.tasks) ? saved.tasks : [];
+      tasks = loadedTasks.map(normalizeTask).filter(Boolean);
+      renderTasks();
+    }
+
+    function renderCrossSuggestions() {
+      const host = document.getElementById('crossTodoSuggestions');
+      const pack = iamData.getCrossPollinationPack(formKey);
+
+      if (!pack.available) {
+        crossSuggestions = [];
+        host.innerHTML = '<li>Nog geen gegevens gevonden voor kruisbestuiving.</li>';
+        return;
+      }
+
+      crossSuggestions = Array.isArray(pack.suggestions) ? pack.suggestions : [];
+
+      host.innerHTML = crossSuggestions.length
+        ? crossSuggestions.map((item) => `<li>${escapeHtml(item.title)}</li>`).join('')
+        : '<li>Nog te weinig ingevulde brongegevens voor kruisbestuiving.</li>';
+    }
+
+    function addCrossSuggestionsToTasks() {
+      if (!crossSuggestions.length) {
+        showMessage('Nog geen suggesties beschikbaar.', true);
+        return;
+      }
+
+      const knownTitles = new Set(tasks.map((task) => task.title.trim().toLowerCase()));
+      const toAdd = crossSuggestions
+        .filter((item) => !knownTitles.has(item.title.trim().toLowerCase()))
+        .map((item) => normalizeTask({
+          title: item.title,
+          date: '',
+          importance: item.importance,
+          urgency: item.urgency,
+          done: false
+        }))
+        .filter(Boolean);
+
+      tasks = tasks.concat(toAdd);
+      renderTasks();
+      saveData(false);
+
+      if (!toAdd.length) {
+        showMessage('Alle suggesties stonden al in je to-do lijst.');
+        return;
+      }
+
+      showMessage(`${toAdd.length} kruisbestuivings-taak/taken toegevoegd.`);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+      renderCrossSuggestions();
+      document.getElementById('addTaskBtn').addEventListener('click', addTask);
+      document.getElementById('addCrossTasksBtn').addEventListener('click', addCrossSuggestionsToTasks);
+      document.getElementById('saveButton').addEventListener('click', () => saveData(true));
+      document.getElementById('exportButton').addEventListener('click', exportData);
+
+      document.getElementById('taskList').addEventListener('click', (event) => {
+        const target = event.target;
+        const action = target.getAttribute('data-action');
+        if (!action) return;
+        const item = target.closest('.task-item');
+        if (!item) return;
+        const id = item.getAttribute('data-task-id');
+        if (!id) return;
+
+        if (action === 'remove') {
+          removeTask(id);
+        }
+      });
+
+      document.getElementById('taskList').addEventListener('change', (event) => {
+        const target = event.target;
+        if (target.getAttribute('data-action') !== 'toggle') return;
+        const item = target.closest('.task-item');
+        if (!item) return;
+        const id = item.getAttribute('data-task-id');
+        if (!id) return;
+        toggleTask(id, target.checked);
+      });
+    });
+  </script>
 </body>
 </html>

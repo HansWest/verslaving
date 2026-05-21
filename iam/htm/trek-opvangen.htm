@@ -428,6 +428,169 @@
       text-decoration: underline;
     }
 
+    .dossier-box {
+      margin-top: 1rem;
+      background: #fff;
+      border: 1px solid #d8e7e7;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(19, 35, 47, 0.08);
+      padding: 1rem;
+    }
+
+    .dossier-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .dossier-top h2 {
+      margin: 0;
+      font-size: 1.03rem;
+      color: #0b5d5d;
+    }
+
+    .dossier-top p {
+      margin: 0.25rem 0 0;
+      color: #566973;
+      font-size: 0.92rem;
+      line-height: 1.45;
+      max-width: 70ch;
+    }
+
+    .dossier-status {
+      border-radius: 999px;
+      padding: 0.38rem 0.75rem;
+      background: #eef8ee;
+      color: #216021;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .dossier-controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+      margin-top: 0.9rem;
+    }
+
+    @media (min-width: 760px) {
+      .dossier-controls {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .dossier-field label,
+    .dossier-picker label {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+      color: #173746;
+    }
+
+    .dossier-field input,
+    .dossier-picker select {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid #c6d8d8;
+      border-radius: 10px;
+      padding: 0.68rem 0.74rem;
+      font: inherit;
+      background: #fff;
+    }
+
+    .dossier-field input:focus,
+    .dossier-picker select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(229, 107, 47, 0.15);
+    }
+
+    .dossier-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 0.9rem;
+    }
+
+    .dossier-actions button {
+      border: none;
+      border-radius: 10px;
+      min-height: 44px;
+      padding: 0.65rem 0.9rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .dossier-actions button.secondary {
+      background: #4b6070;
+    }
+
+    .dossier-picker {
+      margin-top: 0.95rem;
+    }
+
+    .dossier-list {
+      margin: 0.85rem 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .dossier-list li {
+      border: 1px solid #d9e6f0;
+      border-radius: 12px;
+      background: #f8fbff;
+    }
+
+    .dossier-list button {
+      width: 100%;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      padding: 0.78rem 0.85rem;
+    }
+
+    .dossier-list button.active {
+      outline: 2px solid rgba(47, 111, 186, 0.3);
+      outline-offset: -2px;
+      background: #edf5ff;
+    }
+
+    .dossier-list-title {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      align-items: center;
+      font-weight: 700;
+      color: #174476;
+    }
+
+    .dossier-list-meta {
+      margin-top: 0.3rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      color: #52636e;
+      font-size: 0.88rem;
+    }
+
+    .dossier-page-chip {
+      border-radius: 999px;
+      padding: 0.2rem 0.5rem;
+      background: #e9f2ff;
+      color: #1f5d86;
+      font-size: 0.81rem;
+      font-weight: 700;
+    }
+
     @media print {
       .hero-top,
       .action-bar,
@@ -446,6 +609,7 @@
       }
     }
   </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
   <div class="container">
@@ -461,6 +625,7 @@
           Trek voelt vaak als "nu of nooit", maar hij piekt en zakt weer. Dit formulier helpt je om op het moment zelf
           van automatische reactie naar bewuste actie te gaan. Kort, praktisch, en bedoeld om vaker te oefenen.
         </p>
+          <p id="personalGreeting" style="display:none; font-weight:700;"></p>
         <ul class="quick-flow">
           <li><strong>1. Fysieke Reset:</strong> stop en adem om je hersenstam te kalmeren, zodat je de actualiteit kunt zien.</li>
           <li><strong>2. A - Actualiteit:</strong> onder ogen zien wat er nu echt gebeurt.</li>
@@ -473,6 +638,39 @@
           <span class="status-chip" id="lastSavedChip">Nog niet opgeslagen</span>
         </div>
       </header>
+
+      <div class="dossier-box" id="dossierPanel">
+        <div class="dossier-top">
+          <div>
+            <h2>Werkdossier</h2>
+            <p>Maak een nieuwe datum/keyword-combinatie of pak een oudere weer op. De selectie blijft staan als je naar opvangen 2 gaat.</p>
+          </div>
+          <span class="dossier-status" id="dossierStatus">Nog geen dossier geselecteerd</span>
+        </div>
+
+        <div class="dossier-controls">
+          <div class="dossier-field">
+            <label for="dossierDate">Datum</label>
+            <input id="dossierDate" type="date">
+          </div>
+          <div class="dossier-field">
+            <label for="dossierKeyword">Keyword</label>
+            <input id="dossierKeyword" type="text" placeholder="bijv. avondtrek, weekend, spanning">
+          </div>
+        </div>
+
+        <div class="dossier-actions">
+          <button type="button" id="dossierNewButton">Nieuwe kaart</button>
+          <button type="button" class="secondary" id="dossierSaveMetaButton">Bewaar datum en keyword</button>
+        </div>
+
+        <div class="dossier-picker">
+          <label for="dossierSelect">Opgeslagen datums</label>
+          <select id="dossierSelect"></select>
+        </div>
+
+        <ul class="dossier-list" id="dossierList"></ul>
+      </div>
 
       <div class="theory-box">
         <h2>Algemene theorie: ABCDaaah</h2>
@@ -611,7 +809,6 @@
         <div class="action-bar">
           <button type="button" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="secondary" id="exportButton">Exporteer alle IAM-data</button>
-          <button type="button" class="warn" id="printButton">Print / Bewaar als PDF</button>
         </div>
       </form>
 
@@ -625,6 +822,8 @@
   </div>
 
   <script src="../js/dataStore.js"></script>
+  <script src="../js/trekDossier.js"></script>
+  <script src="../js/weeklyReview.js"></script>
   <script>
     const formKey = 'trek-opvangen';
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
@@ -639,6 +838,24 @@
       'afleiding',
       'herhaling'
     ];
+
+      function renderPersonalizedGreeting() {
+        const greetingEl = document.getElementById('personalGreeting');
+        if (!greetingEl) return;
+
+        const displayName = iamData && typeof iamData.getPreferredDisplayName === 'function'
+          ? iamData.getPreferredDisplayName('')
+          : '';
+
+        if (!displayName) {
+          greetingEl.textContent = '';
+          greetingEl.style.display = 'none';
+          return;
+        }
+
+        greetingEl.textContent = `${displayName}, eerst opvangen, dan kiezen.`;
+        greetingEl.style.display = 'block';
+      }
 
     function showMessage(text, isError = false) {
       const el = document.getElementById('message');
@@ -667,6 +884,151 @@
       });
     }
 
+    function getDossierDraftMeta() {
+      const dateInput = document.getElementById('dossierDate');
+      const keywordInput = document.getElementById('dossierKeyword');
+      return {
+        date: dateInput && dateInput.value ? dateInput.value : iamTrekDossiers.todayISODate(),
+        keyword: keywordInput ? keywordInput.value.trim() : ''
+      };
+    }
+
+    function fillDossierInputs(entry) {
+      const dateInput = document.getElementById('dossierDate');
+      const keywordInput = document.getElementById('dossierKeyword');
+      if (dateInput) dateInput.value = entry?.date || iamTrekDossiers.todayISODate();
+      if (keywordInput) keywordInput.value = entry?.keyword || '';
+    }
+
+    function renderDossierPanel() {
+      const state = iamTrekDossiers.getState(iamData);
+      const activeEntry = iamTrekDossiers.getActiveEntry(iamData);
+      const select = document.getElementById('dossierSelect');
+      const list = document.getElementById('dossierList');
+      const status = document.getElementById('dossierStatus');
+
+      if (status) {
+        status.textContent = activeEntry
+          ? `Actief: ${iamTrekDossiers.buildEntryLabel(activeEntry)}`
+          : 'Nog geen dossier geselecteerd';
+      }
+
+      if (select) {
+        select.innerHTML = '';
+        if (!state.entries.length) {
+          const option = document.createElement('option');
+          option.value = '';
+          option.textContent = 'Nog geen opgeslagen dossiers';
+          select.appendChild(option);
+          select.disabled = true;
+        } else {
+          select.disabled = false;
+          state.entries.forEach((entry) => {
+            const option = document.createElement('option');
+            option.value = entry.id;
+            option.textContent = iamTrekDossiers.buildEntryLabel(entry);
+            if (activeEntry && activeEntry.id === entry.id) {
+              option.selected = true;
+            }
+            select.appendChild(option);
+          });
+        }
+      }
+
+      if (list) {
+        list.innerHTML = '';
+        if (!state.entries.length) {
+          const item = document.createElement('li');
+          item.textContent = 'Nog geen dossiers opgeslagen. Voeg een datum en keyword toe en druk op Nieuwe kaart of Opslaan.';
+          list.appendChild(item);
+        } else {
+          state.entries.forEach((entry) => {
+            const item = document.createElement('li');
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = activeEntry && activeEntry.id === entry.id ? 'active' : '';
+
+            const title = document.createElement('div');
+            title.className = 'dossier-list-title';
+            title.textContent = iamTrekDossiers.buildEntryLabel(entry);
+
+            const meta = document.createElement('div');
+            meta.className = 'dossier-list-meta';
+
+            const summary = document.createElement('span');
+            summary.textContent = `Pagina-status: ${iamTrekDossiers.buildEntrySummary(entry)}`;
+            meta.appendChild(summary);
+
+            const page1Chip = document.createElement('span');
+            page1Chip.className = 'dossier-page-chip';
+            page1Chip.textContent = entry.pages && entry.pages['trek-opvangen'] && Object.keys(entry.pages['trek-opvangen']).some((key) => key !== 'lastUpdated' && String(entry.pages['trek-opvangen'][key] || '').trim()) ? '1 gevuld' : '1 leeg';
+            meta.appendChild(page1Chip);
+
+            const page2Chip = document.createElement('span');
+            page2Chip.className = 'dossier-page-chip';
+            page2Chip.textContent = entry.pages && entry.pages['trek-opvangen-2'] && Object.keys(entry.pages['trek-opvangen-2']).some((key) => key !== 'lastUpdated' && String(entry.pages['trek-opvangen-2'][key] || '').trim()) ? '2 gevuld' : '2 leeg';
+            meta.appendChild(page2Chip);
+
+            button.appendChild(title);
+            button.appendChild(meta);
+            button.addEventListener('click', () => switchDossier(entry.id));
+            item.appendChild(button);
+            list.appendChild(item);
+          });
+        }
+      }
+    }
+
+    function loadActiveDossierIntoForm() {
+      const active = iamTrekDossiers.getActiveEntry(iamData);
+      const pageData = active
+        ? (iamTrekDossiers.getPageSnapshot(iamData, formKey, active.id) || {})
+        : (iamData.getFormData(formKey) || {});
+      fillForm(pageData);
+      updateMetaChips(pageData || {});
+      renderCognitiveNudges(pageData || {});
+      fillDossierInputs(active);
+      renderDossierPanel();
+    }
+
+    function switchDossier(entryId) {
+      if (!entryId) return;
+      saveForm(false);
+      iamTrekDossiers.setActiveEntry(iamData, entryId);
+      loadActiveDossierIntoForm();
+      showMessage('Dossier geladen.');
+    }
+
+    function saveDossierMeta(feedback = true) {
+      const draft = getDossierDraftMeta();
+      const entry = iamTrekDossiers.updateActiveMeta(iamData, draft) || iamTrekDossiers.ensureActiveEntry(iamData, draft);
+      fillDossierInputs(entry);
+      renderDossierPanel();
+      if (feedback) {
+        showMessage('Datum en keyword bewaard in het dossier.');
+      }
+    }
+
+    function createNewDossier() {
+      const hadActiveEntry = Boolean(iamTrekDossiers.getActiveEntry(iamData));
+      saveForm(false);
+
+      if (!hadActiveEntry) {
+        loadActiveDossierIntoForm();
+        showMessage('Nieuw dossier aangemaakt.');
+        return;
+      }
+
+      const draft = getDossierDraftMeta();
+      const entry = iamTrekDossiers.createEntry(iamData, draft);
+      fillDossierInputs(entry);
+      fillForm({});
+      updateMetaChips({});
+      renderCognitiveNudges({});
+      renderDossierPanel();
+      showMessage('Nieuw dossier aangemaakt.');
+    }
+
     function calculateProgress(data) {
       const values = fields.map((id) => (data[id] || '').trim());
       const filled = values.filter((value) => value.length > 0).length;
@@ -686,14 +1048,11 @@
     }
 
     function getWeeklyReview() {
-      return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
+      return window.iamWeeklyReview ? window.iamWeeklyReview.get(iamData) : (iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {});
     }
 
     function isWeeklyReviewDue(lastCompletedAt) {
-      if (!lastCompletedAt) return true;
-      const last = new Date(lastCompletedAt);
-      if (Number.isNaN(last.getTime())) return true;
-      return (Date.now() - last.getTime()) >= 7 * 24 * 60 * 60 * 1000;
+      return window.iamWeeklyReview ? window.iamWeeklyReview.isDue(lastCompletedAt) : true;
     }
 
     function appendLine(textarea, line) {
@@ -707,37 +1066,24 @@
     }
 
     function renderWeeklyReviewPrompt() {
-      const weekly = getWeeklyReview();
-      const status = document.getElementById('weeklyReviewStatus');
-      const list = document.getElementById('weeklyReviewList');
-      const applyButton = document.getElementById('weeklyReviewApply');
-      if (!status || !list || !applyButton) return;
-
-      const due = isWeeklyReviewDue(weekly.lastCompletedAt);
-      status.textContent = weekly.lastCompletedAt
-        ? (due ? 'Tijd voor nieuwe terugblik' : 'Deze week bijgewerkt')
-        : 'Nog geen terugblik';
-      status.classList.toggle('due', due);
-
-      const lines = [];
-      if (weekly.reflection) lines.push(`Terugblik: ${previewText(weekly.reflection, 120)}`);
-      if (weekly.learning) lines.push(`Leerpunt: ${previewText(weekly.learning, 120)}`);
-      if (weekly.nextStep) lines.push(`Volgende stap: ${previewText(weekly.nextStep, 120)}`);
-      if (!lines.length) lines.push('Nog geen weekreflectie opgeslagen op de homepage.');
-
       const currentNeed = document.getElementById('behoefte')?.value.trim();
-      if (weekly.nextStep && currentNeed) {
-        lines.push(`Check of je volgende stap ook echt aansluit op behoefte B: ${previewText(currentNeed, 80)}.`);
+      if (window.iamWeeklyReview) {
+        window.iamWeeklyReview.renderPrompt({
+          iamData: iamData,
+          statusId: 'weeklyReviewStatus',
+          listId: 'weeklyReviewList',
+          applyButtonId: 'weeklyReviewApply',
+          sourceHref: './index.htm#weeklyReviewCard',
+          sourceLabel: 'Open terugblik op homepage',
+          emptyText: 'Nog geen weekreflectie opgeslagen op de homepage.',
+          extraLines: function (weekly) {
+            if (weekly.nextStep && currentNeed) {
+              return [`Check of je volgende stap ook echt aansluit op behoefte B: ${previewText(currentNeed, 80)}.`];
+            }
+            return [];
+          }
+        });
       }
-
-      list.innerHTML = '';
-      lines.slice(0, 4).forEach((line) => {
-        const item = document.createElement('li');
-        item.textContent = line;
-        list.appendChild(item);
-      });
-
-      applyButton.disabled = !weekly.nextStep;
     }
 
     function applyWeeklyReviewToForm() {
@@ -833,9 +1179,12 @@
 
     function saveForm(feedback = true) {
       try {
-        const saved = iamData.updateFormData(formKey, collectFormData());
+        const formData = collectFormData();
+        const saved = iamData.updateFormData(formKey, formData);
+        iamTrekDossiers.savePageSnapshot(iamData, formKey, formData, getDossierDraftMeta());
         updateMetaChips(saved || {});
         renderCognitiveNudges(saved || {});
+        renderDossierPanel();
         if (feedback) {
           showMessage('Trek-opvangen formulier opgeslagen op dit toestel.');
         }
@@ -865,16 +1214,26 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       const existingData = iamData.getFormData(formKey) || {};
+        renderPersonalizedGreeting();
       fillForm(existingData);
       updateMetaChips(existingData);
       renderCognitiveNudges(existingData);
+      loadActiveDossierIntoForm();
       renderWeeklyReviewPrompt();
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('trekForm').addEventListener('input', () => saveForm(false));
+      document.getElementById('dossierSelect').addEventListener('change', (event) => switchDossier(event.target.value));
+      document.getElementById('dossierNewButton').addEventListener('click', createNewDossier);
+      document.getElementById('dossierSaveMetaButton').addEventListener('click', () => saveDossierMeta(true));
+      document.getElementById('dossierDate').addEventListener('change', () => saveDossierMeta(false));
+      document.getElementById('dossierKeyword').addEventListener('change', () => saveDossierMeta(false));
       document.getElementById('weeklyReviewApply').addEventListener('click', applyWeeklyReviewToForm);
+      window.addEventListener('focus', () => {
+          renderPersonalizedGreeting();
+        renderDossierPanel();
+      });
     });
   </script>
 </body>

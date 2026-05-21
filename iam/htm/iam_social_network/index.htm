@@ -29,6 +29,7 @@
                     <button id="addPersonBtn" class="btn btn-primary">Add Person</button>
                     <button id="shakeBtn" class="btn btn-secondary">Shake it up! 🎲</button>
                     <button id="pauseBtn" class="btn btn-secondary">Pause ⏸️</button>
+                    <button id="settingsBtn" class="btn btn-secondary" type="button">App Settings ⚙️</button>
                     <button id="mobileMenuBtn" class="btn btn-secondary compact-only" type="button" aria-expanded="false">Meer</button>
                     <div class="divider-vertical"></div>
                     <button id="slowerBtn" class="btn btn-secondary" title="Slower">⏪</button>
@@ -188,6 +189,83 @@
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <div id="settingsModal" class="modal hidden" aria-hidden="true">
+            <div class="modal-content glass-panel settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+                <div class="modal-header">
+                    <h2 id="settingsTitle">App Settings</h2>
+                    <button type="button" id="closeSettingsX" class="close-btn" aria-label="Sluiten">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="settingsForm">
+                        <h3 class="settings-section-title">Field Names</h3>
+                        <div class="form-group">
+                            <label for="settingsAppTitle">App titel</label>
+                            <input type="text" id="settingsAppTitle" placeholder="Social Network">
+                        </div>
+                        <div class="form-group">
+                            <label for="settingsAddPersonLabel">Label knop persoon toevoegen</label>
+                            <input type="text" id="settingsAddPersonLabel" placeholder="Add Person">
+                        </div>
+                        <div class="form-group">
+                            <label for="settingsSupportFilterLabel">Label filter steunnetwerk</label>
+                            <input type="text" id="settingsSupportFilterLabel" placeholder="Steunnetwerk">
+                        </div>
+
+                        <h3 class="settings-section-title">Data</h3>
+                        <div class="form-group">
+                            <label for="settingsExportFilePrefix">Export bestandsvoorvoegsel</label>
+                            <input type="text" id="settingsExportFilePrefix" placeholder="West-coaching_social-network-data">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="settingsRememberFilter">
+                                Onthoud actieve filter lokaal
+                            </label>
+                        </div>
+
+                        <h3 class="settings-section-title">Cross-tool Behaviour</h3>
+                        <div class="form-group">
+                            <label for="settingsDefaultFilter">Standaard netwerkfilter</label>
+                            <select id="settingsDefaultFilter">
+                                <option value="all">Alles</option>
+                                <option value="support">Steunnetwerk</option>
+                                <option value="craving-user">Trek door gebruikers</option>
+                                <option value="craving-non-user">Trek door niet-gebruikers</option>
+                                <option value="co-user">Medegebruikers</option>
+                                <option value="unaware">Weten van niets</option>
+                                <option value="talk-craving">Praten over trek</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="settingsLegendExpandedByDefault">
+                                Legenda standaard uitgeklapt tonen
+                            </label>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="helpModal" class="modal hidden" aria-hidden="true">
+            <div class="modal-content glass-panel" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+                <div class="modal-header">
+                    <h2 id="helpTitle">Help</h2>
+                    <button type="button" id="closeHelpX" class="close-btn" aria-label="Sluiten">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Gebruik de filters om netwerktypes apart te highlighten, tik op een persoon om details te wijzigen, en exporteer daarna terug naar IAM als je je netwerkkeuzes wilt bewaren.</p>
+                    <div class="form-actions form-actions-center">
+                        <button type="button" id="closeHelpButton" class="btn btn-secondary close-modal-btn">Got it!</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

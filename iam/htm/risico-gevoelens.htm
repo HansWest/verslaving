@@ -1,282 +1,919 @@
-<html>
-
-deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
--->
-
-)(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
-
-
-
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Risico-inventarisatie (gevoelens)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risico-gevoelens — IAM</title>
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/forms.css">
+    <style>
+        :root {
+            --page-main: #ef6c00;
+            --page-accent: #e65100;
+            --soft: #fff3e0;
+            --border: #ffcc80;
+            --ink: #1f3849;
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="controleerjeverslaving(.nl) is een product van PraatmetHans(.nl) om mensen te helpen om zelfstandig aan de slag te laten gaan met hun verslaving of afhankelijkheid middels verantwoorde formulieren." />
-<meta name="keywords" content="huisarts, poh, verslaving, addiction, zelfstandig, persoonlijk, formulieren, gesprek, keuze, controleerjeverslaving, PraatmetHans.nl" />
+        body {
+            background:
+                radial-gradient(circle at top left, rgba(239, 108, 0, 0.1), transparent 34%),
+                linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+            color: var(--ink);
+            overflow-x: hidden;
+        }
 
+        html {
+            background:
+                radial-gradient(circle at top left, rgba(239, 108, 0, 0.1), transparent 34%),
+                linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+        }
 
+        .page-header {
+            background: linear-gradient(135deg, #ef6c00 0%, #e65100 100%);
+            color: #fff;
+            text-align: left;
+            padding: 1.35rem 1.25rem;
+            margin: 1rem auto 1.2rem;
+            max-width: 760px;
+            border-radius: 16px;
+            box-shadow: 0 12px 28px rgba(31, 56, 73, 0.14);
+        }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+        .page-header h1 {
+            margin: 0 0 0.3rem;
+            font-size: clamp(1.4rem, 4vw, 1.95rem);
+            line-height: 1.2;
+        }
 
-function gevoelaanvullen()
-{
-document.risicogevoelens.voorbeeldgevoel.value=document.risicogevoelens.gevoelvoorbeelden.value+" "+document.risicogevoelens.voorbeeldgevoel.value;
-}
-function gedachteaanvullen()
-{
-document.risicogevoelens.voorbeeldgedachten.value=document.risicogevoelens.gedachtevoorbeeld.value+" "+document.risicogevoelens.voorbeeldgedachten.value;
-}
-function gevoelcat01()
-{
-//alert("lastige categorie-01 gevoelens: "+document.risicogevoelens.gevoelcat101.value+" / "+document.risicogevoelens.gevoelcat102.value+" / "+document.risicogevoelens.gevoelcat103.value);
-document.risicogevoelens.nummer0101.value=document.risicogevoelens.gevoelcat101.value;
-document.risicogevoelens.nummer0102.value=document.risicogevoelens.gevoelcat102.value;
-document.risicogevoelens.nummer0103.value=document.risicogevoelens.gevoelcat103.value;
-}
-function gevoelcat02()
-{
-//alert("lastige categorie-01 gevoelens: "+document.risicogevoelens.gevoelcat101.value+" / "+document.risicogevoelens.gevoelcat102.value+" / "+document.risicogevoelens.gevoelcat103.value);
-document.risicogevoelens.nummer0201.value=document.risicogevoelens.gevoelcat201.value;
-document.risicogevoelens.nummer0202.value=document.risicogevoelens.gevoelcat202.value;
-document.risicogevoelens.nummer0203.value=document.risicogevoelens.gevoelcat203.value;
-}
+        .page-header p {
+            margin: 0;
+            opacity: 0.95;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
 
+        .page-wrap {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 1.25rem 2rem;
+        }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+        .intro-card,
+        .hint-box {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: #333;
+        }
 
-function hulpscherm()
-{
-hulp_scherm(300,'Risicovolle gevoelens','gevoelens die meestal alleen maar de ruimte kregen met hulp van een (beetje) gebruik, dat zijn tricky gevoelens geworden. Gewoon omdat je niet zo goed geleerd hebt om die gevoelens <b>nuchter</b> te <i>uiten</i>, uit te houden of er nuchter iets <i>mee te doen</i>. Dat zijn dus de <b>risico-gevoelens</b> in een periode waarin je de controle wilt terugwinnen op gebruik, dat zijn de gevoelens die je nuchter zult moeten leren tackelen.<br/>Dan is het vaak handig om alvast te bedenken wat die gevoelens zijn en wat jij er <b>nuchter</b> mee wilt leren doen om ze niet zo hoog op te laten lopen dat het lastiger wordt om het gebruik te laten staan...')
-}
+        .intro-card ul,
+        .intro-card ol,
+        .hint-box ul,
+        .hint-box ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
 
-</script>
+        .intro-card li,
+        .hint-box li {
+            margin-bottom: 0.3rem;
+        }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+        .section-title {
+            margin: 1.5rem 0 0.75rem;
+            color: var(--page-accent);
+            font-size: 1.2rem;
+            border-bottom: 3px solid var(--page-main);
+            padding-bottom: 0.4rem;
+        }
+
+        .field {
+            margin-bottom: 1rem;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #222;
+        }
+
+        .field .sub {
+            display: block;
+            margin-bottom: 0.45rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        textarea,
+        input[type="text"],
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.7rem;
+            font: inherit;
+            background: #fff;
+        }
+
+        select {
+            appearance: auto;
+            background-image: none !important;
+            padding-right: 0.7rem;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 84px;
+            line-height: 1.5;
+        }
+
+        .triad {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.6rem;
+        }
+
+        .triad input[type="text"] {
+            min-height: 2.5rem;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+            margin-top: 1.6rem;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .btn-primary {
+            background: var(--page-main);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .footer-nav {
+            text-align: center;
+            margin-top: 2rem;
+            color: #666;
+            font-size: 0.86rem;
+        }
+
+        .footer-nav a {
+            color: var(--page-accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .route-card {
+            border-top: 3px solid #5b744a;
+        }
+
+        .route-hint {
+            margin-top: 0.7rem;
+            color: #5f6a70;
+            font-size: 0.92rem;
+        }
+
+        .cross-suggest-box {
+            background: #fdf5ec;
+            border: 1px solid #f0d0a8;
+            border-radius: 12px;
+            padding: 0.9rem;
+            margin: 0.75rem 0 1rem;
+        }
+
+        .cross-suggest-box p {
+            margin: 0 0 0.55rem;
+            color: #6b553f;
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .cross-suggest-list {
+            display: grid;
+            gap: 0.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cross-suggest-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            background: #fff;
+            border: 1px solid #f0dcbf;
+            border-radius: 10px;
+            padding: 0.6rem 0.7rem;
+        }
+
+        .cross-suggest-item span {
+            flex: 1 1 240px;
+            font-size: 0.88rem;
+            color: #5a4938;
+            line-height: 1.45;
+        }
+
+        .cross-suggest-item button {
+            border: 1px solid #e8cfab;
+            background: #fff3e3;
+            color: #6a4b2f;
+            border-radius: 999px;
+            min-height: 34px;
+            padding: 0.38rem 0.74rem;
+            font: inherit;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .cross-page-links {
+            margin-top: 0.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+        }
+
+        .cross-page-links a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 40px;
+            border-radius: 999px;
+            border: 1px solid #e8cfab;
+            background: #fff3e3;
+            color: #6a4b2f;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 0.42rem 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .priority-entry-box {
+            background: #fdf5ec;
+            border: 1px solid #f0d0a8;
+            border-radius: 12px;
+            padding: 0.9rem;
+            margin-top: 0.75rem;
+        }
+
+        .priority-entry-list {
+            list-style: none;
+            margin: 0.8rem 0 0;
+            padding: 0;
+            display: grid;
+            gap: 0.55rem;
+        }
+
+        .priority-entry-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            background: #fff;
+            border: 1px solid #f0dcbf;
+            border-radius: 10px;
+            padding: 0.6rem 0.7rem;
+        }
+
+        .priority-entry-main p { margin: 0; line-height: 1.45; }
+        .priority-entry-main .meta { margin-top: 0.28rem; font-size: 0.84rem; color: #6b553f; }
+
+        .priority-entry-badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            background: #fff1df;
+            color: #6a4b2f;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.18rem 0.55rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .priority-entry-delete {
+            border: 1px solid #e8cfab;
+            background: #fff;
+            color: #6a4b2f;
+            border-radius: 999px;
+            min-height: 34px;
+            padding: 0.3rem 0.65rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        @media (min-width: 700px) {
+            .triad {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+    </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
-<div class="container">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <header class="page-header">
+        <h1>Risico-gevoelens</h1>
+        <p>Welke gevoelens maken het lastig, en wat helpt jou zonder gebruik?</p>
+    </header>
 
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
+    <main class="page-wrap">
+        <section class="intro-card">
+            <strong>Waarom gevoelens uitmaken:</strong> Niet alleen pijnlijke gevoelens geven risico. Ook spanning, plezier of behoefte aan contact kunnen triggeren.
+            Je leert hier twee soorten risicogevoelens herkennen:
+            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                <li><strong>Categorie 1:</strong> Gevoelens die je zonder gebruik lastig kunt verdragen (eenzaamheid, teleurstelling, verdriet)</li>
+                <li><strong>Categorie 2:</strong> Gevoelens of behoeften die je lastig kunt uiten zonder gebruik (boosheid tonen, kwetsbaarheid, behoefte aan nabijheid)</li>
+            </ul>
+            Met dit werkblad breng je in kaart wat voor jou lastig is en wat jou helpt om op koers te blijven.
+        </section>
 
-</script>
-</head>
-<body>
-<div class="shadow"><div class="content">
-<script language="javascript">
- 
-writelogo();
--->
-</script>
-<div class="praatmethansheader">
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">risico-inventarisatie (gevoelens)</h1>
-</div><div class="rechtsitalic">12 vragen: 30 - 60 minuten</div>
+        <section class="hint-box">
+            <strong>Van gevoel naar koers:</strong> niet elk gevoel is hetzelfde. Trek, angst, hoop en verbondenheid vragen vaak om een andere reactie.
+            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                <li><strong>Trek:</strong> vraagt vaak om directe regulatie en afstand tot triggers.</li>
+                <li><strong>Angst of stress:</strong> vraagt vaker om begrenzen, delen en structureren.</li>
+                <li><strong>Hoop en waarden:</strong> helpen je kiezen wat op lange termijn klopt.</li>
+            </ul>
+            Koppel deze analyse aan <a href="./levenskwaliteit.htm">levenskwaliteit</a> en <a href="./persoonlijke-waarden.htm">persoonlijke waarden</a> zodat je niet alleen remt, maar ook richting kiest.
+        </section>
 
-<p>&nbsp;</p>
-<h1>Risicovolle gevoelens en gedachten </h1>
-<div class="printhide">
-<p>Laten we helder zijn, mensen die dingen hebben meegemaakt die heftige gevoelens
-  geven, die hebben volgens onderzoek meer kans om tegen een verslaving op te
-  botsen dan het landelijk gemiddelde. Daar zie je al dat verslavende middelen
-  soms juist verslavend uitpakken als ze worden gebruikt om grip te houden op
-  lastige gevoelens.<br />
-  Mensen, situaties, gebeurtenissen
-  (&ograve;f
-  juist het uitblijven van bepaalde dingen die zouden moeten gebeuren) kunnen
-  jou gevoelens geven die jij op dit moment lastig vind om (nuchter) mee om te
-  gaan. Gevoelens van teleurstelling, gevoelens van eenzaamheid. Misschien gevoelens
-  als boosheid of verdriet, die je weg zou willen werken. Gevoelens als eenzaamheid
-  of zin in seks of verveling of behoefte aan actie, dat zijn gevoelens die misschien
-  al wel honderd keer een aanleiding kunnen zijn geweest voor een 'kleinigheid',
-  met het doel om even wat moed te krijgen, om gevoel even niet meer te hoeven
-  voelen of om er wel even wat mee te gaan doen.<br />
-  Die gevoelens hoeven lang niet altijd alleen maar negatief te zijn.
-  Veel mensen met een beginnend verslavingspatroon merken dat zij eigenlijk
-  niet eens meer weten hoe zij juist plezier kunnen hebben of een leuke dag kunnen
-  beleven zonder gebruik, en vallen dus juist ook terug op leuke dagen. Als je
-  bij bepaalde gevoelens bijna moet gebruiken omdat je niet zo goed meer weer
-  weet hoe je zonder gebruik om zou moeten gaan met dar gevoel, dan ben je niet
-  zozeer <i>biologisch</i> maar
-  in ieder geval <i>emotioneel</i> afhankelijk geworden van dat middel.</p>
-<h1>EMOTIONELE AFHANKELIJKHEID en risico-gevoelens</h1>
-<p>Emotionele afhankelijkheid aan middelen valt uiteen in twee groepen:</p>
-<ul>
-  <li>Gebruik helpt me om bepaalde gevoelens niet te hoeven voelen (of om bepaalde
-    heftige herinneringen niet te hoeven herleven).</li>
-  <ul>
-  <li>Gebruik dat helpt om je om bepaalde situaties uit te houden (die bepaalde
-    gevoelens geven)     </li>
-  </ul>
-  <li>Gebruik dat helpt omdat bepaalde gevoelens alleen maar naar buiten mogen
-    als er (een beetje) is gebruikt, </li>
-  <ul>
-  <li>of  behoeften die alleen  met behulp van een (beetje)
-    gebruik kunnen worden uitgeleefd.<br/>
-  </li></ul></ul>
-   &nbsp; ...en mogelijk heb jij hier nog persoonlijke &aacute;&aacute;nvullingen?
-   
+        <section class="hint-box">
+            <strong>Snel naar verwante pagina's</strong>
+            <div class="cross-page-links">
+                <a href="./waarom-wel-gebruiken.htm">Waarom-wel-gebruiken</a>
+                <a href="./risico-activiteiten.htm">Risico-activiteiten</a>
+                <a href="./risico-situaties.htm">Risico-situaties</a>
+                <a href="./risico-mensen.htm">Risico-mensen</a>
+                <a href="./risico-gevoelens.htm">Risico-gevoelens</a>
+            </div>
+        </section>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <h2 class="section-title">1) Reframing: Hoe zet je risicogevoelens in perspectief?</h2>
+        <section class="hint-box">
+            <strong>Albert Ellis' twee kernvragen:</strong> Stel jezelf deze vragen om gedachten die je voelt aan te scherpen:
+            <ol style="margin: 0.6rem 0; padding-left: 1.8rem;">
+                <li><strong>Klopt dit echt?</strong> Is dit werkelijk waar, altijd en overal?</li>
+                <li><strong>Helpt dit me?</strong> Brengt deze gedachte mij en mijn dierbaren verder?</li>
+            </ol>
+            <div style="margin-top: 0.8rem; font-size: 0.95rem; color: #555;">
+                <strong>Extra reflectievragen:</strong>
+                <ul style="margin: 0.4rem 0; padding-left: 1.5rem; font-size: 0.9rem;">
+                    <li>Zijn er uitzonderingen op deze regel?</li>
+                    <li>Zouden anderen in dezelfde situatie dit ook denken?</li>
+                    <li>Waar heb ik leren denken als ik dit denk? Helpt dat iemand die ik ken echt?</li>
+                </ul>
+            </div>
+        </section>
 
+        <h2 class="section-title">2) Voorbeelden verzamelen</h2>
+        <div class="field">
+            <label for="gevoelVoorbeeldSelect">Voorbeeldgevoel toevoegen</label>
+            <span class="sub">Kies een voorbeeld en voeg het toe.</span>
+            <select id="gevoelVoorbeeldSelect">
+                <option value="">Kies een voorbeeld...</option>
+            </select>
+        </div>
 
-<form name="risicogevoelens">
-<p>Lastige gevoelens zijn voor mij (bijvoorbeeld):
-  <select name="gevoelvoorbeelden" onChange="gevoelaanvullen()">
-    <option selected="selected">selecteer een optie en kopieer 'm naar het
-    verzamelveld</option>
-    <option value="Als ik me gelukkig of lekker wil voelen.">Als ik me gelukkig
-    of lekker wil voelen.</option>
-    <option value="Als ik teleurstelling voel.">Als ik teleurstelling voel.</option>
-    <option value="Als ik mij verveel.">Als ik mij verveel.</option>
-    <option value="Als ik me te gespannen voel.">Als ik me te gespannen voel.</option>
-    <option value="Als ik depressief wordt.">Als ik depressief wordt.</option>
-    <option value="Als ik lichamelijke pijn heb.">Als ik lichamelijke pijn heb.</option>
-    <option value="Als ik paniek voel opkomen.">Als ik paniek voel opkomen.</option>
-    <option value="Als ik mij eenzaam genoeg voel.">Als ik mij eenzaam genoeg
-    voel.</option>
-    <option value="Als ik mij schaam.">Als ik mij schaam.</option>
-    <option value="Als ik mij somber voel.">Als ik mij somber voel.</option>
-    <option value="Als ik mij ontevreden voel over mijzelf.">Als ik mij ontevreden
-    voel over mijzelf.</option>
-    <option value="Als ik langer ga zitten bedenken dat ik nooit meer zal kunnen gebruiken.">Als
-    ik langer ga zitten bedenken dat ik nooit meer zal kunnen gebruiken.</option>
-    <option value="Als ik kwaad ben omdat er vervelende dingen gebeuren.">Als
-    ik kwaad ben omdat er vervelende dingen gebeuren.</option>
-  </select>
-  <br />
-  <textarea name="voorbeeldgevoel" cols="55" rows="4" class="praatmethansformtextarea" title="Wat zouden nou bijvoorbeeld voor jou lastige gevoelens kunnen zijn?"></textarea>
-</p>
-<h1>Risico-gevoelens</h1>
+        <div class="field">
+            <label for="voorbeeldGevoel">Mijn risico-gevoelens</label>
+            <textarea id="voorbeeldGevoel" name="voorbeeldGevoel" placeholder="Welke gevoelens trekken jou vaak richting gebruik?"></textarea>
+        </div>
 
-<p><b>Categorie 1)</b> Wat zijn voor jou 3 risico-gevoelens die <b>moeilijk
-    uit te houden</b> zijn
-  zonder gebruik:<br/>
-  A
-  -
-  <input type="text" class="praatmethansformtexfield" onChange="gevoelcat01();" name="gevoelcat101" width="17" maxlength="25" title="een gevoel dat je lastig vindt om te voelen en dan je vaak genoeg hebt kunnen wegwerken met gebruik om trek te krijgen als je dat gevoel nuchter meemaakt."/>
-  &nbsp;B-
-  <input type="text" class="praatmethansformtexfield" onChange="gevoelcat01();" name="gevoelcat102" width="17" maxlength="25" title="een gevoel dat je lastig vindt om te voelen en dan je vaak genoeg hebt kunnen wegwerken met gebruik om trek te krijgen als je dat gevoel nuchter meemaakt." />
-  &nbsp;C-
-  <input type="text" class="praatmethansformtexfield" onChange="gevoelcat01();" name="gevoelcat103" width="17" maxlength="25" title="een gevoel dat je lastig vindt om te voelen en dan je vaak genoeg hebt kunnen wegwerken met gebruik om trek te krijgen als je dat gevoel nuchter meemaakt." /><br/>
+        <h2 class="section-title">3) Categorie 1: Moeilijk uit te houden</h2>
+        <div class="field">
+            <span class="sub">Noem drie gevoelens die je zonder gebruik lastig kunt verdragen.</span>
+            <div class="triad">
+                <input type="text" id="cat1A" name="cat1A" placeholder="A - bijv. eenzaamheid">
+                <input type="text" id="cat1B" name="cat1B" placeholder="B - bijv. frustratie">
+                <input type="text" id="cat1C" name="cat1C" placeholder="C - bijv. somberheid">
+            </div>
+        </div>
 
-</p><div class="praatmethansheader2">&quot;drie lastige categorie 1 gevoelens om uit te houden&quot;</div>
-<div class="rechtsitalic">denk bijvoorbeeld aan verdriet, teleurstelling, verveling, frustratie etc.etc. </div>
-<p><b>Categorie 2)</b> Risico-gevoelens die door mij <b>moeilijk ge-uit</b> worden zonder gebruik, dat zijn:<br/>
-  A
-  -
-  <input type="text" class="praatmethansformtexfield" onChange="gevoelcat02();" name="gevoelcat201" width="17" maxlength="25" title="een gevoel dat je lastig vindt om expressie te geven / uit te leven, waarbij (een beetje) gebruik op die momenten behulpzaam was."/>
-  &nbsp;B-
-  <input type="text" class="praatmethansformtexfield" onChange="gevoelcat02();" name="gevoelcat202" width="17" maxlength="25" title="een gevoel dat je lastig vindt om expressie te geven / uit te leven, waarbij (een beetje) gebruik op die momenten behulpzaam was." />
-  &nbsp;C-
-  <input type="text" class="praatmethansformtexfield" onChange="gevoelcat02();" name="gevoelcat203" width="17" maxlength="25" title="een gevoel dat je lastig vindt om expressie te geven / uit te leven, waarbij (een beetje) gebruik op die momenten behulpzaam was." /><br/>
+        <div class="field">
+            <label for="cat1Plan">Wat helpt jou om dit op te vangen zonder gebruik?</label>
+            <textarea id="cat1Plan" name="cat1Plan" placeholder="Wie helpt je? Wat werkt voor jou? Wat spreek je met jezelf af?"></textarea>
+        </div>
 
-</p><div class="praatmethansheader2">&quot;drie categorie 2 gevoelens lastig om te uiten zonder gebruik&quot;</div>
-<div class="rechtsitalic">denk bijvoorbeeld aan het laten zien van verdriet of vermoeidheid, boosheid of irritatie, behoefte aan seks of nabijheid, etc.etc. </div>
-<p><b>A1</b> - Als we het hebben over: 
-  <input name="nummer0101" class="praatmethansformtextblind" type="text" readonly="true" /><br />
-  Wie, in jouw vriendenkring (of onder behandelaars), kan jou helpen om dit gevoel
-  beter te leren uithouden in de toekomst zonder dat je daarbij nog afhankelijk
-  bent van gebruik?<br/>
-<textarea name="gevoel0101oefenen" cols="55" rows="4" class="praatmethansformtextarea" title="Wie, in jouw vriendenkring (of onder behandelaars), kan jou helpen om dit gevoel beter te leren uithouden in de toekomst zonder dat je daarbij nog afhankelijk bent van gebruik?"></textarea></p>
-<div class="praatmethansheader2">&quot;Categorie01-gevoel Nr. &eacute;&eacute;n
-  &amp; jouw dagelijks leven&quot;</div>
-<p></p>
-<p><b>B1</b> - Als we het hebben over: 
-  <input name="nummer0102" class="praatmethansformtextblind" type="text" readonly="true" /><br />
-  Wie, in jouw vriendenkring (of onder behandelaars), kan jou helpen om dit gevoel
-  beter te leren uithouden in de toekomst zonder dat je daarbij nog afhankelijk
-  bent van gebruik?<br/>
-<textarea name="gevoel0102oefenen" cols="55" rows="4" class="praatmethansformtextarea" title="Wie, in jouw vriendenkring (of onder behandelaars), kan jou helpen om dit gevoel beter te leren uithouden in de toekomst zonder dat je daarbij nog afhankelijk bent van gebruik?"></textarea></p>
-<div class="praatmethansheader2">&quot;Categorie01-gevoel Nr. tw&eacute;&eacute; &amp;
-  jouw dagelijks leven&quot;</div>
-<p></p>
-<p><b>C1</b> - Als we het hebben over: 
-  <input name="nummer0103" class="praatmethansformtextblind" type="text" readonly="true" /><br />
-  Wie, in jouw vriendenkring (of onder behandelaars), kan jou helpen om dit gevoel
-  beter te leren uithouden in de toekomst zonder dat je daarbij nog afhankelijk
-  bent van gebruik? Hoe (en waar of met wie samen) wil jij dat gevoel vaker in <b>jouw leven </b> nuchter terug gaan zien?<br/>
-<textarea name="gevoel0103oefenen" cols="55" rows="4" class="praatmethansformtextarea" title="Wie, in jouw vriendenkring (of onder behandelaars), kan jou helpen om dit gevoel beter te leren uithouden in de toekomst zonder dat je daarbij nog afhankelijk bent van gebruik?"></textarea></p>
-<div class="praatmethansheader2">&quot;Categorie01-gevoel Nr. drie &amp; jouw dagelijks
-  leven&quot;</div>
-<p>&nbsp;</p>
+        <h2 class="section-title">4) Categorie 2: Moeilijk te uiten</h2>
+        <div class="field">
+            <span class="sub">Noem drie gevoelens of behoeften die je lastig kunt uiten zonder gebruik.</span>
+            <div class="triad">
+                <input type="text" id="cat2A" name="cat2A" placeholder="A - bijv. boosheid tonen">
+                <input type="text" id="cat2B" name="cat2B" placeholder="B - bijv. kwetsbaarheid tonen">
+                <input type="text" id="cat2C" name="cat2C" placeholder="C - bijv. behoefte aan nabijheid">
+            </div>
+        </div>
 
-<p><b>A2</b>- Als we het hebben over: 
-  <input name="nummer0201" class="praatmethansformtextblind" type="text" readonly="true" /><br />
-   Hoe (en waar of met wie samen) wil jij dat gevoel vaker in <b>jouw leven </b> nuchter terug gaan zien?<br/>
-<textarea name="gevoel0101oefenen" cols="55" rows="4" class="praatmethansformtextarea" title="Wie, in jouw vriendenkring (of onder behandelaars), kan jou helpen om dit gevoel beter te leren uithouden in de toekomst zonder dat je daarbij nog afhankelijk bent van gebruik?"></textarea></p>
-<div class="praatmethansheader2">&quot;Categorie02-gevoel Nr. &eacute;&eacute;n &amp; jouw
-  dagelijks leven&quot;</div>
-<p>&nbsp;</p>
-<p><b>B2</b>- Als we het hebben over: 
-  <input name="nummer0202" class="praatmethansformtextblind" type="text" readonly="true" /><br />
-   Hoe (en waar of met wie samen) wil jij (oefenen om) dat gevoel vaker in <b>jouw
-   leven </b> nuchter
-   terug gaan zien?<br/>
-<textarea name="gevoel0102oefenen" cols="55" rows="4" class="praatmethansformtextarea" title="Wie, in jouw vriendenkring (of onder behandelaars), kan jou helpen om dit gevoel beter te leren uithouden in de toekomst zonder dat je daarbij nog afhankelijk bent van gebruik?"></textarea></p>
-<div class="praatmethansheader2">&quot;Categorie02-gevoel Nr. tw&eacute;&eacute; &amp; jouw
-  dagelijks leven&quot;</div>
-<p>&nbsp;</p>
-<p><b>C2</b> - Als we het hebben over: 
-  <input name="nummer0203" class="praatmethansformtextblind" type="text" readonly="true" /><br />
-   Hoe (en waar of met wie samen) wil jij dat gevoel vaker in <b>jouw leven </b> nuchter
-   terug gaan zien (oefening baart kunst)?<br/>
-<textarea name="gevoel0103oefenen" cols="55" rows="4" class="praatmethansformtextarea" title="Wie, in jouw vriendenkring (of onder behandelaars), kan jou helpen om dit gevoel beter te leren uithouden in de toekomst zonder dat je daarbij nog afhankelijk bent van gebruik?"></textarea></p>
-<div class="praatmethansheader2">&quot;Categorie02-gevoel Nr. drie &amp; jouw
-  dagelijks leven&quot;</div>
-<p>&nbsp;</p>
-  <H1>en nog even een knap lastige (!) P.S.</H1>
+        <div class="field">
+            <label for="cat2Plan">Hoe wil je dit leren uiten zonder gebruik?</label>
+            <textarea id="cat2Plan" name="cat2Plan" placeholder="Met wie kun je dit oefenen? Waar begin je klein?"></textarea>
+        </div>
 
-  <p>en nog een knap lastig raagje om even <b>goed</b> bij stil te staan:<br />
-  Hoeveel tijd geef jij jezelf tot je deze gevoelens beter kunt 'handelen'? Dat
-  is namelijk wel een periode waarin je meer 'last' zult hebben van deze gevoelens..
-    dus dat kan je dan maar beter in calculeren.
+        <h2 class="section-title">5) Lastige gedachten bij gevoelens</h2>
+        <div class="field">
+            <label for="psGedachten">Welke gedachten maken het zwaarder?</label>
+            <textarea id="psGedachten" name="psGedachten" placeholder="Bijv. 'Ik kan dit niet aan', 'het heeft geen zin', 'nu moet ik gebruiken'..."></textarea>
+        </div>
 
-</p><p>&nbsp;</p>
-</form><hr class="formhr" />
-<p>&nbsp;</p>
-<p><i>Onze binnenwereld is net zo groot als de buitenwereld. Toch komen de meeste mensen met een verslaving of een afhankelijkheid er niet omheen om daar eens wat in rond te reizen om 'm beter te leren kennen :-) </i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+        <div class="hint-box">
+            Stel jezelf twee vragen: klopt dit echt, en helpt deze gedachte mij vooruit?
+        </div>
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div></div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+        <h2 class="section-title">6) Interne risico's: wat gebeurt er van binnen in jou?</h2>
+        <div class="field">
+            <span class="sub">Veelal komt het risico niet van buiten, maar van hoe jij voelt en denkt. Dit zijn jouw interne risico's.</span>
+            <label for="interneRisicos">Mijn belangrijkste interne risico's</label>
+            <textarea id="interneRisicos" name="interneRisicos" placeholder="Bijv: De gedachte dat ik alles alleen moet kunnen, schaamte over mijn verleden, het gevoel dat ik niet goed genoeg ben...
+En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textarea>
+        </div>
+
+        <section class="hint-box">
+            <strong>Items met datum en belangrijkheid</strong>
+            <p style="margin:0.45rem 0 0.6rem;">Leg meerdere items vast met datum en belangrijkheid. Hoogste belangrijkheid staat bovenaan.</p>
+            <div class="priority-entry-box">
+                <div class="field">
+                    <label for="gevoelRiskItemText">Item</label>
+                    <input id="gevoelRiskItemText" type="text" placeholder="Bijv. Schaamte na conflict met partner." />
+                </div>
+                <div class="triad" style="grid-template-columns:1fr 1fr;">
+                    <div class="field" style="margin-bottom:0;">
+                        <label for="gevoelRiskItemDate">Datum</label>
+                        <input id="gevoelRiskItemDate" type="date" />
+                    </div>
+                    <div class="field" style="margin-bottom:0;">
+                        <label for="gevoelRiskItemPriority">Belangrijkheid: <span id="gevoelRiskItemPriorityValue">7</span>/10</label>
+                        <input id="gevoelRiskItemPriority" type="range" min="1" max="10" step="1" value="7" />
+                    </div>
+                </div>
+                <div class="action-bar" style="margin-top:0.6rem;">
+                    <button type="button" class="btn btn-secondary" id="addGevoelRiskItemButton">Voeg item toe</button>
+                </div>
+                <ul class="priority-entry-list" id="gevoelRiskItemList"></ul>
+            </div>
+        </section>
+
+        <section class="cross-suggest-box">
+            <p>Ideeën uit andere pagina's (max 5): kies wat je nu helpt en voeg het direct toe.</p>
+            <ul class="cross-suggest-list" id="crossSuggestListGevoelens">
+                <li class="cross-suggest-item"><span>Nog geen suggesties uit gekoppelde pagina's gevonden.</span></li>
+            </ul>
+        </section>
+
+        <section class="intro-card">
+            <strong>Vandaag in beeld:</strong> als je op meerdere pagina's dezelfde dagfocus ziet, wordt het makkelijker om trend en trigger te herkennen.
+            <div class="field" style="margin-top: 0.8rem;">
+                <label for="todayFocusRisico">Wat me nu vooral bezighoudt vandaag?</label>
+                <textarea id="todayFocusRisico" placeholder="Welke gedachte, spanning of behoefte staat vandaag op de voorgrond?"></textarea>
+            </div>
+            <p class="sub" id="todayFocusYesterdayRisico">Gisteren: nog niet ingevuld.</p>
+            <div class="action-bar" style="margin-top: 0.6rem;">
+                <button type="button" class="btn btn-secondary" id="todayFocusCarryRisico">Neem gisteren over</button>
+                <button type="button" class="btn btn-secondary" id="todayFocusNewRisico">Nieuw vandaag</button>
+            </div>
+        </section>
+
+        <div class="hint-box">
+            Interne risico's zijn bijvoorbeeld: veronderstelling dat alleen gebruik je gelukkig maakt; schaamte; zelfkritiek; het idee dat je 'zwak' bent; perfectionisme; teveel alleen willen doen.
+        </div>
+
+        <h2 class="section-title">7) Van inzicht naar actie (nu doen)</h2>
+        <section class="intro-card route-card">
+            <div class="field">
+                <label for="routeUrgency">Hoe urgent is het nu?</label>
+                <select id="routeUrgency">
+                    <option value="laag">Laag: ik kan nog analyseren en plannen</option>
+                    <option value="middel" selected>Middel: ik voel druk en wil direct bijsturen</option>
+                    <option value="hoog">Hoog: ik dreig regie te verliezen</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="routeFocus">Waar wil je nu op focussen?</label>
+                <select id="routeFocus">
+                    <option value="analyse" selected>Analyse van gevoelens en gedachten</option>
+                    <option value="coping">Coping en regulatie</option>
+                    <option value="nood">Noodingrijpen nu</option>
+                </select>
+            </div>
+            <div class="action-bar" style="margin-top: 0.4rem;">
+                <button type="button" class="btn btn-primary" id="openRecommendedRouteButton">Open aanbevolen actiepagina</button>
+            </div>
+            <p class="route-hint" id="routeHint">Huidig adviespad: Stimulus-respons plan.</p>
+        </section>
+
+        <div class="action-bar">
+            <button type="button" class="btn btn-primary" onclick="saveData()">Opslaan</button>
+            <button type="button" class="btn btn-secondary" onclick="exportData()">Exporteren</button>
+            
+        </div>
+
+        <div class="footer-nav">
+            <p>
+                <a href="index.htm">Terug naar overzicht</a> |
+                <a href="risico-situaties.htm">Risico-situaties</a> |
+                <a href="risico-denken.htm">Risico-denken</a>
+            </p>
+        </div>
+    </main>
+
+    <script src="../js/optionsLoader.js"></script>
+    <script src="../js/dataStore.js"></script>
+    <script src="../js/todayFocus.js"></script>
+    <script>
+        const gevoelOptionsUrl = '../assets/options/risico-emoties-gedachten.json';
+        let currentRoutePath = './stimulus-respons.htm';
+        const fields = [
+            'voorbeeldGevoel',
+            'cat1A',
+            'cat1B',
+            'cat1C',
+            'cat1Plan',
+            'cat2A',
+            'cat2B',
+            'cat2C',
+            'cat2Plan',
+            'psGedachten',
+            'interneRisicos'
+        ];
+
+        const gevoelFallback = {
+            groups: [
+                {
+                    label: 'Moeilijke gevoelens',
+                    items: [
+                        'Als ik me teleurgesteld voel',
+                        'Als ik me alleen voel',
+                        'Als ik me schaam',
+                        'Als ik me verveel',
+                        'Als ik me juist heel euforisch voel',
+                        'Als ik me gespannen voel'
+                    ]
+                }
+            ]
+        };
+
+        function appendUniqueLine(target, line) {
+            if (!target || !line) return;
+            const clean = line.trim();
+            if (!clean) return;
+
+            const lines = target.value
+                .split('\n')
+                .map((part) => part.trim())
+                .filter(Boolean);
+
+            if (!lines.includes(clean)) {
+                target.value = target.value ? `${target.value}\n${clean}` : clean;
+            }
+        }
+
+        function todayISODate() {
+            return new Date().toISOString().slice(0, 10);
+        }
+
+        function normalizeRiskItem(entry) {
+            const now = new Date().toISOString();
+            return {
+                id: entry && entry.id ? String(entry.id) : `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+                text: String(entry && entry.text ? entry.text : '').trim(),
+                date: String(entry && entry.date ? entry.date : todayISODate()),
+                priority: Math.max(1, Math.min(10, Number(entry && entry.priority ? entry.priority : 7) || 7)),
+                createdAt: String(entry && entry.createdAt ? entry.createdAt : now)
+            };
+        }
+
+        function normalizeRiskItemList(entries) {
+            const safe = Array.isArray(entries) ? entries : [];
+            return safe
+                .map((entry) => normalizeRiskItem(entry))
+                .filter((entry) => entry.text)
+                .sort((a, b) => {
+                    if (b.priority !== a.priority) return b.priority - a.priority;
+                    return String(b.date || '').localeCompare(String(a.date || ''));
+                });
+        }
+
+        function formatDateLabel(dateText) {
+            const value = String(dateText || '').trim();
+            if (!value) return 'zonder datum';
+            const parsed = new Date(`${value}T12:00:00`);
+            if (Number.isNaN(parsed.getTime())) return value;
+            return parsed.toLocaleDateString('nl-NL', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        function getCurrentRiskItems() {
+            const saved = iamData.getFormData('risico-gevoelens') || {};
+            return normalizeRiskItemList(saved.riskItems);
+        }
+
+        function renderRiskItems(entries) {
+            const list = document.getElementById('gevoelRiskItemList');
+            if (!list) return;
+            list.innerHTML = '';
+
+            if (!entries.length) {
+                const item = document.createElement('li');
+                item.innerHTML = '<div class="priority-entry-main"><p>Nog geen items toegevoegd.</p></div>';
+                list.appendChild(item);
+                return;
+            }
+
+            entries.forEach((entry) => {
+                const row = document.createElement('li');
+
+                const left = document.createElement('div');
+                left.className = 'priority-entry-main';
+                const text = document.createElement('p');
+                text.textContent = entry.text;
+                const meta = document.createElement('p');
+                meta.className = 'meta';
+                meta.textContent = `${formatDateLabel(entry.date)} | belangrijkheid ${entry.priority}/10`;
+                left.appendChild(text);
+                left.appendChild(meta);
+
+                const right = document.createElement('div');
+                const badge = document.createElement('span');
+                badge.className = 'priority-entry-badge';
+                badge.textContent = `Top ${entry.priority}`;
+                const del = document.createElement('button');
+                del.type = 'button';
+                del.className = 'priority-entry-delete';
+                del.textContent = 'Verwijder';
+                del.addEventListener('click', () => removeRiskItem(entry.id));
+                right.appendChild(badge);
+                right.appendChild(document.createElement('br'));
+                right.appendChild(del);
+
+                row.appendChild(left);
+                row.appendChild(right);
+                list.appendChild(row);
+            });
+        }
+
+        function collectFieldData() {
+            const data = {};
+            fields.forEach((field) => {
+                const el = document.getElementById(field);
+                if (el) data[field] = el.value;
+            });
+            return data;
+        }
+
+        function addRiskItem() {
+            const textInput = document.getElementById('gevoelRiskItemText');
+            const dateInput = document.getElementById('gevoelRiskItemDate');
+            const priorityInput = document.getElementById('gevoelRiskItemPriority');
+
+            const entry = normalizeRiskItem({
+                text: textInput ? textInput.value : '',
+                date: dateInput ? dateInput.value : todayISODate(),
+                priority: priorityInput ? Number(priorityInput.value) : 7
+            });
+
+            if (!entry.text) {
+                alert('Vul eerst een risico-item in.');
+                return;
+            }
+
+            const next = normalizeRiskItemList([...getCurrentRiskItems(), entry]);
+            const payload = collectFieldData();
+            payload.riskItems = next;
+            iamData.updateFormData('risico-gevoelens', payload);
+            renderRiskItems(next);
+
+            textInput.value = '';
+            if (priorityInput) priorityInput.value = '7';
+            const label = document.getElementById('gevoelRiskItemPriorityValue');
+            if (label) label.textContent = '7';
+        }
+
+        function removeRiskItem(entryId) {
+            const next = getCurrentRiskItems().filter((entry) => entry.id !== entryId);
+            const payload = collectFieldData();
+            payload.riskItems = next;
+            iamData.updateFormData('risico-gevoelens', payload);
+            renderRiskItems(next);
+        }
+
+        function appendExample() {
+            const select = document.getElementById('gevoelVoorbeeldSelect');
+            if (!select.value) return;
+
+            const selectedMeta = iamOptionsLoader.getSelectedOptionMeta(select);
+            const target = document.getElementById('voorbeeldGevoel');
+            target.value = target.value ? `${target.value}\n${select.value}` : select.value;
+
+            if (selectedMeta.reaction) {
+                const plan = document.getElementById('cat1Plan');
+                appendUniqueLine(plan, selectedMeta.reaction);
+            }
+
+            select.value = '';
+            saveData(false);
+        }
+
+        function buildCrossSuggestions() {
+            if (typeof iamData === 'undefined') return [];
+
+            const denken = iamData.getFormData('risico-denken') || {};
+            const gevoelensLang = iamData.getFormData('lastige-gevoelens') || {};
+            const sociaal = iamData.getFormData('sociaal-netwerk') || {};
+
+            const pool = [
+                { text: denken.hoogRisicoDenken, source: 'risico-denken', target: 'psGedachten' },
+                { text: denken.alternatiefDenken, source: 'risico-denken', target: 'cat1Plan' },
+                { text: denken.interneRisicosDenken, source: 'risico-denken', target: 'interneRisicos' },
+                { text: gevoelensLang.acceptancePractice, source: 'lastige-gevoelens', target: 'cat1Plan' },
+                { text: gevoelensLang.talkPeople, source: 'lastige-gevoelens', target: 'cat2Plan' },
+                { text: sociaal.reachableSupport, source: 'sociaal-netwerk', target: 'cat2Plan' },
+                { text: sociaal.firstReachOut, source: 'sociaal-netwerk', target: 'cat2Plan' }
+            ];
+
+            const unique = [];
+            pool.forEach((item) => {
+                const clean = String(item.text || '').trim();
+                if (!clean) return;
+                if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+                unique.push({ ...item, text: clean });
+            });
+
+            return unique.slice(0, 6);
+        }
+
+        function renderCrossSuggestions() {
+            const list = document.getElementById('crossSuggestListGevoelens');
+            if (!list) return;
+
+            const suggestions = buildCrossSuggestions();
+            list.innerHTML = '';
+
+            if (!suggestions.length) {
+                const empty = document.createElement('li');
+                empty.className = 'cross-suggest-item';
+                empty.innerHTML = '<span>Nog geen suggesties uit gekoppelde pagina\'s gevonden.</span>';
+                list.appendChild(empty);
+                return;
+            }
+
+            suggestions.forEach((item) => {
+                const row = document.createElement('li');
+                row.className = 'cross-suggest-item';
+
+                const text = document.createElement('span');
+                text.textContent = `${item.source}: ${item.text}`;
+
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = 'Voeg toe';
+                button.addEventListener('click', () => {
+                    const target = document.getElementById(item.target);
+                    appendUniqueLine(target, item.text);
+                    saveData(false);
+                });
+
+                row.appendChild(text);
+                row.appendChild(button);
+                list.appendChild(row);
+            });
+        }
+
+        function loadData() {
+            if (typeof iamData === 'undefined') return;
+            const data = iamData.getFormData('risico-gevoelens');
+            if (!data) return;
+            fields.forEach((field) => {
+                const el = document.getElementById(field);
+                if (el && typeof data[field] !== 'undefined') {
+                    el.value = data[field];
+                }
+            });
+            renderRiskItems(normalizeRiskItemList(data.riskItems));
+        }
+
+        function saveData(showFeedback = true) {
+            if (typeof iamData === 'undefined') return;
+            const data = collectFieldData();
+            data.riskItems = getCurrentRiskItems();
+            iamData.updateFormData('risico-gevoelens', data);
+            if (showFeedback) alert('Opgeslagen');
+        }
+
+        function exportData() {
+            if (typeof iamData === 'undefined') return;
+            saveData(false);
+            iamData.exportJSON();
+        }
+
+        function getRecommendedRoute() {
+            const urgency = document.getElementById('routeUrgency').value;
+            const focus = document.getElementById('routeFocus').value;
+
+            if (urgency === 'hoog' || focus === 'nood') {
+                return {
+                    path: './noodplan-forse-trek.htm',
+                    hint: 'Huidig adviespad: Noodplan forse trek.'
+                };
+            }
+            if (focus === 'analyse' && urgency === 'laag') {
+                return {
+                    path: './risico-denken.htm',
+                    hint: 'Huidig adviespad: Risico-denken (analyse verdiepen).'
+                };
+            }
+            if (focus === 'coping') {
+                return {
+                    path: './lastige-gevoelens.htm',
+                    hint: 'Huidig adviespad: Lastige gevoelens (copingroutes).'
+                };
+            }
+            return {
+                path: './stimulus-respons.htm',
+                hint: 'Huidig adviespad: Stimulus-respons plan.'
+            };
+        }
+
+        function updateRouteHint() {
+            const recommendation = getRecommendedRoute();
+            currentRoutePath = recommendation.path;
+            const hintEl = document.getElementById('routeHint');
+            if (hintEl) hintEl.textContent = recommendation.hint;
+        }
+
+        function openRecommendedRoute() {
+            window.location.href = currentRoutePath;
+        }
+
+        async function loadGevoelExamples() {
+            await iamOptionsLoader.loadSelectOptions({
+                selectId: 'gevoelVoorbeeldSelect',
+                url: gevoelOptionsUrl,
+                dataPath: 'gevoelens',
+                placeholder: 'Kies een voorbeeld...',
+                fallback: gevoelFallback
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            loadGevoelExamples();
+            if (window.iamTodayFocus && typeof window.iamTodayFocus.initDailyFocusWidget === 'function') {
+                window.iamTodayFocus.initDailyFocusWidget({
+                    textareaId: 'todayFocusRisico',
+                    yesterdayTextId: 'todayFocusYesterdayRisico',
+                    carryButtonId: 'todayFocusCarryRisico',
+                    newButtonId: 'todayFocusNewRisico',
+                    source: 'risico-gevoelens'
+                });
+            }
+            updateRouteHint();
+            renderCrossSuggestions();
+            renderRiskItems(getCurrentRiskItems());
+
+            const riskItemDate = document.getElementById('gevoelRiskItemDate');
+            if (riskItemDate && !riskItemDate.value) riskItemDate.value = todayISODate();
+            const riskItemPriority = document.getElementById('gevoelRiskItemPriority');
+            const riskItemPriorityValue = document.getElementById('gevoelRiskItemPriorityValue');
+            if (riskItemPriority && riskItemPriorityValue) {
+                riskItemPriority.addEventListener('input', () => {
+                    riskItemPriorityValue.textContent = String(riskItemPriority.value || '7');
+                });
+            }
+            document.getElementById('addGevoelRiskItemButton').addEventListener('click', addRiskItem);
+            document.getElementById('gevoelVoorbeeldSelect').addEventListener('change', appendExample);
+            document.getElementById('routeUrgency').addEventListener('change', updateRouteHint);
+            document.getElementById('routeFocus').addEventListener('change', updateRouteHint);
+            document.getElementById('openRecommendedRouteButton').addEventListener('click', openRecommendedRoute);
+            fields.forEach((field) => {
+                const el = document.getElementById(field);
+                if (el) el.addEventListener('blur', () => saveData(false));
+            });
+            window.addEventListener('focus', renderCrossSuggestions);
+        });
+    </script>
 </body>
 </html>

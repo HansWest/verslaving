@@ -1,0 +1,68 @@
+{
+  "gevoelens": {
+    "groups": [
+      {
+        "label": "Moeilijke gevoelens",
+        "items": [
+          {
+            "value": "Als ik me teleurgesteld voel",
+            "reaction": "Plan een korte check-in met iemand die je vertrouwt."
+          },
+          {
+            "value": "Als ik me alleen voel",
+            "reaction": "Zoek actief contact: een belletje, appje of korte afspraak."
+          },
+          {
+            "value": "Als ik me schaam",
+            "reaction": "Benoem de schaamte en kies een kleine herstelstap."
+          },
+          {
+            "value": "Als ik me verveel",
+            "reaction": "Kies direct een vooraf afgesproken activiteit van 20 minuten."
+          },
+          {
+            "value": "Als ik me juist heel euforisch voel",
+            "reaction": "Vertraag bewust en check je grenzen voordat je beslist."
+          },
+          {
+            "value": "Als ik me gespannen voel",
+            "reaction": "Doe eerst een korte ontspanningsoefening of ademritme."
+          }
+        ]
+      }
+    ]
+  },
+  "gedachten": {
+    "groups": [
+      {
+        "label": "Risico-gedachten",
+        "items": [
+          {
+            "value": "Nu moet ik wel gebruiken",
+            "reaction": "Vervang 'moet' door 'ik voel drang, maar ik kan kiezen'."
+          },
+          {
+            "value": "Een keertje kan geen kwaad",
+            "reaction": "Herinner jezelf aan je patroon: wat gebeurde eerder na die ene keer?"
+          },
+          {
+            "value": "Ik kan hier niet tegen",
+            "reaction": "Maak de taak kleiner: wat is de eerstvolgende haalbare stap?"
+          },
+          {
+            "value": "Het heeft toch geen zin",
+            "reaction": "Kies 1 korte actie die wel zin heeft in de komende 10 minuten."
+          },
+          {
+            "value": "Anderen vallen terug, maar mij gebeurt dat niet",
+            "reaction": "Check feiten: welke waarschuwingssignalen zie je nu al bij jezelf?"
+          },
+          {
+            "value": "Als ik nu niet gebruik, gaat alles mis",
+            "reaction": "Toets de gedachte: wat is het bewijs en welk alternatief is realistischer?"
+          }
+        ]
+      }
+    ]
+  }
+}

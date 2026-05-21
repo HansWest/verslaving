@@ -1,187 +1,348 @@
-<html>
-
-wat-is-mijn-ik.htm deze code is van controleerjeverslaving.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
-
-Basisgedachte:
-Gedrag op een bepaald moment is een evenwicht of beter gezegd een vectoren optelling van de verschillende richtingen die de verschillende strevingen in zich hebben.
-Inzicht in de gelaagdheid en de verschillende elementen en strevingen helpt mogelijk om daar bewuster mee om te gaan.
-(gedachte dat awareness een weg uit de verslaving is)
-
-Status: idee, nog niet publiceerbaar (ga daar graag even netjes mee om?)
--->
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>de IK die controle wenst</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wat is mijn ik?</title>
+  <meta name="description" content="Verdiepingsmodule over identiteit, regie en verslaving binnen IAM." />
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6b8f;
+      --page-accent: #c96d4f;
+      --page-ok: #5a8840;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="controleerjeverslaving(.nl) is een product van PraatmetHans(.nl) om mensen te helpen om zelfstandig aan de slag te laten gaan met hun verslaving of afhankelijkheid middels verantwoorde formulieren." />
-<meta name="keywords" content="huisarts, poh, verslaving, addiction, zelfstandig, persoonlijk, formulieren, gesprek, keuze, controleerjeverslaving, PraatmetHans.nl" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 107, 143, 0.14), transparent 30%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
 
+    .page-shell { max-width: 960px; margin: 0 auto; }
 
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .context-card,
+    .question-card,
+    .route-card,
+    .message {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
 
-function hulpscherm()
-{
-hulp_scherm(290,'Genieten in de toekomst', '@@@@.')
-}
+    .context-card { border-left: 4px solid var(--page-main); }
+    .question-card { border-top: 4px solid var(--page-main); }
+    .route-card { border-top: 4px solid #5b744a; }
 
-</script>
+    .grid-two { display: grid; gap: 1rem; }
+    @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .subtle-help {
+      margin: 0.35rem 0 0.6rem;
+      color: #4d6270;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .message { display: none; border-left: 4px solid var(--page-ok); }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+
+    .action-bar button,
+    .action-bar a {
+      flex: 1 1 180px;
+      text-decoration: none;
+    }
+
+    .quote-block {
+      margin-top: 0.9rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 10px;
+      background: #f2f7fa;
+      border: 1px solid #d5e5ef;
+      color: #2a4a5f;
+    }
+
+    .cross-hint-block {
+      margin: 0.65rem 0 0.3rem;
+      padding: 0.45rem 0.7rem;
+      background: #eef5fa;
+      border-radius: 8px;
+      border: 1px solid #cde0ec;
+    }
+    .cross-hint-block summary {
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--page-main);
+      list-style: none;
+    }
+    .cross-hint-block summary::-webkit-details-marker { display: none; }
+  </style>
+  <script src="../js/themeMode.js"></script>
 </head>
 <body>
-<div class="container">
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./wat-is-mijn-identiteit.htm">Identiteit (Petzold pilaren)</a>
+          <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
+          <a href="./waardigheid.htm">Waardigheid</a>
+          <a href="./levensdoelen-stellen.htm">Levensdoelen</a>
+        </div>
+        <h1>Wat is mijn ik?</h1>
+        <p>Deze pagina gaat over regie: hoe je ik leert surfen op je zelf, in plaats van vechten tegen golven die toch terugkomen.</p>
+      </header>
 
-  ga('create', 'UA-42375957-1', 'controleerjeverslaving.nl');
-  ga('send', 'pageview');
+      <div id="message" class="message"></div>
 
-</script>
-</head>
-<body>
-<div class="shadow"><div class="content">
-<script language="javascript">
- 
-writelogo();
--->
-</script>
-<div class="praatmethansheader">
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader"> Onderzoek van de &quot;ik&quot; die controle wenst </h1>
-</div>
-<div class="rechtsitalic"> Voor een aantal mensen is dit oninteressant, voor anderen is dit wezenlijk voor verandering. 
+      <details class="context-card" style="margin-top:1rem;">
+        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:0.5rem; font-size:1.1rem; font-weight:700; color:var(--page-main);">
+          <span>⚙ Mijn 'ik' en mijn 'zelf': de theorie in het kort</span>
+        </summary>
+        <div style="margin-top:0.75rem;">
+          <p><strong>'Ik' en 'zelf' zijn niet hetzelfde.</strong> Het <em>ik</em> is de denkende, redenerende stem — de neo-cortex die plannen maakt en beslissingen neemt. Maar daaronder liggen twee oudere lagen:</p>
+          <ul style="margin:0.5rem 0 0.75rem; padding-left:1.2rem; line-height:1.65;">
+            <li><strong>Emotioneel zelf</strong> (paleo-cortex): het gevoelsleven, verlangens, herinneringen met lading, verbinding met anderen.</li>
+            <li><strong>Automatisch zelf</strong> (archi-cortex): driften, gewoonten, trek, slaap, spanning — het meest oeroude deel.</li>
+          </ul>
+          <p>Bij verslaving neemt het automatische zelf steeds vaker het stuur over, voordat het ik ook maar een gedachte heeft kunnen vormen. <em>Willskracht</em> (ik-kracht) is dan een te zwak instrument — het gevecht is al verloren voor het begint.</p>
+          <p>Wat beter werkt: leren <strong>surfen op het gevoel en de automatische reacties</strong> in plaats van ze te bestrijden. Dat vraagt dat het <em>ik</em> samenwerkt met het <em>zelf</em> in plaats van er tegenin te gaan.</p>
+          <p>Die samenwerking heeft een richting nodig: een <strong>doel</strong> dat groter is dan het moment. Precies dat is wat een <em>identiteit</em> doet.</p>
+          <p class="subtle-help" style="margin-top:0.6rem;">In de theorie van <strong>Hilarion Petzold</strong> is identiteit als het dak van een Griekse tempel: het steunt op een aantal <em>pilaren</em> die samen jouw zelfbeeld overeind houden. Als meerdere pilaren beschadigd raken — door gebruik, isolatie, verlies van werk of betekenis — gaat het dak scheef. Dit formulier helpt je die pilaren te bekijken.</p>
+        </div>
+      </details>
 
-: 15 - 25 minuten</div>
+      <section class="context-card">
+        <h2>Wanneer helpt deze pagina?</h2>
+        <p class="subtle-help">Wel: als je stabiel genoeg bent om te reflecteren. Niet: als je in crisis bent of net hebt gebruikt. Kies dan eerst noodroutes.</p>
+        <div class="action-bar" style="margin-top:0.5rem;">
+          <a class="button-secondary" href="./noodplan-forse-trek.htm">Noodplan forse trek</a>
+          <a class="button-secondary" href="./plan-bij-uitglijden.htm">Plan bij uitglijden</a>
+        </div>
+      </section>
 
-<h1>Wat is mijn ik?</h1>
-<div class="printhide">
+      <section class="question-card">
+        <h2>Kernreflectie</h2>
+        <p>Ben ik alleen nog maar mijn verslaving, of ben ik meer dan dat? Je ik hoeft je zelf niet te onderdrukken; je ik kan leren lezen, reguleren en kiezen.</p>
+        <div class="quote-block">
+          Als gebruik de enige deur naar genot is geworden, dan is niet je 'ik' die is mislukt, maar je systeem vernauwd. Deze pagina helpt die vernauwing weer breder te maken.
+        </div>
+      </section>
 
-<div class="rechtsitalic">Ben ik alleen nog maar mijn verslaving? Of ben ik meer?</div>
+      <section class="question-card">
+        <h2>Ik leert surfen op het zelf</h2>
+        <p class="subtle-help">Je ik hoeft het zelf niet te bevechten, maar te leren lezen. De <strong>golf</strong> is wat er in de wereld gebeurt. Het <strong>doel</strong> ligt buiten mij, maar ik kies intern mijn richting op basis van haalbaarheid. De <strong>automatische hersenstamreactie</strong> en de <strong>emotionele beweging</strong> ontstaan in mijn surfboard (mijn zelf).</p>
+        <div class="quote-block" style="margin-top:0.6rem;">
+          1. Golf opmerken: wat gebeurt er buiten mij? <br />
+          2. Golf benoemen + boardreactie benoemen: automatische reactie en emotionele beweging zitten niet in de golf, maar in mijn surfboard. <br />
+          3. Interne koers kiezen: wat is nu haalbaar voor mij? verdragen, een omweg kiezen, of richting vasthouden. <br />
+          4. Op de golf sturen: ik blijf staan op mijn board en maak er het beste van.
+        </div>
+        <div class="grid-two">
+          <div class="form-group">
+            <label for="waveTriggerMap">Welke golven in de buitenwereld lokken bij mij board-reacties uit?</label>
+            <textarea id="waveTriggerMap" rows="4" placeholder="Bijv. conflict op werk -> hersenstamreactie: middel voelt 'belangrijk' -> emotionele golf: paniek/schaamte -> impuls: eropaf."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="surfSkills">Welke surfvaardigheden helpen mij om op de golf te sturen?</label>
+            <textarea id="surfSkills" rows="4" placeholder="Bijv. pauzeren, golf benoemen, automatische reactie labelen, emotie labelen, 90 sec reguleren, richtingkeuze maken."></textarea>
+          </div>
+        </div>
+        <div class="grid-two">
+          <div class="form-group">
+            <label for="boardEmotionalProfile">Wat voor surfboard heb ik (emotioneel gezien)?</label>
+            <textarea id="boardEmotionalProfile" rows="4" placeholder="Reageer ik heftig op kleine golven? Reageer ik op oude golven alsof ze nu gebeuren? Wanneer ben ik emotioneel niet in het hier-en-nu?"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="boardBiologyProfile">Wat voor surfboard heb ik (automatische reacties in de biologie)?</label>
+            <textarea id="boardBiologyProfile" rows="4" placeholder="Wat doet mijn lijf automatisch bij spanning? Versnelt het, verstijft het, zoekt het direct middel? Welke biologische reflexen sturen mij weg van keuzevrijheid?"></textarea>
+          </div>
+        </div>
+        <div class="grid-two">
+          <div class="form-group">
+            <label for="upperCost">Hoe leren uppers mij af om te surfen?</label>
+            <textarea id="upperCost" rows="4" placeholder="Bijv. ik maak met uppers wat er niet is, voel schijn-belangrijkheid, raak board-signalen kwijt en stuur op vervormde urgentie."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="downerCost">Hoe leren downers mij af om te surfen?</label>
+            <textarea id="downerCost" rows="4" placeholder="Bijv. ik maak met downers weg wat er wel is, demp emoties, verlies nuance en oefen niet meer met echt verdragen/sturen."></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="surfPlan">Wat is mijn oefenplan: verdragen, omweg kiezen of richting vasthouden?</label>
+          <textarea id="surfPlan" rows="4" placeholder="Bijv. dagelijks 1 golf loggen: gebeurtenis / boardreactie / haalbare keuze. Daarna: verdragen, omweg of richting vasthouden. 3x per week 90 sec staan op mijn board zonder middel."></textarea>
+        </div>
+      </section>
 
-<h1>...en wat is een "ik" dan?</h1> 
-Het is soms lastig om te bedenken en na te voelen wat er nou precies gebeurt. Sommige mensen vinden het prettig om daar over na te denken in termen als "ik", "zelf" en andere mensen denken er liever over na in woorden als "identiteit"@@@, maar daar heb ik het elders over.
+      <form id="ikForm">
+        <section class="route-card">
+          <h2>Klaar om toe te passen?</h2>
+          <p class="subtle-help">Kies je vervolgstap: verder verdiepen of meteen omzetten in concrete actie.</p>
+          <div class="action-bar">
+            <a class="button-secondary" href="./levensdoelen-stellen.htm">Verder verdiepen</a>
+            <a class="button-secondary" href="./voor-nadelen-balansen.htm">Meteen naar keuzebalans</a>
+            <button type="button" class="button-primary" id="faseC_nuDoen_btn" style="display:none;">
+              Aanbevolen: <span id="faseC_recommendation">Starten</span>
+            </button>
+          </div>
+        </section>
 
-Als we zeggen dat jij zelf soms trek heeft on het middel dat zo lastig te controleren is, als het ware wordt jouw zelf door de verslaving soms ontvoerd wordt. Dat maakt dat het dus vervolgens aan jouw "ik" is om "je zelf" te controleren.
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-Wat is dan jouw "ik"?
-Is jouw "ik" hetzelfde als jouw gevoel? Of is jouw ik meer dan jouw gevoel? Gevoelens kunnen soms behoorlijk veranderen. verandert jouw ik dan mee?
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'wat-is-mijn-ik';
+    const fields = [
+      'waveTriggerMap', 'surfSkills', 'boardEmotionalProfile', 'boardBiologyProfile', 'upperCost', 'downerCost', 'surfPlan'
+    ];
 
-Is jouw "ik" hetzelfde als jouw gedachten? Of is jouw ik meer dan jouw gedachten? Gedachten zijn natuurlijk wel bepalend voor controle, Maar dat je kop jou tot nu toe niet heeft tegengehouden zegt misschien iets?
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
 
-Is jouw "ik" hetzelfde als jouw lichaam? Of is jouw ik meer dan jouw lijf?
-Welke rimpels oefen jij door jouw dagelijks leven? </div>
+    function loadData() {
+      const saved = iamData.getFormData(formKey) || {};
+      if (!saved.boardEmotionalProfile && saved.boardProfile) {
+        saved.boardEmotionalProfile = saved.boardProfile;
+      }
+      if (!saved.boardBiologyProfile && saved.boardProfile) {
+        saved.boardBiologyProfile = saved.boardProfile;
+      }
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.value = saved[id] || '';
+      });
+    }
 
-    <form name="evenwicht" method="post" action="">
-      <input type="text" name="links" style="text-align:right; font-size:11px; font-weight:bolder; color:#CC0066; background:#DDDDDD; border:none; font-stretch:extra-condensed" disabled="disabled" value="|||||||||||" />
-    |
-    <input type="text" name="rechts" style="text-align:left; font-size:11px; color:#009933; background:#DDDDDD; border:none; font-stretch:extra-expanded" disabled="disabled" value="||||||" />
-    </form>
-    <p>  Maar als gebruik de enige deur is geworden in de richting van genot, dan is
-      er wel een probleem ontstaan in een leven.</p>
-    <p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+    function collectData() {
+      const data = {};
+      fields.forEach((id) => {
+        const el = document.getElementById(id);
+        data[id] = el ? el.value.trim() : '';
+      });
+      data.boardProfile = [data.boardEmotionalProfile, data.boardBiologyProfile].filter(Boolean).join(' | ');
+      return data;
+    }
 
-<p></p><form name="identiteit">
+    function saveData(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectData());
+        if (feedback) showMessage('Wat-is-mijn-ik opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
 
-hulp voor "dat soort mensen" 09002727
+    function exportData() {
+      try {
+        saveData(false);
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geëxporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
 
+    (function setupRecommendation() {
+      const btn = document.getElementById('faseC_nuDoen_btn');
+      const rec = document.getElementById('faseC_recommendation');
+      if (!btn || !rec) return;
 
+      const lastPage = sessionStorage.getItem('lastPage') || '';
+      const userContext = sessionStorage.getItem('userContext') || 'reflection';
 
-<blockquote>identiteit: Wat zie ik als ik in de spiegel kijk, wat meen ik dat anderen zien als zij naar mij kijken?</blockquote>
+      let recommendation = {
+        page: './levensdoelen-stellen.htm',
+        text: 'Levensdoelen stellen'
+      };
 
-<h1>lichamelijkheid</h1>
-<table>
-<tr><td colspan="2">
-In hoeverre ben ik mijn lichaam? In hoeverre ben ik mijn vermogen om te bewegen, om te genieten, van aanrakingen, van maaltijden, van sport of beweging?</td></tr>
-<tr><td>Wat zie ik als ik naar mijzelf kijk?</td>
-<td>Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat gebruik mijn gezondheid heeft aangetast, of doordat ik afgeleerd heb om op andere manieren te genieten?<br />op dit moment(!) is de draagkracht van deze pilaar nog select name="lichamelijkheidkracht" 100% van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dat te versterken?</td></tr>
-</table>
+      if (lastPage.includes('noodplan') || lastPage.includes('trek') || userContext === 'crisis') {
+        recommendation = {
+          page: './plan-bij-uitglijden.htm',
+          text: 'Plan bij uitglijden'
+        };
+      } else if (lastPage.includes('plan') || userContext === 'planning') {
+        recommendation = {
+          page: './voor-nadelen-balansen.htm',
+          text: 'Voor- en nadelen'
+        };
+      }
 
-<h1>seksualiteit</h1>
-<table>
-<tr><td colspan="2">
-Ben ik hetero, homo, bi, kinky? Ben ik überhaupt niet zo seksueel of juist eigenlijk heel erg?</td></tr>
-<tr><td>Wat zie ik als ik naar mijzelf kijk?</td>
-<td>Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik miijn seksualiteit alleen nog maar onder invloed uitleef? Of omdat ik het niet meer uitleef omdat ik onder invloed ben?<br />op dit moment(!) is de draagkracht van deze pilaar nog select name="seksualiteitkracht" 100% van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?</td></tr>
-</table>
+      rec.textContent = recommendation.text;
+      btn.style.display = 'inline-flex';
+      btn.addEventListener('click', () => {
+        sessionStorage.setItem('lastPage', 'wat-is-mijn-ik.htm');
+        window.location.href = recommendation.page;
+      });
 
-<h1>sociaal netwerk</h1>
-<table>
-<tr><td colspan="2">
-Heb ik veel vrienden of weinig? Steunt mijn familie mij of niet?</td></tr>
-<tr><td>Wat zie ik als ik naar mijzelf kijk?</td>
-<td>Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik eigenlijk alleen nog maar mensen met verslaving in mijn netwerk heb? Of omdat ik alleen nog maar met mensen praat als er gebruikt is? Of juist dat mensen niet meer met mij willen praten omdat zij denken dat ik onder invloed ben?<br />op dit moment(!) is de draagkracht van deze pilaar nog select name="sociaalkracht" 100% van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?</td></tr>
-</table>
+      sessionStorage.setItem('lastPage', 'wat-is-mijn-ik.htm');
+    })();
 
-<h1>arbeid en prestatie</h1>
-<table>
-<tr><td colspan="2">
-Heb ik een aardige carrière? Krijg ik een beetje waardering voor wat ik doe (betaald of niet)? Of ben ik bijvoorbeeld een opleiding/studie aan het doen waar ik iets mee ga kunnen doen?</td></tr>
-<tr><td>Wat zie ik als ik naar mijzelf kijk?</td>
-<td>Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik mijn werk aan het kwijtraken ben door gebruik? Of omdat ik mijn kop niet zo goed meer zo goed bij mijn opleiding kan houden?<br />op dit moment(!) is de draagkracht van deze pilaar nog select name="sociaalkracht" 100% van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?</td></tr>
-</table>
-
-<h1>normen en waarden / spiritualiteit</h1>
-<table>
-<tr><td colspan="2">
-Heb ik normen en waarden waar ik iets aan heb?</td></tr>
-<tr><td>Wat zie ik als ik naar mijzelf kijk?</td>
-<td>Wat laat ik anderen (daarvan) zien</td></tr>
-<tr><td colspan="2">Als ik eerlijk ben voor mijzelf, in hoeverre heeft een verslavingsproces de steunkracht van deze pilaar aangetast? Bijvoorbeeld doordat ik eigenlijk alleen nog maar mensen met verslaving in mijn netwerk heb? Of omdat ik alleen nog maar met mensen praat als er gebruikt is? Of juist dat mensen niet meer met mij willen praten omdat zij denken dat ik onder invloed ben?<br />op dit moment(!) is de draagkracht van deze pilaar nog select name="sociaalkracht" 100% van wat het had kunnen zijn.<br />
-wat kan ik DOEN om dit gebied in mijn leven te versterken?</td></tr>
-</table>
-
-
-</form><hr class="formhr" />
-<p>&nbsp;</p>
-<p><i>identiteit heeft altijd twee kanten: waar identificeer ik mijzelf mee, wat is de identificatie van anderen.</i>
-</p><p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
-
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div>
-</div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+      document.getElementById('saveButton').addEventListener('click', () => saveData(true));
+      document.getElementById('exportButton').addEventListener('click', exportData);
+      document.getElementById('ikForm').addEventListener('input', () => saveData(false));
+    });
+  </script>
 </body>
 </html>

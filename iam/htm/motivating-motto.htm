@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motiverend Motto - IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #173249;
+      --main: #466d8c;
+      --accent: #7a6630;
+      --ok: #3b7f45;
+      --warn: #a2472a;
+      --soft: #f5f0e4;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(63, 122, 161, 0.16), transparent 36%),
+        linear-gradient(180deg, #f8f3ec 0%, #edf4f7 100%);
+      color: var(--ink);
+    }
+    .page-shell {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .hero {
+      margin-top: 1rem;
+      background: linear-gradient(145deg, #6a7a44 0%, var(--main) 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.2rem;
+      box-shadow: 0 14px 30px rgba(23, 50, 73, 0.18);
+    }
+    .top-links {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 0.45rem 0.82rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 1.05rem;
+      margin-top: 1rem;
+      box-shadow: 0 9px 22px rgba(23, 50, 73, 0.09);
+    }
+    .motto-preview {
+      border-left: 5px solid var(--accent);
+      background: linear-gradient(130deg, #fffaf0 0%, var(--soft) 100%);
+    }
+    .motto-preview h2 {
+      margin-top: 0;
+    }
+    .motto-preview p {
+      margin: 0.5rem 0 0;
+    }
+    .motto-big {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #3f3520;
+      line-height: 1.5;
+    }
+    .motto-meta {
+      font-size: 0.9rem;
+      color: #5f5541;
+    }
+    .preview-actions {
+      margin-top: 0.7rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .edit-mode-note {
+      margin: 0.6rem 0 0;
+      color: #35556e;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .form-grid {
+      display: grid;
+      gap: 0.8rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .form-group {
+      margin: 0;
+    }
+    textarea,
+    input[type="date"] {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      padding: 0.6rem 0.75rem;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+    button {
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.55rem 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .button-primary {
+      background: var(--main);
+      border-color: var(--main);
+      color: #fff;
+    }
+    .button-soft {
+      background: #f6f9fc;
+    }
+    .history-list {
+      list-style: none;
+      margin: 0.7rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.65rem;
+    }
+    .history-item {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      border-radius: 12px;
+      background: #fbfdfe;
+      padding: 0.75rem 0.85rem;
+    }
+    .history-item.active {
+      border-color: rgba(59, 127, 69, 0.45);
+      background: #eef8ef;
+    }
+    .history-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      margin-bottom: 0.35rem;
+    }
+    .status-chip {
+      border-radius: 999px;
+      padding: 0.2rem 0.62rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: #e9f1f7;
+      color: #285272;
+    }
+    .status-chip.active {
+      background: #dff2e2;
+      color: #24562a;
+    }
+    .status-chip.expired {
+      background: #fff1ea;
+      color: #8a341f;
+    }
+    .history-text {
+      margin: 0;
+      line-height: 1.5;
+      color: #2f4558;
+      font-weight: 600;
+    }
+    .history-meta {
+      margin: 0.4rem 0 0;
+      color: #4d6270;
+      font-size: 0.86rem;
+    }
+    .message {
+      display: none;
+      margin-top: 0.8rem;
+      border-radius: 10px;
+      padding: 0.72rem 0.9rem;
+      background: #eef8ee;
+      border-left: 4px solid var(--ok);
+      color: #204f22;
+    }
+    .message.show {
+      display: block;
+    }
+    .message.error {
+      background: #fff3f0;
+      border-left-color: var(--warn);
+      color: #7a2b18;
+    }
+    .label-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .info-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.1rem;
+      height: 1.1rem;
+      min-height: 1.1rem;
+      border: 1px solid rgba(23, 50, 73, 0.35);
+      border-radius: 50%;
+      background: #f6f9fc;
+      color: #35556e;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .info-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .info-modal-backdrop.open {
+      display: flex;
+    }
+    .info-modal {
+      width: min(560px, 100%);
+      background: #fff;
+      border-radius: 14px;
+      border-top: 6px solid var(--accent);
+      padding: 1rem 1.05rem;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.24);
+      position: relative;
+    }
+    .info-modal h3 {
+      margin: 0 0 0.6rem;
+      color: #463a1e;
+      font-size: 1rem;
+    }
+    .info-modal p {
+      margin: 0;
+      color: #3b4550;
+      line-height: 1.55;
+    }
+    .info-modal-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.65rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      min-height: 0;
+      padding: 0;
+      color: #6a5d44;
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+  </style>
+  <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <header class="hero">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./dagelijks-gevolg.htm">Naar dagkaart</a>
+        </div>
+        <h1>Motiverend motto</h1>
+        <p>Leg een korte zin vast die jou motiveert. Je kunt meerdere motto's bewaren met begindatum en uiterste verkoopdatum.</p>
+      </header>
+
+      <section class="card motto-preview" aria-labelledby="activeMottoTitle">
+        <h2 id="activeMottoTitle">Actief motto nu</h2>
+        <p id="activeMottoText" class="motto-big">Nog geen actief motto ingesteld.</p>
+        <p id="activeMottoMeta" class="motto-meta">Je actieve motto wordt automatisch getoond op index en dagkaart.</p>
+        <div class="preview-actions">
+          <button type="button" class="button-soft" id="editActiveMottoButton">Bewerk actief motto</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Nieuw motto toevoegen</h2>
+        <p>Houd het kort en persoonlijk, zodat het direct bruikbaar is op moeilijke momenten.</p>
+        <div class="form-group">
+          <label for="mottoText">Motto</label>
+          <textarea id="mottoText" placeholder="Bijvoorbeeld: Ik kies voor rust nu, niet voor spijt straks."></textarea>
+        </div>
+        <div class="form-grid" style="margin-top:0.8rem;">
+          <div class="form-group">
+            <label for="mottoStartDate">Begindatum (optioneel)</label>
+            <input id="mottoStartDate" type="date" />
+          </div>
+          <div class="form-group">
+            <label for="mottoEndDate" class="label-inline">Uiterste verkoopdatum (optioneel)
+              <button
+                type="button"
+                class="info-trigger"
+                id="verkoopInfoButton"
+                aria-label="Uitleg over uiterste verkoopdatum"
+                title="Uitleg over uiterste verkoopdatum"
+              >!</button>
+            </label>
+            <input id="mottoEndDate" type="date" />
+          </div>
+        </div>
+        <div class="action-row">
+          <button type="button" class="button-primary" id="saveMottoButton">Motto opslaan</button>
+          <button type="button" class="button-soft" id="startTodayButton">Begindatum = vandaag</button>
+          <button type="button" class="button-soft" id="clearFormButton">Leegmaken</button>
+        </div>
+        <p id="editModeNote" class="edit-mode-note" style="display:none;">Je bewerkt nu het actieve motto. Klik op Leegmaken om bewerken te annuleren.</p>
+      </section>
+
+      <section class="card">
+        <h2>Opgeslagen motto's</h2>
+        <p>Oude motto's blijven bewaard zodat je kunt terugkijken wat eerder heeft geholpen.</p>
+        <ul class="history-list" id="mottoHistoryList">
+          <li class="history-item">Nog geen motto's opgeslagen.</li>
+        </ul>
+      </section>
+
+      <div id="message" class="message"></div>
+
+      <div class="info-modal-backdrop" id="verkoopInfoModal" aria-hidden="true">
+        <div class="info-modal" role="dialog" aria-modal="true" aria-labelledby="verkoopInfoTitle">
+          <button type="button" class="info-modal-close" id="closeVerkoopInfoButton" aria-label="Sluiten">&times;</button>
+          <h3 id="verkoopInfoTitle">Wat betekent uiterste verkoopdatum?</h3>
+          <p>
+            Dit is de datum waarop dit motto meestal gevoelsmatig minder urgent of "saai" wordt.
+            Vanaf dan heeft het vaak minder impact, en kun je het als verlopen zien. Tegelijk kunnen oude
+            schijnoplossingen zich dan nog steeds aan je opdringen alsof ze werken: je "verkoopt" ze als het ware
+            opnieuw aan jezelf. Gebruik deze datum als signaal om je motto bewust te vernieuwen.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const MOTTO_META_KEY = 'motivatingMotto';
+    let editingMottoId = null;
+
+    function todayDateKey() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function createMottoId() {
+      return `${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+    }
+
+    function showMessage(text, isError = false) {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.classList.toggle('error', isError);
+      el.classList.add('show');
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => {
+        el.classList.remove('show');
+      }, 3200);
+    }
+
+    function normalizeMottoMeta(raw) {
+      if (typeof raw === 'string') {
+        const text = raw.trim();
+        return {
+          items: text ? [{
+            id: createMottoId(),
+            text,
+            startDate: '',
+            endDate: '',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          }] : []
+        };
+      }
+
+      if (!raw || typeof raw !== 'object') {
+        return { items: [] };
+      }
+
+      const items = Array.isArray(raw.items) ? raw.items.slice() : [];
+      if (!items.length && typeof raw.text === 'string' && raw.text.trim()) {
+        items.push({
+          id: createMottoId(),
+          text: raw.text.trim(),
+          startDate: '',
+          endDate: '',
+          createdAt: raw.updatedAt || new Date().toISOString(),
+          updatedAt: raw.updatedAt || new Date().toISOString()
+        });
+      }
+
+      return {
+        ...raw,
+        items: items
+          .filter((item) => item && typeof item.text === 'string' && item.text.trim())
+          .map((item) => ({
+            id: item.id || createMottoId(),
+            text: item.text.trim(),
+            startDate: item.startDate || '',
+            endDate: item.endDate || '',
+            createdAt: item.createdAt || new Date().toISOString(),
+            updatedAt: item.updatedAt || item.createdAt || new Date().toISOString()
+          }))
+      };
+    }
+
+    function getMottoMeta() {
+      const raw = iamData.getAppMeta ? iamData.getAppMeta(MOTTO_META_KEY) : null;
+      return normalizeMottoMeta(raw);
+    }
+
+    function pickActiveMotto(items) {
+      const today = todayDateKey();
+      return items
+        .filter((item) => {
+          const startOk = !item.startDate || item.startDate <= today;
+          const endOk = !item.endDate || today <= item.endDate;
+          return startOk && endOk;
+        })
+        .sort((a, b) => {
+          const left = (a.startDate || '') + '|' + (a.createdAt || '');
+          const right = (b.startDate || '') + '|' + (b.createdAt || '');
+          return right.localeCompare(left);
+        })[0] || null;
+    }
+
+    function getMottoStatus(item) {
+      const today = todayDateKey();
+      if (item.endDate && item.endDate < today) return { key: 'expired', label: 'Verlopen' };
+      if (item.startDate && item.startDate > today) return { key: 'scheduled', label: 'Gepland' };
+      return { key: 'active', label: 'Actief' };
+    }
+
+    function formatRange(item) {
+      const startText = item.startDate || 'nu';
+      const endText = item.endDate || 'onbepaald';
+      return `Geldig van ${startText} t/m ${endText}`;
+    }
+
+    function persistMottoMeta(meta) {
+      const active = pickActiveMotto(meta.items || []);
+      const payload = {
+        items: meta.items || [],
+        text: active ? active.text : '',
+        updatedAt: new Date().toISOString(),
+        lastUpdated: new Date().toISOString()
+      };
+      iamData.updateAppMeta(MOTTO_META_KEY, payload);
+    }
+
+    function renderActiveMotto() {
+      const textEl = document.getElementById('activeMottoText');
+      const metaEl = document.getElementById('activeMottoMeta');
+      const editButton = document.getElementById('editActiveMottoButton');
+      if (!textEl || !metaEl) return;
+
+      const meta = getMottoMeta();
+      const active = pickActiveMotto(meta.items || []);
+
+      if (!active) {
+        textEl.textContent = 'Nog geen actief motto ingesteld.';
+        metaEl.textContent = 'Tip: voeg een motto toe met begindatum en eventueel een verkoopdatum.';
+        if (editButton) editButton.disabled = true;
+        return;
+      }
+
+      textEl.textContent = `"${active.text}"`;
+      metaEl.textContent = `${formatRange(active)}.`;
+      if (editButton) editButton.disabled = false;
+    }
+
+    function enterEditMode(item) {
+      if (!item) return;
+      editingMottoId = item.id;
+      document.getElementById('mottoText').value = item.text || '';
+      document.getElementById('mottoStartDate').value = item.startDate || '';
+      document.getElementById('mottoEndDate').value = item.endDate || '';
+      document.getElementById('saveMottoButton').textContent = 'Wijziging opslaan';
+      document.getElementById('clearFormButton').textContent = 'Bewerken annuleren';
+      document.getElementById('editModeNote').style.display = 'block';
+    }
+
+    function exitEditMode() {
+      editingMottoId = null;
+      document.getElementById('saveMottoButton').textContent = 'Motto opslaan';
+      document.getElementById('clearFormButton').textContent = 'Leegmaken';
+      document.getElementById('editModeNote').style.display = 'none';
+    }
+
+    function renderMottoHistory() {
+      const list = document.getElementById('mottoHistoryList');
+      if (!list) return;
+
+      const meta = getMottoMeta();
+      const items = (meta.items || []).slice().sort((a, b) => {
+        const left = (a.createdAt || '') + '|' + (a.startDate || '');
+        const right = (b.createdAt || '') + '|' + (b.startDate || '');
+        return right.localeCompare(left);
+      });
+
+      list.innerHTML = '';
+      if (!items.length) {
+        list.innerHTML = '<li class="history-item">Nog geen motto\'s opgeslagen.</li>';
+        return;
+      }
+
+      const active = pickActiveMotto(items);
+      items.forEach((item) => {
+        const status = getMottoStatus(item);
+        const li = document.createElement('li');
+        li.className = `history-item${active && active.id === item.id ? ' active' : ''}`;
+
+        const top = document.createElement('div');
+        top.className = 'history-top';
+
+        const statusChip = document.createElement('span');
+        statusChip.className = `status-chip ${status.key}`;
+        statusChip.textContent = status.label;
+
+        const range = document.createElement('span');
+        range.className = 'history-meta';
+        range.textContent = formatRange(item);
+
+        top.appendChild(statusChip);
+        top.appendChild(range);
+
+        const text = document.createElement('p');
+        text.className = 'history-text';
+        text.textContent = `"${item.text}"`;
+
+        const metaLine = document.createElement('p');
+        metaLine.className = 'history-meta';
+        const updated = item.updatedAt ? new Date(item.updatedAt) : null;
+        metaLine.textContent = updated && !Number.isNaN(updated.getTime())
+          ? `Laatst aangepast: ${updated.toLocaleString('nl-NL')}`
+          : 'Laatst aangepast: onbekend';
+
+        li.appendChild(top);
+        li.appendChild(text);
+        li.appendChild(metaLine);
+        list.appendChild(li);
+      });
+    }
+
+    function clearForm() {
+      document.getElementById('mottoText').value = '';
+      document.getElementById('mottoStartDate').value = '';
+      document.getElementById('mottoEndDate').value = '';
+      exitEditMode();
+    }
+
+    function saveMotto() {
+      const text = document.getElementById('mottoText').value.trim();
+      const startDate = document.getElementById('mottoStartDate').value;
+      const endDate = document.getElementById('mottoEndDate').value;
+
+      if (!text) {
+        showMessage('Vul eerst een motto in.', true);
+        return;
+      }
+
+      if (startDate && endDate && endDate < startDate) {
+        showMessage('De verkoopdatum kan niet voor de begindatum liggen.', true);
+        return;
+      }
+
+      const nowIso = new Date().toISOString();
+      const meta = getMottoMeta();
+      const items = Array.isArray(meta.items) ? meta.items.slice() : [];
+      if (editingMottoId) {
+        const idx = items.findIndex((item) => item.id === editingMottoId);
+        if (idx >= 0) {
+          items[idx] = {
+            ...items[idx],
+            text,
+            startDate: startDate || '',
+            endDate: endDate || '',
+            updatedAt: nowIso
+          };
+        } else {
+          items.push({
+            id: createMottoId(),
+            text,
+            startDate: startDate || '',
+            endDate: endDate || '',
+            createdAt: nowIso,
+            updatedAt: nowIso
+          });
+        }
+      } else {
+        items.push({
+          id: createMottoId(),
+          text,
+          startDate: startDate || '',
+          endDate: endDate || '',
+          createdAt: nowIso,
+          updatedAt: nowIso
+        });
+      }
+
+      persistMottoMeta({ ...meta, items });
+      const wasEditing = Boolean(editingMottoId);
+      clearForm();
+      renderActiveMotto();
+      renderMottoHistory();
+      showMessage(wasEditing ? 'Actief motto bijgewerkt.' : 'Motto opgeslagen.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const meta = getMottoMeta();
+      if ((meta.items || []).length) {
+        persistMottoMeta(meta);
+      }
+
+      renderActiveMotto();
+      renderMottoHistory();
+
+      document.getElementById('saveMottoButton').addEventListener('click', saveMotto);
+      document.getElementById('editActiveMottoButton').addEventListener('click', () => {
+        const active = pickActiveMotto(getMottoMeta().items || []);
+        if (!active) {
+          showMessage('Er is nog geen actief motto om te bewerken.', true);
+          return;
+        }
+        enterEditMode(active);
+        showMessage('Actief motto in bewerkmodus gezet.');
+      });
+      document.getElementById('startTodayButton').addEventListener('click', () => {
+        document.getElementById('mottoStartDate').value = todayDateKey();
+      });
+      document.getElementById('clearFormButton').addEventListener('click', clearForm);
+
+      const modal = document.getElementById('verkoopInfoModal');
+      const openBtn = document.getElementById('verkoopInfoButton');
+      const closeBtn = document.getElementById('closeVerkoopInfoButton');
+      if (modal && openBtn && closeBtn) {
+        const openModal = () => {
+          modal.classList.add('open');
+          modal.setAttribute('aria-hidden', 'false');
+        };
+        const closeModal = () => {
+          modal.classList.remove('open');
+          modal.setAttribute('aria-hidden', 'true');
+        };
+
+        openBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') closeModal();
+        });
+      }
+    });
+  </script>
+</body>
+</html>

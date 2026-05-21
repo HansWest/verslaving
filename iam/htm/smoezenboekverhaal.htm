@@ -1,127 +1,330 @@
-<html>
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>Smoezenboek</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smoezenboek</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --page-ink: #1f3849;
+      --page-main: #2f6b8f;
+      --page-accent: #c96d4f;
+      --page-ok: #5a8840;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(47, 107, 143, 0.14), transparent 30%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--page-ink);
+    }
 
+    .page-shell { max-width: 980px; margin: 0 auto; }
 
+    .page-header {
+      background: linear-gradient(140deg, var(--page-main) 0%, #5b744a 100%);
+      color: #fff;
+      border-radius: 18px;
+      padding: 1.4rem;
+      box-shadow: 0 14px 32px rgba(31, 56, 73, 0.16);
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
 
-function hulpscherm()
-{
-hulp_scherm(320,'smoesjes voor jezelf','De laatste fase van trek kenmerkt zich meestal doordat het denken wordt meegevoerd door de trek.<br/>'+'Dan ontstaan meestal de smoesjes die je op de &eacute;&eacute;n-of-andere manier achteraf altijd beter herkent als smoes dan op dat moment. '+'Maar omdat je op dergelijke momenten meestal niet zo slim meer bent kan je ze mogelijk wel van te voren bedenken. De meeste mensen kennen de smoezen wel die zij tegen zichzelf zullen gaan vertellen.')
-}
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.85rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 600;
+    }
 
-</script>
+    .intro-card,
+    .question-card,
+    .message {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 1.1rem;
+      margin-top: 1rem;
+      box-shadow: 0 8px 22px rgba(31, 56, 73, 0.09);
+    }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .intro-card { border-left: 4px solid var(--page-main); }
+    .question-card { border-top: 4px solid var(--page-main); }
+
+    .message { display: none; border-left: 4px solid var(--page-ok); }
+    .message.show { display: block; }
+    .message.error { border-left-color: var(--page-accent); }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+
+    .action-bar button,
+    .action-bar a {
+      flex: 1 1 180px;
+      text-decoration: none;
+    }
+
+    .smoes-grid {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .smoes-block {
+      border: 1px solid #d3e1ea;
+      border-radius: 12px;
+      padding: 0.8rem;
+      background: #f8fbfd;
+    }
+
+    .smoes-block h3 { margin: 0 0 0.55rem; }
+
+    .tip {
+      font-size: 0.92rem;
+      color: #445d6c;
+      margin-top: 0.35rem;
+    }
+
+  </style>
+  <script src="../js/themeMode.js"></script>
 </head>
 <body>
-<div class="container"><div class="shadow"><div class="content">
-<div class="praatmethansheader"><a href="www.praatmehans.nl" class="praatmethanslink">PraatmetHans.nl</a>
-<h1 class="praatmethansheader">Smoezenboek</h1>
-</div>
+  <div class="container">
+    <div class="page-shell">
+      <header class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./waarom-wel-gebruiken.htm">Waarom wel gebruiken</a>
+          <a href="./noodplan-forse-trek.htm">Noodplan forse trek</a>
+          <a href="./plan-bij-uitglijden.htm">Plan bij uitglijden</a>
+        </div>
+        <h1>Smoezenboek</h1>
+        <p>Maak je terugval-smoezen vooraf zichtbaar. Dan herken je ze sneller op het moment dat trek je denken overneemt.</p>
+      </header>
 
-<p>&nbsp;</p>
+      <div id="message" class="message"></div>
 
-<h1>welke smoesjes ga je (jezelf)vertellen?</h1>
-<div class="printhide">
-<p>Smoezen zijn gedachten, verhaaltjes die je jezelf vertelt om bepaalde dingen
-  te laten gebeuren.</p>
-<p>Vaak wordt de waarheid een beetje geweld aan gedaan</p>
-<p>bepaalde gedachten worden gevormd door gevoelens die zo groot zijn geworden
-  dat zij de inhoud van je hedachten gaan bepalen. Abstract? OK een paar voorbeeldjes.
-  De mensen die af willen vallen zullen herkennen dat je maar beter tijdig een
-  boterham kan eten want anders dan wordt de honger zo groot dat je allerhande
-  vette en zoete herrie naar binnen begint te schuiven met als belangrijkste
-  'redenatie': &quot;ach eentje kan geen kklwaad&quot;</p>
-<p>maar waaraom nou dat vervelende woord &quot;smoesjes&quot;?</p>
-<p>omdat het zo duidelijk is. Omdat d&agrave;t is wat het <i>is</i>. En onhou
-  goed <i>ie-der-een</i> vertelt smoesjes. Het is een menselijke eigenschap dat
-  ons taalcentrum in de neocortex achter ons gevoel gaat aanlopen als die gevoelens
-  te sterk worden (waarom denk je dat we dat zo zeggen`; `'te sterk worden`&quot; </p>
-<blockquote>smoesjes zijn verhaaltjes die ontstaan in ons taalcentrum die legitimeren wat wij gaan doen met ons gevoel, terwijl wij eigennlijk iets anders hadden willen doen</blockquote>
-<p>&nbsp;</p>
-<p>Smoezen zijn gedachten, verhaaltjes die je jezelf vertelt om bepaalde dingen
-  te laten gebeuren.
-  Vaak wordt de waarheid een beetje geweld aan gedaan
-  
-  bepaalde gedachten worden gevormd door gevoelens die zo groot zijn geworden
-  dat zij de inhoud van je hedachten gaan bepalen. Abstract? OK een paar voorbeeldjes.
-  De mensen die af willen vallen zullen herkennen dat je maar beter tijdig een
-  boterham kan eten want anders dan wordt de honger zo groot dat je allerhande
-  vette en zoete herrie naar binnen begint te schuiven met als belangrijkste
-  'redenatie':
-  Een smoes is een 'meme', een gedachte. maar het is wel een gedachte die uitnodigt
-  tot gedrag waar je achteraf spijt van krijgt. Als je de smoesjes gaat herkennen
-  die je jezelf zult gaan vertellen, dan scheelt dat enorm op een dergelijk moment.
-  Dan hoef je jouw gedachten niet meer zo serieus te nemen. Sommige smoezen zijn
-  echt favoriet in bepaalde situaties.<br />
-</p>
-<div class="rechtsitalic">ik denk bijvoorbeeld aan &quot;daar heb ik toch schijt an&quot; (zonder dat je invult
-  waaraan of op wiens bordje dat geserveerd gaat worden, bijvoorbeeld) <b>is dat werkelijk zo?</b></div>
-<p></p>
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton" title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het scherm met toelichting zien">&nbsp;&nbsp;&nbsp;?!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&nbsp;&forall;&nbsp;&nbsp;&nbsp;</a>
-</p>
+      <section class="intro-card">
+        <h2>Waarom dit werkt</h2>
+        <p>Een smoes klinkt op het moment zelf logisch, maar achteraf vaak niet. Door vooraf te oefenen met ontkrachting ontstaat er ruimte voor een betere keuze.</p>
+        <p class="tip">Praktisch: noteer de smoes, schrijf een nuchtere ontkrachting, en koppel het aan een alternatief gedrag.</p>
+      </section>
 
-<p>&nbsp;</p>
-</div>
-<form name="smoezen">
-<h1>smoezen (uit eigen werk) ;-)</h1>
-<p>Wat zijn de drie door jou meest gebruikte smoezen, jouw meest favoriete smoezen
-  (op d&agrave;t moment!).</p>
-<p>Smoes 01<br />
-<textarea name="smoes01" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
-<p>Waarom is dit een smoes en wat is er eigenlijk &egrave;cht aan de hand dan? (01)<br />
-<textarea name="ontkrachting01" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-<br />
-</p><div class="praatmethansheader2">&quot;DE number 01 smoes :-)&quot;</div><p></p>
-<p>&nbsp;</p>
-<p>Smoes 02<br />
-    <textarea name="smoes02" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
-<p>Waarom is dit een smoes en wat is er eigenlijk &egrave;cht aan de hand dan? (02)<br />
-<textarea name="ontkrachting02" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-<br />
-</p><div class="praatmethansheader2">&quot;de number 02 smoes ;-) &quot;</div><p></p>
-<p>&nbsp;</p>
-<p>Smoes 03<br />
-    <textarea name="smoes03" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-</p>
-<p>Waarom is dit een smoes en wat is er eigenlijk &egrave;cht aan de hand dan?
-  (03)<br />
-<textarea name="ontkrachting03" class="praatmethansformtextarea" cols="55" rows="3"></textarea>
-<br />
-</p><div class="praatmethansheader2">&quot; en de No 03 favoriete smoes ;-)&quot;</div><p></p>
+      <section class="question-card">
+        <h2>Kruisbestuiving uit andere formulieren</h2>
+        <p class="tip">Deze punten komen uit je risico-, plan- en steunformulieren. Gebruik ze om smoezen sneller te herkennen en te ontkrachten.</p>
+        <ul id="crossInsights" class="iam-cross-list"></ul>
+        <div class="form-group" style="margin-top:0.8rem;">
+          <button type="button" class="button-secondary" id="useCrossBtn">Gebruik deze inzichten in dit formulier</button>
+        </div>
+      </section>
 
-<p>&nbsp;</p>
-</form>
-<p>&nbsp;</p>
-<hr class="formhr" />
+      <form id="smoezenForm">
+        <section class="question-card">
+          <h2>Jouw 3 favoriete smoezen</h2>
+          <div class="smoes-grid">
+            <article class="smoes-block">
+              <h3>Smoes 01</h3>
+              <div class="form-group">
+                <label for="smoes01">Welke smoes vertel je jezelf?</label>
+                <textarea id="smoes01" name="smoes01" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="ontkrachting01">Waarom is dit een smoes, en wat is er echt aan de hand?</label>
+                <textarea id="ontkrachting01" name="ontkrachting01" rows="3"></textarea>
+              </div>
+            </article>
 
-<p></p><i>Het is handig om deze smoezen ook nog even terug te laten komen in de manier
-    waarop je over jouw plannen en zelfs noodplannen denkt.:<ul>
-	<li><a href="noodplan-forse-trek.htm" target="_self">noodplan bij forse trek</a></li>
-	<li><a href="plan-bij-uitglijden.htm" target="_self">plan bij uitglijden</a></li>
-	<li><a href="noodplan-wegglijden.htm" target="_self">noodplan bij wegglijden</a></li>
-	</ul></i><p></p>
-<p align='right' ><i>Copyright 2011 Hans RJ West</i></p>
+            <article class="smoes-block">
+              <h3>Smoes 02</h3>
+              <div class="form-group">
+                <label for="smoes02">Welke smoes vertel je jezelf?</label>
+                <textarea id="smoes02" name="smoes02" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="ontkrachting02">Waarom is dit een smoes, en wat is er echt aan de hand?</label>
+                <textarea id="ontkrachting02" name="ontkrachting02" rows="3"></textarea>
+              </div>
+            </article>
 
+            <article class="smoes-block">
+              <h3>Smoes 03</h3>
+              <div class="form-group">
+                <label for="smoes03">Welke smoes vertel je jezelf?</label>
+                <textarea id="smoes03" name="smoes03" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="ontkrachting03">Waarom is dit een smoes, en wat is er echt aan de hand?</label>
+                <textarea id="ontkrachting03" name="ontkrachting03" rows="3"></textarea>
+              </div>
+            </article>
+          </div>
 
- /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+          <div class="form-group" style="margin-top:1rem;">
+            <button type="button" class="button-secondary" id="fillDemoBtn">Vul voorbeeldteksten</button>
+          </div>
+        </section>
+
+        <div class="action-bar">
+          <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/dataStore.js"></script>
+  <script>
+    const formKey = 'smoezenboekverhaal';
+    const fields = ['smoes01', 'ontkrachting01', 'smoes02', 'ontkrachting02', 'smoes03', 'ontkrachting03'];
+    let crossSeed = null;
+
+    function showMessage(text, isError = false) {
+      const message = document.getElementById('message');
+      message.textContent = text;
+      message.classList.add('show');
+      message.classList.toggle('error', isError);
+      clearTimeout(showMessage.timer);
+      showMessage.timer = setTimeout(() => message.classList.remove('show'), 2800);
+    }
+
+    function collectData() {
+      const data = {};
+      fields.forEach((name) => {
+        const el = document.getElementsByName(name)[0];
+        data[name] = el ? el.value.trim() : '';
+      });
+      return data;
+    }
+
+    function loadData() {
+      const saved = iamData.getFormData(formKey) || {};
+      fields.forEach((name) => {
+        const el = document.getElementsByName(name)[0];
+        if (el && typeof saved[name] !== 'undefined') {
+          el.value = saved[name];
+        }
+      });
+    }
+
+    function saveData(feedback = true) {
+      try {
+        iamData.updateFormData(formKey, collectData());
+        if (feedback) showMessage('Smoezenboek opgeslagen op dit toestel.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Opslaan lukte niet.', true);
+      }
+    }
+
+    function exportData() {
+      try {
+        saveData(false);
+        const exportData = iamData.exportJSON();
+        const url = URL.createObjectURL(exportData.blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = exportData.filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showMessage('Volledige IAM-gegevens geexporteerd als JSON.');
+      } catch (error) {
+        console.error(error);
+        showMessage('Exporteren lukte niet.', true);
+      }
+    }
+
+    function fillDemo() {
+      const demo = {
+        smoes01: 'Eentje kan geen kwaad, ik had een zware dag.',
+        ontkrachting01: 'Dit is een bekende openingszin voor verlies van controle. Ik heb juist rust nodig en niet meer prikkels.',
+        smoes02: 'Ik stop morgen wel weer.',
+        ontkrachting02: 'Uitstel vergroot de drempel. Ik kan nu al een kleine stap zetten: iemand appen of mijn noodplan openen.',
+        smoes03: 'Niemand merkt het toch.',
+        ontkrachting03: 'Ik merk het zelf direct in spanning en schaamte. Mijn herstel draait om eerlijkheid naar mezelf.'
+      };
+      Object.keys(demo).forEach((key) => {
+        const el = document.getElementById(key);
+        if (el && !el.value.trim()) {
+          el.value = demo[key];
+        }
+      });
+      saveData(false);
+      showMessage('Voorbeeldteksten ingevuld. Pas aan naar je eigen situatie.');
+    }
+
+    function renderCrossInsights() {
+      const host = document.getElementById('crossInsights');
+      const pack = iamData.getCrossPollinationPack(formKey);
+
+      if (!pack.available) {
+        host.innerHTML = '<li>Nog geen gegevens gevonden voor kruisbestuiving.</li>';
+        crossSeed = null;
+        return;
+      }
+
+      const triggers = pack.triggers || [];
+      const motivations = pack.motivations || [];
+      const interventions = pack.interventions || [];
+      crossSeed = { triggers, motivations, interventions };
+
+      const lines = [];
+      if (triggers.length) lines.push(`Terugkerende drukmomenten: ${triggers.join('; ')}`);
+      if (motivations.length) lines.push(`Wat je wilt beschermen: ${motivations.join('; ')}`);
+      if (interventions.length) lines.push(`Werkende tegenzet: ${interventions.join('; ')}`);
+
+      host.innerHTML = lines.length
+        ? lines.map((line) => `<li>${line}</li>`).join('')
+        : '<li>Nog te weinig ingevulde brongegevens voor kruisbestuiving.</li>';
+    }
+
+    function fillIfEmpty(id, value) {
+      const el = document.getElementById(id);
+      if (el && !el.value.trim() && value) {
+        el.value = value;
+      }
+    }
+
+    function applyCrossInsights() {
+      if (!crossSeed) {
+        showMessage('Nog geen kruisbestuiving beschikbaar.', true);
+        return;
+      }
+
+      fillIfEmpty('smoes01', `Als ${crossSeed.triggers[0] || 'de druk oploopt'} gebeurt, kan ik denken: "eentje kan wel".`);
+      fillIfEmpty('ontkrachting01', `Dit is een bekende valkuil. Wat ik echt wil beschermen: ${crossSeed.motivations[0] || 'mijn herstel en rust'}.`);
+      fillIfEmpty('smoes02', `Ik kan mezelf ook vertellen: "morgen pak ik het weer op" bij ${crossSeed.triggers[1] || 'spanning'}.`);
+      fillIfEmpty('ontkrachting02', `Uitstel vergroot risico. Werkende tegenzet: ${crossSeed.interventions[0] || 'nu een kleine veilige stap zetten'}.`);
+      fillIfEmpty('smoes03', `Nog een valkuil: "niemand merkt het" op momenten van ${crossSeed.triggers[2] || 'twijfel'}.`);
+      fillIfEmpty('ontkrachting03', `Ik merk het zelf direct. Ik kies liever voor: ${crossSeed.interventions[1] || 'steun vragen en mijn plan volgen'}.`);
+
+      saveData(false);
+      showMessage('Kruisbestuiving toegepast op je smoezenboek.');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+      renderCrossInsights();
+      document.getElementById('fillDemoBtn').addEventListener('click', fillDemo);
+      document.getElementById('useCrossBtn').addEventListener('click', applyCrossInsights);
+      document.getElementById('saveButton').addEventListener('click', () => saveData(true));
+      document.getElementById('exportButton').addEventListener('click', exportData);
+      document.getElementById('smoezenForm').addEventListener('input', () => saveData(false));
+    });
+  </script>
 </body>
 </html>

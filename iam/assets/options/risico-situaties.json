@@ -1,0 +1,50 @@
+{
+  "groups": [
+    {
+      "label": "Sociaal en omgeving",
+      "items": [
+        "Als anderen gebruiken in mijn omgeving.",
+        "Als mensen aandringen dat ik iets drink of gebruik.",
+        "Als iemand mij middelen aanbiedt.",
+        "Als ik op bruiloften of recepties ben.",
+        "Als ik net heb gesport en in de kantine ben.",
+        "Als ik kijk naar anderen die hun gebruik wel in de hand lijken te hebben."
+      ]
+    },
+    {
+      "label": "Plekken en context",
+      "items": [
+        "Als ik langer in cafees zit.",
+        "Als ik langs een plek loop waar ik eerder haalde of gebruikte.",
+        "Als er feestdagen of vakanties zijn.",
+        "Als ik op vakantie ben.",
+        "Als ik gebruik zie op tv, online of in films.",
+        "Als het mooi weer is en iedereen buiten zit."
+      ]
+    },
+    {
+      "label": "Gevoelens en gedachten",
+      "items": [
+        "Als ik me gelukkig of lekker wil voelen.",
+        "Als ik me ontevreden of leeg voel.",
+        "Als ik het gevoel heb dat alles misgaat.",
+        "Als alles weer goed gaat.",
+        "Als ik iets te vieren heb.",
+        "Als het regent en ik me somber of opgesloten voel."
+      ]
+    },
+    {
+      "label": "Stress en belasting",
+      "items": [
+        "Als ik klaar ben met werk en wil ontladen.",
+        "Als ik ruzie heb met partner, familie of vrienden.",
+        "Als ik moe ben en stress oploopt.",
+        "Als ik iets moet doen waar ik erg tegenop zie.",
+        "Als ik financiele problemen heb.",
+        "Als ik lichamelijke pijn heb.",
+        "Als er iemand overlijdt die belangrijk voor me is.",
+        "Als ik alcohol of drugs ruik."
+      ]
+    }
+  ]
+}

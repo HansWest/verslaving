@@ -48,6 +48,26 @@ De weg vooruit zit daarom niet alleen in stoppen of weerstand bieden, maar in:
 - onderscheiden wat korte-termijn opluchting is en wat iemand echt wil
 - alternatieven opbouwen die beter passen bij iemands waarden
 
+### Stoppen versus gestopt blijven
+
+Een praktisch belangrijk onderscheid:
+
+- **Stoppen** voelt vooraf vaak enger en moeilijker dan het achteraf blijkt.
+- **Gestopt blijven** blijkt in de praktijk vaak moeilijker dan vooraf wordt ingeschat.
+
+Een verklaring die in IAM bruikbaar is:
+
+- Bij duidelijke keuze (geen twijfel over wel/niet of hoeveelheid) wordt het alarmsysteem in het oude brein vaak rustiger.
+- Daardoor kan de eerste biologische ontregeling na verloop van tijd afnemen.
+- Maar dan wordt vaak pas zichtbaar wat daaronder lag: **emotionele/psychologische afhankelijkheid** in het dagelijks leven.
+
+Daarom maakt IAM expliciet onderscheid tussen:
+
+- **biologische verslavingsdruk** (drang, ontregeling, automatisme), en
+- **emotionele afhankelijkheid** (leren omgaan met gevoelens, behoeften, relaties en betekenis zonder gebruik).
+
+Praktisch gevolg voor de flow: na stoppen blijft het zwaartepunt verschuiven van crisisbeheersing naar dagelijks oefenen, relatieregulatie en waarden-gericht leven.
+
 ## Taalkeuze in de app
 
 Aan het begin van de app liever niet te veel woorden gebruiken als:

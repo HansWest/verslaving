@@ -1,112 +1,220 @@
-<html>
-
-jouw-verslaving.htm
-
-deze code is van controleerjeverslavingszorg.nl 
-wanneer u ideeen heeft of mee wil werken aan verbeteringen stuur deze dan aan:
-HansRJWest@Gmail.com
-U kunt ook direct de code veranderen, graag met respect voor de bestaande code.
-Voor de context zie:
-http://controleerjeverslaving.wordpress.com/gratis-beta/mee-programmeren-aan-democratiseren-verslavingszorg
-
-Basisgedachte:
-Als mensen meer in staat zijn om zich een beeld te vormen wat het inhoud om inderdaad mogelijk een verlaving te hebben dan is het waarschijnlijk dat zij beter in staat zijn om daar ook mee om te gaan.
-
--->
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<title>wat is verslaving voor jou?</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wat is verslaving voor jou?</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    .page-shell {
+      max-width: 920px;
+      margin: 0 auto;
+    }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    .page-header {
+      background: linear-gradient(135deg, #3e6a87 0%, #6f86b8 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(30, 53, 86, 0.16);
+      margin-bottom: 1.5rem;
+    }
 
+    .page-header h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
 
+    .page-header p {
+      margin-bottom: 0;
+      max-width: 44rem;
+    }
 
-Notice the capital ?S? in ?Screen?? That?s all it takes to get handheld stylesheets working in Windows Mobile browsers.-->
-<script language="javascript">
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
 
+    .top-links a {
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
 
-function hulppagina()
-{
-window.open ("http://controleerjeverslaving.wordpress.com/formulieren/bummer-dat-snap-ik/","controleerjeverslaving");
-}
+    .top-links a:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
 
-function hulpscherm()
-{
-hulp_scherm(250,"verslaving voor jou", "Verslaving is nou eenmaal een complex probleem..<br/>En als je complexe dingen met een simpele oplossing probeert te tackelen, dan maak je de kans groot dat je een oplossing kiest die onvoldoende gaat werken.<br/>Juist door de <i>verschillende aspecten</i> van verslaving scherp te krijgen voor jezelf, help je jezelf om overzicht te behouden.")
-}
+    .intro-card,
+    .form-card,
+    .note-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 18px rgba(22, 50, 79, 0.07);
+    }
 
-</script>
+    .eyebrow {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #3e6a87;
+      margin-bottom: 0.4rem;
+    }
 
-<link rel="stylesheet" href="../css/mobile.css" type="text/css" />
-<link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    .note-card {
+      background: #f3f8fe;
+      border-left: 4px solid #6f86b8;
+    }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+
+    .action-bar button {
+      flex: 1 1 160px;
+    }
+
+    .message {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border-left: 5px solid #3e6a87;
+      background: #eef6ff;
+      margin-bottom: 1rem;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      border-left-color: #c0392b;
+      background: #fdf0ee;
+    }
+  </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
-<div class="container">
+  <div class="container">
+    <div class="page-shell">
+      <div class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./wat-is-mijn-ik.htm">Wie ben ik?</a>
+          <a href="./persoonlijke-waarden.htm">Mijn waarden</a>
+        </div>
+        <h1>Wat is verslaving voor jou?</h1>
+        <p>In een paar zinnen: wat betekent verslaving in jouw ogen? Gebruik het bio-psycho-sociale raamwerk als denkhulp.</p>
+      </div>
 
-<div class="shadow"><div class="content">
-<div class="praatmethansheader">
-<p style="text-align:center"><a href="http://controleerjeverslaving.wordpress.com" target="controleerjeverslaving" style="text-decoration:none; font-size:4em;"><span class="donker">[c</span><span class="middel">ontroleer</span><span class="donker">j</span><span class="middel">e</span><span class="anders">v</span><span class="middel">erslaving</span><span class="lichter">.nl</span><span class="donker">]</span></a></p>
+      <div id="message" class="message"></div>
 
-OK--><a href="http://www.praatmethans.nl" target="praatmethans" class="praatmethanslink">PraatmetHans.nl</a><h1 class="praatmethansheader"><b>Wat is verslaving voor jou?</b></h1></div><div class="rechtsitalic">3 vragen: 10 - 20 minuten</div>
+      <section class="intro-card">
+        <span class="eyebrow">Uitgangspunt</span>
+        <h2>Complex probleem, meerdere lagen</h2>
+        <p>De moderne wetenschap ziet verslaving als een chronische bio-psycho-sociale aandoening. Dat is niet bedoeld als etiket, maar als raamwerk om gerichter na te denken over wat er precies speelt in jouw leven.</p>
+        <p>Probeer daarom deze drie gebieden aandacht te geven in je antwoord op de vraag: <strong>wat is verslaving in jouw ogen?</strong></p>
+      </section>
 
-<h1>Vraagje: Wat is verslaving voor jou? (in een paar zinnen)</h1>
-<div class="printhide"><p>De moderne wetenschap ziet verslaving als een chronische bio-psycho-sociale
-  aandoening. En dat is daarmee ook een raamwerk voor je om er over na te denken.
-   Probeer deze drie gebieden eens aandacht te geven in jouw antwoorden op de
-  vraag: </p>
-<h1>Wat is &quot;verslaving&quot;<br />
-  &nbsp; &nbsp; &nbsp; ...in jouw ogen?</h1>
-  
+      <form id="jouwVerslavingForm">
+        <section class="form-card">
+          <span class="eyebrow">Biologie</span>
+          <h2>Wat is verslaving biologisch gezien?</h2>
+          <label for="bio">Lichamelijke kant: gezondheid, energie, honger, kater, lust, vermogen om te genieten</label>
+          <textarea id="bio" name="bio" rows="5" placeholder="Wat merk ik in mijn lichaam? Wat doet gebruik biologisch met mij?"></textarea>
+        </section>
 
-<p style="text-align:right">
-<a href="./index.htm" class="praatmethansbutton"  title="ik wil naar de formulieren-overzicht pagina">&nbsp;&nbsp;&nbsp;&fnof;&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="hulpscherm();" class="praatmethansbutton" title="ik wil het schermpje met toelichting even zien">&nbsp;&nbsp;&nbsp;?&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp; &nbsp;
-<a href="javascript:void(0)"  onClick="hulppagina();" title="ik wil graag naar de uitgebreide uitleg" target="controleerjeverslaving" class="praatmethansbutton">&nbsp;&nbsp;&nbsp;!&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="saveSelections(document.forms[0]);" class="praatmethansbutton" title="Save/bewaar de inhoud van alle velden even in een cookie">&nbsp;&nbsp;&nbsp;s&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)" onClick="loadSelections(document.forms[0]);" class="praatmethansbutton" title="Recover/herstel de inhoud van deze pagina uit de bewaarde cookies">&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;
-<a href="javascript:void(0)"  onClick="window.print();" class="praatmethansbutton" title="ik wil nu dit formulier printen en ik hou rekening met copyrights">&nbsp;&nbsp;&forall;&nbsp;&nbsp;</a></p>
-<noscript><br /><i>de velden die u invult zullen in de toekomst kunnen worden bewaard, maar dat heeft javascript nodig, anders zijn zij slechts uit te printen...</i></noscript><p></p>
+        <section class="form-card">
+          <span class="eyebrow">Psychologie</span>
+          <h2>Wat is verslaving psychologisch gezien?</h2>
+          <label for="Psycho">Gedachten, overtuigingen en gevoelens</label>
+          <textarea id="Psycho" name="Psycho" rows="5" placeholder="Wat geloof ik hierover? Welke gedachten en gevoelens spelen mee?"></textarea>
+        </section>
 
+        <section class="form-card">
+          <span class="eyebrow">Sociaal</span>
+          <h2>Wat is verslaving sociaal gezien?</h2>
+          <label for="Sociaal">Vriendschap, werk, studie, relaties, omgeving</label>
+          <textarea id="Sociaal" name="Sociaal" rows="5" placeholder="Wat betekent dit voor mijn omgeving en mijn relatie met anderen?"></textarea>
+        </section>
 
-</div>
-<form name="voorjou">
+        <section class="note-card">
+          <p>Als verslaving inderdaad ook een neurologische en chronische aandoening is, helpt het om te leren kennen wat die aandoening concreet betekent voor jouw denken, voelen en handelen.</p>
+        </section>
 
-<p>&nbsp;</p>
-<p><b>Bio</b>logie: lichamelijk (aspecten als gezondheid, energie, genieten)<br/>
-<textarea name="bio" cols="55" rows="4" class="praatmethansformtextarea" title="De biologische kant ervan: de vergifitiging of het medicijn, de honger en de kater, de lust en de energie, het vermogen te genieten."></textarea></p><div class="praatmethansheader2">&quot;Wat is 'verslaving' biologisch gezien?&quot;</div>
-<p>&nbsp;</p>
+        <div class="action-bar">
+          <button type="button" onclick="saveForm()">Opslaan</button>
+          
+        </div>
+      </form>
+    </div>
+  </div>
 
-<p><b>Psycho</b>logisch: -gedachten, geloof en gevoelens-<br/>
-<textarea name="Psycho" cols="55" rows="4" class="praatmethansformtextarea" title="Gedachten die je daarover hebt, de dingen die je daarover gelooft en de gevoelens die je daarbij hebt."></textarea></p><div class="praatmethansheader2">&quot;Wat is 'verslaving' psychologisch gezien?&quot;</div>
-<p>&nbsp;</p>
+  <script>
+    const formType = 'jouw-verslaving';
+    const fieldNames = ['bio', 'Psycho', 'Sociaal'];
 
-<p><b>Sociaal</b>: vriendschap, werk, studie<br/>
-<textarea name="Sociaal" cols="55" rows="4" class="praatmethansformtextarea" title="Wat betekent het voor jouw omgeving? en wat betekent het voor jouw relatie met jouw omgeving?, werk vriendschappen."></textarea></p>
-<div class="praatmethansheader2">&quot;Wat is 'verslaving' sociaal gezien?</div>
-</FORM>
-<SCRIPT language=JavaScript type="">loadSelections(document.forms[0]);</SCRIPT>
-<hr class="formhr" />
-<p>&nbsp;</p>
-<p><i>Als de wetenschap inderdaad gelijk heeft en verslaving is (naast een psychologische,
-    emotionele maatregel, &oacute;&oacute;k een neurologische chronische aandoening,
-    dan kan je maar beter leren kennen wat die aandoening dan eigenlijk is en
-    wat ie betekent voor je denken en je gevoel (en nee, 90% van de mensen weet
-    NIET wat verslaving is, zelfs al hebben ze er al jaren last van) </i></p>
-<p align='right' ><i><a href="http://hanswest.wordpress.com/contact/" target="praatmethans">Last van verslaving? PraatmetHans .nl</a><br/>
-Copyright 2012 Hans RJ West</i></p><script language="javascript">
+    function fillForm(data) {
+      fieldNames.forEach((name) => {
+        const element = document.getElementById(name);
+        if (element && data[name] !== undefined) {
+          element.value = data[name];
+        }
+      });
+    }
 
-document.write ("<p align='right'> de URL van deze pagina, om te copi&euml;ren<br>voor het geven van feedback<br><input name='effe' type='text' value='" + window.location+ "'></p>");
---></script>
- /inhoud -->
-</div></div>
-</div>
-<script src="../js/dataStore.js"></script>
-<script src="../js/legacyFormSync.js"></script>
+    function collectForm() {
+      const data = {};
+      fieldNames.forEach((name) => {
+        const element = document.getElementById(name);
+        if (element) {
+          data[name] = element.value;
+        }
+      });
+      return data;
+    }
+
+    function saveForm() {
+      if (typeof iamData !== 'undefined') {
+        iamData.setFormData(formType, collectForm());
+      }
+      showMessage('Opgeslagen.', false);
+    }
+
+    function showMessage(text, isError) {
+      const element = document.getElementById('message');
+      element.textContent = text;
+      element.className = 'message show' + (isError ? ' error' : '');
+      clearTimeout(showMessage.timeoutId);
+      showMessage.timeoutId = setTimeout(() => {
+        element.className = 'message';
+      }, 2600);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof iamData !== 'undefined') {
+        fillForm(iamData.getFormData(formType) || {});
+      }
+
+      document.getElementById('jouwVerslavingForm').addEventListener('input', () => {
+        saveForm();
+      });
+    });
+  </script>
+  <script src="../js/dataStore.js"></script>
 </body>
 </html>

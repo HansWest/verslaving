@@ -1,0 +1,31 @@
+{
+  "risicotypen": {
+    "groups": [
+      {
+        "label": "Relatietype",
+        "items": [
+          {
+            "value": "enabler",
+            "label": "Enabler — maakt gebruik mogelijk/gemakkelijk"
+          },
+          {
+            "value": "overbelasting",
+            "label": "Overbelasting — zorgt voor stress of oude rollen"
+          },
+          {
+            "value": "gebruiker",
+            "label": "Medgebruiker — gebruikt zelf, voorbeeld/normalisering"
+          },
+          {
+            "value": "emotioneel",
+            "label": "Emotioneel risico — roept sterke gevoelens op"
+          },
+          {
+            "value": "grensvag",
+            "label": "Grensvag — duwt grenzen, minder duidelijkheid"
+          }
+        ]
+      }
+    ]
+  }
+}

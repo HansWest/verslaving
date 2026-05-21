@@ -111,6 +111,24 @@ class IamDataStore {
           learning: '',
           nextStep: '',
           history: []
+        },
+        sleepTracking: {
+          enabled: false,
+          lastModified: null
+        },
+        trackingSettings: {
+          sleep: false,
+          food: false,
+          training: false,
+          meditation: false,
+          social: false,
+          emotion: false,
+          frustration: false
+        },
+        crossPollination: {
+          profile: 'gebalanceerd',
+          phase: 'stabilisatie',
+          lastModified: null
         }
       },
       forms: {
@@ -353,9 +371,147 @@ class IamDataStore {
     return data?.forms?.[formType] || null;
   }
 
+  getIntakeProfile() {
+    return this.getFormData('intake-inventarisatie') || {};
+  }
+
+  getPreferredDisplayName(fallback = '') {
+    const intake = this.getIntakeProfile();
+    const candidates = [
+      intake.nickname,
+      intake.nickName,
+      intake.naam,
+      intake.name
+    ];
+
+    const selected = candidates.find((value) => typeof value === 'string' && value.trim().length > 0);
+    return selected ? selected.trim() : fallback;
+  }
+
   getAppMeta(key) {
     const data = this.getData();
     return key ? data?.appMeta?.[key] || null : data?.appMeta || null;
+  }
+
+  normalizeTrekDossierState(state = {}) {
+    const entries = Array.isArray(state.entries)
+      ? state.entries.map((entry) => this.normalizeTrekDossierEntry(entry))
+      : [];
+
+    entries.sort((left, right) => {
+      const dateOrder = String(right.date || '').localeCompare(String(left.date || ''));
+      if (dateOrder !== 0) return dateOrder;
+      return String(right.updatedAt || '').localeCompare(String(left.updatedAt || ''));
+    });
+
+    const activeId = typeof state.activeId === 'string' ? state.activeId : '';
+    const resolvedActiveId = entries.some((entry) => entry.id === activeId)
+      ? activeId
+      : (entries[0] ? entries[0].id : '');
+
+    return {
+      activeId: resolvedActiveId,
+      entries: entries
+    };
+  }
+
+  normalizeTrekDossierEntry(entry = {}) {
+    const now = new Date().toISOString();
+    const pages = entry.pages && typeof entry.pages === 'object' ? entry.pages : {};
+
+    return {
+      id: typeof entry.id === 'string' && entry.id ? entry.id : this.generateUUID(),
+      date: typeof entry.date === 'string' && entry.date ? entry.date : now.slice(0, 10),
+      keyword: typeof entry.keyword === 'string' ? entry.keyword : '',
+      createdAt: typeof entry.createdAt === 'string' && entry.createdAt ? entry.createdAt : now,
+      updatedAt: typeof entry.updatedAt === 'string' && entry.updatedAt ? entry.updatedAt : now,
+      pages: pages
+    };
+  }
+
+  getTrekDossierState() {
+    return this.normalizeTrekDossierState(this.getAppMeta('trekDossiers') || {});
+  }
+
+  saveTrekDossierState(state) {
+    const normalized = this.normalizeTrekDossierState(state || {});
+    this.updateAppMeta('trekDossiers', normalized);
+    return normalized;
+  }
+
+  getTrekDossierEntries() {
+    return this.getTrekDossierState().entries || [];
+  }
+
+  getActiveTrekDossier() {
+    const state = this.getTrekDossierState();
+    return state.entries.find((entry) => entry.id === state.activeId) || null;
+  }
+
+  setActiveTrekDossier(entryId) {
+    const state = this.getTrekDossierState();
+    if (state.entries.some((entry) => entry.id === entryId)) {
+      state.activeId = entryId;
+    }
+    return this.saveTrekDossierState(state);
+  }
+
+  createTrekDossier(payload = {}) {
+    const now = new Date().toISOString();
+    const entry = this.normalizeTrekDossierEntry({
+      id: this.generateUUID(),
+      date: payload.date,
+      keyword: payload.keyword,
+      createdAt: now,
+      updatedAt: now,
+      pages: payload.pages || {}
+    });
+    const state = this.getTrekDossierState();
+    state.entries.unshift(entry);
+    state.activeId = entry.id;
+    this.saveTrekDossierState(state);
+    return entry;
+  }
+
+  updateTrekDossierMeta(entryId, patch = {}) {
+    if (!entryId) return null;
+    const state = this.getTrekDossierState();
+    const entry = state.entries.find((item) => item.id === entryId);
+    if (!entry) return null;
+
+    const nextDate = typeof patch.date === 'string' && patch.date ? patch.date : entry.date;
+    const nextKeyword = typeof patch.keyword === 'string' ? patch.keyword : entry.keyword;
+
+    entry.date = nextDate;
+    entry.keyword = nextKeyword;
+    entry.updatedAt = new Date().toISOString();
+    this.saveTrekDossierState(state);
+    return entry;
+  }
+
+  updateTrekDossierPage(entryId, formKey, formData) {
+    if (!entryId || !formKey) return null;
+    const state = this.getTrekDossierState();
+    const entry = state.entries.find((item) => item.id === entryId);
+    if (!entry) return null;
+
+    if (!entry.pages || typeof entry.pages !== 'object') {
+      entry.pages = {};
+    }
+
+    entry.pages[formKey] = {
+      ...formData,
+      lastUpdated: new Date().toISOString()
+    };
+    entry.updatedAt = new Date().toISOString();
+    this.saveTrekDossierState(state);
+    return entry.pages[formKey];
+  }
+
+  getTrekDossierPage(entryId, formKey) {
+    const state = this.getTrekDossierState();
+    const entry = state.entries.find((item) => item.id === entryId);
+    return entry?.pages?.[formKey] || null;
   }
 
   updateAppMeta(key, value) {
@@ -389,6 +545,279 @@ class IamDataStore {
     return data.integrationSummary;
   }
 
+  topInsightItems(items, max = 2) {
+    if (!Array.isArray(items)) return [];
+    return this.uniqueLimited(items.filter(Boolean), max);
+  }
+
+  getCrossPollinationPack(context) {
+    const tuning = this.getCrossPollinationTuning();
+    const summary = this.getIntegrationSummary();
+    if (!summary) {
+      return { context, available: false };
+    }
+
+    if (context === 'sova-grenzen') {
+      return {
+        context,
+        available: true,
+        triggers: this.topInsightItems(summary.topTriggers, tuning.mainCap),
+        supports: this.topInsightItems(summary.supportNetwork, tuning.secondaryCap),
+        interventions: this.topInsightItems(summary.bestInterventions, tuning.mainCap)
+      };
+    }
+
+    if (context === 'sova-mixed-signals') {
+      return {
+        context,
+        available: true,
+        triggers: this.topInsightItems(summary.topTriggers, tuning.mainCap),
+        supports: this.topInsightItems(summary.supportNetwork, tuning.secondaryCap),
+        fallbacks: this.topInsightItems(summary.fallbackMoves, tuning.mainCap)
+      };
+    }
+
+    if (context === 'smoezenboekverhaal') {
+      return {
+        context,
+        available: true,
+        triggers: this.topInsightItems(summary.topTriggers, tuning.triggerCap),
+        motivations: this.topInsightItems(summary.motivationAnchors, tuning.secondaryCap),
+        interventions: this.topInsightItems(summary.bestInterventions, tuning.mainCap)
+      };
+    }
+
+    if (context === 'to-do-lijst') {
+      const suggestions = [];
+      this.topInsightItems(summary.earlyWarnings, tuning.mainCap).forEach((item) => {
+        suggestions.push({ title: `Vroege waarschuwing monitoren: ${item}`, importance: 'hoog', urgency: 'nu' });
+      });
+      this.topInsightItems(summary.bestInterventions, tuning.mainCap).forEach((item) => {
+        suggestions.push({ title: `Interventie inplannen: ${item}`, importance: 'hoog', urgency: 'deze-week' });
+      });
+      this.topInsightItems(summary.supportNetwork, tuning.secondaryCap).forEach((item) => {
+        suggestions.push({ title: `Steuncontact plannen met: ${item}`, importance: 'middel', urgency: 'deze-week' });
+      });
+
+      const seen = new Set();
+      const uniqueSuggestions = [];
+      suggestions.forEach((item) => {
+        const key = String(item.title || '').trim().toLowerCase();
+        if (!key || seen.has(key)) return;
+        seen.add(key);
+        uniqueSuggestions.push(item);
+      });
+
+      return {
+        context,
+        available: true,
+        suggestions: uniqueSuggestions.slice(0, tuning.todoCap)
+      };
+    }
+
+    if (context === 'plan-van-aanpak-core') {
+      const balans = this.getFormData('voor-nadelen-balansen') || {};
+      const trek = this.getFormData('soorten-trek') || {};
+      const risicoSituaties = this.getFormData('risico-situaties') || {};
+      const risicoMensen = this.getFormData('risico-mensen') || {};
+      const sociaalNetwerk = this.getFormData('sociaal-netwerk') || {};
+      const risicoActiviteiten = this.getFormData('risico-activiteiten') || {};
+      const stimulus = this.getFormData('stimulus-respons') || {};
+      const gevoelens = this.getFormData('lastige-gevoelens') || {};
+      const smoezen = this.getFormData('smoezenboekverhaal') || {};
+      const sovaGrenzen = this.getFormData('sova-grenzen') || {};
+      const sovaMixed = this.getFormData('sova-mixed-signals') || {};
+
+      const pool = [
+        { text: summary?.topTriggers?.[0] || risicoSituaties.riskySituations, source: 'risico-situaties', target: 'startPoint' },
+        { text: summary?.motivationAnchors?.[0] || balans.decisionNote, source: 'voor-nadelen-balansen', target: 'mainGoal' },
+        { text: risicoSituaties.responsePlan || stimulus.functionalAlternative, source: 'risico-situaties / stimulus-respons', target: 'planA' },
+        { text: risicoActiviteiten.exitStrategy || risicoActiviteiten.afterRisks, source: 'risico-activiteiten', target: 'planB' },
+        { text: summary?.supportNetwork?.[0] || risicoMensen.personName || sociaalNetwerk.reachableSupport || sociaalNetwerk.firstReachOut || stimulus.socialSupport, source: 'supportNetwork', target: 'supportPeople' },
+        { text: stimulus.contingencyReward || gevoelens.enduranceSupport, source: 'stimulus-respons / lastige-gevoelens', target: 'rewards' },
+        { text: summary?.fallbackMoves?.[0] || trek.noGoSignals || risicoMensen.boundarySummary, source: 'nood/terugvalsignalen', target: 'fallbackGoal' },
+        { text: smoezen.ontkrachting01 || smoezen.ontkrachting02, source: 'smoezenboek', target: 'planB' },
+        { text: sovaGrenzen.wensgedrag || sovaMixed.wensgedrag, source: 'sova', target: 'planA' },
+        { text: (this.getFormData('wat-is-mijn-ik') || {}).workStrengthen, source: 'wat-is-mijn-ik', target: 'mainGoal' },
+        { text: (this.getFormData('wat-is-mijn-ik') || {}).valuesStrengthen, source: 'wat-is-mijn-ik', target: 'mainGoal' },
+        { text: (this.getFormData('wat-is-mijn-ik') || {}).socialStrengthen, source: 'wat-is-mijn-ik', target: 'supportPeople' },
+        { text: (this.getFormData('wat-is-mijn-ik') || {}).bodyStrengthen, source: 'wat-is-mijn-ik', target: 'planA' }
+      ];
+
+      const unique = [];
+      pool.forEach((item) => {
+        const clean = String(item.text || '').trim();
+        if (!clean) return;
+        if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+        unique.push({ ...item, text: clean });
+      });
+
+      return {
+        context,
+        available: unique.length > 0,
+        suggestions: unique.slice(0, tuning.planCap)
+      };
+    }
+
+    if (context === 'plan-van-aanpak-boost') {
+      const smoezen = this.getFormData('smoezenboekverhaal') || {};
+      const sovaGrenzen = this.getFormData('sova-grenzen') || {};
+      const sovaMixed = this.getFormData('sova-mixed-signals') || {};
+
+      const pool = [
+        { text: smoezen.smoes01, source: 'smoes01', target: 'fallbackGoal', prefix: 'Herken-smoes' },
+        { text: smoezen.ontkrachting01, source: 'ontkrachting01', target: 'planB', prefix: 'Ontkrachting' },
+        { text: smoezen.ontkrachting02, source: 'ontkrachting02', target: 'planB', prefix: 'Ontkrachting' },
+        { text: sovaGrenzen.wensgedrag, source: 'sova-grenzen', target: 'planA', prefix: 'Grensactie' },
+        { text: sovaMixed.wensgedrag, source: 'sova-mixed-signals', target: 'planA', prefix: 'Communicatie-actie' },
+        { text: sovaMixed.wensgedrag02, source: 'sova-mixed-signals', target: 'planA', prefix: 'Reserve-afspraak' }
+      ];
+
+      const unique = [];
+      pool.forEach((item) => {
+        const clean = String(item.text || '').trim();
+        if (!clean) return;
+        const key = clean.toLowerCase();
+        if (unique.some((entry) => entry.key === key)) return;
+        unique.push({ ...item, text: clean, key: key });
+      });
+
+      return {
+        context,
+        available: unique.length > 0,
+        suggestions: unique.slice(0, tuning.boostCap)
+      };
+    }
+
+    if (context === 'wat-is-mijn-ik') {
+      const forms = (this.getData() || {}).forms || {};
+      const getF = (key) => forms[key] || {};
+      const soortenTrek = getF('soorten-trek');
+      const chemsexPatroon = getF('chemsex-patroon');
+      const chemsexWatWilIk = getF('chemsex-wat-wil-ik');
+      const waarden = getF('persoonlijke-waarden');
+      const motiverendeMensen = getF('motiverende-mensen');
+      const steunnetwerk = getF('steunnetwerk');
+      const risicoSituaties = getF('risico-situaties');
+
+      return {
+        context,
+        available: true,
+        body: this.topInsightItems([
+          soortenTrek.earlyWarningPattern,
+          soortenTrek.noGoSignals,
+          risicoSituaties.internalRisks,
+          chemsexPatroon.comedownBody,
+          chemsexPatroon.earlySignals
+        ], tuning.secondaryCap),
+        sexual: this.topInsightItems([
+          chemsexPatroon.sessionPositives,
+          chemsexPatroon.nextChange,
+          chemsexWatWilIk.coreNeed,
+          chemsexWatWilIk.avoidFeeling
+        ], tuning.secondaryCap),
+        social: this.topInsightItems([
+          ...(summary.supportNetwork || []),
+          motiverendeMensen.personName,
+          steunnetwerk.networkSummary
+        ], tuning.secondaryCap),
+        work: this.topInsightItems([
+          ...(summary.motivationAnchors || []).slice(0, 2),
+          waarden.waarde01,
+          waarden.waardenterugzien
+        ], tuning.secondaryCap),
+        values: this.topInsightItems([
+          waarden.waarde01,
+          waarden.waarde02,
+          waarden.waarde03,
+          chemsexWatWilIk.importantValues,
+          chemsexWatWilIk.futureVision,
+          ...(summary.motivationAnchors || []).slice(0, 2)
+        ], tuning.secondaryCap)
+      };
+    }
+
+    return { context, available: false };
+  }
+
+  getCrossPollinationSettings() {
+    const stored = this.getAppMeta('crossPollination') || {};
+    const profile = ['voorzichtig', 'gebalanceerd', 'directief'].includes(stored.profile)
+      ? stored.profile
+      : 'gebalanceerd';
+    const phase = ['crisis', 'stabilisatie', 'groei'].includes(stored.phase)
+      ? stored.phase
+      : 'stabilisatie';
+
+    return {
+      profile,
+      phase,
+      lastModified: stored.lastModified || null
+    };
+  }
+
+  setCrossPollinationSettings(next = {}) {
+    const current = this.getCrossPollinationSettings();
+    const profile = ['voorzichtig', 'gebalanceerd', 'directief'].includes(next.profile)
+      ? next.profile
+      : current.profile;
+    const phase = ['crisis', 'stabilisatie', 'groei'].includes(next.phase)
+      ? next.phase
+      : current.phase;
+
+    return this.updateAppMeta('crossPollination', {
+      profile,
+      phase,
+      lastModified: new Date().toISOString()
+    });
+  }
+
+  getCrossPollinationTuning() {
+    const settings = this.getCrossPollinationSettings();
+    const profileMap = {
+      voorzichtig: {
+        mainCap: 1,
+        secondaryCap: 1,
+        triggerCap: 2,
+        todoCap: 3,
+        planCap: 3,
+        boostCap: 3
+      },
+      gebalanceerd: {
+        mainCap: 2,
+        secondaryCap: 2,
+        triggerCap: 3,
+        todoCap: 6,
+        planCap: 5,
+        boostCap: 6
+      },
+      directief: {
+        mainCap: 3,
+        secondaryCap: 2,
+        triggerCap: 4,
+        todoCap: 8,
+        planCap: 7,
+        boostCap: 8
+      }
+    };
+
+    const phaseAdjustments = {
+      crisis: { mainCap: 1, secondaryCap: 1, triggerCap: 2 },
+      stabilisatie: { },
+      groei: { mainCap: 1, triggerCap: 1 }
+    };
+
+    const base = profileMap[settings.profile] || profileMap.gebalanceerd;
+    const adjusted = { ...base };
+    const phaseShift = phaseAdjustments[settings.phase] || phaseAdjustments.stabilisatie;
+
+    Object.keys(phaseShift).forEach((key) => {
+      adjusted[key] = Math.max(1, (adjusted[key] || 1) + phaseShift[key]);
+    });
+
+    return adjusted;
+  }
+
   /**
    * Update specific form data
    */
@@ -405,6 +834,13 @@ class IamDataStore {
     data.integrationSummary = this.buildIntegrationSummary(data.forms || {});
     this.saveData(data);
     return data.forms[formType];
+  }
+
+  /**
+   * Alias for updateFormData for backward compatibility
+   */
+  setFormData(formType, formData) {
+    return this.updateFormData(formType, formData);
   }
 
   /**
@@ -426,6 +862,15 @@ class IamDataStore {
     const sociaalNetwerk = getForm('sociaal-netwerk');
     const steunnetwerk = getForm('steunnetwerk');
     const motiverendeMensen = getForm('motiverende-mensen');
+    const watIsMijnIk = getForm('wat-is-mijn-ik');
+    const sovaGrenzen = getForm('sova-grenzen');
+    const sovaMixed = getForm('sova-mixed-signals');
+    const smoezen = getForm('smoezenboekverhaal');
+    const levensdoelen = getForm('levensdoelen-stellen');
+    const genietBeloon = getForm('genieten-belonen');
+    const waardigheid = getForm('waardigheid');
+    const chemsexPatroon = getForm('chemsex-patroon');
+    const chemsexWatWilIk = getForm('chemsex-wat-wil-ik');
     const combineParts = (...parts) => parts
       .filter((part) => typeof part === 'string' && part.trim())
       .join(' - ');
@@ -469,7 +914,8 @@ class IamDataStore {
       combineParts(steunnetwerk.support3Name, steunnetwerk.support3SupportType),
       steunnetwerk.networkSummary,
       motiverendeMensen.personName,
-      combineParts(motiverendeMensen.personName, motiverendeMensen.personRole)
+      combineParts(motiverendeMensen.personName, motiverendeMensen.personRole),
+      levensdoelen.steunHerinnering
     ], 8);
 
     const bestInterventionsBucket = this.buildInsightBucket([
@@ -482,7 +928,20 @@ class IamDataStore {
       risicoActiviteiten.exitStrategy,
       gevoelens.enduranceSupport,
       gevoelens.acceptancePractice,
-      plan.planA
+      plan.planA,
+      sovaGrenzen.wensgedrag,
+      sovaGrenzen.jouwwensgedrag,
+      sovaMixed.wensgedrag,
+      sovaMixed.wensgedrag02,
+      smoezen.ontkrachting01,
+      smoezen.ontkrachting02,
+      smoezen.ontkrachting03,
+      genietBeloon.genietingenmomenteel,
+      genietBeloon.gedragBelonen,
+      genietBeloon.snelBelonen,
+      levensdoelen.eersteStap,
+      watIsMijnIk.surfSkills,
+      watIsMijnIk.surfPlan
     ], 10);
 
     const fallbackMovesBucket = this.buildInsightBucket([
@@ -497,7 +956,26 @@ class IamDataStore {
       soortenTrek.earlyWarningPattern,
       soortenTrek.noGoSignals,
       risicoSituaties.internalRisks,
-      risicoActiviteiten.internalRisks
+      risicoActiviteiten.internalRisks,
+      sovaGrenzen.lastgedrag,
+      sovaMixed.lastgedrag,
+      smoezen.smoes01,
+      smoezen.smoes02,
+      smoezen.smoes03,
+      levensdoelen.grensSignalen,
+      chemsexPatroon.earlySignals,
+      watIsMijnIk.waveTriggerMap,
+      watIsMijnIk.boardEmotionalProfile,
+      watIsMijnIk.boardBiologyProfile,
+      watIsMijnIk.boardProfile,
+      watIsMijnIk.upperCost,
+      watIsMijnIk.downerCost,
+      watIsMijnIk.bodyTension > '50' ? `Lichamelijkheid: ${watIsMijnIk.bodyTension}% spanning (zelf vs. zichtbaar)` : null,
+      watIsMijnIk.sexualTension > '50' ? `Seksualiteit: ${watIsMijnIk.sexualTension}% spanning (zelf vs. zichtbaar)` : null,
+      watIsMijnIk.socialTension > '50' ? `Sociaal: ${watIsMijnIk.socialTension}% spanning (zelf vs. zichtbaar)` : null,
+      watIsMijnIk.workTension > '50' ? `Arbeid: ${watIsMijnIk.workTension}% spanning (zelf vs. zichtbaar)` : null,
+      watIsMijnIk.matterTension > '50' ? `Materie: ${watIsMijnIk.matterTension}% spanning (zelf vs. zichtbaar)` : null,
+      watIsMijnIk.valuesTension > '50' ? `Waarden: ${watIsMijnIk.valuesTension}% spanning (zelf vs. zichtbaar)` : null
     ], 8);
 
     const motivationAnchorsBucket = this.buildInsightBucket([
@@ -518,7 +996,19 @@ class IamDataStore {
       waaromWel.functionSummary,
       combineParts(motiverendeMensen.anchor1Name, motiverendeMensen.anchor1Why),
       combineParts(motiverendeMensen.anchor2Name, motiverendeMensen.anchor2Why),
-      combineParts(motiverendeMensen.anchor3Name, motiverendeMensen.anchor3Why)
+      combineParts(motiverendeMensen.anchor3Name, motiverendeMensen.anchor3Why),
+      watIsMijnIk.workStrengthen,
+      watIsMijnIk.valuesStrengthen,
+      watIsMijnIk.socialStrengthen,
+      watIsMijnIk.bodyStrengthen,
+      watIsMijnIk.surfPlan,
+      levensdoelen.levensDoelen,
+      levensdoelen.steunHerinnering,
+      waardigheid.intrinsiekWaarde,
+      waardigheid.toegevoegdeWaarde,
+      chemsexWatWilIk.coreNeed,
+      chemsexWatWilIk.importantValues,
+      chemsexWatWilIk.futureVision
     ], 8);
 
     const insightMeta = {
@@ -730,7 +1220,146 @@ class IamDataStore {
       return v.toString(16);
     });
   }
+
+  /**
+   * Tracking settings management
+   */
+  getTrackingSettings() {
+    const data = this.getData();
+    return data?.appMeta?.trackingSettings || {
+      sleep: false,
+      food: false,
+      training: false,
+      meditation: false,
+      social: false,
+      emotion: false
+    };
+  }
+
+  setSleepTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.sleep = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  setFoodTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.food = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  setTrainingTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.training = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  setMeditationTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.meditation = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  setSocialTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.social = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  setEmotionTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.emotion = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  getSleepTrackingEnabled() {
+    return this.getTrackingSettings().sleep;
+  }
+
+  getFoodTrackingEnabled() {
+    return this.getTrackingSettings().food;
+  }
+
+  getTrainingTrackingEnabled() {
+    return this.getTrackingSettings().training;
+  }
+
+  getMeditationTrackingEnabled() {
+    return this.getTrackingSettings().meditation;
+  }
+
+  getSocialTrackingEnabled() {
+    return this.getTrackingSettings().social;
+  }
+
+  getEmotionTrackingEnabled() {
+    return this.getTrackingSettings().emotion;
+  }
+
+  setFrustrationTrackingEnabled(enabled) {
+    const settings = this.getTrackingSettings();
+    settings.frustration = enabled;
+    this.updateAppMeta('trackingSettings', settings);
+  }
+
+  getFrustrationTrackingEnabled() {
+    return this.getTrackingSettings().frustration;
+  }
 }
 
 // Initialize global data store
 const iamData = new IamDataStore();
+
+function renderGlobalPersonalGreeting() {
+  if (typeof document === 'undefined') return;
+
+  const hasPageSpecificGreeting =
+    document.getElementById('personalGreeting') ||
+    typeof window.renderPersonalizedGreeting === 'function';
+
+  if (hasPageSpecificGreeting) return;
+
+  const displayName = typeof iamData.getPreferredDisplayName === 'function'
+    ? iamData.getPreferredDisplayName('')
+    : '';
+
+  const existing = document.getElementById('iamAutoPersonalGreeting');
+  if (!displayName) {
+    if (existing && existing.parentNode) {
+      existing.parentNode.removeChild(existing);
+    }
+    return;
+  }
+
+  const titleEl = document.querySelector('h1');
+  if (!titleEl) return;
+
+  const pageName = ((window.location && window.location.pathname) || '').split('/').pop() || '';
+  let greetingText = `${displayName}, welkom terug.`;
+
+  if (/^(noodplan-|start-nu\.htm)/i.test(pageName)) {
+    greetingText = `${displayName}, stap voor stap en blijf veilig.`;
+  } else if (/^(plan-|to-do-lijst\.htm|agenda\.htm)/i.test(pageName)) {
+    greetingText = `${displayName}, klein en concreet werkt het best.`;
+  } else if (/^(dagelijks-gevolg\.htm|analyseachteraf\.htm)/i.test(pageName)) {
+    greetingText = `${displayName}, kijken zonder oordeel geeft richting.`;
+  } else if (/^(trek-opvangen|craving-|soorten-trek\.htm)/i.test(pageName)) {
+    greetingText = `${displayName}, eerst reguleren, daarna kiezen.`;
+  }
+
+  const greetingEl = existing || document.createElement('p');
+  greetingEl.id = 'iamAutoPersonalGreeting';
+  greetingEl.textContent = greetingText;
+  greetingEl.style.margin = '0.55rem 0 0';
+  greetingEl.style.fontWeight = '700';
+
+  if (!existing) {
+    titleEl.insertAdjacentElement('afterend', greetingEl);
+  }
+}
+
+if (typeof window !== 'undefined') {
+  window.iamRenderGlobalPersonalGreeting = renderGlobalPersonalGreeting;
+  document.addEventListener('DOMContentLoaded', renderGlobalPersonalGreeting);
+  window.addEventListener('focus', renderGlobalPersonalGreeting);
+}

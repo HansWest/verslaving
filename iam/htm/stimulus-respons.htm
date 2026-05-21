@@ -75,6 +75,55 @@
       font-size: 0.88rem;
       font-weight: 600;
     }
+    .cross-suggest-box {
+      background: #f4f8fb;
+      border: 1px solid #d4e4ef;
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin: 1rem 0 0;
+    }
+    .cross-suggest-box p {
+      margin: 0 0 0.55rem;
+      color: #445d6d;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+    .cross-suggest-list {
+      display: grid;
+      gap: 0.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .cross-suggest-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #d8e7f1;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+    }
+    .cross-suggest-item span {
+      flex: 1 1 240px;
+      font-size: 0.88rem;
+      color: #324c5d;
+      line-height: 1.45;
+    }
+    .cross-suggest-item button {
+      border: 1px solid #c7dbe8;
+      background: #eef6fb;
+      color: #2b556e;
+      border-radius: 999px;
+      min-height: 34px;
+      padding: 0.38rem 0.74rem;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
     .grid-two { display: grid; gap: 1rem; }
     @media (min-width: 760px) { .grid-two { grid-template-columns: 1fr 1fr; } }
     .action-bar { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
@@ -131,6 +180,7 @@
 
     .weekly-review-list li { margin-bottom: 0.3rem; }
   </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
   <div class="container">
@@ -161,6 +211,11 @@
         </div>
       </section>
 
+      <section class="cross-suggest-box">
+        <p>Ideeën uit andere pagina's (max 5): kies wat nu helpt en voeg het direct toe.</p>
+        <ul class="cross-suggest-list" id="crossSuggestListStimulus"></ul>
+      </section>
+
       <section class="legacy-note" aria-labelledby="techniqueCompassTitle">
         <h2 id="techniqueCompassTitle">Technieken-kompas</h2>
         <p>Uit de oudere werkbladen komt een nuttige kapstok: kies bewust waar je op ingrijpt.</p>
@@ -169,6 +224,8 @@
           <li><strong>Respons voorkomen:</strong> alternatief gedrag, afleiding, anders denken, aandacht en steun.</li>
           <li><strong>Consequentie sturen:</strong> belonen en lange termijn voor ogen houden.</li>
         </ul>
+        <p style="margin-top: 0.85rem; font-size: 0.92rem; color: #435868;"><strong>Tip:</strong> Combinaties van stimuli kunnen samen &#8220;te veel voor willskracht&#8221; zijn. Bijv. vermoeidheid + tegenvaller + trigger tegelijk = hoger risico. Dit helpt bij inzien wanneer je extra voorzorgmaatregelen nodig hebt.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.92rem; color: #435868;"><strong>Oefenen werkt:</strong> Zowel in het echt als in jouw fantasie. Imaginair oefenen (voorstellen dat je je plan uitvoert) helpt om situaties voor te bereiden zonder direct in crisis te zijn.</p>
         <div class="legacy-links">
           <a href="./smoezenboek.htm">Smoezenboek</a>
           <a href="./trek-opvangen-2.htm">Treksurfen</a>
@@ -276,7 +333,6 @@
           <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
         </div>
       </form>
     </div>
@@ -382,6 +438,73 @@
       }
     }
 
+    function buildCrossSuggestions() {
+      if (typeof iamData === 'undefined') return [];
+
+      const risicoDenken = iamData.getFormData('risico-denken') || {};
+      const risicoGevoelens = iamData.getFormData('risico-gevoelens') || {};
+      const planVanAanpak = iamData.getFormData('plan-van-aanpak') || {};
+      const balans = iamData.getFormData('voor-nadelen-balansen') || {};
+
+      const pool = [
+        { text: risicoDenken.alternatiefDenken, source: 'Risico-denken', target: 'cognitive' },
+        { text: risicoDenken.hoogRisicoDenken, source: 'Risico-denken', target: 'stimulus' },
+        { text: risicoGevoelens.cat1Plan, source: 'Risico-gevoelens', target: 'attention' },
+        { text: risicoGevoelens.feelingSurfing, source: 'Risico-gevoelens', target: 'attention' },
+        { text: balans.nadelen, source: 'Voor-nadelen-balansen', target: 'contingencyReward' },
+        { text: balans.voordelen, source: 'Voor-nadelen-balansen', target: 'longTerm' },
+        { text: planVanAanpak.doel, source: 'Plan van aanpak', target: 'practicePlan' },
+        { text: planVanAanpak.hulpbronnen, source: 'Plan van aanpak', target: 'socialSupport' }
+      ];
+
+      const unique = [];
+      pool.forEach((item) => {
+        const clean = String(item.text || '').trim();
+        if (!clean) return;
+        if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+        unique.push({ ...item, text: clean });
+      });
+
+      return unique.slice(0, 5);
+    }
+
+    function renderCrossSuggestions() {
+      const list = document.getElementById('crossSuggestListStimulus');
+      if (!list) return;
+
+      const suggestions = buildCrossSuggestions();
+      list.innerHTML = '';
+
+      if (!suggestions.length) {
+        const empty = document.createElement('li');
+        empty.className = 'cross-suggest-item';
+        empty.innerHTML = '<span>Nog geen suggesties uit gekoppelde pagina\'s gevonden.</span>';
+        list.appendChild(empty);
+        return;
+      }
+
+      suggestions.forEach((item) => {
+        const row = document.createElement('li');
+        row.className = 'cross-suggest-item';
+
+        const text = document.createElement('span');
+        text.textContent = `${item.source}: ${item.text}`;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = 'Voeg toe';
+        button.addEventListener('click', () => {
+          const target = document.getElementById(item.target);
+          appendUniqueLine(target, item.text);
+          saveForm(false);
+        });
+
+        row.appendChild(text);
+        row.appendChild(button);
+        list.appendChild(row);
+      });
+    }
+
     function renderWeeklyReviewPrompt() {
       const weekly = getWeeklyReview();
       const status = document.getElementById('weeklyReviewStatus');
@@ -479,12 +602,13 @@
       document.getElementById('suggestButton').addEventListener('click', applySuggestionFromIntegration);
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('stimulusResponsForm').addEventListener('input', () => saveForm(false));
       document.getElementById('weeklyReviewApply').addEventListener('click', applyWeeklyReviewToForm);
       document.getElementById('weeklyReviewOpen').addEventListener('click', () => {
         window.location.href = 'index.htm#weeklyReviewCard';
       });
+      renderCrossSuggestions();
+      window.addEventListener('focus', renderCrossSuggestions);
     });
   </script>
 </body>

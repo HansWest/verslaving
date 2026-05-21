@@ -57,7 +57,149 @@
     .message { display: none; border-left: 4px solid #5a8840; }
     .message.show { display: block; }
     .message.error { border-left-color: var(--page-accent); }
+
+    .cross-suggest-box {
+      background: #f4f8fb;
+      border: 1px solid #d4e4ef;
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin: 1rem 0 0;
+    }
+
+    .cross-suggest-box p {
+      margin: 0 0 0.55rem;
+      color: #445d6d;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .cross-suggest-list {
+      display: grid;
+      gap: 0.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cross-suggest-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #d8e7f1;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+    }
+
+    .cross-suggest-item span {
+      flex: 1 1 240px;
+      font-size: 0.88rem;
+      color: #324c5d;
+      line-height: 1.45;
+    }
+
+    .cross-suggest-item button {
+      border: 1px solid #c7dbe8;
+      background: #eef6fb;
+      color: #2b556e;
+      border-radius: 999px;
+      min-height: 34px;
+      padding: 0.38rem 0.74rem;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .route-card {
+      border-top: 4px solid #5b744a;
+    }
+
+    .route-hint {
+      margin-top: 0.7rem;
+      color: #4f6574;
+      font-size: 0.92rem;
+    }
+
+    .cross-page-links {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .cross-page-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      border-radius: 999px;
+      border: 1px solid #c9dbe7;
+      background: #f3f8fb;
+      color: #1f4f6d;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0.42rem 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .priority-entry-box {
+      background: #f4f8fb;
+      border: 1px solid #d4e4ef;
+      border-radius: 12px;
+      padding: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .priority-entry-list {
+      list-style: none;
+      margin: 0.8rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .priority-entry-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      background: #fff;
+      border: 1px solid #d8e7f1;
+      border-radius: 10px;
+      padding: 0.6rem 0.7rem;
+    }
+
+    .priority-entry-main p { margin: 0; line-height: 1.45; }
+    .priority-entry-main .meta { margin-top: 0.28rem; font-size: 0.84rem; color: #496072; }
+
+    .priority-entry-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #e8f1f7;
+      color: #1f4f6d;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.18rem 0.55rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .priority-entry-delete {
+      border: 1px solid #d0dde8;
+      background: #fff;
+      color: #3c5b70;
+      border-radius: 999px;
+      min-height: 34px;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
   </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
   <div class="container">
@@ -75,12 +217,26 @@
       <div id="message" class="message"></div>
 
       <section class="intro-card">
-        <h2>Typische risicomomenten</h2>
+        <h2>Hoe werkt dit?</h2>
+        <p><strong>Het kernidee:</strong> Veel risicofoto's activiteiten zijn prima doenbaar — *als je je ervoorbereidt*. Maar zonder plan zijn ze echt risicovol.</p>
+        <p>Dit werkblad helpt je om voor ieder risicovol moment te bedenken:</p>
         <ul class="helper-list">
-          <li>Late activiteiten met weinig energie of slaaptekort.</li>
-          <li>Sociale activiteiten met groepsdruk of beschikbaarheid.</li>
-          <li>Activiteiten die vroeger sterk met gebruik verbonden waren.</li>
+          <li>Hoe je je <strong>voorbereidt</strong> (zodat het waarschijnlijk goed gaat)</li>
+          <li>Hoe je <strong>veilig uitstapt</strong> (als risico oploopt)</li>
+          <li>Welke <strong>narisico's</strong> je verwacht (wat gebeurt pas daarna?)</li>
+          <li>Welke <strong>vaardigheden</strong> je inzet (afleiding, steun, anders denken, etc.)</li>
         </ul>
+      </section>
+
+      <section class="note-card">
+        <h2>Snel naar verwante pagina's</h2>
+        <div class="cross-page-links">
+          <a href="./waarom-wel-gebruiken.htm">Waarom-wel-gebruiken</a>
+          <a href="./risico-activiteiten.htm">Risico-activiteiten</a>
+          <a href="./risico-situaties.htm">Risico-situaties</a>
+          <a href="./risico-mensen.htm">Risico-mensen</a>
+          <a href="./risico-gevoelens.htm">Risico-gevoelens</a>
+        </div>
       </section>
 
       <form id="risicoActiviteitenForm">
@@ -90,14 +246,6 @@
             <label for="presetActivity">Kies een voorbeeldactiviteit (optioneel)</label>
             <select id="presetActivity">
               <option value="">Kies een activiteit</option>
-              <option>Als ik uitga.</option>
-              <option>Als ik me verveel.</option>
-              <option>Als ik iets wil vieren.</option>
-              <option>Als ik ga dansen of naar een afterparty ga.</option>
-              <option>Als ik over emoties ga praten.</option>
-              <option>Als ik seks heb en spanning oploopt.</option>
-              <option>Als ik na sport in de kantine blijf hangen.</option>
-              <option>Als ik op feestdagen in drukte zit.</option>
             </select>
           </div>
           <div class="form-group mt-2">
@@ -164,26 +312,97 @@
           </section>
         </div>
 
+        <section class="question-card">
+          <h2>Items met datum en belangrijkheid</h2>
+          <p style="margin:0 0 0.6rem; color:#4f6574; font-size:0.92rem;">Leg meerdere items vast met datum en belangrijkheid. Hoogste belangrijkheid staat bovenaan.</p>
+          <div class="priority-entry-box">
+            <div class="grid-two">
+              <div class="form-group">
+                <label for="activityRiskItemText">Item</label>
+                <input id="activityRiskItemText" type="text" placeholder="Bijv. Vrijdagavond na werk + moe + drukte." />
+              </div>
+              <div class="form-group">
+                <label for="activityRiskItemDate">Datum</label>
+                <input id="activityRiskItemDate" type="date" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="activityRiskItemPriority">Belangrijkheid: <span id="activityRiskItemPriorityValue">7</span>/10</label>
+              <input id="activityRiskItemPriority" type="range" min="1" max="10" step="1" value="7" />
+            </div>
+            <div class="action-bar" style="margin-top:0.4rem;">
+              <button type="button" class="button-secondary" id="addActivityRiskItemButton">Voeg item toe</button>
+            </div>
+            <ul class="priority-entry-list" id="activityRiskItemList"></ul>
+          </div>
+        </section>
+
         <section class="note-card">
           <h2>Bijpassende vaardigheden</h2>
+          <p style="margin-bottom: 0.6rem; color: #555; font-size: 0.95rem;">Welke vaardigheden zet je in om deze activiteit vol te houden? Hier zijn vijf concrete mogelijkheden:</p>
           <div class="form-group">
-            <label for="matchingSkills">Welke vaardigheden zet je hierbij in?</label>
-            <textarea id="matchingSkills" rows="4" placeholder="Bijvoorbeeld: afleiding, steun vragen, anders denken, treksurfen, zelfbeloning."></textarea>
+            <label style="font-weight: 700;">1) Afleidingen</label>
+            <textarea id="skillAfleiding" placeholder="Welke activiteiten houden je echt bezig? (muziek, sport, spel, vrienden)" rows="2" style="margin-bottom: 0.8rem;"></textarea>
+            
+            <label style="font-weight: 700;">2) Praten</label>
+            <textarea id="skillPraten" placeholder="Met wie kun je bellen of afspreken als het lastig wordt? Met wie over dit moment?" rows="2" style="margin-bottom: 0.8rem;"></textarea>
+            
+            <label style="font-weight: 700;">3) Anders denken</label>
+            <textarea id="skillDenken" placeholder="Hoe denk je nuchter over deze activiteit en haar risico's? Wat zeg je tegen jezelf?" rows="2" style="margin-bottom: 0.8rem;"></textarea>
+            
+            <label style="font-weight: 700;">4) Treksurfen</label>
+            <textarea id="skillTreksurfen" placeholder="Waar in de buurt van deze activiteit is een veilige plek om even weg te zijn? Toilet, buitenlucht?" rows="2" style="margin-bottom: 0.8rem;"></textarea>
+            
+            <label style="font-weight: 700;">5) Zelfbeloning</label>
+            <textarea id="skillBeloning" placeholder="Wat verdien je voor jezelf als je je zelfbeheersing vol houdt? Wat reken je jezelf toe?" rows="2"></textarea>
           </div>
+        </section>
+
+        <section class="cross-suggest-box">
+          <p>Ideeën uit andere pagina's (max 5): voeg alleen toe wat je voorbereiding en exit concreter maakt.</p>
+          <ul class="cross-suggest-list" id="crossSuggestListActiviteiten"></ul>
+        </section>
+
+        <section class="note-card route-card">
+          <h2>Van activiteit naar actie (nu doen)</h2>
+          <div class="grid-two">
+            <div class="form-group">
+              <label for="routeUrgencyActiviteiten">Hoe urgent is het nu?</label>
+              <select id="routeUrgencyActiviteiten">
+                <option value="laag" selected>Laag, ik kan voorbereiden</option>
+                <option value="middel">Middel, ik wil direct bijsturen</option>
+                <option value="hoog">Hoog, ik heb meteen noodhouvast nodig</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="routeFocusActiviteiten">Waar wil je nu op focussen?</label>
+              <select id="routeFocusActiviteiten">
+                <option value="trek" selected>Trekregulatie en opvangen</option>
+                <option value="situatie">Situatiescherpte</option>
+                <option value="plan">Plan aanscherpen</option>
+                <option value="nood">Directe noodroute</option>
+              </select>
+            </div>
+          </div>
+          <div class="action-bar" style="margin-top: 0.5rem;">
+            <button type="button" class="button-primary" id="openRecommendedRouteActiviteitenButton">Open aanbevolen actiepagina</button>
+          </div>
+          <p class="route-hint" id="routeHintActiviteiten">Huidig adviespad: Soorten trek.</p>
         </section>
 
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
         </div>
       </form>
     </div>
   </div>
 
+  <script src="../js/optionsLoader.js"></script>
   <script src="../js/dataStore.js"></script>
   <script>
     const formKey = 'risico-activiteiten';
+    const presetOptionsUrl = '../assets/options/risico-activiteiten.json';
     const fields = [
       'activityDraft',
       'riskyActivities',
@@ -193,13 +412,172 @@
       'exitStrategy',
       'afterRisks',
       'rationalizationRisks',
-      'matchingSkills'
+      'skillAfleiding',
+      'skillPraten',
+      'skillDenken',
+      'skillTreksurfen',
+      'skillBeloning'
     ];
+    let currentActiviteitenRoutePath = './soorten-trek.htm';
+
+    const presetFallback = {
+      groups: [
+        {
+          label: 'Sociaal en uitgaan',
+          items: [
+            'Als ik uitga.',
+            'Als ik ga dansen of naar een afterparty ga.',
+            'Als ik iets wil vieren.',
+            'Als ik op feestdagen in drukte zit.'
+          ]
+        },
+        {
+          label: 'Emotie en spanning',
+          items: [
+            'Als ik me verveel.',
+            'Als ik over emoties ga praten.',
+            'Als ik seks heb en spanning oploopt.'
+          ]
+        },
+        {
+          label: 'Routine en context',
+          items: [
+            'Als ik na sport in de kantine blijf hangen.',
+            'Als ik laat thuiskom en nog veel onrust voel.',
+            'Als ik onverwacht vrije tijd over heb.'
+          ]
+        }
+      ]
+    };
 
     function getDefaultData() {
       const data = {};
       fields.forEach((key) => { data[key] = ''; });
+      data.riskItems = [];
       return data;
+    }
+
+    function todayISODate() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function normalizeRiskItem(entry) {
+      const now = new Date().toISOString();
+      return {
+        id: entry && entry.id ? String(entry.id) : `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+        text: String(entry && entry.text ? entry.text : '').trim(),
+        date: String(entry && entry.date ? entry.date : todayISODate()),
+        priority: Math.max(1, Math.min(10, Number(entry && entry.priority ? entry.priority : 7) || 7)),
+        createdAt: String(entry && entry.createdAt ? entry.createdAt : now)
+      };
+    }
+
+    function normalizeRiskItemList(entries) {
+      const safe = Array.isArray(entries) ? entries : [];
+      return safe
+        .map((entry) => normalizeRiskItem(entry))
+        .filter((entry) => entry.text)
+        .sort((a, b) => {
+          if (b.priority !== a.priority) return b.priority - a.priority;
+          return String(b.date || '').localeCompare(String(a.date || ''));
+        });
+    }
+
+    function formatDateLabel(dateText) {
+      const value = String(dateText || '').trim();
+      if (!value) return 'zonder datum';
+      const parsed = new Date(`${value}T12:00:00`);
+      if (Number.isNaN(parsed.getTime())) return value;
+      return parsed.toLocaleDateString('nl-NL', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function getCurrentRiskItems() {
+      const saved = iamData.getFormData ? (iamData.getFormData(formKey) || getDefaultData()) : getDefaultData();
+      return normalizeRiskItemList(saved.riskItems);
+    }
+
+    function renderRiskItems(entries) {
+      const list = document.getElementById('activityRiskItemList');
+      if (!list) return;
+      list.innerHTML = '';
+
+      if (!entries.length) {
+        const item = document.createElement('li');
+        item.innerHTML = '<div class="priority-entry-main"><p>Nog geen items toegevoegd.</p></div>';
+        list.appendChild(item);
+        return;
+      }
+
+      entries.forEach((entry) => {
+        const row = document.createElement('li');
+
+        const left = document.createElement('div');
+        left.className = 'priority-entry-main';
+        const text = document.createElement('p');
+        text.textContent = entry.text;
+        const meta = document.createElement('p');
+        meta.className = 'meta';
+        meta.textContent = `${formatDateLabel(entry.date)} | belangrijkheid ${entry.priority}/10`;
+        left.appendChild(text);
+        left.appendChild(meta);
+
+        const right = document.createElement('div');
+        const badge = document.createElement('span');
+        badge.className = 'priority-entry-badge';
+        badge.textContent = `Top ${entry.priority}`;
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'priority-entry-delete';
+        del.textContent = 'Verwijder';
+        del.addEventListener('click', () => removeRiskItem(entry.id));
+        right.appendChild(badge);
+        right.appendChild(document.createElement('br'));
+        right.appendChild(del);
+
+        row.appendChild(left);
+        row.appendChild(right);
+        list.appendChild(row);
+      });
+    }
+
+    function addRiskItem() {
+      const textInput = document.getElementById('activityRiskItemText');
+      const dateInput = document.getElementById('activityRiskItemDate');
+      const priorityInput = document.getElementById('activityRiskItemPriority');
+
+      const entry = normalizeRiskItem({
+        text: textInput ? textInput.value : '',
+        date: dateInput ? dateInput.value : todayISODate(),
+        priority: priorityInput ? Number(priorityInput.value) : 7
+      });
+
+      if (!entry.text) {
+        showMessage('Vul eerst een risico-item in.');
+        return;
+      }
+
+      const current = getCurrentRiskItems();
+      current.push(entry);
+      const next = normalizeRiskItemList(current);
+      const payload = collectFormData();
+      payload.riskItems = next;
+      iamData.updateFormData(formKey, payload);
+      renderRiskItems(next);
+
+      textInput.value = '';
+      if (priorityInput) priorityInput.value = '7';
+      const label = document.getElementById('activityRiskItemPriorityValue');
+      if (label) label.textContent = '7';
+      showMessage('Risico-item toegevoegd.');
+    }
+
+    function removeRiskItem(entryId) {
+      const next = getCurrentRiskItems().filter((entry) => entry.id !== entryId);
+      const payload = collectFormData();
+      payload.riskItems = next;
+      iamData.updateFormData(formKey, payload);
+      renderRiskItems(next);
+      showMessage('Risico-item verwijderd.');
     }
 
     function fillForm(data) {
@@ -227,9 +605,27 @@
       showMessage.timer = setTimeout(() => message.classList.remove('show'), 3000);
     }
 
+    function appendUniqueLine(target, line) {
+      if (!target || !line) return;
+      const clean = String(line).trim();
+      if (!clean) return;
+
+      const lines = target.value
+        .split('\n')
+        .map((part) => part.trim())
+        .filter(Boolean);
+
+      if (!lines.includes(clean)) {
+        target.value = target.value ? `${target.value}\n${clean}` : clean;
+      }
+    }
+
     function saveForm(feedback = true) {
       try {
-        iamData.updateFormData(formKey, collectFormData());
+        const payload = collectFormData();
+        payload.riskItems = getCurrentRiskItems();
+        const saved = iamData.updateFormData(formKey, payload);
+        renderRiskItems(normalizeRiskItemList((saved || payload).riskItems));
         if (feedback) showMessage('Risico-activiteiten opgeslagen op dit toestel.');
       } catch (error) {
         console.error(error);
@@ -259,9 +655,147 @@
       saveForm(false);
     }
 
+    function buildCrossSuggestions() {
+      if (typeof iamData === 'undefined') return [];
+
+      const risicoSituaties = iamData.getFormData('risico-situaties') || {};
+      const plan = iamData.getFormData('plan-van-aanpak') || {};
+      const stimulus = iamData.getFormData('stimulus-respons') || {};
+      const denken = iamData.getFormData('risico-denken') || {};
+      const gevoelens = iamData.getFormData('lastige-gevoelens') || {};
+
+      const pool = [
+        { text: risicoSituaties.riskySituations, source: 'Risico-situaties', target: 'riskyActivities' },
+        { text: risicoSituaties.responsePlan, source: 'Risico-situaties', target: 'preparationPlan' },
+        { text: stimulus.functionalAlternative, source: 'Stimulus-respons', target: 'preparationPlan' },
+        { text: plan.planB, source: 'Plan van aanpak', target: 'exitStrategy' },
+        { text: denken.alternatiefDenken, source: 'Risico-denken', target: 'skillDenken' },
+        { text: gevoelens.distractionIdeas, source: 'Lastige gevoelens', target: 'skillAfleiding' },
+        { text: gevoelens.talkPeople, source: 'Lastige gevoelens', target: 'skillPraten' }
+      ];
+
+      const unique = [];
+      pool.forEach((item) => {
+        const clean = String(item.text || '').trim();
+        if (!clean) return;
+        if (unique.some((entry) => entry.text.toLowerCase() === clean.toLowerCase())) return;
+        unique.push({ ...item, text: clean });
+      });
+
+      return unique.slice(0, 5);
+    }
+
+    function renderCrossSuggestions() {
+      const list = document.getElementById('crossSuggestListActiviteiten');
+      if (!list) return;
+
+      const suggestions = buildCrossSuggestions();
+      list.innerHTML = '';
+
+      if (!suggestions.length) {
+        const empty = document.createElement('li');
+        empty.className = 'cross-suggest-item';
+        empty.innerHTML = '<span>Nog geen suggesties uit gekoppelde pagina\'s gevonden.</span>';
+        list.appendChild(empty);
+        return;
+      }
+
+      suggestions.forEach((item) => {
+        const row = document.createElement('li');
+        row.className = 'cross-suggest-item';
+
+        const text = document.createElement('span');
+        text.textContent = `${item.source}: ${item.text}`;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = 'Voeg toe';
+        button.addEventListener('click', () => {
+          const target = document.getElementById(item.target);
+          appendUniqueLine(target, item.text);
+          saveForm(false);
+          showMessage(`Bron ${item.source} toegevoegd aan ${item.target}.`);
+        });
+
+        row.appendChild(text);
+        row.appendChild(button);
+        list.appendChild(row);
+      });
+    }
+
+    function getRecommendedRoute() {
+      const urgency = document.getElementById('routeUrgencyActiviteiten').value;
+      const focus = document.getElementById('routeFocusActiviteiten').value;
+
+      if (urgency === 'hoog' || focus === 'nood') {
+        return {
+          path: './noodplan-forse-trek.htm',
+          hint: 'Huidig adviespad: Noodplan forse trek.'
+        };
+      }
+      if (focus === 'situatie') {
+        return {
+          path: './risico-situaties.htm',
+          hint: 'Huidig adviespad: Risico-situaties.'
+        };
+      }
+      if (focus === 'plan') {
+        return {
+          path: './plan-van-aanpak.htm',
+          hint: 'Huidig adviespad: Plan van aanpak.'
+        };
+      }
+      if (urgency === 'middel') {
+        return {
+          path: './stimulus-respons.htm',
+          hint: 'Huidig adviespad: Stimulus-respons plan.'
+        };
+      }
+
+      return {
+        path: './soorten-trek.htm',
+        hint: 'Huidig adviespad: Soorten trek.'
+      };
+    }
+
+    function updateRouteHint() {
+      const recommendation = getRecommendedRoute();
+      currentActiviteitenRoutePath = recommendation.path;
+      const hintEl = document.getElementById('routeHintActiviteiten');
+      if (hintEl) hintEl.textContent = recommendation.hint;
+    }
+
+    function openRecommendedRoute() {
+      window.location.href = currentActiviteitenRoutePath;
+    }
+
+    async function loadActivityOptions() {
+      await iamOptionsLoader.loadSelectOptions({
+        selectId: 'presetActivity',
+        url: presetOptionsUrl,
+        placeholder: 'Kies een activiteit',
+        fallback: presetFallback
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const saved = iamData.getFormData(formKey);
       fillForm({ ...getDefaultData(), ...(saved || {}) });
+      renderRiskItems(normalizeRiskItemList((saved || {}).riskItems));
+      loadActivityOptions();
+      renderCrossSuggestions();
+      updateRouteHint();
+
+      const riskItemDate = document.getElementById('activityRiskItemDate');
+      if (riskItemDate && !riskItemDate.value) riskItemDate.value = todayISODate();
+      const riskItemPriority = document.getElementById('activityRiskItemPriority');
+      const riskItemPriorityValue = document.getElementById('activityRiskItemPriorityValue');
+      if (riskItemPriority && riskItemPriorityValue) {
+        riskItemPriority.addEventListener('input', () => {
+          riskItemPriorityValue.textContent = String(riskItemPriority.value || '7');
+        });
+      }
+      document.getElementById('addActivityRiskItemButton').addEventListener('click', addRiskItem);
 
       const preset = document.getElementById('presetActivity');
       const draft = document.getElementById('activityDraft');
@@ -278,10 +812,13 @@
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
+      document.getElementById('openRecommendedRouteActiviteitenButton').addEventListener('click', openRecommendedRoute);
+      document.getElementById('routeUrgencyActiviteiten').addEventListener('change', updateRouteHint);
+      document.getElementById('routeFocusActiviteiten').addEventListener('change', updateRouteHint);
       document.getElementById('risicoActiviteitenForm').addEventListener('input', () => saveForm(false));
+      window.addEventListener('focus', renderCrossSuggestions);
+      window.addEventListener('focus', updateRouteHint);
     });
   </script>
-<script src="../js/dataStore.js"></script>
 </body>
 </html>

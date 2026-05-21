@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intake Inventarisatie - IAM</title>
+    <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+    <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+    <style>
+        :root { --ink:#173249; --main:#466d8c; --accent:#cb7a47; --ok:#3b7f45; }
+        body {
+            background: radial-gradient(circle at top left, rgba(63,122,161,0.16), transparent 36%),
+                                    linear-gradient(180deg, #f8f3ec 0%, #edf4f7 100%);
+            color: var(--ink);
+        }
+        .page-shell { max-width: 920px; margin: 0 auto; }
+        .hero {
+            margin-top: 1rem; border-radius: 18px; padding: 1.2rem; color: #fff;
+            background: linear-gradient(145deg, var(--main) 0%, #6c7a45 100%);
+            box-shadow: 0 14px 30px rgba(23,50,73,0.18);
+        }
+        .top-links { display:flex; flex-wrap:wrap; gap:0.55rem; margin-bottom:0.8rem; }
+        .top-links a {
+            color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,0.38);
+            background:rgba(255,255,255,0.14); border-radius:999px; padding:0.45rem 0.82rem;
+            min-height:44px; display:inline-flex; align-items:center; font-weight:700;
+        }
+        .card {
+            margin-top: 1rem; border-radius: 16px; padding: 1.05rem;
+            background: rgba(255,255,255,0.95); box-shadow: 0 9px 22px rgba(23,50,73,0.09);
+        }
+        .form-grid { display:grid; gap:0.9rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+        .full { grid-column: 1 / -1; }
+        .check-grid { display:grid; gap:0.45rem; }
+        .check-grid label { display:flex; gap:0.55rem; align-items:flex-start; }
+        .check-grid input[type="checkbox"] { width:auto; min-height:auto; margin-top:0.25rem; }
+        .other-field { margin-top:0.7rem; }
+        .hidden { display:none; }
+        input[type="text"], input[type="number"], textarea, select {
+            width:100%; min-height:44px; border-radius:10px; border:1px solid rgba(23,50,73,0.18);
+            padding:0.6rem 0.75rem; background:#fff; color:var(--ink);
+        }
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.85rem center;
+            background-size: 1.1em 1.1em;
+            padding-right: 2.4rem;
+        }
+        textarea { min-height:100px; }
+        .actions { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top: 0.8rem; }
+        button {
+            min-height:44px; border-radius:10px; border:1px solid rgba(23,50,73,0.18);
+            background:#fff; color:var(--ink); padding:0.55rem 0.9rem; font-weight:700; cursor:pointer;
+        }
+        .btn-primary { background:var(--main); border-color:var(--main); color:#fff; }
+        .insight {
+            border-left: 5px solid var(--accent); background:#fff8f2; border-radius: 12px;
+            padding: 0.8rem; margin-top: 0.85rem;
+        }
+        .message {
+            margin-top:0.8rem; display:none; border-radius:10px; padding:0.72rem 0.9rem;
+            background:#eef8ee; border-left:4px solid var(--ok); color:#204f22;
+        }
+        .message.show { display:block; }
+    </style>
+    <script src="../js/themeMode.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="page-shell">
+            <header class="hero">
+                <div class="top-links">
+                    <a href="./index.htm">Terug naar overzicht</a>
+                    <a href="./dagelijks-gevolg.htm">Naar dagkaart</a>
+                </div>
+                <h1>Intake Inventarisatie</h1>
+                <p>Snelle eerste inventarisatie: waar zit de grootste ervaren druk en wat lijkt je motivatie om te veranderen?</p>
+            </header>
+
+            <section class="card">
+                <form id="intakeForm">
+                    <div class="form-grid">
+                        <div>
+                            <label for="naam">Naam (of Nickname)</label>
+                            <input id="naam" name="naam" type="text" />
+                        </div>
+                        <div>
+                            <label for="leeftijd">Leeftijd (optioneel)</label>
+                            <input id="leeftijd" name="leeftijd" type="number" min="0" max="120" />
+                        </div>
+                        <div>
+                            <label for="geslacht">Geslacht (optioneel)</label>
+                            <select id="geslacht" name="geslacht">
+                                <option value="">Kies...</option>
+                                <option value="vrouw">Vrouw</option>
+                                <option value="man">Man</option>
+                                <option value="anders">Anders</option>
+                                <option value="zeg-ik-liever-niet">Zeg ik liever niet</option>
+                            </select>
+                        </div>
+
+                        <div class="full">
+                            <label>Waar zit nu het ervaren probleem?</label>
+                            <div class="check-grid">
+                                <label><input type="checkbox" name="probleem_trek" /> Trek / zin / craving</label>
+                                <label><input type="checkbox" name="probleem_routine" /> Moeite met routine of structuur</label>
+                                <label><input type="checkbox" name="probleem_eenzaamheid" /> Eenzaamheid of leegte</label>
+                                <label><input type="checkbox" name="probleem_spanning" /> Spanning, stress of onrust</label>
+                                <label><input type="checkbox" name="probleem_slaap" /> Slaap of herstel</label>
+                                <label><input type="checkbox" name="probleem_relaties" /> Relaties of contact</label>
+                                <label><input type="checkbox" name="probleem_werk" /> Werk, studie of daginvulling</label>
+                                <label><input type="checkbox" name="probleem_anders" /> Anders</label>
+                            </div>
+                            <div class="other-field">
+                                <label for="probleem_anders_tekst">Toelichting bij anders</label>
+                                <input id="probleem_anders_tekst" name="probleem_anders_tekst" type="text" placeholder="Bijv. lichamelijke klachten, ruzie thuis, geldproblemen..." />
+                            </div>
+                        </div>
+
+                        <div class="full">
+                            <label for="doelen">Wat wil je op korte termijn bereiken?</label>
+                            <textarea id="doelen" name="doelen" placeholder="Bijv. 3 nuchtere dagen, rustiger slapen, minder pieken, betere focus..."></textarea>
+                        </div>
+
+                        <div>
+                            <label for="frequentie">Frequentie van gebruik</label>
+                            <select id="frequentie" name="frequentie">
+                                <option value="">Kies...</option>
+                                <option value="dagelijks">Dagelijks</option>
+                                <option value="weekly">Meerdere keren per week</option>
+                                <option value="weekends">Alleen in het weekend</option>
+                                <option value="maandelijks">Een paar keer per maand</option>
+                                <option value="zelden">Zelden</option>
+                            </select>
+                        </div>
+
+                        <div class="full">
+                            <label>Wat motiveert je vooral om te veranderen?</label>
+                            <div class="check-grid">
+                                <label><input type="checkbox" name="motief_gezondheid" /> Gezondheid</label>
+                                <label><input type="checkbox" name="motief_relaties" /> Relaties verbeteren</label>
+                                <label><input type="checkbox" name="motief_werk" /> Werkprestaties</label>
+                                <label><input type="checkbox" name="motief_financieel" /> Geld besparen</label>
+                                <label><input type="checkbox" name="motief_zelfrespect" /> Zelfrespect</label>
+                                <label><input type="checkbox" name="motief_anders" /> Anders (zie toelichting)</label>
+                            </div>
+                            <div class="other-field hidden" id="motiefAndersField">
+                                <label for="motief_anders_tekst">Toelichting bij anders</label>
+                                <input id="motief_anders_tekst" name="motief_anders_tekst" type="text" placeholder="Bijv. mijn kinderen, energie, vertrouwen..." />
+                            </div>
+                        </div>
+
+                        <div class="full">
+                            <label for="steun_personen">Wie kan je nu steunen?</label>
+                            <textarea id="steun_personen" name="steun_personen" placeholder="Bijv. partner, vriend(in), behandelaar, buddy..."></textarea>
+                        </div>
+
+                        <div class="full">
+                            <label for="hulpmiddelen">Wat heb je nodig om het gevoel te hebben dat dit gaat slagen?</label>
+                            <textarea id="hulpmiddelen" name="hulpmiddelen" placeholder="Bijv. dagstructuur, noodplan, contactmomenten, slaapritme..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" class="btn-primary" id="saveButton">Opslaan</button>
+                        <button type="button" id="loadButton">Herstellen</button>
+                        <button type="button" id="clearButton">Leegmaken</button>
+                    </div>
+                </form>
+
+                <div class="insight" id="intakeInsight">
+                    <strong>Eerste interpretatie:</strong>
+                    <p id="intakeInsightText">Vul het formulier in en klik op Opslaan voor een korte samenvatting.</p>
+                </div>
+
+                <div class="message" id="message"></div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../js/dataStore.js"></script>
+    <script>
+        const formKey = 'intake-inventarisatie';
+
+        function showMessage(text) {
+            const el = document.getElementById('message');
+            el.textContent = text;
+            el.classList.add('show');
+            clearTimeout(showMessage.timer);
+            showMessage.timer = setTimeout(() => el.classList.remove('show'), 2600);
+        }
+
+        function collectFormData() {
+            const form = document.getElementById('intakeForm');
+            const data = {};
+            Array.from(form.elements).forEach((el) => {
+                if (!el.name) return;
+                if (el.type === 'checkbox') {
+                    data[el.name] = el.checked;
+                    return;
+                }
+                data[el.name] = (el.value || '').trim();
+            });
+            return data;
+        }
+
+        function setFormData(data) {
+            const form = document.getElementById('intakeForm');
+            Array.from(form.elements).forEach((el) => {
+                if (!el.name) return;
+                if (el.type === 'checkbox') {
+                    el.checked = Boolean(data[el.name]);
+                    return;
+                }
+                el.value = data[el.name] || '';
+            });
+            syncMotiefAndersField();
+            renderInsight(data);
+        }
+
+        function syncMotiefAndersField() {
+            const checkbox = document.querySelector('input[name="motief_anders"]');
+            const field = document.getElementById('motiefAndersField');
+            if (!checkbox || !field) return;
+            field.classList.toggle('hidden', !checkbox.checked);
+            const input = document.getElementById('motief_anders_tekst');
+            if (!checkbox.checked && input) input.value = '';
+        }
+
+        function renderInsight(data) {
+            const problems = [];
+            if (data.probleem_trek) problems.push('trek / craving');
+            if (data.probleem_routine) problems.push('routine of structuur');
+            if (data.probleem_eenzaamheid) problems.push('eenzaamheid of leegte');
+            if (data.probleem_spanning) problems.push('spanning of stress');
+            if (data.probleem_slaap) problems.push('slaap of herstel');
+            if (data.probleem_relaties) problems.push('relaties of contact');
+            if (data.probleem_werk) problems.push('werk, studie of daginvulling');
+            if (data.probleem_anders && data.probleem_anders_tekst) {
+                problems.push(`anders: ${data.probleem_anders_tekst}`);
+            } else if (data.probleem_anders) {
+                problems.push('anders');
+            }
+
+            const motives = [];
+            if (data.motief_gezondheid) motives.push('gezondheid');
+            if (data.motief_relaties) motives.push('relaties');
+            if (data.motief_werk) motives.push('werk');
+            if (data.motief_financieel) motives.push('financien');
+            if (data.motief_zelfrespect) motives.push('zelfrespect');
+            if (data.motief_anders) motives.push('persoonlijke reden');
+
+            const freqMap = {
+                dagelijks: 'hoge gebruiksdruk',
+                weekly: 'regelmatige gebruiksdruk',
+                weekends: 'situationele/weekend-druk',
+                maandelijks: 'lagere maar terugkerende druk',
+                zelden: 'incidentele druk'
+            };
+
+            const pressure = data.frequentie ? (freqMap[data.frequentie] || 'onbekende gebruiksdruk') : 'nog geen frequentie gekozen';
+            const concern = problems.length ? `Ervaren probleem: ${problems.join(', ')}.` : 'Ervaren probleem nog niet ingevuld.';
+            const motive = motives.length ? `Motivatie lijkt vooral te zitten in: ${motives.join(', ')}.` : 'Motivatiebronnen nog niet aangevinkt.';
+
+            document.getElementById('intakeInsightText').textContent = `${concern} Inschatting druk: ${pressure}. ${motive}`;
+        }
+
+        function saveForm() {
+            const data = collectFormData();
+            iamData.updateFormData(formKey, data);
+            renderInsight(data);
+            showMessage('Intake inventarisatie opgeslagen.');
+        }
+
+        function loadForm() {
+            const data = iamData.getFormData(formKey) || {};
+            setFormData(data);
+            showMessage('Intake inventarisatie hersteld.');
+        }
+
+        function clearForm() {
+            setFormData({});
+            showMessage('Formulier leeggemaakt (nog niet opgeslagen).');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('saveButton').addEventListener('click', saveForm);
+            document.getElementById('loadButton').addEventListener('click', loadForm);
+            document.getElementById('clearButton').addEventListener('click', clearForm);
+            document.querySelector('input[name="motief_anders"]').addEventListener('change', syncMotiefAndersField);
+            loadForm();
+        });
+    </script>
+</body>
+</html>

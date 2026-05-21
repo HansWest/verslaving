@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Levensdoelen stellen</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    .page-shell {
+      max-width: 940px;
+      margin: 0 auto;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, #356a6f 0%, #5f8b4d 100%);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(31, 60, 66, 0.16);
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      margin-bottom: 0.5rem;
+      font-size: 2rem;
+    }
+
+    .page-header p {
+      margin-bottom: 0;
+      max-width: 46rem;
+    }
+
+    .top-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .top-links a {
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .top-links a:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .intro-card,
+    .question-card,
+    .note-card,
+    .message {
+      background: white;
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1.1rem;
+      box-shadow: 0 4px 18px rgba(22, 50, 79, 0.07);
+    }
+
+    .intro-card {
+      border-left: 5px solid #356a6f;
+    }
+
+    .question-card {
+      border-top: 5px solid #5f8b4d;
+    }
+
+    .question-card.target {
+      border-top-color: #3d7c84;
+    }
+
+    .question-card.balance {
+      border-top-color: #8f6a3c;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: #edf4ef;
+      color: #2f5f48;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .helper-note {
+      color: #54656f;
+      font-size: 0.95rem;
+      margin-top: 0.45rem;
+    }
+
+    .grid-two {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 760px) {
+      .grid-two {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .action-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+
+    .action-bar button {
+      flex: 1 1 180px;
+    }
+
+    .note-card {
+      border-left: 5px solid #8f6a3c;
+      background: #fbf8f2;
+    }
+
+    .message {
+      display: none;
+      border-left: 5px solid #5f8b4d;
+      background: #eef9f3;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      border-left-color: #c0392b;
+      background: #fdf0ee;
+    }
+  </style>
+    <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="page-shell">
+      <div class="page-header">
+        <div class="top-links">
+          <a href="./index.htm">Terug naar overzicht</a>
+          <a href="./persoonlijke-waarden.htm">Persoonlijke waarden</a>
+          <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
+        </div>
+        <h1>Levensdoelen stellen</h1>
+        <p>Veel gebruik komt voort uit de angst dat het niet goed gaat. Deze pagina helpt je verschuiven van overleven naar leven: van "niet fout" naar "goed genoeg" en "genoeg".</p>
+      </div>
+
+      <div id="message" class="message"></div>
+
+      <section class="intro-card">
+        <span class="eyebrow">Kernvraag</span>
+        <h2>Wanneer is het goed? Wanneer is het genoeg?</h2>
+        <p>Overleven vanuit angst richt zich vaak op wat niet fout mag gaan. Leven richt zich op wat wel goed gaat. Juist dat verschil geeft ruimte voor herstel, leren en rust.</p>
+        <p class="helper-note">Niet perfect, niet tien-op-tien: vaak is goed genoeg precies sterk genoeg om vol te houden.</p>
+      </section>
+
+      <form id="levensdoelenForm">
+        <section class="question-card balance">
+          <span class="eyebrow">Overleven vs leven</span>
+          <h2>Waar sta ik nu vooral in?</h2>
+          <label for="overlevenLeven">Wanneer schiet ik in overleven, en wanneer lukt leven?</label>
+          <textarea id="overlevenLeven" name="overlevenLeven" rows="5" placeholder="Bij overleven doe ik vooral... Bij leven doe ik vooral..."></textarea>
+        </section>
+
+        <div class="grid-two">
+          <section class="question-card target">
+            <span class="eyebrow">Goed genoeg</span>
+            <h2>Wanneer is het goed genoeg?</h2>
+            <label for="goedGenoeg">Wat is voor mij een realistische 7/10 op belangrijke levensgebieden?</label>
+            <textarea id="goedGenoeg" name="goedGenoeg" rows="6" placeholder="Werk, gezondheid, relaties, rust, plezier... Wanneer is het voor nu voldoende?"></textarea>
+          </section>
+
+          <section class="question-card target">
+            <span class="eyebrow">Genoeg</span>
+            <h2>Wanneer heb ik genoeg?</h2>
+            <label for="genoeg">Tijd, energie, geld, spullen, sociale prikkels: wanneer is het genoeg geweest voor vandaag?</label>
+            <textarea id="genoeg" name="genoeg" rows="6" placeholder="Ik heb genoeg wanneer..."></textarea>
+          </section>
+        </div>
+
+        <section class="question-card balance">
+          <span class="eyebrow">Signalen</span>
+          <h2>Waaraan merk ik dat ik over mijn grens ga?</h2>
+          <label for="grensSignalen">Welke signalen wijzen erop dat ik te veel trek aan wilskracht en te weinig herstel inbouw?</label>
+          <textarea id="grensSignalen" name="grensSignalen" rows="5" placeholder="Bijvoorbeeld: opgejaagd, kortaf, piekeren, slechter slapen, meer trek..."></textarea>
+        </section>
+
+        <section class="question-card target">
+          <span class="eyebrow">Levensdoelen</span>
+          <h2>Welke richting wil ik de komende maanden op?</h2>
+          <label for="levensDoelen">Noem 3 doelen die passen bij leven in plaats van overleven</label>
+          <textarea id="levensDoelen" name="levensDoelen" rows="6" placeholder="Doel 1... Doel 2... Doel 3..."></textarea>
+        </section>
+
+        <div class="grid-two">
+          <section class="question-card target">
+            <span class="eyebrow">Eerste stap</span>
+            <h2>Wat is mijn eerste kleine actie?</h2>
+            <label for="eersteStap">Wat kan ik komende 48 uur doen om mijn richting concreet te maken?</label>
+            <textarea id="eersteStap" name="eersteStap" rows="5" placeholder="Eerste kleine stap: ..."></textarea>
+          </section>
+
+          <section class="question-card target">
+            <span class="eyebrow">Steun</span>
+            <h2>Wie helpt mij herinneren aan goed genoeg?</h2>
+            <label for="steunHerinnering">Wie kan me spiegelen als ik weer in alles-of-niets denk?</label>
+            <textarea id="steunHerinnering" name="steunHerinnering" rows="5" placeholder="Naam/rol + hoe die persoon mij helpt..."></textarea>
+          </section>
+        </div>
+
+        <section class="note-card">
+          <h2>Praktische vertaling</h2>
+          <p>Levensdoelen werken pas als ze in ritme terechtkomen. Verwerk je doelen daarom in je plan en agenda, niet alleen in motivatie.</p>
+          <p class="helper-note">Koppelen aan: plan van aanpak, weekplanning, en terugvalpreventie.</p>
+        </section>
+
+        <div class="action-bar">
+          <button type="button" onclick="saveForm()">Opslaan</button>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const formType = 'levensdoelen-stellen';
+    const fieldNames = ['overlevenLeven', 'goedGenoeg', 'genoeg', 'grensSignalen', 'levensDoelen', 'eersteStap', 'steunHerinnering'];
+
+    function fillForm(data) {
+      fieldNames.forEach((name) => {
+        const element = document.getElementById(name);
+        if (element && data[name] !== undefined) {
+          element.value = data[name];
+        }
+      });
+    }
+
+    function collectForm() {
+      const data = {};
+      fieldNames.forEach((name) => {
+        const element = document.getElementById(name);
+        if (element) {
+          data[name] = element.value;
+        }
+      });
+      return data;
+    }
+
+    function saveForm() {
+      if (typeof iamData !== 'undefined') {
+        iamData.setFormData(formType, collectForm());
+      }
+      showMessage('Opgeslagen.', false);
+    }
+
+    function showMessage(text, isError) {
+      const element = document.getElementById('message');
+      element.textContent = text;
+      element.className = 'message show' + (isError ? ' error' : '');
+      clearTimeout(showMessage.timeoutId);
+      showMessage.timeoutId = setTimeout(() => {
+        element.className = 'message';
+      }, 2800);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof iamData !== 'undefined') {
+        fillForm(iamData.getFormData(formType) || {});
+      }
+
+      document.getElementById('levensdoelenForm').addEventListener('input', () => {
+        saveForm();
+      });
+    });
+  </script>
+  <script src="../js/dataStore.js"></script>
+</body>
+</html>

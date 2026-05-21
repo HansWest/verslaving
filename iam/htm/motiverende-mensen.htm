@@ -175,6 +175,7 @@
     .hulpzinnetje-dialog p { margin: 0; line-height: 1.6; }
     .hulpzinnetje-dialog .action-bar { margin-top: 1rem; }
   </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
   <div class="container">
@@ -183,11 +184,12 @@
         <div class="top-links">
           <a href="./index.htm">Terug naar overzicht</a>
           <a href="./sociaal-netwerk.htm">Sociaal netwerk</a>
-          <a href="./steunnetwerk.htm">Steunnetwerk</a>
+          <a href="./steunnetwerk.htm">Steunnetwerk (praktisch)</a>
+          <a href="./oefenen-voor-toekomst.htm">Oefenen voor toekomst</a>
           <a href="./iam_social_network/index.htm">Visualisatie netwerk</a>
         </div>
-        <h1>Motiverende mensen</h1>
-        <p>Voor wie doe je dit? Maak je motivatie concreet met personen of rollen die jij als kompas wilt gebruiken op moeilijke momenten.</p>
+        <h1>Steun en motivatie</h1>
+        <p>Voor wie doe je dit? Maak je motivatierichting concreet met personen of rollen die jij als kompas wilt gebruiken op moeilijke momenten. Voor praktische hulp en bereikbaarheid gebruik je het steunnetwerk.</p>
       </header>
 
       <div id="message" class="message"></div>
@@ -197,6 +199,7 @@
         <ul>
           <li>De oude pagina draaide om een motiverende persoon, diens rol en jouw boodschap. Dat blijft behouden.</li>
           <li>Ook de lijn "bestaand contact of toekomstdoel" en het thema "gedoe in relatie" blijft in de kern hetzelfde.</li>
+          <li>Motivatie mag ook uit een toekomstbeeld komen: een partner, rol, baan of gezin dat je nog aan het opbouwen bent.</li>
           <li>Bestaande legacy-velden worden bij openen meegenomen en omgezet naar deze nieuwe opzet.</li>
         </ul>
       </section>
@@ -238,6 +241,7 @@
                 <option value="bestaand">Bestaand contact</option>
                 <option value="doel">Toekomstdoel</option>
               </select>
+              <p class="subtle-help">Ook als deze persoon of rol nog niet bestaat, kan dit een sterke motivatie-anker zijn.</p>
             </div>
             <div class="form-group">
               <label for="relationshipStatus">Als dit contact al bestaat: wat is de impact van gebruik op jullie relatie?</label>
@@ -313,7 +317,6 @@
           <button type="button" class="button-secondary" id="suggestButton">Vul voorstel uit eerdere stappen</button>
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
         </div>
       </form>
 
@@ -372,6 +375,24 @@
       if (!existing.includes(clean)) {
         textarea.value = textarea.value ? `${textarea.value}\n${clean}` : clean;
       }
+    }
+
+    function getTopWaardigheidEntries(limit = 3) {
+      const waardigheid = iamData.getFormData ? (iamData.getFormData('waardigheid') || {}) : {};
+      const entries = Array.isArray(waardigheid.valueEntries) ? waardigheid.valueEntries : [];
+
+      return entries
+        .map((entry) => ({
+          text: String(entry && entry.text ? entry.text : '').trim(),
+          date: String(entry && entry.date ? entry.date : ''),
+          priority: Math.max(1, Math.min(10, Number(entry && entry.priority ? entry.priority : 0) || 0))
+        }))
+        .filter((entry) => entry.text)
+        .sort((a, b) => {
+          if (b.priority !== a.priority) return b.priority - a.priority;
+          return String(b.date || '').localeCompare(String(a.date || ''));
+        })
+        .slice(0, limit);
     }
 
     function normalizeLegacyData(saved) {
@@ -527,6 +548,16 @@
         addNudge(nudges, `Je noemde waarden: "${previewText(waardenKort)}". Waaraan kunnen anderen straks zien dat je volgens die waarden leeft?`);
       }
 
+      const waardigheidTop = getTopWaardigheidEntries(3);
+      if (waardigheidTop.length && !formData.visibleProgress) {
+        addNudge(nudges, `Uit waardigheid (top): "${previewText(waardigheidTop[0].text)}". Welk zichtbaar gedrag past hier vandaag bij?`);
+      }
+
+      if (waardigheidTop.length > 1 && !formData.motivationType) {
+        const picks = waardigheidTop.map((item) => `${item.text} (${item.priority}/10)`).join(' | ');
+        addNudge(nudges, `Je belangrijkste waardigheid-items zijn: ${previewText(picks, 140)}. Welke daarvan geeft nu de meeste motivatie?`);
+      }
+
       meta.textContent = nudges.length
         ? 'Kleine, concrete duwtjes op basis van wat je al invulde.'
         : 'Nog geen spanning gevonden. Deze pagina kan nu vooral dienen als heldere motivatiekaart.';
@@ -637,7 +668,6 @@
       document.getElementById('suggestButton').addEventListener('click', applySuggestionFromPreviousSteps);
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('motivationForm').addEventListener('input', () => saveForm(false));
 
       window.addEventListener('focus', () => {

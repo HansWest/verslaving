@@ -89,6 +89,29 @@
       gap: 0.9rem;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
+    .section-mini-head {
+      margin: 0 0 0.2rem;
+      color: #2f4a5b;
+      font-size: 1.02rem;
+    }
+    .section-mini-sub {
+      margin: 0;
+      color: #4d6476;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+    .usage-row {
+      display: grid;
+      gap: 0.9rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .usage-row .form-group { margin: 0; }
+    .sleep-row {
+      display: grid;
+      gap: 0.9rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sleep-row .form-group { margin: 0; }
     .tracker-grid .form-group,
     .tracker-shell .form-group { margin: 0; }
     input[type="number"],
@@ -100,6 +123,17 @@
       padding: 0.65rem 0.8rem;
       background: #fff;
       color: var(--ink);
+    }
+    input[type="date"] {
+      padding-right: 2.8rem;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23235171' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='5' width='18' height='16' rx='3' ry='3'/%3e%3cline x1='8' y1='3.5' x2='8' y2='7'/%3e%3cline x1='16' y1='3.5' x2='16' y2='7'/%3e%3cline x1='3' y1='10' x2='21' y2='10'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      background-size: 1.1em 1.1em;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: 0;
+      cursor: pointer;
     }
     .history-head {
       display: flex;
@@ -365,11 +399,249 @@
     }
     .evaluation-status.warn { background: #fff8eb; color: #7a5411; }
     .evaluation-status.alert { background: #fff3f0; color: #8a2f1c; }
+    .observation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin-top: 1rem;
+    }
+    .observation-day {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      border-radius: 12px;
+      background: #fbfdfe;
+      padding: 0.8rem;
+    }
+    .observation-day h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1rem;
+    }
+    .observation-day textarea {
+      min-height: 120px;
+    }
+    .observation-help {
+      margin: 0;
+      color: #4d6476;
+      line-height: 1.5;
+    }
+    .settings-grid {
+      display: grid;
+      gap: 0.7rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .settings-option {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      border: 1px solid rgba(23, 50, 73, 0.12);
+      background: #fbfdfe;
+      border-radius: 12px;
+      padding: 0.65rem 0.8rem;
+      min-height: 44px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .is-hidden-by-setting { display: none; }
+    .settings-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .settings-card-header h2 { margin: 0; }
+    .cog-button {
+      background: none;
+      border: 1px solid rgba(23, 50, 73, 0.18);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .cog-button:hover { background: rgba(23, 50, 73, 0.06); }
+    .cog-button[aria-expanded="true"] { background: #eef4f7; }
+    .settings-body { margin-top: 0.85rem; }
+    .settings-body.is-collapsed { display: none; }
+    .emotion-check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.55rem;
+      margin-top: 0.25rem;
+    }
+    .emotion-check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      border: 1px solid rgba(23, 50, 73, 0.12);
+      border-radius: 10px;
+      padding: 0.45rem 0.55rem;
+      background: #fbfdfe;
+      min-height: 40px;
+      font-weight: 600;
+      color: #2f4a5b;
+    }
+    .motto-card {
+      border-left: 5px solid #6f5d2f;
+      background: linear-gradient(135deg, #fffaf0 0%, #f5f0e4 100%);
+    }
+    .motto-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+    .motto-text {
+      margin: 0.45rem 0 0;
+      font-size: 1.06rem;
+      line-height: 1.5;
+      color: #3f3520;
+      font-weight: 700;
+    }
+    .motto-meta {
+      margin: 0.45rem 0 0;
+      color: #5f5541;
+      font-size: 0.9rem;
+    }
+    .interaction-slider-grid {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .interaction-slider-item {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      background: #fbfdfe;
+      border-radius: 12px;
+      padding: 0.65rem 0.72rem;
+      display: grid;
+      gap: 0.45rem;
+    }
+    .interaction-slider-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+    .interaction-slider-head label {
+      margin: 0;
+      font-weight: 700;
+      color: #2f4a5b;
+      font-size: 0.92rem;
+    }
+    .interaction-slider-value {
+      border-radius: 999px;
+      background: #e8f1f7;
+      color: #245377;
+      min-width: 2.7rem;
+      text-align: center;
+      padding: 0.15rem 0.5rem;
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+    .interaction-slider-item input[type="range"] {
+      width: 100%;
+    }
+    .percent-slider-grid {
+      display: grid;
+      gap: 0.85rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .percent-slider-item {
+      border: 1px solid rgba(23, 50, 73, 0.1);
+      background: #fbfdfe;
+      border-radius: 12px;
+      padding: 0.65rem 0.72rem;
+      display: grid;
+      gap: 0.45rem;
+    }
+    .percent-slider-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+    .percent-slider-head label {
+      margin: 0;
+      font-weight: 700;
+      color: #2f4a5b;
+      font-size: 0.92rem;
+    }
+    .percent-slider-value {
+      border-radius: 999px;
+      background: #e8f1f7;
+      color: #245377;
+      min-width: 6.5rem;
+      text-align: center;
+      padding: 0.15rem 0.5rem;
+      font-weight: 700;
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+    .percent-hidden-input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .interaction-index-box {
+      margin-top: 0.75rem;
+      border: 1px solid rgba(23, 50, 73, 0.12);
+      background: #f3f8fc;
+      border-radius: 12px;
+      padding: 0.7rem 0.8rem;
+    }
+    .interaction-index-box p { margin: 0; }
+    .two-week-setup {
+      margin-top: 0.8rem;
+      display: grid;
+      gap: 0.65rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      align-items: end;
+    }
+    .two-week-status {
+      margin-top: 0.6rem;
+      color: #4d6476;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+    .two-week-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .two-week-head h2 { margin: 0; }
+    .two-week-toggle {
+      border: 1px solid rgba(23, 50, 73, 0.16);
+      border-radius: 999px;
+      background: #f3f8fc;
+      color: #235171;
+      min-height: 38px;
+      padding: 0.35rem 0.8rem;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+    .two-week-card-body.is-collapsed {
+      display: none;
+    }
+    .fourteen-day-overview { margin-top: 1rem; }
+    .overview-empty { opacity: 0.55; }
     @media (max-width: 640px) {
       .tracker-toolbar { grid-template-columns: 1fr; }
       .nav-day { width: 100%; }
+      .usage-row { grid-template-columns: 1fr; }
+      .sleep-row { grid-template-columns: 1fr; }
+      .observation-grid { grid-template-columns: 1fr; }
     }
   </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
   <div class="container">
@@ -381,12 +653,57 @@
           <a href="./plan-van-aanpak.htm">Plan van aanpak</a>
         </div>
         <h1>Het gebruik van de dag</h1>
+        <p id="personalGreeting" style="display:none; font-weight:700;"></p>
         <p>Hier volg je per dag wat je van plan was, wat er werkelijk gebeurde en wat je daaruit wilt leren. Zo maak je gebruik zichtbaar zonder jezelf vast te zetten in oordeel.</p>
       </header>
 
       <section class="card legacy-note">
         <h2>Waarom deze pagina apart staat</h2>
         <p>Het gebruik van de dag volgen is iets anders dan trek meten. Trek zegt iets over de druk in het moment; deze pagina laat zien wat je uiteindelijk deed, wat je wilde doen en wat dat vraagt in je planning of zelfzorg.</p>
+      </section>
+
+      <section class="card motto-card" aria-labelledby="mottoTitle">
+        <div class="motto-head">
+          <h2 id="mottoTitle" style="margin:0;">Motiverend motto</h2>
+          <a href="./motivating-motto.htm" class="button-secondary" style="text-decoration:none; display:inline-flex; align-items:center;">Motto openen / aanpassen</a>
+        </div>
+        <p id="sharedMottoText" class="motto-text">Nog geen motto ingesteld.</p>
+        <p id="sharedMottoMeta" class="motto-meta">Stel een korte zin in die je op koers houdt op lastige momenten.</p>
+      </section>
+
+      <section class="card" aria-labelledby="twoWeekObserveTitle">
+        <div class="two-week-head">
+          <h2 id="twoWeekObserveTitle">Twee weken gebruik bijhouden: eerst waarnemen, dan sturen</h2>
+          <button type="button" id="twoWeekToggleButton" class="two-week-toggle" aria-expanded="true" aria-controls="twoWeekCardBody">Inklappen</button>
+        </div>
+        <div id="twoWeekCardBody" class="two-week-card-body">
+        <p class="observation-help">Je hoeft de komende twee weken niet direct minder te gebruiken. Het doel is eerst zicht krijgen op je gebruik: waarom wil je nu gebruiken, wat voel je, wat denk je, en in welke situatie gebeurt het?</p>
+        <p class="observation-help">Als je wilt opschrijven: omdat ik daar nou eenmaal zin in heb, probeer dan toch even stil te staan bij de vraag waarom je daar nu zin in hebt.</p>
+        <div class="two-week-setup">
+          <div class="form-group" style="margin:0;">
+            <label for="twoWeekStartDate">Begindatum eerste 14-dagenfase</label>
+            <input id="twoWeekStartDate" type="date" />
+          </div>
+          <div class="action-bar" style="margin:0;">
+            <button type="button" class="button-primary" id="startTwoWeekPhaseButton">Start eerste 14 dagen</button>
+          </div>
+        </div>
+        <p id="twoWeekPhaseStatus" class="two-week-status">Nog geen begindatum ingesteld. Kies een startdatum om je eerste twee weken vast te leggen.</p>
+        <div class="zone" style="margin-top:0.9rem;">
+          <h3 style="margin:0 0 0.45rem;">Voorbeeld: het hoeft niet perfect</h3>
+          <textarea readonly>dag 6.
+18:20 thuis. Trek 7/10 na gedoe op werk. Eerst wilde ik direct gebruiken.
+19:10 toch eerst gegeten en 10 min gelopen.
+21:00 uiteindelijk 2 eenheden gebruikt (plan was 1).
+Wat hielp: appje gestuurd naar maatje.
+Wat niet hielp: alleen blijven malen.</textarea>
+          <p class="observation-help" style="margin-top:0.45rem;">Nog mooier is het als je ook tijd, plaats, gevoel of gedachten noteert. Dat helpt om achteraf te analyseren welke risico's er wanneer spelen.</p>
+        </div>
+        <div id="fourteenDayOverview" class="fourteen-day-overview">
+          <p class="observation-help">Overzicht wordt geladen…</p>
+        </div>
+        <p class="observation-help" style="margin-top:0.85rem;"><strong>Waarom dit helpt:</strong> door twee weken bij te houden wat er vlak voor gebruik gebeurt, krijg je later veel meer materiaal om risico-situaties, gevoelens, gedachten en gewoontes te analyseren. Dit is sterke voorinformatie voor analyse achteraf en je plan van aanpak.</p>
+        </div>
       </section>
 
       <div id="message" class="message"></div>
@@ -398,6 +715,63 @@
           <li>Sla op de homepage een weekcheck-in op om hier een samenvatting te zien.</li>
         </ul>
         <p class="attempt-summary-link"><a href="./index.htm#weeklyReviewCard">Bekijk volledige historielijst op homepage</a></p>
+      </section>
+
+      <section class="card" aria-labelledby="dailySettingsTitle">
+        <div class="settings-card-header">
+          <h2 id="dailySettingsTitle">Instellingen dagkaart</h2>
+          <button type="button" class="cog-button" id="settingsToggleBtn" aria-expanded="false" aria-controls="settingsBody" title="Instellingen tonen/verbergen">⚙️</button>
+        </div>
+        <div id="settingsBody" class="settings-body is-collapsed">
+          <p>Kies welke extra onderdelen je hier wilt zien. Alleen aangevinkte onderdelen worden getoond.</p>
+          <div class="settings-grid">
+            <label class="settings-option" for="settingGlobalSleep">
+              <input type="checkbox" id="settingGlobalSleep" />
+              <span>Globale slaaptracking aan</span>
+            </label>
+            <label class="settings-option" for="settingGlobalFood">
+              <input type="checkbox" id="settingGlobalFood" />
+              <span>Globale voeding-tracking aan</span>
+            </label>
+            <label class="settings-option" for="settingGlobalTraining">
+              <input type="checkbox" id="settingGlobalTraining" />
+              <span>Globale training-tracking aan</span>
+            </label>
+            <label class="settings-option" for="settingGlobalMeditation">
+              <input type="checkbox" id="settingGlobalMeditation" />
+              <span>Globale meditatie-tracking aan</span>
+            </label>
+            <label class="settings-option" for="settingGlobalSocial">
+              <input type="checkbox" id="settingGlobalSocial" />
+              <span>Globale sociale-tracking aan</span>
+            </label>
+            <label class="settings-option" for="settingGlobalEmotion">
+              <input type="checkbox" id="settingGlobalEmotion" />
+              <span>Emotie</span>
+            </label>
+            <label class="settings-option" for="settingGlobalFrustration">
+              <input type="checkbox" id="settingGlobalFrustration" />
+              <span>Frustratie</span>
+            </label>
+            <label class="settings-option" for="settingShowSleep">
+              <input type="checkbox" id="settingShowSleep" checked />
+              <span>Slaap (inslapen, wakker, uren)</span>
+            </label>
+            <label class="settings-option" for="settingShowReality">
+              <input type="checkbox" id="settingShowReality" checked />
+              <span>Realiteitsscores (natuur, genieten, contact)</span>
+            </label>
+            <label class="settings-option" for="settingShowReflection">
+              <input type="checkbox" id="settingShowReflection" checked />
+              <span>Reflectie (gemist / te veel)</span>
+            </label>
+          </div>
+          <p id="sleepSettingHint" style="margin:0.7rem 0 0; color:#4d6270; font-size:0.9rem;"></p>
+          <div class="action-bar" style="margin-top:0.75rem;">
+            <button type="button" class="button-secondary" id="exportAllIamButton">Exporteer alle IAM-data (backup)</button>
+            <a href="./data-beheer.htm" class="button-secondary" style="text-decoration:none; display:inline-flex; align-items:center;">Open centraal databeheer</a>
+          </div>
+        </div>
       </section>
 
       <section class="card tracker-shell">
@@ -429,13 +803,29 @@
         </div>
 
         <div class="tracker-grid">
-          <div class="form-group">
-            <label for="plannedUnits">Gepland gebruik (eenheden)</label>
-            <input id="plannedUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 0.5 of 2" />
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <h3 class="section-mini-head">1) Gebruik en context</h3>
+            <p class="section-mini-sub">Plan en realiteit naast elkaar, plus waar en wanneer het begon.</p>
           </div>
-          <div class="form-group">
-            <label for="usageUnits">Werkelijk gebruik (eenheden)</label>
-            <input id="usageUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 1.5 of -0.5" />
+          <div class="usage-row">
+            <div class="form-group">
+              <label for="plannedUnits">Gepland gebruik (eenheden)</label>
+              <input id="plannedUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 0.5 of 2" />
+            </div>
+            <div class="form-group">
+              <label for="usageUnits">Werkelijk gebruik (eenheden)</label>
+              <input id="usageUnits" type="number" step="0.1" inputmode="decimal" placeholder="Bijv. 0, 1.5 of -0.5" />
+            </div>
+          </div>
+          <div class="usage-row">
+            <div class="form-group">
+              <label for="firstUnitsPlace">Plek eerste eenheden</label>
+              <input id="firstUnitsPlace" type="text" placeholder="Bijv. thuis, café, onderweg, feest..." />
+            </div>
+            <div class="form-group">
+              <label for="firstUnitsTime">Tijd eerste eenheden</label>
+              <input id="firstUnitsTime" type="time" />
+            </div>
           </div>
           <div class="form-group">
             <label for="usageNote">Korte toelichting op gebruik</label>
@@ -444,6 +834,10 @@
         </div>
 
         <div class="tracker-grid">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <h3 class="section-mini-head">2) Risico en motivatie</h3>
+            <p class="section-mini-sub">Kerninschatting voor deze dag: wat trekt je naar gebruik en wat houdt je op koers.</p>
+          </div>
           <div class="form-group">
             <label for="riskNote">Risico op deze dag</label>
             <textarea id="riskNote" placeholder="Wat maakt deze dag kwetsbaar of risicovol?"></textarea>
@@ -454,10 +848,220 @@
           </div>
         </div>
 
+        <div class="tracker-grid" id="sleepTrackingSection">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <h3 class="section-mini-head">3) Herstelbasis slaap</h3>
+          </div>
+          <div class="sleep-row">
+            <div class="form-group">
+              <label for="sleepStart">Inslaaptijd:</label>
+              <input id="sleepStart" type="time" />
+            </div>
+            <div class="form-group">
+              <label for="sleepEnd">Wakker om:</label>
+              <input id="sleepEnd" type="time" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="sleepHours">Slaap (automatisch)</label>
+            <input id="sleepHours" type="number" step="0.1" readonly />
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <p class="observation-help" style="margin: 0;">
+              Noteer hier de nacht die op deze dag uitkomt. Als je voor 24:00 uur gisteren bent gaan slapen en vanochtend wakker werd, dan hoort die slaap bij de dag waarop je wakker wordt. De afgelopen nacht bepaalt vooral hoe je denkkracht is en hoe deze dag voelt.
+            </p>
+          </div>
+        </div>
+
+        <div class="tracker-grid" id="realityTrackingSection">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <h3 class="section-mini-head">4) Realiteitsscores (%)</h3>
+            <p class="section-mini-sub">Hier verzamel je de concrete dagsignalen. Deze waarden voeden automatisch de daginteractie-index.</p>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <div class="percent-slider-grid">
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="naturePercentRange">Ben je buiten in <em>natuur</em> geweest?</label>
+                  <span class="percent-slider-value" id="naturePercentValue">Nog niet gekozen</span>
+                </div>
+                <input id="naturePercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="naturePercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="enjoymentPercentRange">Heb je deze dag <em>genoten</em> (van seks bijv.)?</label>
+                  <span class="percent-slider-value" id="enjoymentPercentValue">Nog niet gekozen</span>
+                </div>
+                <input id="enjoymentPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="enjoymentPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="socialIrlPercentRange">Contact met andere mensen <em>in het echt</em></label>
+                  <span class="percent-slider-value" id="socialIrlPercentValue">Nog niet gekozen</span>
+                </div>
+                <input id="socialIrlPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="socialIrlPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="socialOnlinePercentRange">Contact met andere mensen <em>online</em></label>
+                  <span class="percent-slider-value" id="socialOnlinePercentValue">Nog niet gekozen</span>
+                </div>
+                <input id="socialOnlinePercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="socialOnlinePercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+
+            </div>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label>Expressie van basis-emoties van <span id="expressedEmotionSectionDateLabel">vandaag</span> (per emotie)</label>
+            <p class="observation-help" style="margin:0.25rem 0 0.55rem;">Gebruik per emotie de schaal: 0 = volledig ingeslikt, 100 = volledig geuit.</p>
+            <div class="percent-slider-grid">
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="expressedCuriosityRange">Nieuwsgierigheid</label>
+                  <span class="percent-slider-value" id="expressedCuriosityValue">Nog niet gekozen</span>
+                </div>
+                <input id="expressedCuriosityRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="expressedCuriosity" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="expressedAngerRange">Boosheid</label>
+                  <span class="percent-slider-value" id="expressedAngerValue">Nog niet gekozen</span>
+                </div>
+                <input id="expressedAngerRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="expressedAnger" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="expressedSadnessRange">Verdriet</label>
+                  <span class="percent-slider-value" id="expressedSadnessValue">Nog niet gekozen</span>
+                </div>
+                <input id="expressedSadnessRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="expressedSadness" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="expressedFearRange">Angst</label>
+                  <span class="percent-slider-value" id="expressedFearValue">Nog niet gekozen</span>
+                </div>
+                <input id="expressedFearRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="expressedFear" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+              <div class="percent-slider-item">
+                <div class="percent-slider-head">
+                  <label for="expressedDesireRange">Begeerte</label>
+                  <span class="percent-slider-value" id="expressedDesireValue">Nog niet gekozen</span>
+                </div>
+                <input id="expressedDesireRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="expressedDesire" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+            </div>
+            <p class="observation-help" style="margin-top:0.45rem;">Onderzoek dit verder op <a id="expressedEmotionResearchLink" href="./ingeslikte-emoties.htm">ingeslikte emoties</a>.</p>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="expressedEmotionOther">Andere emotie die meespeelde</label>
+            <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+              <input id="expressedEmotionOther" type="text" placeholder="Bijv. schaamte, jaloezie, trots, opluchting..." style="flex:1; min-width:12rem;" />
+              <div style="display:flex; align-items:center; gap:0.4rem; min-width:14rem;">
+                <span class="percent-slider-value" id="expressedOtherPercentValue" style="min-width:4rem;">Nog niet gekozen</span>
+                <input id="expressedOtherPercentRange" type="range" min="0" max="100" step="1" value="50" style="flex:1;" />
+                <input id="expressedOtherPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+              </div>
+            </div>
+            <p class="observation-help" style="margin:0.2rem 0 0;">Schuif naar rechts voor meer expressie (100 = volledig geuit).</p>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="suppressionReason">Waarom heb je deze emoties vandaag liever ingeslikt?</label>
+            <input id="suppressionReason" type="text" placeholder="Bijv. conflict vermijden, geen ruimte voelen, bang zijn voor reactie..." />
+          </div>
+        </div>
+
+        <div class="tracker-grid" id="reflectionTrackingSection">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <h3 class="section-mini-head">5) Reflectie</h3>
+          </div>
+          <div class="form-group">
+            <label for="missedTodayNote">Wat heb je vandaag gemist?</label>
+            <textarea id="missedTodayNote" placeholder="Wat had je vandaag nodig maar ontbrak?"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="tooMuchTodayNote">Wat was er vandaag te veel?</label>
+            <textarea id="tooMuchTodayNote" placeholder="Wat was te veel qua druk, prikkels, mensen, gebruik of verwachtingen?"></textarea>
+          </div>
+        </div>
+
+        <div class="tracker-grid" id="interactionTrackingSection">
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <label style="margin-bottom:0; display:inline;">6) Interactie van de dag (numeriek)</label>
+              <button type="button" id="interactionIndexInfoButton" class="info-button" style="border:none; background:none; cursor:pointer; color:#666; font-weight:bold; font-size:1rem; padding:0 0.2rem;" title="Meer info over dagdruk, zelfregie en herstelgedrag">[!]</button>
+            </div>
+            <p class="section-mini-sub" style="margin-bottom:0.6rem;">Contactkwaliteit en emotie-uitingskloof worden automatisch afgeleid uit de realiteitsscores, zodat je die niet dubbel hoeft in te vullen.</p>
+            <p class="section-mini-sub" id="interactionDerivedHint" style="margin-bottom:0.6rem;"></p>
+            <div class="interaction-slider-grid">
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="dayPressureSlider">Dagdruk</label>
+                  <span class="interaction-slider-value" id="dayPressureSliderValue">50</span>
+                </div>
+                <input id="dayPressureSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="selfRegieSlider">Zelfregie</label>
+                  <span class="interaction-slider-value" id="selfRegieSliderValue">50</span>
+                </div>
+                <input id="selfRegieSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="cravingPeakSlider">Craving (trek)</label>
+                  <span class="interaction-slider-value" id="cravingPeakSliderValue">50</span>
+                </div>
+                <input id="cravingPeakSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="recoveryActionSlider">Herstelgedrag</label>
+                  <span class="interaction-slider-value" id="recoveryActionSliderValue">50</span>
+                </div>
+                <input id="recoveryActionSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="bodyRestSlider">Lichamelijke rust</label>
+                  <span class="interaction-slider-value" id="bodyRestSliderValue">50</span>
+                </div>
+                <input id="bodyRestSlider" type="range" min="0" max="100" step="1" value="50" />
+              </div>
+            </div>
+            <input id="contactQualitySlider" class="percent-hidden-input" type="range" min="0" max="100" step="1" value="50" tabindex="-1" aria-hidden="true" />
+              <div class="interaction-slider-item">
+                <div class="interaction-slider-head">
+                  <label for="emotionExpressionPercentRange">Emotionele ruimte</label>
+                  <span class="interaction-slider-value" id="emotionExpressionPercentRangeValue">50</span>
+                </div>
+                <input id="emotionExpressionPercentRange" type="range" min="0" max="100" step="1" value="50" />
+                <input id="emotionExpressionPercent" class="percent-hidden-input" type="number" min="0" max="100" step="1" inputmode="numeric" tabindex="-1" aria-hidden="true" />
+                <p class="observation-help" style="margin:0.3rem 0 0;">Links: 100% ingeslikt. Rechts: 100% expressie gegeven.</p>
+              </div>
+            <div class="interaction-index-box">
+              <p><strong>Daginteractie-index:</strong> <span id="dayInteractionIndexValue">0</span></p>
+              <p class="observation-help" id="dayInteractionIndexHint" style="margin-top:0.35rem;">Neutraal beeld voor deze dag.</p>
+            </div>
+          </div>
+        </div>
+
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveDayButton">Sla deze dag op</button>
           <button type="button" class="button-secondary" id="copyTodayButton">Gebruik vandaag als datum</button>
-          <button type="button" class="button-secondary" id="printButton">Print / bewaar als pdf</button>
         </div>
       </section>
 
@@ -512,7 +1116,28 @@
         </div>
       </section>
 
-      <div id="hulpzinnetjeModal" class="hulpzinnetje-modal" aria-hidden="true">
+      <div id="interactionIndexModal" class="hulpzinnetje-modal" aria-hidden="true">
+        <div class="hulpzinnetje-dialog" role="dialog" aria-modal="true" aria-labelledby="interactionIndexTitle">
+          <h3 id="interactionIndexTitle">Daginteractie-index: Componenten en gewichten</h3>
+          <div style="overflow-y:auto; max-height:70vh; padding:0.5rem 0; font-size:0.95rem;">
+            <p><strong>Wat meet de daginteractie-index?</strong><br />Deze index balanceert stress, sturing, en emotie-expressie. Een hoger getal = beter vermogen om op koers te blijven.</p>
+            <hr style="margin:0.5rem 0; border:none; border-top:1px solid #ddd;" />
+            <p><strong>Zelfregie</strong> (gewicht: <strong>+0.35</strong> — sterkste positieve effect)<br />Hoe veel controle en bewustzijn heb je over je dag? Hogere waarden = meer regie.</p>
+            <p><strong>Dagdruk</strong> (gewicht: <strong>−0.30</strong>)<br />Hoe veel stress, druk of prikkeling voel je? Hogere waarden = meer druk. Dit vermindert je vermogen om op koers te blijven.</p>
+            <p><strong>Herstelgedrag</strong> (gewicht: <strong>+0.25</strong>)<br />In hoeverre zorg je goed voor jezelf (slaap, beweging, rust, ontspanning)? Hogere waarden = meer zelfzorg.</p>
+            <p><strong>Craving (trek)</strong> (gewicht: <strong>−0.25</strong>)<br />Hoe sterk is je trek naar gebruik? Hogere waarden = sterker craving, wat de index vermindert.</p>
+            <p><strong>Contactkwaliteit</strong> (gewicht: <strong>+0.15</strong>)<br />Automatisch afgeleid uit je online- en IRL-contactscores. Ondersteunt regulering.</p>
+            <p><strong>Lichamelijke rust</strong> (gewicht: <strong>+0.10</strong>)<br />Hoeveel rust/ontspanning heb je? Hogere waarden = meer rust, wat helpt om stabiel te blijven.</p>
+            <p><strong>Emotie-expressie</strong> (gewicht: <strong>+0.15</strong>)<br />Hoeveel van je basis-emoties heb je kunnen uiten vandaag? Hogere waarden = meer expressie = minder terugdruk op trek.</p>
+            <p><strong>Interactie-effect</strong> (gewicht: <strong>−0.15</strong>)<br />Stress × (100 − expressie). Dit meet de versterking: hoge stress + weinig expressie tezamen maken je extra kwetsbaar.</p>
+            <hr style="margin:0.5rem 0; border:none; border-top:1px solid #ddd;" />
+            <p style="font-size:0.9rem; color:#666;"><strong>Score uitleg:</strong><br />Boven 20 = sterk regulerend patroon (goed)<br />−20 tot +20 = neutraal beeld<br />Onder −20 = kwetsbaar patroon (let op zelfzorg)</p>
+          </div>
+          <div class="action-bar">
+            <button type="button" class="button-primary" id="closeInteractionIndexButton">Sluiten</button>
+          </div>
+        </div>
+      </div>
         <div class="hulpzinnetje-dialog" role="dialog" aria-modal="true" aria-labelledby="hulpzinnetjeTitle">
           <h3 id="hulpzinnetjeTitle">Hulpzinnetje</h3>
           <p id="hulpzinnetjeText"></p>
@@ -528,13 +1153,518 @@
   <script>
     const formKey = 'craving-1-10';
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
+    const MOTIVATING_MOTTO_KEY = 'motivatingMotto';
     const ATTEMPT_TAG_LABELS = {
       nuttig: 'Nuttig',
       'niet-nuttig': 'Niet nuttig',
       later: 'Later opnieuw proberen'
     };
+    const INTERACTION_SLIDER_IDS = [
+      'dayPressureSlider',
+      'selfRegieSlider',
+      'cravingPeakSlider',
+      'recoveryActionSlider',
+      'contactQualitySlider',
+      'bodyRestSlider',
+      'emotionExpressionPercentRange'
+    ];
+    const PERCENT_SLIDER_FIELDS = [
+      { fieldId: 'naturePercent', sliderId: 'naturePercentRange', valueId: 'naturePercentValue' },
+      { fieldId: 'enjoymentPercent', sliderId: 'enjoymentPercentRange', valueId: 'enjoymentPercentValue' },
+      { fieldId: 'socialIrlPercent', sliderId: 'socialIrlPercentRange', valueId: 'socialIrlPercentValue' },
+      { fieldId: 'socialOnlinePercent', sliderId: 'socialOnlinePercentRange', valueId: 'socialOnlinePercentValue' },
+      { fieldId: 'emotionExpressionPercent', sliderId: 'emotionExpressionPercentRange', valueId: 'emotionExpressionPercentRangeValue' },
+      { fieldId: 'expressedCuriosity', sliderId: 'expressedCuriosityRange', valueId: 'expressedCuriosityValue' },
+      { fieldId: 'expressedAnger', sliderId: 'expressedAngerRange', valueId: 'expressedAngerValue' },
+      { fieldId: 'expressedSadness', sliderId: 'expressedSadnessRange', valueId: 'expressedSadnessValue' },
+      { fieldId: 'expressedFear', sliderId: 'expressedFearRange', valueId: 'expressedFearValue' },
+      { fieldId: 'expressedDesire', sliderId: 'expressedDesireRange', valueId: 'expressedDesireValue' },
+      { fieldId: 'expressedOtherPercent', sliderId: 'expressedOtherPercentRange', valueId: 'expressedOtherPercentValue' }
+    ];
+    const EXPRESSED_BASIS_FIELDS = [
+      { key: 'expressedCuriosity', label: 'Nieuwsgierigheid' },
+      { key: 'expressedAnger', label: 'Boosheid' },
+      { key: 'expressedSadness', label: 'Verdriet' },
+      { key: 'expressedFear', label: 'Angst' },
+      { key: 'expressedDesire', label: 'Begeerte' },
+      { key: 'expressedOtherPercent', label: 'Andere emotie' }
+    ];
     const historyLimit = 14;
     let selectedHistoryRange = 7;
+    let twoWeekCardUserToggled = false;
+
+    function setTwoWeekCardCollapsed(collapsed) {
+      const body = document.getElementById('twoWeekCardBody');
+      const btn = document.getElementById('twoWeekToggleButton');
+      if (!body || !btn) return;
+      body.classList.toggle('is-collapsed', collapsed);
+      btn.textContent = collapsed ? 'Uitklappen' : 'Inklappen';
+      btn.setAttribute('aria-expanded', String(!collapsed));
+    }
+
+    function isTwoWeekCardCollapsed() {
+      const body = document.getElementById('twoWeekCardBody');
+      return Boolean(body && body.classList.contains('is-collapsed'));
+    }
+
+    function renderPersonalizedGreeting() {
+      const greetingEl = document.getElementById('personalGreeting');
+      if (!greetingEl) return;
+
+      const displayName = iamData && typeof iamData.getPreferredDisplayName === 'function'
+        ? iamData.getPreferredDisplayName('')
+        : '';
+
+      if (!displayName) {
+        greetingEl.textContent = '';
+        greetingEl.style.display = 'none';
+        return;
+      }
+
+      greetingEl.textContent = `Vandaag in beeld, ${displayName}.`;
+      greetingEl.style.display = 'block';
+    }
+
+    function getSliderNumber(id, fallback = 50) {
+      const el = document.getElementById(id);
+      if (!el) return fallback;
+      const num = Number(el.value);
+      return Number.isNaN(num) ? fallback : num;
+    }
+
+    function updateSliderValueBadge(id) {
+      const el = document.getElementById(id);
+      const badge = document.getElementById(`${id}Value`);
+      if (!el || !badge) return;
+      badge.textContent = String(el.value);
+    }
+
+    function computeDayInteractionIndex(values) {
+      const expressionLevel = values.emotionExpression ?? 50;
+      const suppressionLevel = 100 - expressionLevel;
+      const index =
+        0.35 * values.selfRegie -
+        0.30 * values.dayPressure -
+        0.25 * values.cravingPeak +
+        0.25 * values.recoveryAction +
+        0.15 * values.contactQuality +
+        0.10 * values.bodyRest +
+        0.15 * expressionLevel -
+        0.15 * (values.dayPressure * suppressionLevel) / 100;
+      return Math.round(index * 10) / 10;
+    }
+
+    function syncPercentSliderFromField(fieldId, sliderId, valueId) {
+      const fieldEl = document.getElementById(fieldId);
+      const sliderEl = document.getElementById(sliderId);
+      const valueEl = document.getElementById(valueId);
+      if (!fieldEl || !sliderEl || !valueEl) return;
+
+      const raw = String(fieldEl.value || '').trim();
+      if (raw === '' || Number.isNaN(Number(raw))) {
+        sliderEl.value = '50';
+        valueEl.textContent = 'Nog niet gekozen';
+        return;
+      }
+
+      const clamped = Math.min(100, Math.max(0, Number(raw)));
+      sliderEl.value = String(clamped);
+      valueEl.textContent = `${clamped}%`;
+    }
+
+    function syncAllPercentSlidersFromFields() {
+      PERCENT_SLIDER_FIELDS.forEach(({ fieldId, sliderId, valueId }) => {
+        syncPercentSliderFromField(fieldId, sliderId, valueId);
+      });
+      syncDerivedInteractionFromPercents();
+    }
+
+    function toOptionalPercentNumber(rawValue) {
+      const raw = String(rawValue ?? '').trim().replace(',', '.');
+      if (raw === '') return null;
+      const num = Number(raw);
+      if (Number.isNaN(num)) return null;
+      return Math.min(100, Math.max(0, num));
+    }
+
+    function deriveContactQualityFromPercents(onlineRaw, irlRaw) {
+      const online = toOptionalPercentNumber(onlineRaw);
+      const irl = toOptionalPercentNumber(irlRaw);
+      if (online === null && irl === null) return null;
+      if (online === null) return irl;
+      if (irl === null) return online;
+      return Math.round((online + irl) / 2);
+    }
+
+    function getExpressedBasicsSummary(entry) {
+      return EXPRESSED_BASIS_FIELDS
+        .map(({ key, label }) => {
+          const raw = entry?.[key];
+          if (!isNumericUnits(raw)) return '';
+          const value = Number(raw);
+          if (value <= 0) return '';
+          return `${label} ${formatUnits(value)}%`;
+        })
+        .filter(Boolean);
+    }
+
+    function formatEmotionBalanceText(value) {
+      if (!isNumericUnits(value)) return '';
+      if (Number(value) === 50) return 'Emotionele ruimte: in balans tussen expressie en inslikken';
+      if (Number(value) > 50) return `Emotionele ruimte: ${formatUnits(Number(value))}% richting expressie`;
+      return `Emotionele ruimte: ${formatUnits(100 - Number(value))}% richting inslikken`;
+    }
+
+    function syncDerivedInteractionFromPercents() {
+      const contactEl = document.getElementById('contactQualitySlider');
+      const socialOnlineEl = document.getElementById('socialOnlinePercent');
+      const socialIrlEl = document.getElementById('socialIrlPercent');
+
+      if (!contactEl || !socialOnlineEl || !socialIrlEl) return;
+
+      const derivedContact = deriveContactQualityFromPercents(socialOnlineEl.value, socialIrlEl.value);
+
+      contactEl.value = String(derivedContact === null ? 50 : derivedContact);
+
+      updateDayInteractionSummary();
+    }
+
+    function setupPercentSliderBindings() {
+      PERCENT_SLIDER_FIELDS.forEach(({ fieldId, sliderId, valueId }) => {
+        const fieldEl = document.getElementById(fieldId);
+        const sliderEl = document.getElementById(sliderId);
+        const valueEl = document.getElementById(valueId);
+        if (!fieldEl || !sliderEl || !valueEl) return;
+
+        sliderEl.addEventListener('input', () => {
+          fieldEl.value = sliderEl.value;
+          valueEl.textContent = `${sliderEl.value}%`;
+          syncDerivedInteractionFromPercents();
+        });
+      });
+
+      syncAllPercentSlidersFromFields();
+    }
+
+    function updateDayInteractionSummary() {
+      const values = {
+        dayPressure: getSliderNumber('dayPressureSlider'),
+        selfRegie: getSliderNumber('selfRegieSlider'),
+        cravingPeak: getSliderNumber('cravingPeakSlider'),
+        recoveryAction: getSliderNumber('recoveryActionSlider'),
+        contactQuality: getSliderNumber('contactQualitySlider'),
+        bodyRest: getSliderNumber('bodyRestSlider'),
+        emotionExpression: getSliderNumber('emotionExpressionPercentRange')
+      };
+      const index = computeDayInteractionIndex(values);
+      const valueEl = document.getElementById('dayInteractionIndexValue');
+      const hintEl = document.getElementById('dayInteractionIndexHint');
+      const derivedEl = document.getElementById('interactionDerivedHint');
+      if (valueEl) valueEl.textContent = String(index);
+      if (derivedEl) {
+        const contactText = Number.isFinite(values.contactQuality) ? `${Math.round(values.contactQuality)}%` : 'n.v.t.';
+        const expressionText = Number.isFinite(values.emotionExpression) ? `${Math.round(values.emotionExpression)}%` : 'n.v.t.';
+        derivedEl.textContent = `Afgeleid: contactkwaliteit ${contactText} | emotie-expressie ${expressionText}.`;
+      }
+      if (hintEl) {
+        if (index >= 20) {
+          hintEl.textContent = 'Sterk regulerend dagpatroon.';
+        } else if (index <= -20) {
+          hintEl.textContent = 'Kwetsbaar dagpatroon: extra steun en bijsturing kan helpen.';
+        } else {
+          hintEl.textContent = 'Neutraal beeld voor deze dag.';
+        }
+      }
+      return index;
+    }
+
+    function getTodayDateKey() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function pickActiveMotto(mottoMeta) {
+      if (!mottoMeta || typeof mottoMeta !== 'object') return null;
+      const items = Array.isArray(mottoMeta.items) ? mottoMeta.items : [];
+      const today = getTodayDateKey();
+
+      const active = items
+        .filter((item) => item && typeof item.text === 'string' && item.text.trim())
+        .filter((item) => {
+          const startOk = !item.startDate || item.startDate <= today;
+          const endOk = !item.endDate || today <= item.endDate;
+          return startOk && endOk;
+        })
+        .sort((a, b) => {
+          const left = (a.startDate || '') + '|' + (a.createdAt || '');
+          const right = (b.startDate || '') + '|' + (b.createdAt || '');
+          return right.localeCompare(left);
+        });
+
+      return active[0] || null;
+    }
+
+    function formatMottoPeriod(item) {
+      if (!item) return '';
+      const startText = item.startDate || 'nu';
+      const endText = item.endDate || 'onbepaald';
+      return `Geldig van ${startText} t/m ${endText}`;
+    }
+
+    function getMotivatingMottoMeta() {
+      if (!iamData || typeof iamData.getAppMeta !== 'function') return null;
+      return iamData.getAppMeta(MOTIVATING_MOTTO_KEY);
+    }
+
+    function renderMotivatingMottoSpot() {
+      const textEl = document.getElementById('sharedMottoText');
+      const metaEl = document.getElementById('sharedMottoMeta');
+      if (!textEl || !metaEl) return;
+
+      const mottoMeta = getMotivatingMottoMeta();
+      const activeItem = pickActiveMotto(mottoMeta);
+      const mottoText = activeItem
+        ? activeItem.text.trim()
+        : (typeof mottoMeta === 'string'
+          ? mottoMeta.trim()
+          : (mottoMeta && typeof mottoMeta.text === 'string' ? mottoMeta.text.trim() : ''));
+
+      if (!mottoText) {
+        textEl.textContent = 'Nog geen motto ingesteld.';
+        metaEl.textContent = 'Stel een korte zin in die je op koers houdt op lastige momenten.';
+        return;
+      }
+
+      textEl.textContent = `"${mottoText}"`;
+      if (activeItem) {
+        metaEl.textContent = `${formatMottoPeriod(activeItem)}. Bekijk of wijzig via de motto-pagina.`;
+        return;
+      }
+
+      const updated = mottoMeta && mottoMeta.updatedAt ? new Date(mottoMeta.updatedAt) : null;
+      metaEl.textContent = updated && !Number.isNaN(updated.getTime())
+        ? `Laatst aangepast: ${updated.toLocaleString('nl-NL')}`
+        : 'Dit motto is zichtbaar vanaf index en dagkaart.';
+    }
+
+    function getDailySectionSettings() {
+      const state = getFormState();
+      const saved = state.dailySectionSettings && typeof state.dailySectionSettings === 'object'
+        ? state.dailySectionSettings
+        : {};
+      return {
+        showSleep: saved.showSleep !== false,
+        showReality: saved.showReality !== false,
+        showReflection: saved.showReflection !== false
+      };
+    }
+
+    function getTwoWeekPhase() {
+      const state = getFormState();
+      const phase = state.twoWeekPhase && typeof state.twoWeekPhase === 'object' ? state.twoWeekPhase : {};
+      const startDate = phase.startDate || '';
+      const endDate = phase.endDate || '';
+      return { startDate, endDate };
+    }
+
+    function computeTwoWeekEndDate(startDate) {
+      if (!startDate) return '';
+      const start = fromDateKey(startDate);
+      start.setDate(start.getDate() + 13);
+      return toDateKey(start);
+    }
+
+    function getTwoWeekRangeDates(startDate, endDate) {
+      if (!startDate || !endDate) return [];
+      const dates = [];
+      let cur = fromDateKey(startDate);
+      const end = fromDateKey(endDate);
+      while (toDateKey(cur) <= toDateKey(end)) {
+        dates.push(toDateKey(cur));
+        cur.setDate(cur.getDate() + 1);
+      }
+      return dates;
+    }
+
+    function saveTwoWeekPhaseStart(startDate) {
+      const normalizedStart = (startDate || '').trim();
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(normalizedStart)) {
+        showMessage('Kies een geldige begindatum voor de 14-dagenfase.');
+        return;
+      }
+      const endDate = computeTwoWeekEndDate(normalizedStart);
+      const state = getFormState();
+      iamData.updateFormData(formKey, {
+        ...state,
+        twoWeekPhase: {
+          startDate: normalizedStart,
+          endDate
+        }
+      });
+      render14DayOverview();
+      showMessage(`Eerste 14-dagenfase gestart: ${normalizedStart} t/m ${endDate}.`);
+    }
+
+    function render14DayOverview() {
+      const container = document.getElementById('fourteenDayOverview');
+      const statusEl = document.getElementById('twoWeekPhaseStatus');
+      const startInput = document.getElementById('twoWeekStartDate');
+      const startButton = document.getElementById('startTwoWeekPhaseButton');
+      if (!container) return;
+
+      const todayKey = toDateKey(new Date());
+      const phase = getTwoWeekPhase();
+      const hasPhase = Boolean(phase.startDate && phase.endDate);
+
+      if (startInput) {
+        startInput.value = phase.startDate || startInput.value || '';
+        startInput.disabled = hasPhase;
+      }
+      if (startButton) {
+        startButton.disabled = hasPhase;
+        startButton.textContent = hasPhase ? 'Eerste 14 dagen vastgelegd' : 'Start eerste 14 dagen';
+      }
+
+      if (!hasPhase) {
+        if (statusEl) {
+          statusEl.textContent = 'Nog geen begindatum ingesteld. Kies een startdatum om je eerste twee weken vast te leggen.';
+        }
+        container.innerHTML = '<p class="observation-help">Na het instellen van je begindatum zie je hier alleen die eerste vaste 14 dagen terug. Daarna blijft dit blok als terugblik-archief bestaan.</p>';
+        return;
+      }
+
+      const entries = getDailyEntries();
+      const days = getTwoWeekRangeDates(phase.startDate, phase.endDate);
+      const isBefore = todayKey < phase.startDate;
+      const isAfter = todayKey > phase.endDate;
+
+      if (statusEl) {
+        if (isBefore) {
+          statusEl.textContent = `Je eerste 14-dagenfase staat gepland van ${phase.startDate} t/m ${phase.endDate}.`;
+        } else if (isAfter) {
+          statusEl.textContent = `Archief van je eerste 14 dagen (${phase.startDate} t/m ${phase.endDate}). Dit komt niet opnieuw terug als nieuwe fase.`;
+        } else {
+          const dayNumber = getDateDiffInDays(todayKey, phase.startDate) + 1;
+          statusEl.textContent = `Je zit in dag ${dayNumber} van je eerste 14-dagenfase (${phase.startDate} t/m ${phase.endDate}).`;
+        }
+      }
+
+      if (!twoWeekCardUserToggled) {
+        setTwoWeekCardCollapsed(isAfter);
+      }
+
+      const filledCount = days.filter((k) => entries[k] && hasEntryContent(entries[k])).length;
+      if (!filledCount) {
+        container.innerHTML = '<p class="observation-help">Nog geen dagkaarten ingevuld binnen je vaste eerste 14 dagen. Gebruik de dagkaart hieronder om dit archief op te bouwen.</p>';
+        return;
+      }
+      const cards = days.slice().reverse().map((dateKey) => {
+        const entry = entries[dateKey];
+        if (!entry || !hasEntryContent(entry)) {
+          return `<div class="observation-day overview-empty"><h3>${formatDateLabel(dateKey)}</h3><p class="observation-help">Geen invoer</p></div>`;
+        }
+        const parts = [];
+        if (isNumericUnits(entry.plannedUnits)) parts.push(`Gepland: ${formatUnits(entry.plannedUnits)} eenheden`);
+        if (isNumericUnits(entry.units)) parts.push(`Werkelijk: ${formatUnits(entry.units)} eenheden`);
+        if (isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units)) {
+          parts.push(`Verschil: ${formatUnits(Number(entry.units) - Number(entry.plannedUnits))} eenheden`);
+        }
+        if (entry.usageNote) parts.push(`Toelichting: ${entry.usageNote}`);
+        if (entry.riskNote) parts.push(`Risico: ${entry.riskNote}`);
+        if (entry.motivationNote) parts.push(`Motivatie: ${entry.motivationNote}`);
+        if (isNumericUnits(entry.sleepHours)) parts.push(`Slaap: ${formatUnits(entry.sleepHours)} uur`);
+        if (isNumericUnits(entry.naturePercent)) parts.push(`Natuur: ${formatUnits(entry.naturePercent)}%`);
+        if (isNumericUnits(entry.enjoymentPercent)) parts.push(`Genoten: ${formatUnits(entry.enjoymentPercent)}%`);
+        if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
+        if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
+        const emotionBalanceText = formatEmotionBalanceText(entry.emotionExpressionPercent);
+        if (emotionBalanceText) parts.push(emotionBalanceText);
+        if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) parts.push(`Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`);
+        if (entry.expressedEmotionOther) parts.push(`Andere emotie: ${entry.expressedEmotionOther}`);
+        if (entry.suppressionReason) parts.push(`Reden om liever in te slikken: ${entry.suppressionReason}`);
+        const expressedBasics = getExpressedBasicsSummary(entry);
+        if (expressedBasics.length) parts.push(`Expressie basis-emoties: ${expressedBasics.join(', ')}`);
+        if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
+        if (entry.tooMuchTodayNote) parts.push(`Te veel: ${entry.tooMuchTodayNote}`);
+        return `<div class="observation-day"><h3>${formatDateLabel(dateKey)}</h3>${parts.map((p) => `<p>${p}</p>`).join('')}</div>`;
+      }).join('');
+      container.innerHTML = `<div class="observation-grid">${cards}</div>`;
+    }
+
+    function toggleSettingsBody() {
+      const body = document.getElementById('settingsBody');
+      const btn = document.getElementById('settingsToggleBtn');
+      if (!body || !btn) return;
+      const isCollapsed = body.classList.contains('is-collapsed');
+      body.classList.toggle('is-collapsed', !isCollapsed);
+      btn.setAttribute('aria-expanded', String(!isCollapsed));
+    }
+
+    function isGlobalSleepTrackingEnabled() {
+      if (!iamData || typeof iamData.getTrackingSettings !== 'function') return true;
+      const tracking = iamData.getTrackingSettings() || {};
+      return tracking.sleep !== false;
+    }
+
+    function saveDailySectionSettings(partial) {
+      const state = getFormState();
+      const current = getDailySectionSettings();
+      iamData.updateFormData(formKey, {
+        ...state,
+        dailySectionSettings: {
+          ...current,
+          ...partial
+        }
+      });
+    }
+
+    function applyDailySectionSettings() {
+      const settings = getDailySectionSettings();
+      const globalSleepEnabled = isGlobalSleepTrackingEnabled();
+      const globalTracking = (iamData && typeof iamData.getTrackingSettings === 'function')
+        ? (iamData.getTrackingSettings() || {})
+        : {};
+      const showSleepSection = settings.showSleep && globalSleepEnabled;
+      const sleepSection = document.getElementById('sleepTrackingSection');
+      const realitySection = document.getElementById('realityTrackingSection');
+      const reflectionSection = document.getElementById('reflectionTrackingSection');
+      const globalSleepToggle = document.getElementById('settingGlobalSleep');
+      const globalFoodToggle = document.getElementById('settingGlobalFood');
+      const globalTrainingToggle = document.getElementById('settingGlobalTraining');
+      const globalMeditationToggle = document.getElementById('settingGlobalMeditation');
+      const globalSocialToggle = document.getElementById('settingGlobalSocial');
+      const globalEmotionToggle = document.getElementById('settingGlobalEmotion');
+      const globalFrustrationToggle = document.getElementById('settingGlobalFrustration');
+      const sleepToggle = document.getElementById('settingShowSleep');
+      const realityToggle = document.getElementById('settingShowReality');
+      const reflectionToggle = document.getElementById('settingShowReflection');
+      const sleepHint = document.getElementById('sleepSettingHint');
+
+      if (globalSleepToggle) globalSleepToggle.checked = globalSleepEnabled;
+      if (globalFoodToggle) globalFoodToggle.checked = Boolean(globalTracking.food);
+      if (globalTrainingToggle) globalTrainingToggle.checked = Boolean(globalTracking.training);
+      if (globalMeditationToggle) globalMeditationToggle.checked = Boolean(globalTracking.meditation);
+      if (globalSocialToggle) globalSocialToggle.checked = Boolean(globalTracking.social);
+      if (globalEmotionToggle) globalEmotionToggle.checked = Boolean(globalTracking.emotion);
+      if (globalFrustrationToggle) globalFrustrationToggle.checked = Boolean(globalTracking.frustration);
+      if (sleepToggle) sleepToggle.checked = settings.showSleep;
+      if (realityToggle) realityToggle.checked = settings.showReality;
+      if (reflectionToggle) reflectionToggle.checked = settings.showReflection;
+
+      if (sleepToggle) sleepToggle.disabled = !globalSleepEnabled;
+      if (sleepHint) {
+        sleepHint.textContent = globalSleepEnabled
+          ? 'Slaaptracking staat aan. Je zet dit aan of uit via de ⚙-instellingen op deze pagina.'
+          : 'Slaaptracking staat uit. Zet Slaap aan via de ⚙-instellingen op deze pagina om dit blok te gebruiken.';
+      }
+
+      if (sleepSection) sleepSection.classList.toggle('is-hidden-by-setting', !showSleepSection);
+      if (realitySection) realitySection.classList.toggle('is-hidden-by-setting', !settings.showReality);
+      if (reflectionSection) reflectionSection.classList.toggle('is-hidden-by-setting', !settings.showReflection);
+    }
 
     function getWeeklyReview() {
       return iamData.getAppMeta ? (iamData.getAppMeta(WEEKLY_REVIEW_KEY) || {}) : {};
@@ -621,6 +1751,22 @@
       });
     }
 
+    function openInteractionIndexModal() {
+      const modal = document.getElementById('interactionIndexModal');
+      if (modal) {
+        modal.setAttribute('aria-hidden', 'false');
+        modal.style.display = 'flex';
+      }
+    }
+
+    function closeInteractionIndexModal() {
+      const modal = document.getElementById('interactionIndexModal');
+      if (modal) {
+        modal.setAttribute('aria-hidden', 'true');
+        modal.style.display = 'none';
+      }
+    }
+
     function openHulpzinnetjeModal(title, text) {
       const modal = document.getElementById('hulpzinnetjeModal');
       const titleEl = document.getElementById('hulpzinnetjeTitle');
@@ -667,6 +1813,7 @@
       baseDate.setDate(baseDate.getDate() + days);
       dateInput.value = toDateKey(baseDate);
       renderSelectedDay();
+      updateExpressedEmotionResearchLink();
     }
 
     function getFormState() {
@@ -681,9 +1828,39 @@
     function setSelectedFields(entry) {
       document.getElementById('plannedUnits').value = entry && entry.plannedUnits !== '' && entry.plannedUnits !== null && entry.plannedUnits !== undefined ? entry.plannedUnits : '';
       document.getElementById('usageUnits').value = entry && entry.units !== '' && entry.units !== null && entry.units !== undefined ? entry.units : '';
+      document.getElementById('firstUnitsTime').value = entry?.firstUnitsTime || '';
+      document.getElementById('firstUnitsPlace').value = entry?.firstUnitsPlace || '';
       document.getElementById('usageNote').value = entry?.usageNote || '';
       document.getElementById('riskNote').value = entry?.riskNote || '';
       document.getElementById('motivationNote').value = entry?.motivationNote || '';
+      document.getElementById('sleepStart').value = entry?.sleepStart || '';
+      document.getElementById('sleepEnd').value = entry?.sleepEnd || '';
+      document.getElementById('sleepHours').value = entry && entry.sleepHours !== '' && entry.sleepHours !== null && entry.sleepHours !== undefined ? entry.sleepHours : '';
+      document.getElementById('naturePercent').value = entry && entry.naturePercent !== '' && entry.naturePercent !== null && entry.naturePercent !== undefined ? entry.naturePercent : '';
+      document.getElementById('enjoymentPercent').value = entry && entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined ? entry.enjoymentPercent : '';
+      document.getElementById('socialOnlinePercent').value = entry && entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined ? entry.socialOnlinePercent : '';
+      document.getElementById('socialIrlPercent').value = entry && entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined ? entry.socialIrlPercent : '';
+      document.getElementById('expressedEmotionOther').value = entry?.expressedEmotionOther || '';
+      document.getElementById('suppressionReason').value = entry?.suppressionReason || '';
+      document.getElementById('expressedCuriosity').value = entry && entry.expressedCuriosity !== '' && entry.expressedCuriosity !== null && entry.expressedCuriosity !== undefined ? entry.expressedCuriosity : '';
+      document.getElementById('expressedAnger').value = entry && entry.expressedAnger !== '' && entry.expressedAnger !== null && entry.expressedAnger !== undefined ? entry.expressedAnger : '';
+      document.getElementById('expressedSadness').value = entry && entry.expressedSadness !== '' && entry.expressedSadness !== null && entry.expressedSadness !== undefined ? entry.expressedSadness : '';
+      document.getElementById('expressedFear').value = entry && entry.expressedFear !== '' && entry.expressedFear !== null && entry.expressedFear !== undefined ? entry.expressedFear : '';
+      document.getElementById('expressedDesire').value = entry && entry.expressedDesire !== '' && entry.expressedDesire !== null && entry.expressedDesire !== undefined ? entry.expressedDesire : '';
+      document.getElementById('expressedOtherPercent').value = entry && entry.expressedOtherPercent !== '' && entry.expressedOtherPercent !== null && entry.expressedOtherPercent !== undefined ? entry.expressedOtherPercent : '';
+      document.getElementById('dayPressureSlider').value = entry && entry.dayPressure !== undefined && entry.dayPressure !== null ? entry.dayPressure : 50;
+      document.getElementById('selfRegieSlider').value = entry && entry.selfRegie !== undefined && entry.selfRegie !== null ? entry.selfRegie : 50;
+      document.getElementById('cravingPeakSlider').value = entry && entry.cravingPeak !== undefined && entry.cravingPeak !== null ? entry.cravingPeak : 50;
+      document.getElementById('recoveryActionSlider').value = entry && entry.recoveryAction !== undefined && entry.recoveryAction !== null ? entry.recoveryAction : 50;
+      document.getElementById('contactQualitySlider').value = entry && entry.contactQuality !== undefined && entry.contactQuality !== null ? entry.contactQuality : 50;
+      document.getElementById('bodyRestSlider').value = entry && entry.bodyRest !== undefined && entry.bodyRest !== null ? entry.bodyRest : 50;
+      document.getElementById('emotionExpressionPercentRange').value = entry && entry.emotionExpression !== undefined && entry.emotionExpression !== null ? entry.emotionExpression : 50;
+      document.getElementById('emotionExpressionPercent').value = entry && entry.emotionExpressionPercent !== '' && entry.emotionExpressionPercent !== null && entry.emotionExpressionPercent !== undefined ? entry.emotionExpressionPercent : '';
+      INTERACTION_SLIDER_IDS.forEach(updateSliderValueBadge);
+      updateDayInteractionSummary();
+      document.getElementById('missedTodayNote').value = entry?.missedTodayNote || '';
+      document.getElementById('tooMuchTodayNote').value = entry?.tooMuchTodayNote || '';
+      syncAllPercentSlidersFromFields();
     }
 
     function renderSelectedDayMeta(entry, dateKey) {
@@ -704,8 +1881,22 @@
       if (entry.units !== '' && entry.units !== null && entry.units !== undefined) {
         parts.push(`Gebruik: ${entry.units} eenheden`);
       }
+      if (entry.firstUnitsTime) parts.push(`Eerste eenheden tijd: ${entry.firstUnitsTime}`);
+      if (entry.firstUnitsPlace) parts.push(`Eerste eenheden plek: ${entry.firstUnitsPlace}`);
+      if (isNumericUnits(entry.sleepHours)) parts.push(`Slaap: ${formatUnits(entry.sleepHours)} uur`);
       if (entry.riskNote) parts.push('Risico ingevuld');
       if (entry.motivationNote) parts.push('Motivatie ingevuld');
+      if (isNumericUnits(entry.naturePercent) || isNumericUnits(entry.enjoymentPercent) || isNumericUnits(entry.socialOnlinePercent) || isNumericUnits(entry.socialIrlPercent) || isNumericUnits(entry.emotionExpressionPercent)) {
+        parts.push('Realiteitsscores ingevuld');
+      }
+      if (entry.suppressionReason || entry.expressedEmotionOther || isNumericUnits(entry.expressedCuriosity) || isNumericUnits(entry.expressedAnger) || isNumericUnits(entry.expressedSadness) || isNumericUnits(entry.expressedFear) || isNumericUnits(entry.expressedDesire) || isNumericUnits(entry.expressedOtherPercent)) {
+        parts.push('Emotie-expressie ingevuld');
+      }
+      if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) {
+        parts.push(`Daginteractie-index: ${entry.dayInteractionIndex}`);
+      }
+      if (entry.missedTodayNote) parts.push('Gemist ingevuld');
+      if (entry.tooMuchTodayNote) parts.push('Te veel ingevuld');
       state.textContent = parts.length ? parts.join(' | ') : 'Dag opgeslagen';
     }
 
@@ -713,29 +1904,118 @@
       const dateKey = document.getElementById('usageDate').value || toDateKey(new Date());
       const entry = getDailyEntries()[dateKey] || null;
       setSelectedFields(entry);
+      if (entry && entry.sleepHours === '' && entry.sleepStart && entry.sleepEnd) {
+        calculateSleepHours();
+      }
       renderSelectedDayMeta(entry, dateKey);
+      const emotionDateLabel = document.getElementById('expressedEmotionSectionDateLabel');
+      if (emotionDateLabel) {
+        const todayKey = toDateKey(new Date());
+        emotionDateLabel.textContent = dateKey === todayKey ? 'vandaag' : formatDateLabel(dateKey);
+      }
     }
 
     function collectSelectedDayData() {
       const rawPlanned = document.getElementById('plannedUnits').value.trim().replace(',', '.');
       const rawUnits = document.getElementById('usageUnits').value.trim().replace(',', '.');
+      const rawSleepHours = document.getElementById('sleepHours').value.trim().replace(',', '.');
+      const rawNature = document.getElementById('naturePercent').value.trim().replace(',', '.');
+      const rawEnjoyment = document.getElementById('enjoymentPercent').value.trim().replace(',', '.');
+      const rawSocialOnline = document.getElementById('socialOnlinePercent').value.trim().replace(',', '.');
+      const rawSocialIrl = document.getElementById('socialIrlPercent').value.trim().replace(',', '.');
+      const rawExpressedCuriosity = document.getElementById('expressedCuriosity').value.trim().replace(',', '.');
+      const rawExpressedAnger = document.getElementById('expressedAnger').value.trim().replace(',', '.');
+      const rawExpressedSadness = document.getElementById('expressedSadness').value.trim().replace(',', '.');
+      const rawExpressedFear = document.getElementById('expressedFear').value.trim().replace(',', '.');
+      const rawExpressedDesire = document.getElementById('expressedDesire').value.trim().replace(',', '.');
+      const rawExpressedOtherPercent = document.getElementById('expressedOtherPercent').value.trim().replace(',', '.');
+      const dayPressure = getSliderNumber('dayPressureSlider');
+      const selfRegie = getSliderNumber('selfRegieSlider');
+      const cravingPeak = getSliderNumber('cravingPeakSlider');
+      const recoveryAction = getSliderNumber('recoveryActionSlider');
+      const contactQualityDerived = deriveContactQualityFromPercents(rawSocialOnline, rawSocialIrl);
+      const contactQuality = contactQualityDerived === null ? '' : contactQualityDerived;
+      const contactQualityForIndex = contactQualityDerived === null ? 50 : contactQualityDerived;
+      const bodyRest = getSliderNumber('bodyRestSlider');
+      const emotionExpressionDerived = toOptionalPercentNumber(document.getElementById('emotionExpressionPercent').value);
+      const emotionExpression = emotionExpressionDerived === null ? '' : emotionExpressionDerived;
+      const emotionExpressionForIndex = emotionExpressionDerived === null ? 50 : emotionExpressionDerived;
       return {
         plannedUnits: rawPlanned === '' ? '' : Number(rawPlanned),
         units: rawUnits === '' ? '' : Number(rawUnits),
+        firstUnitsTime: document.getElementById('firstUnitsTime').value,
+        firstUnitsPlace: document.getElementById('firstUnitsPlace').value.trim(),
         usageNote: document.getElementById('usageNote').value.trim(),
         riskNote: document.getElementById('riskNote').value.trim(),
         motivationNote: document.getElementById('motivationNote').value.trim(),
+        sleepStart: document.getElementById('sleepStart').value,
+        sleepEnd: document.getElementById('sleepEnd').value,
+        sleepHours: rawSleepHours === '' ? '' : Number(rawSleepHours),
+        naturePercent: rawNature === '' ? '' : Number(rawNature),
+        enjoymentPercent: rawEnjoyment === '' ? '' : Number(rawEnjoyment),
+        socialOnlinePercent: rawSocialOnline === '' ? '' : Number(rawSocialOnline),
+        socialIrlPercent: rawSocialIrl === '' ? '' : Number(rawSocialIrl),
+        dayPressure,
+        selfRegie,
+        cravingPeak,
+        recoveryAction,
+        contactQuality,
+        bodyRest,
+        emotionExpression,
+        dayInteractionIndex: computeDayInteractionIndex({ dayPressure, selfRegie, cravingPeak, recoveryAction, contactQuality: contactQualityForIndex, bodyRest, emotionExpression: emotionExpressionForIndex }),
+        expressedEmotionOther: document.getElementById('expressedEmotionOther').value.trim(),
+        suppressionReason: document.getElementById('suppressionReason').value.trim(),
+        expressedCuriosity: rawExpressedCuriosity === '' ? '' : Number(rawExpressedCuriosity),
+        expressedAnger: rawExpressedAnger === '' ? '' : Number(rawExpressedAnger),
+        expressedSadness: rawExpressedSadness === '' ? '' : Number(rawExpressedSadness),
+        expressedFear: rawExpressedFear === '' ? '' : Number(rawExpressedFear),
+        expressedDesire: rawExpressedDesire === '' ? '' : Number(rawExpressedDesire),
+        expressedOtherPercent: rawExpressedOtherPercent === '' ? '' : Number(rawExpressedOtherPercent),
+        missedTodayNote: document.getElementById('missedTodayNote').value.trim(),
+        tooMuchTodayNote: document.getElementById('tooMuchTodayNote').value.trim(),
+        emotionExpressionPercent: (() => { const r = document.getElementById('emotionExpressionPercent').value.trim().replace(',', '.'); return r === '' ? '' : Number(r); })(),
         updatedAt: new Date().toISOString()
       };
+    }
+
+    function isValidPercent(value) {
+      return value >= 0 && value <= 100;
     }
 
     function hasEntryContent(entry) {
       return entry && (
         (entry.plannedUnits !== '' && entry.plannedUnits !== null && entry.plannedUnits !== undefined) ||
         (entry.units !== '' && entry.units !== null && entry.units !== undefined) ||
+        Boolean(entry.firstUnitsTime) ||
+        Boolean(entry.firstUnitsPlace) ||
         Boolean(entry.usageNote) ||
         Boolean(entry.riskNote) ||
-        Boolean(entry.motivationNote)
+        Boolean(entry.motivationNote) ||
+        Boolean(entry.sleepStart) ||
+        Boolean(entry.sleepEnd) ||
+        (entry.sleepHours !== '' && entry.sleepHours !== null && entry.sleepHours !== undefined) ||
+        (entry.naturePercent !== '' && entry.naturePercent !== null && entry.naturePercent !== undefined) ||
+        (entry.enjoymentPercent !== '' && entry.enjoymentPercent !== null && entry.enjoymentPercent !== undefined) ||
+        (entry.socialOnlinePercent !== '' && entry.socialOnlinePercent !== null && entry.socialOnlinePercent !== undefined) ||
+        (entry.socialIrlPercent !== '' && entry.socialIrlPercent !== null && entry.socialIrlPercent !== undefined) ||
+        Boolean(entry.expressedEmotionOther) ||
+        Boolean(entry.suppressionReason) ||
+        isNumericUnits(entry.expressedCuriosity) ||
+        isNumericUnits(entry.expressedAnger) ||
+        isNumericUnits(entry.expressedSadness) ||
+        isNumericUnits(entry.expressedFear) ||
+        isNumericUnits(entry.expressedDesire) ||
+        isNumericUnits(entry.expressedOtherPercent) ||
+        (entry.dayPressure !== undefined && entry.dayPressure !== null && Number(entry.dayPressure) !== 50) ||
+        (entry.selfRegie !== undefined && entry.selfRegie !== null && Number(entry.selfRegie) !== 50) ||
+        (entry.cravingPeak !== undefined && entry.cravingPeak !== null && Number(entry.cravingPeak) !== 50) ||
+        (entry.recoveryAction !== undefined && entry.recoveryAction !== null && Number(entry.recoveryAction) !== 50) ||
+        (entry.contactQuality !== undefined && entry.contactQuality !== null && Number(entry.contactQuality) !== 50) ||
+        (entry.bodyRest !== undefined && entry.bodyRest !== null && Number(entry.bodyRest) !== 50) ||
+        (entry.emotionExpression !== undefined && entry.emotionExpression !== null && Number(entry.emotionExpression) !== 50) ||
+        (entry.emotionExpressionPercent !== '' && entry.emotionExpressionPercent !== null && entry.emotionExpressionPercent !== undefined) ||
+        Boolean(entry.missedTodayNote) ||
+        Boolean(entry.tooMuchTodayNote)
       );
     }
 
@@ -758,6 +2038,54 @@
         showMessage('Gebruik in eenheden moet een geldig getal zijn.');
         return;
       }
+      if (entry.sleepHours !== '' && Number.isNaN(entry.sleepHours)) {
+        showMessage('Slaapuren moeten een geldig getal zijn.');
+        return;
+      }
+      if (entry.naturePercent !== '' && (Number.isNaN(entry.naturePercent) || !isValidPercent(entry.naturePercent))) {
+        showMessage('Natuur moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.enjoymentPercent !== '' && (Number.isNaN(entry.enjoymentPercent) || !isValidPercent(entry.enjoymentPercent))) {
+        showMessage('Genoten moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.socialOnlinePercent !== '' && (Number.isNaN(entry.socialOnlinePercent) || !isValidPercent(entry.socialOnlinePercent))) {
+        showMessage('Online contact moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.socialIrlPercent !== '' && (Number.isNaN(entry.socialIrlPercent) || !isValidPercent(entry.socialIrlPercent))) {
+        showMessage('IRL contact moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.emotionExpressionPercent !== '' && (Number.isNaN(entry.emotionExpressionPercent) || !isValidPercent(entry.emotionExpressionPercent))) {
+        showMessage('Emotionele ruimte moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.expressedCuriosity !== '' && (Number.isNaN(entry.expressedCuriosity) || !isValidPercent(entry.expressedCuriosity))) {
+        showMessage('Nieuwsgierigheid moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.expressedAnger !== '' && (Number.isNaN(entry.expressedAnger) || !isValidPercent(entry.expressedAnger))) {
+        showMessage('Boosheid moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.expressedSadness !== '' && (Number.isNaN(entry.expressedSadness) || !isValidPercent(entry.expressedSadness))) {
+        showMessage('Verdriet moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.expressedFear !== '' && (Number.isNaN(entry.expressedFear) || !isValidPercent(entry.expressedFear))) {
+        showMessage('Angst moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.expressedDesire !== '' && (Number.isNaN(entry.expressedDesire) || !isValidPercent(entry.expressedDesire))) {
+        showMessage('Begeerte moet tussen 0 en 100 liggen.');
+        return;
+      }
+      if (entry.expressedOtherPercent !== '' && (Number.isNaN(entry.expressedOtherPercent) || !isValidPercent(entry.expressedOtherPercent))) {
+        showMessage('Andere emotie moet tussen 0 en 100 liggen.');
+        return;
+      }
 
       if (hasEntryContent(entry)) {
         entries[dateKey] = entry;
@@ -772,6 +2100,7 @@
 
       renderSelectedDay();
       renderHistory();
+      render14DayOverview();
       showMessage('Dagkaart opgeslagen.');
     }
 
@@ -992,9 +2321,27 @@
         if (isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units)) {
           parts.push(`Verschil: ${formatUnits(Number(entry.units) - Number(entry.plannedUnits))} eenheden`);
         }
+        if (entry.firstUnitsTime) parts.push(`Eerste eenheden tijd: ${entry.firstUnitsTime}`);
+        if (entry.firstUnitsPlace) parts.push(`Eerste eenheden plek: ${entry.firstUnitsPlace}`);
         if (entry.riskNote) parts.push(`Risico: ${entry.riskNote}`);
         if (entry.motivationNote) parts.push(`Motivatie: ${entry.motivationNote}`);
         if (entry.usageNote) parts.push(`Toelichting: ${entry.usageNote}`);
+        if (entry.sleepStart) parts.push(`Inslapen: ${entry.sleepStart}`);
+        if (entry.sleepEnd) parts.push(`Wakker: ${entry.sleepEnd}`);
+        if (isNumericUnits(entry.sleepHours)) parts.push(`Slaapuren: ${formatUnits(entry.sleepHours)}`);
+        if (isNumericUnits(entry.naturePercent)) parts.push(`Natuur: ${formatUnits(entry.naturePercent)}%`);
+        if (isNumericUnits(entry.enjoymentPercent)) parts.push(`Genoten: ${formatUnits(entry.enjoymentPercent)}%`);
+        if (isNumericUnits(entry.socialOnlinePercent)) parts.push(`Contact online: ${formatUnits(entry.socialOnlinePercent)}%`);
+        if (isNumericUnits(entry.socialIrlPercent)) parts.push(`Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`);
+        const emotionBalanceText = formatEmotionBalanceText(entry.emotionExpressionPercent);
+        if (emotionBalanceText) parts.push(emotionBalanceText);
+        if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) parts.push(`Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`);
+        if (entry.expressedEmotionOther) parts.push(`Andere emotie: ${entry.expressedEmotionOther}`);
+        if (entry.suppressionReason) parts.push(`Reden om liever in te slikken: ${entry.suppressionReason}`);
+        const expressedBasics = getExpressedBasicsSummary(entry);
+        if (expressedBasics.length) parts.push(`Expressie basis-emoties: ${expressedBasics.join(', ')}`);
+        if (entry.missedTodayNote) parts.push(`Gemist: ${entry.missedTodayNote}`);
+        if (entry.tooMuchTodayNote) parts.push(`Te veel: ${entry.tooMuchTodayNote}`);
 
         return `
           <li class="history-item">
@@ -1043,7 +2390,7 @@
         filename = `iam-dagkaart-${toDateKey(new Date())}.csv`;
         const escapeCsv = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
         const rows = [
-          ['date', 'plannedUnits', 'units', 'difference', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
+          ['date', 'plannedUnits', 'units', 'difference', 'firstUnitsTime', 'firstUnitsPlace', 'sleepStart', 'sleepEnd', 'sleepHours', 'naturePercent', 'enjoymentPercent', 'socialOnlinePercent', 'socialIrlPercent', 'emotionExpressionPercent', 'dayPressure', 'selfRegie', 'cravingPeak', 'recoveryAction', 'contactQuality', 'bodyRest', 'emotionExpression', 'dayInteractionIndex', 'expressedEmotionOther', 'suppressionReason', 'expressedCuriosity', 'expressedAnger', 'expressedSadness', 'expressedFear', 'expressedDesire', 'expressedOtherPercent', 'missedTodayNote', 'tooMuchTodayNote', 'usageNote', 'riskNote', 'motivationNote', 'updatedAt'],
           ...sortedEntries.map((entry) => {
             const hasBoth = isNumericUnits(entry.plannedUnits) && isNumericUnits(entry.units);
             const difference = hasBoth ? Number(entry.units) - Number(entry.plannedUnits) : '';
@@ -1052,6 +2399,34 @@
               entry.plannedUnits ?? '',
               entry.units ?? '',
               difference,
+              entry.firstUnitsTime || '',
+              entry.firstUnitsPlace || '',
+              entry.sleepStart || '',
+              entry.sleepEnd || '',
+              entry.sleepHours ?? '',
+              entry.naturePercent ?? '',
+              entry.enjoymentPercent ?? '',
+              entry.socialOnlinePercent ?? '',
+              entry.socialIrlPercent ?? '',
+              entry.emotionExpressionPercent ?? '',
+              entry.dayPressure ?? '',
+              entry.selfRegie ?? '',
+              entry.cravingPeak ?? '',
+              entry.recoveryAction ?? '',
+              entry.contactQuality ?? '',
+              entry.bodyRest ?? '',
+              entry.emotionExpression ?? '',
+              entry.dayInteractionIndex ?? '',
+              entry.expressedEmotionOther || '',
+              entry.suppressionReason || '',
+              entry.expressedCuriosity ?? '',
+              entry.expressedAnger ?? '',
+              entry.expressedSadness ?? '',
+              entry.expressedFear ?? '',
+              entry.expressedDesire ?? '',
+              entry.expressedOtherPercent ?? '',
+              entry.missedTodayNote || '',
+              entry.tooMuchTodayNote || '',
               entry.usageNote || '',
               entry.riskNote || '',
               entry.motivationNote || '',
@@ -1074,6 +2449,26 @@
       link.remove();
       URL.revokeObjectURL(url);
       showMessage(`Dagregistraties geëxporteerd als ${format.toUpperCase()}.`);
+    }
+
+    function exportAllIamData() {
+      if (!iamData || typeof iamData.getData !== 'function') {
+        showMessage('Volledige export is nu niet beschikbaar.');
+        return;
+      }
+
+      const allData = iamData.getData() || {};
+      const content = JSON.stringify({ exportedAt: new Date().toISOString(), data: allData }, null, 2);
+      const blob = new Blob([content], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `iam-backup-${toDateKey(new Date())}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showMessage('Volledige IAM-backup geëxporteerd als JSON.');
     }
 
     function renderHistory() {
@@ -1158,6 +2553,104 @@
           item.appendChild(motivation);
         }
 
+        if (entry.sleepStart) {
+          const sleepStart = document.createElement('p');
+          sleepStart.textContent = `Inslapen: ${entry.sleepStart}`;
+          item.appendChild(sleepStart);
+        }
+
+        if (entry.sleepEnd) {
+          const sleepEnd = document.createElement('p');
+          sleepEnd.textContent = `Wakker: ${entry.sleepEnd}`;
+          item.appendChild(sleepEnd);
+        }
+
+        if (entry.firstUnitsTime) {
+          const firstTime = document.createElement('p');
+          firstTime.textContent = `Eerste eenheden tijd: ${entry.firstUnitsTime}`;
+          item.appendChild(firstTime);
+        }
+
+        if (entry.firstUnitsPlace) {
+          const firstPlace = document.createElement('p');
+          firstPlace.textContent = `Eerste eenheden plek: ${entry.firstUnitsPlace}`;
+          item.appendChild(firstPlace);
+        }
+
+        if (isNumericUnits(entry.sleepHours)) {
+          const sleepHours = document.createElement('p');
+          sleepHours.textContent = `Slaapuren: ${formatUnits(entry.sleepHours)}`;
+          item.appendChild(sleepHours);
+        }
+
+        if (isNumericUnits(entry.naturePercent)) {
+          const nature = document.createElement('p');
+          nature.textContent = `Natuur: ${formatUnits(entry.naturePercent)}%`;
+          item.appendChild(nature);
+        }
+
+        if (isNumericUnits(entry.enjoymentPercent)) {
+          const enjoyment = document.createElement('p');
+          enjoyment.textContent = `Genoten: ${formatUnits(entry.enjoymentPercent)}%`;
+          item.appendChild(enjoyment);
+        }
+
+        if (isNumericUnits(entry.socialOnlinePercent)) {
+          const socialOnline = document.createElement('p');
+          socialOnline.textContent = `Contact online: ${formatUnits(entry.socialOnlinePercent)}%`;
+          item.appendChild(socialOnline);
+        }
+
+        if (isNumericUnits(entry.socialIrlPercent)) {
+          const socialIrl = document.createElement('p');
+          socialIrl.textContent = `Contact IRL: ${formatUnits(entry.socialIrlPercent)}%`;
+          item.appendChild(socialIrl);
+        }
+
+        const emotionBalanceText = formatEmotionBalanceText(entry.emotionExpressionPercent);
+        if (emotionBalanceText) {
+          const emotionSwallowed = document.createElement('p');
+          emotionSwallowed.textContent = emotionBalanceText;
+          item.appendChild(emotionSwallowed);
+        }
+
+        if (entry.dayInteractionIndex !== '' && entry.dayInteractionIndex !== null && entry.dayInteractionIndex !== undefined) {
+          const interactionIndex = document.createElement('p');
+          interactionIndex.textContent = `Daginteractie-index: ${formatUnits(entry.dayInteractionIndex)}`;
+          item.appendChild(interactionIndex);
+        }
+
+        if (entry.expressedEmotionOther) {
+          const expressedOther = document.createElement('p');
+          expressedOther.textContent = `Andere emotie: ${entry.expressedEmotionOther}`;
+          item.appendChild(expressedOther);
+        }
+
+        if (entry.suppressionReason) {
+          const suppressionMain = document.createElement('p');
+          suppressionMain.textContent = `Reden om liever in te slikken: ${entry.suppressionReason}`;
+          item.appendChild(suppressionMain);
+        }
+
+        const expressedBasics = getExpressedBasicsSummary(entry);
+        if (expressedBasics.length) {
+          const expressedBasicsP = document.createElement('p');
+          expressedBasicsP.textContent = `Expressie basis-emoties: ${expressedBasics.join(', ')}`;
+          item.appendChild(expressedBasicsP);
+        }
+
+        if (entry.missedTodayNote) {
+          const missed = document.createElement('p');
+          missed.textContent = `Wat heb je vandaag gemist: ${entry.missedTodayNote}`;
+          item.appendChild(missed);
+        }
+
+        if (entry.tooMuchTodayNote) {
+          const tooMuch = document.createElement('p');
+          tooMuch.textContent = `Wat was er vandaag te veel: ${entry.tooMuchTodayNote}`;
+          item.appendChild(tooMuch);
+        }
+
         list.appendChild(item);
       });
 
@@ -1174,15 +2667,88 @@
       showMessage.timer = setTimeout(() => el.classList.remove('show'), 2500);
     }
 
+    function calculateSleepHours() {
+      const startEl = document.getElementById('sleepStart');
+      const endEl = document.getElementById('sleepEnd');
+      const hoursEl = document.getElementById('sleepHours');
+      if (!startEl || !endEl || !hoursEl) return;
+
+      if (!startEl.value || !endEl.value) {
+        hoursEl.value = '';
+        return;
+      }
+
+      const [startH, startM] = startEl.value.split(':').map(Number);
+      const [endH, endM] = endEl.value.split(':').map(Number);
+      if (Number.isNaN(startH) || Number.isNaN(startM) || Number.isNaN(endH) || Number.isNaN(endM)) {
+        hoursEl.value = '';
+        return;
+      }
+
+      let startMinutes = startH * 60 + startM;
+      let endMinutes = endH * 60 + endM;
+      if (endMinutes <= startMinutes) {
+        endMinutes += 24 * 60;
+      }
+
+      const hours = (endMinutes - startMinutes) / 60;
+      hoursEl.value = String(Math.round(hours * 10) / 10);
+    }
+
+    function updateExpressedEmotionResearchLink() {
+      const link = document.getElementById('expressedEmotionResearchLink');
+      const dateInput = document.getElementById('usageDate');
+      if (!link || !dateInput) return;
+      const dateKey = dateInput.value || toDateKey(new Date());
+      link.href = `./ingeslikte-emoties.htm?date=${encodeURIComponent(dateKey)}`;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const existing = iamData.getFormData(formKey) || {};
       const dateInput = document.getElementById('usageDate');
 
       dateInput.value = existing.lastTrackedDate || toDateKey(new Date());
+      renderPersonalizedGreeting();
       renderAttemptSummary();
+      renderMotivatingMottoSpot();
       renderSelectedDay();
+      INTERACTION_SLIDER_IDS.forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        updateSliderValueBadge(id);
+        el.addEventListener('input', () => {
+          updateSliderValueBadge(id);
+          updateDayInteractionSummary();
+        });
+      });
+      setupPercentSliderBindings();
+      updateDayInteractionSummary();
+      updateExpressedEmotionResearchLink();
       renderHistory();
+      render14DayOverview();
 
+      const twoWeekStartBtn = document.getElementById('startTwoWeekPhaseButton');
+      const twoWeekStartInput = document.getElementById('twoWeekStartDate');
+      const twoWeekToggleBtn = document.getElementById('twoWeekToggleButton');
+      if (twoWeekStartBtn && twoWeekStartInput) {
+        twoWeekStartBtn.addEventListener('click', () => {
+          saveTwoWeekPhaseStart(twoWeekStartInput.value || toDateKey(new Date()));
+        });
+      }
+      if (twoWeekToggleBtn) {
+        twoWeekToggleBtn.addEventListener('click', () => {
+          twoWeekCardUserToggled = true;
+          setTwoWeekCardCollapsed(!isTwoWeekCardCollapsed());
+        });
+      }
+
+      document.getElementById('interactionIndexInfoButton').addEventListener('click', openInteractionIndexModal);
+      document.getElementById('closeInteractionIndexButton').addEventListener('click', closeInteractionIndexModal);
+      document.getElementById('interactionIndexModal').addEventListener('click', (event) => {
+        if (event.target.id === 'interactionIndexModal') {
+          closeInteractionIndexModal();
+        }
+      });
       document.querySelectorAll('[data-hulpzinnetje-content]').forEach((button) => {
         button.addEventListener('click', () => {
           openHulpzinnetjeModal(button.dataset.hulpzinnetjeTitle || 'Hulpzinnetje', button.dataset.hulpzinnetjeContent || '');
@@ -1196,18 +2762,88 @@
       });
       document.getElementById('prevDayButton').addEventListener('click', () => shiftSelectedDate(-1));
       document.getElementById('nextDayButton').addEventListener('click', () => shiftSelectedDate(1));
-      document.getElementById('usageDate').addEventListener('change', renderSelectedDay);
+      document.getElementById('usageDate').addEventListener('change', () => {
+        renderSelectedDay();
+        updateExpressedEmotionResearchLink();
+      });
       document.getElementById('saveDayButton').addEventListener('click', saveSelectedDay);
+      document.getElementById('sleepStart').addEventListener('change', calculateSleepHours);
+      document.getElementById('sleepEnd').addEventListener('change', calculateSleepHours);
       document.getElementById('copyTodayButton').addEventListener('click', () => {
         dateInput.value = toDateKey(new Date());
         renderSelectedDay();
+        updateExpressedEmotionResearchLink();
       });
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.querySelectorAll('[data-range]').forEach((button) => {
         button.addEventListener('click', () => setHistoryFilter(Number(button.dataset.range)));
       });
       document.getElementById('exportDailyJsonButton').addEventListener('click', () => exportDailyEntries('json'));
       document.getElementById('exportDailyCsvButton').addEventListener('click', () => exportDailyEntries('csv'));
+      document.getElementById('exportAllIamButton').addEventListener('click', exportAllIamData);
+
+      applyDailySectionSettings();
+      document.getElementById('settingsToggleBtn').addEventListener('click', toggleSettingsBody);
+      document.getElementById('settingGlobalSleep').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setSleepTrackingEnabled === 'function') {
+          iamData.setSleepTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale slaaptracking staat nu aan.' : 'Globale slaaptracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalFood').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setFoodTrackingEnabled === 'function') {
+          iamData.setFoodTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale voeding-tracking staat nu aan.' : 'Globale voeding-tracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalTraining').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setTrainingTrackingEnabled === 'function') {
+          iamData.setTrainingTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale training-tracking staat nu aan.' : 'Globale training-tracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalMeditation').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setMeditationTrackingEnabled === 'function') {
+          iamData.setMeditationTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale meditatie-tracking staat nu aan.' : 'Globale meditatie-tracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalSocial').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setSocialTrackingEnabled === 'function') {
+          iamData.setSocialTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale sociale-tracking staat nu aan.' : 'Globale sociale-tracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalEmotion').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setEmotionTrackingEnabled === 'function') {
+          iamData.setEmotionTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale emotie-tracking staat nu aan.' : 'Globale emotie-tracking staat nu uit.');
+      });
+      document.getElementById('settingGlobalFrustration').addEventListener('change', (event) => {
+        if (iamData && typeof iamData.setFrustrationTrackingEnabled === 'function') {
+          iamData.setFrustrationTrackingEnabled(event.target.checked);
+        }
+        applyDailySectionSettings();
+        showMessage(event.target.checked ? 'Globale frustratie-tracking staat nu aan.' : 'Globale frustratie-tracking staat nu uit.');
+      });
+      document.getElementById('settingShowSleep').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showSleep: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowReality').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showReality: event.target.checked });
+        applyDailySectionSettings();
+      });
+      document.getElementById('settingShowReflection').addEventListener('change', (event) => {
+        saveDailySectionSettings({ showReflection: event.target.checked });
+        applyDailySectionSettings();
+      });
 
       loadRegulationFields();
       renderEvaluation();
@@ -1233,7 +2869,9 @@
       }
 
       window.addEventListener('focus', () => {
+        renderPersonalizedGreeting();
         renderAttemptSummary();
+        renderMotivatingMottoSpot();
       });
     });
   </script>

@@ -57,6 +57,32 @@
             margin: 0;
         }
 
+        .inspiration-panel {
+            margin-top: 1.1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #fff;
+            padding: 0.85rem;
+        }
+
+        .inspiration-panel img {
+            display: block;
+            width: 100%;
+            max-width: 260px;
+            margin: 0 auto;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            height: auto;
+        }
+
+        .inspiration-panel figcaption {
+            margin-top: 0.55rem;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.88rem;
+            line-height: 1.45;
+        }
+
         /* ── section cards ───────────────────────────── */
         .section-grid {
             display: grid;
@@ -281,6 +307,7 @@
 
         /* Language visibility is handled in JS via the hidden attribute. */
     </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body class="lang-nl">
 <div class="container">
@@ -301,6 +328,11 @@
             Deze pagina is er voor iedereen die sex on chems kent - of nieuwsgierig is, of merkt dat het soms anders loopt dan gehoopt.
             Geen oordeel. Geen preek. Wel eerlijke informatie en een paar handige vragen aan jezelf.
         </p>
+
+        <figure class="inspiration-panel">
+            <img src="../../IntegrativeAddictionManagement/pics/AutooDoodBAC0-01.jpg" alt="Grafiek als herinnering dat risico snel kan oplopen">
+            <figcaption>Beeldanker: risico kan sneller oplopen dan het in het moment voelt.</figcaption>
+        </figure>
     </div>
 
     <!-- ══ TOPIC CARDS GRID ════════════════════════════ -->
@@ -602,5 +634,6 @@
 
     updateScore();
 </script>
+    <script src="../js/dataStore.js"></script>
 </body>
 </html>

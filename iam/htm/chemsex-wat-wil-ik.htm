@@ -55,7 +55,31 @@
     .message { display: none; border-left: 4px solid var(--accent); }
     .message.show { display: block; }
     .message.error { border-left-color: #8a2f2f; }
+    .inspiration-panel {
+      margin-top: 1rem;
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+      padding: 0.75rem;
+    }
+    .inspiration-panel img {
+      display: block;
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.55);
+      background: #fff;
+    }
+    .inspiration-panel figcaption {
+      margin-top: 0.45rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.92);
+    }
   </style>
+    <script src="../js/themeMode.js"></script>
 </head>
 <body>
   <div class="container">
@@ -69,6 +93,10 @@
         </div>
         <h1>Wat wil ik eigenlijk?</h1>
         <p>Reflectie over de functie van chemsex in je leven: opwinding, verbinding, escapisme, schaamte en wat jij op langere termijn wilt.</p>
+        <figure class="inspiration-panel">
+          <img src="../../IntegrativeAddictionManagement/pics/AutooDoodBAC0-01.jpg" alt="Grafiek als visuele reminder van oplopende impact">
+          <figcaption>Kleine keuzes nu kunnen veel effect hebben op je lijn daarna.</figcaption>
+        </figure>
       </header>
 
       <div id="message" class="message"></div>
@@ -139,7 +167,6 @@
         <div class="action-bar">
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
           <button type="button" class="button-secondary" id="exportButton">Exporteer alles als JSON</button>
-          <button type="button" class="button-secondary" id="printButton">Print of bewaar als pdf</button>
         </div>
       </form>
     </div>
@@ -213,7 +240,6 @@
 
       document.getElementById('saveButton').addEventListener('click', () => saveForm(true));
       document.getElementById('exportButton').addEventListener('click', exportAll);
-      document.getElementById('printButton').addEventListener('click', () => window.print());
       document.getElementById('chemsexMeaningForm').addEventListener('input', () => saveForm(false));
     });
   </script>
