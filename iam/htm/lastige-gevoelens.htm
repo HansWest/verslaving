@@ -212,6 +212,16 @@
       </section>
 
       <form id="lastigeGevoelensForm">
+        <section class="question-card regulate" style="margin-bottom: 1rem;">
+          <span class="eyebrow">Oorsprong</span>
+          <h2>Hersenstam of Prefrontaal?</h2>
+          <p>Is dit een acute overlevingsdrang van je hersenstam (paniek, fysieke spanning, alles-of-niets) of is het een lastig gevoel uit je denkende brein (verdriet, eenzaamheid, rouw)?</p>
+          <div class="form-group">
+            <label for="brainstemVsPrefrontal">Herken je welk deel van je brein nu de leiding neemt?</label>
+            <textarea id="brainstemVsPrefrontal" name="brainstemVsPrefrontal" rows="4" placeholder="Bijvoorbeeld: Dit voelt als blinde paniek (hersenstam) / Dit is een diep verdriet (prefrontaal)"></textarea>
+          </div>
+        </section>
+
         <div class="grid-two">
           <section class="question-card prevent">
             <span class="eyebrow">Voorkomen</span>
@@ -358,6 +368,7 @@
   <script>
     const formKey = 'lastige-gevoelens';
     const fieldIds = [
+      'brainstemVsPrefrontal',
       'avoidTriggers',
       'distractionIdeas',
       'healthyIntensity',
@@ -374,6 +385,7 @@
 
     function getDefaultData() {
       return {
+        brainstemVsPrefrontal: '',
         avoidTriggers: '',
         distractionIdeas: '',
         healthyIntensity: '',
