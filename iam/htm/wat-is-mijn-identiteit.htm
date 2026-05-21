@@ -175,6 +175,15 @@
 
       <form id="identiteitForm">
         <section class="question-card">
+          <h2>Verslaving vs Identiteit</h2>
+          <div class="form-group">
+            <label for="addictionVsIdentity">Kaapt de verslaving jouw identiteit?</label>
+            <p class="subtle-help">Bijv. ben je emotioneel afhankelijk van het middel om 'leuk' te zijn, of gijzelt de biologische drang enkel je lichaam zonder dat je het emotioneel nodig hebt?</p>
+            <textarea id="addictionVsIdentity" name="addictionVsIdentity" rows="3"></textarea>
+          </div>
+        </section>
+
+        <section class="question-card">
           <h2>Lichamelijkheid</h2>
           <div class="grid-two">
             <div class="form-group">
@@ -373,6 +382,7 @@
     const canonicalFormKey = 'wat-is-mijn-ik';
     const legacyFormKey = 'wat-is-mijn-identiteit';
     const fieldNames = [
+      'addictionVsIdentity',
       'lijfzelf', 'lijfander', 'lijfspanning', 'lijfdoen', 'lichamelijkheidkracht',
       'sekszelf', 'seksander', 'seksspanning', 'seksdoen', 'seksualiteitkracht',
       'soczelf', 'socander', 'socspanning', 'socdoen', 'sociaalkracht',
@@ -431,6 +441,7 @@
 
     function identityToCanonical(identityData) {
       return {
+        addictionVsIdentity: identityData.addictionVsIdentity || '',
         bodySelfView: identityData.lijfzelf || '',
         bodyShown: identityData.lijfander || '',
         bodyTension: identityData.lijfspanning || '0',
@@ -466,6 +477,7 @@
 
     function canonicalToIdentity(canonicalData) {
       return {
+        addictionVsIdentity: canonicalData.addictionVsIdentity || '',
         lijfzelf: canonicalData.bodySelfView || '',
         lijfander: canonicalData.bodyShown || '',
         lijfspanning: canonicalData.bodyTension || '0',

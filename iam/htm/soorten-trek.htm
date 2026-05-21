@@ -247,6 +247,15 @@
             </div>
           </div>
           <div class="form-group mt-2">
+            <label for="cravingType1Origin">Is dit vooral biologisch (lichaam) of emotioneel (gevoel/vlucht)?</label>
+            <select id="cravingType1Origin">
+              <option value="">Kies...</option>
+              <option value="biologisch">Biologisch (Fysieke drang/Hersenstam)</option>
+              <option value="emotioneel">Emotioneel (Verdoving/Vlucht)</option>
+              <option value="mix">Mix van beide</option>
+            </select>
+          </div>
+          <div class="form-group mt-2">
             <label for="cravingType1BodySignals">Wat merk je in je lichaam?</label>
             <textarea id="cravingType1BodySignals" rows="4"></textarea>
           </div>
@@ -273,6 +282,15 @@
             </div>
           </div>
           <div class="form-group mt-2">
+            <label for="cravingType2Origin">Is dit vooral biologisch (lichaam) of emotioneel (gevoel/vlucht)?</label>
+            <select id="cravingType2Origin">
+              <option value="">Kies...</option>
+              <option value="biologisch">Biologisch (Fysieke drang/Hersenstam)</option>
+              <option value="emotioneel">Emotioneel (Verdoving/Vlucht)</option>
+              <option value="mix">Mix van beide</option>
+            </select>
+          </div>
+          <div class="form-group mt-2">
             <label for="cravingType2BodySignals">Wat merk je in je lichaam?</label>
             <textarea id="cravingType2BodySignals" rows="4"></textarea>
           </div>
@@ -297,6 +315,15 @@
               <label for="cravingType3Duration">Hoe lang duurt dit meestal?</label>
               <input id="cravingType3Duration" type="text" />
             </div>
+          </div>
+          <div class="form-group mt-2">
+            <label for="cravingType3Origin">Is dit vooral biologisch (lichaam) of emotioneel (gevoel/vlucht)?</label>
+            <select id="cravingType3Origin">
+              <option value="">Kies...</option>
+              <option value="biologisch">Biologisch (Fysieke drang/Hersenstam)</option>
+              <option value="emotioneel">Emotioneel (Verdoving/Vlucht)</option>
+              <option value="mix">Mix van beide</option>
+            </select>
           </div>
           <div class="form-group mt-2">
             <label for="cravingType3BodySignals">Wat merk je in je lichaam?</label>
@@ -375,16 +402,19 @@
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
     const fields = [
       'cravingType1Name',
+      'cravingType1Origin',
       'cravingType1BodySignals',
       'cravingType1Context',
       'cravingType1Duration',
       'cravingType1HelpfulResponse',
       'cravingType2Name',
+      'cravingType2Origin',
       'cravingType2BodySignals',
       'cravingType2Context',
       'cravingType2Duration',
       'cravingType2HelpfulResponse',
       'cravingType3Name',
+      'cravingType3Origin',
       'cravingType3BodySignals',
       'cravingType3Context',
       'cravingType3Duration',
