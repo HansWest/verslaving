@@ -339,18 +339,20 @@
 <body>
     <header class="page-header">
         <h1>Risico-gevoelens</h1>
-        <p>Welke gevoelens maken het lastig, en wat helpt jou zonder gebruik?</p>
+        <p>Welke gevoelens of behoeften spelen mee, en welke reactie past bij wat jij nodig hebt?</p>
     </header>
 
     <main class="page-wrap">
+        <div id="pageMessage" class="hint-box" role="status" aria-live="polite" hidden></div>
+
         <section class="intro-card">
             <strong>Waarom gevoelens uitmaken:</strong> Niet alleen pijnlijke gevoelens geven risico. Ook spanning, plezier of behoefte aan contact kunnen triggeren.
             Je leert hier twee soorten risicogevoelens herkennen:
             <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                <li><strong>Categorie 1:</strong> Gevoelens die je zonder gebruik lastig kunt verdragen (eenzaamheid, teleurstelling, verdriet)</li>
-                <li><strong>Categorie 2:</strong> Gevoelens of behoeften die je lastig kunt uiten zonder gebruik (boosheid tonen, kwetsbaarheid, behoefte aan nabijheid)</li>
+                <li><strong>Categorie 1:</strong> Gevoelens die op dit moment lastig te verdragen zijn (bijvoorbeeld eenzaamheid, teleurstelling of verdriet).</li>
+                <li><strong>Categorie 2:</strong> Gevoelens of behoeften die je lastig vindt om te uiten (bijvoorbeeld boosheid, kwetsbaarheid of behoefte aan nabijheid).</li>
             </ul>
-            Met dit werkblad breng je in kaart wat voor jou lastig is en wat jou helpt om op koers te blijven.
+            Gebruik alleen de vragen die voor jou nuttig zijn. Je hoeft niets te delen of in te vullen om verder te kunnen; kies zelf welke steun of volgende stap past.
         </section>
 
         <section class="hint-box">
@@ -376,25 +378,24 @@
 
         <h2 class="section-title">1) Reframing: Hoe zet je risicogevoelens in perspectief?</h2>
         <section class="hint-box">
-            <strong>Albert Ellis' twee kernvragen:</strong> Stel jezelf deze vragen om gedachten die je voelt aan te scherpen:
+            <strong>Een gedachte onderzoeken:</strong> Een gevoel is echt, ook als de gedachte erbij niet het hele verhaal vertelt. Als het helpend voelt, kun je jezelf vragen:
             <ol style="margin: 0.6rem 0; padding-left: 1.8rem;">
-                <li><strong>Klopt dit echt?</strong> Is dit werkelijk waar, altijd en overal?</li>
-                <li><strong>Helpt dit me?</strong> Brengt deze gedachte mij en mijn dierbaren verder?</li>
+                <li>Welke gedachte gaat er door me heen, en weet ik zeker dat die altijd klopt?</li>
+                <li>Welke andere uitleg is mogelijk, en wat zou mij nu kunnen helpen?</li>
             </ol>
             <div style="margin-top: 0.8rem; font-size: 0.95rem; color: #555;">
                 <strong>Extra reflectievragen:</strong>
                 <ul style="margin: 0.4rem 0; padding-left: 1.5rem; font-size: 0.9rem;">
                     <li>Zijn er uitzonderingen op deze regel?</li>
-                    <li>Zouden anderen in dezelfde situatie dit ook denken?</li>
-                    <li>Waar heb ik leren denken als ik dit denk? Helpt dat iemand die ik ken echt?</li>
+                    <li>Wat zou ik tegen iemand zeggen die ik graag mag in dezelfde situatie?</li>
                 </ul>
             </div>
         </section>
 
         <h2 class="section-title">2) Voorbeelden verzamelen</h2>
         <div class="field">
-            <label for="gevoelVoorbeeldSelect">Voorbeeldgevoel toevoegen</label>
-            <span class="sub">Kies een voorbeeld en voeg het toe.</span>
+            <label for="gevoelVoorbeeldSelect">Een voorbeeld bekijken (optioneel)</label>
+            <span class="sub">Kies alleen een voorbeeld als dat je helpt woorden te vinden.</span>
             <select id="gevoelVoorbeeldSelect">
                 <option value="">Kies een voorbeeld...</option>
             </select>
@@ -402,44 +403,44 @@
 
         <div class="field">
             <label for="voorbeeldGevoel">Mijn risico-gevoelens</label>
-            <textarea id="voorbeeldGevoel" name="voorbeeldGevoel" placeholder="Welke gevoelens trekken jou vaak richting gebruik?"></textarea>
+            <textarea id="voorbeeldGevoel" name="voorbeeldGevoel" placeholder="Welke gevoelens of behoeften merk ik op, en in welke situatie?"></textarea>
         </div>
 
-        <h2 class="section-title">3) Categorie 1: Moeilijk uit te houden</h2>
+        <h2 class="section-title">3) Gevoelens die lastig te verdragen zijn</h2>
         <div class="field">
-            <span class="sub">Noem drie gevoelens die je zonder gebruik lastig kunt verdragen.</span>
+            <span class="sub">Noteer alleen wat voor jou relevant is; één voorbeeld is genoeg en je mag dit leeg laten.</span>
             <div class="triad">
-                <input type="text" id="cat1A" name="cat1A" placeholder="A - bijv. eenzaamheid">
-                <input type="text" id="cat1B" name="cat1B" placeholder="B - bijv. frustratie">
-                <input type="text" id="cat1C" name="cat1C" placeholder="C - bijv. somberheid">
+                <input type="text" id="cat1A" name="cat1A" aria-label="Eerste gevoel dat lastig te verdragen is (optioneel)" placeholder="Bijv. eenzaamheid">
+                <input type="text" id="cat1B" name="cat1B" aria-label="Tweede gevoel dat lastig te verdragen is (optioneel)" placeholder="Bijv. frustratie">
+                <input type="text" id="cat1C" name="cat1C" aria-label="Derde gevoel dat lastig te verdragen is (optioneel)" placeholder="Bijv. somberheid">
             </div>
         </div>
 
         <div class="field">
-            <label for="cat1Plan">Wat helpt jou om dit op te vangen zonder gebruik?</label>
-            <textarea id="cat1Plan" name="cat1Plan" placeholder="Wie helpt je? Wat werkt voor jou? Wat spreek je met jezelf af?"></textarea>
+            <label for="cat1Plan">Wat zou jou hierbij kunnen helpen?</label>
+            <textarea id="cat1Plan" name="cat1Plan" placeholder="Bijv. rust nemen, iets praktisch doen, iemand spreken of professionele steun vragen."></textarea>
         </div>
 
-        <h2 class="section-title">4) Categorie 2: Moeilijk te uiten</h2>
+        <h2 class="section-title">4) Gevoelens of behoeften die lastig te uiten zijn</h2>
         <div class="field">
-            <span class="sub">Noem drie gevoelens of behoeften die je lastig kunt uiten zonder gebruik.</span>
+            <span class="sub">Noteer alleen wat voor jou relevant is; je hoeft geen drie voorbeelden te bedenken.</span>
             <div class="triad">
-                <input type="text" id="cat2A" name="cat2A" placeholder="A - bijv. boosheid tonen">
-                <input type="text" id="cat2B" name="cat2B" placeholder="B - bijv. kwetsbaarheid tonen">
-                <input type="text" id="cat2C" name="cat2C" placeholder="C - bijv. behoefte aan nabijheid">
+                <input type="text" id="cat2A" name="cat2A" aria-label="Eerste lastig te uiten gevoel of behoefte (optioneel)" placeholder="Bijv. boosheid tonen">
+                <input type="text" id="cat2B" name="cat2B" aria-label="Tweede lastig te uiten gevoel of behoefte (optioneel)" placeholder="Bijv. kwetsbaarheid tonen">
+                <input type="text" id="cat2C" name="cat2C" aria-label="Derde lastig te uiten gevoel of behoefte (optioneel)" placeholder="Bijv. behoefte aan nabijheid">
             </div>
         </div>
 
         <div class="field">
-            <label for="cat2Plan">Hoe wil je dit leren uiten zonder gebruik?</label>
+            <label for="cat2Plan">Hoe zou je dit willen uiten of bespreken?</label>
             <textarea id="cat2Plan" name="cat2Plan" placeholder="Met wie kun je dit oefenen? Waar begin je klein?"></textarea>
         </div>
 
-        <h2 class="section-title">5) Nep-emoties (Biologische Ontwenning)</h2>
+        <h2 class="section-title">5) Gevoelens bij lichamelijke ontwenning</h2>
         <div class="field">
-            <label for="fakeEmotions">Welke 'nep-emoties' produceert jouw brein als het biologisch in ontwenning is?</label>
-            <span class="sub">Bijv. plotselinge paniek, extreme prikkelbaarheid, of blinde woede die direct verdwijnt na gebruik. Dit zijn geen diepe psychologische pijnen, maar fysieke overlevingsreflexen van de hersenstam.</span>
-            <textarea id="fakeEmotions" name="fakeEmotions" placeholder="Mijn fysieke brein-trucs zijn..."></textarea>
+            <label for="fakeEmotions">Welke veranderingen in stemming of gevoel merk je mogelijk bij ontwenning?</label>
+            <span class="sub">Ontwenning kan invloed hebben op hoe je je lichamelijk en emotioneel voelt. Een gevoel is niet “nep”; deze vraag helpt alleen om mogelijke patronen te noteren. Je hoeft zelf geen oorzaak vast te stellen. Bespreek klachten die ernstig zijn, je zorgen geven of moeilijk vol te houden zijn met een zorgprofessional.</span>
+            <textarea id="fakeEmotions" name="fakeEmotions" placeholder="Wat merk ik, wanneer gebeurt het, en welke steun kan ik vragen?"></textarea>
         </div>
 
         <h2 class="section-title">6) Lastige gedachten bij gevoelens</h2>
@@ -454,10 +455,9 @@
 
         <h2 class="section-title">7) Interne risico's: wat gebeurt er van binnen in jou?</h2>
         <div class="field">
-            <span class="sub">Veelal komt het risico niet van buiten, maar van hoe jij voelt en denkt. Dit zijn jouw interne risico's.</span>
+            <span class="sub">Soms spelen gedachten, gevoelens en omstandigheden samen een rol. Dat is informatie om steun of een aanpak te kiezen, geen oordeel over jou.</span>
             <label for="interneRisicos">Mijn belangrijkste interne risico's</label>
-            <textarea id="interneRisicos" name="interneRisicos" placeholder="Bijv: De gedachte dat ik alles alleen moet kunnen, schaamte over mijn verleden, het gevoel dat ik niet goed genoeg ben...
-En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textarea>
+            <textarea id="interneRisicos" name="interneRisicos" placeholder="Bijv. een gedachte, gevoel of situatie die het moeilijker maakt. Wat zou mij steun of ruimte geven?"></textarea>
         </div>
 
         <section class="hint-box">
@@ -486,16 +486,16 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
         </section>
 
         <section class="cross-suggest-box">
-            <p>Ideeën uit andere pagina's (max 5): kies wat je nu helpt en voeg het direct toe.</p>
+            <p>Vrijblijvende ideeën uit andere pagina's (max 5): bekijk wat past en voeg alleen toe wat voor jou helpend is.</p>
             <ul class="cross-suggest-list" id="crossSuggestListGevoelens">
                 <li class="cross-suggest-item"><span>Nog geen suggesties uit gekoppelde pagina's gevonden.</span></li>
             </ul>
         </section>
 
         <section class="intro-card">
-            <strong>Vandaag in beeld:</strong> als je op meerdere pagina's dezelfde dagfocus ziet, wordt het makkelijker om trend en trigger te herkennen.
+            <strong>Vandaag in beeld (optioneel):</strong> een korte notitie kan helpen een patroon te zien. Je hoeft dit niet dagelijks in te vullen.
             <div class="field" style="margin-top: 0.8rem;">
-                <label for="todayFocusRisico">Wat me nu vooral bezighoudt vandaag?</label>
+                <label for="todayFocusRisico">Wat houdt me vandaag vooral bezig?</label>
                 <textarea id="todayFocusRisico" placeholder="Welke gedachte, spanning of behoefte staat vandaag op de voorgrond?"></textarea>
             </div>
             <p class="sub" id="todayFocusYesterdayRisico">Gisteren: nog niet ingevuld.</p>
@@ -506,7 +506,7 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
         </section>
 
         <div class="hint-box">
-            Interne risico's zijn bijvoorbeeld: veronderstelling dat alleen gebruik je gelukkig maakt; schaamte; zelfkritiek; het idee dat je 'zwak' bent; perfectionisme; teveel alleen willen doen.
+            Dit werkblad ondersteunt je eigen verkenning; het stelt geen diagnose en bepaalt niet welk doel je moet kiezen. Je kunt een vraag overslaan, een antwoord later aanpassen of een andere aanpak kiezen.
         </div>
 
         <h2 class="section-title">8) Van inzicht naar actie (nu doen)</h2>
@@ -528,9 +528,10 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
                 </select>
             </div>
             <div class="action-bar" style="margin-top: 0.4rem;">
-                <button type="button" class="btn btn-primary" id="openRecommendedRouteButton">Open aanbevolen actiepagina</button>
+                <button type="button" class="btn btn-primary" id="openRecommendedRouteButton">Bekijk voorgestelde actiepagina</button>
             </div>
-            <p class="route-hint" id="routeHint">Huidig adviespad: Stimulus-respons plan.</p>
+            <p class="route-hint" id="routeHint">Huidig voorstel: Stimulus-respons plan.</p>
+            <p class="sub">Dit is een voorstel op basis van je keuzes, geen verplicht advies. Je kunt het negeren of zelf een andere pagina openen.</p>
         </section>
 
         <div class="action-bar">
@@ -704,7 +705,7 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
             });
 
             if (!entry.text) {
-                alert('Vul eerst een risico-item in.');
+                showMessage('Vul eerst een risico-item in.');
                 return;
             }
 
@@ -770,7 +771,7 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
                 unique.push({ ...item, text: clean });
             });
 
-            return unique.slice(0, 6);
+            return unique.slice(0, 5);
         }
 
         function renderCrossSuggestions() {
@@ -824,11 +825,25 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
         }
 
         function saveData(showFeedback = true) {
-            if (typeof iamData === 'undefined') return;
-            const data = collectFieldData();
-            data.riskItems = getCurrentRiskItems();
-            iamData.updateFormData('risico-gevoelens', data);
-            if (showFeedback) alert('Opgeslagen');
+            try {
+                if (typeof iamData === 'undefined') {
+                    throw new Error('IAM-opslag is niet beschikbaar.');
+                }
+                const data = collectFieldData();
+                data.riskItems = getCurrentRiskItems();
+                iamData.updateFormData('risico-gevoelens', data);
+                if (showFeedback) showMessage('Je notities zijn op dit toestel opgeslagen.');
+            } catch (error) {
+                console.error('Opslaan van risico-gevoelens is mislukt.', error);
+                showMessage('Opslaan lukte niet. Je antwoorden zijn mogelijk niet bewaard.');
+            }
+        }
+
+        function showMessage(message) {
+            const element = document.getElementById('pageMessage');
+            if (!element) return;
+            element.textContent = message;
+            element.hidden = false;
         }
 
         function exportData() {
@@ -844,24 +859,24 @@ En: met wie ga ik hierover praten? Wie helpt me dit nuchterer te zien?"></textar
             if (urgency === 'hoog' || focus === 'nood') {
                 return {
                     path: './noodplan-forse-trek.htm',
-                    hint: 'Huidig adviespad: Noodplan forse trek.'
+                    hint: 'Huidig voorstel: Noodplan forse trek.'
                 };
             }
             if (focus === 'analyse' && urgency === 'laag') {
                 return {
                     path: './risico-denken.htm',
-                    hint: 'Huidig adviespad: Risico-denken (analyse verdiepen).'
+                    hint: 'Huidig voorstel: Risico-denken (analyse verdiepen).'
                 };
             }
             if (focus === 'coping') {
                 return {
                     path: './lastige-gevoelens.htm',
-                    hint: 'Huidig adviespad: Lastige gevoelens (copingroutes).'
+                    hint: 'Huidig voorstel: Lastige gevoelens (copingroutes).'
                 };
             }
             return {
                 path: './stimulus-respons.htm',
-                hint: 'Huidig adviespad: Stimulus-respons plan.'
+                hint: 'Huidig voorstel: Stimulus-respons plan.'
             };
         }
 

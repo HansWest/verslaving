@@ -144,7 +144,7 @@ function testDataPersistence(html, filename) {
     `  → Uses iamData API`);
   
   // Should have saveForm or similar
-  hasPattern(html, h => h.includes('saveForm') || h.includes('saveData'),
+  hasPattern(html, h => h.includes('saveForm') || h.includes('saveData') || h.includes('savePeople') || h.includes('savePerson'),
     `  → Has save function`);
   
   // Should have focus/change listeners

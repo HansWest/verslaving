@@ -270,15 +270,16 @@
           <a href="./risico-situaties.htm">Vorige stap</a>
           <a href="./risico-activiteiten.htm">Volgende stap</a>
         </div>
-        <h1>Risico-inventarisatie: mensen</h1>
-        <p>Sommige contacten helpen je koers, andere maken die lastiger. Hier maak je per persoon helder wat het risico is en welke grens of afspraak jij kiest.</p>
+        <h1>Contacten en sociale situaties</h1>
+        <p>Contacten en situaties kunnen invloed hebben op hoe je je voelt en welke keuzes haalbaar zijn. Breng in kaart wat er voor jou speelt en welke grens, steun of afspraak je zelf wilt kiezen.</p>
       </header>
 
       <div id="message" class="message"></div>
 
       <section class="intro-card">
-        <h2>Jouw risicomensen</h2>
-        <p>Voeg personen toe, bewerk ze later, en koppel ze aan plannen.</p>
+        <h2>Contacten die invloed hebben op jouw situatie</h2>
+        <p>Kijk naar wat er tussen jullie gebeurt en in welke omstandigheden. Iemand is niet als persoon een risico; de aard van een situatie of interactie kan voor jou lastig of juist steunend zijn.</p>
+        <p>Je hoeft niet alle velden in te vullen. Gebruik een rol, initialen of bijnaam in plaats van een volledige naam; deze notities kunnen gevoelige informatie bevatten.</p>
       </section>
 
       <section class="note-card">
@@ -294,7 +295,7 @@
 
       <section class="note-card">
         <h2>Items met datum en belangrijkheid</h2>
-        <p style="margin:0 0 0.6rem; color:#4f6574; font-size:0.92rem;">Leg meerdere items vast met datum en belangrijkheid. Hoogste belangrijkheid staat bovenaan.</p>
+        <p style="margin:0 0 0.6rem; color:#4f6574; font-size:0.92rem;">Noteer desgewenst een concrete situatie en hoe belangrijk die nu voor jou is. De score is jouw inschatting, geen objectieve risicometing.</p>
         <div class="priority-entry-box">
           <div class="grid-two">
             <div class="form-group">
@@ -323,7 +324,7 @@
       </div>
 
       <section class="note-card route-card">
-        <h2>Van sociale trigger naar actie (nu doen)</h2>
+        <h2>Van sociale situatie naar een volgende stap</h2>
         <div class="grid-two">
           <div class="form-group">
             <label for="routeUrgencyMensen">Hoe urgent is het nu?</label>
@@ -344,9 +345,10 @@
           </div>
         </div>
         <div class="action-bar" style="margin-top: 0.5rem;">
-          <button type="button" class="button-primary" id="openRecommendedRouteMensenButton">Open aanbevolen actiepagina</button>
+          <button type="button" class="button-primary" id="openRecommendedRouteMensenButton">Bekijk voorgestelde actiepagina</button>
         </div>
-        <p class="route-hint" id="routeHintMensen">Huidig adviespad: Risico-activiteiten.</p>
+        <p class="route-hint" id="routeHintMensen">Huidig voorstel: Risico-activiteiten.</p>
+        <p>Dit is een vrijblijvend voorstel op basis van je keuzes. Je kunt het negeren of zelf een andere pagina openen.</p>
       </section>
 
       <div id="risicoMensenList"></div>
@@ -357,8 +359,8 @@
 
           <div class="grid-two">
             <div class="form-group">
-              <label for="formName">Naam, bijnaam of rol</label>
-              <input id="formName" type="text" placeholder="bijv. collega X, mijn broer, oude vrienden" />
+              <label for="formName">Herkenbare aanduiding (bijv. rol, initialen of bijnaam)</label>
+              <input id="formName" type="text" placeholder="Bijv. collega, vriend A, familielid" />
             </div>
             <div class="form-group">
               <label for="formCloseness">Hoe dichtbij (0-10)?</label>
@@ -372,13 +374,13 @@
           </div>
 
           <div class="form-group">
-            <label for="formSituation">In welke situatie wordt het risicovol?</label>
-            <textarea id="formSituation" rows="3"></textarea>
+            <label for="formSituation">In welke situatie heeft dit contact invloed op jou?</label>
+            <textarea id="formSituation" rows="3" placeholder="Bijv. wanneer, waar en wat er dan gebeurt."></textarea>
           </div>
 
           <div class="form-group">
-            <label for="formRiskDesc">Beschrijf het risico kort</label>
-            <textarea id="formRiskDesc" rows="3" placeholder="bijv: enabler, overbelasting, samen gebruiken, emotionaal getriggerd."></textarea>
+            <label for="formRiskDesc">Wat maakt deze situatie lastig of juist steunend?</label>
+            <textarea id="formRiskDesc" rows="3" placeholder="Beschrijf gedrag en omstandigheden, zonder jezelf of de ander te veroordelen."></textarea>
           </div>
 
           <div class="form-group">
@@ -403,7 +405,7 @@
           </div>
 
           <section class="cross-suggest-box">
-            <p>Ideeën uit andere pagina's (max 5): voeg alleen toe wat deze persoonkaart concreter maakt.</p>
+            <p>Vrijblijvende ideeën uit andere pagina's (max 5): gebruik alleen wat deze situatie of jouw plan concreter maakt.</p>
             <ul class="cross-suggest-list" id="crossSuggestListMensen"></ul>
           </section>
 
@@ -680,7 +682,7 @@
           <div class="person-header">
             <div class="person-info">
               <h3>${escapeHtml(person.name || '(naamloos)')}</h3>
-              <div class="person-meta">Dichtbij: ${person.closeness || '?'}/10</div>
+              <div class="person-meta">Hoe dichtbij: ${person.closeness ?? '?'}/10</div>
               ${riskoLabels ? `<div class="risk ko-badges">${riskoLabels.split(', ').map((label) => `<span class="risico-badge">${escapeHtml(label)}</span>`).join('')}</div>` : ''}
             </div>
             <div class="person-actions">
@@ -751,7 +753,7 @@
       const trek = iamData.getFormData('soorten-trek') || {};
 
       const pool = [
-        { text: sociaal.reachableSupport || plan.supportPeople, source: 'Sociaal netwerk / Plan van aanpak', target: 'formName' },
+        { text: sociaal.reachableSupport || plan.supportPeople, source: 'Sociaal netwerk / Plan van aanpak', target: 'formPlanB' },
         { text: gevoelens.cat2Plan, source: 'Risico-gevoelens', target: 'formWiseWords' },
         { text: denken.interneRisicosDenken, source: 'Risico-denken', target: 'formRiskDesc' },
         { text: plan.planA, source: 'Plan van aanpak', target: 'formPlanA' },
@@ -794,11 +796,11 @@
 
         const button = document.createElement('button');
         button.type = 'button';
-        button.textContent = 'Voeg toe';
+        button.textContent = 'Gebruik idee';
         button.addEventListener('click', () => {
           const target = document.getElementById(item.target);
           appendUniqueToField(target, item.text);
-          showMessage(`Bron ${item.source} toegevoegd aan ${item.target}.`);
+          showMessage(`Idee uit ${item.source} toegevoegd aan het plan. Sla de kaart op om het te bewaren.`);
         });
 
         row.appendChild(text);
@@ -814,31 +816,31 @@
       if (urgency === 'hoog' || focus === 'nood') {
         return {
           path: './noodplan-wegglijden.htm',
-          hint: 'Huidig adviespad: Noodplan wegglijden.'
+          hint: 'Huidig voorstel: Noodplan wegglijden.'
         };
       }
       if (focus === 'plan') {
         return {
           path: './plan-van-aanpak.htm',
-          hint: 'Huidig adviespad: Plan van aanpak.'
+          hint: 'Huidig voorstel: Plan van aanpak.'
         };
       }
       if (focus === 'trek') {
         return {
           path: './soorten-trek.htm',
-          hint: 'Huidig adviespad: Soorten trek.'
+          hint: 'Huidig voorstel: Soorten trek.'
         };
       }
       if (urgency === 'middel') {
         return {
           path: './stimulus-respons.htm',
-          hint: 'Huidig adviespad: Stimulus-respons plan.'
+          hint: 'Huidig voorstel: Stimulus-respons plan.'
         };
       }
 
       return {
         path: './risico-activiteiten.htm',
-        hint: 'Huidig adviespad: Risico-activiteiten.'
+        hint: 'Huidig voorstel: Risico-activiteiten.'
       };
     }
 
@@ -880,7 +882,7 @@
       const person = people[idx];
       document.getElementById('formTitle').textContent = `Bewerk: ${person.name}`;
       document.getElementById('formName').value = person.name || '';
-      document.getElementById('formCloseness').value = person.closeness || '';
+      document.getElementById('formCloseness').value = person.closeness ?? '';
       document.getElementById('formSituation').value = person.situation || '';
       document.getElementById('formRiskDesc').value = person.riskDesc || '';
       document.getElementById('formWiseWords').value = person.wiseWords || '';
@@ -897,7 +899,7 @@
     function savePerson() {
       const name = document.getElementById('formName').value.trim();
       if (!name) {
-        showMessage('Voer alstublieft een naam in.', true);
+        showMessage('Vul een herkenbare aanduiding in, bijvoorbeeld een rol of bijnaam.', true);
         return;
       }
       const selectedTypes = Array.from(document.querySelectorAll('.risktype-checkbox:checked')).map((cb) => cb.value);

@@ -357,9 +357,10 @@
             </div>
           </div>
           <div class="action-bar" style="margin-top: 0.5rem;">
-            <button type="button" class="button-primary" id="openRecommendedRouteSituatiesButton">Open aanbevolen actiepagina</button>
+            <button type="button" class="button-primary" id="openRecommendedRouteSituatiesButton">Bekijk voorgestelde actiepagina</button>
           </div>
-          <p class="route-hint" id="routeHintSituaties">Huidig adviespad: Risico-mensen.</p>
+          <p class="route-hint" id="routeHintSituaties">Huidig voorstel: Risico-mensen.</p>
+          <p>Dit voorstel volgt je keuzes hierboven. Je kunt het bekijken, negeren of zelf een andere stap kiezen.</p>
         </section>
 
         <div class="action-bar">
@@ -770,25 +771,25 @@
       if (urgency === 'hoog' || focus === 'nood') {
         return {
           path: './noodplan-forse-trek.htm',
-          hint: 'Huidig adviespad: Noodplan forse trek.'
+          hint: 'Huidig voorstel: Noodplan forse trek.'
         };
       }
       if (focus === 'activiteit') {
         return {
           path: './risico-activiteiten.htm',
-          hint: 'Huidig adviespad: Risico-activiteiten.'
+          hint: 'Huidig voorstel: Risico-activiteiten.'
         };
       }
       if (focus === 'trek') {
         return {
           path: './soorten-trek.htm',
-          hint: 'Huidig adviespad: Soorten trek.'
+          hint: 'Huidig voorstel: Soorten trek.'
         };
       }
 
       return {
         path: './risico-mensen.htm',
-        hint: 'Huidig adviespad: Risico-mensen.'
+        hint: 'Huidig voorstel: Risico-mensen.'
       };
     }
 

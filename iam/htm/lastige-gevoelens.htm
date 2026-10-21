@@ -464,9 +464,10 @@
             </div>
           </div>
           <div class="action-bar">
-            <button type="button" class="button-primary" id="openRecommendedRouteButton">Open aanbevolen actiepagina</button>
+            <button type="button" class="button-primary" id="openRecommendedRouteButton">Bekijk voorgestelde actiepagina</button>
           </div>
-          <p class="route-hint" id="routeHint">Huidig adviespad: Trek opvangen.</p>
+          <p class="route-hint" id="routeHint">Huidig voorstel: Trek opvangen.</p>
+          <p>Dit voorstel volgt je keuzes hierboven. Je kunt het bekijken, negeren of zelf een andere stap kiezen.</p>
         </section>
 
         <div class="action-bar">
@@ -675,24 +676,24 @@
       if (intensity === 'hoog' || need === 'nood') {
         return {
           path: './noodplan-forse-trek.htm',
-          hint: 'Huidig adviespad: Noodplan forse trek.'
+          hint: 'Huidig voorstel: Noodplan forse trek.'
         };
       }
       if (need === 'analyse') {
         return {
           path: './risico-gevoelens.htm',
-          hint: 'Huidig adviespad: Risico-gevoelens (analyse + triggerherkenning).'
+          hint: 'Huidig voorstel: Risico-gevoelens (analyse + triggerherkenning).'
         };
       }
       if (intensity === 'middel') {
         return {
           path: './stimulus-respons.htm',
-          hint: 'Huidig adviespad: Stimulus-respons plan.'
+          hint: 'Huidig voorstel: Stimulus-respons plan.'
         };
       }
       return {
         path: './trek-opvangen.htm',
-        hint: 'Huidig adviespad: Trek opvangen.'
+        hint: 'Huidig voorstel: Trek opvangen.'
       };
     }
 

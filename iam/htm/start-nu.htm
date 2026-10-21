@@ -139,13 +139,14 @@
           </div>
         </div>
 
-        <div id="routeBox" class="route-box safe">Uitkomst: Stabiliseren met korte techniek.</div>
-        <p id="routeHint" class="hint">Aanbevolen route: Trek opvangen.</p>
+        <div id="routeBox" class="route-box safe">Voorstel op basis van je antwoorden: stabiliseren met een korte techniek.</div>
+        <p id="routeHint" class="hint">Voorgestelde stap: Trek opvangen.</p>
 
         <div class="action-bar">
-          <button type="button" class="button-primary" id="openRouteButton">Open mijn volgende stap</button>
+          <button type="button" class="button-primary" id="openRouteButton">Bekijk voorgestelde stap</button>
           <button type="button" class="button-secondary" id="saveSnapshotButton">Bewaar moment</button>
         </div>
+        <p class="hint">Deze inschatting is gebaseerd op je antwoorden en is geen diagnose. Je kunt een andere stap kiezen. Bij direct gevaar, neem contact op met lokale hulpdiensten.</p>
       </section>
     </div>
   </div>
@@ -182,15 +183,15 @@
           return {
             path: './noodplan-wegglijden.htm',
             boxClass: 'route-box alert',
-            boxText: 'Uitkomst: Crisisroute zonder directe steun.',
-            hintText: 'Aanbevolen route: Noodplan wegglijden.'
+            boxText: 'Voorstel op basis van je antwoorden: open het noodplan wegglijden.',
+            hintText: 'Voorgestelde stap: Noodplan wegglijden.'
           };
         }
         return {
           path: './noodplan-forse-trek.htm',
           boxClass: 'route-box alert',
-          boxText: 'Uitkomst: Crisisroute met directe steun.',
-          hintText: 'Aanbevolen route: Noodplan forse trek.'
+          boxText: 'Voorstel op basis van je antwoorden: open het noodplan voor forse trek.',
+          hintText: 'Voorgestelde stap: Noodplan forse trek.'
         };
       }
 
@@ -198,16 +199,16 @@
         return {
           path: './stimulus-respons.htm',
           boxClass: 'route-box warn',
-          boxText: 'Uitkomst: Actief reguleren en trigger doorbreken.',
-          hintText: 'Aanbevolen route: Stimulus-respons plan.'
+          boxText: 'Voorstel op basis van je antwoorden: probeer een stimulus-respons plan.',
+          hintText: 'Voorgestelde stap: Stimulus-respons plan.'
         };
       }
 
       return {
         path: './trek-opvangen.htm',
         boxClass: 'route-box safe',
-        boxText: 'Uitkomst: Stabiliseren met korte techniek.',
-        hintText: 'Aanbevolen route: Trek opvangen.'
+        boxText: 'Voorstel op basis van je antwoorden: probeer een korte techniek om trek op te vangen.',
+        hintText: 'Voorgestelde stap: Trek opvangen.'
       };
     }
 
