@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veelgestelde Vragen (FAQ) — IAM</title>
+  <link rel="stylesheet" href="../css/mobile.css" type="text/css" />
+  <link rel="stylesheet" href="../css/forms.css" type="text/css" />
+  <style>
+    :root {
+      --ink: #1f3849;
+      --main: #3f7aa1;
+      --accent: #c9684a;
+      --safe: #3b7f45;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --summary-hover: #f1f7fb;
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(63, 122, 161, 0.14), transparent 32%),
+        linear-gradient(180deg, #f8f4ed 0%, #edf4f7 100%);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 1rem 0.5rem 3rem;
+    }
+    .shell { max-width: 900px; margin: 0 auto; }
+    .hero {
+      margin-top: 1rem;
+      border-radius: 18px;
+      background: linear-gradient(140deg, var(--main) 0%, #5a64b6 100%);
+      color: #fff;
+      padding: 1.5rem;
+      box-shadow: 0 14px 30px rgba(23, 50, 73, 0.18);
+    }
+    .hero h1 { margin: 0.4rem 0 0.3rem; font-size: clamp(1.6rem, 4vw, 2.2rem); }
+    .hero p { margin: 0; opacity: 0.92; font-size: 1.05rem; }
+    
+    .top-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .top-links a {
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      padding: 0.5rem 0.9rem;
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .faq-section {
+      margin-top: 1.5rem;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      color: var(--main);
+      margin: 1.25rem 0 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .faq-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 0;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 4px 14px rgba(23, 50, 73, 0.06);
+      border: 1px solid rgba(63, 122, 161, 0.12);
+      overflow: hidden;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .faq-card:hover {
+      border-color: rgba(63, 122, 161, 0.3);
+      box-shadow: 0 6px 18px rgba(23, 50, 73, 0.1);
+    }
+    .faq-details summary {
+      padding: 1.1rem 1.25rem;
+      font-weight: 700;
+      font-size: 1.02rem;
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #173249;
+    }
+    .faq-details summary::-webkit-details-marker { display: none; }
+    .faq-details summary::after {
+      content: '+';
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--main);
+      transition: transform 0.2s;
+    }
+    .faq-details[open] summary::after {
+      transform: rotate(45deg);
+    }
+    .faq-details summary:hover {
+      background: var(--summary-hover);
+    }
+    .faq-body {
+      padding: 0 1.25rem 1.2rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #334155;
+      border-top: 1px solid rgba(63, 122, 161, 0.08);
+      background: #fafcfe;
+    }
+    .faq-body p { margin: 0.75rem 0 0; }
+    .faq-body ul { margin: 0.5rem 0 0; padding-left: 1.25rem; }
+    .faq-body li { margin-bottom: 0.4rem; }
+
+    .callout-box {
+      background: #eef5fc;
+      border-left: 4px solid var(--main);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin: 0.8rem 0;
+      font-size: 0.92rem;
+    }
+
+    .doc-links-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-top: 2rem;
+      box-shadow: 0 6px 18px rgba(23, 50, 73, 0.08);
+      border-left: 5px solid #5a64b6;
+    }
+    .doc-links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .doc-btn {
+      display: block;
+      padding: 0.75rem 1rem;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .doc-btn:hover {
+      background: #f1f5f9;
+      border-color: var(--main);
+    }
+    .doc-btn small {
+      display: block;
+      font-weight: 400;
+      color: #64748b;
+      margin-top: 0.2rem;
+      font-size: 0.8rem;
+    }
+  </style>
+  <script src="../js/themeMode.js"></script>
+</head>
+<body>
+  <div class="shell">
+    
+    <div class="hero">
+      <div class="top-links">
+        <a href="index.htm">← Terug naar Dashboard</a>
+        <a href="craving-1-10.htm">🧠 Trekmeter</a>
+        <a href="noodplan-wegglijden.htm">🚨 Noodplan</a>
+        <a href="data-beheer.htm">🗂️ Databeheer</a>
+      </div>
+      <h1>❓ Veelgestelde Vragen (FAQ)</h1>
+      <p>Helderheid over privacy, de werking van het brein, en samenwerken met AI.</p>
+    </div>
+
+    <!-- SECTIE 1: PRIVACY & BEVEILIGING -->
+    <div class="faq-section">
+      <h2 class="section-title">🔒 1. Privacy, Beveiliging & Jouw Data</h2>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Waar worden mijn antwoorden en gegevens opgeslagen?</summary>
+          <div class="faq-body">
+            <p><strong>100% lokaal op je eigen apparaat</strong> (in de browseropslag via <code>localStorage</code> en <code>IndexedDB</code>). Er is geen centrale server van IAM die jouw gegevens ontvangt of opslaat. Als je je browsergegevens wist, zijn de gegevens ook daadwerkelijk weg.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Kijkt er iemand stiekem met mij mee?</summary>
+          <div class="faq-body">
+            <p><strong>Nee.</strong> Er is geen volgsoftware, geen analytics en geen meekijkende instantie of behandelaar. Het doel van IAM is de democratisering van de verslavingszorg: jij bent zelf de eigenaar van jouw herstelproces.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Waarom is dit veiliger dan een gewone zorg-app met een inlogaccount?</summary>
+          <div class="faq-body">
+            <p>Bij gewone apps staan jouw gevoelige gegevens, gedachten en terugvalmomenten op één centrale server in de cloud. Als die server gehackt wordt, ligt alles op straat.</p>
+            <p>Bij IAM <strong>bestaat zo'n centrale database simpelweg niet</strong>. Niemand kan bij jouw data inbreken, omdat alles uitsluitend op jouw eigen computer of telefoon staat.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Wat gebeurt er als ik op "Kopieer voor mijn AI" klik?</summary>
+          <div class="faq-body">
+            <p>Die knop plaatst een samenvatting van jouw actuele score en noodplan netjes op jouw <strong>klembord</strong>. Er wordt op dat moment nog niets verzonden.</p>
+            <p>Pas wanneer jij zélf naar jouw eigen ChatGPT, Claude of Gemini gaat en op <em>Plakken</em> drukt, deel jij die tekst. Jij houdt altijd 100% de regie.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- SECTIE 2: HET BREINMODEL & VERSLAVING -->
+    <div class="faq-section">
+      <h2 class="section-title">🧠 2. Wat is Verslaving? (Zonder Schuld of Schaamte)</h2>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Waarom wijkt IAM af van de traditionele AA (Anonieme Alcoholisten)?</summary>
+          <div class="faq-body">
+            <p>Traditionele 12-stappenprogramma's leggen vaak de nadruk op 'karaktergebreken', moreel tekortschieten en machteloosheid. Dit veroorzaakt vaak diepe schuld en schaamte.</p>
+            <p>Neurobiologisch gezien brengt schaamte het zenuwstelsel direct in een stress-alarm. En omdat het brein gewend is spanning te verdoven met de molecule, jaagt schaamte mensen vaak juist terug in gebruik. IAM werkt daarom zonder enig moreel oordeel.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Wat betekent "het gekaapte denkende brein"?</summary>
+          <div class="faq-body">
+            <p>Het overlevingsbrein (de hersenstam en het limbisch systeem) heeft evolutionair de taak om levensbehoeften (eten, water, veiligheid) te waarborgen. Door een sterke dopamine-stimulus raakt dit systeem in de war en kent het existentiële <strong>'belangrijkheid'</strong> toe aan de molecule of het gedrag.</p>
+            <p>Jouw rationele, denkende brein (prefrontale cortex) is niet kapot of zwak, maar wordt <strong>gekaapt</strong>. Als gehoorzame probleemoplosser gaat het denkende brein verklaringen en excuses ("smoezen") verzinnen om het alarm van de hersenstam te stillen.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Hoe kom je hieruit? (Zelfregulatie & Co-regulatie)</summary>
+          <div class="faq-body">
+            <p>Herstel is geen levenslange strijd van wilskracht, maar het <strong>ontkrachten van de ervaren belangrijkheid</strong> van de molecule:</p>
+            <ul>
+              <li><strong>Zelfregulatie:</strong> Leren aarden, vertragen, rustig ademhalen en voelen wat er écht speelt onder de drang (moeheid, eenzaamheid, overprikkeling).</li>
+              <li><strong>Co-regulatie:</strong> Verbinding maken met een betrouwbare ander of een maatje om je zenuwstelsel tot rust te brengen.</li>
+            </ul>
+            <p>Zodra het alarmsysteem tot rust komt, verliest de molecule zijn kunstmatige belangrijkheid en wordt het weer een neutrale stof.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- SECTIE 3: WERKEN MET AI -->
+    <div class="faq-section">
+      <h2 class="section-title">🤖 3. Samenwerken met AI (ChatGPT, Claude, Gemini)</h2>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Kan ik gratis AI gebruiken om met IAM te sparren?</summary>
+          <div class="faq-body">
+            <p><strong>Ja.</strong> Je kunt de gratis versies van ChatGPT, Claude of Google Gemini gebruiken. Met de "Kopieer voor mijn AI"-knop in IAM plak je simpelweg je actuele toestand in de chat.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Wat is een Custom GPT of Gemini Gem?</summary>
+          <div class="faq-body">
+            <p>Dat is een vooraf ingestelde versie van ChatGPT of Gemini. Je kunt de instructies uit onze theoriebasis éénmalig in zo'n Gem of GPT plakken. Vanaf dat moment spreekt de AI altijd direct de respectvolle, constructieve taal van IAM, zonder dat je het telkens opnieuw hoeft uit te leggen.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Hoe houd ik mijn gesprekken met de AI privé?</summary>
+          <div class="faq-body">
+            <p>In de instellingen van ChatGPT, Claude en Gemini kun je met één klik de optie <em>"Model training"</em> uitschakelen. Geef in de chat bovendien nooit je achternaam, adres of Burgerservicenummer door. De AI heeft die gegevens ook helemaal niet nodig om jou te helpen reguleren.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- SECTIE 4: HOE GEBRUIK IK IAM? -->
+    <div class="faq-section">
+      <h2 class="section-title">🧭 4. IAM in de Praktijk</h2>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Moet ik alle formulieren van Fase 1 t/m Fase 4 invullen?</summary>
+          <div class="faq-body">
+            <p><strong>Zeker niet.</strong> IAM is een gereedschapskist, geen verplicht lesprogramma. Kies wat op dit moment voor jou nuttig voelt. Voor de een is dat de <em>Trekmeter</em>, voor de ander het <em>Smoezenboek</em> of het <em>Noodplan</em>.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-card">
+        <details class="faq-details">
+          <summary>Wat doe ik als ik acute drang voel?</summary>
+          <div class="faq-body">
+            <p>Ga direct naar de <a href="craving-1-10.htm">Trekmeter (1 tot 10)</a> of het <a href="noodplan-wegglijden.htm">Noodplan bij wegglijden</a>. Stop met nadenken, adem rustig uit, en kies één kleine concrete fysieke actie om je hersenstam te kalmeren.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- DIEPERE DOCUMENTATIE LINKS -->
+    <div class="doc-links-card">
+      <h3 style="margin:0 0 0.5rem; color:#173249;">📚 Verdiepende Documentatie & Achtergrond</h3>
+      <p style="margin:0; font-size:0.9rem; color:#526473;">Wil je de achterliggende theorie, werkafspraken of AI-systeemprompts in detail bestuderen?</p>
+      
+      <div class="doc-links-grid">
+        <a href="../docs/privacy-en-ai-faq.md" class="doc-btn" target="_blank">
+          🔒 Privacy & AI FAQ
+          <small>Gedetailleerde privacyrichtlijnen voor mens en AI</small>
+        </a>
+        <a href="../docs/wat-is-verslaving-ai-base.md" class="doc-btn" target="_blank">
+          🧠 Wat is Verslaving? (AI Base)
+          <small>Het neurobiologische kernmodel & systeemprompt</small>
+        </a>
+        <a href="../docs/achterliggende-theorie.md" class="doc-btn" target="_blank">
+          📖 Achterliggende Theorie
+          <small>Integratieve strategie en taalkeuzes in IAM</small>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
