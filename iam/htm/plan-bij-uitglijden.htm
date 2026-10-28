@@ -319,7 +319,7 @@
           <a href="./noodplan-forse-trek.htm">Volgende stap</a>
         </div>
         <h1>Plan bij Uitglijden</h1>
-        <p>Een eerlijk plan voor als het even fout gaat: hoe herken je het, wat stop je ermee, hoe help je jezelf weer overeind?</p>
+        <p>Een steunend plan voor als je van je plan afwijkt: hoe herken je wat er gebeurt, wat wil je begrenzen en wat helpt je een volgende stap te kiezen?</p>
       </header>
 
       <div id="message" class="message"></div>
@@ -330,7 +330,7 @@
           <li>Een <strong>uitglijder</strong> is één keer gebruik dat niet in je plan paste.</li>
           <li>Het verschil met <strong>wegglijden</strong> is dat je bij een uitglijder snel inziet dat je van plan afweken en je weer oppakt.</li>
           <li>Dit plan helpt je om die moment van "oh nee, ik glijd uit" snel om te zetten in "oké, nu doe ik X".</li>
-          <li>Het gaat niet om schuldgevoelens, maar om <strong>schade beperken</strong> en <strong>snel terug naar plan</strong>.</li>
+          <li>Het gaat niet om schuldgevoelens of persoonlijk falen, maar om <strong>schade beperken</strong> en een volgende stap kiezen die bij jou past.</li>
         </ul>
       </section>
 
@@ -478,9 +478,10 @@
             </div>
           </div>
           <div class="action-bar">
-            <button type="button" class="button-primary" id="openRecommendedRouteButton">Open aanbevolen actiepagina</button>
+            <button type="button" class="button-primary" id="openRecommendedRouteButton">Bekijk voorgestelde actiepagina</button>
           </div>
-          <p class="route-hint" id="routeHint">Huidig adviespad: Trek opvangen.</p>
+          <p class="route-hint" id="routeHint">Huidig voorstel: Trek opvangen.</p>
+          <p>Dit voorstel volgt je keuzes hierboven. Je kunt het bekijken, negeren of zelf een andere stap kiezen.</p>
         </section>
 
         <section class="recovery-sync-box">
@@ -834,24 +835,24 @@
       if (urgency === 'hoog' && support === 'nee') {
         return {
           path: './noodplan-wegglijden.htm',
-          hint: 'Huidig adviespad: Noodplan wegglijden (hoge urgentie zonder directe steun).'
+          hint: 'Huidig voorstel: Noodplan wegglijden (hoge urgentie zonder directe steun).'
         };
       }
       if (urgency === 'hoog') {
         return {
           path: './noodplan-forse-trek.htm',
-          hint: 'Huidig adviespad: Noodplan forse trek.'
+          hint: 'Huidig voorstel: Noodplan forse trek.'
         };
       }
       if (urgency === 'middel') {
         return {
           path: './stimulus-respons.htm',
-          hint: 'Huidig adviespad: Stimulus-respons plan.'
+          hint: 'Huidig voorstel: Stimulus-respons plan.'
         };
       }
       return {
         path: './trek-opvangen.htm',
-        hint: 'Huidig adviespad: Trek opvangen.'
+        hint: 'Huidig voorstel: Trek opvangen.'
       };
     }
 

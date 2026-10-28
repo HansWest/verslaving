@@ -718,6 +718,7 @@
                 </div>
                 <h1>Voor- en nadelen balans</h1>
                 <p>Aan elk gedrag kleven voor- en nadelen. Dit geldt ook voor verandering van gedrag. In deze balans zetten we de voor- en nadelen van gebruik en van verandering op een rijtje. Daarbij is het belangrijk om naar de korte en lange termijn te kijken. De balans opmaken kan helpen bij het nemen van een beslissing.</p>
+                <p>Deze balans helpt je afwegen; zij schrijft geen keuze voor. Je mag punten overslaan en je afweging later herzien.</p>
             </header>
 
             <div id="message" class="message" role="status" aria-live="polite"></div>
@@ -956,9 +957,10 @@
                         </div>
                     </div>
                     <div class="action-bar" style="margin-top: 0.5rem;">
-                        <button type="button" class="button-primary" id="openRecommendedRouteBalanceButton">Open aanbevolen actiepagina</button>
+                        <button type="button" class="button-primary" id="openRecommendedRouteBalanceButton">Bekijk voorgestelde actiepagina</button>
                     </div>
-                    <p class="route-hint" id="routeHintBalance">Huidig adviespad: Plan van aanpak.</p>
+                    <p class="route-hint" id="routeHintBalance">Huidig voorstel: Plan van aanpak.</p>
+                    <p>Dit voorstel volgt je keuzes hierboven. Je kunt het bekijken, negeren of zelf een andere stap kiezen.</p>
                 </section>
 
                 <div class="action-bar">
@@ -1792,25 +1794,25 @@
             if (urgency === 'hoog' || focus === 'nood') {
                 return {
                     path: './noodplan-forse-trek.htm',
-                    hint: 'Huidig adviespad: Noodplan forse trek.'
+                    hint: 'Huidig voorstel: Noodplan forse trek.'
                 };
             }
             if (focus === 'analyse') {
                 return {
                     path: './risico-denken.htm',
-                    hint: 'Huidig adviespad: Risico-denken (extra analyse).'
+                    hint: 'Huidig voorstel: Risico-denken (extra analyse).'
                 };
             }
             if (focus === 'oefenen' || urgency === 'middel') {
                 return {
                     path: './stimulus-respons.htm',
-                    hint: 'Huidig adviespad: Stimulus-respons plan.'
+                    hint: 'Huidig voorstel: Stimulus-respons plan.'
                 };
             }
 
             return {
                 path: './plan-van-aanpak.htm',
-                hint: 'Huidig adviespad: Plan van aanpak.'
+                hint: 'Huidig voorstel: Plan van aanpak.'
             };
         }
 
@@ -1901,4 +1903,3 @@
 <script src="../js/dataStore.js"></script>
 </body>
 </html>
-

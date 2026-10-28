@@ -321,9 +321,10 @@
                 </select>
             </div>
             <div class="action-bar" style="margin-top: 0.5rem;">
-                <button type="button" class="btn btn-primary" id="openRecommendedRouteButton">Open aanbevolen actiepagina</button>
+                <button type="button" class="btn btn-primary" id="openRecommendedRouteButton">Bekijk voorgestelde actiepagina</button>
             </div>
-            <p class="route-hint" id="routeHint">Huidig adviespad: Risico-gevoelens.</p>
+            <p class="route-hint" id="routeHint">Huidig voorstel: Risico-gevoelens.</p>
+            <p>Dit voorstel volgt je keuzes hierboven. Je kunt het bekijken, negeren of zelf een andere stap kiezen.</p>
         </section>
 
         <div class="action-bar">
@@ -511,25 +512,25 @@
             if (urgency === 'hoog' || focus === 'nood') {
                 return {
                     path: './noodplan-forse-trek.htm',
-                    hint: 'Huidig adviespad: Noodplan forse trek.'
+                    hint: 'Huidig voorstel: Noodplan forse trek.'
                 };
             }
             if (focus === 'oefenen') {
                 return {
                     path: './stimulus-respons.htm',
-                    hint: 'Huidig adviespad: Stimulus-respons plan.'
+                    hint: 'Huidig voorstel: Stimulus-respons plan.'
                 };
             }
             if (urgency === 'laag') {
                 return {
                     path: './voor-nadelen-balansen.htm',
-                    hint: 'Huidig adviespad: Voor- en nadelen balans.'
+                    hint: 'Huidig voorstel: Voor- en nadelen balans.'
                 };
             }
 
             return {
                 path: './risico-gevoelens.htm',
-                hint: 'Huidig adviespad: Risico-gevoelens.'
+                hint: 'Huidig voorstel: Risico-gevoelens.'
             };
         }
 

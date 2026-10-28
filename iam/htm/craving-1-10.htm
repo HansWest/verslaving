@@ -308,9 +308,10 @@
         <div class="zone" id="modelResultZone">Verwachte volgende stand: <strong id="predictedScore">0.0</strong></div>
         <div class="zone safe" id="modelAdviceZone">Advies: kies een kleine preventieve actie (adem, water, korte afleiding).</div>
         <div class="action-bar">
-          <button type="button" class="button-primary" id="openRecommendedActionButton">Open aanbevolen actiepagina</button>
+          <button type="button" class="button-primary" id="openRecommendedActionButton">Bekijk voorgestelde actiepagina</button>
         </div>
-        <p class="attempt-summary-link" id="recommendedActionHint">Huidig adviespad: Trek opvangen.</p>
+        <p class="attempt-summary-link" id="recommendedActionHint">Huidig voorstel: Trek opvangen.</p>
+        <p>Dit voorstel volgt je invoer. Je kunt het bekijken, negeren of zelf een andere stap kiezen.</p>
       </section>
 
       <section class="card followup-card">
@@ -506,18 +507,18 @@
       if (score <= 3.5) {
         return {
           path: './trek-opvangen.htm',
-          label: 'Huidig adviespad: Trek opvangen.'
+          label: 'Huidig voorstel: Trek opvangen.'
         };
       }
       if (score <= 6.5) {
         return {
           path: './stimulus-respons.htm',
-          label: 'Huidig adviespad: Stimulus-respons plan.'
+          label: 'Huidig voorstel: Stimulus-respons plan.'
         };
       }
       return {
         path: './noodplan-forse-trek.htm',
-        label: 'Huidig adviespad: Noodplan forse trek.'
+        label: 'Huidig voorstel: Noodplan forse trek.'
       };
     }
 

@@ -382,9 +382,10 @@
             </div>
           </div>
           <div class="action-bar" style="margin-top: 0.5rem;">
-            <button type="button" class="button-primary" id="openRecommendedRouteTrekButton">Open aanbevolen actiepagina</button>
+            <button type="button" class="button-primary" id="openRecommendedRouteTrekButton">Bekijk voorgestelde actiepagina</button>
           </div>
-          <p class="route-hint" id="routeHintTrek">Huidig adviespad: Trek opvangen.</p>
+          <p class="route-hint" id="routeHintTrek">Huidig voorstel: Trek opvangen.</p>
+          <p>Dit voorstel volgt je keuzes hierboven. Je kunt het bekijken, negeren of zelf een andere stap kiezen.</p>
         </section>
 
         <div class="action-bar">
@@ -586,31 +587,31 @@
       if (urgency === 'hoog' || focus === 'nood') {
         return {
           path: './noodplan-forse-trek.htm',
-          hint: 'Huidig adviespad: Noodplan forse trek.'
+          hint: 'Huidig voorstel: Noodplan forse trek.'
         };
       }
       if (focus === 'analyse') {
         return {
           path: './risico-gevoelens.htm',
-          hint: 'Huidig adviespad: Risico-gevoelens (analyse).'
+          hint: 'Huidig voorstel: Risico-gevoelens (analyse).'
         };
       }
       if (focus === 'plan') {
         return {
           path: './plan-van-aanpak.htm',
-          hint: 'Huidig adviespad: Plan van aanpak.'
+          hint: 'Huidig voorstel: Plan van aanpak.'
         };
       }
       if (urgency === 'middel') {
         return {
           path: './stimulus-respons.htm',
-          hint: 'Huidig adviespad: Stimulus-respons plan.'
+          hint: 'Huidig voorstel: Stimulus-respons plan.'
         };
       }
 
       return {
         path: './trek-opvangen.htm',
-        hint: 'Huidig adviespad: Trek opvangen.'
+        hint: 'Huidig voorstel: Trek opvangen.'
       };
     }
 

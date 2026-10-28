@@ -334,9 +334,10 @@
             </div>
           </div>
           <div class="action-bar">
-            <button type="button" class="btn-primary" id="openRecommendedRouteButton">Open aanbevolen vervolgstap</button>
+            <button type="button" class="btn-primary" id="openRecommendedRouteButton">Bekijk voorgestelde vervolgstap</button>
           </div>
-          <p class="route-hint" id="routeHint">Huidig adviespad: Stimulus-respons plan.</p>
+          <p class="route-hint" id="routeHint">Huidig voorstel: Stimulus-respons plan.</p>
+          <p>Dit voorstel volgt je keuzes hierboven. Je kunt het bekijken, negeren of zelf een andere stap kiezen.</p>
         </section>
 
         <div class="action-bar">
@@ -434,24 +435,24 @@
       if (urgency === 'hoog' || focus === 'nood') {
         return {
           path: './noodplan-forse-trek.htm',
-          hint: 'Huidig adviespad: Noodplan forse trek.'
+          hint: 'Huidig voorstel: Noodplan forse trek.'
         };
       }
       if (focus === 'onderscheiden' && urgency === 'laag') {
         return {
           path: './risico-gevoelens.htm',
-          hint: 'Huidig adviespad: Risico-gevoelens (onderscheiden + herkennen).'
+          hint: 'Huidig voorstel: Risico-gevoelens (onderscheiden + herkennen).'
         };
       }
       if (focus === 'coping') {
         return {
           path: './lastige-gevoelens.htm',
-          hint: 'Huidig adviespad: Lastige gevoelens (copingroutes).'
+          hint: 'Huidig voorstel: Lastige gevoelens (copingroutes).'
         };
       }
       return {
         path: './stimulus-respons.htm',
-        hint: 'Huidig adviespad: Stimulus-respons plan.'
+        hint: 'Huidig voorstel: Stimulus-respons plan.'
       };
     }
 
