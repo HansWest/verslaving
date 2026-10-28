@@ -220,6 +220,9 @@ async function testAiBridge() {
   const prompt = browser.iamAiBridge.buildPrompt({ cravingScore: 8 });
   hasPattern(prompt, text => text.includes('geen diagnose') && text.includes('Vraag eerst'),
     '  → Prompt treats AI as optional reflection, not diagnosis');
+  const listenPrompt = browser.iamAiBridge.buildPrompt({ cravingScore: 5, intent: 'listen' });
+  hasPattern(listenPrompt, text => text.includes('gehoord worden') && text.includes('zonder meteen met oplossingen'),
+    '  → Supports intent selection for listening without unasked solutions');
   hasPattern(bridgeCode, code => !code.includes('support1Name') && !code.includes('reachableSupport'),
     '  → Does not automatically add stored support contacts');
 

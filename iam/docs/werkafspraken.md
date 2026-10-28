@@ -33,6 +33,14 @@ Deze notitie bevat praktische afspraken over hoe we IAM ontwikkelen en hoe nieuw
 - Documentatie in gebruik staat in de map `iam/docs` en niet verspreid in meerdere varianten.
 - Per functionaliteit is duidelijk wat de actieve versie is en in welke map die staat.
 
+## Toon, Beeldspraak en Geloofwaardigheid
+
+- **Nuchter en uitnodigend, niet over-enthousiasmerend:** Vermijd stelligheid, wonderclaims of overdreven enthousiasme over theorieën of neurobiologische modellen. Te veel enthousiasme wekt bij mensen met verslavingsproblematiek terecht scepsis op en kan onbetrouwbaar overkomen.
+- **Modellen zijn optionele metaforen, geen universele waarheden:** Presenteer concepten zoals het "gekaapte overlevingsbrein" of "hersenstam vs. neocortex" als mogelijke kijkrichtingen of helpende beeldspraak, nooit als vaststaande neurobiologische dogma's of medische diagnoses.
+- **Geen afzetten tegen andere herstelwegen:** Zet IAM niet neer als het "enige juiste alternatief" ten opzichte van bijv. 12-stappenprogramma's, lotgenotengroepen of reguliere verslavingszorg. Ieder mens heeft een eigen pad en baat bij verschillende vormen van hulp.
+- **Geen aannames over doelen:** Neem nooit aan dat de gebruiker per se wil stoppen, minderen of een ademhalingsoefening wil doen. Vraag eerst wat de gebruiker zelf nodig heeft (luisteren, onderzoeken of mogelijke actie).
+- **Hersteldoel blijft van de cliënt:** De autonomie van de gebruiker staat altijd voorop. Suggesties en tools zijn aanbiedingen die te allen tijde geweigerd, gewijzigd of genegeerd mogen worden.
+
 ## Kruisbestuiving: 1 leidende bron
 
 - Kruisbestuiving van formulierinformatie wordt centraal opgebouwd in `iam/js/dataStore.js`.
