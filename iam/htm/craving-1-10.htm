@@ -267,8 +267,9 @@
             <button type="button" class="button-secondary" id="todayFocusNewCraving">Nieuw vandaag</button>
           </div>
         </div>
-        <div class="action-bar">
+        <div class="action-bar" style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;">
           <button type="button" class="button-primary" id="saveButton">Opslaan op dit toestel</button>
+          <button type="button" class="button-secondary" id="copyAiButton" style="background:#f1f5f9;color:#1e3a5f;border:1px solid #cbd5e1;font-weight:600;">🤖 Kopieer voor mijn AI</button>
         </div>
         <div id="message" class="message"></div>
       </section>
@@ -338,6 +339,7 @@
   <script src="../js/dataStore.js"></script>
   <script src="../js/todayFocus.js"></script>
   <script src="../js/emotionDynamics.js"></script>
+  <script src="../js/aiBridge.js"></script>
   <script>
     const formKey = 'craving-1-10';
     const WEEKLY_REVIEW_KEY = 'weeklyReview';
@@ -621,6 +623,17 @@
       document.getElementById('decayQuotient').addEventListener('input', updateEmotionModel);
       document.getElementById('openRecommendedActionButton').addEventListener('click', openRecommendedActionPage);
       document.getElementById('saveButton').addEventListener('click', saveData);
+      const copyAiBtn = document.getElementById('copyAiButton');
+      if (copyAiBtn) {
+        copyAiBtn.addEventListener('click', () => {
+          if (window.iamAiBridge) {
+            window.iamAiBridge.copyPromptToClipboard({
+              cravingScore: scoreInput.value,
+              note: noteInput.value
+            });
+          }
+        });
+      }
       window.addEventListener('focus', () => {
         renderAttemptSummary();
       });

@@ -3,6 +3,7 @@
 Deze notitie is bedoeld voor ontwikkeling, redactie en verdere uitwerking van IAM. Dit is niet per se tekst die een gebruiker direct aan het begin van de app hoeft te zien.
 
 Voor praktische werkwijze en onderhoudsafspraken, zie `werkafspraken.md`.
+Voor de neurobiologische kernformulering en AI-systeemprompt (gekaaid denkend brein vs. overlevingsbrein, ontkrachting van belangrijkheid, zelf- en co-regulatie), zie `wat-is-verslaving-ai-base.md`.
 
 ## Compacte kernformulering
 

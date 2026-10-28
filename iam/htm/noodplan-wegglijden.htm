@@ -680,6 +680,7 @@
     <button class="btn btn-primary" onclick="saveData()">💾 Opslaan</button>
     <button class="btn btn-secondary" onclick="exportData()">📄 Exporteren</button>
     <button class="btn btn-secondary" onclick="printData()">🖨️ Afdrukken</button>
+    <button class="btn btn-secondary" onclick="copyForAi()" style="background:#f1f5f9;color:#1e3a5f;font-weight:600;">🤖 Kopieer voor mijn AI</button>
 </div>
 
 <!-- ── FOOTER NAV ──────────────────────────────────── -->
@@ -692,7 +693,21 @@
 <script src="../js/supportNetwork.js"></script>
 <script src="../js/crisisActions.js"></script>
 <script src="../js/crisisCrossflow.js"></script>
+<script src="../js/aiBridge.js"></script>
 <script>
+    function copyForAi() {
+        if (window.iamAiBridge) {
+            const noodStap1 = (document.getElementById('weldoen01') && document.getElementById('weldoen01').value) || '';
+            const welGaanDoen = (document.getElementById('welGaanDoen') && document.getElementById('welGaanDoen').value) || '';
+            const noteText = noodStap1 || welGaanDoen || 'Ik voel dat ik aan het wegglijden ben en raadpleeg mijn noodplan.';
+            window.iamAiBridge.copyPromptToClipboard({
+                context: 'noodplan-wegglijden',
+                note: noteText,
+                question: 'Ik voel dat ik aan het wegglijden ben. Help mij niet te oordelen over mezelf, maar te focussen op de eerste kleine stap uit mijn noodplan en rust te brengen in mijn zenuwstelsel.'
+            });
+        }
+    }
+
     const fields = [
         'definitieUitglijder',
         'definitieWegglijden',
