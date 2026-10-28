@@ -14,6 +14,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const vm = require('vm');
 
 // Test Configuration
 const TEST_PAGES_FASE_B = [
@@ -169,6 +170,70 @@ function testCrisisCrossflow(html, filename) {
     `  → Renders crossflow suggestions`);
 }
 
+async function testAiBridge() {
+  console.log('\n🤖 Testing AI Bridge\n');
+
+  const bridgeFile = path.join(__dirname, '..', 'js', 'aiBridge.js');
+  const bridgeCode = fs.readFileSync(bridgeFile, 'utf-8');
+  const elements = new Map();
+  const clipboardWrites = [];
+  const createElement = () => ({
+    style: {},
+    listeners: {},
+    value: '',
+    setAttribute() {},
+    addEventListener(name, callback) {
+      this.listeners[name] = callback;
+    },
+    remove() {},
+    focus() {},
+    select() {}
+  });
+  const document = {
+    body: { appendChild() {} },
+    createElement,
+    execCommand: () => true,
+    getElementById(id) {
+      if (!elements.has(id)) elements.set(id, createElement());
+      return elements.get(id);
+    }
+  };
+  document.createElement = (tag) => {
+    const element = createElement();
+    if (tag === 'div') element.querySelector = () => createElement();
+    return element;
+  };
+  const browser = {
+    console,
+    document,
+    navigator: {
+      clipboard: {
+        async writeText(text) {
+          clipboardWrites.push(text);
+        }
+      }
+    }
+  };
+  browser.window = browser;
+  vm.runInNewContext(bridgeCode, browser);
+
+  const prompt = browser.iamAiBridge.buildPrompt({ cravingScore: 8 });
+  hasPattern(prompt, text => text.includes('geen diagnose') && text.includes('Vraag eerst'),
+    '  → Prompt treats AI as optional reflection, not diagnosis');
+  hasPattern(bridgeCode, code => !code.includes('support1Name') && !code.includes('reachableSupport'),
+    '  → Does not automatically add stored support contacts');
+
+  browser.iamAiBridge.copyPromptToClipboard({ note: 'Context ter beoordeling' });
+  hasPattern(clipboardWrites, writes => writes.length === 0,
+    '  → Shows a preview before clipboard access');
+
+  const promptInput = elements.get('iam-ai-prompt-text');
+  promptInput.value += '\nAangepast door gebruiker';
+  await elements.get('iam-ai-copy-btn').listeners.click();
+  hasPattern(clipboardWrites, writes => writes.length === 1 && writes[0].includes('Aangepast door gebruiker'),
+    '  → Copies the user-reviewed prompt');
+}
+
 // Main test execution
 async function runTests() {
   console.log('═══════════════════════════════════════════════════════════');
@@ -249,6 +314,14 @@ async function runTests() {
     totalTests++;
     failedTests.push(`✗ Module test: ${error.message}`);
     console.log(`✗ Module test: ${error.message}`);
+  }
+
+  try {
+    await testAiBridge();
+  } catch (error) {
+    totalTests++;
+    failedTests.push(`✗ AI Bridge test: ${error.message}`);
+    console.log(`✗ AI Bridge test: ${error.message}`);
   }
 
   // Summary

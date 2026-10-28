@@ -3,11 +3,11 @@
 Deze notitie is bedoeld voor ontwikkeling, redactie en verdere uitwerking van IAM. Dit is niet per se tekst die een gebruiker direct aan het begin van de app hoeft te zien.
 
 Voor praktische werkwijze en onderhoudsafspraken, zie `werkafspraken.md`.
-Voor de neurobiologische kernformulering en AI-systeemprompt (gekaaid denkend brein vs. overlevingsbrein, ontkrachting van belangrijkheid, zelf- en co-regulatie), zie `wat-is-verslaving-ai-base.md`.
+Voor het IAM-perspectief op verslaving, de optionele breinmetafoor en de AI-richtlijn, zie `wat-is-verslaving-ai-base.md`. De afstemmingsprincipes voor AI-ondersteuning staan in `alignment.md`.
 
 ## Compacte kernformulering
 
-Veel mensen gaan meer gebruiken vanuit een oorspronkelijk positieve reden: iets helpt, verzacht of geeft grip. Juist daardoor kunnen behoeften en emoties die eerder voelbaar waren naar de achtergrond verdwijnen, omdat er al een snelle invulling klaarstaat.
+Veel mensen gaan op een bepaald monent méér gebruiken dan achteraf verstandig is vanuit een oorspronkelijk *positieve* reden: iets helpt, verzacht of geeft grip. Juist daardoor kunnen behoeften en emoties die eerder voelbaar waren naar de achtergrond verdwijnen, omdat er al een snelle invulling klaarstaat.
 
 Na verloop van tijd wordt het daardoor lastiger om te herkennen wat iemand eigenlijk echt nodig heeft. Tegelijk kan het middel steeds aantrekkelijker voelen, vaak zonder dat iemand dat direct doorheeft. Deze verschuiving van eigen regie naar toenemende aantrekkingskracht is de kern van afhankelijkheid.
 

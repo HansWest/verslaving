@@ -57,6 +57,20 @@ Gebruik de praktische toets ook om bestaande pagina's en hulpmiddelen te beoorde
 - **Leren van een uitglijder:** richt reflectie en feedback op begrip, leren en de volgende stap die de gebruiker zelf wil zetten. Vermijd taal die een uitglijder als persoonlijk falen presenteert. Dit geldt voor [lessen-uitglijder.htm](../htm/lessen-uitglijder.htm) en [plan-bij-uitglijden.htm](../htm/plan-bij-uitglijden.htm).
 - **Gegevensbeheer:** leg in begrijpelijke taal uit wat lokaal wordt opgeslagen, wat een export bevat en wat verwijderen inhoudt. Dat is extra belangrijk voor gevoelige gegevens over gezondheid en contacten; zie [data-beheer.htm](../htm/data-beheer.htm).
 
+## AI als optioneel hulpmiddel
+
+De AI-koppeling volgt dezelfde afstemmingsprincipes als de rest van IAM:
+
+- AI is een optionele reflectiehulp, geen behandelaar, beslisser of maatstaf voor herstel. De gebruiker kan ook zonder AI verder.
+- Begin bij wat de gebruiker van het gesprek wil: gehoord worden, iets onderzoeken of mogelijke vervolgstappen verkennen. Als dat niet duidelijk is, vraag het eerst.
+- Neem geen hersteldoel, verklaring voor gevoelens of behoefte aan een techniek aan. Een breinmodel is hooguit een mogelijke lens, geen diagnose of universele verklaring.
+- Formuleer interpretaties en vervolgstappen als opties. Laat de gebruiker corrigeren, weigeren, aanpassen of het gesprek beëindigen.
+- Deel alleen context die voor de vraag nodig is. Toon de volledige prompt vóór kopiëren en laat de gebruiker die aanpassen; voeg geen contactnamen of andere opgeslagen gegevens ongemerkt toe.
+- Wees eerlijk over beperkingen en privacy: IAM verzendt de prompt niet zelf naar een AI-provider, maar na plakken en verzenden gelden de gegevens- en privacyvoorwaarden van die aanbieder.
+- Bij direct gevaar of mogelijk medisch riskante ontwenning moet de AI passende menselijke of professionele hulp aanraden en niet suggereren dat AI-gesprek voldoende is.
+
+De prompt en implementatie horen bij elkaar: zie [wat-is-verslaving-ai-base.md](wat-is-verslaving-ai-base.md), [privacy-en-ai-faq.md](privacy-en-ai-faq.md) en [aiBridge.js](../js/aiBridge.js).
+
 ## Voorbeeld
 
 Een dagboekvraag over trek kan helpen patronen te herkennen en een passende actie te kiezen. De waarde zit niet in dagelijks invullen als doel op zich. Als invullen belastend is, moet de gebruiker het kunnen overslaan of de vorm aanpassen zonder dat de app dit als gebrek aan inzet presenteert.

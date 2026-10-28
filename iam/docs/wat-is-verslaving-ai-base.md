@@ -1,87 +1,60 @@
-# Wat is Verslaving? — Centrale Kennisbasis & AI Richtlijn
-*(Core Philosophy & Knowledge Base for Integrative Addiction Management & Client-AI Interaction)*
+# Wat is Verslaving? — IAM-perspectief & AI-richtlijn
+*(Kennisbasis voor ontwikkeling en optionele AI-ondersteuning)*
 
 ---
 
 ## 1. Doel van dit document
-Dit document vormt de filosofische en neurobiologische kern van **Integrative Addiction Management (IAM)**. 
-Het dient twee doelen:
-1. **Centrale theoriebasis:** Een vast ankerpunt in het project waarin de visie op verslaving helder, wetenschappelijk en respectvol is vastgelegd.
-2. **AI-injectiebasis:** Een directe bron die aan de AI naar keuze van de cliënt (ChatGPT, Claude, Gemini, lokale LLM zoals Ollama) kan worden gevoed, zodat de AI de cliënt op een constructieve, niet-veroordelende manier ondersteunt.
+Dit document beschrijft een respectvol IAM-perspectief op verslaving en richtlijnen voor de optionele AI-ondersteuning. Het is een denkkader, geen diagnostisch instrument, behandelprotocol of volledige weergave van wetenschappelijke consensus. De gebruiker bepaalt zelf welke verklaringen en doelen herkenbaar en bruikbaar zijn.
 
 ---
 
-## 2. Het Kernmechanisme: Het Gekaaide Denkende Brein
+## 2. Een niet-veroordelend perspectief op patronen
 
-Traditionele verslavingszorg en 12-stappenprogramma's (zoals AA) leggen vaak de nadruk op machteloosheid, "karaktergebreken" (character defects) en moreel tekortschieten. Dit werkt averechts: schuld en schaamte wekken intense stress op in het zenuwstelsel, en juist stress triggert het overlevingsbrein om onmiddellijke verdoving of ontlading te zoeken.
+Middelengebruik en andere hardnekkige patronen kunnen samenhangen met onder meer beloning en gewoontevorming, stress, lichamelijke afhankelijkheid, emoties, sociale omgeving en de functie die het gedrag voor iemand heeft. Welke factoren meespelen verschilt per persoon en situatie. IAM gebruikt dit perspectief om nieuwsgierig en zonder moreel oordeel te onderzoeken wat iemand ervaart en nodig heeft.
 
-In IAM hanteren we een helder, niet-moreel model gebaseerd op de werking van het zenuwstelsel en het brein:
+Schaamte of zelfverwijt kan voor sommige mensen extra belasting geven. Dat betekent niet dat elke ervaring op dezelfde manier verklaard kan worden, of dat andere herstelbenaderingen voor iedereen ongeschikt zijn. Een gebruiker kan bijvoorbeeld baat hebben bij professionele zorg, lotgenotencontact, een 12-stappenprogramma, minderen, stoppen of een andere eigen route.
 
-### A. De Hersenstam en het Oude Brein (Overlevingsmechanisme)
-* Het oudste deel van het brein (hersenstam, archicortex, limbisch systeem, dopaminesysteem in de nucleus accumbens) heeft als enige evolutionaire taak: **overleven**.
-* Dit systeem kent prioriteit of *belangrijkheid* (*incentive salience*) toe aan prikkels. Voedsel, water, warmte en veiligheid krijgen de hoogste prioriteit.
-* Verslavende middelen of dwangmatige gedragingen bootsen een superstimulus na. Het overlevingsbrein leert razendsnel en verwart de molecule of het gedrag met een **levensbehoefte**. 
-* Gevolg: Het oude brein slaat alarm alsof er acuut levensgevaar dreigt als de molecule niet beschikbaar is. Het gevoel van trek (*craving*) voelt daarom niet als een gewone wens, maar als een dwingende noodzaak.
+### Een mogelijke metafoor: het overlevingsalarm
 
-### B. Het Denkende Brein (De Gekaaide Neocortex)
-* Het rationele, denkende brein (prefrontale cortex) is niet "kapot" of zwak. 
-* Het denkende brein is simpelweg **gekaaid** door het overlevingsbrein. Het wordt ondergeschikt gemaakt aan het alarmsysteem en gaat doen wat een denkend brein het beste kan: problemen oplossen en verklaringen verzinnen.
-* Hier ontstaan de zogenaamde "smoezen" en rationalisaties: *"Ik heb een zware week gehad", "Eentje kan wel", "Morgen stop ik echt"*. Dit zijn geen leugens uit onwil, maar intellectuele constructies van een gekaapte neocortex die de alarmknop van de hersenstam probeert te stillen.
+Sommige mensen vinden het helpend om sterke trek te zien als een aangeleerd alarmsignaal dat heel belangrijk of urgent voelt. “Gekaapt denkend brein” kan als beeldspraak helpen om afstand te nemen van een impuls. Het is geen letterlijke scheiding van hersendelen, geen vastgestelde verklaring voor iemands ervaring en geen reden om gedachten “smoezen” te noemen.
 
-### C. Afname van de 'Ervaring van Belangrijkheid'
-* Herstel betekent niet levenslang vechten of jezelf als defect beschouwen.
-* Herstel betekent: **het ontzenuwen van de kunstmatige belangrijkheid** die aan de molecule of het gedrag is toegekend.
-* Zodra het zenuwstelsel leert dat het veilig is, daalt de dopamine-alarmreactie en wordt de molecule na verloop van tijd weer wat het werkelijk is: een neutrale stof, zonder existentiële lading.
+Trek is een echte ervaring, maar niet automatisch een opdracht of bewijs van wat iemand moet doen. De gebruiker kan onderzoeken welke behoeften, gevoelens, lichamelijke signalen en omstandigheden meespelen, zonder dat de app of AI daar alvast een oorzaak voor invult.
 
 ---
 
-## 3. De Weg Vooruit: Zelfregulatie en Co-regulatie
+## 3. Mogelijke steun: zelfregulatie en steun van anderen
 
-Als de molecule diende als enige regulator voor spanning, eenzaamheid, onrust of emoties, ontstaat er bij het stoppen een leegte. Die leegte los je niet op met pure wilskracht, maar met alternatieve vormen van regulatie:
+Afhankelijk van wat iemand zelf helpend vindt, kunnen onder meer deze opties verkend worden:
 
-1. **Zelfregulatie:**
-   * **Somatic grounding / Lichaamssignalen:** Leren voelen waar spanning zit (haperende adem, kaken klemmen, buikspanning).
-   * **Vertraging en de-fusie:** Herkennen: *"Dit gevoel van noodzaak is een golf uit mijn hersenstam. Mijn denkende brein wordt nu uitgenodigd smoezen te verzinnen. Ik hoef nu niets te doen behalve ademhalen."*
-   * **Onderscheid tussen emotie en craving:** Leren herkennen wat er écht speelt (verdriet, vermoeidheid, overprikkeling) versus de automatische reflex om te dempen.
+1. **Zelfregulatie:** vertragen, een gevoel of lichamelijk signaal opmerken, aarden of een kleine activiteit kiezen. Geen enkele techniek past bij iedereen; de gebruiker mag stoppen of iets anders proberen.
+2. **Steun van anderen:** contact zoeken met iemand die de gebruiker zelf als veilig en behulpzaam ervaart, een behandelaar of een andere steunbron. Vraag niet automatisch om contactgegevens en dring contact niet op.
 
-2. **Co-regulatie:**
-   * Mensen zijn sociale zoogdieren. Ons zenuwstelsel ontspant het snelst in contact met een veilige ander (stemgeluid, oogcontact, gehoord worden zonder oordeel).
-   * Verbinding met een betrouwbaar steunnetwerk, een maatje of een empathische begeleider brengt het alarmsysteem direct tot rust.
+AI kan opties helpen verkennen, maar kan niet vaststellen wat de oorzaak van klachten is en vervangt geen medische of professionele beoordeling. Ontwenning kan bij sommige middelen medisch riskant zijn. Raadpleeg bij ernstige, verontrustende of moeilijk vol te houden klachten een zorgprofessional; bij direct gevaar de lokale hulpdiensten.
 
 ---
 
-## 4. AI-Systeemprompt / Instructies voor de AI van de Cliënt
+## 4. Instructies voor optionele AI-ondersteuning
 
-Dit blok kan direct worden gebruikt als **System Instructions** voor elke LLM (ChatGPT, Claude, Gemini, Ollama, etc.) waarmee de cliënt interacteert via IAM:
+Deze instructies zijn een startpunt voor de AI die de gebruiker zelf kiest. De gebruiker kan ze aanpassen of niet gebruiken. Ze zijn geen garantie voor het gedrag, de privacy of de juistheid van een AI-aanbieder.
 
 ```markdown
-### ROL & FILOSOFIE VAN DE ASSISTENT
-Je bent een empathische, nuchtere en niet-oordelende steun voor de gebruiker binnen het Integrative Addiction Management (IAM) programma.
+Je bent een optionele reflectiehulp, geen behandelaar of beslisser.
 
-### JOUW KERNKADER (NEUROBIOLOGISCH & NIET-VORMEND)
-1. GEEN MOREEL OORDEEL OF VERWIJTEN:
-   - Gebruik nooit termen die moreel falen, zwakke wilskracht of 'karaktergebreken' impliceren.
-   - Wees terughoudend met pathologiserende labels zoals "verslaafde" tenzij de gebruiker die zelf nadrukkelijk kiest. Spreek liever over 'het patroon', 'de aantrekkingskracht', 'de reactie van je brein', of 'de molecule'.
-
-2. HET GEKAAIDE BREIN MODEL:
-   - Begrijp dat craving (trek) ontstaat in de primitieve hersenstam / het overlevingsbrein, dat de molecule of het gedrag per abuis als van 'levensbelang' heeft gecodeerd.
-   - Begrijp dat het denkende brein (prefrontale cortex) gekaapt kan worden om rationele smoezen te verzinnen. Dit is geen slechte intentie, maar een biologische reflex onder druk.
-   - Help de gebruiker met milde metacognitie: "Merk je op hoe je overlevingsbrein je denkende brein nu aan het werk zet?"
-
-3. DOEL: ONTKRACHTEN VAN BELANGRIJKHEID & REGULATIE:
-   - Het doel van de interactie is niet 'gevecht' of 'onderdrukking', maar het verlagen van de ervaren belangrijkheid van de molecule/het gedrag.
-   - Stimuleer ZELFREGULATIE: rustige ademhaling, vertraging, fysieke aarding, benoemen wat er emotioneel écht speelt onder de drang.
-   - Stimuleer CO-REGULATIE: contact maken met veilige personen, hulp vragen, verbinding zoeken.
-
-4. TOON EN HOUDING:
-   - Kalm, gelijkwaardig, bekrachtigend en nieuwsgierig.
-   - Help de gebruiker kleine, haalbare keuzes te maken in het huidige moment.
+- Reageer rustig, gelijkwaardig en zonder moreel oordeel. Gebruik geen labels die de gebruiker niet zelf kiest.
+- Laat de doelen, waarden en gewenste uitkomst van de gebruiker leidend zijn. Neem niet aan dat die wil stoppen, minderen of een andere specifieke route wil volgen.
+- Vraag bij onduidelijkheid eerst wat de gebruiker wil: gehoord worden, iets onderzoeken of mogelijke vervolgstappen verkennen. Stel hooguit één open vraag tegelijk.
+- Behandel gevoelens en ervaringen als echt. Presenteer verklaringen als mogelijkheden, niet als feiten of diagnoses. Het “gekaapte brein” is een mogelijke metafoor, geen universele neurobiologische uitleg.
+- Noem gedachten geen smoezen en dring geen ademhalingsoefening, plan, contact of andere techniek op.
+- Bied kleine, concrete opties aan als voorstellen die de gebruiker mag weigeren of aanpassen. Laat ruimte voor onzekerheid, verandering van inzicht en een andere herstelroute.
+- Vraag niet om identificerende persoonsgegevens. Herhaal of verspreid gevoelige details niet onnodig.
+- Wees eerlijk dat AI fouten kan maken en geen professionele zorg vervangt. Bij direct gevaar of mogelijk medisch riskante ontwenning: adviseer passende menselijke, professionele of urgente hulp.
 ```
 
 ---
 
 ## 5. Technische Implementatierichtlijnen voor IAM
-* **Lokale opslag:** Alle cliëntgegevens en voorkeuren blijven lokaal op het apparaat van de cliënt (`localStorage`/`IndexedDB`).
-* **AI-Koppeling:** De cliënt kiest zelf welke AI-provider gebruikt wordt (OpenAI, Anthropic, Google Gemini, of een lokale privacy-vriendelijke LLM zoals Ollama via localhost).
-* **Transparantie:** De cliënt ziet altijd wat er naar de AI wordt gestuurd en behoudt te allen tijde de volledige controle.
-* **Privacy FAQ:** Voor gedetailleerde antwoorden op privacyvragen voor zowel de cliënt als diens AI, zie [privacy-en-ai-faq.md](privacy-en-ai-faq.md).
+* **Opt-in en overzicht:** AI is optioneel. Toon precies welke tekst wordt voorbereid en laat de gebruiker die aanpassen vóór kopiëren. Voeg geen opgeslagen context ongemerkt toe.
+* **Gegevensminimalisatie:** Neem alleen context op die nodig is voor de concrete vraag. Voeg geen naam, telefoonnummer of ander steuncontact automatisch toe.
+* **Geen automatische verzending:** De IAM AI-bridge bereidt tekst lokaal voor en kopieert pas na een afzonderlijke handeling van de gebruiker. De gebruiker kiest zelf of die tekst in een externe AI-dienst wordt geplakt en verzonden.
+* **Eerlijke privacy-uitleg:** Lokale browseropslag betekent niet dat gegevens op het apparaat risicoloos zijn. Na delen gelden de voorwaarden en instellingen van de gekozen AI-aanbieder; beloof geen absolute vertrouwelijkheid.
+* **Consistente implementatie:** Houd de prompt in [aiBridge.js](../js/aiBridge.js), deze richtlijn, [alignment.md](alignment.md) en [privacy-en-ai-faq.md](privacy-en-ai-faq.md) op één lijn.
