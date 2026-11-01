@@ -13,7 +13,7 @@ Daarom ben ik op zoek naar programmeurs en mensen die met ideeën willen komen o
 …dit is een proces dat ik aanvankelijk in HTML/Javascript programmeer - zoveel mogelijk client-side - om het mogelijk in een volgende fase om te zetten naar PHP-MySQL om het vervolgens ook meer feedback te laten genereren.
 
 Kijk op:
-[hanswest-github/kink_aware_coach](https://hanswest.github.io/kink_aware_coach/)
+[hanswest-github/verslaving](https://hanswest.github.io/verslaving/iam/htm/index.htm)
 
 Als je algemene ideeën hebt of mee wilt denken:
 
