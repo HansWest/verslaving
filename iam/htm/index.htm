@@ -1466,7 +1466,7 @@
                 </div>
             </div>
             <div class="weekly-review-links" id="weeklyReviewLinks"></div>
-            <p class="weekly-review-meta" id="weeklyReviewMeta">Nog geen weekreflectie opgeslagen.</p>
+            <p class="weekly-review-meta" id="weeklyReviewMeta">Nog niets ingevuld om op terug te blikken.</p>
             <div class="weekly-attempt-tools">
                 <div>
                     <label for="weeklyAttemptTag">Hoe label je deze poging in je historielijst?</label>
@@ -2587,9 +2587,13 @@
             }
 
             if (meta) {
-                const lastText = weekly.lastCompletedAt
-                    ? `Laatst bewaard: ${formatDateTimeNl(weekly.lastCompletedAt)}`
-                    : 'Nog geen weekreflectie opgeslagen.';
+                const hasReflection = [weekly.reflection, weekly.learning, weekly.nextStep]
+                    .some((value) => typeof value === 'string' && value.trim());
+                const lastText = hasReflection
+                    ? (weekly.lastCompletedAt
+                        ? `Laatst bewaard: ${formatDateTimeNl(weekly.lastCompletedAt)}`
+                        : 'Weekreflectie ingevuld.')
+                    : 'Nog niets ingevuld om op terug te blikken.';
 
                 const summaryText = Array.isArray(summary?.motivationAnchors) && summary.motivationAnchors.length
                     ? ` Motivatie-anker: ${summary.motivationAnchors[0]}.`

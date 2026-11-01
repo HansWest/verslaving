@@ -194,7 +194,7 @@
           <span class="weekly-review-chip" id="weeklyReviewStatus">Nog geen terugblik</span>
         </div>
         <ul class="weekly-review-list" id="weeklyReviewList">
-          <li>Nog geen weekreflectie opgeslagen op de homepage.</li>
+          <li>Nog niets ingevuld om op terug te blikken.</li>
         </ul>
         <div class="action-bar" style="margin-top: 1rem;">
           <button type="button" class="button-primary" id="weeklyReviewApply">Neem volgende stap over in reflectie</button>
@@ -488,7 +488,7 @@
           applyButtonId: 'weeklyReviewApply',
           sourceHref: './index.htm#weeklyReviewCard',
           sourceLabel: 'Open terugblik op homepage',
-          emptyText: 'Nog geen weekreflectie opgeslagen op de homepage.',
+          emptyText: 'Nog niets ingevuld om op terug te blikken.',
           extraLines: function (weekly) {
             if (weekly.nextStep && warning) {
               return [`Check of die volgende stap past bij je vroege signalen: ${warning}.`];
