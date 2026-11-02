@@ -1335,6 +1335,15 @@ function renderGlobalPersonalGreeting() {
   if (!titleEl) return;
 
   const pageName = ((window.location && window.location.pathname) || '').split('/').pop() || '';
+  const isGamePage = /^to_self_manage_game\.htm$/i.test(pageName);
+  const gameCard = isGamePage
+    ? document.querySelector(
+      '#app-content .manager-first-card, #app-content .swipe-area, #app-content > div > .bg-gray-800'
+    )
+    : null;
+  const greetingAnchor = gameCard || titleEl;
+  if (isGamePage && !gameCard) return;
+
   let greetingText = `${displayName}, welkom terug.`;
 
   if (/^(noodplan-|start-nu\.htm)/i.test(pageName)) {
@@ -1353,8 +1362,8 @@ function renderGlobalPersonalGreeting() {
   greetingEl.style.margin = '0.55rem 0 0';
   greetingEl.style.fontWeight = '700';
 
-  if (!existing) {
-    titleEl.insertAdjacentElement('afterend', greetingEl);
+  if (greetingEl.previousElementSibling !== greetingAnchor) {
+    greetingAnchor.insertAdjacentElement('afterend', greetingEl);
   }
 }
 

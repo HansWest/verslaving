@@ -227,16 +227,16 @@
                         <span>BEHEER</span>
                         <span>SPEL</span>
                     </h1>
-                    <div class="flex space-x-2">
+                    <div class="flex items-center space-x-2">
                         <button id="nav-manager"
                             class="py-1 px-2.5 text-xs rounded-full font-semibold bg-teal-600 text-gray-100 shadow-lg">Beheer</button>
                         <button id="nav-game"
-                            class="py-1 px-2.5 text-xs rounded-full font-semibold bg-gray-700 text-gray-300 hover:bg-gray-600">Spelen
-                            (0 punten)</button>
+                            class="py-1 px-2.5 text-xs rounded-full font-semibold bg-gray-700 text-gray-300 hover:bg-gray-600">Spelen</button>
                         <button id="nav-progress"
                             class="py-1 px-2.5 text-xs rounded-full font-semibold bg-gray-700 text-gray-300 hover:bg-gray-600">Voortgang</button>
                     </div>
                 </div>
+                <p id="nav-game-score" class="px-4 pb-2 text-right text-xs font-medium text-teal-300" aria-live="polite">Vandaag: 0 punten</p>
             </header>
 
             <main id="app-content" class="flex-grow w-full p-4 pt-8 bg-gray-900">
@@ -327,8 +327,15 @@
                 hasCheckedIn = false;
             }
 
-            document.getElementById('nav-game').textContent = `Spelen (${todayScore} punten)`;
+            updateGameScoreDisplay();
             updateHotlistStatus();
+        }
+
+        function updateGameScoreDisplay() {
+            const scoreElement = document.getElementById('nav-game-score');
+            if (scoreElement) {
+                scoreElement.textContent = `Vandaag: ${todayScore} punten`;
+            }
         }
 
         function saveItems() {
@@ -338,7 +345,7 @@
 
         function saveScores() {
             localStorage.setItem('verity_scores', JSON.stringify(dailyScores));
-            document.getElementById('nav-game').textContent = `Spelen (${todayScore} punten)`;
+            updateGameScoreDisplay();
         }
 
         function updateHotlistStatus() {
@@ -609,7 +616,7 @@
                     </p>
 
                     <div class="grid grid-cols-1 gap-6">
-                        <div class="bg-gray-800 p-4 rounded-xl shadow-xl border-t-4 border-green-500">
+                        <div class="manager-first-card bg-gray-800 p-4 rounded-xl shadow-xl border-t-4 border-green-500">
                             <h3 class="text-base font-bold text-green-400 mb-3">Lange termijn positief (naartoe bewegen)</h3>
                             <p class="text-xs text-gray-400 mb-3">
                                 Items waar je naartoe wilt bewegen (swipe naar beneden). Dit is je motivatie.
@@ -913,6 +920,9 @@
             }
 
             document.getElementById('app-content').innerHTML = contentHTML;
+            if (typeof window.iamRenderGlobalPersonalGreeting === 'function') {
+                window.iamRenderGlobalPersonalGreeting();
+            }
 
             if (currentItem && gameActive) {
                 setupGameCardListeners();
@@ -1364,6 +1374,9 @@
             }
 
             setupEventListeners();
+            if (typeof window.iamRenderGlobalPersonalGreeting === 'function') {
+                window.iamRenderGlobalPersonalGreeting();
+            }
         }
 
         function setupEventListeners() {
