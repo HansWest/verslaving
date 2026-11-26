@@ -34,7 +34,7 @@
     if (weekly.reflection) items.push(toItem(`Terugblik: ${previewText(weekly.reflection)}`, sourceHref, sourceLabel));
     if (weekly.learning) items.push(toItem(`Leerpunt: ${previewText(weekly.learning)}`, sourceHref, sourceLabel));
     if (weekly.nextStep) items.push(toItem(`Volgende stap: ${previewText(weekly.nextStep)}`, sourceHref, sourceLabel));
-    if (!items.length) items.push(toItem(emptyText || 'Nog geen weekreflectie opgeslagen op de homepage.', sourceHref, sourceLabel));
+    if (!items.length) items.push(toItem(emptyText || 'Nog niets ingevuld om op terug te blikken.', sourceHref, sourceLabel));
     return items;
   }
 
