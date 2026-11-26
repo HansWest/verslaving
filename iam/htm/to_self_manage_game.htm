@@ -214,32 +214,56 @@
 
 <body class="bg-gray-900">
 
-    <a id="desktop-clickout-link" href="./index.htm" aria-label="Terug naar overzicht via klik buiten het speelveld" title="Klik buiten het speelveld om terug te gaan naar overzicht"></a>
+    <a id="desktop-clickout-link" href="./index.htm" aria-label="Terug naar overzicht via klik buiten het speelveld"
+        title="Klik buiten het speelveld om terug te gaan naar overzicht"></a>
 
     <!-- START Mobile Frame Wrapper -->
     <div id="mobile-frame" class="max-w-sm mx-auto w-full flex flex-col mt-8 mb-8 relative">
         <div id="app-content-wrapper" class="flex flex-col flex-grow bg-gray-900 rounded-2xl overflow-hidden">
 
-            <header class="sticky top-0 z-40 bg-gray-800 shadow-xl border-b border-gray-700 w-full">
-                <div class="flex justify-between items-center px-4 py-3">
-                    <h1 class="flex flex-col font-black tracking-wider text-teal-400 text-xs leading-tight">
-                        <span>ZELF</span>
-                        <span>BEHEER</span>
-                        <span>SPEL</span>
-                    </h1>
-                    <div class="flex space-x-2">
-                        <button id="nav-manager"
-                            class="py-1 px-2.5 text-xs rounded-full font-semibold bg-teal-600 text-gray-100 shadow-lg">Beheer</button>
-                        <button id="nav-game"
-                            class="py-1 px-2.5 text-xs rounded-full font-semibold bg-gray-700 text-gray-300 hover:bg-gray-600">Spelen
-                            (0 punten)</button>
-                        <button id="nav-progress"
-                            class="py-1 px-2.5 text-xs rounded-full font-semibold bg-gray-700 text-gray-300 hover:bg-gray-600">Voortgang</button>
+            <header
+                class="sticky top-0 z-40 bg-gray-800/95 backdrop-blur-sm shadow-xl border-b border-gray-700/80 w-full px-3 py-2.5 space-y-2">
+                <div class="flex justify-between items-center">
+                    <a href="./index.htm"
+                        class="inline-flex items-center gap-1 text-xs font-semibold text-gray-400 hover:text-teal-300 transition-colors py-1 px-1.5 -ml-1 rounded-md hover:bg-gray-700/50"
+                        title="Terug naar overzicht">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        <span>Overzicht</span>
+                    </a>
+
+                    <div class="flex items-center gap-1.5">
+                        <span class="inline-block w-2 h-2 rounded-full bg-teal-400"></span>
+                        <h1 class="text-xs font-black tracking-wider text-gray-100 uppercase">Zelfbeheer Spel</h1>
+                    </div>
+
+                    <div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-900/80 border border-gray-700 text-xs font-bold text-yellow-400 shadow-inner"
+                        title="Dagscore">
+                        <span class="text-yellow-400 text-xs">⚡</span>
+                        <span id="header-score">0 pt</span>
                     </div>
                 </div>
+
+                <nav class="bg-gray-900/80 p-1 rounded-xl flex gap-1 border border-gray-700/60" role="tablist"
+                    aria-label="Spelnavigatie">
+                    <button id="nav-manager" role="tab" aria-selected="true"
+                        class="flex-1 py-1.5 px-2 text-xs font-semibold rounded-lg text-center transition-all bg-teal-600 text-white shadow-md">
+                        Beheer
+                    </button>
+                    <button id="nav-game" role="tab" aria-selected="false"
+                        class="flex-1 py-1.5 px-2 text-xs font-medium rounded-lg text-center transition-all text-gray-400 hover:text-gray-200 hover:bg-gray-800/60">
+                        Spelen
+                    </button>
+                    <button id="nav-progress" role="tab" aria-selected="false"
+                        class="flex-1 py-1.5 px-2 text-xs font-medium rounded-lg text-center transition-all text-gray-400 hover:text-gray-200 hover:bg-gray-800/60">
+                        Voortgang
+                    </button>
+                </nav>
             </header>
 
-            <main id="app-content" class="flex-grow w-full p-4 pt-8 bg-gray-900">
+            <main id="app-content" class="flex-grow w-full p-4 pt-4 bg-gray-900">
                 <div id="loading-message" class="text-center mt-20">
                     <div class="animate-spin rounded-full h-10 w-10 border-b-4 border-teal-500 mx-auto mb-3"></div>
                     <p class="text-base text-gray-400">Lokale gegevens laden...</p>
@@ -327,8 +351,19 @@
                 hasCheckedIn = false;
             }
 
-            document.getElementById('nav-game').textContent = `Spelen (${todayScore} punten)`;
+            updateHeaderScore();
             updateHotlistStatus();
+        }
+
+        function updateHeaderScore() {
+            const scoreEl = document.getElementById('header-score');
+            if (scoreEl) {
+                scoreEl.textContent = `${todayScore} pt`;
+            }
+            const navGame = document.getElementById('nav-game');
+            if (navGame) {
+                navGame.textContent = 'Spelen';
+            }
         }
 
         function saveItems() {
@@ -338,7 +373,7 @@
 
         function saveScores() {
             localStorage.setItem('verity_scores', JSON.stringify(dailyScores));
-            document.getElementById('nav-game').textContent = `Spelen (${todayScore} punten)`;
+            updateHeaderScore();
         }
 
         function updateHotlistStatus() {
@@ -1203,17 +1238,20 @@
         // --- 7. EVENT HANDLERS ---
         function handleNavigation(newView) {
             currentView = newView;
-            ['nav-manager', 'nav-game', 'nav-progress'].forEach(id => {
+            const navItems = [
+                { id: 'nav-manager', view: 'manager' },
+                { id: 'nav-game', view: 'game' },
+                { id: 'nav-progress', view: 'progress' }
+            ];
+            navItems.forEach(({ id, view }) => {
                 const btn = document.getElementById(id);
                 if (btn) {
-                    if (id.includes(newView)) {
-                        btn.classList.replace('bg-gray-700', 'bg-teal-600');
-                        btn.classList.replace('text-gray-300', 'text-gray-100');
-                        btn.classList.add('shadow-lg');
+                    const isActive = view === newView;
+                    btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                    if (isActive) {
+                        btn.className = 'flex-1 py-1.5 px-2 text-xs font-semibold rounded-lg text-center transition-all bg-teal-600 text-white shadow-md';
                     } else {
-                        btn.classList.replace('bg-teal-600', 'bg-gray-700');
-                        btn.classList.replace('text-gray-100', 'text-gray-300');
-                        btn.classList.remove('shadow-lg');
+                        btn.className = 'flex-1 py-1.5 px-2 text-xs font-medium rounded-lg text-center transition-all text-gray-400 hover:text-gray-200 hover:bg-gray-800/60';
                     }
                 }
             });
